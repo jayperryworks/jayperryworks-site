@@ -1,0 +1,38 @@
+//= require normalize-css/normalize.css
+// Pull normalize.css in via sprockets, because SASS doesn't compile it
+//-> doing this via @import generates an "@import" in the CSS, which is undesirable
+
+@charset "utf-8";
+
+// =============================================================================
+// Frameworks
+// -> sass/bower load paths are set in config.rb @root
+// =============================================================================
+
+@import "bourbon/dist/bourbon";
+@import "breakpoint-sass/stylesheets/breakpoint";
+@import "singularity/stylesheets/singularitygs";
+@import "sass-toolkit/stylesheets/toolkit";
+
+/* =============================================================================
+// Settings & resets
+// ========================================================================== */
+
+
+
+/* =============================================================================
+// Core style imports
+// ========================================================================== */
+
+
+
+/* =============================================================================
+// Modules & components
+// ========================================================================== */
+
+
+
+/* =============================================================================
+// Styles of Shame
+// -> put quick and dirty hacks here, then clean up & organize later
+// ========================================================================== */
