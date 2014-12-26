@@ -1,0 +1,170 @@
+/* =============================================================================
+// Global layout styles
+// ===========================================================================*/
+
+/*doc
+---
+title: Global layout helpers
+name: layout
+category: core
+---
+
+Special layout styles can be added to an element or container with these 'microclasses'.
+
+```html_example
+<a href="#" class="button l-abs top right">Button @ top right</a>
+```
+
+*/
+
+// Config/mixins
+// -----------------------------------------------------------------------------
+
+// ---- Layout, grid & gutters -------------------------------------------------
+
+// Quickly set grid-margins on a container across multiple breakpoints
+@mixin layout-margins($property: padding, $negative: false, $sides: left right) {
+    // grab the first value for default (mobile) screens
+    $margins: first($layout-margins);
+
+    // make it negative if $negative is set to true
+    @if $negative == true {
+        $margins: -(first($layout-margins));
+    }
+
+    // apply to all sides specified
+    // -> left and right are defaults
+    @each $side in $sides {
+        #{$property}-#{$side}: $margins;
+    }
+
+
+    @if length($layout-margins) > 1 {
+        @for $i from 1 through length($layout-margins) {
+
+            // set up breakpoints for additional values
+            @include breakpoint(nth($breakpoints, $i)) {
+
+                // make it negative if $negative is set to true
+                $margins: nth($layout-margins, $i);
+
+                // make it negative if $negative is set to true
+                @if $negative == true {
+                    $margins: -(nth($layout-margins, $i));
+                }
+
+                // apply to all sides specified
+                // -> left and right are defaults
+                @each $side in $sides {
+                    #{$property}-#{$side}: $margins;
+                }
+            }
+        }
+    }
+}
+
+// A helper to quickly create grid-span() includes across multiple breakpoints
+// Saves having to write breakpoint calls over and over again
+@mixin grid-span-break($cols, $start, $opts: false) {
+    @include grid-span(nth($cols, 1), nth($start, 1), $options: $opts);
+
+    @for $i from 1 through (length($cols) - 1) {
+        $num: ($i + 1);
+        @include breakpoint(nth($breakpoints, $num)) {
+            @include grid-span(nth($cols, $num), nth($start, $num), $options: $opts);
+        }
+    }
+}
+
+/* ---- Generic helpers ------------------------------------------------------*/
+
+// hack to make a child element be the full height of its parent
+// -> note parent el MUST have overflow: hidden; set.
+@mixin l-full-height($padding: 0, $margin: 0) {
+    // http://stackoverflow.com/a/25164260
+    margin-bottom: ($margin - 1000px);
+    padding-bottom: ($padding + 1000px);
+}
+
+
+/* Layout Microclasses
+// ---------------------------------------------------------------------------*/
+
+/* ---- Fixed position -------------------------------------------------------*/
+
+@mixin scroll($axis: y) {
+    overflow: auto;
+
+    @if ($axis == y) {
+        overflow-x: hidden;
+        overflow-y: auto;
+    } @elseif ($axis == x) {
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+}
+
+%scroll-y {
+    @include scroll(y);
+}
+
+%scroll-x {
+    @include scroll(x);
+}
+
+// fix an element and make it full-height or full-width
+.l-fixed, %l-fixed {
+    position: fixed;
+
+    &.full-h, %l-fixed--full-h {
+        @extend %scroll-y;
+        top: 0;
+        bottom: 0;
+    }
+    &.full-w, %l-fixed--full-w {
+        @extend %scroll-x;
+        left: 0;
+        right: 0;
+    }
+}
+
+/* ---- Absolute Positioning -------------------------------------------------*/
+
+// position an element absolutely in the left, right, top or bottom.
+// -> parent element MUST have explicit positioning
+.l-abs, %l-abs {
+    position: absolute;
+
+    // MODIFIERS:
+    // .left, .right, .top, .bottom
+
+    $sides: left right top bottom;
+    @for $i from 1 through length($sides) {
+        $side: nth($sides, $i);
+
+        &.#{$side} {
+            #{$side}: 0;
+            margin-#{$side}: $grid-gutter;
+        }
+    }
+}
+
+/* ---- Floats ---------------------------------------------------------------*/
+
+// float an element left or right
+.l-float, %l-float {
+    &.left {
+        float: left;
+    }
+    &.right {
+        float: right;
+    }
+}
+
+// limit a container's width on large screens
+// and center it vertically
+.l-limited_w, %l-limited_w {
+  max-width: $layout-w;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -1,0 +1,167 @@
+// ==========================================================================
+//  Global settings
+// ==========================================================================
+
+/*doc
+---
+title: Global Variables & Mixins
+name: settings
+category: core
+---
+
+Keep things consistent with all these great public properties, functions, and mixins.
+
+`%base-radius`: A standard rounded-corner radius we use throughout the site. Usage: `@extend %base-radius`
+
+`%base-transition`: A standard CSS transition used all over the place. Applies to every property of your selector/element. If you'd like to apply to only certain properties, use the `$base-duration` global variable. Usage: `@extend %base-transition`
+
+*/
+
+// Asset Paths
+// ----------------------------------------------------------------------
+
+$path-images : "../images";
+$path-fonts  : "../fonts";
+$path-icons  : "#{$path-images}/_icons";
+
+// Base Config
+// ----------------------------------------------------------------------
+
+$base-duration: 0.5s; // in seconds
+$base-radius: 3px;
+
+%base-radius {
+  border-radius: $base-radius;
+}
+
+%base-transition {
+  // base transition used globally
+  @include transition (all $base-duration);
+}
+
+// Colors
+// ----------------------------------------------------------------------
+// base colors
+// -> PRIVATE, do not use outside this settings file
+$black: #262524;
+$gray: #817f74;
+$beige: #f5f4eb;
+$beige--dark: #d1d0ca;
+$blue: #54abc6;
+$orange: #fb5f4d;
+$green: #748a47;
+$white: #fff;
+
+// themes
+// -> PUBLIC, use these for color references (see themes file)
+
+
+// shortcut "get" function to access theme map values
+// -> PUBLIC
+@function theme($name, $key) {
+  // @if ($name == "reverse") {
+  //   @return map-get($theme--reverse, $key);
+  // } @else {
+  //   @return map-get($theme--default, $key);
+  // }
+}
+
+// base text colors
+// -> PUBLIC
+$color-text--primary: #333;
+$color-text--secondary: #666;
+
+$color-selection: red;
+
+
+// Typography
+// -----------------------------------------------------------------------------
+
+$type-size--default: 16px;
+$type-size-amp: 1.1em; // size of ampersands relative to their context
+$type-line_height: 1.5;
+
+
+// Containers/layout
+// -----------------------------------------------------------------------------
+
+// --- breakpoints -------------------------------------------------------------
+$breakpoints: 480px 768px 1024px 1280px;
+
+$screen--xsmall: nth($breakpoints, 1);
+$screen--small: nth($breakpoints, 2);
+$screen--medium: nth($breakpoints, 3);
+$screen--large: nth($breakpoints, 4);
+
+$breakpoint-to-ems: true; // for breakpoints sass library
+
+// --- global widths -----------------------------------------------------------
+$base-w--min: $screen--medium; // min width of site
+
+$layout-w: nth($breakpoints, 4); // max width of main layout
+$layout-w--narrow: 680px; // max width of 'narrow' elements (e.g. body type)
+
+// --- element dimensions ------------------------------------------------------
+// -> convert to REM in most cases
+$header-h: 48px;
+$sidebar-w: 300px;
+
+$border-w: 1px;
+$border-w--thick: 2px;
+$border-w--super_thick: 6px;
+$border-style: solid;
+
+// make a standard border/hairline that works with the parent color theme
+@mixin border($side: all, $w: thin/*, $color: inherit*/) {
+    @if ($side == all) {
+        @if ($w == thin) {
+            border-width: $border-w;
+        } @else if ($w == thick) {
+            border-width: $border-w--thick;
+        } @else if($w == super) {
+            border-width: $border-w--super_thick;
+        } @else {
+            border-width: #{$w};
+        }
+        border-style: $border-style;
+        border-color: inherit;
+    } @else {
+        @if ($w == thin) {
+            border-#{$side}-width: $border-w;
+        } @else if ($w == thick) {
+            border-#{$side}-width: $border-w--thick;
+        } @else if($w == super) {
+            border-#{$side}-width: $border-w--super_thick;
+        } @else {
+            border-width: #{$w};
+        }
+        border-#{$side}-style: $border-style;
+        border-#{$side}-color: inherit;
+    }
+}
+
+
+// --- grid variables ----------------------------------------------------------
+$grid-gutter: 26px; // convert to rem/em/percent
+$layout-margins: $grid-gutter;
+$legacy-support-for-ie7: true;
+
+$ms-base: 1;
+$ms-ratio: $golden;
+
+// Singularity.gs setup
+// -> https://github.com/Team-Sass/Singularity
+// -> this project uses LOCAL grids rather than global. see module files.
+// @include add-grid(1 3);
+// @include add-gutter($grid-gutter);
+
+// scale for ratio-based grids and/or type
+// -> http://alistapart.com/article/content-out-layout
+// $grid-scale: 1 1.618 2.618 4.236 6.854 11.089 17.942 29.030;
+
+@debug ms-list(0, 8, 16px, $golden);
+
+// --- default z-indexes -------------------------------------------------------
+$z--low: 0;
+$z--middle: 1;
+$z--high: 2;

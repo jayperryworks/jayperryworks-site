@@ -1,0 +1,67 @@
+/* ==========================================================================
+//  Global color themes
+// -> base colors are set here, but modules apply their own
+// -> refer to colors ONLY via the $theme maps in global settings (_settings.scss)
+// ========================================================================== */
+
+@mixin theme($theme) {
+  
+
+  .well {
+    
+  }
+
+  .highlight {
+    
+  }
+
+  .accent {
+    
+  }
+
+  #{headers()} {
+    
+  }
+
+  p, table, li, span {
+    
+  }
+
+  a {
+    
+  }
+
+  input, textarea {
+    
+
+    &:focus {
+      // border-color: map-get($theme, highlight);
+    }
+    
+    // http://css-tricks.com/snippets/css/style-placeholder-text/
+    &::-webkit-input-placeholder {
+       // color: map-get($theme, text--tertiary);
+    }
+    &:-moz-placeholder { /* Firefox 18- */
+       // color: map-get($theme, text--tertiary);  
+    }
+    &::-moz-placeholder {  /* Firefox 19+ */
+       // color: map-get($theme, text--tertiary);  
+    }
+    &:-ms-input-placeholder {  
+       // color: map-get($theme, text--tertiary);  
+    }
+  }
+}
+
+/* Default
+// ----------------------------------------------------------------------------- */
+%theme--default, body {
+  
+}
+
+/* Reverse
+// ----------------------------------------------------------------------------- */
+.reverse {
+  
+}

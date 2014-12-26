@@ -1,28 +1,32 @@
 # If you do not have OpenSSL installed, update
 # the following line to use "http://" instead
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
 gem "middleman", "~>3.3.7"
 
 # Live-reloading plugin
 gem "middleman-livereload", "~> 3.1.0"
 
-# crunch html on build
+# middleman plugins
 gem "middleman-minify-html"
+gem "middleman-s3_sync"
+gem "middleman-google-analytics"
+gem "middleman-autoprefixer"
+gem "middleman-simple-thumbnailer"
 
 # Markdown renderer
-gem 'redcarpet'
+gem "redcarpet"
 
 # URL-ize strings
-gem 'string-urlize'
+gem "string-urlize"
 
 # transpile ES6 modules
-# gem 'es6_module_transpiler-rails'
+# gem "es6_module_transpiler-rails"
 
 # update to latest compass to support SASS
 # -> would like to ditch compass entirely b/c sass frameworks are installed via bower
 # -> but middleman likes it: https://github.com/middleman/middleman/issues/874
-gem 'compass', '~>1.0'
+gem "compass", ">=1.0"
 
 # Latest version of SASS
 gem "sass", ">=3.4"

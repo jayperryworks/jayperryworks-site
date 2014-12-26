@@ -5,7 +5,7 @@
 @charset "utf-8";
 
 // =============================================================================
-// Frameworks
+// Vendor Libraries
 // -> sass/bower load paths are set in config.rb @root
 // =============================================================================
 
@@ -18,7 +18,11 @@
 // Settings & resets
 // ========================================================================== */
 
-
+@import "core/settings"; // all global vars, functions, mixins are here
+@import "core/fonts"; // all @font-face things
+@import "core/print"; // globals for print
+@import "core/themes"; // global/base color schemes
+@import "core/layout"; // global layout helpers
 
 /* =============================================================================
 // Core style imports

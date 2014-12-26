@@ -35,6 +35,13 @@
 # Automatic image dimensions on image_tag helper
 # activate :automatic_image_sizes
 
+# autoprefix CSS
+activate :autoprefixer
+
+activate :google_analytics do |ga|
+  ga.tracking_id = 'UA-XXXXXXX-X' # Replace with your property ID.
+end
+
 # Reload the browser automatically whenever files change
 configure :development do
   activate :livereload
@@ -46,6 +53,8 @@ end
 #     "Helping"
 #   end
 # end
+
+set :site_title, 'Jay Perry: Prints &amp; Paintings'
 
 set :css_dir, 'assets/stylesheets'
 set :js_dir, 'assets/javascripts'
