@@ -18,6 +18,8 @@
 .DS_Store
 
 /bower_components
+/node_modules
+
 *.sublime-project
 *.sublime-workspace
 Gemfile.lock

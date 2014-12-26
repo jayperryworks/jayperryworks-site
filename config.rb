@@ -65,7 +65,7 @@ set :css_dir, 'assets/stylesheets'
 set :js_dir, 'assets/javascripts'
 set :images_dir, 'assets/images'
 set :fonts_dir, 'assets/fonts'
-# set :icon_sprites, 'assets/images/icons.svg'
+set :icon_sprites, 'assets/images/spritemap.svg'
 
 # Add bower's directory to sprockets asset path
 # -> use bundler for back-end dependencies, bower for front-end dependencies
@@ -79,6 +79,7 @@ end
 configure :build do
 
   # Compress/optimize images
+  # -> svg optimization is handled by gulp (svgstore)
   activate :imageoptim do |options|
     options.image_extensions = %w(.png .jpg .gif)
   end
