@@ -18,6 +18,10 @@
     </head>
 
     <body class="<%= page_classes %>">
+        <header class="header global" role="banner">
+            <%= partial("layouts/partials/icon", :locals => { :id => "logo-prints"}) %>
+        </header>
+
         <%= yield %>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

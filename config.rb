@@ -35,6 +35,13 @@
 # Automatic image dimensions on image_tag helper
 # activate :automatic_image_sizes
 
+# run the blog extension
+activate :blog do |blog|
+  blog.prefix = "work"
+  blog.permalink = "{category}/{year}/{title}/"
+  blog.layout = "print"
+end
+
 # autoprefix CSS
 activate :autoprefixer do |config|
     config.browsers = ['last 2 versions', 'Explorer >= 9']
@@ -50,11 +57,13 @@ configure :development do
 end
 
 # Methods defined in the helpers block are available in templates
-# helpers do
-#   def some_helper
-#     "Helping"
-#   end
-# end
+helpers do
+  # def svg_sprite(id, title="", role="img", opts={})
+  #   "<svg class=\"icon " + id + "\" title=\"" + title + "\" role=\"" + role + "\">"
+  #   "<use xlink:href=\"<%= asset_url(\"#{icon_sprites}##{id}\") %>\"></use>"
+  #   "</svg>"
+  # end
+end
 
 set :site_title, 'Jay Perry: Prints &amp; Paintings'
 

@@ -1,0 +1,16 @@
+<%# A simple partial for inserting SVG sprites. %>
+<%# @param id: (string) the ID of the sprite you want %>
+<%# @param classes: (string, optional) any classes you'd like to add.  %>
+<%# @param role: ARIA role. use either 'img' (default) or 'presentation'. %>
+<%# -> "presentation" designates it as simply decoration (and should be ignored by screenreaders) %>
+<%# -> while "img" says it should have its own description. In the latter case, the title attribute acts like an alt tag. %>
+
+<% classes ||= "" %>
+<% title ||= "" %>
+<% role ||= "img" %>
+<svg class="icon <%= id %><%= " #{classes}" %>" title="<%= title %>" role="<%= role %>">
+  <use xlink:href="<%= asset_url("#{icon_sprites}##{id}") %>"></use>
+</svg>
+
+<%# usage: %>
+<%# partial("layouts/partials/icon", :locals => { :id => "[ NAME OF ICON ]", :classes => "[ ADDITIONAL CLASSES ]", :role => "img" }) %>

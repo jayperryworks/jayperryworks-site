@@ -1,0 +1,41 @@
+<% wrap_layout :layout do %>
+<section>
+    <img src="" alt="Frozen Waterfall">
+    <header>
+        <h1><%= current_page.data.title %></h1>
+        <time><%= current_page.data.date %></time>
+        <h2><%= current_page.data.format %> &bull; <%= current_page.data.width %> x <%= current_page.data.height %></h2>
+        <ul>
+            <% current_page.data.tags.each do |tag| %>
+            <li><a href="#"><%= tag %></a>
+            <% end %>
+        </ul>
+    </header>
+
+    <%= yield %>
+
+</section>
+
+<section>
+    <h1>Available Editions</h1>
+    <nav class="nav local">
+        <ul>
+            <% current_page.data.editions.each do |edition| %>
+            <li><a href="#edition--<%= edition %>"><%= edition %></a></li>
+            <% end %>
+        </ul>
+    </nav>
+
+    <section id="#edition--large">
+        <img src="" alt="large edition">
+        <h2>Large Giclee Print &bull; $80</h2>
+        <dl>
+            <dt>Print Size</dt>
+            <dd>16" x 24"</dd>
+            <dt>Paper Size</dt>
+            <dd>18" x 26"</dd>
+        </dl>
+        <a href="">Buy this print</a>
+    </section>
+</section>
+<% end %>

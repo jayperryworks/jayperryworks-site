@@ -43,14 +43,15 @@ $base-radius: 3px;
 // ----------------------------------------------------------------------
 // base colors
 // -> PRIVATE, do not use outside this settings file
-$black: #262524;
-$gray: #817f74;
-$beige: #f5f4eb;
-$beige--dark: #d1d0ca;
-$blue: #54abc6;
-$orange: #fb5f4d;
-$green: #748a47;
-$white: #fff;
+$black        : #262524;
+$orange       : #f4b64e;
+$orange--dark : #ea8e4d;
+$blue         : #1e6299;
+$blue--dark   : #3077ab;
+$red          : #d82333;
+$red--dark    : #a0262b;
+$green        : #00a556;
+$green--dark  : #187042;
 
 // themes
 // -> PUBLIC, use these for color references (see themes file)
@@ -159,7 +160,7 @@ $ms-ratio: $golden;
 // -> http://alistapart.com/article/content-out-layout
 // $grid-scale: 1 1.618 2.618 4.236 6.854 11.089 17.942 29.030;
 
-@debug ms-list(0, 8, 16px, $golden);
+// @debug ms-list(0, 8, 16px, $golden);
 
 // --- default z-indexes -------------------------------------------------------
 $z--low: 0;

@@ -15,6 +15,7 @@ gem "middleman-autoprefixer"
 gem "middleman-simple-thumbnailer"
 gem "middleman-search_engine_sitemap"
 gem "middleman-imageoptim"
+gem "middleman-blog"
 
 # Markdown renderer
 gem "redcarpet"
