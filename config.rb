@@ -36,7 +36,9 @@
 # activate :automatic_image_sizes
 
 # autoprefix CSS
-activate :autoprefixer
+activate :autoprefixer do |config|
+    config.browsers = ['last 2 versions', 'Explorer >= 9']
+end
 
 activate :google_analytics do |ga|
   ga.tracking_id = 'UA-XXXXXXX-X' # Replace with your property ID.
@@ -56,10 +58,14 @@ end
 
 set :site_title, 'Jay Perry: Prints &amp; Paintings'
 
+set :url_root, 'http://prints.jayperryworks.com'
+activate :search_engine_sitemap
+
 set :css_dir, 'assets/stylesheets'
 set :js_dir, 'assets/javascripts'
 set :images_dir, 'assets/images'
 set :fonts_dir, 'assets/fonts'
+# set :icon_sprites, 'assets/images/icons.svg'
 
 # Add bower's directory to sprockets asset path
 # -> use bundler for back-end dependencies, bower for front-end dependencies
@@ -71,6 +77,12 @@ end
 
 # Build-specific configuration
 configure :build do
+
+  # Compress/optimize images
+  activate :imageoptim do |options|
+    options.image_extensions = %w(.png .jpg .gif)
+  end
+
   # For example, change the Compass output style for deployment
   activate :minify_css
 

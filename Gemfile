@@ -13,6 +13,8 @@ gem "middleman-s3_sync"
 gem "middleman-google-analytics"
 gem "middleman-autoprefixer"
 gem "middleman-simple-thumbnailer"
+gem "middleman-search_engine_sitemap"
+gem "middleman-imageoptim"
 
 # Markdown renderer
 gem "redcarpet"
