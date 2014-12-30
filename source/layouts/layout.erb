@@ -19,7 +19,9 @@
 
     <body class="<%= page_classes %>">
         <header class="header global" role="banner">
-            <%= partial("layouts/partials/icon", :locals => { :id => "logo-prints"}) %>
+            <a href="/">
+                <%= partial("layouts/partials/icon", :locals => { :id => "logo-prints"}) %>
+            </a>
         </header>
 
         <%= yield %>
