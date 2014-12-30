@@ -73,6 +73,7 @@ activate :search_engine_sitemap
 set :css_dir, 'assets/stylesheets'
 set :js_dir, 'assets/javascripts'
 set :images_dir, 'assets/images'
+set :media_dir, 'media'
 set :fonts_dir, 'assets/fonts'
 set :icon_sprites, 'assets/images/spritemap.svg'
 

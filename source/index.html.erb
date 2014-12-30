@@ -5,6 +5,7 @@ title: Home
 <ul>
     <% blog.articles.each do |print| %>
     <li data-year="<%= print.date.strftime('%Y') %>">
+        <a href="<%= print.url %>"><img src="<%= asset_url(media_dir + "/" + print.data.hero) %>" /></a>
         <h3><a href="<%= print.url %>"><%= print.title %></a></h3>
     </li>
     <% end %>

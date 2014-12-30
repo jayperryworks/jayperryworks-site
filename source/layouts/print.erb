@@ -1,9 +1,9 @@
 <% wrap_layout :layout do %>
 <section>
-    <img src="" alt="Frozen Waterfall">
+    <img src="<%= asset_url(media_dir + "/" + current_page.data.hero) %>" alt="<%= current_page.data.title %>">
     <header>
         <h1><%= current_page.data.title %></h1>
-        <time><%= current_page.data.date %></time>
+        <time><%= current_page.date.strftime('%Y') %></time>
         <h2><%= current_page.data.format %> &bull; <%= current_page.data.width %> x <%= current_page.data.height %></h2>
         <ul>
             <% current_page.data.tags.each do |tag| %>
@@ -22,7 +22,7 @@
         <ul>
             <% current_page.data.editions.each do |edition| %>
                 <% if edition.name %>
-                <li><a href="#edition--<%= edition.name %>"><%= edition.name %></a></li>
+                <li><a href="#edition--<%= edition.name %>"><%= edition.name.titleize %></a></li>
                 <% end %>
             <% end %>
         </ul>
@@ -31,7 +31,7 @@
     <% current_page.data.editions.each do |edition| %>
     <section id="#edition--<%= edition.name %>">
         <img src="" alt="<% edition.name %> edition">
-        <h2><%= edition.name %> <%= edition.type %> Print &bull; <%= edition.price %></h2>
+        <h2><%= edition.name.titleize %> <%= edition.type.titleize %> Print &bull; <%= edition.price %></h2>
         <dl>
             <dt>Print Size</dt>
             <dd><%= edition.height %>" x <%= edition.width %>"</dd>
