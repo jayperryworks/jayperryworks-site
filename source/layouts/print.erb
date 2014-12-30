@@ -21,21 +21,25 @@
     <nav class="nav local">
         <ul>
             <% current_page.data.editions.each do |edition| %>
-            <li><a href="#edition--<%= edition %>"><%= edition %></a></li>
+                <% if edition.name %>
+                <li><a href="#edition--<%= edition.name %>"><%= edition.name %></a></li>
+                <% end %>
             <% end %>
         </ul>
     </nav>
 
-    <section id="#edition--large">
-        <img src="" alt="large edition">
-        <h2>Large Giclee Print &bull; $80</h2>
+    <% current_page.data.editions.each do |edition| %>
+    <section id="#edition--<%= edition.name %>">
+        <img src="" alt="<% edition.name %> edition">
+        <h2><%= edition.name %> <%= edition.type %> Print &bull; <%= edition.price %></h2>
         <dl>
             <dt>Print Size</dt>
-            <dd>16" x 24"</dd>
+            <dd><%= edition.height %>" x <%= edition.width %>"</dd>
             <dt>Paper Size</dt>
-            <dd>18" x 26"</dd>
+            <dd><%= edition.height + (edition.border * 2) %>" x <%= edition.width + (edition.border * 2) %>"</dd>
         </dl>
         <a href="">Buy this print</a>
     </section>
+    <% end %>
 </section>
 <% end %>

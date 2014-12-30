@@ -9,9 +9,24 @@ format: Tryptych on panels
 width: 6'
 height: 4'
 editions:
-  - large
-  - medium
-  - small
+  - name: large
+    type: giclee
+    height: 16
+    width: 24
+    border: 1
+    price: $80
+  - name: medium
+    type: giclee
+    height: 12
+    width: 18
+    border: 1
+    price: $50
+  - name: small
+    type: giclee
+    height: 8
+    width: 12
+    border: 1
+    price: $30
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quid ei reliquisti, nisi te, quoquo modo loqueretur, intellegere, quid diceret? Si enim ad populum me vocas, eum. Itaque ad tempus ad Pisonem omnes. Multa sunt dicta ab antiquis de contemnendis ac despiciendis rebus humanis; Duo Reges: constructio interrete. Quid nunc honeste dicit? Qua ex cognitione facilior facta est investigatio rerum occultissimarum.
