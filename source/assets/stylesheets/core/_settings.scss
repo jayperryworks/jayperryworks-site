@@ -78,9 +78,9 @@ $color-selection: red;
 // Typography
 // -----------------------------------------------------------------------------
 
-$type-size--default: 16px;
-$type-size-amp: 1.1em; // size of ampersands relative to their context
-$type-line_height: 1.5;
+$type-size--default : 16px;
+$type-size-amp      : 1.1em; // size of ampersands relative to their context
+$type-line_height   : 1.5;
 
 
 // Containers/layout
@@ -163,6 +163,6 @@ $ms-ratio: $golden;
 // @debug ms-list(0, 8, 16px, $golden);
 
 // --- default z-indexes -------------------------------------------------------
-$z--low: 0;
-$z--middle: 1;
-$z--high: 2;
+$z--low    : 0;
+$z--middle : 1;
+$z--high   : 2;

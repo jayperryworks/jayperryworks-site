@@ -5,7 +5,7 @@
 @charset "utf-8";
 
 // =============================================================================
-// Vendor Libraries
+// Frameworks & vendor stuff
 // -> sass/bower load paths are set in config.rb @root
 // =============================================================================
 
@@ -13,28 +13,46 @@
 @import "breakpoint-sass/stylesheets/breakpoint";
 @import "singularity/stylesheets/singularitygs";
 @import "sass-toolkit/stylesheets/toolkit";
+@import "sass-units/units";
 
 /* =============================================================================
-// Settings & resets
+// Core style helpers
+// -> global settings, resets, helper classes
 // ========================================================================== */
 
 @import "core/settings"; // all global vars, functions, mixins are here
 @import "core/fonts"; // all @font-face things
+@import "core/base"; // base styles
 @import "core/print"; // globals for print
 @import "core/themes"; // global/base color schemes
 @import "core/layout"; // global layout helpers
 
 /* =============================================================================
-// Core style imports
+// Atoms
+// -> individual elements
 // ========================================================================== */
 
-
+@import "atoms/type";
 
 /* =============================================================================
-// Modules & components
+// Molecules
+// -> simple groups of things that can be easily combined & reused
 // ========================================================================== */
 
+/* =============================================================================
+// Organisms
+// -> self-contained, reusable groups of molecules
+// ========================================================================== */
 
+/* =============================================================================
+// Regions
+// -> reusable content regions containing specific combinations of organisms
+// -> compose entirely with organisms as much as possible
+// -> should not contain much "original" styling, leave that to
+//      the atoms, molecules, organisms
+// ========================================================================== */
+
+@import "regions/header";
 
 /* =============================================================================
 // Styles of Shame

@@ -23,6 +23,7 @@
   "devDependencies": {
     "bourbon": "~4.0.2",
     "singularity": "~1.4.0",
-    "sass-toolkit": "~2.6.0"
+    "sass-toolkit": "~2.6.0",
+    "sass-units": "git@github.com:jayperryworks/sass-units.git#~0.0.4"
   }
 }

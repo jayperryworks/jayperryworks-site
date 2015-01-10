@@ -2,21 +2,6 @@
 // Global layout styles
 // ===========================================================================*/
 
-/*doc
----
-title: Global layout helpers
-name: layout
-category: core
----
-
-Special layout styles can be added to an element or container with these 'microclasses'.
-
-```html_example
-<a href="#" class="button l-abs top right">Button @ top right</a>
-```
-
-*/
-
 // Config/mixins
 // -----------------------------------------------------------------------------
 
@@ -161,10 +146,18 @@ Special layout styles can be added to an element or container with these 'microc
     }
 }
 
+/* ---- Containers -----------------------------------------------------------*/
+
 // limit a container's width on large screens
 // and center it vertically
 .l-limited_w, %l-limited_w {
-  max-width: $layout-w;
+  max-width: $layout-w + (36px * 2);
   margin-left: auto;
   margin-right: auto;
+}
+
+.panel {
+    @include rem(padding-left, 36px);
+    @include rem(padding-right, 36px);
+    @extend %l-limited_w;
 }

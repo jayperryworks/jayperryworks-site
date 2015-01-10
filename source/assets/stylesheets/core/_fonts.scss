@@ -125,11 +125,11 @@
 
 @font-face {
     font-family: 'CentraleSansRegular';
-    src: url('Centrale_Sans_Regular-webfont.eot');
-    src: url('Centrale_Sans_Regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('Centrale_Sans_Regular-webfont.woff') format('woff'),
-         url('Centrale_Sans_Regular-webfont.ttf') format('truetype'),
-         url('Centrale_Sans_Regular-webfont.svg#CentraleSansRegular') format('svg');
+    src: url('#{$path-fonts}/Centrale_Sans_Regular-webfont.eot');
+    src: url('#{$path-fonts}/Centrale_Sans_Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('#{$path-fonts}/Centrale_Sans_Regular-webfont.woff') format('woff'),
+         url('#{$path-fonts}/Centrale_Sans_Regular-webfont.ttf') format('truetype'),
+         url('#{$path-fonts}/Centrale_Sans_Regular-webfont.svg#CentraleSansRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -160,11 +160,11 @@
 
 @font-face {
     font-family: 'CentraleSansBold';
-    src: url('Centrale_Sans_Bold-webfont.eot');
-    src: url('Centrale_Sans_Bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('Centrale_Sans_Bold-webfont.woff') format('woff'),
-         url('Centrale_Sans_Bold-webfont.ttf') format('truetype'),
-         url('Centrale_Sans_Bold-webfont.svg#CentraleSansBold') format('svg');
+    src: url('#{$path-fonts}/Centrale_Sans_Bold-webfont.eot');
+    src: url('#{$path-fonts}/Centrale_Sans_Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('#{$path-fonts}/Centrale_Sans_Bold-webfont.woff') format('woff'),
+         url('#{$path-fonts}/Centrale_Sans_Bold-webfont.ttf') format('truetype'),
+         url('#{$path-fonts}/Centrale_Sans_Bold-webfont.svg#CentraleSansBold') format('svg');
     font-weight: bold;
     font-style: normal;
 }
@@ -181,7 +181,6 @@
     font-weight: normal;
     font-style: normal;
 }
-
 
 /* --- Display font --------------------------------------------------------- */
 %font-display {

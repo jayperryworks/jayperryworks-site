@@ -1,5 +1,5 @@
 <% wrap_layout :layout do %>
-<section>
+<section class="panel">
     <img src="<%= asset_url(media_dir + "/" + current_page.data.hero) %>" alt="<%= current_page.data.title %>">
     <header>
         <h1><%= current_page.data.title %></h1>
@@ -16,7 +16,7 @@
 
 </section>
 
-<section>
+<section class="panel">
     <h1>Available Editions</h1>
     <nav class="nav local">
         <ul>
