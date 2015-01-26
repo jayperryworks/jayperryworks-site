@@ -1,0 +1,62 @@
+/* =============================================================================
+// Post styles
+// ========================================================================== */
+
+/* Base
+// -------------------------------------------------------------------------- */
+
+.post {
+
+}
+
+/* Modifiers
+// -------------------------------------------------------------------------- */
+
+.post {
+
+}
+
+/* Submodules
+// -------------------------------------------------------------------------- */
+
+.post {
+    &-header {
+        max-width: $layout-w--narrow;
+        margin: 0 auto;
+    }
+
+    &-body {
+        $margin: 1em;
+
+        p {
+            max-width: $layout-w--narrow;
+            margin: 0 auto 1em auto;
+        }
+
+        ul {
+            @include grid-inline(2 2 3, $gutter: 2px);
+
+            & + p { margin-top: 1em; }
+        }
+    }
+
+    &-tags {
+        @include inline-list();
+
+        & > li {
+          &:after {
+            content: ",";
+          }
+          &:last-child:after {
+            content: "";
+          }
+        }
+    }
+
+    &-tag {
+        @include font-scale(1);
+        display: inline-block;
+        width: auto;
+        text-transform: uppercase;
+    }
+}

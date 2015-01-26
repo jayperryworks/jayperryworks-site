@@ -71,7 +71,6 @@
     padding-bottom: ($padding + 1000px);
 }
 
-
 /* Layout Microclasses
 // ---------------------------------------------------------------------------*/
 
@@ -157,7 +156,13 @@
 }
 
 .panel {
+    @extend %l-limited_w;
     @include rem(padding-left, 36px);
     @include rem(padding-right, 36px);
-    @extend %l-limited_w;
+}
+
+/* ---- Grids ----------------------------------------------------------------*/
+
+.l-grid {
+    @include grid-inline(1 2 3, $child: ".l-grid-item");
 }

@@ -1,45 +1,48 @@
 <% wrap_layout :layout do %>
-<section class="panel">
-    <img src="<%= asset_url(media_dir + "/" + current_page.data.hero) %>" alt="<%= current_page.data.title %>">
-    <header>
-        <h1><%= current_page.data.title %></h1>
-        <time><%= current_page.date.strftime('%Y') %></time>
-        <h2><%= current_page.data.format %> &bull; <%= current_page.data.width %> x <%= current_page.data.height %></h2>
-        <ul>
-            <% current_page.data.tags.each do |tag| %>
-            <li><a href="#"><%= tag %></a>
-            <% end %>
-        </ul>
-    </header>
-
-    <%= yield %>
-
-</section>
-
-<section class="panel">
-    <h1>Available Editions</h1>
-    <nav class="nav local">
-        <ul>
-            <% current_page.data.editions.each do |edition| %>
-                <% if edition.name %>
-                <li><a href="#edition--<%= edition.name %>"><%= edition.name.titleize %></a></li>
+<article class="post">
+    <section class="panel">
+        <img class="hero" src="<%= asset_url(media_dir + "/" + current_page.data.hero) %>" alt="<%= current_page.data.title %>">
+        <header class="post-header">
+            <time><%= current_page.date.strftime('%Y') %></time>
+            <h1><%= current_page.data.title %></h1>
+            <h2><%= current_page.data.format %>, <%= current_page.data.width %> x <%= current_page.data.height %></h2>
+            <ul class="post-tags">
+                <% current_page.data.tags.each do |tag| %>
+                <li><a class="post-tag" href="#"><%= tag %></a></li>
                 <% end %>
-            <% end %>
-        </ul>
-    </nav>
+            </ul>
+        </header>
+        <div class="post-body">
+            <%= yield %>
+        </div>
 
-    <% current_page.data.editions.each do |edition| %>
-    <section id="#edition--<%= edition.name %>">
-        <img src="" alt="<% edition.name %> edition">
-        <h2><%= edition.name.titleize %> <%= edition.type.titleize %> Print &bull; <%= edition.price %></h2>
-        <dl>
-            <dt>Print Size</dt>
-            <dd><%= edition.height %>" x <%= edition.width %>"</dd>
-            <dt>Paper Size</dt>
-            <dd><%= edition.height + (edition.border * 2) %>" x <%= edition.width + (edition.border * 2) %>"</dd>
-        </dl>
-        <a href="">Buy this print</a>
     </section>
-    <% end %>
-</section>
+
+    <section class="panel">
+        <h1>Available Editions</h1>
+        <nav class="nav local">
+            <ul>
+                <% current_page.data.editions.each do |edition| %>
+                    <% if edition.name %>
+                    <li><a href="#edition--<%= edition.name %>"><%= edition.name.titleize %></a></li>
+                    <% end %>
+                <% end %>
+            </ul>
+        </nav>
+
+        <% current_page.data.editions.each do |edition| %>
+        <section id="#edition--<%= edition.name %>">
+            <img src="" alt="<% edition.name %> edition">
+            <h2><%= edition.name.titleize %> <%= edition.type.titleize %> Print &bull; <%= edition.price %></h2>
+            <dl>
+                <dt>Print Size</dt>
+                <dd><%= edition.height %>" x <%= edition.width %>"</dd>
+                <dt>Paper Size</dt>
+                <dd><%= edition.height + (edition.border * 2) %>" x <%= edition.width + (edition.border * 2) %>"</dd>
+            </dl>
+            <a href="">Buy this print</a>
+        </section>
+        <% end %>
+    </section>
+</article>
 <% end %>

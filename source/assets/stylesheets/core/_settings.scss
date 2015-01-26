@@ -100,7 +100,7 @@ $breakpoint-to-ems: true; // for breakpoints sass library
 $base-w--min: $screen--medium; // min width of site
 
 $layout-w: nth($breakpoints, 4); // max width of main layout
-$layout-w--narrow: 680px; // max width of 'narrow' elements (e.g. body type)
+$layout-w--narrow: 800px; // max width of 'narrow' elements (e.g. body type)
 
 // --- element dimensions ------------------------------------------------------
 // -> convert to REM in most cases
