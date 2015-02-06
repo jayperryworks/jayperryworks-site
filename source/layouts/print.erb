@@ -31,8 +31,8 @@
         </nav>
 
         <% current_page.data.editions.each do |edition| %>
-        <section id="#edition--<%= edition.name %>">
-            <img src="" alt="<% edition.name %> edition">
+        <section class="strip" id="#edition--<%= edition.name %>">
+            <img src="<%= asset_url(media_dir + "/" + edition.image) %>" alt="<%= edition.name %> edition">
             <h2><%= edition.name.titleize %> <%= edition.type.titleize %> Print &bull; <%= edition.price %></h2>
             <dl>
                 <dt>Print Size</dt>
