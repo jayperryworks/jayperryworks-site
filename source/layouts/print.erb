@@ -19,16 +19,18 @@
     </section>
 
     <section class="panel">
-        <h1>Available Editions</h1>
-        <nav class="nav local">
-            <ul>
-                <% current_page.data.editions.each do |edition| %>
-                    <% if edition.name %>
-                    <li><a href="#edition--<%= edition.name %>"><%= edition.name.titleize %></a></li>
+        <header class="panel-header">
+            <h1>Available Editions</h1>
+            <nav class="nav local">
+                <ul>
+                    <% current_page.data.editions.each do |edition| %>
+                        <% if edition.name %>
+                        <li><a href="#edition--<%= edition.name %>"><%= edition.name.titleize %></a></li>
+                        <% end %>
                     <% end %>
-                <% end %>
-            </ul>
-        </nav>
+                </ul>
+            </nav>
+        </header>
 
         <% current_page.data.editions.each do |edition| %>
         <section class="strip" id="#edition--<%= edition.name %>">
