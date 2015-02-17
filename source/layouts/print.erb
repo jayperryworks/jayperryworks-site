@@ -19,30 +19,30 @@
     </section>
 
     <section class="panel">
-        <header class="panel-header">
-            <h1>Available Editions</h1>
-            <nav class="nav local">
-                <ul>
-                    <% current_page.data.editions.each do |edition| %>
-                        <% if edition.name %>
-                        <li><a href="#edition--<%= edition.name %>"><%= edition.name.titleize %></a></li>
-                        <% end %>
+        <h1 class="panel-header">Available Editions</h1>
+        <nav class="nav jump">
+            <ul>
+                <% current_page.data.editions.each do |edition| %>
+                    <% if edition.name %>
+                    <li><a href="#edition--<%= edition.name %>"><%= edition.name.titleize %></a></li>
                     <% end %>
-                </ul>
-            </nav>
-        </header>
+                <% end %>
+            </ul>
+        </nav>
 
         <% current_page.data.editions.each do |edition| %>
-        <section class="strip" id="#edition--<%= edition.name %>">
-            <img src="<%= asset_url(media_dir + "/" + edition.image) %>" alt="<%= edition.name %> edition">
-            <h2><%= edition.name.titleize %> <%= edition.type.titleize %> Print &bull; <%= edition.price %></h2>
-            <dl>
-                <dt>Print Size</dt>
-                <dd><%= edition.height %>" x <%= edition.width %>"</dd>
-                <dt>Paper Size</dt>
-                <dd><%= edition.height + (edition.border * 2) %>" x <%= edition.width + (edition.border * 2) %>"</dd>
-            </dl>
-            <a href="">Buy this print</a>
+        <section class="media full" id="#edition--<%= edition.name %>">
+            <img class="media-image" src="<%= asset_url(media_dir + "/" + edition.image) %>" alt="<%= edition.name %> edition">
+            <aside class="media-description">
+                <h2><%= edition.name.titleize %> <%= edition.type.titleize %> Print &bull; <%= edition.price %></h2>
+                <dl>
+                    <dt>Print Size</dt>
+                    <dd><%= edition.height %>" x <%= edition.width %>"</dd>
+                    <dt>Paper Size</dt>
+                    <dd><%= edition.height + (edition.border * 2) %>" x <%= edition.width + (edition.border * 2) %>"</dd>
+                </dl>
+                <a href="">Buy this print</a>
+            </aside>
         </section>
         <% end %>
     </section>

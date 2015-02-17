@@ -43,27 +43,37 @@ $base-radius: 3px;
 // ----------------------------------------------------------------------
 // base colors
 // -> PRIVATE, do not use outside this settings file
-$black        : #262524;
-$orange       : #f4b64e;
-$orange--dark : #ea8e4d;
-$blue         : #1e6299;
-$blue--dark   : #3077ab;
-$red          : #d82333;
-$red--dark    : #a0262b;
-$green        : #00a556;
-$green--dark  : #187042;
+$black          : #262524;
+$gray           : #898989;
+$orange         : #f4b64e;
+$orange--dark   : #ea8e4d;
+$blue           : #1e6299;
+$blue--dark     : #3077ab;
+$red            : #d82333;
+$red--dark      : #a0262b;
+$green          : #00a556;
+$green--dark    : #187042;
 
 // themes
 // -> PUBLIC, use these for color references (see themes file)
-
+$theme--default: (
+    text--primary   : $black,
+    text--secondary : $gray,
+    text--tertiary  : lighten($gray, 10),
+    bg              : white,
+    well            : lighten($gray, 15),
+    border          : lighten($gray, 10),
+    highlight       : $blue,
+    highlight--dark : $blue--dark
+);
 
 // shortcut "get" function to access theme map values
 // -> PUBLIC
-@function theme($name, $key) {
+@function theme($key, $theme: "default") {
   // @if ($name == "reverse") {
   //   @return map-get($theme--reverse, $key);
   // } @else {
-  //   @return map-get($theme--default, $key);
+    @return map-get($theme--default, $key);
   // }
 }
 
@@ -113,7 +123,7 @@ $border-w--super_thick: 6px;
 $border-style: solid;
 
 // make a standard border/hairline that works with the parent color theme
-@mixin border($side: all, $w: thin/*, $color: inherit*/) {
+@mixin border($side: all, $w: thin, $theme: default) {
     @if ($side == all) {
         @if ($w == thin) {
             border-width: $border-w;
@@ -134,10 +144,10 @@ $border-style: solid;
         } @else if($w == super) {
             border-#{$side}-width: $border-w--super_thick;
         } @else {
-            border-width: #{$w};
+            border-#{$side}-width: #{$w};
         }
         border-#{$side}-style: $border-style;
-        border-#{$side}-color: inherit;
+        border-#{$side}-color: theme(border);
     }
 }
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="12px" height="19px" viewBox="0 0 12 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>arrow-right</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="assets/icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <path d="M8.43933983,10.5606602 L8.43933983,8.43933983 L0.439339828,16.4393398 C-0.146446609,17.0251263 -0.146446609,17.9748737 0.439339828,18.5606602 C1.02512627,19.1464466 1.97487373,19.1464466 2.56066017,18.5606602 L10.5606602,10.5606602 L11.6213203,9.5 L10.5606602,8.43933983 L2.56066017,0.439339828 C1.97487373,-0.146446609 1.02512627,-0.146446609 0.439339828,0.439339828 C-0.146446609,1.02512627 -0.146446609,1.97487373 0.439339828,2.56066017 L8.43933983,10.5606602 Z" id="arrow-right" fill="#474747" sketch:type="MSShapeGroup"></path>
+    </g>
+</svg>

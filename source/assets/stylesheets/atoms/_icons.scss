@@ -1,31 +1,33 @@
 /* ==========================================================================
-// Panel styles
+// icon styles
 // ========================================================================== */
 
 /* Base
 // ---------------------------------------------------------------------------*/
 
-.panel {
-    // border-top-style: solid;
-    // border-top-color: theme(border);
-    // border-top-width: 1px;
-    @include border(top);
+.icon {
+
 }
 
 /* Modifiers
 // ---------------------------------------------------------------------------*/
 
-.panel {
+.icon {
+    &.logo-jp {
 
+        .logo-jp-bg {
+            fill: $blue;
+        }
+        .logo-jp-letter {
+            fill: white;
+        }
+    }
 }
 
 /* Submodules
 // ---------------------------------------------------------------------------*/
 
-.panel {
-    &-header {
-        @include font-scale(4);
-        margin-top: 0.5em;
-        text-align: center;
-    }
+.icon {
+
 }
+

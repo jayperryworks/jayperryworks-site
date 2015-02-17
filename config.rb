@@ -60,7 +60,7 @@ end
 helpers do
   # def svg_sprite(id, title="", role="img", opts={})
   #   "<svg class=\"icon " + id + "\" title=\"" + title + "\" role=\"" + role + "\">"
-  #   "<use xlink:href=\"<%= asset_url(\"#{icon_sprites}##{id}\") %>\"></use>"
+  #   "<use xlink:href=\"<%= asset_url(\"#{spritemap}##{id}\") %>\"></use>"
   #   "</svg>"
   # end
 end
@@ -75,7 +75,7 @@ set :js_dir, 'assets/javascripts'
 set :images_dir, 'assets/images'
 set :media_dir, 'media'
 set :fonts_dir, 'assets/fonts'
-set :icon_sprites, 'assets/images/spritemap.svg'
+set :spritemap, 'assets/images/spritemap.svg'
 
 # Add bower's directory to sprockets asset path
 # -> use bundler for back-end dependencies, bower for front-end dependencies
