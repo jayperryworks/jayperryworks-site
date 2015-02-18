@@ -24,7 +24,11 @@
             <ul>
                 <% current_page.data.editions.each do |edition| %>
                     <% if edition.name %>
-                    <li><a href="#edition--<%= edition.name %>"><%= edition.name.titleize %></a></li>
+                    <li>
+                        <a href="#edition--<%= edition.name %>">
+                            <%= partial("layouts/partials/icon", :locals => { :id => "edition-#{edition.name}", :classes => "edition", :title => "#{edition.name.titleize} Print Edition" }) %>
+                        </a>
+                    </li>
                     <% end %>
                 <% end %>
             </ul>

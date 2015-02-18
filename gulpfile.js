@@ -35,7 +35,7 @@ gulp.task("icons", function() {
                     $('svg').attr('style', 'display:none');
                     // remove 'fill' & 'stroke' attributes from everything
                     // -> replace in CSS
-                    $('svg').find('[fill]').removeAttr('fill');
+                    $('svg').find('[fill]').not("[fill='currentColor']").removeAttr('fill');
                     $('svg').find('[stroke]').removeAttr('stroke');
                     $('svg').find('desc').remove();
              }))

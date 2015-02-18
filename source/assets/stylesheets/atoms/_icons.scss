@@ -6,7 +6,9 @@
 // ---------------------------------------------------------------------------*/
 
 .icon {
-
+    display: inline-block;
+    width: 1.4em;
+    height: 1.4em;
 }
 
 /* Modifiers
@@ -14,14 +16,30 @@
 
 .icon {
     &.logo-jp {
+        @include rem(width, 40px);
+        @include rem(height, 39px);
+        fill: $blue;
+        color: white;
+    }
 
-        .logo-jp-bg {
-            fill: $blue;
-        }
-        .logo-jp-letter {
-            fill: white;
+    &.edition {
+        @extend %base-transition;
+        fill: white;
+        border: 2px solid $black;
+        color: $black;
+
+        &:hover {
+            fill: $black;
+            color: white;
         }
     }
+}
+
+.logo-jp-bg {
+    fill: $blue;
+}
+.logo-jp-letter {
+    fill: white;
 }
 
 /* Submodules
