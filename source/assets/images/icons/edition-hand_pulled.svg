@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="29px" height="31px" viewBox="0 0 29 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
     <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
     <title>edition-hand_pulled</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="assets/icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="edition-hand_pulled" class="edition" sketch:type="MSLayerGroup">
-            <rect class="edition-bg" id="Rectangle-10" stroke="#474747" stroke-width="2" fill="#FFFFFF" sketch:type="MSShapeGroup" x="0" y="0" width="28.7855349" height="30.24" rx="2"></rect>
-            <path class="edition-type" d="M19.18,10.9 L15.774,10.9 L15.774,11.901 C16.086,11.94 16.398,11.966 16.697,11.979 L16.697,14.813 L12.342,14.813 L12.342,11.979 C12.628,11.966 12.927,11.94 13.239,11.901 L13.239,10.9 L9.82,10.9 L9.82,11.901 C10.197,11.94 10.561,11.979 10.925,11.992 L10.925,18.908 C10.574,18.934 10.197,18.96 9.82,18.999 L9.82,20 L13.239,20 L13.239,18.999 C12.927,18.96 12.628,18.934 12.342,18.921 L12.342,15.996 L16.697,15.996 L16.697,18.921 C16.398,18.934 16.086,18.96 15.774,18.999 L15.774,20 L19.18,20 L19.18,18.999 C18.816,18.96 18.452,18.934 18.101,18.908 L18.101,11.992 C18.452,11.979 18.816,11.94 19.18,11.901 L19.18,10.9 Z" id="H" fill="#474747" sketch:type="MSShapeGroup"></path>
+        <g id="edition-hand_pulled" sketch:type="MSLayerGroup">
+            <rect id="Rectangle-10" fill="#474747" sketch:type="MSShapeGroup" x="0" y="0" width="30" height="30" rx="2"></rect>
+            <path d="M20,10 L16.3611111,10 L16.3611111,11.1 C16.6944444,11.1428571 17.0277778,11.1714286 17.3472222,11.1857143 L17.3472222,14.3 L12.6944444,14.3 L12.6944444,11.1857143 C13,11.1714286 13.3194444,11.1428571 13.6527778,11.1 L13.6527778,10 L10,10 L10,11.1 C10.4027778,11.1428571 10.7916667,11.1857143 11.1805556,11.2 L11.1805556,18.8 C10.8055556,18.8285714 10.4027778,18.8571429 10,18.9 L10,20 L13.6527778,20 L13.6527778,18.9 C13.3194444,18.8571429 13,18.8285714 12.6944444,18.8142857 L12.6944444,15.6 L17.3472222,15.6 L17.3472222,18.8142857 C17.0277778,18.8285714 16.6944444,18.8571429 16.3611111,18.9 L16.3611111,20 L20,20 L20,18.9 C19.6111111,18.8571429 19.2222222,18.8285714 18.8472222,18.8 L18.8472222,11.2 C19.2222222,11.1857143 19.6111111,11.1428571 20,11.1 L20,10 Z" id="H" fill="currentColor" sketch:type="MSShapeGroup"></path>
         </g>
     </g>
 </svg>
