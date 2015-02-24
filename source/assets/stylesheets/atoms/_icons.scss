@@ -24,9 +24,13 @@
 
     &.edition {
         @extend %base-transition;
+        @include rem(width, 30px);
+        @include rem(height, 30px);
+        font-size: 0;
         fill: white;
         border: 2px solid $black;
         color: $black;
+        border-radius: 5px;
 
         &:hover {
             fill: $black;
