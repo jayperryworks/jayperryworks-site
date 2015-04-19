@@ -6,10 +6,15 @@
 // ---------------------------------------------------------------------------*/
 
 .panel {
-    // border-top-style: solid;
-    // border-top-color: theme(border);
-    // border-top-width: 1px;
+    @extend %l-limited_w;
+    @include rem(padding-left, $layout-margins);
+    @include rem(padding-right, $layout-margins);
     @include border(top);
+    position: relative;
+
+    &:first-child {
+        border-top: none;
+    }
 }
 
 /* Modifiers

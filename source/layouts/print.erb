@@ -35,9 +35,9 @@
         </nav>
 
         <% current_page.data.editions.each do |edition| %>
-        <section class="media full" id="#edition--<%= edition.name %>">
-            <img class="media-image" src="<%= asset_url(media_dir + "/" + edition.image) %>" alt="<%= edition.name %> edition">
-            <aside class="media-description">
+        <figure class="media full" id="#edition--<%= edition.name %>">
+            <img src="<%= asset_url(media_dir + "/" + edition.image) %>" alt="<%= edition.name %> edition">
+            <figcaption class="media-description">
                 <h2><%= edition.name.titleize %> <%= edition.type.titleize %> Print &bull; <%= edition.price %></h2>
                 <dl>
                     <dt>Print Size</dt>
@@ -46,8 +46,8 @@
                     <dd><%= edition.height + (edition.border * 2) %>" x <%= edition.width + (edition.border * 2) %>"</dd>
                 </dl>
                 <a href="">Buy this print</a>
-            </aside>
-        </section>
+            </figcaption>
+        </figure>
         <% end %>
     </section>
 </article>

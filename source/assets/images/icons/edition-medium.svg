@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+<svg width="22px" height="16px" viewBox="0 0 22 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
     <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
     <title>edition-medium</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="assets/icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="edition-medium" sketch:type="MSLayerGroup">
-            <rect id="Rectangle-11" fill="#474747" sketch:type="MSShapeGroup" x="0" y="0" width="30" height="30" rx="2"></rect>
-            <path d="M22,10 L18.3333333,10 L14.8888889,17.6714286 L11.5873016,10 L8,10 L8,11.1 C8.63492063,11.1714286 9.07936508,11.2 9.34920635,11.2142857 L9.34920635,18.8 C8.93650794,18.8142857 8.50793651,18.8571429 8.03174603,18.9 L8.03174603,20 L12.1428571,20 L12.1428571,18.9 C11.7301587,18.8571429 11.3650794,18.8285714 10.984127,18.8 L10.984127,11.9 L14.2539683,20 L15.4126984,20 L18.968254,11.9 L18.968254,18.8142857 C18.6190476,18.8285714 18.2698413,18.8571429 17.8888889,18.9 L17.8888889,20 L21.968254,20 L21.968254,18.9 C21.5079365,18.8571429 21.0793651,18.8142857 20.6349206,18.8 L20.6349206,11.2142857 C20.9365079,11.2 21.3809524,11.1571429 22,11.1 L22,10 Z" id="M" fill="currentColor" sketch:type="MSShapeGroup"></path>
-        </g>
+        <path d="M22,0 L16.2380952,0 L10.8253968,12.2742857 L10.7755102,12.2742857 L5.63718821,0 L0,0 L0,1.76 C0.997732426,1.87428571 1.69614512,1.92 2.12018141,1.94285714 L2.12018141,14.08 C1.47165533,14.1028571 0.798185941,14.1714286 0.0498866213,14.24 L0.0498866213,16 L6.51020408,16 L6.51020408,14.24 C5.861678,14.1714286 5.28798186,14.1257143 4.6893424,14.08 L4.6893424,3.04 L9.8276644,16 L11.6485261,16 L17.2358277,3.04 L17.2358277,14.1028571 C16.6870748,14.1257143 16.138322,14.1714286 15.5396825,14.24 L15.5396825,16 L21.9501134,16 L21.9501134,14.24 C21.2267574,14.1714286 20.553288,14.1028571 19.8548753,14.08 L19.8548753,1.94285714 C20.3287982,1.92 21.0272109,1.85142857 22,1.76 L22,0 Z" id="edition-medium" fill="#474747" sketch:type="MSShapeGroup"></path>
     </g>
 </svg>

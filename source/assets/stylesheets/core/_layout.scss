@@ -150,15 +150,9 @@
 // limit a container's width on large screens
 // and center it vertically
 .l-limited_w, %l-limited_w {
-  max-width: $layout-w + (36px * 2);
+  max-width: $layout-w + ($layout-margins * 2);
   margin-left: auto;
   margin-right: auto;
-}
-
-.panel {
-    @extend %l-limited_w;
-    @include rem(padding-left, 36px);
-    @include rem(padding-right, 36px);
 }
 
 /* ---- Grids ----------------------------------------------------------------*/

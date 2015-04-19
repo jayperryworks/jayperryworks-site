@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+<svg width="18px" height="16px" viewBox="0 0 18 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
     <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
     <title>edition-hand_pulled</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="assets/icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="edition-hand_pulled" sketch:type="MSLayerGroup">
-            <rect id="Rectangle-10" fill="#474747" sketch:type="MSShapeGroup" x="0" y="0" width="30" height="30" rx="2"></rect>
-            <path d="M20,10 L16.3611111,10 L16.3611111,11.1 C16.6944444,11.1428571 17.0277778,11.1714286 17.3472222,11.1857143 L17.3472222,14.3 L12.6944444,14.3 L12.6944444,11.1857143 C13,11.1714286 13.3194444,11.1428571 13.6527778,11.1 L13.6527778,10 L10,10 L10,11.1 C10.4027778,11.1428571 10.7916667,11.1857143 11.1805556,11.2 L11.1805556,18.8 C10.8055556,18.8285714 10.4027778,18.8571429 10,18.9 L10,20 L13.6527778,20 L13.6527778,18.9 C13.3194444,18.8571429 13,18.8285714 12.6944444,18.8142857 L12.6944444,15.6 L17.3472222,15.6 L17.3472222,18.8142857 C17.0277778,18.8285714 16.6944444,18.8571429 16.3611111,18.9 L16.3611111,20 L20,20 L20,18.9 C19.6111111,18.8571429 19.2222222,18.8285714 18.8472222,18.8 L18.8472222,11.2 C19.2222222,11.1857143 19.6111111,11.1428571 20,11.1 L20,10 Z" id="H" fill="currentColor" sketch:type="MSShapeGroup"></path>
-        </g>
+        <path d="M18,0 L11.45,0 L11.45,1.76 C12.05,1.82857143 12.65,1.87428571 13.225,1.89714286 L13.225,6.88 L4.85,6.88 L4.85,1.89714286 C5.4,1.87428571 5.975,1.82857143 6.575,1.76 L6.575,0 L0,0 L0,1.76 C0.725,1.82857143 1.425,1.89714286 2.125,1.92 L2.125,14.08 C1.45,14.1257143 0.725,14.1714286 0,14.24 L0,16 L6.575,16 L6.575,14.24 C5.975,14.1714286 5.4,14.1257143 4.85,14.1028571 L4.85,8.96 L13.225,8.96 L13.225,14.1028571 C12.65,14.1257143 12.05,14.1714286 11.45,14.24 L11.45,16 L18,16 L18,14.24 C17.3,14.1714286 16.6,14.1257143 15.925,14.08 L15.925,1.92 C16.6,1.89714286 17.3,1.82857143 18,1.76 L18,0 Z" id="edition-hand_pulled" fill="#474747" sketch:type="MSShapeGroup"></path>
     </g>
 </svg>

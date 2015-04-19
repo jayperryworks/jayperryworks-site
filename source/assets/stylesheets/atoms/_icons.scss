@@ -26,25 +26,25 @@
         @extend %base-transition;
         @include rem(width, 30px);
         @include rem(height, 30px);
-        font-size: 0;
-        fill: white;
+        @include rem(padding, 8px);
         border: 2px solid $black;
-        color: $black;
-        border-radius: 5px;
+        border-radius: 2px;
+        fill: $black;
+        background-color: white;
 
         &:hover {
-            fill: $black;
-            color: white;
+            fill: white;
+            background-color: $black;
         }
     }
 }
 
-.logo-jp-bg {
-    fill: $blue;
-}
-.logo-jp-letter {
-    fill: white;
-}
+        .logo-jp-bg {
+            fill: $blue;
+        }
+        .logo-jp-letter {
+            fill: white;
+        }
 
 /* Submodules
 // ---------------------------------------------------------------------------*/

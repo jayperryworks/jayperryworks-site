@@ -1,27 +1,30 @@
 /* ==========================================================================
-// Nav styles
+// Media box styles
 // ========================================================================== */
 
 /* Base
 // ---------------------------------------------------------------------------*/
 
-.nav {
+.media {
 
 }
 
 /* Modifiers
 // ---------------------------------------------------------------------------*/
 
-.nav {
+.media {
+    &.full {
+        @include clearfix;
+        margin: 0;
+        margin-top: 1em;
 
-    &.jump {
-        $w: 60px;
-
-        @extend %l-abs;
-        @include rem(width, $w);
-
-        & + *, & + .media {
-            @include rem(margin-left, $w);
+        @include layout(2 1, $grid-gutter) {
+            img {
+                @include grid-span(1, 1);
+            }
+            .media-description {
+                @include grid-span(1, 2);
+            }
         }
     }
 }
@@ -29,7 +32,7 @@
 /* Submodules
 // ---------------------------------------------------------------------------*/
 
-.nav {
+.media {
 
 }
 
