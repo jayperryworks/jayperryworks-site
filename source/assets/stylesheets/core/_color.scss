@@ -1,0 +1,126 @@
+/* ==========================================================================
+//  Global color styles
+// -> base colors are set here on global elements, but modules apply their own
+// -> refer to colors ONLY via the $theme maps
+// ========================================================================== */
+
+// Base Colors
+// ----------------------------------------------------------------------
+// -> PRIVATE, do not use outside this settings file
+$black          : #262524;
+$gray           : #898989;
+$orange         : #f4b64e;
+$orange--dark   : #ea8e4d;
+$blue           : #1e6299;
+$blue--dark     : #3077ab;
+$red            : #d82333;
+$red--dark      : #a0262b;
+$green          : #00a556;
+$green--dark    : #187042;
+
+// Themes
+// ----------------------------------------------------------------------
+// -> PUBLIC, use these for color references
+
+$theme--default: (
+    text--primary   : $black,
+    text--secondary : $gray,
+    text--tertiary  : lighten($gray, 10),
+    bg              : white,
+    well            : lighten($gray, 15),
+    border          : lighten($gray, 10),
+    highlight       : $blue,
+    highlight--dark : $blue--dark
+);
+
+// shortcut "get" function to access theme map values
+// -> PUBLIC
+// -> USAGE: color: theme(text--primary);
+@function theme($key, $name: "default") {
+  @if ($name == "reverse") {
+    @return map-get($theme--reverse, $key);
+  } @else {
+    @return map-get($theme--default, $key);
+  }
+}
+
+// base text colors
+// -> PUBLIC
+$color-text--primary: theme(text--primary);
+$color-text--secondary: theme(text--secondary);
+
+$color-selection: red;
+
+// Theme Globals
+// ----------------------------------------------------------------------
+// -> set up all the base colors
+
+@mixin theme($theme) {
+
+    .well {
+        background: theme(well, $theme);
+    }
+
+    .highlight {
+        color: theme(highlight, $theme);
+    }
+
+    .accent {
+        color: theme(accent, $theme);
+    }
+
+    html,
+    button,
+    input,
+    select,
+    textarea {
+      color: theme(text--secondary, $theme);
+    }
+
+    #{headers()} {
+        color: theme(text--primary, $theme);
+    }
+
+    p, table, li, span {
+        color: theme(text--secondary, $theme);
+    }
+
+    a, a:link, a:visited {
+        color: theme(highlight, $theme);
+    }
+
+    input, textarea {
+        background: theme(well, $theme);
+        border-color: theme(border, $theme);
+
+        &:focus {
+            border-color: theme(highlight, $theme);
+        }
+
+        // http://css-tricks.com/snippets/css/style-placeholder-text/
+        &::-webkit-input-placeholder,
+        &:-moz-placeholder,
+        &::-moz-placeholder,
+        &:-ms-input-placeholder  {
+            color: theme(text--tertiary, $theme);
+        }
+    }
+
+    // highlight color when you select something
+    ::selection {
+      background: theme(highlight, $theme);
+      text-shadow: none;
+    }
+
+    // ditto, for mozilla engine
+    ::-moz-selection {
+      background: theme(highlight, $theme);
+      text-shadow: none;
+    }
+}
+
+/* Default
+// -------------------------------------------------------------------------- */
+%theme--default, body {
+  @include theme(default);
+}

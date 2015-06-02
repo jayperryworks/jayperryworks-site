@@ -1,0 +1,25 @@
+/* =============================================================================
+//  Global animation styles
+// ========================================================================== */
+
+// Vendor libraries
+// -----------------------------------------------------------------------------
+// bower components
+@import "bourbon/app/assets/stylesheets/bourbon";
+
+// Config & mixins
+// -----------------------------------------------------------------------------
+
+$base-duration: 0.5s !default; // in seconds
+
+%base-transition {
+  // base transition used globally
+  @include transition (all $base-duration);
+}
+
+/* Globals
+// -------------------------------------------------------------------------- */
+
+a {
+    @extend %base-transition;
+}

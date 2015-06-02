@@ -1,5 +1,6 @@
 //= require normalize-css/normalize.css
-// Pull normalize.css in via sprockets, because SASS doesn't compile it
+//= require vendor/html5bp.css
+// Pull normalize.css, etc. in via sprockets, because SASS doesn't compile it
 //-> doing this via @import generates an "@import" in the CSS, which is undesirable
 
 @charset "utf-8";
@@ -24,9 +25,9 @@
 
 @import "core/settings"; // all global vars, functions, mixins are here
 @import "core/fonts"; // all @font-face things
-@import "core/base"; // base styles
+// @import "core/base"; // base styles
 @import "core/print"; // globals for print
-@import "core/themes"; // global/base color schemes
+@import "core/color"; // global/base color schemes
 @import "core/layout"; // global layout helpers
 
 /* =============================================================================

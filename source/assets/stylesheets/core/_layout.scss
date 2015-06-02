@@ -2,64 +2,104 @@
 // Global layout styles
 // ===========================================================================*/
 
+@import "libs";
+@import "fonts";
+
+/*doc
+---
+title: Global layout helpers
+name: layout
+category: core
+---
+
+Global layout styles.
+
+```html_example
+<a href="#" class="button l-abs top right">Button @ top right</a>
+```
+
+*/
+
+
 // Config/mixins
 // -----------------------------------------------------------------------------
 
-// ---- Layout, grid & gutters -------------------------------------------------
+// --- global breakpoints ------------------------------------------------------
+// -> requires Breakpoint library
+$breakpoints: 480px 768px 1024px 1280px;
 
-// Quickly set grid-margins on a container across multiple breakpoints
-@mixin layout-margins($property: padding, $negative: false, $sides: left right) {
-    // grab the first value for default (mobile) screens
-    $margins: first($layout-margins);
+$screen--xsmall : nth($breakpoints, 1);
+$screen--small  : nth($breakpoints, 2);
+$screen--medium : nth($breakpoints, 3);
+$screen--large  : nth($breakpoints, 4);
 
-    // make it negative if $negative is set to true
-    @if $negative == true {
-        $margins: -(first($layout-margins));
-    }
+$breakpoint-to-ems: true;
 
-    // apply to all sides specified
-    // -> left and right are defaults
-    @each $side in $sides {
-        #{$property}-#{$side}: $margins;
-    }
+%hide { display: none; }
 
+// screen-size helper classes
+.show-small {
+    @extend %hide;
 
-    @if length($layout-margins) > 1 {
-        @for $i from 1 through length($layout-margins) {
-
-            // set up breakpoints for additional values
-            @include breakpoint(nth($breakpoints, $i)) {
-
-                // make it negative if $negative is set to true
-                $margins: nth($layout-margins, $i);
-
-                // make it negative if $negative is set to true
-                @if $negative == true {
-                    $margins: -(nth($layout-margins, $i));
-                }
-
-                // apply to all sides specified
-                // -> left and right are defaults
-                @each $side in $sides {
-                    #{$property}-#{$side}: $margins;
-                }
-            }
-        }
+    @include breakpoint($screen--small) {
+        display: block;
     }
 }
 
-// A helper to quickly create grid-span() includes across multiple breakpoints
-// Saves having to write breakpoint calls over and over again
-@mixin grid-span-break($cols, $start, $opts: false) {
-    @include grid-span(nth($cols, 1), nth($start, 1), $options: $opts);
+.show-medium {
+    @extend %hide;
 
-    @for $i from 1 through (length($cols) - 1) {
-        $num: ($i + 1);
-        @include breakpoint(nth($breakpoints, $num)) {
-            @include grid-span(nth($cols, $num), nth($start, $num), $options: $opts);
-        }
+    @include breakpoint($screen--medium) {
+        display: block;
     }
 }
+
+// --- global element dimensions -----------------------------------------------
+$gutter: fs(4); // based on font scale (see _fonts.scss)
+$gutter-outside: fs(6); // based on font scale (see _fonts.scss)
+$layout-w: $screen--medium; // max width of main layout
+$layout-w--narrow: 680px; // max width of 'narrow' elements (e.g. body type)
+$layout-w--wide: 1200px;
+
+@function add_outside_gutters($w) {
+    // compensate with for outside margins (ie padding) and split gutters
+    @return ($w + ($gutter-outside * 2));
+}
+
+%l-base-w {
+    max-width: add_outside_gutters($layout-w);
+}
+
+%l-base-w--narrow {
+    max-width: add_outside_gutters($layout-w--narrow);
+}
+
+%l-base-w--wide {
+    max-width: add_outside_gutters($layout-w--wide);
+}
+
+// --- grid variables ----------------------------------------------------------
+
+// Singularity globals
+@include add-gutter($gutter);
+// @include add-gutter-style('split' 'fixed');
+
+// Singularity Quick Spanner globals
+$sqs-thumb-span-bottom-margins: false;
+
+// scale for ratio-based grids and/or type
+// -> http://alistapart.com/article/content-out-layout
+$grid-scale: 1 1.618 2.618 4.236 6.854 11.089 17.942 29.030;
+
+@function ms($n) {
+    @return nth($grid-scale, $n);
+}
+
+// --- default z-indexes -------------------------------------------------------
+$z--low    : 0;
+$z--middle : 1;
+$z--high   : 2;
+
 
 /* ---- Generic helpers ------------------------------------------------------*/
 
@@ -71,8 +111,80 @@
     padding-bottom: ($padding + 1000px);
 }
 
-/* Layout Microclasses
+
+/* Layout Globals/Base Styles
 // ---------------------------------------------------------------------------*/
+
+html {
+    // set up the base font size at each breakpoint
+    // this will scale the whole layout proportionately as the screen size changes
+    // and we only have to change one thing
+    font-size: 95%;
+
+    @include breakpoint($screen--small) {
+        font-size: 100%;
+    }
+
+    @include breakpoint($screen--medium) {
+        font-size: 110%;
+    }
+
+    // set everything to roll with border-box sizing
+    // -> much easier than reg box model
+    // -> http://www.paulirish.com/2012/box-sizing-border-box-ftw/
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+
+/* Layout Helper Microclasses
+// ---------------------------------------------------------------------------*/
+
+/* ---- Wrappers and columns -------------------------------------------------*/
+
+// basic layout wrapper, for constraining at large screen sizes
+.l-wrapper, %l-wrapper {
+    @extend %l-base-w;
+    @include clearfix;
+    display: block;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: $gutter-outside;
+    padding-right: $gutter-outside;
+
+    // & > .headline:first-child {
+    //     margin-top: $gutter;
+    // }
+
+    // narrow version of layout wrapper
+    &.narrow {
+        @extend %l-base-w--narrow;
+    }
+
+    &.wide {
+        @extend %l-base-w--wide;
+    }
+}
+
+/* https://css-tricks.com/NetMag/FluidWidthVideo/Article-FluidWidthVideo.php */
+.l-wrapper-video {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    padding-top: 25px;
+    height: 0;
+
+    & > iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
 
 /* ---- Fixed position -------------------------------------------------------*/
 
@@ -128,7 +240,7 @@
 
         &.#{$side} {
             #{$side}: 0;
-            margin-#{$side}: $grid-gutter;
+            margin-#{$side}: gutters();
         }
     }
 }
@@ -145,18 +257,33 @@
     }
 }
 
-/* ---- Containers -----------------------------------------------------------*/
+/* ---- Visibility -----------------------------------------------------------*/
 
-// limit a container's width on large screens
-// and center it vertically
-.l-limited_w, %l-limited_w {
-  max-width: $layout-w + ($layout-margins * 2);
-  margin-left: auto;
-  margin-right: auto;
+@mixin visually_hidden($focusable: false) {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+
+    /*
+     * Extends the .visuallyhidden class to allow the element
+     * to be focusable when navigated to via the keyboard:
+     * https://www.drupal.org/node/897638
+     */
+    @if ($focusable == true) {
+        &:active,
+        &:focus {
+            clip: auto;
+            height: auto;
+            margin: 0;
+            overflow: visible;
+            position: static;
+            width: auto;
+        }
+    }
 }
 
-/* ---- Grids ----------------------------------------------------------------*/
-
-.l-grid {
-    @include grid-inline(1 2 3, $child: ".l-grid-item");
-}

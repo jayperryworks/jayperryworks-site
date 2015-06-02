@@ -9,54 +9,45 @@
 
 }
 
-/* Modifiers
-// -------------------------------------------------------------------------- */
-
-.post {
-
-}
-
 /* Submodules
 // -------------------------------------------------------------------------- */
 
-.post {
-    &-header {
+.post-header {
+    max-width: $layout-w--narrow;
+    margin: 0 auto;
+}
+
+.post-body {
+    $margin: 1em;
+
+    p {
         max-width: $layout-w--narrow;
-        margin: 0 auto;
+        margin: 0 auto 1em auto;
     }
 
-    &-body {
-        $margin: 1em;
+    ul {
+        @include grid-inline(2 2 3, $gutter: 2px);
 
-        p {
-            max-width: $layout-w--narrow;
-            margin: 0 auto 1em auto;
-        }
-
-        ul {
-            @include grid-inline(2 2 3, $gutter: 2px);
-
-            & + p { margin-top: 1em; }
-        }
+        & + p { margin-top: 1em; }
     }
+}
 
-    &-tags {
-        @include inline-list();
+.post-tags {
+    @include inline-list();
 
-        & > li {
-          &:after {
-            content: ",";
-          }
-          &:last-child:after {
-            content: "";
-          }
-        }
+    & > li {
+      &:after {
+        content: ",";
+      }
+      &:last-child:after {
+        content: "";
+      }
     }
+}
 
-    &-tag {
+    .post-tag {
         @include font-scale(1);
         display: inline-block;
         width: auto;
         text-transform: uppercase;
     }
-}

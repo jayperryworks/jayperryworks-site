@@ -1,0 +1,61 @@
+/* =============================================================================
+// Border/rule settings & helper
+// ===========================================================================*/
+
+/*doc
+---
+title: Border settings & mixins
+name: layout
+category: core
+---
+
+Some variables that allow us to keep our border styles DRY and control them from one place.
+
+```css_example
+div {
+    @extend %base-radius;
+    @include border(all, thin, theme(border));
+}
+```
+
+*/
+
+// Rounded corners
+// -----------------------------------------------------------------------------
+
+$base-radius: 3px !default;
+
+%base-radius {
+  border-radius: $base-radius;
+}
+
+// Border width & style
+// -----------------------------------------------------------------------------
+
+$borders: 1px 2px !default;
+$border-style: solid !default;
+
+// make a standard border/hairline that works with the parent color theme
+@mixin border($side: all, $w: thin, $color: inherit, $style: $border-style) {
+    @if ($side == all) {
+        @if ($w == thin) {
+            border-width: nth($borders, 1);
+        } @else if ($w == thick) {
+            border-width: nth($borders, 2);
+        } @else {
+            border-width: #{$w};
+        }
+        border-style: $style;
+        border-color: $color;
+    } @else {
+        @if ($w == thin) {
+            border-#{$side}-width: nth($borders, 1);
+        } @else if ($w == thick) {
+            border-#{$side}-width: nth($borders, 2);
+        } @else {
+            border-width: #{$w};
+        }
+        border-#{$side}-style: $style;
+        border-#{$side}-color: $color;
+    }
+}

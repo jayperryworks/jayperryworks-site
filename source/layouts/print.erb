@@ -18,6 +18,7 @@
 
     </section>
 
+    <% if current_page.data.editions.present? %>
     <section class="panel">
         <h1 class="panel-header">Available Editions</h1>
         <nav class="nav jump">
@@ -50,5 +51,6 @@
         </figure>
         <% end %>
     </section>
+    <% end %>
 </article>
 <% end %>
