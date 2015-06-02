@@ -1,0 +1,29 @@
+/* =============================================================================
+//  Global list styles
+// ========================================================================== */
+
+@import "../core/*";
+
+/* Globals
+// -------------------------------------------------------------------------- */
+
+li {
+    @include font-scale(2);
+
+    strong {
+        font-weight: bold;
+    }
+}
+
+li {
+    margin-bottom: 0.5em;
+}
+
+ol, ul {
+    margin-left: 1.5em; /* bump to the right a little @ mobile sizes so the numbers/bullets don't run off */
+    padding-left: 0;
+
+    @include breakpoint($screen--small) {
+        margin-left: 0;
+    }
+}

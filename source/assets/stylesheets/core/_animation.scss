@@ -2,10 +2,24 @@
 //  Global animation styles
 // ========================================================================== */
 
-// Vendor libraries
-// -----------------------------------------------------------------------------
-// bower components
-@import "bourbon/app/assets/stylesheets/bourbon";
+/*doc
+---
+title: Animation
+name: animation
+category: core
+---
+
+The animation library sets global defaults for CSS transitions. Use it in your modules like this:
+
+```
+.your-selector {
+    @extend %base-transition;
+}
+```
+
+*/
+
+@import "libs";
 
 // Config & mixins
 // -----------------------------------------------------------------------------

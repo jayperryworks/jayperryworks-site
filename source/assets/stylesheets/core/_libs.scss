@@ -1,13 +1,16 @@
-// Vendor Libraries
-// -> to make it more convenient to import dependencies
-// -----------------------------------------------------------------------------
+// =============================================================================
+// Frameworks & vendor stuff
+// -> all dependencies should be imported here, then imported
+//    as-needed in modules
+// -> NOTE: the dependency scheme in this framework requires compass's 
+//    "import once" library. make sure it's installed somewhere.
+//    (it ships with middleman)
+// =============================================================================
 
 // bower components
 @import "bourbon/app/assets/stylesheets/bourbon";
 @import "breakpoint-sass/stylesheets/breakpoint";
 @import "singularity/stylesheets/singularitygs";
-// @import "singularity-quick-spanner/stylesheets/singularity-quick-spanner";
-// @import "sass-toolkit/stylesheets/toolkit";
 @import "sass-units/units";
 @import "sass-list-helpers/helpers-lists";
 @import "sass-type-helpers/type-helpers";

@@ -1,70 +1,55 @@
 //= require normalize-css/normalize.css
 //= require vendor/html5bp.css
-// Pull normalize.css, etc. in via sprockets, because SASS doesn't compile it
+// Pull normalize.css & html5bp in via sprockets, because SASS doesn't compile it
 //-> doing this via @import generates an "@import" in the CSS, which is undesirable
 
-@charset "utf-8";
 
-// =============================================================================
-// Frameworks & vendor stuff
-// -> sass/bower load paths are set in config.rb @root
-// =============================================================================
-
-@import "bourbon/dist/bourbon";
-@import "breakpoint-sass/stylesheets/breakpoint";
-@import "singularity/stylesheets/singularitygs";
-@import "sass-toolkit/stylesheets/toolkit";
-@import "sass-units/units";
-@import "sass-list-helpers/helpers-lists";
-@import "sass-grid-inline/grid-inline";
-
-/* =============================================================================
+/* /////////////////////////////////////////////////////////////////////////////
 // Core style helpers
 // -> global settings, resets, helper classes
-// ========================================================================== */
+///////////////////////////////////////////////////////////////////////////// */
 
-@import "core/settings"; // all global vars, functions, mixins are here
-@import "core/fonts"; // all @font-face things
-// @import "core/base"; // base styles
-@import "core/print"; // globals for print
+@import "core/settings"; // global settings
+@import "core/animation"; // global animation/behaviors
+@import "core/fonts"; // all @font-face things and base type scale
+@import "core/borders"; // global border styles
 @import "core/color"; // global/base color schemes
-@import "core/layout"; // global layout helpers
+@import "core/layout"; // global layout styles/helpers
 
-/* =============================================================================
+/* /////////////////////////////////////////////////////////////////////////////
 // Atoms
 // -> individual elements
-// ========================================================================== */
+///////////////////////////////////////////////////////////////////////////// */
 
-@import "atoms/type";
-@import "atoms/icons";
+@import "atoms/*";
 
-/* =============================================================================
+/* /////////////////////////////////////////////////////////////////////////////
 // Molecules
 // -> simple groups of things that can be easily combined & reused
-// ========================================================================== */
+///////////////////////////////////////////////////////////////////////////// */
 
-@import "molecules/navigation";
-@import "molecules/media_box";
+@import "molecules/*";
 
-/* =============================================================================
+/* /////////////////////////////////////////////////////////////////////////////
 // Organisms
 // -> self-contained, reusable groups of molecules
-// ========================================================================== */
+///////////////////////////////////////////////////////////////////////////// */
 
-@import "organisms/panel";
+@import "organisms/*";
 
-/* =============================================================================
+/* /////////////////////////////////////////////////////////////////////////////
 // Regions
-// -> reusable content regions containing specific combinations of organisms
+// -> reusable, major content regions containing specific combinations of organisms
 // -> compose entirely with organisms as much as possible
 // -> should not contain much "original" styling, leave that to
 //      the atoms, molecules, organisms
-// ========================================================================== */
+///////////////////////////////////////////////////////////////////////////// */
 
-@import "regions/header";
-@import "regions/post";
+@import "regions/*";
 
-/* =============================================================================
+/* /////////////////////////////////////////////////////////////////////////////
 // Styles of Shame
 // -> put quick and dirty hacks here, then clean up & organize later
-// ========================================================================== */
+///////////////////////////////////////////////////////////////////////////// */
+
+

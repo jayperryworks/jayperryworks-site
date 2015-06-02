@@ -1,0 +1,76 @@
+/* =============================================================================
+//  Form module
+// ========================================================================== */
+
+@import "../core/*";
+
+/*doc
+---
+title: Forms
+name: Form
+category: atoms
+---
+
+*/
+
+/* Base
+// -------------------------------------------------------------------------- */
+
+form {
+	@extend %font-body;
+}
+
+fieldset {
+	
+}
+
+legend {
+	
+}
+
+input, textarea, select {
+	@extend %font-body;
+	@extend %base-transition;
+	padding: 0.5em 1em;
+	border-radius: 3px;
+	box-sizing: border-box;
+	box-shadow: none;
+	text-shadow: none;
+
+	&:focus {
+		outline: 0;
+		outline: thin dotted \9; /* IE6-9 */
+		box-shadow: none;
+	}
+}
+
+[type="checkbox"] {
+	width: 1em;
+	height: 1em;
+}
+
+input[type="search"] {
+
+	&:focus {
+		
+	}
+}
+
+// Allow only vertical resizing of textareas.
+textarea {
+	resize: vertical;
+
+	&:focus {
+		// outline: 0;
+		// outline: thin dotted \9; /* IE6-9 */
+		// border-color: $color--secondary;
+	}
+}
+
+select {
+	
+}
+
+label {
+	
+}

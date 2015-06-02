@@ -1,0 +1,96 @@
+/* =============================================================================
+//  Global heading styles
+// ========================================================================== */
+
+@import "../core/*";
+
+/*doc
+---
+title: Headings
+name: heading
+category: atoms
+---
+
+You can make individual headings and groups of headings with both the usual `h1 - h6` tags and also a few helper/microclasses to add special behaviors.
+
+#### Helper classes
+
+`h1 - h6` get global styles, which you can imitate with other tags (like `span`) if needed using these greek fraternity-esque helpers:
+
+```
+.alpha // looks like h1
+.beta // looks like h2
+.cappa // looks like h3
+.delta // looks like h4
+.epsilon // looks like h5
+.zeta // looks like h6
+```
+
+`.highlight` is useful for making a heading bright and obnoxious. It will adapt the highlight color of its context (ie blue, orange, whatever).
+
+##### Note on titles and subtitles
+
+It's important to remember that the `h1, h2, h3`, etc. elements are not just for looks: they have a specific purpose in HTML. They're essential to the DOM Tree and, to your browser, they represent the beginning of a new section of content. HTML5 has a variety of what are called "sectioning" elements and headings are the most basic of those (`section`, `article`, and `aside` being more sophisticated sectioning containers).
+
+What does this mean? Don't use an `h3` tag just because you wnat that size and style of type somewhere. Use it only to mark up a third-level section heading. If you just want the look of an `h3` in a non-sectioning context (like an article subtitle), use a generic element like `span` or `p` with the `.cappa` helper class.
+
+Many modules (like `media-box`, `profile`, etc.) define their own special heading submodules to achieve a certain style regardless of the actual markup. If you're working in one of those modules, reach for the submodules first.
+
+*/
+
+/* Globals
+// -------------------------------------------------------------------------- */
+
+#{headers()} {
+    line-height: 1.2;
+    margin-bottom: 0;
+}
+
+#{headers()} {
+    line-height: 1.2;
+    margin-bottom: 0;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+
+    a { color: inherit; }
+}
+
+h1, .alpha, %alpha {
+    @extend %font-display;
+    @include font-scale(7);
+}
+
+h2, .beta, %beta {
+    @extend %font-display;
+    @include font-scale(6);
+}
+
+h3, .cappa, %cappa {
+    @extend %font-display;
+    @include font-scale(5);
+}
+
+h4, .delta, %delta {
+    @extend %font-display;
+    @include font-scale(4);
+}
+
+h5, .epsilon, %epsilon {
+    @extend %font-display;
+    @include font-scale(3);
+}
+
+h6, .zeta, %zeta {
+    @extend %font-display;
+    @include font-scale(2);
+}
+
+/* Modules
+// -------------------------------------------------------------------------- */
+// -> specific applications headings or groups of headings
+
+.highlight {
+    color: theme(highlight);
+
+    > a { color: inherit; }
+}

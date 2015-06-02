@@ -2,9 +2,6 @@
 // Global layout styles
 // ===========================================================================*/
 
-@import "libs";
-@import "fonts";
-
 /*doc
 ---
 title: Global layout helpers
@@ -19,6 +16,9 @@ Global layout styles.
 ```
 
 */
+
+@import "libs";
+@import "fonts";
 
 
 // Config/mixins

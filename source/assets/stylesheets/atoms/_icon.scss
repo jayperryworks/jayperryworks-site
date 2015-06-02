@@ -1,0 +1,60 @@
+/* =============================================================================
+//  SVG styles
+// -> for icon sprites, vector graphics, etc.
+// ========================================================================== */
+
+
+/* SVG Sprite Icons
+// -------------------------------------------------------------------------- */
+.icon {
+    display: inline-block;
+    height: 1.4em;
+    width: 1.4em;
+    max-height: 100%;
+    max-width: 100%;
+    margin-top: -0.15em; // scooch up a little on the baseline
+    margin-right: 0.3em;
+    vertical-align: middle;
+    fill: inherit;
+
+    svg {
+        margin: 0;
+        width: 100%;
+        max-height: 100%;
+    }
+}
+
+/* Modifiers
+// ---------------------------------------------------------------------------*/
+
+.icon.logo-jp {
+    @include rem(width, 40px);
+    @include rem(height, 39px);
+    fill: $blue;
+    color: white;
+}
+
+.icon.edition {
+    @extend %base-transition;
+    @include rem(width, 30px);
+    @include rem(height, 30px);
+    @include rem(padding, 8px);
+    border: 2px solid $black;
+    border-radius: 2px;
+    fill: $black;
+    background-color: white;
+
+    &:hover {
+        fill: white;
+        background-color: $black;
+    }
+}
+
+
+    .logo-jp-bg {
+        fill: $blue;
+    }
+    .logo-jp-letter {
+        fill: white;
+    }
+

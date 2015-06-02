@@ -1,0 +1,72 @@
+/* =============================================================================
+//  Global type styles
+// ========================================================================== */
+
+@import "../core/*";
+
+/*doc
+
+Inline text is mostly styled globally and doesn't change a whole lot from one context to another. If you mark it up with relevant tags it should take care of itself. But there are a few helper classes to define special styles:
+
+`.intro`: an italicized introduction to an article. Pretty common in Handshake's features and interviews.
+
+`.caption`: small, secondary text appearing in sidebars and, of course, captions.
+
+`.callout`: a featured passage. It isn't a header, per se, but it's the most important part of the article body. Used, for example, to highlight the question in _1 Question, 9 Experts_.
+
+`.lead`: the first paragraph of an article, decorated with a drop cap, etc. This is usually selected via `.content > p:first-child`, but if you need to imitate those styles in another context, use this class.
+
+*/
+
+
+/* Globals
+// -------------------------------------------------------------------------- */
+
+body {
+    @extend %font-body;
+    @include enable-ligatures;
+    line-height: $type-line_height;
+}
+
+p {
+    @include font-scale(2);
+
+    strong {
+        font-weight: bold;
+    }
+}
+
+a {
+    text-decoration: none;
+}
+
+strong {
+
+}
+
+small {
+    @include font-scale(1);
+}
+
+figcaption {
+
+}
+
+address {
+
+}
+
+/* Helpers
+// -------------------------------------------------------------------------- */
+
+// the first paragraph, often set slightly bigger
+.lead, .content > p:first-of-type {
+    @include font-scale(3);
+}
+
+// a caption
+.caption, figcaption {
+    @extend %font-body;
+    @include font-scale(1);
+    color: theme(text--secondary);
+}

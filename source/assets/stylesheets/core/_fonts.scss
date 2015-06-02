@@ -1,211 +1,104 @@
-/* ==========================================================================
-//  @Font-face styles
+/* =============================================================================
+//  Webfonts
 // ========================================================================== */
 
-@charset "UTF-8";
+/*doc
+---
+title: Fonts
+name: fonts
+category: core
+---
 
-/* @Font-face declarations
-// -> using both unique font names and style linking to ensure it works everywhere
-// -> http://www.smashingmagazine.com/2013/02/14/setting-weights-and-styles-at-font-face-declaration/
-// -------------------------------------------------------------------------- */
+Fonts are accessed through SASS placeholders. Just extend the appropriate one. Fonts are applied to type, globally, in _type.scss, and individual modules can set up their own font styles.
 
-/* --- Quadon --------------------------------------------------------------- */
+Please DO NOT use your own font-family attributes in any circumstance. Always extend the placeholder.
 
-/*!
- * Web Fonts from fontspring.com
- *
- * All OpenType features and all extended glyphs have been removed.
- * Fully installable fonts can be purchased at http://www.fontspring.com
- *
- * The fonts included in this stylesheet are subject to the End User License you purchased
- * from Fontspring. The fonts are protected under domestic and international trademark and
- * copyright law. You are prohibited from modifying, reverse engineering, duplicating, or
- * distributing this font software.
- *
- * (c) 2010-2014 Fontspring
- *
- *
- *
- *
- * The fonts included are copyrighted by the vendor listed below.
- *
- * Vendor:      Rene Bieder
- * License URL: http://www.fontspring.com/licenses/rene-bieder/webfont
- *
- *
- */
+```
+// display fonts
+// -> headlines, buttons, labels, etc.
 
-@font-face {
-    font-family: 'QuadonMedium';
-    src: url('#{$path-fonts}/Quadon-Medium-webfont.eot');
-    src: url('#{$path-fonts}/Quadon-Medium-webfont.eot?#iefix') format('embedded-opentype'),
-         url('#{$path-fonts}/Quadon-Medium-webfont.woff2') format('woff2'),
-         url('#{$path-fonts}/Quadon-Medium-webfont.woff') format('woff'),
-         url('#{$path-fonts}/Quadon-Medium-webfont.ttf') format('truetype'),
-         url('#{$path-fonts}/Quadon-Medium-webfont.svg#quadonmedium') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
+@extend %font-display
+@extend %font-display-bold
 
-/* --- Banda ---------------------------------------------------------------- */
+// body fonts
+// -> paragraphs, captions, etc.
 
-/*!
- * @license
- * MyFonts Webfont Build ID 2816065, 2014-05-21T13:36:30-0400
- *
- * The fonts listed in this notice are subject to the End User License
- * Agreement(s) entered into by the website owner. All other parties are
- * explicitly restricted from using the Licensed Webfonts(s).
- *
- * You may obtain a valid license at the URLs below.
- *
- * Webfont: Banda Regular by Typedepot
- * URL: http://www.myfonts.com/fonts/typedepot/banda/regular/
- * Copyright: All Rights reserved.Copyright &#x00A9; 2011 By typedepot.
- * Licensed pageviews: 100,000,000
- *
- * Webfont: Banda Light by Typedepot
- * URL: http://www.myfonts.com/fonts/typedepot/banda/light/
- * Copyright: All Rights reserved.Copyright &#x00A9; 2011 By typedepot.
- * Licensed pageviews: 10,000
- *
- *
- * License: http://www.myfonts.com/viewlicense?type=web&buildid=2816065
- *
- * © 2014 MyFonts Inc
+@extend %font-body
+@extend %font-body-italic
+@extend %font-body-bold
+```
+
 */
 
-@font-face {
-    font-family: 'BandaLight';
-    font-weight: normal;
-    font-style: normal;
-    src: url('#{$path-fonts}/2AF841_3_0.eot');
-    src: url('#{$path-fonts}/2AF841_3_0.eot?#iefix') format('embedded-opentype'),
-         url('#{$path-fonts}/2AF841_3_0.woff') format('woff'),
-         url('#{$path-fonts}/2AF841_3_0.ttf') format('truetype'),
-         url('#{$path-fonts}/2AF841_3_0.svg#wf') format('svg');
+@import "libs";
+
+
+// Config & mixins
+// -----------------------------------------------------------------------------
+
+// default type sizes
+$type-size--default: 16px;
+$type-size-amp: 1.1em; // size of ampersands relative to their context
+$type-line_height: 1.5;
+
+@mixin type--default {
+  @include rem(font-size, $type-size--default);
 }
 
-@font-face {
-    font-family: 'BandaRegular';
-    font-weight: bold;
-    font-style: normal;
-    src: url('#{$path-fonts}/2AF841_2_0.eot');
-    src: url('#{$path-fonts}/2AF841_2_0.eot?#iefix') format('embedded-opentype'),
-         url('#{$path-fonts}/2AF841_2_0.woff') format('woff'),
-         url('#{$path-fonts}/2AF841_2_0.ttf') format('truetype'),
-         url('#{$path-fonts}/2AF841_2_0.svg#wf') format('svg');
-}
+// modular scale
+// -> requires SASS Type Helpers
+$font-scale: 10px 13px 16px 19px 26px 42px 68px 110px;
 
-/* --- Centrale Sans -------------------------------------------------------- */
+/* Globals
+// -------------------------------------------------------------------------- */
 
-/*!
- * Web Fonts from fontspring.com
- *
- * All OpenType features and all extended glyphs have been removed.
- * Fully installable fonts can be purchased at http://www.fontspring.com
- *
- * The fonts included in this stylesheet are subject to the End User License you purchased
- * from Fontspring. The fonts are protected under domestic and international trademark and
- * copyright law. You are prohibited from modifying, reverse engineering, duplicating, or
- * distributing this font software.
- *
- * (c) 2010-2011 Fontspring
- *
- *
- *
- *
- * The fonts included are copyrighted by the vendor listed below.
- *
- * Vendor:      Typedepot
- * License URL: http://www.fontspring.com/fflicense/typedepot
- *
- *
- */
+/* ----- Example @font-face ------------------------------------------------- */
 
-@font-face {
-    font-family: 'CentraleSansRegular';
-    src: url('#{$path-fonts}/Centrale_Sans_Regular-webfont.eot');
-    src: url('#{$path-fonts}/Centrale_Sans_Regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('#{$path-fonts}/Centrale_Sans_Regular-webfont.woff') format('woff'),
-         url('#{$path-fonts}/Centrale_Sans_Regular-webfont.ttf') format('truetype'),
-         url('#{$path-fonts}/Centrale_Sans_Regular-webfont.svg#CentraleSansRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-/*!
- * Web Fonts from fontspring.com
- *
- * All OpenType features and all extended glyphs have been removed.
- * Fully installable fonts can be purchased at http://www.fontspring.com
- *
- * The fonts included in this stylesheet are subject to the End User License you purchased
- * from Fontspring. The fonts are protected under domestic and international trademark and
- * copyright law. You are prohibited from modifying, reverse engineering, duplicating, or
- * distributing this font software.
- *
- * (c) 2010-2011 Fontspring
- *
- *
- *
- *
- * The fonts included are copyrighted by the vendor listed below.
- *
- * Vendor:      Typedepot
- * License URL: http://www.fontspring.com/fflicense/typedepot
- *
- *
- */
-
-@font-face {
-    font-family: 'CentraleSansBold';
-    src: url('#{$path-fonts}/Centrale_Sans_Bold-webfont.eot');
-    src: url('#{$path-fonts}/Centrale_Sans_Bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('#{$path-fonts}/Centrale_Sans_Bold-webfont.woff') format('woff'),
-         url('#{$path-fonts}/Centrale_Sans_Bold-webfont.ttf') format('truetype'),
-         url('#{$path-fonts}/Centrale_Sans_Bold-webfont.svg#CentraleSansBold') format('svg');
-    font-weight: bold;
-    font-style: normal;
-}
-
+// @font-face {
+//     font-family: 'MuseoSans';
+//     src: font-url('#{$path-fonts}/MuseoSans300.eot');
+//     src: font-url('#{$path-fonts}/MuseoSans300.eot?#iefix') format('embedded-opentype'),
+//          font-url('#{$path-fonts}/MuseoSans300.woff') format('woff'),
+//          font-url('#{$path-fonts}/MuseoSans300.ttf') format('truetype'),
+//          font-url('#{$path-fonts}/MuseoSans300.svg#MuseoSans300') format('svg');
+//     font-weight: normal;
+//     font-style: normal;
+// }
 
 /* Font styles
 // -> PUBLIC, use these to style type globally & in modules
 // -------------------------------------------------------------------------- */
 
-/* --- Headline font -------------------------------------------------------- */
+/* ----- Display type ------------------------------------------------------- */
 
-%font-headline {
-    font-family: "QuadonMedium", $georgia;
-    font-weight: normal;
-    font-style: normal;
-}
-
-/* --- Display font --------------------------------------------------------- */
 %font-display {
-    font-family: "BandaLight", $lucida-grande;
+    font-family: $helvetica;
     font-weight: normal;
     font-style: normal;
 }
 
 %font-display--bold {
     @extend %font-display;
-    font-family: "BandaRegular", $lucida-grande;
+    font-family: $helvetica;
     font-weight: bold;
 }
 
-/* --- Body font ------------------------------------------------------------ */
+
+/* ----- Body type ---------------------------------------------------------- */
 
 %font-body {
-    font-family: "CentraleSansRegular", $lucida-grande;
+    font-family: $helvetica;
     font-weight: normal;
     font-style: normal;
 }
 
+%font-body--italic {
+    @extend %font-body;
+    font-style: italic;
+}
+
 %font-body--bold {
     @extend %font-body;
-    font-family: "CentraleSansBold", $lucida-grande;
     font-weight: bold;
 }
 
@@ -215,4 +108,11 @@
   font-family: "Baskerville", "Palatino", "Book Antiqua", serif;
   font-style: italic;
   font-weight: normal;
+}
+
+/* use the best ampersands from common system fonts... */
+.amp {
+    @extend %amp-system;
+    font-size: $type-size-amp; /* relative to whatever type surrounds it -- it renders slightly bigger */
+    color: inherit;
 }

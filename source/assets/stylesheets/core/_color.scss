@@ -4,19 +4,59 @@
 // -> refer to colors ONLY via the $theme maps
 // ========================================================================== */
 
+/*doc
+---
+title: Color
+name: color
+category: core
+---
+
+Some functions and globals to keep the color scheme DRY and easy to manage in one place. Color for the entire site is handled through structured SASS maps, assigning each color a role:
+
+```
+$theme--default: (
+    text--primary   : $black,
+    text--secondary : #706F6F,
+    text--tertiary  : darken($gray, 10),
+    bg              : white,
+    well            : $gray--superlight,
+    border          : $gray--light,
+    highlight       : $highlight--default,
+    accent          : $blue--dark
+);
+
+```
+You can easily access these colors by "role" with the `theme()` function, like so:
+
+```
+.your-module {
+    color: theme(highlight);
+    background-color: theme(bg);
+
+}
+```
+
+If the site has multiple color schemes (say, "default" and "reverse" themes), you can specify the theme by passing in a second parameter:
+
+```
+background-color: theme(bg, reverse);
+```
+
+The second parameter is optional, and theme() will default to the 'default' theme map.
+
+*/
+
 // Base Colors
 // ----------------------------------------------------------------------
 // -> PRIVATE, do not use outside this settings file
-$black          : #262524;
-$gray           : #898989;
-$orange         : #f4b64e;
-$orange--dark   : #ea8e4d;
-$blue           : #1e6299;
-$blue--dark     : #3077ab;
-$red            : #d82333;
-$red--dark      : #a0262b;
-$green          : #00a556;
-$green--dark    : #187042;
+// -> EXAMPLE:
+$black : #4A4A4A;
+$blue--dark: #8C9498;
+$gray: #C6CBCA;
+$gray--light: #DEE3E3;
+$gray--superlight: #F1F2F3;
+
+$highlight--default: #00AEEF;
 
 // Themes
 // ----------------------------------------------------------------------
@@ -24,13 +64,24 @@ $green--dark    : #187042;
 
 $theme--default: (
     text--primary   : $black,
-    text--secondary : $gray,
-    text--tertiary  : lighten($gray, 10),
+    text--secondary : #706F6F,
+    text--tertiary  : darken($gray, 10),
     bg              : white,
-    well            : lighten($gray, 15),
-    border          : lighten($gray, 10),
-    highlight       : $blue,
-    highlight--dark : $blue--dark
+    well            : $gray--superlight,
+    border          : $gray--light,
+    highlight       : $highlight--default,
+    accent          : $blue--dark
+);
+
+$theme--reverse: (
+    text--primary   : white,
+    text--secondary : #ccc,
+    text--tertiary  : #999,
+    bg              : #333,
+    well            : darken(#333, 5),
+    border          : #666,
+    highlight       : white,
+    accent          : #999
 );
 
 // shortcut "get" function to access theme map values
@@ -44,18 +95,13 @@ $theme--default: (
   }
 }
 
-// base text colors
-// -> PUBLIC
-$color-text--primary: theme(text--primary);
-$color-text--secondary: theme(text--secondary);
-
-$color-selection: red;
-
 // Theme Globals
 // ----------------------------------------------------------------------
 // -> set up all the base colors
 
 @mixin theme($theme) {
+    color: theme(text--secondary, $theme);
+    background-color: theme(bg, $theme);
 
     .well {
         background: theme(well, $theme);
@@ -69,7 +115,6 @@ $color-selection: red;
         color: theme(accent, $theme);
     }
 
-    html,
     button,
     input,
     select,
@@ -85,7 +130,7 @@ $color-selection: red;
         color: theme(text--secondary, $theme);
     }
 
-    a, a:link, a:visited {
+    a {
         color: theme(highlight, $theme);
     }
 
@@ -121,6 +166,6 @@ $color-selection: red;
 
 /* Default
 // -------------------------------------------------------------------------- */
-%theme--default, body {
+body {
   @include theme(default);
 }

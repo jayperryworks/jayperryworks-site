@@ -1,0 +1,86 @@
+/* =============================================================================
+//  Button module
+// ========================================================================== */
+
+@import "../core/*";
+
+/*doc
+---
+title: Buttons
+name: button
+category: atoms
+---
+
+You can apply button styles to pretty much anything you'd like. Anchors and button elements, though, would be the winners on the semantics front.
+
+You can mix and match classes to get the hierarchy/size you need. "small primary" and "large tertiary" are both kosher.
+
+```html_example
+<a href="#" class="button">Default</a>
+<a href="#" class="button primary">Primary</a>
+<a href="#" class="button secondary">Secondary</a>
+<a href="#" class="button tertiary">Tertiary</a>
+<a href="#" class="button small">Small</a>
+<a href="#" class="button large">Large</a>
+```
+
+*/
+
+/* Config/mixins
+// -------------------------------------------------------------------------- */
+$button-radius--default: 3px;
+
+
+/* Base
+// -------------------------------------------------------------------------- */
+
+button, .button {
+
+}
+
+
+
+/* Modifiers
+// -------------------------------------------------------------------------- */
+button, .button {
+
+    // --- types ---------------------------------------------------------------
+    // -> variations that indicate relative importance.
+
+    // obnoxious button that demands attention. click me! i'm all orange and stuff.
+    &.primary {
+
+    }
+
+    // an introvert button; not making a big deal of it, just here if you need me.
+    &.secondary {
+
+    }
+
+    // --- sizes ---------------------------------------------------------------
+    // -> default size is "medium." add these classes to go bigger or smaller.
+
+    &.small {
+
+    }
+
+    &.large {
+
+    }
+
+    // --- special variations --------------------------------------------------
+    // -> buttons of a strange and amazing nature
+
+    // a "hidden," text-only button. doesn't look like a button but behaves like one in every other way.
+    &.text {
+
+    }
+}
+
+/* Submodules
+// -------------------------------------------------------------------------- */
+
+// group/row of buttons joined together
+.button-group {
+
+}
