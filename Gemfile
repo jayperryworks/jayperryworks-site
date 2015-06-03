@@ -17,6 +17,10 @@ gem "middleman-search_engine_sitemap"
 gem "middleman-imageoptim"
 gem "middleman-blog"
 
+# Compass extensions
+gem "compass-import-once"
+gem "SassyJSON"
+
 # Markdown renderer
 gem "redcarpet"
 

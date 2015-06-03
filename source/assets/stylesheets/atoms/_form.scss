@@ -21,11 +21,11 @@ form {
 }
 
 fieldset {
-	
+
 }
 
 legend {
-	
+
 }
 
 input, textarea, select {
@@ -36,12 +36,28 @@ input, textarea, select {
 	box-sizing: border-box;
 	box-shadow: none;
 	text-shadow: none;
+    color: theme(text--secondary);
+    background: theme(well);
+    border-color: theme(border);
+
+    // http://css-tricks.com/snippets/css/style-placeholder-text/
+    &::-webkit-input-placeholder,
+    &:-moz-placeholder,
+    &::-moz-placeholder,
+    &:-ms-input-placeholder  {
+        color: theme(text--tertiary);
+    }
 
 	&:focus {
+        border-color: theme(highlight);
 		outline: 0;
 		outline: thin dotted \9; /* IE6-9 */
 		box-shadow: none;
 	}
+}
+
+input, textarea {
+
 }
 
 [type="checkbox"] {
@@ -52,7 +68,7 @@ input, textarea, select {
 input[type="search"] {
 
 	&:focus {
-		
+
 	}
 }
 
@@ -68,9 +84,9 @@ textarea {
 }
 
 select {
-	
+
 }
 
 label {
-	
+
 }
