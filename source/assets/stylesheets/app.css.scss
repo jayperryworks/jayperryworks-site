@@ -9,6 +9,7 @@
 // -> global settings, resets, helper classes
 ///////////////////////////////////////////////////////////////////////////// */
 
+@import "core/libs"; // vendor libs, dependencies
 @import "core/settings"; // global settings
 @import "core/animation"; // global animation/behaviors
 @import "core/fonts"; // all @font-face things and base type scale

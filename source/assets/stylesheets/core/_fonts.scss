@@ -52,18 +52,42 @@ $font-scale: 10px 13px 16px 19px 26px 42px 68px 110px;
 /* Globals
 // -------------------------------------------------------------------------- */
 
-/* ----- Example @font-face ------------------------------------------------- */
+/* ----- Quadon ------------------------------------------------------------- */
 
-// @font-face {
-//     font-family: 'MuseoSans';
-//     src: font-url('#{$path-fonts}/MuseoSans300.eot');
-//     src: font-url('#{$path-fonts}/MuseoSans300.eot?#iefix') format('embedded-opentype'),
-//          font-url('#{$path-fonts}/MuseoSans300.woff') format('woff'),
-//          font-url('#{$path-fonts}/MuseoSans300.ttf') format('truetype'),
-//          font-url('#{$path-fonts}/MuseoSans300.svg#MuseoSans300') format('svg');
-//     font-weight: normal;
-//     font-style: normal;
-// }
+@font-face {
+    font-family: 'Quadon';
+    src: font-url('#{$path-fonts}/Quadon-Medium-webfont.eot');
+    src: font-url('#{$path-fonts}/Quadon-Medium-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('#{$path-fonts}/Quadon-Medium-webfont.woff') format('woff'),
+         font-url('#{$path-fonts}/Quadon-Medium-webfont.ttf') format('truetype'),
+         font-url('#{$path-fonts}/Quadon-Medium-webfont.svg#Quadon-Medium-webfont') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ----- Centrale Sans ------------------------------------------------------ */
+
+@font-face {
+    font-family: 'Centrale';
+    src: font-url('#{$path-fonts}/Centrale_Sans_Regular-webfont.eot');
+    src: font-url('#{$path-fonts}/Centrale_Sans_Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('#{$path-fonts}/Centrale_Sans_Regular-webfont.woff') format('woff'),
+         font-url('#{$path-fonts}/Centrale_Sans_Regular-webfont.ttf') format('truetype'),
+         font-url('#{$path-fonts}/Centrale_Sans_Regular-webfont.svg#Centrale_Sans_Regular-webfont') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Centrale-Bold';
+    src: font-url('#{$path-fonts}/Centrale_Sans_Bold-webfont.eot');
+    src: font-url('#{$path-fonts}/Centrale_Sans_Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('#{$path-fonts}/Centrale_Sans_Bold-webfont.woff') format('woff'),
+         font-url('#{$path-fonts}/Centrale_Sans_Bold-webfont.ttf') format('truetype'),
+         font-url('#{$path-fonts}/Centrale_Sans_Bold-webfont.svg#Centrale_Sans_Bold-webfont') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
 
 /* Font styles
 // -> PUBLIC, use these to style type globally & in modules
@@ -72,33 +96,27 @@ $font-scale: 10px 13px 16px 19px 26px 42px 68px 110px;
 /* ----- Display type ------------------------------------------------------- */
 
 %font-display {
-    font-family: $helvetica;
+    font-family: 'Quadon', $helvetica;
     font-weight: normal;
     font-style: normal;
 }
-
-%font-display--bold {
-    @extend %font-display;
-    font-family: $helvetica;
-    font-weight: bold;
-}
-
 
 /* ----- Body type ---------------------------------------------------------- */
 
 %font-body {
-    font-family: $helvetica;
+    font-family: 'Centrale', $helvetica;
     font-weight: normal;
     font-style: normal;
 }
 
-%font-body--italic {
-    @extend %font-body;
-    font-style: italic;
-}
+// %font-body--italic {
+//     @extend %font-body;
+//     font-style: italic;
+// }
 
 %font-body--bold {
     @extend %font-body;
+    font-family: 'Centrale-Bold', $helvetica;
     font-weight: bold;
 }
 
