@@ -4,7 +4,7 @@
 
 # Change Compass configuration
 compass_config do |config|
-    require "SassyJSON"
+    # require "SassyJSON"
     require "compass/import-once/activate"
 #   config.output_style = :compact
 end

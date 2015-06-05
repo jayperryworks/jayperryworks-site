@@ -4,7 +4,7 @@
 // -> refer to colors ONLY via the $theme maps
 // ========================================================================== */
 
-@import "SassyJSON";
+// @import "SassyJSON";
 // @import "data/colors.json";
 
 /*doc
@@ -58,14 +58,15 @@ $black        : #474747;
 $gray         : #b1b1b1;
 
 // highlights
-$orange       : #f4b64e;
-$orange--dark : #ea8e4d;
-$blue         : #3077ab;
-$blue--dark   : #1e6299;
-$red          : #d82333;
-$red--dark    : #a0262b;
-$green        : #00a556;
-$green--dark  : #187042;
+// -> pulled in from /data/colors.yml
+// $orange       : #f4b64e;
+// $orange--dark : #ea8e4d;
+// $blue         : #3077ab;
+// $blue--dark   : #1e6299;
+// $red          : #d82333;
+// $red--dark    : #a0262b;
+// $green        : #00a556;
+// $green--dark  : #187042;
 
 // Themes
 // ----------------------------------------------------------------------
@@ -80,7 +81,7 @@ $theme--default: (
     bg              : white,
     well            : lighten($gray, 20),
     border          : lighten($gray, 10),
-    highlight       : <%= data.colors.orange %>
+    highlight       : <%= data.colors["orange"] %>
 );
 
 // shortcut "get" function to access theme map values
@@ -96,7 +97,7 @@ $theme--default: (
 
 // Theme Globals
 // ----------------------------------------------------------------------
-// -> set up all the base colors
+// -> set up helper classes and base colors
 
 @mixin theme($theme) {
     color: theme(text--secondary, $theme);

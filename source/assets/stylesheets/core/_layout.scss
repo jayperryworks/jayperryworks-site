@@ -74,10 +74,6 @@ $layout-w--wide: 1200px;
     max-width: add_outside_gutters($layout-w--narrow);
 }
 
-%l-base-w--wide {
-    max-width: add_outside_gutters($layout-w--wide);
-}
-
 // --- grid variables ----------------------------------------------------------
 
 // Singularity globals
@@ -163,10 +159,6 @@ html {
     // narrow version of layout wrapper
     &.narrow {
         @extend %l-base-w--narrow;
-    }
-
-    &.wide {
-        @extend %l-base-w--wide;
     }
 }
 

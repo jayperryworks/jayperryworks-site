@@ -30,7 +30,7 @@
 .icon.logo-jp {
     @include rem(width, 40px);
     @include rem(height, 39px);
-    fill: $blue;
+    fill: theme(highlight);
     color: white;
 }
 
@@ -39,20 +39,20 @@
     @include rem(width, 30px);
     @include rem(height, 30px);
     @include rem(padding, 8px);
-    border: 2px solid $black;
+    border: 2px solid theme(text--primary);
     border-radius: 2px;
-    fill: $black;
+    fill: theme(text--primary);
     background-color: white;
 
     &:hover {
         fill: white;
-        background-color: $black;
+        background-color: theme(text--primary);
     }
 }
 
 
     .logo-jp-bg {
-        fill: $blue;
+        fill: theme(highlight);
     }
     .logo-jp-letter {
         fill: white;
