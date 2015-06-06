@@ -4,8 +4,8 @@
 
 # Change Compass configuration
 compass_config do |config|
-    # require "SassyJSON"
     require "compass/import-once/activate"
+    require "breakpoint-slicer"
 #   config.output_style = :compact
 end
 
@@ -83,8 +83,11 @@ set :spritemap, 'assets/images/spritemap.svg'
 # -> use bundler for back-end dependencies, bower for front-end dependencies
 # -> http://dejimata.com/2013/11/4/bundler-meet-bower
 after_configuration do
-  @bower_config = JSON.parse(IO.read("#{root}/.bowerrc"))
-  sprockets.append_path File.join "#{root}", @bower_config["directory"]
+    @bower_config = JSON.parse(IO.read("#{root}/.bowerrc"))
+    sprockets.append_path File.join "#{root}", @bower_config["directory"]
+    sprockets.import_asset "jquery/dist/jquery.min.js"
+    sprockets.import_asset "modernizr/modernizr.js"
+    sprockets.import_asset "svg4everybody/svg4everybody.ie8.min.js"
 end
 
 # Build-specific configuration

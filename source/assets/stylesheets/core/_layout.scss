@@ -26,22 +26,23 @@ Global layout styles.
 
 // --- global breakpoints ------------------------------------------------------
 // -> requires Breakpoint library
-$breakpoints: 480px 768px 1024px 1280px;
 
-$screen--xsmall : nth($breakpoints, 1);
-$screen--small  : nth($breakpoints, 2);
-$screen--medium : nth($breakpoints, 3);
-$screen--large  : nth($breakpoints, 4);
+// set up breakpoints
+$breakpoints: add-breakpoint("xsmall", 480px);
+$breakpoints: add-breakpoint("small", 768px);
+$breakpoints: add-breakpoint("medium", 1024px);
+$breakpoints: add-breakpoint("large", 1280px);
 
+// breakpoints settings
 $breakpoint-to-ems: true;
 
+// screen-size helper classes
 %hide { display: none; }
 
-// screen-size helper classes
 .show-small {
     @extend %hide;
 
-    @include breakpoint($screen--small) {
+    @include respond-to("small") {
         display: block;
     }
 }
@@ -49,7 +50,7 @@ $breakpoint-to-ems: true;
 .show-medium {
     @extend %hide;
 
-    @include breakpoint($screen--medium) {
+    @include respond-to("medium") {
         display: block;
     }
 }
@@ -57,7 +58,7 @@ $breakpoint-to-ems: true;
 // --- global element dimensions -----------------------------------------------
 $gutter: fs(4); // based on font scale (see _fonts.scss)
 $gutter-outside: fs(6); // based on font scale (see _fonts.scss)
-$layout-w: $screen--medium; // max width of main layout
+$layout-w: 1024px; // max width of main layout
 $layout-w--narrow: 680px; // max width of 'narrow' elements (e.g. body type)
 $layout-w--wide: 1200px;
 
@@ -117,11 +118,11 @@ html {
     // and we only have to change one thing
     font-size: 95%;
 
-    @include breakpoint($screen--small) {
+    @include respond-to("small") {
         font-size: 100%;
     }
 
-    @include breakpoint($screen--medium) {
+    @include respond-to("medium") {
         font-size: 110%;
     }
 

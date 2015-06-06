@@ -45,12 +45,18 @@ The gallery module uses the [Singularity Quick Spanner plugin](https://github.co
 
 @import "../core/*";
 
+@include add-gutter(1px);
+
+// Singularity Quick Spanner settings
+$gallery-gutter-style: "split"; // gutter style
+$sqs-thumb-span-cancel-last-row-margins: true; // remove margins on last row of grid
+
 /* Base
 // ---------------------------------------------------------------------------*/
 
 .gallery, .post-body > ul {
     @include unstyled-list;
-    display: block;
+    display: block; // in case flexbox isn't supported
     display: flex;
     flex-flow: row wrap;
     align-items: stretch;
@@ -61,13 +67,13 @@ The gallery module uses the [Singularity Quick Spanner plugin](https://github.co
 
 .gallery.small {
     .gallery-item {
-        @include breakpoint($screen--xsmall) {
+        @include respond-to("xsmall") {
             flex: 0 0 (100%/2);
         }
-        @include breakpoint($screen--small) {
+        @include respond-to("small") {
             flex: 0 0 (100%/3);
         }
-        @include breakpoint($screen--medium) {
+        @include respond-to("medium") {
             flex: 0 0 (100%/4);
         }
     }
@@ -75,7 +81,7 @@ The gallery module uses the [Singularity Quick Spanner plugin](https://github.co
 
 .gallery.large {
     .gallery-item {
-        @include breakpoint($screen--small) {
+        @include respond-to("small") {
             flex: 0 0 50%;
         }
     }
@@ -90,11 +96,18 @@ The gallery module uses the [Singularity Quick Spanner plugin](https://github.co
     margin: 0 0 $gutter 0;
     padding: $gutter $gutter 0 0;
 
-    @include breakpoint($screen--small) {
+    @include respond-to("small") {
         flex: 0 0 50%;
     }
 
-    @include breakpoint($screen--medium) {
+    @include respond-to("medium") {
         flex: 0 0 (100%/3);
+    }
+
+    .no-flexbox & {
+        @include respond-to("small") {
+            @include thumb-span(3, $gutstyle: $gallery-gutter-style);
+            padding-bottom: 0;
+        }
     }
 }

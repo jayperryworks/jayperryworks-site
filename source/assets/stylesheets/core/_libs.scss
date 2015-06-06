@@ -10,8 +10,11 @@
 // bower components
 @import "sass-toolkit/stylesheets/toolkit";
 @import "bourbon/app/assets/stylesheets/bourbon";
+// @import "compass-breakpoint";
 @import "breakpoint-sass/stylesheets/breakpoint";
+// @import "breakpoint-slicer/stylesheets/breakpoint-slicer";
 @import "singularity/stylesheets/singularitygs";
+@import "singularity-quick-spanner/stylesheets/singularity-quick-spanner";
 @import "sass-units/units";
 @import "sass-list-helpers/helpers-lists";
 @import "sass-type-helpers/type-helpers";

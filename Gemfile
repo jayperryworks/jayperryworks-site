@@ -19,7 +19,7 @@ gem "middleman-blog"
 
 # Compass extensions
 gem "compass-import-once"
-gem "SassyJSON"
+gem "breakpoint-slicer"
 
 # Markdown renderer
 gem "redcarpet"
