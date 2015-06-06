@@ -1,0 +1,100 @@
+/* ==========================================================================
+// Gallery module
+// -> arrange child elements into even rows and columns
+// ========================================================================== */
+
+/*doc
+---
+title: Gallery
+name: gallery
+category: organisms
+---
+
+A gallery is a grid of small bits of content- usually listings or thumbnails. It breaks the content into even columns and rows. It is responsive, so the column number will change based on screen width, and column width is fluid (percentage-based).
+
+```html_example
+    <ul class='gallery'>
+        <li class="gallery-item">
+            Wow, I'm in a gallery.
+        </li>
+        <li class="gallery-item">
+            Me too.
+        </li>
+    </ul>
+```
+
+Typically, you'll mark up a gallery as an unordered list, but it will work with most block-level elements (like <nav> or <div>). Just give the container a "gallery" class and the children a "gallery-item" class.
+
+There are three (column) size variations: small, medium, and large. Medium is default, so that's the size you get with just "gallery." This only affects overall column width: a "large" gallery will have fewer columns at any given screen size than a "small" gallery. Note any size variation can be used at any screen size. The best choice mainly depends on the type of content you're displaying. If there's lots of text, it might look squished in a "small" gallery, whereas tiny icons might get blown up really huge in a "large" gallery.
+
+```html_example
+    <!-- small gallery, with narrow columns -->
+    <ul class="gallery small"></ul>
+
+    <!-- medium gallery, slightly wider columns -->
+    <!-- (default, no modifier needed) -->
+    <ul class="gallery"></ul>
+
+    <!-- large gallery with wide columns -->
+    <ul class="gallery large"></ul>
+```
+
+The gallery module uses the [Singularity Quick Spanner plugin](https://github.com/lolmaus/singularity-quick-spanner) and it's Thumbnail Grid mixins. This uses nth-child selectors heavily, so we'll prob need to polyfill this for IE8.
+
+*/
+
+@import "../core/*";
+
+/* Base
+// ---------------------------------------------------------------------------*/
+
+.gallery, .post-body > ul {
+    @include unstyled-list;
+    display: block;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+}
+
+/* Modifiers
+// ---------------------------------------------------------------------------*/
+
+.gallery.small {
+    .gallery-item {
+        @include breakpoint($screen--xsmall) {
+            flex: 0 0 (100%/2);
+        }
+        @include breakpoint($screen--small) {
+            flex: 0 0 (100%/3);
+        }
+        @include breakpoint($screen--medium) {
+            flex: 0 0 (100%/4);
+        }
+    }
+}
+
+.gallery.large {
+    .gallery-item {
+        @include breakpoint($screen--small) {
+            flex: 0 0 50%;
+        }
+    }
+}
+
+
+/* Submodules
+// ---------------------------------------------------------------------------*/
+
+.gallery-item, .post-body li {
+    $gutter: 1px;
+    margin: 0 0 $gutter 0;
+    padding: $gutter $gutter 0 0;
+
+    @include breakpoint($screen--small) {
+        flex: 0 0 50%;
+    }
+
+    @include breakpoint($screen--medium) {
+        flex: 0 0 (100%/3);
+    }
+}
