@@ -47,7 +47,8 @@ $type-line_height: 1.5;
 
 // modular scale
 // -> requires SASS Type Helpers
-$font-scale: 10px 13px 16px 19px 26px 42px 68px 110px;
+// -> perfect fifth, 16-40 base (http://www.modularscale.com/?16,40&px&1.5&web&text)
+$font-scale: 11px 16px 18px 24px 27px 36px 40px 54px 60px 81px;
 
 /* Globals
 // -------------------------------------------------------------------------- */
@@ -56,6 +57,17 @@ $font-scale: 10px 13px 16px 19px 26px 42px 68px 110px;
 
 @font-face {
     font-family: 'Quadon';
+    src: font-url('#{$path-fonts}/Quadon-Regular-webfont.eot');
+    src: font-url('#{$path-fonts}/Quadon-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('#{$path-fonts}/Quadon-Regular-webfont.woff') format('woff'),
+         font-url('#{$path-fonts}/Quadon-Regular-webfont.ttf') format('truetype'),
+         font-url('#{$path-fonts}/Quadon-Regular-webfont.svg#Quadon-Regular-webfont') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Quadon-Medium';
     src: font-url('#{$path-fonts}/Quadon-Medium-webfont.eot');
     src: font-url('#{$path-fonts}/Quadon-Medium-webfont.eot?#iefix') format('embedded-opentype'),
          font-url('#{$path-fonts}/Quadon-Medium-webfont.woff') format('woff'),

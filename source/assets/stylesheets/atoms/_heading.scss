@@ -58,27 +58,27 @@ h1, .alpha, %alpha {
 
 h2, .beta, %beta {
     @extend %font-display;
-    @include font-scale(6);
+    @include font-scale(5);
 }
 
 h3, .cappa, %cappa {
     @extend %font-display;
-    @include font-scale(5);
+    @include font-scale(4);
 }
 
 h4, .delta, %delta {
     @extend %font-display;
-    @include font-scale(4);
+    @include font-scale(3);
 }
 
 h5, .epsilon, %epsilon {
     @extend %font-display;
-    @include font-scale(3);
+    @include font-scale(2);
 }
 
 h6, .zeta, %zeta {
-    @extend %font-display;
-    @include font-scale(2);
+    @extend %font-body;
+    @include font-scale(1);
 }
 
 /* Modules
