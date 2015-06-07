@@ -20,14 +20,15 @@
 
     <% if current_page.data.editions.present? %>
     <section class="panel">
-        <h1 class="panel-header">Available Editions</h1>
+        <h2 class="panel-slug">Available Editions</h2>
         <nav class="nav jump">
             <ul>
                 <% current_page.data.editions.each do |edition| %>
                     <% if edition.name %>
-                    <li class="media_box">
+                    <li>
                         <a href="#edition--<%= edition.name %>">
-                            <%= partial("layouts/partials/icon", :locals => { :id => "edition-#{edition.name}", :classes => "edition", :title => "#{edition.name.titleize} Print Edition" }) %>
+                            <%# partial("layouts/partials/icon", :locals => { :id => "edition-#{edition.name}", :classes => "edition", :title => "#{edition.name.titleize} Print Edition" }) %>
+                            <%= edition.name %>
                         </a>
                     </li>
                     <% end %>

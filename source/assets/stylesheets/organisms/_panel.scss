@@ -8,13 +8,11 @@
 // ---------------------------------------------------------------------------*/
 
 .panel {
-    @extend %l-base-w;
-    @include rem(padding-left, $gutter-outside);
-    @include rem(padding-right, $gutter-outside);
+    @include rem(padding, $gutter-outside);
     @include border(top);
     position: relative;
 
-    &:first-child {
+    &:first-of-type {
         border-top: none;
     }
 }
@@ -29,10 +27,8 @@
 /* Submodules
 // ---------------------------------------------------------------------------*/
 
-.panel {
-    &-header {
-        @include font-scale(4);
-        margin-top: 0.5em;
-        text-align: center;
-    }
+.panel-slug {
+    @include font-scale(3);
+    margin-top: -($gutter-outside/2);
+    text-align: center;
 }

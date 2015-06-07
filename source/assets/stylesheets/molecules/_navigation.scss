@@ -12,17 +12,19 @@
 /* Modifiers
 // ---------------------------------------------------------------------------*/
 
-.nav {
+.nav.jump {
+    $w: 60px;
 
-    &.jump {
-        $w: 60px;
+    @extend %l-abs;
+    @include unstyled-list;
+    @include rem(width, $w);
 
-        @extend %l-abs;
-        @include rem(width, $w);
+    & ~ *, & ~ .media {
+        @include rem(margin-left, $w);
+    }
 
-        & + *, & + .media {
-            @include rem(margin-left, $w);
-        }
+    > ul {
+        @include unstyled-list;
     }
 }
 

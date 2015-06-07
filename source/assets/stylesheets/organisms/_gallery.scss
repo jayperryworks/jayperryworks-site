@@ -77,12 +77,32 @@ $sqs-thumb-span-cancel-last-row-margins: true; // remove margins on last row of 
             flex: 0 0 (100%/4);
         }
     }
+
+    // non-flexbox fallback
+    .no-flexbox & {
+        .gallery-item {
+            @include respond-to("small") {
+                @include thumb-span(4, $gutstyle: $gallery-gutter-style);
+                padding-bottom: 0;
+            }
+        }
+    }
 }
 
 .gallery.large {
     .gallery-item {
         @include respond-to("small") {
             flex: 0 0 50%;
+        }
+    }
+
+    // non-flexbox fallback
+    .no-flexbox & {
+        .gallery-item {
+            @include respond-to("small") {
+                @include thumb-span(2, $gutstyle: $gallery-gutter-style);
+                padding-bottom: 0;
+            }
         }
     }
 }
@@ -104,6 +124,7 @@ $sqs-thumb-span-cancel-last-row-margins: true; // remove margins on last row of 
         flex: 0 0 (100%/3);
     }
 
+    // non-flexbox fallback
     .no-flexbox & {
         @include respond-to("small") {
             @include thumb-span(3, $gutstyle: $gallery-gutter-style);
