@@ -9,30 +9,17 @@ $header-h: 50px;
 /* Base
 // ---------------------------------------------------------------------------*/
 
-.header {
+.header, [role="banner"] {
 
 }
 
 /* Modifiers
 // ---------------------------------------------------------------------------*/
 
-.header {
+.header, [role="banner"] {
     &.global {
         height: $header-h;
         text-align: center;
-
-        // .logo.prints {
-        //     @include rem(width, 120px);
-        //     @include rem(height, $header-h);
-        //     // @include rem(padding-top, 12px);
-        //     @include rem(padding-bottom, 12px);
-        //     display: inline-block;
-
-        //     .icon {
-        //         width: 100%;
-        //         height: 100%;
-        //     }
-        // }
     }
 }
 

@@ -18,6 +18,7 @@
 
     </section>
 
+    <!-- Editions -->
     <% if current_page.data.editions.present? %>
     <section class="panel">
         <h2 class="panel-slug">Available Editions</h2>
@@ -26,10 +27,7 @@
                 <% current_page.data.editions.each do |edition| %>
                     <% if edition.name %>
                     <li>
-                        <a href="#edition--<%= edition.name %>">
-                            <%# partial("layouts/partials/icon", :locals => { :id => "edition-#{edition.name}", :classes => "edition", :title => "#{edition.name.titleize} Print Edition" }) %>
-                            <%= edition.name %>
-                        </a>
+                        <a class="nav-item" href="#edition--<%= edition.name %>"><%= truncate(edition.name, :length => 1) %></a>
                     </li>
                     <% end %>
                 <% end %>

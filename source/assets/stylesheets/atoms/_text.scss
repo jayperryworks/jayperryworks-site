@@ -37,7 +37,14 @@ p {
 }
 
 a {
+    @extend %base-transition;
+    @extend %font-body;
     text-decoration: none;
+    color: theme('highlight');
+
+    &:hover, &:active {
+        color: darken(theme('highlight'), 10);
+    }
 }
 
 strong {

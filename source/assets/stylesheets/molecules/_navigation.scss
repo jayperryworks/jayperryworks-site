@@ -3,14 +3,14 @@
 // ========================================================================== */
 
 /* Base
-// ---------------------------------------------------------------------------*/
+// -------------------------------------------------------------------------- */
 
 .nav {
 
 }
 
 /* Modifiers
-// ---------------------------------------------------------------------------*/
+// -------------------------------------------------------------------------- */
 
 .nav.jump {
     $w: 60px;
@@ -19,6 +19,7 @@
     @include unstyled-list;
     @include rem(width, $w);
 
+    // add left margin to siblings (set up 2 cols)
     & ~ *, & ~ .media {
         @include rem(margin-left, $w);
     }
@@ -29,9 +30,34 @@
 }
 
 /* Submodules
-// ---------------------------------------------------------------------------*/
+// -------------------------------------------------------------------------- */
 
-.nav {
+/* --- .nav.item ------------------------------------------------------------ */
+.nav.jump .nav-item {
+    @extend %font-display;
+    @include rem(width, 30px);
+    // @include rem(height, 30px);
+    @include border($color: theme('text--primary'));
+    display: block;
+    padding: 0.3em;
+    text-transform: uppercase;
+    text-align: center;
+    vertical-align: middle;
+    color: theme('text--primary');
 
+    &:hover, &:active {
+        color: theme('bg');
+        background-color: theme('text--primary');
+    }
+}
+
+.nav.jump .nav-label {
+    display: inline-block;
+    visibility: hidden;
+    text-align: center;
+
+    &:first-letter {
+        visibility: visible;
+    }
 }
 
