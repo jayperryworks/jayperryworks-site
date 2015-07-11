@@ -29,6 +29,7 @@
 
 .panel-slug {
     @include font-scale(3);
-    margin-top: -($gutter-outside/2);
+    margin-top: -($gutter-outside/ms(2));
+    margin-bottom: $gutter-outside;
     text-align: center;
 }

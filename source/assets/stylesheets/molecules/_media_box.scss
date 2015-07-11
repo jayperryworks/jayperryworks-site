@@ -17,11 +17,16 @@
 
 .media.full {
     @include clearfix;
-    margin: 0;
-    margin-top: 1em;
+    @include rem(margin, 0 0 $gutter 0);
+    @include rem(padding, 0 0 $gutter 0);
+    @include border('bottom');
+
+    display: block;
+
+    &:last-child { border-bottom: none; }
 
     @include layout(2 1, $gutter) {
-        img {
+        .media-img {
             @include grid-span(1, 1);
         }
         .media-description {
