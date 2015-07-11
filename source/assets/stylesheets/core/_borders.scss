@@ -42,32 +42,29 @@ $base-radius: 3px !default;
 // Border width & style
 // -----------------------------------------------------------------------------
 
-$borders: 1px 4px !default;
+$borders: 1px 2px 4px !default;
 $border-style: solid !default;
 
+// get function for border widths
+@function border-w($w: 'thin') {
+    @if ($w == 'thin') {
+        @return nth($borders, 1);
+    } @else if ($w == 'mid') {
+        @return nth($borders, 2);
+    } @else if ($w == 'thick') {
+        @return nth($borders, 3);
+    } @else {
+        @return #{$w};
+    }
+}
+
 // make a standard border/hairline that works with the parent color theme
-@mixin border($sides: all, $w: thin, $color: theme('border'), $style: $border-style) {
+@mixin border($sides: all, $w: 'thin', $color: theme('border'), $style: $border-style) {
     @if ($sides == all) {
-        @if ($w == thin) {
-            border-width: nth($borders, 1);
-        } @else if ($w == thick) {
-            border-width: nth($borders, 2);
-        } @else {
-            border-width: #{$w};
-        }
-        border-style: $style;
-        border-color: $color;
+        border: border-w($w) $style $color;
     } @else {
         @each $side in $sides {
-            @if ($w == thin) {
-                border-#{$side}-width: nth($borders, 1);
-            } @else if ($w == thick) {
-                border-#{$side}-width: nth($borders, 2);
-            } @else {
-                border-width: #{$w};
-            }
-            border-#{$side}-style: $style;
-            border-#{$side}-color: $color;
+            border-#{$side}: border-w($w) $style $color;
         }
     }
 }
