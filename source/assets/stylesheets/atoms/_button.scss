@@ -35,6 +35,7 @@ $button-radius--default: 3px;
 // -------------------------------------------------------------------------- */
 
 button, .button {
+    @extend %font-display;
 
 }
 

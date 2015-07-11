@@ -5,7 +5,6 @@
 # Change Compass configuration
 compass_config do |config|
     require "compass/import-once/activate"
-    require "breakpoint-slicer"
 #   config.output_style = :compact
 end
 

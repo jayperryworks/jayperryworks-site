@@ -21,7 +21,7 @@ $theme--default: (
     text--primary   : $black,
     text--secondary : #706F6F,
     text--tertiary  : darken($gray, 10),
-    bg              : white,
+    bg              : #fff,
     well            : $gray--superlight,
     border          : $gray--light,
     highlight       : $highlight--default,
@@ -73,56 +73,99 @@ $gray         : #b1b1b1;
 // -> PUBLIC, use these for color references
 
 // note: highlight is default; variations are assigned in local styles
-$theme--default: (
-    text--primary   : $black,
-    text--secondary : $gray,
-    text--tertiary  : lighten($gray, 10),
-    text--body      : darken($gray, 20),
-    bg              : white,
-    well            : lighten($gray, 20),
-    border          : lighten($gray, 10),
-    highlight       : <%= data.colors["orange"] %>
+$themes: (
+    'default': (
+        'text': (
+            'primary'   : $black,
+            'secondary' : $gray,
+            'tertiary'  : lighten($gray, 10),
+            'body'      : darken($gray, 20),
+        ),
+        'bg'              : #fff,
+        'well'            : lighten($gray, 20),
+        'border'          : lighten($gray, 10),
+        'highlight'       : <%= data.colors["orange"] %>
+    ),
+    'reverse': (
+        'text': (
+            'primary'   : #fff,
+            'secondary' : $gray,
+            'tertiary'  : lighten($gray, 10),
+            'body'      : darken($gray, 20),
+        ),
+        'bg'              : $black,
+        'well'            : darken($black, 20),
+        'border'          : lighten($black, 20),
+        'highlight'       : <%= data.colors["orange"] %>
+    ),
+    'wash': (
+        'text': (
+            'primary'   : $black,
+            'secondary' : $gray,
+            'tertiary'  : lighten($gray, 10),
+            'body'      : darken($gray, 20),
+        ),
+        'bg'              : <%= data.colors["orange"] %>,
+        'well'            : <%= data.colors["orange--dark"] %>,
+        'border'          : <%= data.colors["orange--dark"] %>,
+        'highlight'       : #fff
+    )
 );
 
 // shortcut "get" function to access theme map values
 // -> PUBLIC
-// -> USAGE: color: theme(text--primary);
-@function theme($key, $name: "default") {
-  @if ($name == "reverse") {
-    @return map-get($theme--reverse, $key);
-  } @else {
-    @return map-get($theme--default, $key);
-  }
+// -> USAGE:
+//      color: theme('text' 'primary');
+//      color: theme('highlight', 'reverse');
+@function theme($colors, $name: 'default') {
+    $map: map-get($themes, $name);
+    @each $color in $colors {
+        $map: map-get($map, $color);
+    }
+    @return $map;
+
 }
+
+@debug theme('text' 'primary', 'reverse');
 
 // Theme Globals
 // ----------------------------------------------------------------------
 // -> set up helper classes and base colors
 
 @mixin theme($theme) {
-    color: theme(text--secondary, $theme);
-    background-color: theme(bg, $theme);
+    color: theme('text' 'secondary', $theme);
+    background-color: theme('bg', $theme);
+    border-color: theme('border', $theme);
 
     // highlight color when you select something
     ::selection {
-      background: theme(highlight, $theme);
+      background: theme('highlight', $theme);
       text-shadow: none;
     }
 
     // ditto, for mozilla engine
     ::-moz-selection {
-      background: theme(highlight, $theme);
+      background: theme('highlight', $theme);
       text-shadow: none;
     }
 
     // helper classes
-    .well { background: theme(well, $theme); }
+    .well { background: theme('well', $theme); }
 
-    .highlight { color: theme(highlight, $theme); }
+    .highlight { color: theme('highlight', $theme); }
 }
 
-/* Default
+/* Themes
+// -> @extend these to apply a theme to a module
 // -------------------------------------------------------------------------- */
 body {
-  @include theme(default);
+    @include theme('default');
+}
+
+%theme--reverse {
+    @include theme('reverse');
+}
+
+%theme--wash {
+    @include theme('wash');
 }

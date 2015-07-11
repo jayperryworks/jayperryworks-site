@@ -27,7 +27,7 @@
                 <% current_page.data.editions.each do |edition| %>
                     <% if edition.name %>
                     <li>
-                        <a class="nav-item" href="#edition--<%= edition.name %>"><%= truncate(edition.name, :length => 1) %></a>
+                        <a class="nav-item button edition <%= edition.name %>" href="#edition--<%= edition.name %>"><%= edition.name %></a>
                     </li>
                     <% end %>
                 <% end %>
