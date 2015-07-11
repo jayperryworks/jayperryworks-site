@@ -2,6 +2,9 @@
 // Nav styles
 // ========================================================================== */
 
+@import "../core/*";
+@import "../atoms/button";
+
 /* Base
 // -------------------------------------------------------------------------- */
 
@@ -20,7 +23,7 @@
     @include rem(width, $w);
 
     // add left margin to siblings (set up 2 cols)
-    & ~ *, & ~ .media {
+    & ~ * {
         @include rem(margin-left, $w);
     }
 
@@ -33,31 +36,36 @@
 // -------------------------------------------------------------------------- */
 
 /* --- .nav.item ------------------------------------------------------------ */
-.nav.jump .nav-item {
-    @extend %font-display;
+.nav-item {
     @include rem(width, 30px);
-    // @include rem(height, 30px);
-    @include border($color: theme('text primary'));
     display: block;
-    padding: 0.3em;
-    text-transform: uppercase;
+}
+
+.nav-button {
+    @extend .button;
+    @extend .button.small;
+    @extend .button.initial;
+    padding-left: 0;
+    padding-right: 0;
     text-align: center;
     vertical-align: middle;
-    color: theme('text' 'primary');
+    // border-radius: 1px;
+    // border-width: border-w('mid');
 
-    &:hover, &:active {
-        color: theme('bg');
-        background-color: theme('text' 'primary');
+    &.is-active {
+        color: theme('text' 'primary', 'reverse');
+        border-color: theme('bg', 'reverse');
+        background-color: theme('bg', 'reverse');
     }
 }
 
-.nav.jump .nav-label {
-    display: inline-block;
-    visibility: hidden;
-    text-align: center;
+// .nav-label {
+//     display: inline-block;
+//     visibility: hidden;
+//     text-align: center;
 
-    &:first-letter {
-        visibility: visible;
-    }
-}
+//     &:first-letter {
+//         visibility: visible;
+//     }
+// }
 

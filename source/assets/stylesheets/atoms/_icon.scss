@@ -33,28 +33,14 @@
     fill: theme(highlight);
     color: white;
 }
-
-.icon.edition {
-    @extend %base-transition;
-    @include rem(width, 30px);
-    @include rem(height, 30px);
-    @include rem(padding, 8px);
-    border: 2px solid theme('text' 'primary');
-    border-radius: 2px;
-    fill: theme('text' 'primary');
-    background-color: white;
-
-    &:hover {
-        fill: white;
-        background-color: theme('text' 'primary');
-    }
-}
-
-
     .logo-jp-bg {
         fill: theme(highlight);
     }
     .logo-jp-letter {
         fill: white;
     }
+
+/* Submodules
+// ---------------------------------------------------------------------------*/
+
 

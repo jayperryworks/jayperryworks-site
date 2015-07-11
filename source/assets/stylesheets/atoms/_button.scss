@@ -36,18 +36,20 @@ $button-radius--default: 3px;
 
 button, .button {
     @extend %font-display;
-    @extend %theme--reverse;
-    @include border('all', 'thick', $color: theme('bg', 'reverse'));
+    @include border('all', 'thick', $color: theme('text' 'primary'));
     @include font-scale(2);
     display: inline-block;
     padding: em(fs(1)) em(fs(4));
     border-radius: $button-radius--default;
-    color: theme('text' 'primary', 'reverse');
+    color: theme('text' 'primary');
 
     &:hover, &:active {
         border-color: theme('highlight');
-        color: theme('text' 'primary', 'reverse'); // override default link hover color
-        background-color: theme('highlight');
+        color: theme('highlight'); // override default link hover color
+    }
+
+    sup {
+        font-size: 0.618em;
     }
 }
 
@@ -74,7 +76,10 @@ button, .button {
     // -> default size is "medium." add these classes to go bigger or smaller.
 
     &.small {
-
+        @include font-scale(1);
+        padding: em(6px) em(fs(2));
+        border-radius: 1px;
+        border-width: border-w('mid');
     }
 
     &.large {
@@ -89,6 +94,17 @@ button, .button {
         padding: 0 em(fs(4)) 0 0; // override default button padding
         vertical-align: middle;
     }
+
+    // icon for type of edition
+    &.initial {
+        @extend %font-display--bold;
+        text-align: center;
+        text-transform: uppercase;
+
+        &:before { content: attr(data-initial); }
+
+        > .button-label { @include visually_hidden(true); }
+    }
 }
 
 /* Submodules
@@ -100,14 +116,21 @@ button, .button {
 }
 
 // price callout on a purchase button
+// -> use inside .button.purchase
 .button-price {
-    @extend %font-display--bold;
+    @extend %base-transition;
+    @extend %theme--reverse;
     display: inline-block;
     margin-right: 1em;
-    padding: em(fs(1)) em(fs(4));
+    padding: em(9px) em(fs(4));
     height: 100%;
     text-align: center;
     vertical-align: middle;
-    color: theme('text' 'primary');
-    background-color: theme('bg');
+    font-size: 1.2em;
+    color: theme('text' 'primary', 'reverse');
+
+    &:hover, &:active,
+    .button:hover &, .button:active & {
+        background-color: theme('highlight', 'reverse');
+    }
 }
