@@ -27,7 +27,7 @@
                 <% current_page.data.editions.each do |edition| %>
                     <% if edition.name %>
                     <li>
-                        <a class="nav-item button edition <%= edition.name %>" href="#edition--<%= edition.name %>"><%= edition.name %></a>
+                        <a class="nav-item <%= edition.name %>" href="#edition--<%= edition.name %>"><%= edition.name %></a>
                     </li>
                     <% end %>
                 <% end %>
@@ -38,14 +38,14 @@
         <figure class="media full" id="#edition--<%= edition.name %>">
             <img src="<%= asset_url(media_dir + "/" + edition.image) %>" alt="<%= edition.name %> edition">
             <figcaption class="media-description">
-                <h2><%= edition.name.titleize %> <%= edition.type.titleize %> Print &bull; <%= edition.price %></h2>
+                <h2><strong><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
                 <dl>
                     <dt>Print Size</dt>
                     <dd><%= edition.height %>" x <%= edition.width %>"</dd>
                     <dt>Paper Size</dt>
                     <dd><%= edition.height + (edition.border * 2) %>" x <%= edition.width + (edition.border * 2) %>"</dd>
                 </dl>
-                <a href="">Buy this print</a>
+                <a class="button purchase" href=""><strong class="button-price"><%= edition.price %></strong> Buy this print</a>
             </figcaption>
         </figure>
         <% end %>
