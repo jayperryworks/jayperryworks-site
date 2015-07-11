@@ -13,7 +13,7 @@
 @import "core/settings"; // global settings
 @import "core/animation"; // global animation/behaviors
 @import "core/fonts"; // all @font-face things and base type scale
-// @import "core/borders"; // global border styles
+@import "core/borders"; // global border styles
 @import "core/color"; // global/base color schemes
 @import "core/layout"; // global layout styles/helpers
 
@@ -22,31 +22,28 @@
 // -> individual elements
 ///////////////////////////////////////////////////////////////////////////// */
 
-// @import "atoms/*";
+@import "atoms/*";
 
 /* /////////////////////////////////////////////////////////////////////////////
 // Molecules
 // -> simple groups of things that can be easily combined & reused
 ///////////////////////////////////////////////////////////////////////////// */
 
-// @import "molecules/*";
+@import "molecules/*";
 
 /* /////////////////////////////////////////////////////////////////////////////
 // Organisms
 // -> self-contained, reusable groups of molecules
 ///////////////////////////////////////////////////////////////////////////// */
 
-// @import "organisms/*";
+@import "organisms/*";
 
 /* /////////////////////////////////////////////////////////////////////////////
 // Regions
 // -> reusable, major content regions containing specific combinations of organisms
-// -> compose entirely with organisms as much as possible
-// -> should not contain much "original" styling, leave that to
-//      the atoms, molecules, organisms
 ///////////////////////////////////////////////////////////////////////////// */
 
-// @import "regions/*";
+@import "regions/*";
 
 /* /////////////////////////////////////////////////////////////////////////////
 // Styles of Shame

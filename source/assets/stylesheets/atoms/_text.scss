@@ -30,6 +30,7 @@ body {
 
 p {
     @include font-scale(2);
+    color: theme('text' 'body');
 
     strong {
         font-weight: bold;

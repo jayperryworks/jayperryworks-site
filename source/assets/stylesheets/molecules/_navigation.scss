@@ -43,11 +43,11 @@
     text-transform: uppercase;
     text-align: center;
     vertical-align: middle;
-    color: theme('text primary');
+    color: theme('text' 'primary');
 
     &:hover, &:active {
         color: theme('bg');
-        background-color: theme('text primary');
+        background-color: theme('text' 'primary');
     }
 }
 

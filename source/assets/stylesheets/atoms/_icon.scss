@@ -39,14 +39,14 @@
     @include rem(width, 30px);
     @include rem(height, 30px);
     @include rem(padding, 8px);
-    border: 2px solid theme('text primary');
+    border: 2px solid theme('text' 'primary');
     border-radius: 2px;
-    fill: theme('text primary');
+    fill: theme('text' 'primary');
     background-color: white;
 
     &:hover {
         fill: white;
-        background-color: theme('text primary');
+        background-color: theme('text' 'primary');
     }
 }
 

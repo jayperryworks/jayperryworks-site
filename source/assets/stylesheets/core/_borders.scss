@@ -46,7 +46,7 @@ $borders: 1px 4px !default;
 $border-style: solid !default;
 
 // make a standard border/hairline that works with the parent color theme
-@mixin border($sides: all, $w: thin, $color: theme(border), $style: $border-style) {
+@mixin border($sides: all, $w: thin, $color: theme('border'), $style: $border-style) {
     @if ($sides == all) {
         @if ($w == thin) {
             border-width: nth($borders, 1);
