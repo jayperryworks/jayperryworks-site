@@ -2,10 +2,10 @@
 <article class="post">
     <section class="panel">
         <img class="hero" src="<%= asset_url(media_dir + "/" + current_page.data.hero) %>" alt="<%= current_page.data.title %>">
-        <header class="post-header">
+        <header class="post-headline">
             <time class="post-date"><%= current_page.date.strftime('%Y') %></time>
             <h1 class=""><%= current_page.data.title %></h1>
-            <span class="post-info"><%= current_page.data.format %>, <%= current_page.data.width %> x <%= current_page.data.height %></span>
+            <span class="post-info"><%= current_page.data.format %>, <%= current_page.data.width %> &times; <%= current_page.data.height %></span>
             <ul class="post-tags">
                 <% current_page.data.tags.each do |tag| %>
                 <li><a class="post-tag" href="#"><%= tag %></a></li>
@@ -24,10 +24,10 @@
         <h2 class="panel-slug">Available Editions</h2>
         <nav class="nav jump">
             <ul>
-                <% current_page.data.editions.each do |edition| %>
+                <% current_page.data.editions.each_with_index do |edition, i| %>
                     <% if edition.name %>
                     <li>
-                        <a class="nav-item nav-button" href="#edition-<%= edition.name %>" data-initial="<%= edition.name[0] %>"><span class="button-label"><%= edition.name %></span></a>
+                        <a class="nav-item nav-button <% if i == 0 %>is-active<% end %>" href="#edition-<%= edition.name %>" data-initial="<%= edition.name[0] %>"><span class="button-label"><%= edition.name %></span></a>
                     </li>
                     <% end %>
                 <% end %>

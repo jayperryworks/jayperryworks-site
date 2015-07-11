@@ -3,6 +3,7 @@
 // ========================================================================== */
 
 @import "../core/*";
+@import "../molecules/headline";
 
 /* Base
 // -------------------------------------------------------------------------- */
@@ -14,23 +15,29 @@
 /* Submodules
 // -------------------------------------------------------------------------- */
 
-.post-header {
+.post-headline {
+    @extend .headline;
     max-width: $layout-w--narrow;
     margin: 0 auto;
+}
+
+.post-date {
+    @extend %font-body--bold;
+    @include font-scale(2);
+    color: theme('highlight');
 }
 
 .post-body {
     $margin: 1em;
 
+    * + * { @include rem(margin-top, fs(5)); }
+
     p {
         max-width: $layout-w--narrow;
-        margin: 0 auto 1em auto;
-    }
+        margin-left: auto;
+        margin-right: auto;
 
-    ul {
-        // @include grid-inline(2 2 3, $gutter: 2px);
-
-        & + p { margin-top: 1em; }
+        & + p {  margin-top: 1em; }
     }
 }
 

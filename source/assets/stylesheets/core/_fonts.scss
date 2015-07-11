@@ -89,10 +89,10 @@ $font-scale: 11px 16px 18px 24px 27px 36px 40px 54px 60px 81px;
 
 @font-face {
     font-family: 'Museo-Bold';
-    src: font-url('#{$path-fonts}/museosans_500-webfont.eot');
-    src: font-url('#{$path-fonts}/museosans_500-webfont.eot?#iefix') format('embedded-opentype'),
-         font-url('#{$path-fonts}/museosans_500-webfont.woff') format('woff'),
-         font-url('#{$path-fonts}/museosans_500-webfont.ttf') format('truetype');
+    src: font-url('#{$path-fonts}/museosans_700-webfont.eot');
+    src: font-url('#{$path-fonts}/museosans_700-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('#{$path-fonts}/museosans_700-webfont.woff') format('woff'),
+         font-url('#{$path-fonts}/museosans_700-webfont.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
 }
