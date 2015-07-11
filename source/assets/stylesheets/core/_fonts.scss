@@ -60,8 +60,7 @@ $font-scale: 11px 16px 18px 24px 27px 36px 40px 54px 60px 81px;
     src: font-url('#{$path-fonts}/Quadon-Regular-webfont.eot');
     src: font-url('#{$path-fonts}/Quadon-Regular-webfont.eot?#iefix') format('embedded-opentype'),
          font-url('#{$path-fonts}/Quadon-Regular-webfont.woff') format('woff'),
-         font-url('#{$path-fonts}/Quadon-Regular-webfont.ttf') format('truetype'),
-         font-url('#{$path-fonts}/Quadon-Regular-webfont.svg#Quadon-Regular-webfont') format('svg');
+         font-url('#{$path-fonts}/Quadon-Regular-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -71,8 +70,7 @@ $font-scale: 11px 16px 18px 24px 27px 36px 40px 54px 60px 81px;
     src: font-url('#{$path-fonts}/Quadon-Medium-webfont.eot');
     src: font-url('#{$path-fonts}/Quadon-Medium-webfont.eot?#iefix') format('embedded-opentype'),
          font-url('#{$path-fonts}/Quadon-Medium-webfont.woff') format('woff'),
-         font-url('#{$path-fonts}/Quadon-Medium-webfont.ttf') format('truetype'),
-         font-url('#{$path-fonts}/Quadon-Medium-webfont.svg#Quadon-Medium-webfont') format('svg');
+         font-url('#{$path-fonts}/Quadon-Medium-webfont.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
 }
@@ -80,25 +78,33 @@ $font-scale: 11px 16px 18px 24px 27px 36px 40px 54px 60px 81px;
 /* ----- Centrale Sans ------------------------------------------------------ */
 
 @font-face {
-    font-family: 'Centrale';
-    src: font-url('#{$path-fonts}/Centrale_Sans_Regular-webfont.eot');
-    src: font-url('#{$path-fonts}/Centrale_Sans_Regular-webfont.eot?#iefix') format('embedded-opentype'),
-         font-url('#{$path-fonts}/Centrale_Sans_Regular-webfont.woff') format('woff'),
-         font-url('#{$path-fonts}/Centrale_Sans_Regular-webfont.ttf') format('truetype'),
-         font-url('#{$path-fonts}/Centrale_Sans_Regular-webfont.svg#Centrale_Sans_Regular-webfont') format('svg');
+    font-family: 'Museo';
+    src: font-url('#{$path-fonts}/museosans_300-webfont.eot');
+    src: font-url('#{$path-fonts}/museosans_300-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('#{$path-fonts}/museosans_300-webfont.woff') format('woff'),
+         font-url('#{$path-fonts}/museosans_300-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Museo-Bold';
+    src: font-url('#{$path-fonts}/museosans_500-webfont.eot');
+    src: font-url('#{$path-fonts}/museosans_500-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('#{$path-fonts}/museosans_500-webfont.woff') format('woff'),
+         font-url('#{$path-fonts}/museosans_500-webfont.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Centrale-Bold';
-    src: font-url('#{$path-fonts}/Centrale_Sans_Bold-webfont.eot');
-    src: font-url('#{$path-fonts}/Centrale_Sans_Bold-webfont.eot?#iefix') format('embedded-opentype'),
-         font-url('#{$path-fonts}/Centrale_Sans_Bold-webfont.woff') format('woff'),
-         font-url('#{$path-fonts}/Centrale_Sans_Bold-webfont.ttf') format('truetype'),
-         font-url('#{$path-fonts}/Centrale_Sans_Bold-webfont.svg#Centrale_Sans_Bold-webfont') format('svg');
-    font-weight: bold;
-    font-style: normal;
+    font-family: 'Museo-Italic';
+    src: font-url('#{$path-fonts}/museosans_300_italic-webfont.eot');
+    src: font-url('#{$path-fonts}/museosans_300_italic-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('#{$path-fonts}/museosans_300_italic-webfont.woff') format('woff'),
+         font-url('#{$path-fonts}/museosans_300_italic-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
 }
 
 /* Font styles
@@ -122,19 +128,20 @@ $font-scale: 11px 16px 18px 24px 27px 36px 40px 54px 60px 81px;
 /* ----- Body type ---------------------------------------------------------- */
 
 %font-body {
-    font-family: 'Centrale', $helvetica;
+    font-family: 'Museo', $helvetica;
     font-weight: normal;
     font-style: normal;
 }
 
-// %font-body--italic {
-//     @extend %font-body;
-//     font-style: italic;
-// }
+%font-body--italic {
+    @extend %font-body;
+    font-family: 'Museo-Italic', $helvetica;
+    font-style: italic;
+}
 
 %font-body--bold {
     @extend %font-body;
-    font-family: 'Centrale-Bold', $helvetica;
+    font-family: 'Museo-Bold', $helvetica;
     font-weight: bold;
 }
 
