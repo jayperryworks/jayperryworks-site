@@ -39,7 +39,25 @@ $media-bp: 'medium';
 }
 
 .media-description {
+    margin-top: 1.5em;
+
     @include respond-to($media-bp) {
         @include grid-span(1, 2, $media-grid);
+        margin-top: 0;
     }
+}
+
+.media-stats {
+    @extend .tabular;
+    @include font-scale(1);
+}
+
+.media-caption {
+    @include font-scale(1);
+    color: theme('text--tertiary');
+
+    // .media-stats + & {
+    //     @include border(top);
+    //     padding-top: 1em;
+    // }
 }

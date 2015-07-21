@@ -89,7 +89,7 @@ button, .button {
     // --- special variations --------------------------------------------------
     // -> buttons of a strange and amazing nature
 
-    // a "hidden," text-only button. doesn't look like a button but behaves like one in every other way.
+    // a "buy this" button, usually with a price
     &.purchase {
         padding: 0 em(fs(4)) 0 0; // override default button padding
         vertical-align: middle;

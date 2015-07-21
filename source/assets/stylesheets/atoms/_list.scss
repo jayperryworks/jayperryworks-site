@@ -29,5 +29,36 @@ ol, ul {
 }
 
 dl {
+    @include font-scale(2);
+    // margin-top: 0;
+    color: theme('text--tertiary');
+}
 
+    dt {
+        @extend %font-body--bold;
+    }
+    dd {
+        @extend %font-body;
+        margin-left: 0;
+    }
+
+.tabular {
+    @include clearfix;
+    display: block;
+
+    .tabular-key, dt {
+        display: inline-block;
+        float: left;
+        clear: left;
+        width: 7em;
+
+        &:after {
+            content: ":";
+        }
+    }
+
+    .tabular-value, dd {
+        display: inline-block;
+        float: left;
+    }
 }

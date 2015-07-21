@@ -22,10 +22,11 @@
     <% if current_page.data.editions.present? %>
     <section class="panel has-jump">
         <h2 class="panel-slug">Available Editions</h2>
-        <nav class="nav jump">
+
+        <nav class="nav jump fixedsticky" id="js-sticky">
             <ul>
                 <% current_page.data.editions.each_with_index do |edition, i| %>
-                    <% if edition.name %>
+                    <% if edition.name.present? %>
                     <li>
                         <a class="nav-item nav-button <% if i == 0 %>is-active<% end %>" href="#edition-<%= edition.name %>" data-initial="<%= edition.name[0] %>"><span class="button-label"><%= edition.name %></span></a>
                     </li>
@@ -35,16 +36,19 @@
         </nav>
 
         <% current_page.data.editions.each do |edition| %>
-        <figure class="media full" id="#edition-<%= edition.name %>">
+        <figure class="media full" id="edition-<%= edition.name %>">
             <img class="media-img" src="<%= asset_url(media_dir + "/" + edition.image) %>" alt="<%= edition.name %> edition">
             <figcaption class="media-description">
                 <h2><strong><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
-                <dl>
+                <dl class="media-stats">
                     <dt>Print Size</dt>
                     <dd><%= edition.height %>" &times; <%= edition.width %>"</dd>
                     <dt>Paper Size</dt>
                     <dd><%= edition.height + (edition.border * 2) %>" &times; <%= edition.width + (edition.border * 2) %>"</dd>
+                    <dt>Edition</dt>
+                    <dd><% if edition.limit.present? %>edition.limit<% else %>Open<% end %></dd>
                 </dl>
+                <p class="media-caption">Printed at Archival Arts in Baltimore on heavy, textured, acid-free Hahnemuhle cotton rag paper, using archival pigment-based inks. Individually signed and numbered.</p>
                 <a class="button purchase" href=""><span class="button-price"><sup>$</sup><%= edition.price %></span> Buy this print</a>
             </figcaption>
         </figure>
