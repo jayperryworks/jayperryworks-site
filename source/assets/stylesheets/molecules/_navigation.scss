@@ -18,14 +18,19 @@ $nav-jump-w: 60px;
 // -------------------------------------------------------------------------- */
 
 .nav.jump {
-
-    @extend %l-abs;
+    // @extend %l-abs;
     @include unstyled-list;
     @include rem(width, $nav-jump-w);
+    display: none;
+    // position: relative;
 
     > ul {
         @include unstyled-list;
         margin: 0;
+    }
+
+    @include respond-to('small') {
+        display: block;
     }
 }
 
@@ -73,6 +78,10 @@ $nav-jump-w: 60px;
 
     // add left margin to a jump nav's siblings
     .nav.jump ~ * {
-        @include rem(margin-left, $nav-jump-w);
+        @include respond-to('small') { @include rem(margin-left, $nav-jump-w); }
     }
+}
+
+.fixedsticky {
+    top: 1em;
 }
