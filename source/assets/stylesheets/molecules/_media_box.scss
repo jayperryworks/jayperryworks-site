@@ -4,6 +4,9 @@
 
 @import "../core/*";
 
+$media-grid: (ms(3) ms(1));
+$media-bp: 'medium';
+
 
 /* Base
 // ---------------------------------------------------------------------------*/
@@ -24,14 +27,19 @@
     display: block;
 
     &:last-child { border-bottom: none; }
+}
 
-    @include layout(2 1, $gutter) {
-        .media-img {
-            @include grid-span(1, 1);
-        }
-        .media-description {
-            @include grid-span(1, 2);
-        }
+/* Submodules
+// ---------------------------------------------------------------------------*/
+
+.media-img {
+    @include respond-to($media-bp) {
+        @include grid-span(1, 1, $media-grid);
     }
 }
 
+.media-description {
+    @include respond-to($media-bp) {
+        @include grid-span(1, 2, $media-grid);
+    }
+}

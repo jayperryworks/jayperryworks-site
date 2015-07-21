@@ -20,7 +20,7 @@
 
     <!-- Editions -->
     <% if current_page.data.editions.present? %>
-    <section class="panel">
+    <section class="panel has-jump">
         <h2 class="panel-slug">Available Editions</h2>
         <nav class="nav jump">
             <ul>
@@ -41,9 +41,9 @@
                 <h2><strong><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
                 <dl>
                     <dt>Print Size</dt>
-                    <dd><%= edition.height %>" x <%= edition.width %>"</dd>
+                    <dd><%= edition.height %>" &times; <%= edition.width %>"</dd>
                     <dt>Paper Size</dt>
-                    <dd><%= edition.height + (edition.border * 2) %>" x <%= edition.width + (edition.border * 2) %>"</dd>
+                    <dd><%= edition.height + (edition.border * 2) %>" &times; <%= edition.width + (edition.border * 2) %>"</dd>
                 </dl>
                 <a class="button purchase" href=""><span class="button-price"><sup>$</sup><%= edition.price %></span> Buy this print</a>
             </figcaption>

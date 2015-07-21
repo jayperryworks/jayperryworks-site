@@ -5,6 +5,8 @@
 @import "../core/*";
 @import "../atoms/button";
 
+$nav-jump-w: 60px;
+
 /* Base
 // -------------------------------------------------------------------------- */
 
@@ -16,19 +18,14 @@
 // -------------------------------------------------------------------------- */
 
 .nav.jump {
-    $w: 60px;
 
     @extend %l-abs;
     @include unstyled-list;
-    @include rem(width, $w);
-
-    // add left margin to siblings (set up 2 cols)
-    & ~ * {
-        @include rem(margin-left, $w);
-    }
+    @include rem(width, $nav-jump-w);
 
     > ul {
         @include unstyled-list;
+        margin: 0;
     }
 }
 
@@ -69,3 +66,13 @@
 //     }
 // }
 
+/* States
+// -------------------------------------------------------------------------- */
+
+.has-jump {
+
+    // add left margin to a jump nav's siblings
+    .nav.jump ~ * {
+        @include rem(margin-left, $nav-jump-w);
+    }
+}
