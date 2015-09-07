@@ -23,12 +23,12 @@
     <section class="panel has-jump">
         <h2 class="panel-slug">Available Editions</h2>
 
-        <nav class="nav jump fixedsticky" id="js-sticky">
+        <nav class="nav jump js-sticky">
             <ul>
                 <% current_page.data.editions.each_with_index do |edition, i| %>
                     <% if edition.name.present? %>
                     <li>
-                        <a class="nav-item nav-button <% if i == 0 %>is-active<% end %>" href="#edition-<%= edition.name %>" data-initial="<%= edition.name[0] %>"><span class="button-label"><%= edition.name %></span></a>
+                        <a class="nav-item nav-button js-highlight<% if i == 0 %> is-active<% end %>" href="#edition-<%= edition.name %>" data-initial="<%= edition.name[0] %>"><span class="button-label"><%= edition.name %></span></a>
                     </li>
                     <% end %>
                 <% end %>

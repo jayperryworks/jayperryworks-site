@@ -52,6 +52,9 @@ activate :google_analytics do |ga|
   ga.tracking_id = 'UA-XXXXXXX-X' # Replace with your property ID.
 end
 
+# run ES6 transpiler on the Javascripts
+activate :es6
+
 # Reload the browser automatically whenever files change
 configure :development do
   activate :livereload

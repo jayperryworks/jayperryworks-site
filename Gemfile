@@ -16,6 +16,7 @@ gem "middleman-simple-thumbnailer"
 gem "middleman-search_engine_sitemap"
 gem "middleman-imageoptim"
 gem "middleman-blog"
+gem "middleman-es6", github: "vast/middleman-es6"
 
 # Compass extensions
 gem "compass-import-once"
