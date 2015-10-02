@@ -13,28 +13,32 @@
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
 
-        <%= stylesheet_link_tag "app" %>
+        <script>
+            // HTML5 element HTML5 shiv
+            document.createElement("main");
+            document.createElement("picture");
+        </script>
+        <%= javascript_include_tag "libs" %>
+        <%= stylesheet_link_tag "main" %>
 
         <!-- custom page colors -->
         <style type="text/CSS">
 
         </style>
-
-        <%= javascript_include_tag  "vendor/modernizr" %>
     </head>
+
+    <%= partial "layouts/partials/spritemap" %>
 
     <body class="<%= page_classes %>">
         <header class="header global" role="banner">
             <a class="logo prints" href="/">
-                <%= partial("layouts/partials/icon", :locals => { :id => "logo-jp", :title => "Prints &amp; Paintings by Jay Perry" }) %>
+                <% partial("layouts/partials/icon", :locals => { :id => "logo-jp", :title => "Prints &amp; Paintings by Jay Perry" }) %>
             </a>
         </header>
 
         <%= yield %>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="<%= js_dir %>/vendor/jquery.js"><\/script>')</script>
-        <%= javascript_include_tag  "app" %>
+        <%= javascript_include_tag  "main" %>
 
         <%= google_analytics_tag %>
     </body>

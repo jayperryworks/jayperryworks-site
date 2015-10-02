@@ -45,7 +45,7 @@ end
 
 # autoprefix CSS
 activate :autoprefixer do |config|
-    config.browsers = ['last 2 versions', 'Explorer >= 9']
+    config.browsers = ['last 2 versions', 'Explorer >= 8']
 end
 
 activate :google_analytics do |ga|
@@ -62,11 +62,11 @@ end
 
 # Methods defined in the helpers block are available in templates
 helpers do
-  # def svg_sprite(id, title="", role="img", opts={})
-  #   "<svg class=\"icon " + id + "\" title=\"" + title + "\" role=\"" + role + "\">"
-  #   "<use xlink:href=\"<%= asset_url(\"#{spritemap}##{id}\") %>\"></use>"
-  #   "</svg>"
-  # end
+  def icon(id, title, role="img", opts={})
+    # "<svg class='icon #{id}' title='#{title}' role='#{role}'>"
+    # "   <use xlink:href='##{id}'></use>"
+    # "</svg>"
+  end
 end
 
 set :site_title, 'Jay Perry: Prints &amp; Paintings'
@@ -89,7 +89,7 @@ after_configuration do
     sprockets.append_path File.join "#{root}", @bower_config["directory"]
     sprockets.import_asset "jquery/dist/jquery.min.js"
     sprockets.import_asset "modernizr/modernizr.js"
-    sprockets.import_asset "svg4everybody/svg4everybody.ie8.min.js"
+    sprockets.import_asset "picturefill/dist/picturefill.min.js"
 end
 
 # Build-specific configuration

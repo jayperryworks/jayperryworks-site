@@ -8,8 +8,10 @@
 <% classes ||= "" %>
 <% title ||= "" %>
 <% role ||= "img" %>
+<% fallback ||= "#{id}.png" %>
 <svg class="icon <%= id %><%= " #{classes}" %>" title="<%= title %>" role="<%= role %>">
-  <use xlink:href="<%= asset_url("#{spritemap}##{id}") %>"></use>
+  <use xlink:href="#<%= id %>"></use>
+  <image src="<%= asset_url(fallback) %>" xlink:href="" />
 </svg>
 
 <%# usage: %>
