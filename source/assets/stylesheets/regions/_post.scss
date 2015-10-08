@@ -55,6 +55,7 @@
 }
 
     .post-tag {
+        @extend %font-accent--bold;
         @include font-scale(1);
         display: inline-block;
         width: auto;

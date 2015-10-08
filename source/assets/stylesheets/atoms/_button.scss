@@ -35,7 +35,7 @@ $button-radius--default: 3px;
 // -------------------------------------------------------------------------- */
 
 button, .button {
-    @extend %font-display;
+    @extend %font-accent;
     @include border('all', 'thick', $color: theme('text' 'primary'));
     @include font-scale(2);
     display: inline-block;
@@ -97,7 +97,7 @@ button, .button {
 
     // icon for type of edition
     &.initial {
-        @extend %font-display--bold;
+        @extend %font-accent--bold;
         text-align: center;
         text-transform: uppercase;
 

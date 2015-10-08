@@ -69,7 +69,7 @@ helpers do
   end
 end
 
-set :site_title, 'Jay Perry: Prints &amp; Paintings'
+set :site_title, 'Jay Perry'
 
 set :url_root, 'http://prints.jayperryworks.com'
 activate :search_engine_sitemap
