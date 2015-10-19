@@ -35,10 +35,10 @@ dl {
 }
 
     dt {
-        @extend %font-body--bold;
+        @extend %font-accent--bold;
     }
     dd {
-        @extend %font-body;
+        @extend %font-accent;
         margin-left: 0;
     }
 

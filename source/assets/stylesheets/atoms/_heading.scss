@@ -72,12 +72,12 @@ h4, .delta, %delta {
 }
 
 h5, .epsilon, %epsilon {
-    @extend %font-display;
+    @extend %font-accent;
     @include font-scale(2);
 }
 
 h6, .zeta, %zeta {
-    @extend %font-body;
+    @extend %font-accent;
     @include font-scale(1);
 }
 

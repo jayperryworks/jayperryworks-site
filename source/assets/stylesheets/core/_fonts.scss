@@ -9,7 +9,7 @@ name: fonts
 category: core
 ---
 
-Fonts are accessed through SASS placeholders. Just extend the appropriate one. Fonts are applied to type, globally, in _type.scss, and individual modules can set up their own font styles.
+Fonts are accessed through SASS placeholders. Just extend the appropriate one. Fonts are applied to type, globally, in _text.scss, and individual modules can set up their own font styles.
 
 Please DO NOT use your own font-family attributes in any circumstance. Always extend the placeholder.
 
@@ -18,7 +18,6 @@ Please DO NOT use your own font-family attributes in any circumstance. Always ex
 // -> headlines, buttons, labels, etc.
 
 @extend %font-display
-@extend %font-display-bold
 
 // body fonts
 // -> paragraphs, captions, etc.
@@ -30,6 +29,7 @@ Please DO NOT use your own font-family attributes in any circumstance. Always ex
 
 */
 
+// requires bourbon
 @import "libs";
 
 
@@ -47,24 +47,39 @@ $type-line_height: 1.5;
 
 // modular scale
 // -> requires SASS Type Helpers
-// -> perfect fifth, 16-40 base (http://www.modularscale.com/?16,40&px&1.5&web&text)
-$font-scale: 13px 16px 18px 24px 27px 36px 40px 54px 60px 81px;
+// -> minor fourth (1.2), 16px base (http://www.modularscale.com/?16&px&1.2&web&text)
+$font-scale: 11px 13px 16px 19px 23px 28px 33px 39px 48px 57px 69px 83px 99px;
 
 $trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
 
 /* Globals
 // -------------------------------------------------------------------------- */
 
-/* ----- Quadon ------------------------------------------------------------- */
+/*
+    This font software is the property of Commercial Type.
 
-@include font-face("Publico-Text", font_path("PublicoText-Roman-Web"), $file-formats: eot woff ttf svg);
-@include font-face("Publico-Text-Italic", font_path("PublicoText-Italic-Web"), italic, $file-formats: eot woff ttf svg);
+    You may not modify the font software, use it on another website, or install it on a computer.
 
-/* ----- Source Sans Pro ---------------------------------------------------- */
+    License information is available at http://commercialtype.com/eula
+    For more information please visit Commercial Type at http://commercialtype.com or email us at info[at]commercialtype.com
 
-@include font-face("Source Sans", font_path("sourcesanspro-regular-webfont"), 400, $file-formats: eot woff woff2 ttf svg);
-@include font-face("Source Sans Light", font_path("sourcesanspro-light-webfont"), 300, $file-formats: eot woff woff2 ttf svg);
-@include font-face("Source Sans Bold", font_path("sourcesanspro-bold-webfont"), 700, $file-formats: eot woff woff2 ttf svg);
+    Copyright (C) 2013 Schwartzco Inc.
+    License: 1510-UFDUPE
+*/
+
+/* ----- Publico ------------------------------------------------------------- */
+
+// headline
+@include font-face("Publico Headline", font_path("PublicoHeadline-Roman-Web"), $file-formats: eot woff ttf svg);
+
+// text
+@include font-face("Publico Text", font_path("PublicoText-Roman-Web"), $file-formats: eot woff ttf svg);
+@include font-face("Publico Text Italic", font_path("PublicoText-Italic-Web"), italic, $file-formats: eot woff ttf svg);
+
+/* ----- Guardian ---------------------------------------------------- */
+
+@include font-face("Guardian Sans", font_path("GuardianSans-Light-Web"), $file-formats: eot woff ttf svg);
+@include font-face("Guardian Sans Bold", font_path("GuardianSans-Bold-Web"), bold, $file-formats: eot woff ttf svg);
 
 /* Font styles
 // -> PUBLIC, use these to style type globally & in modules
@@ -73,47 +88,41 @@ $trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
 /* ----- Display type ------------------------------------------------------- */
 
 %font-display {
-    font-family: 'Publico-Text', $georgia;
+    font-family: 'Publico Headline', $georgia;
     font-weight: normal;
     font-style: normal;
 }
 
 %font-display--italic {
     @extend %font-display;
-    font-family: 'Publico-Text-Italic', $georgia;
+    font-family: 'Publico Text Italic', $georgia;
     font-style: italic;
 }
 
 %font-accent {
-    font-family: 'Source Sans', $trebuchet;
-    font-weight: 400;
+    font-family: 'Guardian Sans', $trebuchet;
+    font-weight: normal;
     font-style: normal;
-}
-
-%font-accent--light {
-    @extend %font-accent;
-    font-family: 'Source Sans Light', $trebuchet;
-    font-weight: 300;
 }
 
 %font-accent--bold {
     @extend %font-accent;
-    font-family: 'Source Sans Bold', $trebuchet;
-    font-weight: 700;
+    font-family: 'Guardian Sans Bold', $trebuchet;
+    font-weight: bold;
 }
 
 /* ----- Body type ---------------------------------------------------------- */
 
 %font-body {
-    @extend %font-display;
+    font-family: 'Publico Text', $georgia;
+    font-weight: normal;
+    font-style: normal;
 }
 
 %font-body--italic {
     @extend %font-display--italic;
-}
-
-%font-body--bold {
-    @extend %font-display--italic;
+    font-family: 'Publico Text Italic', $georgia;
+    font-style: italic;
 }
 
 /* ----- Ampersands --------------------------------------------------------- */

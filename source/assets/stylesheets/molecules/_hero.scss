@@ -11,6 +11,6 @@
 .hero {
     @include rem(margin, 0 auto fs(5));
     display: block;
-    height: 600px;
-    height: 80vh;
+    max-height: 600px;
+    max-height: 80vh;
 }

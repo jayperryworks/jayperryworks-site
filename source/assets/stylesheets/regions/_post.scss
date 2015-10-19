@@ -22,7 +22,7 @@
 }
 
 .post-date {
-    @extend %font-body--bold;
+    @extend %font-body--italic;
     @include font-scale(2);
     color: theme('highlight');
 }

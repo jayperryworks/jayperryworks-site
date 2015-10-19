@@ -29,11 +29,14 @@ body {
 }
 
 p {
-    @include font-scale(2);
+    @extend %font-body;
+    @include font-scale(3);
     color: theme('text' 'body');
 
     strong {
-        font-weight: bold;
+        @extend %font-body--italic;
+        font-style: italic;
+        // font-weight: bold;
     }
 }
 
@@ -49,7 +52,8 @@ a {
 }
 
 strong {
-
+    @extend %font-body--italic;
+    font-style: italic;
 }
 
 small {
