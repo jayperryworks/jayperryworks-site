@@ -1,15 +1,28 @@
 ---
-title: Home
+title: home
 ---
 
 <section class="panel">
-    <h1>Work</h1>
+    <h1 class="panel-slug">Work</h1>
     <ul class="gallery">
         <% blog.articles.each do |print| %>
         <li class="gallery-item" data-year="<%= print.date.strftime('%Y') %>">
             <a href="<%= print.url %>"><img src="<%= asset_url(media_dir + "/" + print.data.hero) %>" /></a>
-            <h3><a href="<%= print.url %>"><%= print.title %></a></h3>
         </li>
         <% end %>
+    </ul>
+</section>
+
+<section class="panel">
+    <h1 class="panel-slug">Writing</h1>
+    <ul class="feed">
+        <li class="feed-item"></li>
+    </ul>
+</section>
+
+<section class="panel">
+    <h1 class="panel-slug">Profile</h1>
+    <ul class="feed">
+        <li class="feed-item"></li>
     </ul>
 </section>

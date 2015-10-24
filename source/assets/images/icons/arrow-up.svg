@@ -1,10 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="19px" height="13px" viewBox="0 0 19 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
-    <title>arrow-up</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="assets/icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <path d="M10.5606602,3.87132034 L8.43933983,3.87132034 L16.4393398,11.8713203 C17.0251263,12.4571068 17.9748737,12.4571068 18.5606602,11.8713203 C19.1464466,11.2855339 19.1464466,10.3357864 18.5606602,9.75 L10.5606602,1.75 L9.5,0.689339828 L8.43933983,1.75 L0.439339828,9.75 C-0.146446609,10.3357864 -0.146446609,11.2855339 0.439339828,11.8713203 C1.02512627,12.4571068 1.97487373,12.4571068 2.56066017,11.8713203 L10.5606602,3.87132034 Z" id="arrow-up" fill="#474747" sketch:type="MSShapeGroup"></path>
-    </g>
-</svg>
+<svg width="19" height="13" viewBox="0 0 19 13" xmlns="http://www.w3.org/2000/svg"><title>arrow-up</title><path d="M10.56 3.87H8.44l8 8c.585.587 1.535.587 2.12 0 .586-.584.586-1.534 0-2.12l-8-8L9.5.69 8.44 1.75l-8 8c-.586.586-.586 1.536 0 2.12.585.587 1.535.587 2.12 0l8-8z" fill="#474747" fill-rule="evenodd"/></svg>

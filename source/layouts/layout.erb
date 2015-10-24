@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
         <!-- Use title if it's in the page YAML frontmatter -->
-        <title><%= site_title %> | <%= current_page.data.title %></title>
+        <title><%= data.site.site_title %> | <% if current_page.data.title.present? %><%= current_page.data.title %><% end %></title>
 
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,10 +30,14 @@
     <%= partial "layouts/partials/spritemap" %>
 
     <body class="<%= page_classes %>">
-        <header class="header global" role="banner">
-            <a class="logo prints" href="/">
-                <% partial("layouts/partials/icon", :locals => { :id => "logo-jp", :title => "Prints &amp; Paintings by Jay Perry" }) %>
-            </a>
+        <header class="header" role="banner">
+            <%= partial("layouts/partials/logo-jpw", :locals => { :color => current_page.data.color }) %>
+            <% if current_page.data.title == "home" %>
+            <div class="header-intro">
+                <p class="header-greeting"><%= data.site.intro %></p>
+                <p class="header-status"><%= data.site.statuses[rand(data.site.statuses.length - 1)] %></p>
+            </div>
+            <% end %>
         </header>
 
         <%= yield %>

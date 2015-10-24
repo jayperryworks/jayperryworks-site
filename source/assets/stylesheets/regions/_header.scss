@@ -4,28 +4,43 @@
 
 @import "../core/*";
 
-$header-h: 50px;
+// $header-h: 50px;
 
 /* Base
 // ---------------------------------------------------------------------------*/
 
 .header, [role="banner"] {
-
+    // height: $header-h;
+    text-align: center;
 }
 
 /* Modifiers
 // ---------------------------------------------------------------------------*/
 
-.header, [role="banner"] {
-    &.global {
-        height: $header-h;
-        text-align: center;
-    }
-}
+
 
 /* Submodules
 // ---------------------------------------------------------------------------*/
 
-.header {
-
+// a couple intro lines
+.header-intro {
+    @include rem(margin-top, fs(7));
+    @include rem(margin-bottom, fs(7));
+    padding-left: $gutter-outside;
+    padding-right: $gutter-outside;
 }
+
+    .header-greeting {
+        @extend %font-display;
+        @include font-scale(4);
+        margin: 0 0 0.5em 0;
+        line-height: 1.4;
+        color: theme(text primary);
+    }
+
+    .header-status {
+        @extend %font-display;
+        @include font-scale(3);
+        margin: 0;
+        color: theme(text secondary);
+    }
