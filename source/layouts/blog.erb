@@ -1,0 +1,20 @@
+<% wrap_layout :layout do %>
+    <article class="post">
+        <div class="l-wrapper narrow">
+            <aside class="post-meta">
+                <header>
+                    <h1 class="post-title"><%= current_page.data.title %></h1>
+                    <span class="post-subtitle"><%= current_page.data.subtitle %></span>
+                </header>
+                <time class="post-date"><%= current_page.data.date %></time>
+                <dl class="post-tags">
+                    <dt>Filed under</dt>
+                    <% current_page.data.tags.each do |tag| %>
+                    <dd><a href=""><%= tag %></a></dd>
+                    <% end %>
+                </dl>
+            </aside>
+            <%= yield %>
+        </div>
+    </article>
+<% end %>

@@ -5,9 +5,9 @@ title: home
 <section class="panel">
     <h1 class="panel-slug">Work</h1>
     <ul class="gallery">
-        <% blog.articles.each do |print| %>
+        <% blog("work").articles.each do |print| %>
         <li class="gallery-item" data-year="<%= print.date.strftime('%Y') %>">
-            <a href="<%= print.url %>"><img src="<%= asset_url(media_dir + "/" + print.data.hero) %>" /></a>
+            <a href="<%= print.url %>"><img src="<%= print.url + print.data.hero %>" /></a>
         </li>
         <% end %>
     </ul>
@@ -16,13 +16,17 @@ title: home
 <section class="panel">
     <h1 class="panel-slug">Writing</h1>
     <ul class="feed">
-        <li class="feed-item"></li>
+        <% blog("writing").articles.each do |article| %>
+        <li class="feed-item">
+            <h2><%= link_to article.title, article.url %></h2>
+            <%= article.summary %>
+            <%= link_to "Read more &rsaquo;", article.url %>
+        </li>
+        <% end %>
     </ul>
 </section>
 
 <section class="panel">
     <h1 class="panel-slug">Profile</h1>
-    <ul class="feed">
-        <li class="feed-item"></li>
-    </ul>
+
 </section>

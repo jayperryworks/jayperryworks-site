@@ -38,10 +38,24 @@ end
 
 # run the blog extension
 activate :blog do |blog|
-  blog.prefix = "work"
-  blog.permalink = "{category}/{year}/{title}/"
-  blog.layout = "print"
+    blog.name = "work"
+    blog.prefix = "work"
+    blog.sources = "{year}/{title}.html"
+    blog.permalink = "{category}/{year}/{title}.html"
+    blog.layout = "print"
 end
+
+activate :blog do |blog|
+    blog.name = "writing"
+    blog.prefix = "writing"
+    blog.sources = "{year}/{month}-{day}-{title}.html"
+    blog.permalink = "{year}/{month}/{title}.html"
+    blog.taglink = "tags/{tag}.html"
+    blog.summary_separator = /EXCERPT/
+    blog.layout = "blog"
+end
+
+activate :directory_indexes
 
 # autoprefix CSS
 activate :autoprefixer do |config|
