@@ -34,7 +34,7 @@ editions:
 #    image: "frozen_waterfall-8x12.jpg"
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quid ei reliquisti, nisi te, quoquo modo loqueretur, intellegere, quid diceret? Si enim ad populum me vocas, eum. Itaque ad tempus ad Pisonem omnes. Multa sunt dicta ab antiquis de contemnendis ac despiciendis rebus humanis; Duo Reges: constructio interrete. Quid nunc honeste dicit? Qua ex cognitione facilior facta est investigatio rerum occultissimarum.
+My wife and I were on a weekend trip to the Laurel Highlands in Pennsylvania, visiting some Frank Lloyd Wright houses, and found ourselves rambling around in the snow in the surrounding hills. Just past a bend in the road, there was a short cliff with a spectacular waterfall– frozen solid.
 
 - ![Frozen Waterfall, in-progress](frozen_waterfall/process01.jpg)
 - ![Frozen Waterfall, in-progress](frozen_waterfall/process02.jpg)

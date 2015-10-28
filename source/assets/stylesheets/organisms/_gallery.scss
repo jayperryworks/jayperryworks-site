@@ -45,16 +45,10 @@ The gallery module uses the [Singularity Quick Spanner plugin](https://github.co
 
 @import "../core/*";
 
-@include add-gutter(1px);
-
-// Singularity Quick Spanner settings
-$gallery-gutter-style: "split"; // gutter style
-$sqs-thumb-span-cancel-last-row-margins: true; // remove margins on last row of grid
-
 /* Base
 // ---------------------------------------------------------------------------*/
 
-.gallery, .post-body > ul {
+.gallery {
     @include unstyled-list;
     display: block; // in case flexbox isn't supported
     display: flex;
@@ -111,7 +105,7 @@ $sqs-thumb-span-cancel-last-row-margins: true; // remove margins on last row of 
 /* Submodules
 // ---------------------------------------------------------------------------*/
 
-.gallery-item, .post-body li {
+.gallery-item {
     $gutter: 1px;
     margin: 0 0 $gutter 0;
     padding: $gutter $gutter 0 0;

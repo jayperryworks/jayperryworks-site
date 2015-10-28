@@ -76,13 +76,22 @@ address {
 // -------------------------------------------------------------------------- */
 
 // the first paragraph, often set slightly bigger
-.lead, .content > p:first-of-type {
+.lead {
     @include font-scale(3);
+
+    &:first-letter {
+        @extend %font-accent--bold;
+        float: left;
+        margin: 0 0.1em -0.1em 0;
+        font-size: 3.7em;
+        line-height: 0.8;
+        color: theme(highlight);
+    }
 }
 
 // a caption
 .caption, figcaption {
     @extend %font-body;
     @include font-scale(1);
-    color: theme(text--secondary);
+    color: theme(text secondary);
 }

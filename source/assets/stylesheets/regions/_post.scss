@@ -3,7 +3,9 @@
 // ========================================================================== */
 
 @import "../core/*";
-@import "../molecules/headline";
+@import "../atoms/heading";
+@import "../atoms/text";
+@import "../organisms/gallery";
 
 /* Base
 // -------------------------------------------------------------------------- */
@@ -15,19 +17,31 @@
 /* Submodules
 // -------------------------------------------------------------------------- */
 
-.post-headline {
-    @extend .headline;
+.post-header {
     max-width: $layout-w--narrow;
     margin: 0 auto;
 }
 
+.post-meta {
+    @include border(bottom);
+}
+
+.post-title {
+    @extend %alpha;
+}
+
+.post-subtitle {
+    @extend %cappa;
+    @extend %font-accent;
+}
+
 .post-date {
-    @extend %font-body--italic;
+    @extend %font-accent--bold;
     @include font-scale(2);
     color: theme('highlight');
 }
 
-.post-body {
+.post-content {
     $margin: 1em;
 
     * + * { @include rem(margin-top, fs(5)); }
@@ -38,13 +52,20 @@
         margin-right: auto;
 
         & + p {  margin-top: 1em; }
+
+        &:first-child, &:first-of-type {
+            @extend .lead;
+        }
     }
+
+    > ul { @extend .gallery; }
+    li { @extend .gallery-item; }
 }
 
 .post-tags {
     @include inline-list();
 
-    & > li {
+    & > li, & > dd {
       &:after {
         content: ",";
       }
@@ -55,9 +76,15 @@
 }
 
     .post-tag {
-        @extend %font-accent--bold;
+        @extend %font-accent;
         @include font-scale(1);
         display: inline-block;
         width: auto;
         text-transform: uppercase;
+        color: theme(text tertiary);
+
+        a {
+            font-family: inherit;
+            color: inherit;
+        }
     }

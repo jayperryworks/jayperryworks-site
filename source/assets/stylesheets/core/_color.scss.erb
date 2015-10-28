@@ -139,14 +139,16 @@ $themes: (
 
     // highlight color when you select something
     ::selection {
-      background: theme('highlight', $theme);
-      text-shadow: none;
+        color: theme(bg, $theme);
+        background: theme('highlight', $theme);
+        text-shadow: none;
     }
 
     // ditto, for mozilla engine
     ::-moz-selection {
-      background: theme('highlight', $theme);
-      text-shadow: none;
+        color: theme(bg, $theme);
+        background: theme('highlight', $theme);
+        text-shadow: none;
     }
 
     // helper classes

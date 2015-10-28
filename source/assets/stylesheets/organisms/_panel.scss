@@ -3,6 +3,7 @@
 // ========================================================================== */
 
 @import "../core/*";
+@import "../atoms/heading";
 
 /* Base
 // ---------------------------------------------------------------------------*/
@@ -11,24 +12,20 @@
     @include rem(padding, $gutter-outside);
     @include border(top);
     position: relative;
-
-    &:first-of-type {
-        border-top: none;
-    }
 }
 
 /* Modifiers
 // ---------------------------------------------------------------------------*/
 
-.panel {
-
+.panel.top {
+    border-top: none;
 }
 
 /* Submodules
 // ---------------------------------------------------------------------------*/
 
 .panel-slug {
-    @include font-scale(3);
+    @extend .slug;
     margin-top: -($gutter-outside/ms(2));
     margin-bottom: $gutter-outside;
     text-align: center;

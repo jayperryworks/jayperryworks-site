@@ -54,6 +54,7 @@ Many modules (like `media-box`, `profile`, etc.) define their own special headin
 h1, .alpha, %alpha {
     @extend %font-display;
     @include font-scale(7);
+    letter-spacing: -0.03em;
 }
 
 h2, .beta, %beta {
@@ -89,4 +90,11 @@ h6, .zeta, %zeta {
     color: theme(highlight);
 
     > a { color: inherit; }
+}
+
+.slug {
+    @extend %font-accent--bold;
+    @extend %epsilon;
+    text-transform: uppercase;
+    color: theme(text primary);
 }
