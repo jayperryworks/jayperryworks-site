@@ -18,12 +18,9 @@
 // -------------------------------------------------------------------------- */
 
 .post-header {
-    max-width: $layout-w--narrow;
-    margin: 0 auto;
-}
-
-.post-meta {
-    @include border(bottom);
+    @extend .l-wrapper.narrow;
+    margin-top: 2em;
+    margin-bottom: 2em;
 }
 
 .post-title {
@@ -36,15 +33,13 @@
 }
 
 .post-date {
-    @extend %font-accent--bold;
-    @include font-scale(2);
-    color: theme('highlight');
+
 }
 
 .post-content {
     $margin: 1em;
 
-    * + * { @include rem(margin-top, fs(5)); }
+    * + * { margin-top: 1em; }
 
     p {
         max-width: $layout-w--narrow;
@@ -62,29 +57,33 @@
     li { @extend .gallery-item; }
 }
 
+.post-meta {
+    @include border(top bottom);
+    padding: 1em 0;
+    margin: 1em 0;
+}
+
 .post-tags {
     @include inline-list();
+    margin: 0.5em 0;
+
+    &:last-child { margin-bottom: 0; }
 
     & > li, & > dd {
-      &:after {
-        content: ",";
-      }
-      &:last-child:after {
-        content: "";
-      }
+        margin-top: 0;
+
+        &:after {
+            content: ",";
+            color: theme(text secondary);
+        }
+        &:last-child:after {
+            content: "";
+        }
     }
 }
 
-    .post-tag {
+    .post-tags-label {
         @extend %font-accent;
-        @include font-scale(1);
-        display: inline-block;
-        width: auto;
         text-transform: uppercase;
         color: theme(text tertiary);
-
-        a {
-            font-family: inherit;
-            color: inherit;
-        }
     }

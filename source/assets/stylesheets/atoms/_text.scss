@@ -42,7 +42,7 @@ p {
 
 a {
     @extend %base-transition;
-    @extend %font-body;
+    font-family: inherit;
     text-decoration: none;
     color: theme('highlight');
 
@@ -64,15 +64,24 @@ sup {
     font-size: 0.618em;
 }
 
-figcaption {
+time {
+    @extend %font-accent--bold;
+    @include font-scale(2);
+    text-transform: uppercase;
+    color: theme(text secondary);
+}
 
+figcaption {
+    @extend %font-body;
+    @include font-scale(1);
+    color: theme(text secondary);
 }
 
 address {
 
 }
 
-/* Helpers
+/* Modules
 // -------------------------------------------------------------------------- */
 
 // the first paragraph, often set slightly bigger
@@ -90,8 +99,28 @@ address {
 }
 
 // a caption
-.caption, figcaption {
-    @extend %font-body;
-    @include font-scale(1);
+.caption { @extend figcaption; }
+
+.date { @extend time; }
+
+.tag {
+    @extend a;
+    @extend %font-accent;
+    @include font-scale(2);
+    display: inline-block;
+    text-transform: uppercase;
     color: theme(text secondary);
+
+    &:hover, &:active {
+        color: theme(highlight);
+    }
+
+    a {
+        @extend %font-accent;
+        color: theme(text secondary);
+
+        &:hover, &:active {
+            color: theme(text primary);
+        }
+    }
 }

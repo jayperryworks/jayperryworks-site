@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
         <!-- Use title if it's in the page YAML frontmatter -->
-        <title><%= data.site.site_title %> | <% if current_page.data.title.present? %><%= current_page.data.title %><% end %></title>
+        <title><%= data.site.site_title %><% if current_page.data.title.present? && current_page.data.title != "home" %>| <%= current_page.data.title %><% end %></title>
 
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">

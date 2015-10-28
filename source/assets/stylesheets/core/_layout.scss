@@ -143,7 +143,7 @@ html {
 /* ---- Wrappers and columns -------------------------------------------------*/
 
 // basic layout wrapper, for constraining at large screen sizes
-.l-wrapper, %l-wrapper {
+.l-wrapper {
     @extend %l-base-w;
     @include clearfix;
     display: block;
@@ -159,6 +159,7 @@ html {
 
     // narrow version of layout wrapper
     &.narrow {
+        @extend .l-wrapper;
         @extend %l-base-w--narrow;
     }
 }

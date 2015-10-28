@@ -1,23 +1,27 @@
 <% wrap_layout :layout do %>
     <article class="post">
-        <div class="post-content l-wrapper narrow">
-            <header>
+            <header class="post-header">
                 <h1 class="post-title"><%= current_page.data.title %></h1>
                 <span class="post-subtitle"><%= current_page.data.subtitle %></span>
             </header>
-            <aside class="post-meta">
-                <time class="post-date"><%= current_page.data.date %></time>
-                <dl class="post-tags">
-                    <dt>Filed under</dt>
-                    <% current_page.data.tags.each do |tag| %>
-                    <dd class="post-tag"><a href=""><%= tag %></a></dd>
-                    <% end %>
-                </dl>
-            </aside>
-            <% if current_page.data.image.present? %>
-                <%= image_tag current_page.url + current_page.data.image %>
-            <% end %>
-            <%= yield %>
+            <div class="post-content l-wrapper narrow">
+
+                <aside class="post-meta">
+                    <time class="post-date"><%= current_page.date.strftime("%B %-d, %Y") %></time>
+                    <dl class="post-tags">
+                        <dt class="post-tags-label">Filed under:</dt>
+                        <% current_page.data.tags.each do |tag| %>
+                        <dd class="tag"><a href=""><%= tag %></a></dd>
+                        <% end %>
+                    </dl>
+                </aside>
+
+                <% if current_page.data.image.present? %>
+                    <%= image_tag current_page.url + current_page.data.image, :class => "post-feature_image" %>
+                <% end %>
+
+                <%= yield %>
+
         </div>
     </article>
 <% end %>
