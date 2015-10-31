@@ -7,11 +7,11 @@ statuses:
   - "Ask me what my favorite kind of brush is. I dare you."
 
 social:
-  - channel: "Etsy"
+  - name: "Etsy"
     link: https://www.etsy.com/shop/jayperry
-  - channel: "Twitter"
+  - name: "Twitter"
     link: https://twitter.com/inkpixelsrust
-  - channel: "Pinterest"
+  - name: "Pinterest"
     link: https://www.pinterest.com/jayperryworks/
-  - channel: "Github"
+  - name: "Github"
     link: https://github.com/jayperryworks
