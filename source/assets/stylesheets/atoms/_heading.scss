@@ -127,10 +127,3 @@ h6, .zeta, %zeta {
     text-transform: uppercase;
     color: lighte(theme(text primary), 10);
 }
-
-// make a heading the highlight color
-.highlight {
-    color: theme(highlight);
-
-    > a { color: inherit; }
-}

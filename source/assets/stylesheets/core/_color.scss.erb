@@ -171,3 +171,10 @@ body {
 %theme--wash {
     @include theme('wash');
 }
+
+// make an element the highlight color
+.highlight {
+    color: theme(highlight);
+
+    > a { color: inherit; }
+}

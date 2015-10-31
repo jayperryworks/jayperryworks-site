@@ -49,9 +49,9 @@
                 <div class="card l-wrapper narrow">
                     <img src="http://placehold.it/600x400" alt="Jay Perry" class="card-thumb">
                     <div class="card-content">
-                        <p><strong>Jay Perry</strong> is a designer, illustrator, and writer living near Baltimore. He likes books, old rusty cars, and forests.</p>
+                        <p><span class="highlight">Jay Perry</span> is a designer, illustrator, and writer living near Baltimore. He likes books, old rusty cars, and forests.</p>
                         <dl class="tags">
-                            <dt class="tags-label">Say hi</dt>
+                            <dt class="tags-label inline">Say hi</dt>
                             <% data.site.social.each do |site| %>
                             <dd class="tag"><%= link_to site.channel, site.link %></dd>
                             <% end %>
@@ -60,14 +60,13 @@
                 </div>
             </div>
             <div class="footer-section">
-                <%= partial("layouts/partials/logo-jpw", :locals => {:color => highlight }) %>
-                <small class="footer-copyright">&copy; copyright 2015 Jay Perry Works, all rights reserved unless otherwise noted.</small>
-                <a href="" class="footer-utility">Colophon</a>
+                <%= partial("layouts/partials/logo-jpw", :locals => { :classes => "footer-logo" }) %>
+                <small class="footer-copyright">&copy; copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>
+                <!-- <a href="" class="footer-utility">Colophon</a> -->
             </div>
         </footer>
 
         <%= javascript_include_tag  "main" %>
-
         <%= google_analytics_tag %>
     </body>
 </html>

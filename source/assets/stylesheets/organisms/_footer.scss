@@ -1,0 +1,56 @@
+/* =============================================================================
+// Footer styles
+// ========================================================================== */
+
+@import "../core/*";
+@import "../atoms/heading";
+@import "../atoms/text";
+@import "../organisms/gallery";
+
+/* Base
+// -------------------------------------------------------------------------- */
+
+.footer, footer {
+    @include border(top);
+    margin-top: $gutter;
+    padding-top: $gutter;
+    padding-bottom: $gutter;
+}
+
+/* Submodules
+// -------------------------------------------------------------------------- */
+
+.footer-section {
+    @include border(top);
+    margin-top: $gutter;
+    padding-top: $gutter;
+    padding-bottom: $gutter;
+
+    &:first-child {
+        border-top: none;
+        margin-top: none;
+        padding-top: none;
+    }
+}
+
+.footer-logo {
+    @extend .logo;
+    margin-left: $gutter;
+    max-height: em(26px);
+    max-width: em(175px);
+
+    @include respond-to('small') {
+        display: inline-block;
+        vertical-align: top;
+    }
+}
+
+.footer-copyright {
+    @extend %font-accent;
+    display: block;
+    margin-left: $gutter;
+    margin-top: 0.8em;
+    font-size: 0.5em;
+    text-transform: uppercase;
+    color: theme(text tertiary);
+}

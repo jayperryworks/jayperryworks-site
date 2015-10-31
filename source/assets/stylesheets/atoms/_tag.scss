@@ -57,3 +57,10 @@
     text-transform: uppercase;
     color: theme(text tertiary);
 }
+
+.tags-label.inline {
+    display: inline-block;
+    margin-right: 0.5em;
+
+    &:after { content: ":"; }
+}
