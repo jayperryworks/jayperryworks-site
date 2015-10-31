@@ -1,24 +1,25 @@
 /* ==========================================================================
-// Media box styles
+// card box styles
 // ========================================================================== */
 
 @import "../core/*";
+@import "../atoms/button";
 
-$media-grid: (ms(3) ms(1));
-$media-bp: 'medium';
+$card-grid: (ms(3) ms(1));
+$card-bp: 'medium';
 
 
 /* Base
 // ---------------------------------------------------------------------------*/
 
-.media {
+.card {
 
 }
 
 /* Modifiers
 // ---------------------------------------------------------------------------*/
 
-.media.full {
+.card.full {
     @include clearfix;
     @include rem(margin, 0 0 $gutter 0);
     @include rem(padding, 0 0 $gutter 0);
@@ -32,31 +33,38 @@ $media-bp: 'medium';
 /* Submodules
 // ---------------------------------------------------------------------------*/
 
-.media-img {
-    @include respond-to($media-bp) {
-        @include grid-span(1, 1, $media-grid);
+.card-thumb {
+    @include respond-to($card-bp) {
+        // @include grid-span(1, 1, $card-grid);
     }
 }
 
-.media-description {
+.card-content {
     margin-top: 1.5em;
 
-    @include respond-to($media-bp) {
-        @include grid-span(1, 2, $media-grid);
+    @include respond-to($card-bp) {
+        // @include grid-span(1, 2, $card-grid);
         margin-top: 0;
     }
 }
 
-.media-stats {
+.card-read_more {
+    @extend .button;
+    @extend .read_more;
+    display: block;
+    margin-top: 1em;
+}
+
+.card-stats {
     @extend .tabular;
     @include font-scale(1);
 }
 
-.media-caption {
+.card-caption {
     @include font-scale(1);
     color: theme('text--tertiary');
 
-    // .media-stats + & {
+    // .card-stats + & {
     //     @include border(top);
     //     padding-top: 1em;
     // }

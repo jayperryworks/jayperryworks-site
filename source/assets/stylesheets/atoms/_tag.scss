@@ -1,0 +1,59 @@
+/* =============================================================================
+// Tag/tag list styles
+// ========================================================================== */
+
+@import "../core/*";
+
+/* Base
+// -------------------------------------------------------------------------- */
+
+.tag {
+    @extend a;
+    @extend %font-accent;
+    @include font-scale(2);
+    display: inline-block;
+    text-transform: uppercase;
+    color: theme(text secondary);
+
+    &:hover, &:active {
+        color: theme(highlight);
+    }
+
+    a {
+        @extend %font-accent;
+        color: theme(text secondary);
+
+        &:hover, &:active {
+            color: theme(text primary);
+        }
+    }
+}
+
+// list of tags
+.tags {
+    @include inline-list();
+    margin: 0.5em 0;
+
+    &:last-child { margin-bottom: 0; }
+
+    & > li, & > dd {
+        margin-top: 0;
+
+        &:after {
+            content: ",";
+            color: theme(text secondary);
+        }
+        &:last-child:after {
+            content: "";
+        }
+    }
+}
+
+/* Submodules
+// -------------------------------------------------------------------------- */
+
+.tags-label {
+    @extend %font-accent;
+    text-transform: uppercase;
+    color: theme(text tertiary);
+}

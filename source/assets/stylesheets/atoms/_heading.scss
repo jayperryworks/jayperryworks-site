@@ -41,60 +41,96 @@ Many modules (like `media-box`, `profile`, etc.) define their own special headin
 /* Globals
 // -------------------------------------------------------------------------- */
 
+// defaults for all headers
 #{headers()} {
-    line-height: 1.2;
-    margin-bottom: 0;
-    -webkit-margin-before: 0;
-    -webkit-margin-after: 0;
     color: theme('text' 'primary');
-
-    a { color: inherit; }
 }
 
 h1, .alpha, %alpha {
     @extend %font-display;
-    @include font-scale(7);
+    @include font-scale(8);
+    margin: 0;
     letter-spacing: -0.03em;
+    line-height: 1.1;
+
+    a { color: inherit; }
 }
 
 h2, .beta, %beta {
     @extend %font-display;
-    @include font-scale(5);
+    @include font-scale(6);
+    margin: 0;
+    line-height: 1.2;
+
+    a { color: inherit; }
 }
 
 h3, .cappa, %cappa {
-    @extend %font-display;
+    @extend %font-accent;
     @include font-scale(4);
+    margin: 0;
+    line-height: 1.2;
+
+    a { color: inherit; }
 }
 
 h4, .delta, %delta {
-    @extend %font-display;
+    @extend %font-accent;
     @include font-scale(3);
+    margin: 0;
+    line-height: 1.2;
+
+    a { color: inherit; }
 }
 
 h5, .epsilon, %epsilon {
-    @extend %font-accent;
+    @extend %font-accent--bold;
     @include font-scale(2);
+    margin: 0;
+    line-height: 1.2;
+
+    a { color: inherit; }
 }
 
 h6, .zeta, %zeta {
-    @extend %font-accent;
+    @extend %font-accent--bold;
     @include font-scale(1);
+    margin: 0;
+    line-height: 1.2;
+
+    a { color: inherit; }
 }
 
 /* Modules
 // -------------------------------------------------------------------------- */
 // -> specific types of headings or groups of headings
 
-.highlight {
-    color: theme(highlight);
-
-    > a { color: inherit; }
+// make an element look like a primary heading
+.title {
+    @extend %font-display;
+    display: block;
+    color: theme(text-primary);
 }
 
+// make an element look like a secondary heading
+.subtitle {
+    @extend %font-accent;
+    display: block;
+    color: theme(text secondary);
+    margin-top: 0.2em;
+}
+
+// make a heading a secondary label, a "meta header"
 .slug {
     @extend %font-accent--bold;
     @extend %epsilon;
     text-transform: uppercase;
-    color: theme(text primary);
+    color: lighte(theme(text primary), 10);
+}
+
+// make a heading the highlight color
+.highlight {
+    color: theme(highlight);
+
+    > a { color: inherit; }
 }

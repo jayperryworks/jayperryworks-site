@@ -17,13 +17,16 @@ title: home
     <h1 class="panel-slug">Writing</h1>
     <ul class="feed">
         <% blog("writing").articles.each do |article| %>
-        <li class="feed-item">
-            <% link_to article.url do %>
+        <li class="feed-item card">
+            <% link_to article.url, :class => "card-thumb" do %>
                 <img src="<%= article.url + article.data.image %>" alt="<%= article.title %>">
             <% end %>
-            <h2><%= link_to article.title, article.url %></h2>
-            <%= article.summary %>
-            <%= link_to "Read more &rsaquo;", article.url %>
+            <div class="card-content">
+                <h2><%= link_to article.title, article.url %></h2>
+                <p class="subtitle cappa"><%= link_to article.data.subtitle, article.url %></p>
+                <%= article.summary %>
+                <%= link_to "Read more &rsaquo;", article.url, :class => "card-read_more" %>
+            </div>
         </li>
         <% end %>
     </ul>

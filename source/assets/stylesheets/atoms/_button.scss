@@ -105,6 +105,14 @@ button, .button {
 
         > .button-label { @include visually_hidden(true); }
     }
+
+    &.read_more {
+        @extend %font-accent--bold;
+        @include font-scale(1);
+        padding: 0;
+        border: none;
+        text-transform: uppercase;
+    }
 }
 
 /* Submodules

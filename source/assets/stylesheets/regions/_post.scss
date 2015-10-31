@@ -23,19 +23,6 @@
     margin-bottom: 2em;
 }
 
-.post-title {
-    @extend %alpha;
-}
-
-.post-subtitle {
-    @extend %cappa;
-    @extend %font-accent;
-}
-
-.post-date {
-
-}
-
 .post-content {
     $margin: 1em;
 
@@ -62,28 +49,3 @@
     padding: 1em 0;
     margin: 1em 0;
 }
-
-.post-tags {
-    @include inline-list();
-    margin: 0.5em 0;
-
-    &:last-child { margin-bottom: 0; }
-
-    & > li, & > dd {
-        margin-top: 0;
-
-        &:after {
-            content: ",";
-            color: theme(text secondary);
-        }
-        &:last-child:after {
-            content: "";
-        }
-    }
-}
-
-    .post-tags-label {
-        @extend %font-accent;
-        text-transform: uppercase;
-        color: theme(text tertiary);
-    }

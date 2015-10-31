@@ -102,25 +102,3 @@ address {
 .caption { @extend figcaption; }
 
 .date { @extend time; }
-
-.tag {
-    @extend a;
-    @extend %font-accent;
-    @include font-scale(2);
-    display: inline-block;
-    text-transform: uppercase;
-    color: theme(text secondary);
-
-    &:hover, &:active {
-        color: theme(highlight);
-    }
-
-    a {
-        @extend %font-accent;
-        color: theme(text secondary);
-
-        &:hover, &:active {
-            color: theme(text primary);
-        }
-    }
-}

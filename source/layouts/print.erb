@@ -38,11 +38,11 @@
         </nav>
 
         <% current_page.data.editions.each do |edition| %>
-        <figure class="media full" id="edition-<%= edition.name %>">
-            <img class="media-img" src="<%= asset_url current_page.url + edition.image %>" alt="<%= edition.name %> edition">
-            <figcaption class="media-description">
+        <figure class="card full" id="edition-<%= edition.name %>">
+            <img class="card-thumb" src="<%= asset_url current_page.url + edition.image %>" alt="<%= edition.name %> edition">
+            <figcaption class="card-content">
                 <h2><strong><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
-                <dl class="media-stats">
+                <dl class="card-stats">
                     <dt>Print Size</dt>
                     <dd><%= edition.height %>" &times; <%= edition.width %>"</dd>
                     <dt>Paper Size</dt>
@@ -50,7 +50,7 @@
                     <dt>Edition</dt>
                     <dd><% if edition.limit.present? %>edition.limit<% else %>Open<% end %></dd>
                 </dl>
-                <p class="media-caption">Printed at Archival Arts in Baltimore on heavy, textured, acid-free Hahnemuhle cotton rag paper, using archival pigment-based inks. Individually signed and numbered.</p>
+                <p class="card-caption">Printed at Archival Arts in Baltimore on heavy, textured, acid-free Hahnemuhle cotton rag paper, using archival pigment-based inks. Individually signed and numbered.</p>
                 <a class="button purchase" href=""><span class="button-price"><sup>$</sup><%= edition.price %></span> Buy this print</a>
             </figcaption>
         </figure>
