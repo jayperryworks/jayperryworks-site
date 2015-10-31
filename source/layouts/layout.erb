@@ -1,3 +1,5 @@
+<% highlight = current_page.data.color || data.colors.blue %>
+
 <!DOCTYPE html>
 <html class="no-js" lang="">
     <head>
@@ -31,7 +33,7 @@
 
     <body class="<%= page_classes %>">
         <header class="header" role="banner">
-            <%= partial("layouts/partials/logo-jpw", :locals => { :color => current_page.data.color }) %>
+            <%= partial("layouts/partials/logo-jp", :locals => { :color => highlight }) %>
             <% if current_page.data.title == "home" %>
             <div class="header-intro">
                 <p class="header-greeting"><%= data.site.intro %></p>
@@ -41,6 +43,28 @@
         </header>
 
         <%= yield %>
+
+        <footer class="footer" role="contentinfo">
+            <div class="footer-section">
+                <div class="card l-wrapper narrow">
+                    <img src="http://placehold.it/600x400" alt="Jay Perry" class="card-thumb">
+                    <div class="card-content">
+                        <p><strong>Jay Perry</strong> is a designer, illustrator, and writer living near Baltimore. He likes books, old rusty cars, and forests.</p>
+                        <dl class="tags">
+                            <dt class="tags-label">Say hi</dt>
+                            <% data.site.social.each do |site| %>
+                            <dd class="tag"><%= link_to site.channel, site.link %></dd>
+                            <% end %>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-section">
+                <%= partial("layouts/partials/logo-jpw", :locals => {:color => highlight }) %>
+                <small class="footer-copyright">&copy; copyright 2015 Jay Perry Works, all rights reserved unless otherwise noted.</small>
+                <a href="" class="footer-utility">Colophon</a>
+            </div>
+        </footer>
 
         <%= javascript_include_tag  "main" %>
 

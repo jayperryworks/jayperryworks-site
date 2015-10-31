@@ -5,3 +5,13 @@ intro: "My name is Jay and I'm a designer, illustrator, and writer living near B
 statuses:
   - "And I could use another cup of tea."
   - "Ask me what my favorite kind of brush is. I dare you."
+
+social:
+  - channel: "Etsy"
+    link: https://www.etsy.com/shop/jayperry
+  - channel: "Twitter"
+    link: https://twitter.com/inkpixelsrust
+  - channel: "Pinterest"
+    link: https://www.pinterest.com/jayperryworks/
+  - channel: "Github"
+    link: https://github.com/jayperryworks
