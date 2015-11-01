@@ -28,8 +28,12 @@
 
     &:first-child {
         border-top: none;
-        margin-top: none;
-        padding-top: none;
+        margin-top: 0;
+        padding-top: 0;
+    }
+
+    &:last-child {
+        padding-bottom: 0;
     }
 }
 
