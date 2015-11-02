@@ -1,0 +1,21 @@
+<% if current_page.data.color.present? %>
+<style>
+
+    /* local highlight colors */
+    .highlight,
+    .highlight-hover:hover,
+    .highlight-hover:active { color: <%= highlight current_page.data.color %>; }
+
+    .highlight-border,
+    .highlight-border-hover:hover,
+    .highlight-border-hover:active,
+    .highlight-border-hover:focus {
+        border-color: <%= highlight current_page.data.color %>; }
+
+    .highlight-bg,
+    .highlight-bg-hover:hover,
+    .highlight-bg-hover:active,
+    .highlight-bg-hover:focus { background-color: <%= highlight current_page.data.color %>; }
+
+</style>
+<% end %>

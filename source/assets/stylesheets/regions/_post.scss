@@ -37,6 +37,10 @@
 
         &:first-child, &:first-of-type {
             @extend .lead;
+
+            @include jacket(highlights) {
+                color: #000;
+            }
         }
     }
 

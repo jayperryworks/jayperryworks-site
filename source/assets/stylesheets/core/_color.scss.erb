@@ -4,9 +4,6 @@
 // -> refer to colors ONLY via the $theme maps
 // ========================================================================== */
 
-// @import "SassyJSON";
-// @import "data/colors.json";
-
 /*doc
 ---
 title: Color
@@ -84,7 +81,7 @@ $themes: (
         'bg'              : #fff,
         'well'            : lighten($gray, 20),
         'border'          : lighten($gray, 10),
-        'highlight'       : <%= data.colors["orange"] %>
+        'highlight'       : <%= highlight("orange") %>
     ),
     'reverse': (
         'text': (
@@ -96,7 +93,7 @@ $themes: (
         'bg'              : $black,
         'well'            : darken($black, 20),
         'border'          : lighten($black, 20),
-        'highlight'       : <%= data.colors["orange"] %>
+        'highlight'       : <%= highlight("orange") %>
     ),
     'wash': (
         'text': (
@@ -105,9 +102,9 @@ $themes: (
             'tertiary'  : lighten($gray, 10),
             'body'      : darken($gray, 20),
         ),
-        'bg'              : <%= data.colors["orange"] %>,
-        'well'            : <%= data.colors["orange--dark"] %>,
-        'border'          : <%= data.colors["orange--dark"] %>,
+        'bg'              : <%= highlight("orange") %>,
+        'well'            : <%= highlight("orange-dark") %>,
+        'border'          : <%= highlight("orange-dark") %>,
         'highlight'       : #fff
     )
 );

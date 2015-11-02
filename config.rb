@@ -56,6 +56,9 @@ activate :blog do |blog|
 end
 
 activate :directory_indexes
+page "README.md", :directory_index => false
+page "LICENSE", :directory_index => false
+page "404.html", :directory_index => false
 
 # autoprefix CSS
 activate :autoprefixer do |config|
@@ -76,11 +79,18 @@ end
 
 # Methods defined in the helpers block are available in templates
 helpers do
-  def icon(id, title, role="img", opts={})
-    # "<svg class='icon #{id}' title='#{title}' role='#{role}'>"
-    # "   <use xlink:href='##{id}'></use>"
-    # "</svg>"
-  end
+    def icon(id, title, role="img", opts={})
+        output = "<svg class='icon #{id}' title='#{title}' role='#{role}'><use xlink:href='##{id}'></use></svg>"
+    end
+
+    # check to see if a highlight color is one of the defaults listed in colors.yml
+    def highlight(color)
+        if data.colors.include? color
+            return data.colors[color.to_s]
+        else
+            return color
+        end
+    end
 end
 
 set :url_root, 'http://prints.jayperryworks.com'

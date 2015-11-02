@@ -77,13 +77,6 @@ $layout-w--wide: 1200px;
 
 // --- grid variables ----------------------------------------------------------
 
-// Singularity globals
-@include add-gutter($gutter);
-// @include add-gutter-style('split' 'fixed');
-
-// Singularity Quick Spanner globals
-$sqs-thumb-span-bottom-margins: false;
-
 // scale for ratio-based grids and/or type
 // -> http://alistapart.com/article/content-out-layout
 $grid-scale: 1 1.618 2.618 4.236 6.854 11.089 17.942 29.030;

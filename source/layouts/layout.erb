@@ -1,5 +1,3 @@
-<% highlight = current_page.data.color || data.colors.blue %>
-
 <!DOCTYPE html>
 <html class="no-js" lang="">
     <head>
@@ -7,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
         <!-- Use title if it's in the page YAML frontmatter -->
-        <title><%= data.site.site_title %><% if current_page.data.title.present? && current_page.data.title != "home" %>| <%= current_page.data.title %><% end %></title>
+        <title><%= data.site.site_title %><% if current_page.data.title.present? && current_page.data.title != "home" %> | <%= current_page.data.title %><% end %></title>
 
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,19 +19,20 @@
             document.createElement("picture");
         </script>
         <%= javascript_include_tag "libs" %>
-        <%= stylesheet_link_tag "main" %>
 
-        <!-- custom page colors -->
-        <style type="text/CSS">
-
+        <% if current_page.data.color.present? %>
+        <style>
+            <%= partial("layouts/partials/highlights", :locals => { :color => highlight(current_page.data.color) }) %>
         </style>
+        <% end %>
+        <%= stylesheet_link_tag "main" %>
     </head>
 
     <%= partial "layouts/partials/spritemap" %>
 
     <body class="<%= page_classes %>">
         <header class="header" role="banner">
-            <%= partial("layouts/partials/logo-jp", :locals => { :color => highlight }) %>
+            <%= partial("layouts/partials/logo-jp") %>
             <% if current_page.data.title == "home" %>
             <div class="header-intro">
                 <p class="header-greeting"><%= data.site.intro %></p>
