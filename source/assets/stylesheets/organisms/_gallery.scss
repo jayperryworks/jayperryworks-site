@@ -39,11 +39,23 @@ There are three (column) size variations: small, medium, and large. Medium is de
     <ul class="gallery large"></ul>
 ```
 
-The gallery module uses the [Singularity Quick Spanner plugin](https://github.com/lolmaus/singularity-quick-spanner) and it's Thumbnail Grid mixins. This uses nth-child selectors heavily, so we'll prob need to polyfill this for IE8.
-
 */
 
+// requires Bourbon & Modernizr
 @import "../core/*";
+
+$gallery-gutter: $gutter;
+
+@mixin columns($number: 2, $g: $gallery-gutter) {
+    display: inline-block;
+    width: (100%/$number);
+    padding-right: $g;
+
+    .flexbox & {
+        width: auto;
+        flex: 0 0 (100%/$number);
+    }
+}
 
 /* Base
 // ---------------------------------------------------------------------------*/
@@ -51,54 +63,39 @@ The gallery module uses the [Singularity Quick Spanner plugin](https://github.co
 .gallery {
     @include unstyled-list;
     display: block; // in case flexbox isn't supported
-    display: flex;
-    flex-flow: row wrap;
-    align-items: stretch;
+    position: relative;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    font-size: 0;
+    @include flex-direction(row);
+    @include flex-wrap(wrap);
+    @include align-items(stretch);
+
+    @include respond-to('small') {
+        @include display(flex);
+        margin-right: -($gallery-gutter); // to prevent uneven column widths
+    }
 }
 
 /* Modifiers
 // ---------------------------------------------------------------------------*/
 
+// "small" columns
+// -> see .gallery-item submodule for styles
 .gallery.small {
-    .gallery-item {
-        @include respond-to("xsmall") {
-            flex: 0 0 (100%/2);
-        }
-        @include respond-to("small") {
-            flex: 0 0 (100%/3);
-        }
-        @include respond-to("medium") {
-            flex: 0 0 (100%/4);
-        }
+    @include respond-to('xsmall') {
+        @include display(flex);
+        margin-right: -($gallery-gutter); // to prevent uneven column widths
     }
-
-    // non-flexbox fallback
-    // .no-flexbox & {
-    //     .gallery-item {
-    //         @include respond-to("small") {
-    //             @include thumb-span(4, $gutstyle: $gallery-gutter-style);
-    //             padding-bottom: 0;
-    //         }
-    //     }
-    // }
 }
 
+// "large" columns
+// -> see .gallery-item submodule for styles
 .gallery.large {
-    .gallery-item {
-        @include respond-to("small") {
-            flex: 0 0 50%;
-        }
+    @include respond-to('small') {
+        @include display(flex);
+        margin-right: -($gallery-gutter); // to prevent uneven column widths
     }
-
-    // non-flexbox fallback
-    // .no-flexbox & {
-    //     .gallery-item {
-    //         @include respond-to("small") {
-    //             @include thumb-span(2, $gutstyle: $gallery-gutter-style);
-    //             padding-bottom: 0;
-    //         }
-    //     }
-    // }
 }
 
 
@@ -106,23 +103,36 @@ The gallery module uses the [Singularity Quick Spanner plugin](https://github.co
 // ---------------------------------------------------------------------------*/
 
 .gallery-item {
-    $gutter: 1px;
-    margin: 0 0 $gutter 0;
-    padding: $gutter $gutter 0 0;
+    display: block;
+    margin: 0;
+    padding-bottom: $gallery-gutter;
+    font-size: $type-size--default;
 
     @include respond-to("small") {
-        flex: 0 0 50%;
+        @include columns(2);
     }
 
     @include respond-to("medium") {
-        flex: 0 0 (100%/3);
+        @include columns(3);
     }
 
-    // non-flexbox fallback
-    // .no-flexbox & {
-    //     @include respond-to("small") {
-    //         @include thumb-span(3, $gutstyle: $gallery-gutter-style);
-    //         padding-bottom: 0;
-    //     }
-    // }
+    .gallery.small & {
+        @include respond-to("xsmall") {
+            @include columns(2);
+        }
+        @include respond-to("small") {
+            @include columns(3);
+        }
+        @include respond-to("medium") {
+            @include columns(4);
+        }
+    }
+
+    .gallery.large & {
+        .gallery.large & {
+            @include respond-to('small') {
+                @include columns(2);
+            }
+        }
+    }
 }

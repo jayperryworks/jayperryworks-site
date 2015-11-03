@@ -30,7 +30,7 @@
             <% if current_page.data.title == "home" %>
             <div class="header-intro">
                 <p class="header-greeting"><%= data.site.intro %></p>
-                <p class="header-status"><%= data.site.statuses[rand(data.site.statuses.length - 1)] %></p>
+                <p class="header-status"><%= data.site.statuses[rand(data.site.statuses.length)] %></p>
             </div>
             <% end %>
         </header>

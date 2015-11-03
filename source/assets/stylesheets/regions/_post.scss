@@ -39,7 +39,10 @@
         &:last-child { margin-bottom: 0; }
     }
 
-    > ul { @extend .gallery; }
+    > ul {
+        @extend .gallery;
+        @include rem(margin-top, fs(4));
+    }
     li { @extend .gallery-item; }
 }
 
