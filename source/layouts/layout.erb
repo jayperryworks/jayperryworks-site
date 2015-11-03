@@ -19,12 +19,6 @@
             document.createElement("picture");
         </script>
         <%= javascript_include_tag "libs" %>
-
-        <% if current_page.data.color.present? %>
-        <style>
-            <%= partial("layouts/partials/highlights", :locals => { :color => highlight(current_page.data.color) }) %>
-        </style>
-        <% end %>
         <%= stylesheet_link_tag "main" %>
     </head>
 

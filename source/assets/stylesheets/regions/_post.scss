@@ -10,9 +10,7 @@
 /* Base
 // -------------------------------------------------------------------------- */
 
-.post {
-
-}
+.post { display: block; }
 
 /* Submodules
 // -------------------------------------------------------------------------- */
@@ -25,6 +23,7 @@
 
 .post-content {
     $margin: 1em;
+    padding-bottom: $gutter-outside;
 
     * + * { margin-top: 1em; }
 
@@ -35,13 +34,9 @@
 
         & + p {  margin-top: 1em; }
 
-        &:first-child, &:first-of-type {
-            @extend .lead;
+        &:first-child, &:first-of-type { @extend .lead; }
 
-            @include jacket(highlights) {
-                color: #000;
-            }
-        }
+        &:last-child { margin-bottom: 0; }
     }
 
     > ul { @extend .gallery; }
@@ -52,4 +47,9 @@
     @include border(top bottom);
     padding: 1em 0;
     margin: 1em 0;
+}
+
+.post-feature_image {
+    margin: 1em 0;
+    width: 100%;
 }

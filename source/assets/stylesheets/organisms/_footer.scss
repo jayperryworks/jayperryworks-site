@@ -12,9 +12,9 @@
 
 .footer, footer {
     @include border(top);
-    margin-top: $gutter;
-    padding-top: $gutter;
-    padding-bottom: $gutter;
+    // margin-top: $gutter;
+    padding-top: $gutter-outside;
+    padding-bottom: $gutter-outside;
 }
 
 /* Submodules
@@ -22,13 +22,13 @@
 
 .footer-section {
     @include border(top);
-    margin-top: $gutter;
-    padding-top: $gutter;
-    padding-bottom: $gutter;
+    // margin-top: $gutter;
+    padding-top: $gutter-outside;
+    padding-bottom: $gutter-outside;
 
     &:first-child {
         border-top: none;
-        margin-top: 0;
+        // margin-top: 0;
         padding-top: 0;
     }
 
@@ -42,6 +42,8 @@
     margin-left: $gutter;
     max-height: em(26px);
     max-width: em(175px);
+
+    > .logo-jpw-works { fill: theme(highlight); }
 
     @include respond-to('small') {
         display: inline-block;

@@ -2,7 +2,7 @@
 //  Button module
 // ========================================================================== */
 
-@import "../core/*";
+// @import "../core/*";
 
 /*doc
 ---
@@ -44,6 +44,11 @@ button, .button {
     &:hover, &:active {
         border-color: theme('highlight');
         color: theme('highlight'); // override default link hover color
+
+        @include jacket(highlights) {
+            border-color: black;
+            color: black;
+        }
     }
 
     sup {

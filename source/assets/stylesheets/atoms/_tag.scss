@@ -24,7 +24,7 @@
         color: theme(text secondary);
 
         &:hover, &:active {
-            color: theme(text primary);
+            color: theme(highlight);
         }
     }
 }
@@ -55,7 +55,7 @@
 .tags-label {
     @extend %font-accent;
     text-transform: uppercase;
-    color: theme(text tertiary);
+    color: theme(text primary);
 }
 
 .tags-label.inline {

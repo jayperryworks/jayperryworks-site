@@ -19,3 +19,9 @@
 
 </style>
 <% end %>
+
+<% if current_page.data.color.present? %>
+<style>
+    <%= partial("assets/stylesheets/highlights", :locals => { :color => highlight(current_page.data.color) }) %>
+</style>
+<% end %>
