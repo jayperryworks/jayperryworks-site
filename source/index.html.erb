@@ -16,7 +16,7 @@ title: home
 <section class="panel">
     <h1 class="panel-slug">Writing</h1>
     <ul class="feed">
-        <% blog("writing").articles.each do |article| %>
+        <% blog("writing").articles[0...5].each do |article| %>
         <li class="feed-item card horizontal l-wrapper narrow">
             <% link_to article.url, :class => "card-figure" do %>
                 <img src="<%= article.url + article.data.image %>" alt="<%= article.title %>">
