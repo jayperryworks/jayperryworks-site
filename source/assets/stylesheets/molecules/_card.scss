@@ -5,19 +5,40 @@
 @import "../core/*";
 @import "../atoms/button";
 
-$card-grid: (ms(3) ms(1));
+$card-grid: ms(1) ms(3);
 $card-bp: 'medium';
 
+@mixin col($loc, $gutter: $gutter, $grid: $card-grid) {
+    display: inline-block;
+    width: percentage(nth($grid, $loc)/sl-sum($grid));
+    padding: 0 ($gutter/2);
+
+    &:first-child { padding-left: 0; }
+    &:last-child { padding-right: 0; }
+}
 
 /* Base
 // ---------------------------------------------------------------------------*/
 
 .card {
-
+    display: block;
 }
 
 /* Modifiers
 // ---------------------------------------------------------------------------*/
+
+.card.horizontal {
+    font-size: 0;
+
+    > * { @include type-default; }
+
+    @include respond-to('xsmall') {
+        .flexbox & {
+            @include display(flex);
+            @include align-items(flex-start);
+        }
+    }
+}
 
 .card.full {
     @include clearfix;
@@ -33,19 +54,40 @@ $card-bp: 'medium';
 /* Submodules
 // ---------------------------------------------------------------------------*/
 
-.card-thumb {
-    @include respond-to($card-bp) {
-        // @include grid-span(1, 1, $card-grid);
+.card-figure {
+    display: block;
+
+    .card.horizontal & {
+        @include type-default;
+
+        @include respond-to('xsmall') {
+            @include col(1);
+
+            .flexbox & {
+                display: block;
+            }
+        }
     }
 }
 
 .card-content {
+    display: block;
     margin-top: 1.5em;
 
-    @include respond-to($card-bp) {
-        // @include grid-span(1, 2, $card-grid);
-        margin-top: 0;
+    .card.horizontal & {
+        @include respond-to('xsmall') {
+            @include col(2);
+            margin-top: 0;
+
+            .flexbox & {
+                display: block;
+                width: auto;
+                flex: 1;
+            }
+        }
     }
+
+    p:first-child { margin-top: 0; }
 }
 
 .card-read_more {

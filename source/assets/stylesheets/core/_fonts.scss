@@ -41,7 +41,7 @@ $type-size--default: 16px;
 $type-size-amp: 1.1em; // size of ampersands relative to their context
 $type-line_height: 1.5;
 
-@mixin type--default {
+@mixin type-default {
   @include rem(font-size, $type-size--default);
 }
 

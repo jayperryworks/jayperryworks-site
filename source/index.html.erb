@@ -4,7 +4,7 @@ title: home
 
 <section class="panel">
     <h1 class="panel-slug">Work</h1>
-    <ul class="gallery">
+    <ul class="gallery center l-wrapper">
         <% blog("work").articles.each do |print| %>
         <li class="gallery-item" data-year="<%= print.date.strftime('%Y') %>">
             <a href="<%= print.url %>"><img src="<%= print.url + print.data.hero %>" /></a>
@@ -17,8 +17,8 @@ title: home
     <h1 class="panel-slug">Writing</h1>
     <ul class="feed">
         <% blog("writing").articles.each do |article| %>
-        <li class="feed-item card">
-            <% link_to article.url, :class => "card-thumb" do %>
+        <li class="feed-item card horizontal l-wrapper narrow">
+            <% link_to article.url, :class => "card-figure" do %>
                 <img src="<%= article.url + article.data.image %>" alt="<%= article.title %>">
             <% end %>
             <div class="card-content">

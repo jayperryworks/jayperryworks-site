@@ -39,7 +39,7 @@
 
         <% current_page.data.editions.each do |edition| %>
         <figure class="card full" id="edition-<%= edition.name %>">
-            <img class="card-thumb" src="<%= asset_url current_page.url + edition.image %>" alt="<%= edition.name %> edition">
+            <img class="card-figure" src="<%= asset_url current_page.url + edition.image %>" alt="<%= edition.name %> edition">
             <figcaption class="card-content">
                 <h2><strong><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
                 <dl class="card-stats">

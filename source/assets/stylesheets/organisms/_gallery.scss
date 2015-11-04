@@ -51,7 +51,8 @@ $gallery-gutter: $gutter;
     width: (100%/$number);
     padding-right: $g;
 
-    .flexbox & {
+    @include yep(flexbox) {
+        display: block;
         width: auto;
         flex: 0 0 (100%/$number);
     }
@@ -71,9 +72,19 @@ $gallery-gutter: $gutter;
     @include flex-wrap(wrap);
     @include align-items(stretch);
 
+    &.l-wrapper {
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: $gutter-outside;
+    }
+
     @include respond-to('small') {
         @include display(flex);
         margin-right: -($gallery-gutter); // to prevent uneven column widths
+
+        &.l-wrapper {
+            padding-right: ($gutter-outside - $gutter);
+        }
     }
 }
 
@@ -86,6 +97,8 @@ $gallery-gutter: $gutter;
     @include respond-to('xsmall') {
         @include display(flex);
         margin-right: -($gallery-gutter); // to prevent uneven column widths
+
+        &.l-wrapper { padding-right: ($gutter-outside - $gutter); }
     }
 }
 
@@ -96,6 +109,11 @@ $gallery-gutter: $gutter;
         @include display(flex);
         margin-right: -($gallery-gutter); // to prevent uneven column widths
     }
+}
+
+.gallery.center {
+    @include justify-content(center);
+    text-align: center;
 }
 
 

@@ -16,11 +16,12 @@
     "tests"
   ],
   "dependencies": {
-    "normalize-css": "~3.0.2",
-    "modernizr": "~2.8.3",
+    "normalize-css": "latest",
     "jquery": "~2.1.3",
-    "picturefill": "~3.0.1",
-    "html5-boilerplate": "~5.2.0"
+    "picturefill": "latest",
+    "html5-boilerplate": "~5.2.0",
+    "loadcss": "~0.2.4",
+    "modernizr": "~2.8.3"
   },
   "devDependencies": {
     "sass-toolkit": "~2.9.0",
@@ -28,8 +29,10 @@
     "sass-units": "~0.0.5",
     "sass-type-helpers": "git@github.com:jayperryworks/sass-type-helpers.git#~0.0.3",
     "sass-list-helpers": "git@github.com:jayperryworks/sass-list-helpers.git#~0.0.1",
-    "breakpoint-sass": "~2.5.0",
-    "singularity": "~1.6.2",
-    "sassy-maps": "~0.4.0"
+    "breakpoint-sass": "latest",
+    "sassy-maps": "~0.4.0",
+    "SassyLists": "~2.2.4",
+    "jacket": "~1.1.1",
+    "modernizr-mixin": "~3.0.7"
   }
 }

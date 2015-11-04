@@ -27,33 +27,28 @@ Global layout styles.
 // --- global breakpoints ------------------------------------------------------
 // -> requires Breakpoint library
 
-// set up breakpoints
-$breakpoints: add-breakpoint("xsmall", 480px);
-$breakpoints: add-breakpoint("small", 768px);
-$breakpoints: add-breakpoint("medium", 1024px);
-$breakpoints: add-breakpoint("large", 1280px);
+$breakpoints: (
+    'xsmall' : 480px,
+    'small'  : 700px,
+    'medium' : 1000px,
+    'large'  : 1200px,
+    'huge'   : 1600px,
+);
 
-// breakpoints settings
-$breakpoint-to-ems: true;
-
-// screen-size helper classes
-%hide { display: none; }
-
-.show-small {
-    @extend %hide;
-
-    @include respond-to("small") {
-        display: block;
-    }
+// add the breakpoints to Breakpoint library
+// -> so we can use 'respond-to' syntax
+// -> https://github.com/at-import/breakpoint/wiki/Respond-To
+@each $name, $size in $breakpoints {
+    @include add-breakpoint($name, $size);
 }
 
-.show-medium {
-    @extend %hide;
-
-    @include respond-to("medium") {
-        display: block;
-    }
+// getter/helper function to pull breakpoints from the map
+@function screen($size) {
+    @return map-get($breakpoints, $size);
+    // @debug map-get($breakpoints, $size);
 }
+
+@include breakpoint-set('to ems', true);
 
 // --- global element dimensions -----------------------------------------------
 $gutter: fs(4); // based on font scale (see _fonts.scss)
