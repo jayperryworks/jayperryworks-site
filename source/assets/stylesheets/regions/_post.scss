@@ -48,8 +48,17 @@
 
 .post-meta {
     @include border(top bottom);
+    display: block;
     padding: 1em 0;
     margin: 1em 0;
+
+    @include respond-to('large') {
+        $w: 200px;
+        @include rem(width, $w);
+        @include rem(margin-right, -($w + $gutter));
+        float: right;
+        border-bottom: none;
+    }
 }
 
 .post-feature_image {

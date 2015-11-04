@@ -42,24 +42,31 @@ $base-radius: 3px !default;
 // Border width & style
 // -----------------------------------------------------------------------------
 
-$borders: 1px 2px 4px !default;
+$border-w--default: 'thin';
+
+$border-widths: (
+    'thin'  : 1px,
+    'mid'   : 2px,
+    'thick' : 4px,
+);
+
 $border-style: solid !default;
 
 // get function for border widths
-@function border-w($w: 'thin') {
-    @if ($w == 'thin') {
-        @return nth($borders, 1);
-    } @else if ($w == 'mid') {
-        @return nth($borders, 2);
-    } @else if ($w == 'thick') {
-        @return nth($borders, 3);
-    } @else {
+@function border-w($w: $border-w--default) {
+    @if (type-of($w) == "number") {
         @return #{$w};
+    } @else {
+        @each $name, $value in $border-widths {
+            @if ($w == $name) {
+                @return map-get($border-widths, $name);
+            }
+        }
     }
 }
 
 // make a standard border/hairline that works with the parent color theme
-@mixin border($sides: all, $w: 'thin', $color: theme('border'), $style: $border-style) {
+@mixin border($sides: all, $w: $border-w--default, $color: theme('border'), $style: $border-style) {
     @if ($sides == all) {
         border: border-w($w) $style $color;
     } @else {
