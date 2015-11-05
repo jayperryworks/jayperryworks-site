@@ -6,7 +6,7 @@ color: orange
 tags:
   - acrylic
   - india ink
-hero: "frozen_waterfall_r2.jpg"
+cover: "frozen_waterfall_r2.jpg"
 format: Tryptych on panels
 width: 6'
 height: 4'

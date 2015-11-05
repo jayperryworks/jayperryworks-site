@@ -72,19 +72,9 @@ $gallery-gutter: $gutter;
     @include flex-wrap(wrap);
     @include align-items(stretch);
 
-    &.l-wrapper {
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: $gutter-outside;
-    }
-
     @include respond-to('small') {
         @include display(flex);
         margin-right: -($gallery-gutter); // to prevent uneven column widths
-
-        &.l-wrapper {
-            padding-right: ($gutter-outside - $gutter);
-        }
     }
 }
 

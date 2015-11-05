@@ -23,8 +23,7 @@
 .footer-section {
     @include border(top);
     // margin-top: $gutter;
-    padding-top: $gutter-outside;
-    padding-bottom: $gutter-outside;
+    padding: $gutter-outside;
 
     &:first-child {
         border-top: none;

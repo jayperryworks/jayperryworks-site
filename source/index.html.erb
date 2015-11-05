@@ -7,7 +7,7 @@ title: home
     <ul class="gallery center l-wrapper">
         <% blog("work").articles.each do |print| %>
         <li class="gallery-item" data-year="<%= print.date.strftime('%Y') %>">
-            <a href="<%= print.url %>"><img src="<%= print.url + print.data.hero %>" /></a>
+            <a href="<%= print.url %>"><img src="<%= print.url + print.data.cover %>" /></a>
         </li>
         <% end %>
     </ul>

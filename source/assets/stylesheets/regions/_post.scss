@@ -10,7 +10,9 @@
 /* Base
 // -------------------------------------------------------------------------- */
 
-.post { display: block; }
+.post {
+    display: block;
+}
 
 /* Submodules
 // -------------------------------------------------------------------------- */
@@ -19,11 +21,13 @@
     @extend .l-wrapper.narrow;
     margin-top: 2em;
     margin-bottom: 2em;
+    padding-left: $gutter-outside;
+    padding-right: $gutter-outside;
 }
 
 .post-content {
     $margin: 1em;
-    padding-bottom: $gutter-outside;
+    padding: 0 $gutter-outside $gutter-outside;
 
     * + * { margin-top: 1em; }
 
@@ -41,6 +45,7 @@
 
     > ul {
         @extend .gallery;
+        @extend .l-wrapper;
         @include rem(margin-top, fs(4));
     }
     li { @extend .gallery-item; }

@@ -63,11 +63,11 @@ $layout-w--wide: 1200px;
 }
 
 %l-base-w {
-    max-width: add_outside_gutters($layout-w);
+    max-width: $layout-w;
 }
 
 %l-base-w--narrow {
-    max-width: add_outside_gutters($layout-w--narrow);
+    max-width: $layout-w--narrow;
 }
 
 // --- grid variables ----------------------------------------------------------
@@ -138,34 +138,14 @@ html {
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    padding-left: $gutter-outside;
-    padding-right: $gutter-outside;
-
-    // & > .headline:first-child {
-    //     margin-top: $gutter;
-    // }
-
-    // narrow version of layout wrapper
-    &.narrow {
-        @extend .l-wrapper;
-        @extend %l-base-w--narrow;
-    }
+    // padding-left: $gutter-outside;
+    // padding-right: $gutter-outside;
 }
 
-/* https://css-tricks.com/NetMag/FluidWidthVideo/Article-FluidWidthVideo.php */
-.l-wrapper-video {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
-    padding-top: 25px;
-    height: 0;
-
-    & > iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
+// narrow version of layout wrapper
+.l-wrapper.narrow {
+    @extend .l-wrapper;
+    @extend %l-base-w--narrow;
 }
 
 /* ---- Fixed position -------------------------------------------------------*/

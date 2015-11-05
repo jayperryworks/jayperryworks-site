@@ -4,10 +4,32 @@
 
 @import "../core/*";
 
+/* Globals
+// -------------------------------------------------------------------------- */
+
 audio,
 canvas,
 img,
 video {
     vertical-align: middle;
     max-width: 100%;
+}
+
+/* Modules
+// -------------------------------------------------------------------------- */
+
+/* https://css-tricks.com/NetMag/FluidWidthVideo/Article-FluidWidthVideo.php */
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    padding-top: 25px;
+    height: 0;
+
+    & > iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
 }
