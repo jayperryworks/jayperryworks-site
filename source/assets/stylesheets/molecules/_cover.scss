@@ -10,6 +10,7 @@
 
 .cover {
     @include rem(margin, 0 auto fs(5));
+    @include rem(padding, 0 $gutter-outside);
     display: block;
     max-height: 600px;
     max-height: 80vh;

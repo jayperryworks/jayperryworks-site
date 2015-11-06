@@ -21,13 +21,13 @@
     @extend .l-wrapper.narrow;
     margin-top: 2em;
     margin-bottom: 2em;
-    padding-left: $gutter-outside;
-    padding-right: $gutter-outside;
+    // padding-left: $gutter-outside;
+    // padding-right: $gutter-outside;
 }
 
 .post-content {
     $margin: 1em;
-    padding: 0 $gutter-outside $gutter-outside;
+    padding: 0 0 $gutter-outside;
 
     * + * { margin-top: 1em; }
 
@@ -35,6 +35,7 @@
         max-width: $layout-w--narrow;
         margin-left: auto;
         margin-right: auto;
+        padding: 0 $gutter-outside;
 
         & + p {  margin-top: 1em; }
 
@@ -44,9 +45,12 @@
     }
 
     > ul {
-        @extend .gallery;
         @extend .l-wrapper;
+        @extend .gallery;
+        // @extend .gallery.l-wrapper;
         @include rem(margin-top, fs(4));
+        margin-left: auto;
+        margin-right: auto;
     }
     li { @extend .gallery-item; }
 }

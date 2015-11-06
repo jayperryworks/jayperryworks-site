@@ -63,18 +63,19 @@ $layout-w--wide: 1200px;
 }
 
 %l-base-w {
-    max-width: $layout-w;
+    max-width: add_outside_gutters($layout-w);
 }
 
 %l-base-w--narrow {
-    max-width: $layout-w--narrow;
+    max-width: add_outside_gutters($layout-w--narrow);
 }
 
 // --- grid variables ----------------------------------------------------------
 
 // scale for ratio-based grids and/or type
 // -> http://alistapart.com/article/content-out-layout
-$grid-scale: 1 1.618 2.618 4.236 6.854 11.089 17.942 29.030;
+$grid-scale: 1 1.2 1.44 1.728 2.074 2.488 2.986 3.583 4.3 5.16 6.192 7.43
+ 8.916 10.699 12.839;
 
 @function ms($n) {
     @return nth($grid-scale, $n);
@@ -138,8 +139,8 @@ html {
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    // padding-left: $gutter-outside;
-    // padding-right: $gutter-outside;
+    padding-left: $gutter-outside;
+    padding-right: $gutter-outside;
 }
 
 // narrow version of layout wrapper

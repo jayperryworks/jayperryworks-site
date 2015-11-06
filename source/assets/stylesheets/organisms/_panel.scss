@@ -9,7 +9,7 @@
 // ---------------------------------------------------------------------------*/
 
 .panel {
-    @include rem(padding, $gutter-outside);
+    @include rem(padding, $gutter-outside 0);
     @include border(top);
     position: relative;
 }

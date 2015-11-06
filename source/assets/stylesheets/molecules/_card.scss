@@ -5,7 +5,7 @@
 @import "../core/*";
 @import "../atoms/button";
 
-$card-grid: ms(1) ms(3);
+$card-grid: ms(1) ms(7);
 $card-bp: 'medium';
 
 @mixin col($loc, $gutter: $gutter, $grid: $card-grid) {
