@@ -18,11 +18,10 @@
 // -------------------------------------------------------------------------- */
 
 .post-header {
+    @extend .l-wrapper;
     @extend .l-wrapper.narrow;
     margin-top: 2em;
     margin-bottom: 2em;
-    // padding-left: $gutter-outside;
-    // padding-right: $gutter-outside;
 }
 
 .post-content {
@@ -32,12 +31,11 @@
     * + * { margin-top: 1em; }
 
     p {
-        max-width: $layout-w--narrow;
-        margin-left: auto;
-        margin-right: auto;
+        @extend .l-wrapper;
+        @extend .l-wrapper.narrow;
         padding: 0 $gutter-outside;
 
-        & + p {  margin-top: 1em; }
+        // & + p {  margin-top: 1em; }
 
         &:first-child, &:first-of-type { @extend .lead; }
 

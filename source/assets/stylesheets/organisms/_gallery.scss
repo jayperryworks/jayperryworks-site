@@ -55,12 +55,12 @@ $gallery-gutter: $gutter;
     // use an nth-child selector to clear away padding set in lower (previous) media queries
     // -> specificity hack
     &:nth-child(n) {
-        padding-right: ($g/2);
-        padding-left: ($g/2);
+        margin-right: 0;
+        margin-left: 0;
     }
 
-    &:first-child, &:nth-child(#{$number}n + 1) { padding-left: 0; }
-    &:last-child, &:nth-child(#{$number}n) { padding-right: 0; }
+    &:first-child, &:nth-child(#{$number}n + 1) { margin-left: -($g/2); }
+    &:nth-child(#{$number}n) { margin-right: -($g/2); }
 
     @include yep(flexbox) {
         display: block;
