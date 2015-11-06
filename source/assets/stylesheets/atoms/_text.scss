@@ -24,7 +24,8 @@ Inline text is mostly styled globally and doesn't change a whole lot from one co
 
 body {
     @extend %font-body;
-    @include enable-ligatures;
+    // @include enable-ligatures;
+    font-feature-settings: "liga","dlig";
     line-height: $type-line_height;
 }
 

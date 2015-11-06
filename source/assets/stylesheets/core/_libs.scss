@@ -8,13 +8,12 @@
 // =============================================================================
 
 // bower components
-@import "sass-toolkit/stylesheets/toolkit";
 @import "bourbon/app/assets/stylesheets/bourbon";
 @import "breakpoint-sass/stylesheets/breakpoint";
 @import "jacket/stylesheets/jacket";
 @import "sassy-maps/sass/sassy-maps";
+@import "SassyLists/stylesheets/SassyLists";
 @import "sass-units/units";
 @import "sass-list-helpers/helpers-lists";
 @import "sass-type-helpers/type-helpers";
-@import "SassyLists/stylesheets/SassyLists";
 @import "modernizr-mixin/stylesheets/modernizr";

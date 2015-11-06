@@ -24,7 +24,6 @@
     "modernizr": "~2.8.3"
   },
   "devDependencies": {
-    "sass-toolkit": "~2.9.0",
     "bourbon": "~4.2.2",
     "sass-units": "~0.0.5",
     "sass-type-helpers": "git@github.com:jayperryworks/sass-type-helpers.git#~0.0.3",

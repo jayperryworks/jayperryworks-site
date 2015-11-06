@@ -5,27 +5,22 @@
 @import "../core/*";
 @import "../atoms/button";
 
-$nav-jump-w: 60px;
+$jump-w: 30px;
+$jump-margin: $gutter-outside;
 
 /* Base
 // -------------------------------------------------------------------------- */
 
-.nav {
-
-}
-
-/* Modifiers
-// -------------------------------------------------------------------------- */
-
-.nav.jump {
+.jump_nav {
     // @extend %l-abs;
     @include unstyled-list;
-    @include rem(width, $nav-jump-w);
+    // @include rem(width, $jump-w);
     display: none;
-    position: relative;
-    float: left;
-    top: -1em;
+    position: absolute;
+    // margin-top: -1em; // make a little room against the browser window
     padding-top: 1em;
+    left: $jump-margin;
+    z-index: $z--high;
 
     > ul {
         @include unstyled-list;
@@ -41,12 +36,12 @@ $nav-jump-w: 60px;
 // -------------------------------------------------------------------------- */
 
 /* --- .nav.item ------------------------------------------------------------ */
-.nav-item {
-    @include rem(width, 30px);
+.jump_nav-item {
+    @include rem(width, $jump-w);
     display: block;
 }
 
-.nav-button {
+.jump_nav-button {
     @extend .button;
     @extend .button.small;
     @extend .button.initial;
@@ -81,8 +76,8 @@ $nav-jump-w: 60px;
     position: relative;
 
     // add left margin to a jump nav's siblings
-    .nav.jump ~ * {
-        @include respond-to('small') { @include rem(margin-left, $nav-jump-w); }
+    .jump_nav ~ * {
+        @include respond-to('small') { @include rem(padding-left, ($jump-margin + $jump-w + $gutter)); }
     }
 }
 
