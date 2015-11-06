@@ -54,13 +54,13 @@ $gallery-gutter: $gutter;
 
     // use an nth-child selector to clear away padding set in lower (previous) media queries
     // -> specificity hack
-    &:nth-child(n) {
-        margin-right: 0;
-        margin-left: 0;
-    }
+    // &:nth-child(n) {
+    //     margin-right: 0;
+    //     margin-left: 0;
+    // }
 
-    &:first-child, &:nth-child(#{$number}n + 1) { margin-left: -($g/2); }
-    &:nth-child(#{$number}n) { margin-right: -($g/2); }
+    // &:first-child, &:nth-child(#{$number}n + 1) { margin-left: -($g/2); }
+    // &:nth-child(#{$number}n) { margin-right: -($g/2); }
 
     @include yep(flexbox) {
         display: block;
@@ -96,7 +96,8 @@ $gallery-gutter: $gutter;
 
     @include respond-to('small') {
         @include display(flex);
-        // margin-right: -($gallery-gutter); // to prevent uneven column widths
+        margin-left: -($gallery-gutter/2);
+        margin-right: -($gallery-gutter/2); // to prevent uneven column widths
     }
 }
 
@@ -108,7 +109,8 @@ $gallery-gutter: $gutter;
 .gallery.small {
     @include respond-to('xsmall') {
         @include display(flex);
-        // margin-right: -($gallery-gutter); // to prevent uneven column widths
+        margin-left: -($gallery-gutter/2);
+        margin-right: -($gallery-gutter/2);
 
         // &.l-wrapper { padding-right: ($gutter-outside - $gutter); }
     }
@@ -119,7 +121,8 @@ $gallery-gutter: $gutter;
 .gallery.large {
     @include respond-to('small') {
         @include display(flex);
-        // margin-right: -($gallery-gutter); // to prevent uneven column widths
+        margin-left: -($gallery-gutter/2);
+        margin-right: -($gallery-gutter/2);
     }
 }
 

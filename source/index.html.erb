@@ -4,25 +4,15 @@ title: home
 
 <section class="panel">
     <h1 class="panel-slug">Work</h1>
-    <ul class="gallery l-wrapper">
-        <% blog("work").articles.each do |print| %>
-        <li class="gallery-item" data-year="<%= print.date.strftime('%Y') %>">
-            <a href="<%= print.url %>"><img src="<%= print.url + print.data.cover %>" /></a>
-        </li>
-        <li class="gallery-item" data-year="<%= print.date.strftime('%Y') %>">
-            <a href="<%= print.url %>"><img src="<%= print.url + print.data.cover %>" /></a>
-        </li>
-        <li class="gallery-item" data-year="<%= print.date.strftime('%Y') %>">
-            <a href="<%= print.url %>"><img src="<%= print.url + print.data.cover %>" /></a>
-        </li>
-        <li class="gallery-item" data-year="<%= print.date.strftime('%Y') %>">
-            <a href="<%= print.url %>"><img src="<%= print.url + print.data.cover %>" /></a>
-        </li>
-        <li class="gallery-item" data-year="<%= print.date.strftime('%Y') %>">
-            <a href="<%= print.url %>"><img src="<%= print.url + print.data.cover %>" /></a>
-        </li>
-        <% end %>
-    </ul>
+    <div class="l-wrapper">
+        <ul class="gallery center">
+            <% blog("work").articles.each do |print| %>
+            <li class="gallery-item" data-year="<%= print.date.strftime('%Y') %>">
+                <a href="<%= print.url %>"><img src="<%= print.url + print.data.cover %>" /></a>
+            </li>
+            <% end %>
+        </ul>
+    </div>
 </section>
 
 <section class="panel">
