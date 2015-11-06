@@ -22,4 +22,15 @@
 /* Submodules
 // ---------------------------------------------------------------------------*/
 
-.feed-item { display: block; }
+.feed-item {
+    @include rem(padding-bottom, fs(7));
+    @include rem(margin-bottom, fs(7));
+    @include border(bottom);
+    display: block;
+
+    &:last-child {
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border-bottom: none;
+    }
+}
