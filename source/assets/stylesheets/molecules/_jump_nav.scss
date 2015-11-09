@@ -45,6 +45,8 @@ $jump-margin: $gutter-outside;
     @extend .button;
     @extend .button.small;
     @extend .button.initial;
+    @extend .button.text;
+    display: block;
     padding-left: 0;
     padding-right: 0;
     text-align: center;

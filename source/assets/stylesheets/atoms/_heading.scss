@@ -38,67 +38,62 @@ Many modules (like `media-box`, `profile`, etc.) define their own special headin
 
 */
 
+%heading-defaults {
+    line-height: 1.2;
+    margin: 0;
+    color: theme('text' 'primary');
+
+    a { color: inherit; }
+
+    strong {
+        font-family: inherit;
+        font-style: normal;
+        font-weight: normal;
+        color: theme(highlight);
+    }
+}
+
 /* Globals
 // -------------------------------------------------------------------------- */
 
-// defaults for all headers
-#{headers()} {
-    color: theme('text' 'primary');
-}
-
 h1, .alpha, %alpha {
+    @extend %heading-defaults;
     @extend %font-display;
     @include font-scale(8);
-    margin: 0;
     letter-spacing: -0.03em;
     line-height: 1.1;
-
-    a { color: inherit; }
 }
 
 h2, .beta, %beta {
+    @extend %heading-defaults;
     @extend %font-display;
     @include font-scale(6);
-    margin: 0;
-    line-height: 1.2;
-
-    a { color: inherit; }
 }
 
 h3, .cappa, %cappa {
+    @extend %heading-defaults;
     @extend %font-accent;
-    @include font-scale(4);
-    margin: 0;
-    line-height: 1.2;
+    @include font-scale(5);
 
-    a { color: inherit; }
+    // strong { @extend %font-accent--bold; }
 }
 
 h4, .delta, %delta {
+    @extend %heading-defaults;
     @extend %font-accent;
     @include font-scale(3);
-    margin: 0;
-    line-height: 1.2;
-
-    a { color: inherit; }
 }
 
 h5, .epsilon, %epsilon {
+    @extend %heading-defaults;
     @extend %font-accent--bold;
     @include font-scale(2);
-    margin: 0;
-    line-height: 1.2;
-
-    a { color: inherit; }
 }
 
 h6, .zeta, %zeta {
+    @extend %heading-defaults;
     @extend %font-accent--bold;
     @include font-scale(1);
-    margin: 0;
-    line-height: 1.2;
-
-    a { color: inherit; }
 }
 
 /* Modules

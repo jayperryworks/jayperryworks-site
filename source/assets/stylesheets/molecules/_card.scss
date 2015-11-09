@@ -113,9 +113,9 @@ $card-bp: 'medium';
     p:first-child { margin-top: 0; }
 }
 
-.card-read_more {
+.card-button {
     @extend .button;
-    @extend .read_more;
+    @extend .button.text;
     display: block;
     margin-top: 1em;
 }

@@ -31,18 +31,19 @@ ol, ul {
 dl {
     @include font-scale(2);
     margin: 0;
-    color: theme('text--tertiary');
+    color: theme(text tertiary);
 }
 
     dt {
-        @extend %font-accent;
-        color: theme(text secondary);
+        @extend %font-accent--bold;
+        color: theme(text tertiary);
     }
     dd {
         @extend %font-accent;
         margin-left: 0;
     }
 
+// a "table" layout for definition lists
 .tabular {
     @include clearfix;
     display: block;

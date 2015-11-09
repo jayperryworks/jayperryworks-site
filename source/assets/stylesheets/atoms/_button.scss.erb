@@ -62,19 +62,6 @@ button, .button {
 // -------------------------------------------------------------------------- */
 button, .button {
 
-    // --- types ---------------------------------------------------------------
-    // -> variations that indicate relative importance.
-
-    // obnoxious button that demands attention. click me! i'm all orange and stuff.
-    &.primary {
-
-    }
-
-    // an introvert button; not making a big deal of it, just here if you need me.
-    &.secondary {
-
-    }
-
     // --- sizes ---------------------------------------------------------------
     // -> default size is "medium." add these classes to go bigger or smaller.
 
@@ -83,10 +70,6 @@ button, .button {
         padding: em(6px) em(fs(2));
         border-radius: 1px;
         border-width: border-w('mid');
-    }
-
-    &.large {
-
     }
 
     // --- special variations --------------------------------------------------
@@ -105,11 +88,9 @@ button, .button {
         text-transform: uppercase;
 
         &:before { content: attr(data-initial); }
-
-        > .button-label { @include visually_hidden(true); }
     }
 
-    &.read_more {
+    &.text {
         @extend %font-accent--bold;
         @include font-scale(1);
         padding: 0;
@@ -144,4 +125,11 @@ button, .button {
     .button:hover &, .button:active & {
         background-color: theme('highlight', 'reverse');
     }
+}
+
+// label applied to a button
+// -> for applying special formatting to button contents
+// -> hidden on "initial" variant
+.button-label {
+    .button.initial > & { @include visually_hidden(true); }
 }

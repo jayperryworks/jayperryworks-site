@@ -27,7 +27,7 @@ title: home
                 <h2><%= link_to article.title, article.url %></h2>
                 <p class="subtitle cappa"><%= link_to article.data.subtitle, article.url %></p>
                 <%= article.summary %>
-                <%= link_to "Read more &rsaquo;", article.url, :class => "card-read_more" %>
+                <%= link_to "Read more &rsaquo;", article.url, :class => "card-button" %>
             </div>
         </li>
         <% end %>

@@ -2,6 +2,8 @@
 <article class="post">
     <section class="panel top">
         <img class="cover" src="<%= asset_url(current_page.url + current_page.data.cover) %>" alt="<%= current_page.data.title %>">
+
+        <!-- cover image and info -->
         <header class="post-header">
             <div class="post-info">
                 <time class="post-date"><%= current_page.date.strftime('%Y') %></time>
@@ -13,14 +15,18 @@
                 </ul>
             </div>
             <h1 class="post-title"><%= current_page.data.title %></h1>
-        </header>
+        </header><!-- /.post-header -->
+
+        <!-- writeup -->
         <div class="post-content l-wrapper">
             <%= yield %>
-        </div>
+        </div><!-- /.post-content -->
 
-    </section>
+    </section><!-- /.panel -->
 
     <!-- Editions -->
+
+    <!-- jump nav -->
     <% if current_page.data.editions.present? %>
     <section class="panel has-jump">
         <h2 class="panel-slug">Available Editions</h2>
@@ -30,21 +36,22 @@
             <ul>
                 <% current_page.data.editions.each_with_index do |edition, i| %>
                     <% if edition.name.present? %>
-                    <li>
-                        <a class="jump_nav-item jump_nav-button js-highlight<% if i == 0 %> is-active<% end %>" href="#edition-<%= edition.name %>" data-initial="<%= edition.name[0] %>"><span class="button-label"><%= edition.name %></span></a>
+                    <li class="jump_nav-item">
+                        <a class="jump_nav-button js-highlight<% if i == 0 %> is-active<% end %>" href="#edition-<%= edition.name %>" data-initial="<%= edition.name[0] %>"><span class="button-label"><%= edition.name %></span></a>
                     </li>
                     <% end %>
                 <% end %>
             </ul>
-        </nav>
+        </nav><!-- /.jump_nav -->
         <% end %>
 
+        <!-- edition cards -->
         <div class="feed l-wrapper">
             <% current_page.data.editions.each do |edition| %>
             <figure class="card horizontal large feed-item" id="edition-<%= edition.name %>">
                 <img class="card-figure" src="<%= asset_url current_page.url + edition.image %>" alt="<%= edition.name %> edition">
                 <figcaption class="card-content">
-                    <h2><strong><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
+                    <h2 class="cappa"><strong><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
                     <dl class="card-stats">
                         <dt>Print Size</dt>
                         <dd><%= edition.height %>" &times; <%= edition.width %>"</dd>
@@ -56,10 +63,10 @@
                     <p class="card-caption">Printed at Archival Arts in Baltimore on heavy, textured, acid-free Hahnemuhle cotton rag paper, using archival pigment-based inks. Individually signed and numbered.</p>
                     <a class="button purchase" href=""><span class="button-price"><sup>$</sup><%= edition.price %></span> Buy this print</a>
                 </figcaption>
-            </figure>
+            </figure><!-- /.card.feed-item -->
             <% end %>
-        </div>
-    </section>
+        </div><!-- /.feed -->
+    </section><!-- /.panel -->
     <% end %>
 </article>
 <% end %>
