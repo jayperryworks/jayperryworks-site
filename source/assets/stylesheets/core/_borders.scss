@@ -42,7 +42,7 @@ $base-radius: 3px !default;
 // Border width & style
 // -----------------------------------------------------------------------------
 
-$border-w--default: 'thin';
+$border-w--default: 'thin' !default;
 
 $border-widths: (
     'thin'  : 1px,
@@ -66,12 +66,13 @@ $border-style: solid !default;
 }
 
 // make a standard border/hairline that works with the parent color theme
+// make a standard border/hairline that works with the parent color theme
 @mixin border($sides: all, $w: $border-w--default, $color: theme('border'), $style: $border-style) {
     @if ($sides == all) {
-        border: border-w($w) $style $color;
+        border: border-w($w) #{$style} #{$color};
     } @else {
         @each $side in $sides {
-            border-#{$side}: border-w($w) $style $color;
+            border-#{$side}: border-w($w) #{$style} #{$color};
         }
     }
 }
