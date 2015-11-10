@@ -4,6 +4,8 @@
 
 @import "../core/*";
 
+$tag-color: theme(text tertiary);
+
 /* Base
 // -------------------------------------------------------------------------- */
 
@@ -11,9 +13,9 @@
     @extend a;
     @extend %font-accent;
     @include font-scale(2);
-    display: inline-block;
+    display: inline;
     text-transform: uppercase;
-    color: theme(text secondary);
+    color: $tag-color;
 
     &:hover, &:active {
         color: theme(highlight);
@@ -21,7 +23,7 @@
 
     a {
         @extend %font-accent;
-        color: theme(text secondary);
+        color: $tag-color;
 
         &:hover, &:active {
             color: theme(highlight);
@@ -32,7 +34,9 @@
 // list of tags
 .tags {
     @include inline-list();
+    display: inline-block;
     margin: 0.5em 0;
+    vertical-align: top;
 
     &:last-child { margin-bottom: 0; }
 
@@ -41,10 +45,10 @@
 
         &:after {
             content: ",";
-            color: theme(text secondary);
+            color: $tag-color;
         }
         &:last-child:after {
-            content: "";
+            content: none;
         }
     }
 }
@@ -53,14 +57,12 @@
 // -------------------------------------------------------------------------- */
 
 .tags-label {
-    @extend %font-accent;
+    @extend %font-accent--bold;
+    @include font-scale(2);
+    display: inline;
     text-transform: uppercase;
-    color: theme(text primary);
-}
-
-.tags-label.inline {
-    display: inline-block;
-    margin-right: 0.5em;
+    color: $tag-color;
+    margin-right: 0.3em;
 
     &:after { content: ":"; }
 }

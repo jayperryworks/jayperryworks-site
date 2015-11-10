@@ -81,6 +81,49 @@ $grid-scale: 1 1.2 1.44 1.728 2.074 2.488 2.986 3.583 4.3 5.16 6.192 7.43
     @return nth($grid-scale, $n);
 }
 
+@mixin grid-container($size: false, $display: block) {
+    display: #{$display};
+    font-size: 0;
+
+    @if ($size != false) {
+        @if (type-of($size) == number) {
+            @include breakpoint($size) {
+                @include yep(flexbox) { @include display(flex); }
+            }
+        } @elseif (type-of($size) == string) {
+            @include respond-to($size) {
+                @include yep(flexbox) { @include display(flex); }
+            }
+        }
+    } @else {
+        @include yep(flexbox) { @include display(flex); }
+    }
+
+
+    > * { @include type-default; }
+}
+
+%grid-container { @include grid-container; }
+
+// multi-column layouts
+@mixin column($loc, $grid: 1 1 1, $gutter: $gutter) {
+    display: inline-block;
+    width: percentage(nth($grid, $loc)/sl-sum($grid));
+    padding: 0 ($gutter/2);
+
+    &:first-child { padding-left: 0; }
+    &:last-child { padding-right: 0; }
+
+    @include yep(flexbox) {
+        display: block;
+
+        @if ($loc == length($grid)) {
+            width: auto;
+            @include flex(1);
+        }
+    }
+}
+
 // --- default z-indexes -------------------------------------------------------
 $z--low    : 0;
 $z--middle : 1;

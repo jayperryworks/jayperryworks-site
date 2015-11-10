@@ -5,8 +5,8 @@
 
         <!-- cover image and info -->
         <header class="post-header">
-            <div class="post-info">
-                <time class="post-date"><%= current_page.date.strftime('%Y') %></time>
+            <div class="post-meta top">
+                <time><%= current_page.date.strftime('%Y') %></time>
                 <span class="post-subtitle"><%= current_page.data.width %> &times; <%= current_page.data.height %>, <%= current_page.data.format %></span>
                 <ul class="tags">
                     <% current_page.data.tags.each do |tag| %>

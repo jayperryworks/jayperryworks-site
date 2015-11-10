@@ -46,21 +46,11 @@ There are three (column) size variations: small, medium, and large. Medium is de
 
 $gallery-gutter: $gutter;
 
-@mixin columns($number: 2, $g: $gallery-gutter) {
+@mixin gallery-columns($number: 2, $g: $gallery-gutter) {
     display: inline-block;
     width: (100%/$number);
     padding-right: ($g/2);
     padding-left: ($g/2);
-
-    // use an nth-child selector to clear away padding set in lower (previous) media queries
-    // -> specificity hack
-    // &:nth-child(n) {
-    //     margin-right: 0;
-    //     margin-left: 0;
-    // }
-
-    // &:first-child, &:nth-child(#{$number}n + 1) { margin-left: -($g/2); }
-    // &:nth-child(#{$number}n) { margin-right: -($g/2); }
 
     @include yep(flexbox) {
         display: block;
@@ -144,29 +134,29 @@ $gallery-gutter: $gutter;
     margin-left: 0;
 
     @include respond-to("small") {
-        @include columns(2);
+        @include gallery-columns(2);
     }
 
     @include respond-to("medium") {
-        @include columns(3);
+        @include gallery-columns(3);
     }
 
     .gallery.small & {
         @include respond-to("xsmall") {
-            @include columns(2);
+            @include gallery-columns(2);
         }
         @include respond-to("small") {
-            @include columns(3);
+            @include gallery-columns(3);
         }
         @include respond-to("medium") {
-            @include columns(4);
+            @include gallery-columns(4);
         }
     }
 
     .gallery.large & {
         .gallery.large & {
             @include respond-to('small') {
-                @include columns(2);
+                @include gallery-columns(2);
             }
         }
     }

@@ -9,23 +9,6 @@ $card-grid: ms(1) ms(7);
 $card-grid--large: ms(7) ms(1);
 $card-bp: 'medium';
 
-@mixin col($loc, $grid: $card-grid, $gutter: $gutter) {
-    display: inline-block;
-    width: percentage(nth($grid, $loc)/sl-sum($grid));
-    padding: 0 ($gutter/2);
-
-    &:first-child { padding-left: 0; }
-    &:last-child { padding-right: 0; }
-
-    @if ($loc == length($grid)) {
-        .flexbox & {
-            display: block;
-            width: auto;
-            flex: 1;
-        }
-    }
-}
-
 /* Base
 // ---------------------------------------------------------------------------*/
 
@@ -68,7 +51,7 @@ $card-bp: 'medium';
         @include type-default;
 
         @include respond-to('xsmall') {
-            @include col(1);
+            @include column(1, $card-grid);
 
             .flexbox & { display: block; }
         }
@@ -81,7 +64,7 @@ $card-bp: 'medium';
             padding: 0;
         }
 
-        @include respond-to('medium') { @include col(1, $grid: $card-grid--large); }
+        @include respond-to('medium') { @include column(1, $grid: $card-grid--large); }
     }
 }
 
@@ -91,7 +74,7 @@ $card-bp: 'medium';
 
     .card.horizontal & {
         @include respond-to('xsmall') {
-            @include col(2);
+            @include column(2, $card-grid);
             margin-top: 0;
         }
     }
@@ -104,7 +87,7 @@ $card-bp: 'medium';
         flex: none;
 
         @include respond-to('medium') {
-            @include col(2, $grid: $card-grid--large);
+            @include column(2, $grid: $card-grid--large);
             flex: 1;
             margin-top: 0;
         }

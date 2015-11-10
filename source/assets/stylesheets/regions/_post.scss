@@ -5,6 +5,7 @@
 @import "../core/*";
 @import "../atoms/heading";
 @import "../atoms/text";
+@import "../atoms/list";
 @import "../organisms/gallery";
 
 /* Base
@@ -55,15 +56,63 @@
 .post-meta {
     @include border(top bottom);
     display: block;
-    padding: 1em 0;
-    margin: 1em 0;
+    padding: 0.8em 0;
+    margin: 0.8em 0;
 
-    @include respond-to('large') {
-        $w: 200px;
-        @include rem(width, $w);
-        @include rem(margin-right, -($w + $gutter));
+    &.top { border-top: none; }
+
+    &.sidebar {
+        @include respond-to('large') {
+            $w: 200px;
+            @include rem(width, $w);
+            @include rem(margin-right, -($w + $gutter));
+            float: right;
+            border-bottom: none;
+        }
+    }
+}
+
+.post-date {
+    @extend .date;
+    @include font-scale(2);
+    display: block;
+
+    @include respond-to('small') {
+        @include border(right);
+        display: inline;
+        margin-right: 0.8em;
+        padding-right: 0.8em;
+    }
+
+    .post-meta.sidebar & {
+        @include respond-to('large') {
+            display: block;
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+    }
+}
+
+.post-tags {
+    @extend .tags;
+    display: block;
+    margin: 0.5em 0 0;
+
+    @include respond-to('small') {
+        display: inline;
+        margin: 0;
+    }
+
+    &.right {
         float: right;
-        border-bottom: none;
+    }
+
+    .post-meta.sidebar & {
+        @include respond-to('large') {
+            display: block;
+            margin: 0.5em 0 0;
+        }
     }
 }
 

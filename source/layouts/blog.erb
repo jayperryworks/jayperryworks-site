@@ -6,10 +6,10 @@
             </header>
             <div class="post-content l-wrapper narrow">
 
-                <aside class="post-meta">
-                    <time><%= current_page.date.strftime("%B %-d, %Y") %></time>
-                    <dl class="tags">
-                        <dt class="tags-label">Filed under:</dt>
+                <aside class="post-meta sidebar">
+                    <time class="post-date"><%= current_page.date.strftime("%B %-d, %Y") %></time>
+                    <dl class="post-tags">
+                        <dt class="tags-label">Filed under</dt>
                         <% current_page.data.tags.each do |tag| %>
                         <dd class="tag"><a href=""><%= tag %></a></dd>
                         <% end %>
