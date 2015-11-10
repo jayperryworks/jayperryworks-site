@@ -10,7 +10,6 @@ $tag-color: theme(text tertiary);
 // -------------------------------------------------------------------------- */
 
 .tag {
-    @extend a;
     @extend %font-accent;
     @include font-scale(2);
     display: inline;

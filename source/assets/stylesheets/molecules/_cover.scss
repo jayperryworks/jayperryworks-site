@@ -9,7 +9,7 @@
 // ---------------------------------------------------------------------------*/
 
 .cover {
-    @include rem(margin, 0 auto fs(5));
+    @include rem(margin, 0 auto);
     display: block;
     padding: 0 $gutter-outside;
     max-height: 600px;

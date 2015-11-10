@@ -69,7 +69,7 @@ time {
     @extend %font-accent--bold;
     @include font-scale(2);
     text-transform: uppercase;
-    color: theme(text secondary);
+    color: theme(text tertiary);
 }
 
 figcaption {

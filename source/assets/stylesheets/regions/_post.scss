@@ -6,6 +6,7 @@
 @import "../atoms/heading";
 @import "../atoms/text";
 @import "../atoms/list";
+@import "../molecules/cover";
 @import "../organisms/gallery";
 
 /* Base
@@ -18,11 +19,15 @@
 /* Submodules
 // -------------------------------------------------------------------------- */
 
+.post-cover { @extend .cover; }
+
 .post-header {
     @extend .l-wrapper;
     @extend .l-wrapper.narrow;
     margin-top: 2em;
     margin-bottom: 2em;
+
+    .post-cover + & { margin-top: 0; }
 }
 
 .post-content {
@@ -54,12 +59,19 @@
 }
 
 .post-meta {
+    @extend %font-accent;
+    @include font-scale(2);
     @include border(top bottom);
     display: block;
     padding: 0.8em 0;
     margin: 0.8em 0;
+    text-transform: uppercase;
+    color: theme(text tertiary);
 
-    &.top { border-top: none; }
+    &.top {
+        @include rem(margin-bottom, fs(6));
+        border-top: none;
+    }
 
     &.sidebar {
         @include respond-to('large') {

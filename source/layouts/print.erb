@@ -1,14 +1,14 @@
 <% wrap_layout :layout do %>
 <article class="post">
     <section class="panel top">
-        <img class="cover" src="<%= asset_url(current_page.url + current_page.data.cover) %>" alt="<%= current_page.data.title %>">
+        <img class="post-cover" src="<%= asset_url(current_page.url + current_page.data.cover) %>" alt="<%= current_page.data.title %>">
 
         <!-- cover image and info -->
         <header class="post-header">
             <div class="post-meta top">
-                <time><%= current_page.date.strftime('%Y') %></time>
-                <span class="post-subtitle"><%= current_page.data.width %> &times; <%= current_page.data.height %>, <%= current_page.data.format %></span>
-                <ul class="tags">
+                <time class="post-date"><%= current_page.date.strftime('%Y') %></time>
+                <span><%= current_page.data.width %> &times; <%= current_page.data.height %>, <%= current_page.data.format %></span>
+                <ul class="post-tags right">
                     <% current_page.data.tags.each do |tag| %>
                     <li><a class="tag" href="#"><%= tag %></a></li>
                     <% end %>
