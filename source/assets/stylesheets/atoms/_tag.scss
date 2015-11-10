@@ -3,6 +3,7 @@
 // ========================================================================== */
 
 @import "../core/*";
+@import "../atoms/text";
 
 $tag-color: theme(text tertiary);
 
@@ -10,45 +11,52 @@ $tag-color: theme(text tertiary);
 // -------------------------------------------------------------------------- */
 
 .tag {
+    @extend %base-transition;
     @extend %font-accent;
-    @include font-scale(2);
-    display: inline;
-    text-transform: uppercase;
-    color: $tag-color;
+    @extend .meta;
+    @include border;
+    // @include font-scale(1);
+    display: inline-block;
+    padding: 0.15em 0.4em 0.05em;
+    border-radius: 0.1em;
+    vertical-align: bottom;
 
     &:hover, &:active {
         color: theme(highlight);
+        border-color: theme(highlight);
     }
 
     a {
         @extend %font-accent;
-        color: $tag-color;
+        color: inherit;
 
-        &:hover, &:active {
-            color: theme(highlight);
-        }
+        &:hover, &:active { color: inherit; }
     }
 }
 
 // list of tags
 .tags {
-    @include inline-list();
+    // @include inline-list();
     display: inline-block;
     margin: 0.5em 0;
-    vertical-align: top;
+    padding: 0;
+    list-style: none;
 
     &:last-child { margin-bottom: 0; }
 
-    & > li, & > dd {
+    & > .tag, & > li, & > dd {
+        display: inline-block;
         margin-top: 0;
+        margin-right: 0.2em;
 
-        &:after {
-            content: ",";
-            color: $tag-color;
-        }
-        &:last-child:after {
-            content: none;
-        }
+        &:last-child { margin-right: 0; }
+
+        // &:after {
+        //     content: ",";
+        // }
+        // &:last-child:after {
+        //     content: none;
+        // }
     }
 }
 
@@ -56,11 +64,8 @@ $tag-color: theme(text tertiary);
 // -------------------------------------------------------------------------- */
 
 .tags-label {
-    @extend %font-accent--bold;
-    @include font-scale(2);
+    @extend .meta;
     display: inline;
-    text-transform: uppercase;
-    color: $tag-color;
     margin-right: 0.3em;
 
     &:after { content: ":"; }

@@ -63,8 +63,8 @@
     @include font-scale(2);
     @include border(top bottom);
     display: block;
-    padding: 0.8em 0;
-    margin: 0.8em 0;
+    padding: 1em 0;
+    margin: 1em 0;
     text-transform: uppercase;
     color: theme(text tertiary);
 
@@ -86,7 +86,6 @@
 
 .post-date {
     @extend .date;
-    @include font-scale(2);
     display: block;
 
     @include respond-to('small') {
@@ -113,11 +112,12 @@
 
     @include respond-to('small') {
         display: inline;
-        margin: 0;
+        // margin-left: 1em;
+        margin-top: 0.2em;
     }
 
     &.right {
-        float: right;
+        // @include respond-to('small') { float: right; }
     }
 
     .post-meta.sidebar & {

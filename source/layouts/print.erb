@@ -7,7 +7,7 @@
         <header class="post-header">
             <div class="post-meta top">
                 <time class="post-date"><%= current_page.date.strftime('%Y') %></time>
-                <span><%= current_page.data.width %> &times; <%= current_page.data.height %>, <%= current_page.data.format %></span>
+                <span class="meta"><%= current_page.data.width %> &times; <%= current_page.data.height %>, <%= current_page.data.format %></span>
                 <ul class="post-tags right">
                     <% current_page.data.tags.each do |tag| %>
                     <li><a class="tag" href="#"><%= tag %></a></li>

@@ -66,10 +66,7 @@ sup {
 }
 
 time {
-    @extend %font-accent--bold;
-    @include font-scale(2);
-    text-transform: uppercase;
-    color: theme(text tertiary);
+    @extend .date;
 }
 
 figcaption {
@@ -102,4 +99,16 @@ address {
 // a caption
 .caption { @extend figcaption; }
 
-.date { @extend time; }
+.meta {
+    @extend %font-accent;
+    @include font-scale(2);
+    text-transform: uppercase;
+    color: theme(text tertiary);
+
+    a { color: inherit; }
+}
+
+.date {
+    @extend .meta;
+    @extend %font-accent--bold;
+}
