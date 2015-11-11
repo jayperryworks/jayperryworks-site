@@ -4,6 +4,7 @@
 
 @import "../core/*";
 @import "../atoms/button";
+@import "../atoms/heading";
 
 $card-grid: ms(1) ms(7);
 $card-grid--large: ms(7) ms(1);
@@ -101,6 +102,16 @@ $card-bp: 'medium';
     @extend .button.text;
     display: block;
     margin-top: 1em;
+}
+
+.card-title {
+    @extend .title;
+    margin: 0;
+}
+
+.card-subtitle {
+    @extend .subtitle;
+    margin: 0;
 }
 
 .card-stats {

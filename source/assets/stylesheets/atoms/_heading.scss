@@ -104,6 +104,7 @@ h6, .zeta, %zeta {
 .title {
     @extend %font-display;
     display: block;
+    margin: 0.5em 0;
     color: theme(text-primary);
 }
 
@@ -111,8 +112,13 @@ h6, .zeta, %zeta {
 .subtitle {
     @extend %font-accent;
     display: block;
+    margin: 0.5em 0;
     color: theme(text secondary);
     margin-top: 0.2em;
+
+    .title + & { margin-top: 0; }
+
+    strong { color: theme('text' 'primary'); }
 }
 
 // make a heading a secondary label, a "meta header"

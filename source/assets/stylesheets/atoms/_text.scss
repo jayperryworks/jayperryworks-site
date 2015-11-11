@@ -102,6 +102,7 @@ address {
 .meta {
     @extend %font-accent;
     @include font-scale(2);
+    // display: block;
     text-transform: uppercase;
     color: theme(text tertiary);
 

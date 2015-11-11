@@ -82,6 +82,8 @@
             border-bottom: none;
         }
     }
+
+    // @include respond-to('small') { display: flex; }
 }
 
 .post-date {
@@ -117,7 +119,14 @@
     }
 
     &.right {
-        // @include respond-to('small') { float: right; }
+        @include respond-to('small') {
+            display: inline-block;
+            // @include flex(1);
+            // @include align-self(flex-end);
+            margin-top: -0.2em;
+            margin-left: 1em;
+            float: right;
+        }
     }
 
     .post-meta.sidebar & {

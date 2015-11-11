@@ -24,8 +24,10 @@ title: home
                 <img src="<%= article.url + article.data.image %>" alt="<%= article.title %>">
             <% end %>
             <div class="card-content">
-                <h2><%= link_to article.title, article.url %></h2>
-                <p class="subtitle cappa"><%= link_to article.data.subtitle, article.url %></p>
+                <h2 class="card-title"><%= link_to article.title, article.url %></h2>
+                <% if article.data.subtitle.present? %>
+                <%= link_to article.data.subtitle, article.url, :class => "card-subtitle cappa" %>
+                <% end %>
                 <%= article.summary %>
                 <%= link_to "Read more &rsaquo;", article.url, :class => "card-button" %>
             </div>

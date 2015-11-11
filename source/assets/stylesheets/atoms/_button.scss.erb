@@ -34,16 +34,17 @@ $button-radius--default: 3px;
 
 button, .button {
     @extend %font-accent;
-    @include border('all', 'thick', $color: theme('text' 'primary'));
+    @include border('all', 1px, $color: lighten(theme('text' 'primary'), 20));
     @include font-scale(2);
     display: inline-block;
-    padding: em(fs(1)) em(fs(4));
+    padding: 0.5em 1.2em;
     border-radius: $button-radius--default;
     color: theme('text' 'primary');
 
     &:hover, &:active {
         border-color: theme('highlight');
-        color: theme('highlight'); // override default link hover color
+        background-color: theme('highlight');
+        color: theme('bg'); // override default link hover color
 
         @include jacket(highlights) {
             border-color: black;
@@ -51,9 +52,8 @@ button, .button {
         }
     }
 
-    sup {
-        font-size: 0.618em;
-    }
+    sup { font-size: 0.618em; }
+    strong { @extend %font-accent--bold; }
 }
 
 
