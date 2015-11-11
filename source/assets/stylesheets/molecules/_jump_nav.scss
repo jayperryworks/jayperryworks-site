@@ -15,9 +15,9 @@ $jump-margin: $gutter-outside;
     // @extend %l-abs;
     @include unstyled-list;
     // @include rem(width, $jump-w);
-    display: none;
+    display: block;
     position: absolute;
-    // margin-top: -1em; // make a little room against the browser window
+    margin-top: -1em; // make a little room against the browser window
     padding-top: 1em;
     left: $jump-margin;
     z-index: $z--high;
@@ -27,49 +27,46 @@ $jump-margin: $gutter-outside;
         margin: 0;
     }
 
-    @include respond-to('small') {
-        display: block;
-    }
+    > li { display: block; }
 }
 
 /* Submodules
 // -------------------------------------------------------------------------- */
 
-/* --- .nav.item ------------------------------------------------------------ */
-.jump_nav-item {
-    @include rem(width, $jump-w);
-    display: block;
-}
+/* --- nav items ------------------------------------------------------------ */
 
-.jump_nav-button {
-    @extend .button;
-    @extend .button.small;
-    @extend .button.initial;
-    @extend .button.text;
+.jump_nav-item {
+    @extend %font-accent--bold;
+    @include font-scale(2);
+    // @include rem(width, $jump-w);
     display: block;
-    padding-left: 0;
-    padding-right: 0;
-    text-align: center;
+    margin-bottom: 0.5em;
+    padding: 0.4em 0.8em 0.2em;
     vertical-align: middle;
-    // border-radius: 1px;
-    // border-width: border-w('mid');
+    text-align: center;
+    text-transform: uppercase;
+    color: theme('text' 'primary');
+
+    &:before { content: attr(data-initial); }
+
+    &:hover, &:active {  }
 
     &.is-active {
-        color: theme('text' 'primary', 'reverse');
-        border-color: theme('bg', 'reverse');
-        background-color: theme('bg', 'reverse');
+        @include border;
+        color: theme('text' 'primary');
     }
 }
 
-// .nav-label {
-//     display: inline-block;
-//     visibility: hidden;
-//     text-align: center;
+/* --- nav labels ----------------------------------------------------------- */
+// -> label hidden on larger screens
 
-//     &:first-letter {
-//         visibility: visible;
-//     }
-// }
+.jump_nav-label {
+    @extend %font-accent--bold;
+    @include visually_hidden(true);
+    text-align: center;
+    text-transform: uppercase;
+}
+
 
 /* States
 // -------------------------------------------------------------------------- */
@@ -83,7 +80,8 @@ $jump-margin: $gutter-outside;
     }
 }
 
-.is-sticky {
+.jump_nav.is-sticky {
     position: fixed !important;
-    top: 0 !important;
+    top: 1em !important;
+    margin-top: 0;
 }

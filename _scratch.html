@@ -25,3 +25,30 @@
     <%= partial("assets/stylesheets/highlights", :locals => { :color => highlight(current_page.data.color) }) %>
 </style>
 <% end %>
+
+// SVG sprites
+// -> Load the inline spritemap via AJAX to take advantage of caching
+// -> https://css-tricks.com/ajaxing-svg-sprite/
+// -----------------------------------------------------------------------------
+jpw.sprites = (function($){
+    'use strict';
+
+    var exports = {};
+
+    exports.init = function(file) {
+        if (Modernizr.inlinesvg) {
+            // if the browser supports inline SVG...
+            $.get(file, function(data) {
+                // create a div at the very top of the body...
+                var div = document.createElement("div");
+                // ... and inject the svg definitions
+                div.innerHTML = new XMLSerializer().serializeToString(data.documentElement);
+                document.body.insertBefore(div, document.body.childNodes[0]);
+
+                console.log("yay sprites!");
+            });
+        }
+    }
+
+    return exports;
+})(jQuery);
