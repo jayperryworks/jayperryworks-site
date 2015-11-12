@@ -81,15 +81,6 @@ button, .button {
         vertical-align: middle;
     }
 
-    // icon for type of edition
-    &.initial {
-        @extend %font-accent--bold;
-        text-align: center;
-        text-transform: uppercase;
-
-        &:before { content: attr(data-initial); }
-    }
-
     &.text {
         @extend %font-accent--bold;
         @include font-scale(1);
@@ -125,11 +116,4 @@ button, .button {
     .button:hover &, .button:active & {
         background-color: theme('highlight', 'reverse');
     }
-}
-
-// label applied to a button
-// -> for applying special formatting to button contents
-// -> hidden on "initial" variant
-.button-label {
-    .button.initial > & { @include visually_hidden(true); }
 }
