@@ -37,7 +37,7 @@
                 <% current_page.data.editions.each_with_index do |edition, i| %>
                     <% if edition.name.present? %>
                     <li>
-                        <a class="jump_nav-item js-highlight<% if i == 0 %> is-active<% end %>" href="#edition-<%= edition.name %>" data-initial="<%= edition.name[0] %>"><span class="jump_nav-label"><%= edition.name %></span></a>
+                        <a class="jump_nav-item js-active<% if i == 0 %> is-active<% end %>" href="#edition-<%= edition.name %>" data-initial="<%= edition.name[0] %>"><span class="jump_nav-label"><%= edition.name %></span></a>
                     </li>
                     <% end %>
                 <% end %>

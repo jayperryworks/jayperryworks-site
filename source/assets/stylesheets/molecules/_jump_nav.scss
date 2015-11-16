@@ -6,7 +6,7 @@
 @import "../atoms/button";
 
 $jump-w: 30px;
-$jump-margin: $gutter-outside;
+$jump-margin: $gutter $gutter-outside;
 
 /* Base
 // -------------------------------------------------------------------------- */
@@ -15,11 +15,13 @@ $jump-margin: $gutter-outside;
     // @extend %l-abs;
     @include unstyled-list;
     // @include rem(width, $jump-w);
-    display: block;
-    position: absolute;
-    margin-top: -1em; // make a little room against the browser window
+    display: none;
+    position: relative;
+    left: nth($jump-margin, 1);
+    float: left;
+    // top: 1em; // make a little room against the browser window
+    margin-top: -1em;
     padding-top: 1em;
-    left: $jump-margin;
     z-index: $z--high;
 
     > ul {
@@ -28,6 +30,36 @@ $jump-margin: $gutter-outside;
     }
 
     > li { display: block; }
+
+    @include respond-to("xsmall") {
+        display: block;
+    }
+
+    @include respond-to("small") {
+        left: nth($jump-margin, 2);
+    }
+}
+
+
+/* Modifers
+// -------------------------------------------------------------------------- */
+
+/* --- States --------------------------------------------------------------- */
+.jump_nav.is-sticky {
+    position: fixed !important;
+    top: 0 !important;
+    margin-top: 0;
+    float: none;
+}
+
+.has-jump {
+    position: relative;
+
+    // add left margin to a jump nav's siblings
+    .jump_nav ~ * {
+        @include respond-to('xsmall') { @include rem(padding-left, (nth($jump-margin, 1) + $jump-w + $gutter)); }
+        @include respond-to('small') { @include rem(padding-left, (nth($jump-margin, 2) + $jump-w + $gutter)); }
+    }
 }
 
 /* Submodules
@@ -38,7 +70,7 @@ $jump-margin: $gutter-outside;
 .jump_nav-item {
     @extend %font-accent--bold;
     @include font-scale(2);
-    // @include rem(width, $jump-w);
+    @include rem(width, $jump-w);
     display: block;
     margin-bottom: 0.5em;
     padding: 0.4em 0.8em 0.2em;
@@ -65,23 +97,4 @@ $jump-margin: $gutter-outside;
     @include visually_hidden(true);
     text-align: center;
     text-transform: uppercase;
-}
-
-
-/* States
-// -------------------------------------------------------------------------- */
-
-.has-jump {
-    position: relative;
-
-    // add left margin to a jump nav's siblings
-    .jump_nav ~ * {
-        @include respond-to('small') { @include rem(padding-left, ($jump-margin + $jump-w + $gutter)); }
-    }
-}
-
-.jump_nav.is-sticky {
-    position: fixed !important;
-    top: 1em !important;
-    margin-top: 0;
 }

@@ -4,7 +4,8 @@
 // Modules
 // =============================================================================
 
-//= require modules/jpw.stickyNav.js
+// require modules/jpw.stickyNav.js
+//= require modules/jquery.bivee.sticky.js
 
 var jpw = window.jpw || {};
 
@@ -16,5 +17,9 @@ var jpw = window.jpw || {};
 jQuery(function($) {
 
     // make jump navs 'sticky' on scroll
-    jpw.sticky.init(".js-sticky");
+    // jpw.sticky.init(".js-sticky");
+    $(".js-sticky").bivee_sticky();
+    $(".js-sticky").bivee_sticky({
+
+    });
 });
