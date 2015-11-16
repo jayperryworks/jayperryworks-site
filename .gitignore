@@ -23,3 +23,5 @@
 *.sublime-project
 *.sublime-workspace
 Gemfile.lock
+
+.s3_sync

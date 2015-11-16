@@ -17,6 +17,7 @@ gem "middleman-search_engine_sitemap"
 gem "middleman-imageoptim"
 gem "middleman-blog"
 gem "middleman-es6", github: "vast/middleman-es6"
+gem "middleman-s3_sync"
 
 # Compass extensions
 gem "compass-import-once"
