@@ -18,6 +18,7 @@ editions:
     border: 1
     price: 80
     image: "frozen_waterfall-16x24.jpg"
+    url: https://www.etsy.com/listing/161673713/frozen-waterfall-16-x-24-art-print
   - name: medium
     type: giclee
     height: 12
@@ -25,6 +26,7 @@ editions:
     border: 1
     price: 50
     image: "frozen_waterfall-12x18.jpg"
+    url: https://www.etsy.com/listing/161660956/frozen-waterfall-12-x-18-art-print
 #  - name: small
 #    type: giclee
 #    height: 8
