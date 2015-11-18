@@ -70,7 +70,7 @@ activate :google_analytics do |ga|
 end
 
 activate :s3_sync do |s3_sync|
-  s3_sync.bucket                     = 'my.bucket.com' # The name of the S3 bucket you are targetting. This is globally unique.
+  s3_sync.bucket                     = 'jayperryworks.com' # The name of the S3 bucket you are targetting. This is globally unique.
   s3_sync.region                     = 'us-west-1'     # The AWS region for your bucket.
   s3_sync.delete                     = false # We delete stray files by default.
   s3_sync.after_build                = false # We do not chain after the build step by default.
@@ -126,6 +126,7 @@ after_configuration do
     sprockets.import_asset "jquery/dist/jquery.min.js"
     sprockets.import_asset "modernizr/modernizr.js"
     sprockets.import_asset "picturefill/dist/picturefill.min.js"
+    sprockets.import_asset "jquery.scrollTo/jquery.scrollTo.min.js"
 end
 
 # Build-specific configuration

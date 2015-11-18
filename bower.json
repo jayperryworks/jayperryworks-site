@@ -21,7 +21,8 @@
     "picturefill": "latest",
     "html5-boilerplate": "~5.2.0",
     "loadcss": "~0.2.4",
-    "modernizr": "~2.8.3"
+    "modernizr": "~2.8.3",
+    "jquery.scrollTo": "~2.1.2"
   },
   "devDependencies": {
     "bourbon": "~4.2.2",

@@ -1,10 +1,10 @@
 //= require jquery
+//= require jquery.scrollTo/jquery.scrollTo.min.js
 
 // =============================================================================
 // Modules
 // =============================================================================
 
-// require modules/jpw.stickyNav.js
 //= require modules/jquery.bivee.sticky.js
 
 var jpw = window.jpw || {};
@@ -17,9 +17,14 @@ var jpw = window.jpw || {};
 jQuery(function($) {
 
     // make jump navs 'sticky' on scroll
-    // jpw.sticky.init(".js-sticky");
     $(".js-sticky").bivee_sticky();
-    $(".js-sticky").bivee_sticky({
 
+    // scroll to a target when you click a link in the jump nav
+    $(".js-scroll").click(function() {
+        var target = $(this).attr("href");
+        $(window).scrollTo(target, 400, {
+                axis:'y',
+                offset: { top: -16 },
+            });
     });
 });

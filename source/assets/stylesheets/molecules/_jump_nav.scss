@@ -95,6 +95,7 @@ $jump-margin: $gutter $gutter-outside;
 .jump_nav-label {
     @extend %font-accent--bold;
     @include visually_hidden(true);
+    display: block;
     text-align: center;
     text-transform: uppercase;
 }

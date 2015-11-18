@@ -26,8 +26,8 @@
 
     <!-- Editions -->
 
-    <!-- jump nav -->
     <% if current_page.data.editions.present? %>
+    <!-- jump nav -->
     <section class="panel has-jump">
         <h2 class="panel-slug">Available Editions</h2>
 
@@ -37,7 +37,7 @@
                 <% current_page.data.editions.each_with_index do |edition, i| %>
                     <% if edition.name.present? %>
                     <li>
-                        <a class="jump_nav-item js-active<% if i == 0 %> is-active<% end %>" href="#edition-<%= edition.name %>" data-initial="<%= edition.name[0] %>"><span class="jump_nav-label"><%= edition.name %></span></a>
+                        <a class="jump_nav-item js-active js-scroll<% if i == 0 %> is-active<% end %>" href="#edition_<%= edition.name %>" data-initial="<%= edition.name[0] %>"><span class="jump_nav-label"><%= edition.name %></span></a>
                     </li>
                     <% end %>
                 <% end %>
@@ -48,7 +48,7 @@
         <!-- edition cards -->
         <div class="feed l-wrapper">
             <% current_page.data.editions.each do |edition| %>
-            <figure class="card horizontal large feed-item" id="edition-<%= edition.name %>">
+            <figure class="card horizontal large feed-item" id="edition_<%= edition.name %>">
                 <img class="card-figure" src="<%= asset_url current_page.url + edition.image %>" alt="<%= edition.name %> edition">
                 <figcaption class="card-content">
                     <h2 class="cappa subtitle"><strong><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>

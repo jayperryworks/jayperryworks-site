@@ -30,7 +30,7 @@
             var $parent = base.$el.parent(),
                 parentH = $parent.height,
                 windowH = $(window).height,
-                elOffset = $(el).offset().top,
+                elOffset = base.$el.offset().top,
                 parentOffsetBottom = $parent.offset().top + parentH; // target element's offset (distance to top)
                 // base.activeEl = highlightEl ? $(highlightEl) : false; // an nav element to be highlighted on scroll
 
@@ -57,7 +57,7 @@
 
             // reset the target element's offset when the window resizes
             $(parent).resize(function() {
-                base.toggleSticky(base.$el, $(el).offset().top);
+                base.toggleSticky(base.$el, base.$el.offset().top);
             });
         };
 
@@ -133,11 +133,11 @@
 //         var options = options || {};
 //         // options.constrainToParent =
 
-//         $(el).each(function() {
-//             var $parent = $(el).parent(),
+//         base.$el.each(function() {
+//             var $parent = base.$el.parent(),
 //                 parentH = $parent.height,
 //                 windowH = $(window).height,
-//                 elOffset = $(el).offset().top; // target element's offset (distance to top)
+//                 elOffset = base.$el.offset().top; // target element's offset (distance to top)
 //                 // base.activeEl = highlightEl ? $(highlightEl) : false; // an nav element to be highlighted on scroll
 
 //             // console.log(base.activeEl);
@@ -163,31 +163,31 @@
 
 //             // reset the target element's offset when the window resizes
 //             $(parent).resize(function() {
-//                 _toggleSticky(el, $(el).offset().top);
+//                 _toggleSticky(el, base.$el.offset().top);
 //             });
 //         });
 //     };
 
 //     function _toggleSticky(el, offset, parent) {
 //         var scrollTop = $(window).scrollTop(),
-//             scrollBottom = scrollTop + $(el).height,
+//             scrollBottom = scrollTop + base.$el.height,
 //             elOffset = offset || 0;
 
 //         if (elOffset <= scrollTop) {
-//             $(el).addClass(base.options.displayClass);
+//             base.$el.addClass(base.options.displayClass);
 //             console.log("sticky");
 //         } else {
-//             $(el).removeClass(base.options.displayClass);
+//             base.$el.removeClass(base.options.displayClass);
 //         }
 
 //         if (elOffset <= scrollTop) {
-//             $(el).addClass(base.options.displayClass);
-//             $(el).removeClass(base.options.bottomClass);
+//             base.$el.addClass(base.options.displayClass);
+//             base.$el.removeClass(base.options.bottomClass);
 //         } else {
-//             $(el).removeClass(base.options.displayClass);
+//             base.$el.removeClass(base.options.displayClass);
 
 //             // if (scrollBottom) {
-//             //     $(el).addClass(base.options.bottomClass);
+//             //     base.$el.addClass(base.options.bottomClass);
 //             // }
 //         }
 //     }
@@ -197,8 +197,8 @@
 
 //         var viewportMargin = ($(window).height()/base.options.viewportMargin), // Viewport Height
 //             scrollTop = $(window).scrollTop(), // Scroll Top
-//             yPos = $(el).offset().top,
-//             elH = $(el).outerHeight();
+//             yPos = base.$el.offset().top,
+//             elH = base.$el.outerHeight();
 
 //         if (yPos < (viewportMargin + scrollTop) && (yPos > (scrollTop + viewportMargin - elH))) {
 //             return true;

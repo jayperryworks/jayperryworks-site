@@ -43,5 +43,5 @@ My wife and I were on a weekend trip to the Laurel Highlands in Pennsylvania, vi
 - ![Frozen Waterfall, in-progress](frozen_waterfall/process05.jpg)
 - ![Frozen Waterfall, in-progress](frozen_waterfall/process06.jpg)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sumenda potius quam expetenda. Avaritiamne minuis? Bonum incolumis acies: misera caecitas. An eum discere ea mavis, quae cum plane perdidiceriti nihil sciat? Bona autem corporis huic sunt, quod posterius posui, similiora. Duo Reges: constructio interrete. Haeret in salebra. Quod ea non occurrentia fingunt, vincunt Aristonem; Vitiosum est enim in dividendo partem in genere numerare. Sequitur disserendi ratio cognitioque naturae;
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sumenda potius quam expetenda. Avaritiamne minuis? Bonum incolumis acies: misera caecitas. An eum discere ea mavis, quae cum plane perdidiceriti nihil sciat? Bona autem corporis huic sunt, quod posterius posui, similiora. Duo Reges: constructio interrete. Haeret in salebra. Quod ea non occurrentia fingunt, vincunt Aristonem; Vitiosum est enim in dividendo partem in genere numerare. Sequitur disserendi ratio cognitioque naturae.
 
