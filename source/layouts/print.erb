@@ -31,20 +31,6 @@
     <section class="panel has-jump">
         <h2 class="panel-slug">Available Editions</h2>
 
-        <% if current_page.data.editions.length > 1 %>
-        <nav class="jump_nav js-sticky">
-            <ul>
-                <% current_page.data.editions.each_with_index do |edition, i| %>
-                    <% if edition.name.present? %>
-                    <li>
-                        <a class="jump_nav-item js-active js-scroll<% if i == 0 %> is-active<% end %>" href="#edition_<%= edition.name %>" data-initial="<%= edition.name[0] %>"><span class="jump_nav-label"><%= edition.name %></span></a>
-                    </li>
-                    <% end %>
-                <% end %>
-            </ul>
-        </nav><!-- /.jump_nav -->
-        <% end %>
-
         <!-- edition cards -->
         <div class="feed l-wrapper">
             <% current_page.data.editions.each do |edition| %>
