@@ -9,7 +9,6 @@ gem "middleman-livereload", "~> 3.1.0"
 
 # middleman plugins
 gem "middleman-minify-html"
-# gem "middleman-s3_sync"
 gem "middleman-google-analytics"
 gem "middleman-autoprefixer"
 gem "middleman-simple-thumbnailer"
@@ -17,11 +16,10 @@ gem "middleman-search_engine_sitemap"
 gem "middleman-imageoptim"
 gem "middleman-blog"
 gem "middleman-es6", github: "vast/middleman-es6"
-gem "middleman-s3_sync"
+gem "middleman-s3_sync", "~> 3.0"
 
 # Compass extensions
 gem "compass-import-once"
-gem "breakpoint-slicer"
 
 # Markdown renderer
 gem "redcarpet"

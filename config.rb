@@ -60,27 +60,33 @@ page "README.md", :directory_index => false
 page "LICENSE", :directory_index => false
 page "404.html", :directory_index => false
 
+# activate :relative_assets
+
 # autoprefix CSS
 activate :autoprefixer do |config|
     config.browsers = ['last 2 versions', 'Explorer >= 8']
 end
 
 activate :google_analytics do |ga|
-  ga.tracking_id = 'UA-XXXXXXX-X' # Replace with your property ID.
+    ga.tracking_id = 'UA-XXXXXXX-X' # Replace with your property ID.
 end
 
 activate :s3_sync do |s3_sync|
-  s3_sync.bucket                     = 'jayperryworks.com' # The name of the S3 bucket you are targetting. This is globally unique.
-  s3_sync.region                     = 'us-west-1'     # The AWS region for your bucket.
-  s3_sync.delete                     = false # We delete stray files by default.
-  s3_sync.after_build                = false # We do not chain after the build step by default.
-  s3_sync.prefer_gzip                = true
-  s3_sync.path_style                 = true
-  s3_sync.reduced_redundancy_storage = false
-  s3_sync.acl                        = 'public-read'
-  s3_sync.encryption                 = false
-  s3_sync.prefix                     = ''
-  s3_sync.version_bucket             = false
+  # s3_sync.bucket                     = 'BUCKET' # The name of the S3 bucket you are targetting. This is globally unique.
+  s3_sync.region                     = 'us-east-1'     # The AWS region for your bucket.
+  # s3_sync.aws_access_key_id          = 'AWS KEY ID'
+  # # s3_sync.aws_secret_access_key      = 'AWS SECRET KEY'
+  # s3_sync.delete                     = false # We delete stray files by default.
+  # s3_sync.after_build                = false # We do not chain after the build step by default.
+  # s3_sync.prefer_gzip                = true
+  # s3_sync.path_style                 = true
+  # s3_sync.reduced_redundancy_storage = false
+  # s3_sync.acl                        = 'public-read'
+  # s3_sync.encryption                 = false
+  # s3_sync.prefix                     = ''
+  # s3_sync.version_bucket             = false
+  # s3_sync.error_document             = '404.html'
+  # s3_sync.index_suffix               = 'index.html'
 end
 
 # run ES6 transpiler on the Javascript
@@ -88,7 +94,7 @@ end
 
 # Reload the browser automatically whenever files change
 configure :development do
-  activate :livereload
+    activate :livereload
 end
 
 # Methods defined in the helpers block are available in templates
@@ -113,9 +119,10 @@ activate :search_engine_sitemap
 set :css_dir, 'assets/stylesheets'
 set :js_dir, 'assets/javascripts'
 set :images_dir, 'assets/images'
-set :media_dir, 'media'
 set :fonts_dir, 'assets/fonts'
 set :spritemap, 'assets/images/spritemap.svg'
+
+set :relative_links, true
 
 # Add bower's directory to sprockets asset path
 # -> use bundler for back-end dependencies, bower for front-end dependencies
@@ -132,24 +139,26 @@ end
 # Build-specific configuration
 configure :build do
 
-  # Compress/optimize images
-  # -> svg optimization is handled by gulp (svgstore)
-  activate :imageoptim do |options|
-    options.image_extensions = %w(.png .jpg .gif)
-  end
+    activate :minify_html
 
-  # For example, change the Compass output style for deployment
-  activate :minify_css
+    # For example, change the Compass output style for deployment
+    activate :minify_css
 
-  # Minify Javascript on build
-  activate :minify_javascript
+    # Minify Javascript on build
+    activate :minify_javascript
 
-  # Enable cache buster
-  activate :asset_hash
+    # Enable cache buster
+    activate :asset_hash
 
-  # Use relative URLs
-  activate :relative_assets
+    # Use relative URLs
+    activate :relative_assets
 
-  # Or use a different image path
-  # set :http_prefix, "/Content/images/"
+    # Compress/optimize images
+    # -> svg optimization is handled by svgo
+    activate :imageoptim do |options|
+        options.image_extensions = %w(.png .jpg .gif)
+    end
+
+    # Or use a different image path
+    # set :http_prefix, "/Content/images/"
 end

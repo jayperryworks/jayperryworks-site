@@ -17,7 +17,7 @@
                 </aside>
 
                 <% if current_page.data.image.present? %>
-                    <%= image_tag current_page.url + current_page.data.image, :class => "post-feature_image" %>
+                    <%= image_tag current_page.url + current_page.data.image, :class => "post-feature_image", :alt => current_page.data.title %>
                 <% end %>
 
                 <%= yield %>

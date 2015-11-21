@@ -1,7 +1,7 @@
 <% wrap_layout :layout do %>
 <article class="post">
     <section class="panel top">
-        <img class="post-cover" src="<%= asset_url(current_page.url + current_page.data.cover) %>" alt="<%= current_page.data.title %>">
+        <%= image_tag current_page.url + current_page.data.cover, :class => "post-cover", :alt => current_page.data.title %>
 
         <!-- cover image and info -->
         <header class="post-header">
@@ -35,7 +35,7 @@
         <div class="feed l-wrapper">
             <% current_page.data.editions.each do |edition| %>
             <figure class="card horizontal large feed-item" id="edition_<%= edition.name %>">
-                <img class="card-figure" src="<%= asset_url current_page.url + edition.image %>" alt="<%= edition.name %> edition">
+                <%= image_tag current_page.url + edition.image, :class => "card-figure", :alt => edition.name + " edition" %>
                 <figcaption class="card-content">
                     <h2 class="cappa subtitle"><strong><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
                     <dl class="card-stats">
