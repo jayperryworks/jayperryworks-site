@@ -17,6 +17,7 @@ title: home
     </div>
 </section>
 
+<% if blog("writing").articles.length > 0 %>
 <section class="panel">
     <h1 class="panel-slug">Writing</h1>
     <ul class="feed">
@@ -37,3 +38,4 @@ title: home
         <% end %>
     </ul>
 </section>
+<% end %>
