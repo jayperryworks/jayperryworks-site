@@ -8,7 +8,7 @@ title: home
         <ul class="gallery center">
             <% blog("work").articles.each do |print| %>
             <li class="gallery-item" data-year="<%= print.date.strftime('%Y') %>">
-                <% link_to print.url do %>
+                <% link_to print do %>
                     <%= image_tag print.url + print.data.cover, :alt => print.data.title %>
                 <% end %>
             </li>
@@ -22,17 +22,16 @@ title: home
     <ul class="feed">
         <% blog("writing").articles[0...5].each do |article| %>
         <li class="feed-item card horizontal l-wrapper narrow">
-            <% link_to article.url, :class => "card-figure" do %>
+            <% link_to article, :class => "card-figure" do %>
                 <%= image_tag article.url + article.data.image, :alt => article.title %>
-                <%= image_tag "logo-jp-blue.png" %>
             <% end %>
             <div class="card-content">
-                <h2 class="card-title"><%= link_to article.title, article.url %></h2>
+                <h2 class="card-title"><%= link_to article.title, article %></h2>
                 <% if article.data.subtitle.present? %>
-                <%= link_to article.data.subtitle, article.url, :class => "card-subtitle cappa" %>
+                <%= link_to article.data.subtitle, article, :class => "card-subtitle cappa" %>
                 <% end %>
                 <%= article.summary %>
-                <%= link_to "Read more &rsaquo;", article.url, :class => "card-button" %>
+                <%= link_to "Read more &rsaquo;", article, :class => "card-button" %>
             </div>
         </li>
         <% end %>

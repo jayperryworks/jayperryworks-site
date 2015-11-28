@@ -60,7 +60,11 @@ page "README.md", :directory_index => false
 page "LICENSE", :directory_index => false
 page "404.html", :directory_index => false
 
-# activate :relative_assets
+# Use relative URLs
+activate :relative_assets
+
+# Enable cache buster
+# activate :asset_hash
 
 # autoprefix CSS
 activate :autoprefixer do |config|
@@ -113,7 +117,7 @@ helpers do
     end
 end
 
-set :url_root, 'http://prints.jayperryworks.com'
+set :url_root, 'http://jayperryworks.com'
 activate :search_engine_sitemap
 
 set :css_dir, 'assets/stylesheets'
@@ -139,6 +143,9 @@ end
 # Build-specific configuration
 configure :build do
 
+    # Enable cache buster
+    # activate :asset_hash
+
     activate :minify_html
 
     # For example, change the Compass output style for deployment
@@ -146,12 +153,6 @@ configure :build do
 
     # Minify Javascript on build
     activate :minify_javascript
-
-    # Enable cache buster
-    activate :asset_hash
-
-    # Use relative URLs
-    activate :relative_assets
 
     # Compress/optimize images
     # -> svg optimization is handled by svgo
