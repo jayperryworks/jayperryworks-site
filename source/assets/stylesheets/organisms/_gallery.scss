@@ -46,9 +46,13 @@ There are three (column) size variations: small, medium, and large. Medium is de
 
 $gallery-gutter: $gutter;
 
+@function gallery-column-w($number) {
+    @return (100%/$number);
+}
+
 @mixin gallery-columns($number: 2, $g: $gallery-gutter) {
     display: inline-block;
-    width: (100%/$number);
+    width: gallery-column-w($number);
     padding-right: ($g/2);
     padding-left: ($g/2);
 
@@ -84,6 +88,7 @@ $gallery-gutter: $gutter;
         margin-left: 0;
     }
 
+    // default breakpoints -- see modifiers below for changes
     @include respond-to('small') {
         @include display(flex);
         margin-left: -($gallery-gutter/2);
@@ -135,21 +140,31 @@ $gallery-gutter: $gutter;
 
     @include respond-to("small") {
         @include gallery-columns(2);
+
+        // &.constrained { @include aspect(gallery-column-w(2)); }
     }
 
     @include respond-to("medium") {
         @include gallery-columns(3);
+
+        // &.constrained { @include aspect(gallery-column-w(3)); }
     }
 
     .gallery.small & {
         @include respond-to("xsmall") {
             @include gallery-columns(2);
+
+            // &.constrained { @include aspect(gallery-column-w(2)); }
         }
         @include respond-to("small") {
             @include gallery-columns(3);
+
+            // &.constrained { @include aspect(gallery-column-w(3)); }
         }
         @include respond-to("medium") {
             @include gallery-columns(4);
+
+            // &.constrained { @include aspect(gallery-column-w(4)); }
         }
     }
 
@@ -157,6 +172,8 @@ $gallery-gutter: $gutter;
         .gallery.large & {
             @include respond-to('small') {
                 @include gallery-columns(2);
+
+                // &.constrained { @include aspect(gallery-column-w(2)); }
             }
         }
     }
