@@ -6,33 +6,44 @@
 
 // padding to force an aspect ratio
 // -> apply mixin to a container element, and the child image will be constrained
-@mixin aspect($w, $ratio: 3, $child_el: "constrained-content", $cover: false) {
+@mixin aspect($w, $ratio: 3, $child_el: ".constrained-content", $cover: false) {
     position: relative;
     // height: 100px;
 
     &:before, &::before {
         display: block;
         content: " ";
-        width: $w;
         padding-top: (ms(1)/ms($ratio)) * 100%;
     }
 
-    > img, #{$child_el} {
+    #{$child_el} {
+        display: block;
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
+        // max-width: 100%;
 
-        @if ($cover != false) {
-            object-fit: cover;
+        // center the image within its frame if transforms are supported
+        //
 
-            // center the image within its frame if transforms are supported
-            .csstransforms & {
+        // @if ($cover != false) {
+        //     object-fit: cover;
+        // }
+
+        > img {
+            position: absolute;
+            max-width: 100%;
+            max-height: 100%;
+
+            @include yep(csstransforms) {
                 @include transform(translateY(-50%) translateX(-50%));
                 top: 50%;
                 left: 50%;
             }
+
+
         }
     }
 }
@@ -62,7 +73,7 @@ figure {
     padding-top: 25px;
     height: 0;
 
-    & > iframe {
+    & > iframe, .video-embed {
         position: absolute;
         top: 0;
         left: 0;
@@ -70,5 +81,3 @@ figure {
         height: 100%;
     }
 }
-
-.constrained { @include aspect(100%); }

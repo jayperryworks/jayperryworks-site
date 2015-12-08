@@ -139,6 +139,36 @@ $z--high   : 2;
     padding-bottom: ($padding + 1000px);
 }
 
+/* ---- Visibility -----------------------------------------------------------*/
+
+@mixin visually_hidden($focusable: false) {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+
+    /*
+     * Extends the .visuallyhidden class to allow the element
+     * to be focusable when navigated to via the keyboard:
+     * https://www.drupal.org/node/897638
+     */
+    @if ($focusable == true) {
+        &:active,
+        &:focus {
+            clip: auto;
+            height: auto;
+            margin: 0;
+            overflow: visible;
+            position: static;
+            width: auto;
+        }
+    }
+}
+
 
 /* Layout Globals/Base Styles
 // ---------------------------------------------------------------------------*/
@@ -187,8 +217,40 @@ html {
 
 // narrow version of layout wrapper
 .l-wrapper.narrow {
-    @extend .l-wrapper;
     @extend %l-base-w--narrow;
+}
+
+/* ---- Aspect ratio ---------------------------------------------------------*/
+
+.l-constrained {
+    position: relative;
+
+    &:before, &::before {
+        display: block;
+        content: " ";
+        padding-top: (ms(1)/ms(1)) * 100%;
+    }
+}
+
+.l-constrained-wrapper {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.l-constrained-content {
+    position: absolute;
+    max-width: 100%;
+    max-height: 100%;
+
+    @include yep(csstransforms) {
+        @include transform(translateY(-50%) translateX(-50%));
+        top: 50%;
+        left: 50%;
+    }
 }
 
 /* ---- Fixed position -------------------------------------------------------*/
@@ -233,7 +295,7 @@ html {
 
 // position an element absolutely in the left, right, top or bottom.
 // -> parent element MUST have explicit positioning
-.l-abs, %l-abs {
+.l-abs {
     position: absolute;
 
     // MODIFIERS:
@@ -253,42 +315,12 @@ html {
 /* ---- Floats ---------------------------------------------------------------*/
 
 // float an element left or right
-.l-float, %l-float {
+.l-float {
     &.left {
         float: left;
     }
     &.right {
         float: right;
-    }
-}
-
-/* ---- Visibility -----------------------------------------------------------*/
-
-@mixin visually_hidden($focusable: false) {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-
-    /*
-     * Extends the .visuallyhidden class to allow the element
-     * to be focusable when navigated to via the keyboard:
-     * https://www.drupal.org/node/897638
-     */
-    @if ($focusable == true) {
-        &:active,
-        &:focus {
-            clip: auto;
-            height: auto;
-            margin: 0;
-            overflow: visible;
-            position: static;
-            width: auto;
-        }
     }
 }
 
