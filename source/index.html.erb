@@ -8,7 +8,7 @@ title: home
         <ul class="gallery center">
             <% blog("work").articles.each do |print| %>
             <li class="gallery-item" data-year="<%= print.date.strftime('%Y') %><% if print.data.tags.present? %>" data-tags="<% print.data.tags.each_with_index do |tag, index| %><%= tag.urlize %><% unless index == (print.data.tags.length - 1) %> <% end %><% end %>"<% end %>>
-                <div class="l-constrained reverse">
+                <div class="l-constrained well">
                     <% link_to print, :class => "l-constrained-wrapper" do %>
                         <%= image_tag print.url + print.data.cover, :alt => print.data.title, :class => "l-constrained-content" %>
                     <% end %>
