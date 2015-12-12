@@ -47,15 +47,27 @@
     }
 
     > ul {
-        // @extend .l-wrapper;
         @extend .gallery;
-        // @extend .gallery.l-wrapper;
         @include rem(margin-top, fs(8));
-        // margin-left: auto;
-        // margin-right: auto;
+        @include rem(margin-bottom, fs(8));
+
+        &.small { @extend .gallery.small; }
+        &.large { @extend .gallery.large; }
     }
 
-    li { @extend .gallery-item; }
+    li {
+        @extend .gallery-item;
+
+        ul.small & { @extend %gallery-item--small; }
+        ul.large & { @extend %gallery-item--large; }
+    }
+
+    > img {
+        @include rem(margin-top, fs(8));
+        @include rem(margin-bottom, fs(8));
+
+        & + ul, & + .gallery { margin-top: $gallery-gutter; }
+    }
 }
 
 .post-meta {
