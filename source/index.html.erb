@@ -22,9 +22,9 @@ title: home
 <% if blog("writing").articles.length > 0 %>
 <section class="panel">
     <h1 class="panel-slug">Writing</h1>
-    <ul class="feed">
+    <ul class="feed l-wrapper narrow">
         <% blog("writing").articles[0...5].each do |article| %>
-        <li class="feed-item card horizontal l-wrapper narrow">
+        <li class="feed-item card horizontal">
             <% link_to article, :class => "card-figure" do %>
                 <%= image_tag article.url + article.data.image, :alt => article.title %>
             <% end %>

@@ -116,9 +116,11 @@ $themes: (
 //      color: theme('highlight', 'reverse');
 @function theme($colors, $name: 'default') {
     $map: map-get($themes, $name);
+
     @each $color in $colors {
         $map: map-get($map, $color);
     }
+
     @return $map;
 
 }

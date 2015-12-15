@@ -62,12 +62,12 @@
         ul.large & { @extend %gallery-item--large; }
     }
 
-    > img {
-        @include rem(margin-top, fs(8));
-        @include rem(margin-bottom, fs(8));
+    // > img {
+    //     @include rem(margin-top, fs(8));
+    //     @include rem(margin-bottom, fs(8));
 
-        & + ul, & + .gallery { margin-top: $gallery-gutter; }
-    }
+    //     & + ul, & + .gallery { margin-top: $gallery-gutter; }
+    // }
 }
 
 .post-meta {

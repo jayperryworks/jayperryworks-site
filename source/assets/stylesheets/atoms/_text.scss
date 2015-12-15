@@ -33,12 +33,6 @@ p {
     @extend %font-body;
     @include font-scale(3);
     color: theme('text' 'body');
-
-    strong {
-        @extend %font-body--italic;
-        font-style: italic;
-        // font-weight: bold;
-    }
 }
 
 a {
@@ -52,7 +46,7 @@ a {
     }
 }
 
-strong {
+strong, em {
     @extend %font-body--italic;
     font-style: italic;
 }
@@ -90,7 +84,7 @@ address {
         @extend %font-accent;
         display: inline-block;
         float: left;
-        margin: -0.05em 0.03em -0.3em 0;
+        margin: -0.05em 0.1em -0.3em -0.03em;
         font-size: 3.5em;
         line-height: 1;
         color: theme(text primary);

@@ -228,7 +228,7 @@ html {
     &:before, &::before {
         display: block;
         content: " ";
-        padding-top: (ms(1)/ms(1)) * 100%;
+        padding-top: (ms(1)/ms(2)) * 100%;
     }
 }
 
