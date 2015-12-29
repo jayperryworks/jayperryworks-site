@@ -6,18 +6,7 @@ title: home
 <section class="panel">
     <h1 class="panel-slug">Work</h1>
     <div class="l-wrapper">
-        <ul class="gallery centered">
-            <% blog("work").articles.each do |print| %>
-            <li class="gallery-item" data-year="<%= print.date.strftime('%Y') %><% if print.data.tags.present? %>" data-tags="<% print.data.tags.each_with_index do |tag, index| %><%= tag.urlize %><% unless index == (print.data.tags.length - 1) %> <% end %><% end %>"<% end %>>
-                <div class="l-constrained well">
-                    <% link_to print, :class => "l-constrained-wrapper" do %>
-                        <% img_filename = print.data.thumb.present? ? print.data.thumb : print.data.cover %>
-                        <%= image_tag print.url + img_filename, :alt => print.data.title, :class => "l-constrained-content" %>
-                    <% end %>
-                </div>
-            </li>
-            <% end %>
-        </ul>
+        <%= partial "layouts/partials/work" %>
     </div>
 </section>
 

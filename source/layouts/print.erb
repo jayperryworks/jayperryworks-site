@@ -59,19 +59,7 @@
 <section class="panel">
     <h1 class="panel-slug">More work</h1>
     <div class="l-wrapper">
-        <ul class="gallery centered">
-            <% blog("work").articles.each do |print| %>
-            <% unless print.title == current_page.title %>
-            <li class="gallery-item">
-                <div class="l-constrained well">
-                    <% link_to print, :class => "l-constrained-wrapper" do %>
-                        <%= image_tag print.url + print.data.cover, :alt => print.data.title, :class => "l-constrained-content" %>
-                    <% end %>
-                </div>
-            </li>
-            <% end %>
-            <% end %>
-        </ul>
+        <%= partial("layouts/partials/work", :locals => { :current => true, :tags => false }) %>
     </div>
 </section>
 <% end %>
