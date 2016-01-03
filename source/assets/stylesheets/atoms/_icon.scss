@@ -30,11 +30,11 @@
 .icon.logo-jp {
     @include rem(width, 40px);
     @include rem(height, 39px);
-    fill: theme(highlight);
+    fill: theme(text primary);
     color: white;
 }
     .logo-jp-bg {
-        fill: theme(highlight);
+        fill: theme(text primary);
     }
     .logo-jp-letter {
         fill: white;

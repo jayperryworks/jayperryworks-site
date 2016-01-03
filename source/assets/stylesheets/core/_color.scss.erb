@@ -74,14 +74,14 @@ $themes: (
     'default': (
         'text': (
             'primary'   : $black,
-            'secondary' : $gray,
-            'tertiary'  : lighten($gray, 10),
-            'body'      : darken($gray, 20),
+            'secondary' : darken($gray, 10),
+            'tertiary'  : $gray,
+            'body'      : darken($gray, 30),
         ),
         'bg'              : #fff,
         'well'            : lighten($gray, 20),
         'border'          : lighten($gray, 20),
-        'highlight'       : $black
+        'highlight'       : <%= highlight("blue") %>
     ),
     'reverse': (
         'text': (
@@ -93,7 +93,7 @@ $themes: (
         'bg'              : $black,
         'well'            : darken($black, 20),
         'border'          : lighten($black, 20),
-        'highlight'       : <%= highlight("orange") %>
+        'highlight'       : <%= highlight("blue") %>
     ),
     'wash': (
         'text': (
@@ -102,9 +102,9 @@ $themes: (
             'tertiary'  : lighten($gray, 10),
             'body'      : darken($gray, 20),
         ),
-        'bg'              : <%= highlight("orange") %>,
-        'well'            : <%= highlight("orange-dark") %>,
-        'border'          : <%= highlight("orange-dark") %>,
+        'bg'              : <%= highlight("blue") %>,
+        'well'            : <%= highlight("blue-dark") %>,
+        'border'          : <%= highlight("blue-dark") %>,
         'highlight'       : #fff
     )
 );
