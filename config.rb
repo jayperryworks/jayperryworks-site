@@ -56,8 +56,6 @@ activate :blog do |blog|
 end
 
 activate :directory_indexes
-page "README.md", :directory_index => false
-page "LICENSE", :directory_index => false
 page "404.html", :directory_index => false
 
 # Use relative URLs
