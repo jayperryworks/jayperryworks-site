@@ -4,8 +4,8 @@
   "description": "prints",
   "main": "index.js",
   "scripts": {
-    "build": "bundle exec middleman build",
-    "deploy": "npm run build && git-directory-deploy --directory build --repo staging",
+    "build": "bundle exec middleman build --",
+    "deploy": "npm run build && git-directory-deploy --directory build",
     "deploy:prod": "npm run build && git-directory-deploy --directory build --branch master --repo production"
   },
   "repository": {
