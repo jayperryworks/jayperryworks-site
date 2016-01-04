@@ -8,7 +8,7 @@
 /.bundle
 
 # Ignore the build directory
-# /build
+/build
 
 # Ignore cache
 /.sass-cache
@@ -19,9 +19,12 @@
 
 /vendor/assets/bower_components
 /node_modules
+npm_debug.log
 
 *.sublime-project
 *.sublime-workspace
 Gemfile.lock
 
 .s3_sync
+
+imageoptim.manifest.yml
