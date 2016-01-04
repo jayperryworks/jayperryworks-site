@@ -4,9 +4,10 @@
   "description": "jayperryworks-site-dev",
   "main": "index.js",
   "scripts": {
-    "build": "bundle exec middleman build",
-    "deploy": "npm run build && git-directory-deploy --directory build --branch master",
-    "deploy:prod": "git-directory-deploy --directory build --repo production --branch production"
+    "build": "bundle exec middleman build --",
+    "predeploy": "npm run build",
+    "deploy": "git-directory-deploy --directory build --branch gh-pages --repo staging",
+    "deploy:prod": "git-directory-deploy --directory build --branch master"
   },
   "repository": {
     "type": "git",
