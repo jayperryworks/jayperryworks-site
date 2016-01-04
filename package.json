@@ -6,7 +6,7 @@
   "scripts": {
     "build": "bundle exec middleman build",
     "deploy": "npm run build && git-directory-deploy --directory build",
-    "deploy:prod": "npm run build && git-directory-deploy --directory build --branch master --repo production"
+    "deploy:prod": "git-directory-deploy --directory build --repo production --branch production"
   },
   "repository": {
     "type": "git",
