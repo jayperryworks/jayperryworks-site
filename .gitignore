@@ -9,7 +9,7 @@
 
 # Ignore the build directory
 /build
-imageoptim.manifest.yml
+build/imageoptim.manifest.yml
 
 # Ignore cache
 /.sass-cache
@@ -20,12 +20,10 @@ imageoptim.manifest.yml
 
 /vendor/assets/bower_components
 /node_modules
-npm-debug.log
+**/npm-debug.log
 
 *.sublime-project
 *.sublime-workspace
 Gemfile.lock
 
 .s3_sync
-
-imageoptim.manifest.yml
