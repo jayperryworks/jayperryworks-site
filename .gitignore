@@ -9,7 +9,7 @@
 
 # Ignore the build directory
 /build
-build/imageoptim.manifest.yml
+**/imageoptim.manifest.yml
 
 # Ignore cache
 /.sass-cache

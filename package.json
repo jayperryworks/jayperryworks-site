@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "bundle exec middleman build",
-    "deploy": "npm run build && git-directory-deploy --directory build",
+    "deploy": "npm run build && git-directory-deploy --directory build --branch master",
     "deploy:prod": "git-directory-deploy --directory build --repo production --branch production"
   },
   "repository": {
