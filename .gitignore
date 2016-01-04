@@ -9,6 +9,7 @@
 
 # Ignore the build directory
 /build
+imageoptim.manifest.yml
 
 # Ignore cache
 /.sass-cache
@@ -19,7 +20,7 @@
 
 /vendor/assets/bower_components
 /node_modules
-npm_debug.log
+npm-debug.log
 
 *.sublime-project
 *.sublime-workspace
