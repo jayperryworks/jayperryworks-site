@@ -76,7 +76,7 @@ end
 activate :deploy do |deploy|
   deploy.method = :git
   deploy.build_before = true # default: false
-  # deploy.branch = "gh-pages"
+  deploy.branch = 'gh-pages'
 end
 
 # activate :s3_sync do |s3_sync|
