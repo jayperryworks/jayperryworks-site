@@ -15,7 +15,7 @@ gem "middleman-simple-thumbnailer"
 gem "middleman-search_engine_sitemap"
 gem "middleman-imageoptim"
 gem "middleman-blog"
-# gem "middleman-s3_sync", "~> 3.0"
+gem "middleman-deploy"
 
 # Compass extensions
 gem "compass-import-once"
