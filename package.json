@@ -6,8 +6,7 @@
   "scripts": {
     "build": "bundle exec middleman build --",
     "predeploy": "npm run build",
-    "deploy": "git-directory-deploy --directory build --branch gh-pages --repo staging",
-    "deploy:prod": "git-directory-deploy --directory build --branch master"
+    "deploy": "git-directory-deploy --directory build --branch master"
   },
   "repository": {
     "type": "git",
