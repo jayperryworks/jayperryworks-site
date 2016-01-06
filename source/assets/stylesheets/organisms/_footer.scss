@@ -38,12 +38,13 @@
 
 .footer-logo {
     @extend .logo;
+    display: block;
     // margin-left: $gutter;
     max-height: em(26px);
     max-width: em(175px);
 
-    > .logo-jpw-jay_perry { fill: theme(text primary); }
-    > .logo-jpw-works { fill: theme(highlight); }
+    .logo-jpw-jay_perry { fill: theme(text primary); }
+    .logo-jpw-works { fill: theme(highlight); }
 
     @include respond-to('small') {
         display: inline-block;
