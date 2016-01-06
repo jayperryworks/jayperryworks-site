@@ -38,10 +38,9 @@
 
 .footer-logo {
     @extend .logo;
-    display: block;
     // margin-left: $gutter;
-    max-height: em(26px);
-    max-width: em(175px);
+    height: em(26px);
+    width: em(175px);
 
     .logo-jpw-jay_perry { fill: theme(text primary); }
     .logo-jpw-works { fill: theme(highlight); }
