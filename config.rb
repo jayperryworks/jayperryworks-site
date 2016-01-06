@@ -3,10 +3,10 @@
 ###
 
 # Change Compass configuration
-compass_config do |config|
-    require "compass/import-once/activate"
+# compass_config do |config|
+#   require "compass/import-once/activate"
 #   config.output_style = :compact
-end
+# end
 
 ###
 # Page options, layouts, aliases and proxies
@@ -107,9 +107,6 @@ end
 
 # Methods defined in the helpers block are available in templates
 helpers do
-    def icon(id, title, role="img", opts={})
-        output = "<svg class='icon #{id}' title='#{title}' role='#{role}'><use xlink:href='##{id}'></use></svg>"
-    end
 
     # check to see if a highlight color is one of the defaults listed in colors.yml
     def highlight(color)
