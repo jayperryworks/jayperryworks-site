@@ -14,8 +14,12 @@
 
 # Per-page layout changes:
 #
+
 # With no layout
-# page "/path/to/file.html", :layout => false
+page '/*.xml', layout: false
+page '/*.json', layout: false
+page '/*.txt', layout: false
+
 #
 # With alternative layout
 # page "/path/to/file.html", :layout => :otherlayout
@@ -30,7 +34,7 @@
 #  :which_fake_page => "Rendering a fake page with a local variable" }
 
 ###
-# Helpers
+# General configuration
 ###
 
 # Automatic image dimensions on image_tag helper
@@ -73,12 +77,6 @@ activate :google_analytics do |ga|
     ga.tracking_id = 'UA-XXXXXXX-X' # Replace with your property ID.
 end
 
-# activate :deploy do |deploy|
-#   deploy.method = :git
-#   # deploy.build_before = true # default: false
-#   deploy.branch = 'gh-pages'
-# end
-
 # activate :s3_sync do |s3_sync|
 #   # s3_sync.bucket                     = 'BUCKET' # The name of the S3 bucket you are targetting. This is globally unique.
 #   s3_sync.region                     = 'us-east-1'     # The AWS region for your bucket.
@@ -97,13 +95,15 @@ end
 #   # s3_sync.index_suffix               = 'index.html'
 # end
 
-# run ES6 transpiler on the Javascript
-# activate :es6
-
 # Reload the browser automatically whenever files change
 configure :development do
     activate :livereload
 end
+
+
+###
+# Helpers
+###
 
 # Methods defined in the helpers block are available in templates
 helpers do
@@ -128,18 +128,6 @@ set :fonts_dir, 'assets/fonts'
 set :spritemap, 'assets/images/spritemap.svg'
 
 set :relative_links, true
-
-# Add bower's directory to sprockets asset path
-# -> use bundler for back-end dependencies, bower for front-end dependencies
-# -> http://dejimata.com/2013/11/4/bundler-meet-bower
-after_configuration do
-    @bower_config = JSON.parse(IO.read("#{root}/.bowerrc"))
-    sprockets.append_path File.join "#{root}", @bower_config["directory"]
-    sprockets.import_asset "jquery/dist/jquery.min.js"
-    sprockets.import_asset "modernizr/modernizr.js"
-    sprockets.import_asset "picturefill/dist/picturefill.min.js"
-    sprockets.import_asset "jquery.scrollTo/jquery.scrollTo.min.js"
-end
 
 # Build-specific configuration
 configure :build do
