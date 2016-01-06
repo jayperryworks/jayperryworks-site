@@ -119,7 +119,7 @@ helpers do
 end
 
 set :url_root, 'http://jayperryworks.com'
-activate :search_engine_sitemap
+# activate :search_engine_sitemap
 
 set :css_dir, 'assets/stylesheets'
 set :js_dir, 'assets/javascripts'
