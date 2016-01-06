@@ -20,6 +20,12 @@
         <!-- writeup -->
         <div class="post-content l-wrapper">
             <%= yield %>
+
+            <% if current_page.data.edition_placeholder == true %>
+            <div class="l-centered">
+                <a class="button large l-has-margin top" href="https://www.etsy.com/shop/jayperry" target="_blank">Print editions available at <strong>Etsy</strong></a>
+            </div>
+            <% end %>
         </div><!-- /.post-content -->
 
     </section><!-- /.panel -->

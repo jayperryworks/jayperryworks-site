@@ -327,3 +327,19 @@ html {
 /* ---- Centered content -----------------------------------------------------*/
 
 .l-centered { text-align: center; }
+
+/* ---- Margins --------------------------------------------------------------*/
+
+$l-sides: top right bottom left;
+
+.l-has-margin {
+    @each $side in $l-sides {
+        &.#{$side} { margin-#{$side}: $gutter; }
+    }
+}
+
+.l-has-padding {
+    @each $side in $l-sides {
+        &.#{$side} { padding-#{$side}: $gutter; }
+    }
+}
