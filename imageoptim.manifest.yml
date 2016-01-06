@@ -1,102 +1,90 @@
 ---
-build/assets/images/icons/arrow-down.png: 2016-01-04 18:19:14.000000000 -05:00
-build/assets/images/icons/arrow-down@1.5x.png: 2016-01-04 18:19:14.000000000 -05:00
-build/assets/images/icons/arrow-down@2x.png: 2016-01-04 18:19:14.000000000 -05:00
-build/assets/images/icons/arrow-down@3x.png: 2016-01-04 18:19:14.000000000 -05:00
-build/assets/images/icons/arrow-left.png: 2016-01-04 18:19:14.000000000 -05:00
-build/assets/images/icons/arrow-left@1.5x.png: 2016-01-04 18:19:14.000000000 -05:00
-build/assets/images/icons/arrow-left@2x.png: 2016-01-04 18:19:14.000000000 -05:00
-build/assets/images/icons/arrow-left@3x.png: 2016-01-04 18:19:14.000000000 -05:00
-build/assets/images/icons/arrow-right.png: 2016-01-04 18:19:14.000000000 -05:00
-build/assets/images/icons/arrow-right@1.5x.png: 2016-01-04 18:19:14.000000000 -05:00
-build/assets/images/icons/arrow-right@2x.png: 2016-01-04 18:19:14.000000000 -05:00
-build/assets/images/icons/arrow-right@3x.png: 2016-01-04 18:19:14.000000000 -05:00
-build/assets/images/icons/arrow-up.png: 2016-01-04 18:19:14.000000000 -05:00
-build/assets/images/icons/arrow-up@1.5x.png: 2016-01-04 18:19:14.000000000 -05:00
-build/assets/images/icons/arrow-up@2x.png: 2016-01-04 18:19:14.000000000 -05:00
-build/assets/images/icons/arrow-up@3x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/edition-hand_pulled.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/edition-hand_pulled@1.5x.png: 2016-01-04 18:19:15.000000000
+build/assets/images/icons/arrow-down.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/arrow-down@1.5x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/arrow-down@2x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/arrow-down@3x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/arrow-left.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/arrow-left@1.5x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/arrow-left@2x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/arrow-left@3x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/arrow-right.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/arrow-right@1.5x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/arrow-right@2x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/arrow-right@3x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/arrow-up.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/arrow-up@1.5x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/arrow-up@2x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/arrow-up@3x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/edition-hand_pulled.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/edition-hand_pulled@1.5x.png: 2016-01-05 10:36:00.000000000
   -05:00
-build/assets/images/icons/edition-hand_pulled@2x.png: 2016-01-04 18:19:15.000000000
+build/assets/images/icons/edition-hand_pulled@2x.png: 2016-01-05 10:36:00.000000000
   -05:00
-build/assets/images/icons/edition-hand_pulled@3x.png: 2016-01-04 18:19:15.000000000
+build/assets/images/icons/edition-hand_pulled@3x.png: 2016-01-05 10:36:00.000000000
   -05:00
-build/assets/images/icons/edition-large.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/edition-large@1.5x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/edition-large@2x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/edition-large@3x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/edition-medium.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/edition-medium@1.5x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/edition-medium@2x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/edition-medium@3x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/edition-small.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/edition-small@1.5x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/edition-small@2x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/edition-small@3x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-blue.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-blue@1.5x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-blue@2x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-blue@3x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-green.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-green@1.5x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-green@2x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-green@3x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-orange.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-orange@1.5x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-orange@2x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-orange@3x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-pos.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-pos@1.5x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-pos@2x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-pos@3x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-red.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-red@1.5x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-red@2x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp-red@3x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp@1.5x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp@2x.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/icons/logo-jp@3x.png: 2016-01-04 18:19:16.000000000 -05:00
-build/assets/images/logos/logo-jp-blue.png: 2016-01-04 18:19:15.000000000 -05:00
-build/assets/images/logos/logo-jp-green.png: 2016-01-04 18:19:16.000000000 -05:00
-build/assets/images/logos/logo-jp-orange.png: 2016-01-04 18:19:16.000000000 -05:00
-build/assets/images/logos/logo-jp-pos.png: 2016-01-04 18:19:16.000000000 -05:00
-build/assets/images/logos/logo-jp-red.png: 2016-01-04 18:19:16.000000000 -05:00
-build/assets/images/logos/logo-jp@2x.png: 2016-01-04 18:19:16.000000000 -05:00
-build/assets/images/logos/logo-jpw-black_and_white.png: 2016-01-04 18:19:16.000000000
+build/assets/images/icons/edition-large.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/edition-large@1.5x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/edition-large@2x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/edition-large@3x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/edition-medium.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/edition-medium@1.5x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/edition-medium@2x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/edition-medium@3x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/edition-small.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/edition-small@1.5x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/edition-small@2x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/edition-small@3x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-blue.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-blue@1.5x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-blue@2x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-blue@3x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-green.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-green@1.5x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-green@2x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-green@3x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-orange.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-orange@1.5x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-orange@2x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-orange@3x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-pos.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-pos@1.5x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-pos@2x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-pos@3x.png: 2016-01-05 10:36:01.000000000 -05:00
+build/assets/images/icons/logo-jp-red.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-red@1.5x.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp-red@2x.png: 2016-01-05 10:36:01.000000000 -05:00
+build/assets/images/icons/logo-jp-red@3x.png: 2016-01-05 10:36:01.000000000 -05:00
+build/assets/images/icons/logo-jp.png: 2016-01-05 10:36:00.000000000 -05:00
+build/assets/images/icons/logo-jp@1.5x.png: 2016-01-05 10:36:01.000000000 -05:00
+build/assets/images/icons/logo-jp@2x.png: 2016-01-05 10:36:01.000000000 -05:00
+build/assets/images/icons/logo-jp@3x.png: 2016-01-05 10:36:01.000000000 -05:00
+build/assets/images/logos/logo-jp-blue.png: 2016-01-05 10:36:01.000000000 -05:00
+build/assets/images/logos/logo-jp-green.png: 2016-01-05 10:36:01.000000000 -05:00
+build/assets/images/logos/logo-jp-orange.png: 2016-01-05 10:36:01.000000000 -05:00
+build/assets/images/logos/logo-jp-pos.png: 2016-01-05 10:36:01.000000000 -05:00
+build/assets/images/logos/logo-jp-red.png: 2016-01-05 10:36:01.000000000 -05:00
+build/assets/images/logos/logo-jp@2x.png: 2016-01-05 10:36:01.000000000 -05:00
+build/assets/images/logos/logo-jpw-black_and_white.png: 2016-01-05 10:36:01.000000000
   -05:00
-build/assets/images/logos/logo-jpw-blue.png: 2016-01-04 18:19:16.000000000 -05:00
-build/assets/images/logos/logo-jpw-green.png: 2016-01-04 18:19:16.000000000 -05:00
-build/assets/images/logos/logo-jpw-orange.png: 2016-01-04 18:19:16.000000000 -05:00
-build/assets/images/logos/logo-jpw-red.png: 2016-01-04 18:19:16.000000000 -05:00
-build/assets/images/logos/logo-jpw.png: 2016-01-04 18:19:16.000000000 -05:00
-build/work/prints/2013/cliffs/cliffs-thumb.jpg: 2016-01-04 18:19:16.000000000 -05:00
-build/work/prints/2013/cliffs/cliffs.jpg: 2016-01-04 18:19:18.000000000 -05:00
-build/work/prints/2013/cliffs/IMG_9003.jpg: 2016-01-04 18:19:17.000000000 -05:00
-build/work/prints/2013/cliffs/IMG_9004.jpg: 2016-01-04 18:19:17.000000000 -05:00
-build/work/prints/2013/up_and_down/IMG_8956.jpg: 2016-01-04 18:19:17.000000000 -05:00
-build/work/prints/2013/up_and_down/IMG_8959.jpg: 2016-01-04 18:19:17.000000000 -05:00
-build/work/prints/2013/up_and_down/up_and_down-thumb.jpg: 2016-01-04 18:19:17.000000000
+build/assets/images/logos/logo-jpw-blue.png: 2016-01-05 10:36:01.000000000 -05:00
+build/assets/images/logos/logo-jpw-green.png: 2016-01-05 10:36:01.000000000 -05:00
+build/assets/images/logos/logo-jpw-orange.png: 2016-01-05 10:36:01.000000000 -05:00
+build/assets/images/logos/logo-jpw-red.png: 2016-01-05 10:36:01.000000000 -05:00
+build/assets/images/logos/logo-jpw.png: 2016-01-05 10:36:02.000000000 -05:00
+build/work/prints/2014/eroded_asphalt/DSCF1534.jpg: 2016-01-05 10:36:03.000000000
   -05:00
-build/work/prints/2013/up_and_down/up_and_down.jpg: 2016-01-04 18:19:18.000000000
+build/work/prints/2014/eroded_asphalt/DSCF1535.jpg: 2016-01-05 10:36:03.000000000
   -05:00
-build/work/prints/2013/up_and_down/winter_fungus_s1.jpg: 2016-01-04 18:19:19.000000000
+build/work/prints/2014/eroded_asphalt/DSCF1571.jpg: 2016-01-05 10:36:03.000000000
   -05:00
-build/work/prints/2014/eroded_asphalt/DSCF1534.jpg: 2016-01-04 18:19:17.000000000
+build/work/prints/2014/eroded_asphalt/DSCF1572.jpg: 2016-01-05 10:36:03.000000000
   -05:00
-build/work/prints/2014/eroded_asphalt/DSCF1535.jpg: 2016-01-04 18:19:18.000000000
+build/work/prints/2014/eroded_asphalt/DSCF1574.jpg: 2016-01-05 10:36:03.000000000
   -05:00
-build/work/prints/2014/eroded_asphalt/DSCF1571.jpg: 2016-01-04 18:19:18.000000000
+build/work/prints/2014/eroded_asphalt/eroded_asphalt-thumb.jpg: 2016-01-05 10:36:04.000000000
   -05:00
-build/work/prints/2014/eroded_asphalt/DSCF1572.jpg: 2016-01-04 18:19:18.000000000
+build/work/prints/2014/eroded_asphalt/eroded_asphalt.jpg: 2016-01-05 10:36:06.000000000
   -05:00
-build/work/prints/2014/eroded_asphalt/DSCF1574.jpg: 2016-01-04 18:19:18.000000000
+build/work/prints/2014/homeward/homeward-thumb.jpg: 2016-01-05 10:36:04.000000000
   -05:00
-build/work/prints/2014/eroded_asphalt/eroded_asphalt-thumb.jpg: 2016-01-04 18:19:18.000000000
-  -05:00
-build/work/prints/2014/eroded_asphalt/eroded_asphalt.jpg: 2016-01-04 18:19:21.000000000
-  -05:00
-build/work/prints/2014/homeward/homeward-thumb.jpg: 2016-01-04 18:19:18.000000000
-  -05:00
-build/work/prints/2014/homeward/homeward.jpg: 2016-01-04 18:19:19.000000000 -05:00
+build/work/prints/2014/homeward/homeward.jpg: 2016-01-05 10:36:05.000000000 -05:00
