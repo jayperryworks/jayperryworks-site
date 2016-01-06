@@ -1,12 +1,12 @@
 {
-  "name": "jayperryworks-site-dev",
+  "name": "jpw-site",
   "version": "1.0.0",
-  "description": "jayperryworks-site-dev",
+  "description": "Jay Perry's website",
   "main": "index.js",
   "scripts": {
     "build": "bundle exec middleman build --",
     "predeploy": "npm run build",
-    "deploy": "git-directory-deploy --directory build --branch gh-pages"
+    "deploy": "git-directory-deploy --directory build --branch master"
   },
   "repository": {
     "type": "git",
