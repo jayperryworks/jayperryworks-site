@@ -37,6 +37,12 @@ page '/*.txt', layout: false
 # General configuration
 ###
 
+# activate :external_pipeline,
+#   name: :webpack,
+#   command: build? ? './node_modules/webpack/bin/webpack.js --bail' : './node_modules/webpack/bin/webpack.js --watch -d',
+#   source: ".tmp/dist",
+#   latency: 1
+
 # Automatic image dimensions on image_tag helper
 # activate :automatic_image_sizes
 
@@ -121,12 +127,14 @@ end
 set :url_root, 'http://jayperryworks.com'
 # activate :search_engine_sitemap
 
+# Asset paths
 set :css_dir, 'assets/stylesheets'
 set :js_dir, 'assets/javascripts'
 set :images_dir, 'assets/images'
 set :fonts_dir, 'assets/fonts'
 set :spritemap, 'assets/images/spritemap.svg'
 
+# Use relative links all the time - helps catch url bugs before deployment
 set :relative_links, true
 
 # Build-specific configuration
@@ -140,13 +148,16 @@ configure :build do
     # For example, change the Compass output style for deployment
     activate :minify_css
 
+    # "Ignore" JS so webpack has full control.
+    ignore { |path| path =~ /\/(.*)\.js$/ && $1 != 'all' }
+
     # Minify Javascript on build
     activate :minify_javascript
 
     # Compress/optimize images
     # -> svg optimization is handled by svgo
     activate :imageoptim do |options|
-        options.image_extensions = %w(.png .jpg .gif)
+        options.image_extensions = %w(.png .jpg .gif .svg)
     end
 
     # Or use a different image path
