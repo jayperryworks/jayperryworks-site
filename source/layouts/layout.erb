@@ -39,13 +39,14 @@
 
         <footer class="footer" role="contentinfo">
             <% unless current_page.data.title == "home" %>
-            <div class="footer-section">
-                <div class="card l-wrapper narrow l-centered">
+            <div class="card horizontal l-wrapper narrow">
+                <%= image_tag "portrait.jpg", :class => "card-figure portrait", :alt => "Jay Perry" %>
+                <div class="card-content">
                     <p>Jay Perry is a designer, illustrator, and writer living near Baltimore. He likes books, old rusty cars, and forests.</p>
                     <dl class="tags">
                         <dt class="tags-label inline">Say hi</dt>
                         <% data.site.social.each do |site| %>
-                        <dd><%= link_to site.name, site.link, :class => "tag", :target => "_blank" %></dd>
+                        <dd><%= link_to site.name, site.link, :class => "tag" %></dd>
                         <% end %>
                     </dl>
                 </div>
