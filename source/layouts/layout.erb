@@ -40,7 +40,9 @@
         <footer class="footer" role="contentinfo">
             <% unless current_page.data.title == "home" %>
             <div class="card horizontal l-wrapper narrow">
-                <%= image_tag "portrait.jpg", :class => "card-figure portrait", :alt => "Jay Perry" %>
+                <figure class="card-figure">
+                    <%= image_tag "portrait.jpg", :class => "border all round", :alt => "Jay Perry" %>
+                </figure>
                 <div class="card-content">
                     <p>Jay Perry is a designer, illustrator, and writer living near Baltimore. He likes books, old rusty cars, and forests.</p>
                     <dl class="tags">
