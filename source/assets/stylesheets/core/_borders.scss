@@ -66,7 +66,6 @@ $border-style: solid !default;
 }
 
 // make a standard border/hairline that works with the parent color theme
-// make a standard border/hairline that works with the parent color theme
 @mixin border($sides: all, $w: $border-w--default, $color: theme('border'), $style: $border-style) {
     @if ($sides == all) {
         border: border-w($w) #{$style} #{$color};
@@ -87,13 +86,11 @@ $border-style: solid !default;
     @each $side in $sides {
         &.#{$side} {
             @include border($side);
-            padding-#{$side}: $gutter;
         }
     }
 
     &.all {
         @include border;
-        padding: $gutter;
     }
 }
 

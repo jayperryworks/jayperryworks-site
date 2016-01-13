@@ -31,7 +31,9 @@ $card-bp: 'medium';
     }
 }
 
-.card.large {}
+.card.large {
+    // see .card-figure
+}
 
 .card.horizontal.large {
     @include respond-to('xsmall') {
@@ -40,6 +42,10 @@ $card-bp: 'medium';
     @include respond-to('medium') {
         .flexbox & { @include display(flex); }
     }
+}
+
+.card.horizontal.centered {
+    @include align-items(center);
 }
 
 /* Submodules
