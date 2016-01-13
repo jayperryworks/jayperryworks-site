@@ -73,6 +73,8 @@ $card-bp: 'medium';
 
         @include respond-to('medium') { @include column(1, $grid: $card-grid--large); }
     }
+
+    .card-centered & { vertical-align: center; }
 }
 
 .card-content {
@@ -99,6 +101,8 @@ $card-bp: 'medium';
             margin-top: 0;
         }
     }
+
+    .card-centered & { vertical-align: center; }
 
     p:first-child { margin-top: 0; }
 }
