@@ -39,7 +39,7 @@ Please DO NOT use your own font-family attributes in any circumstance. Always ex
 // default type sizes
 $type-size--default: 16px;
 $type-size-amp: 1.1em; // size of ampersands relative to their context
-$type-line_height: 1.5;
+$type-line_height: 1.7;
 
 @mixin type-default {
   @include rem(font-size, $type-size--default);
