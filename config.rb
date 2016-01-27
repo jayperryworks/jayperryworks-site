@@ -67,7 +67,7 @@ activate :autoprefixer do |config|
 end
 
 activate :google_analytics do |ga|
-    ga.tracking_id = 'UA-XXXXXXX-X' # Replace with your property ID.
+    ga.tracking_id = 'UA-51213824-1' # Replace with your property ID.
 end
 
 # activate :s3_sync do |s3_sync|
