@@ -24,4 +24,10 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
+  <url>
+    <loc>http://jayperryworks.com/writing/2016/04/stripped/</loc>
+    <lastmod>2016-04-03T13:27:23-04:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>
