@@ -1,6 +1,6 @@
 ---
-title: Walk Art Center's Interview with Google Design
-subtitle: An interesting discussion on design culture and magic paper
+title: Stripped
+subtitle: A documentary on comics
 tags: 
   - illustration
   - comics
