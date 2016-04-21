@@ -120,8 +120,13 @@ helpers do
         end
     end
 
-    def figure(image, caption="")
-        # content_tag
+    def figure(image)
+        content_tag(:figure, :class => 'feature') do
+            image_tag("/writing/2016/#{image}", :class => "feature")
+            content_tag(:figcaption, :class => "caption") do
+              yield
+            end
+        end
     end
 end
 
