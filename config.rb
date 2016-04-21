@@ -119,6 +119,10 @@ helpers do
             return color
         end
     end
+
+    def figure(image, caption="")
+        # content_tag
+    end
 end
 
 set :url_root, 'http://jayperryworks.com'
