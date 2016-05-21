@@ -120,14 +120,15 @@ helpers do
         end
     end
 
-    def figure(image)
-        content_tag(:figure, :class => 'feature') do
-            image_tag("/writing/2016/#{image}", :class => "feature")
-            content_tag(:figcaption, :class => "caption") do
-              yield
-            end
-        end
-    end
+    # {current_page.date.strftime("%Y")}
+    # def figure(image, &block)
+    #     concat(content_tag(:figure, :class => 'feature') do
+    #         image_tag("/writing/2016/#{image}", :class => "feature") +
+    #         content_tag(:figcaption, :class => 'caption') do
+    #             capture(&block)
+    #         end
+    #     end, block.binding)
+    # end
 end
 
 set :url_root, 'http://jayperryworks.com'

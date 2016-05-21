@@ -1,0 +1,6 @@
+<% content_tag :figure, :class => 'feature' do %>
+    <%= image_tag "/writing/2016/#{image}", :class => 'feature-image', :alt => 'Finished cover' %>
+    <% content_tag :figcaption, :class => "feature-caption" do %>
+        <%= yield %>
+    <% end %>
+<% end %>
