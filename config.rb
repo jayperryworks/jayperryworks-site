@@ -24,11 +24,19 @@ page '/*.txt', layout: false
 # General configuration
 ###
 
-# activate :external_pipeline,
-#   name: :webpack,
-#   command: build? ? './node_modules/webpack/bin/webpack.js --bail' : './node_modules/webpack/bin/webpack.js --watch -d',
-#   source: ".tmp/dist",
-#   latency: 1
+config[:images_dir] = 'assets/images'
+config[:css_dir] = 'stylesheets'
+config[:js_dir] = 'javascripts'
+
+# ignore css and js, b/c we're handling with external pipeline
+ignore 'assets/stylesheets/*'
+ignore 'assets/javascripts/*'
+
+activate :external_pipeline,
+    name: :npm,
+    command: build? ? 'npm run build' : 'npm start',
+    source: ".tmp/dist",
+    latency: 1
 
 # Automatic image dimensions on image_tag helper
 # activate :automatic_image_sizes
@@ -62,31 +70,13 @@ activate :relative_assets
 # activate :asset_hash
 
 # autoprefix CSS
-activate :autoprefixer do |config|
-    config.browsers = ['last 2 versions', 'Explorer >= 8']
-end
+# activate :autoprefixer do |config|
+#     config.browsers = ['last 2 versions', 'Explorer >= 8']
+# end
 
 activate :google_analytics do |ga|
     ga.tracking_id = 'UA-51213824-1' # Replace with your property ID.
 end
-
-# activate :s3_sync do |s3_sync|
-#   # s3_sync.bucket                     = 'BUCKET' # The name of the S3 bucket you are targetting. This is globally unique.
-#   s3_sync.region                     = 'us-east-1'     # The AWS region for your bucket.
-#   # s3_sync.aws_access_key_id          = 'AWS KEY ID'
-#   # # s3_sync.aws_secret_access_key      = 'AWS SECRET KEY'
-#   # s3_sync.delete                     = false # We delete stray files by default.
-#   # s3_sync.after_build                = false # We do not chain after the build step by default.
-#   # s3_sync.prefer_gzip                = true
-#   # s3_sync.path_style                 = true
-#   # s3_sync.reduced_redundancy_storage = false
-#   # s3_sync.acl                        = 'public-read'
-#   # s3_sync.encryption                 = false
-#   # s3_sync.prefix                     = ''
-#   # s3_sync.version_bucket             = false
-#   # s3_sync.error_document             = '404.html'
-#   # s3_sync.index_suffix               = 'index.html'
-# end
 
 # Reload the browser automatically whenever files change
 configure :development do
@@ -124,13 +114,6 @@ end
 set :url_root, 'http://jayperryworks.com'
 # activate :search_engine_sitemap
 
-# Asset paths
-set :css_dir, 'assets/stylesheets'
-set :js_dir, 'assets/javascripts'
-set :images_dir, 'assets/images'
-set :fonts_dir, 'assets/fonts'
-set :spritemap, 'assets/images/spritemap.svg'
-
 # Use relative links all the time - helps catch url bugs before deployment
 set :relative_links, true
 
@@ -143,13 +126,13 @@ configure :build do
     activate :minify_html
 
     # For example, change the Compass output style for deployment
-    activate :minify_css
+    # activate :minify_css
 
     # "Ignore" JS so webpack has full control.
-    ignore { |path| path =~ /\/(.*)\.js$/ && $1 != 'all' }
+    # ignore { |path| path =~ /\/(.*)\.js$/ && $1 != 'all' }
 
     # Minify Javascript on build
-    activate :minify_javascript
+    # activate :minify_javascript
 
     # Compress/optimize images
     # -> svg optimization is handled by svgo
