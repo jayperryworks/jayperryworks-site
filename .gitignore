@@ -22,8 +22,6 @@
 /node_modules
 **/npm-debug.log
 
-*.sublime-project
-*.sublime-workspace
-Gemfile.lock
+*.sublime*
 
 .s3_sync

@@ -66,7 +66,6 @@ $border-style: solid !default;
 }
 
 // make a standard border/hairline that works with the parent color theme
-// make a standard border/hairline that works with the parent color theme
 @mixin border($sides: all, $w: $border-w--default, $color: theme('border'), $style: $border-style) {
     @if ($sides == all) {
         border: border-w($w) #{$style} #{$color};
@@ -80,25 +79,23 @@ $border-style: solid !default;
 // Helper classes
 // -----------------------------------------------------------------------------
 
-.has-border {
-    &.top {
-        @include border(top);
-        padding-top: $gutter;
+.border {
+
+    $sides: top right bottom left;
+
+    @each $side in $sides {
+        &.#{$side} {
+            @include border($side);
+        }
     }
-    &.bottom {
-        @include border(bottom);
-        padding-bottom: $gutter;
-    }
-    &.left {
-        @include border(left);
-        padding-left: $gutter;
-    }
-    &.right {
-        @include border(right);
-        padding-right: $gutter;
+
+    &.all {
+        @include border;
     }
 }
 
-.has-no-borders {
+.no-borders {
     border: none !important;
 }
+
+.round { border-radius: 50%; }

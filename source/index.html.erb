@@ -21,8 +21,10 @@ title: home
     <ul class="feed l-wrapper narrow">
         <% blog("writing").articles[0...5].each do |article| %>
         <li class="feed-item card horizontal">
+            <% if article.data.image.present? %>
             <% link_to article, :class => "card-figure" do %>
                 <%= image_tag article.url + article.data.image, :alt => article.title %>
+            <% end %>
             <% end %>
             <div class="card-content">
                 <h2 class="card-title"><%= link_to article.title, article %></h2>

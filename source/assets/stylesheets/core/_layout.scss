@@ -20,6 +20,8 @@ Global layout styles.
 @import "libs";
 @import "fonts";
 
+$sides: top, right, bottom, left;
+
 
 // Config/mixins
 // -----------------------------------------------------------------------------
@@ -121,6 +123,28 @@ $grid-scale: 1 1.2 1.44 1.728 2.074 2.488 2.986 3.583 4.3 5.16 6.192 7.43 8.916 
             @include flex(1);
         }
     }
+}
+
+// --- utility classes ---------------------------------------------------------
+
+.l-padding {
+    @each $side in $sides {
+        &.#{$side} { padding-#{$side}: $gutter; }
+        &.#{$side}.wide { padding-#{side}: $gutter-outside; }
+    }
+
+    &.all { padding: $gutter; }
+    &.all.wide { padding: $gutter-outside; }
+}
+
+.l-margin {
+    @each $side in $sides {
+        &.#{$side} { margin-#{$side}: $gutter; }
+        &.#{$side}.wide { padding-#{side}: $gutter-outside; }
+    }
+
+    &.all { margin: $gutter; }
+    &.all.wide { margin: $gutter-outside; }
 }
 
 // --- default z-indexes -------------------------------------------------------
