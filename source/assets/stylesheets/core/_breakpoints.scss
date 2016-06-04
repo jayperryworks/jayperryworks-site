@@ -1,0 +1,87 @@
+/* =============================================================================
+// Global breakpoints
+// -> uses include-media library (http://include-media.com)
+// ===========================================================================*/
+
+/*doc
+---
+title: Global Breakpoints
+name: breakpoints
+category: Core
+---
+
+A series of global breakpoints are used throughout the site. Note that components often use their own local breakpoints (or "tweakpoints") to handle their layout, but the overall layout is based on the globals.
+
+The breakpoints are simply labelled by size: "xsmall," "small," "medium," "large," and "xlarge."
+
+Utility classes are available for each: `.show@[SIZE]`, e.g. `.show@small` These will hide an element below a particular screen width.
+
+```html_example
+<div class="show@medium">You can only see me above "medium" screen sizes.</div>
+```
+
+To access a specific breakpoint value in Sass, use the `screen()` function, as in `max-width: screen('large');`, which will compile to `max-width: 75em;`
+
+*/
+
+@import "libs";
+
+// Config & mixins
+// -----------------------------------------------------------------------------
+
+// Global breakpoints map
+// -> also used by include-media library
+$breakpoints: (
+    'xsmall' : 30em,
+    'small'  : 42em,
+    'medium' : 62em,
+    'large'  : 75em,
+    'huge'   : 100em,
+);
+
+// getter/helper function to pull breakpoints from the map
+@function screen($size) {
+    @return map-get($breakpoints, $size);
+    // @debug map-get($breakpoints, $size);
+}
+
+// Breakpointify mixin by Hugo Giraudel, lightly modified
+// -> https://twitter.com/HugoGiraudel/status/696707047946108929
+// -> Helper mixin to create suffixed modifiers of a class
+// -> to make it effective starting certain breakpoints.
+// -> @param {String} $class - Class to “breakpointify”
+@mixin breakpointify($class, $default: false, $sizes: all, $direction: '>') {
+    @if $default == true {
+       #{$class} { @content; }
+    }
+
+    @if $sizes == 'all' {
+        @each $name, $size in $breakpoints {
+            @include media("#{$direction}#{$name}") {
+               #{$class}\@#{$name} { @content; }
+            }
+        }
+    } @else {
+        @each $name in $sizes {
+            @include media("#{$direction}#{$name}") {
+               #{$class}\@#{$name} { @content; }
+            }
+        }
+    }
+}
+
+/* Utility classes
+// -------------------------------------------------------------------------- */
+
+// screen-size helper classes
+// -> hide content until screen reaches specified breakpoint size
+// usage: <span class="show@small">
+@each $name, $size in $breakpoints {
+    .show\@#{$name} {
+        @include media("<#{$size}") { display: none !important; }
+    }
+
+    .hide\@#{$name} {
+        @include media(">#{$size}") { display: none !important; }
+    }
+}

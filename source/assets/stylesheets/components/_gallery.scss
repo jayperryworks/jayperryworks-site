@@ -42,7 +42,7 @@ There are three (column) size variations: small, medium, and large. Medium is de
 */
 
 // requires Bourbon & Modernizr
-@import "../core/*";
+@import "../core/all";
 
 $gallery-gutter: 4px;
 
@@ -67,7 +67,7 @@ $gallery-gutter: 4px;
 // ---------------------------------------------------------------------------*/
 
 .gallery {
-    // @include unstyled-list;
+    // list-style: none;
     display: block; // in case flexbox isn't supported
     position: relative;
     margin-bottom: 0;
@@ -89,7 +89,7 @@ $gallery-gutter: 4px;
     }
 
     // default breakpoints -- see modifiers below for changes
-    @include respond-to('xsmall') {
+    @include media('>xsmall') {
         @include display(flex);
         margin-left: -($gallery-gutter/2);
         margin-right: -($gallery-gutter/2); // to prevent uneven column widths
@@ -102,7 +102,7 @@ $gallery-gutter: 4px;
 // "small" columns
 // -> see .gallery-item submodule for styles
 .gallery.small {
-    @include respond-to('xsmall') {
+    @include media('>xsmall') {
         @include display(flex);
         margin-left: -($gallery-gutter/2);
         margin-right: -($gallery-gutter/2);
@@ -114,7 +114,7 @@ $gallery-gutter: 4px;
 // "large" columns
 // -> see .gallery-item submodule for styles
 .gallery.large {
-    @include respond-to('small') {
+    @include media('>small') {
         @include display(flex);
         margin-left: -($gallery-gutter/2);
         margin-right: -($gallery-gutter/2);
@@ -138,16 +138,16 @@ $gallery-gutter: 4px;
     padding-left: 0;
     margin-left: 0;
 
-    @include respond-to("xsmall") { @include gallery-columns(2); }
-    @include respond-to("medium") { @include gallery-columns(3); }
+    @include media(">xsmall") { @include gallery-columns(2); }
+    @include media(">medium") { @include gallery-columns(3); }
 
     .gallery.small &, %gallery-item--small {
-        @include respond-to("xsmall") { @include gallery-columns(2); }
-        @include respond-to("small") { @include gallery-columns(3); }
-        @include respond-to("medium") { @include gallery-columns(4); }
+        @include media(">xsmall") { @include gallery-columns(2); }
+        @include media(">small") { @include gallery-columns(3); }
+        @include media(">medium") { @include gallery-columns(4); }
     }
 
     .gallery.large &, %gallery-item--large {
-        @include respond-to('small') { @include gallery-columns(2); }
+        @include media('>small') { @include gallery-columns(2); }
     }
 }

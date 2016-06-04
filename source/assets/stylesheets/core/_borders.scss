@@ -28,7 +28,7 @@ Some mixins that allow us to keep our border styles DRY and control them from on
 
 @import "libs";
 @import "color";
-@import "layout";
+@import "../layout/spacing";
 
 // Rounded corners
 // -----------------------------------------------------------------------------

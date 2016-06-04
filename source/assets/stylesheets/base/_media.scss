@@ -2,7 +2,7 @@
 //  Global media styles
 // ========================================================================== */
 
-@import "../core/*";
+@import "../core/all";
 
 // padding to force an aspect ratio
 // -> apply mixin to a container element, and the child image will be constrained

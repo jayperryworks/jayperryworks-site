@@ -2,8 +2,8 @@
 // Tag/tag list styles
 // ========================================================================== */
 
-@import "../core/*";
-@import "../atoms/text";
+@import "../core/all";
+@import "../base/text";
 
 $tag-color: theme(text tertiary);
 

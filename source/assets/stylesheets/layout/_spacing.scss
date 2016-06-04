@@ -1,0 +1,54 @@
+/* =============================================================================
+// Global spacing
+// -> used to keep whitespace in the layout consistent
+// ========================================================================== */
+
+@import "../core/libs";
+
+// standard spacing for margins and padding, etc.
+$l-margin: fs(4);
+$l-margin--narrow: fs(2);
+$l-margin--wide: fs(6);
+
+$l-sides: left right top bottom;
+
+
+/* Margins
+// -------------------------------------------------------------------------- */
+
+.l-margin { @include rem(margin, $l-margin); }
+
+.l-margin--narrow { @include rem(margin, $l-margin--narrow !important); }
+.l-margin--wide { @include rem(margin, $l-margin--wide !important); }
+
+@each $side in $l-sides {
+    .l-margin-#{$side} { @include rem(margin-#{$side}, $l-margin !important); }
+    .l-margin-#{$side}--narrow { @include rem(margin-#{$side}, $l-margin--narrow !important); }
+    .l-margin-#{$side}--wide { @include rem(margin-#{$side}, $l-margin--wide !important); }
+}
+
+.l-no-margin { @include rem(margin, 0 !important); }
+
+@each $side in $l-sides {
+    .l-no-margin-#{$side} { @include rem(margin-#{$side}, 0 !important); }
+}
+
+/* Padding
+// -------------------------------------------------------------------------- */
+
+.l-padding { @include rem(padding, $l-margin !important); }
+
+.l-padding--narrow { @include rem(padding, $l-margin--narrow !important); }
+.l-padding--wide { @include rem(padding, $l-margin--wide !important); }
+
+@each $side in $l-sides {
+    .l-padding-#{$side} { @include rem(padding-#{$side}, $l-margin !important); }
+    .l-padding-#{$side}--narrow { @include rem(padding-#{$side}, $l-margin--narrow !important); }
+    .l-padding-#{$side}--wide { @include rem(padding-#{$side}, $l-margin--wide !important); }
+}
+
+.l-no-padding { @include rem(padding, 0 !important); }
+
+@each $side in $l-sides {
+    .l-no-padding-#{$side} { @include rem(padding-#{$side}, 0 !important); }
+}

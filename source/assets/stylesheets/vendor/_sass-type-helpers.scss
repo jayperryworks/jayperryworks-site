@@ -1,0 +1,29 @@
+
+// tweak-able modular scale
+// -> http://www.modularscale.com
+// -> if you need a mixin that strictly calculates modular scale values, try https://github.com/modularscale/modularscale-sass
+$font-scale: 13px 16px 19px 26px 30px 42px 48px 68px 78px 110px !default;
+
+@function fs($step) {
+    @return nth($font-scale, $step);
+}
+
+@mixin font-scale($step, $unit: "rem") {
+    @if ($unit == "rem") {
+        @include rem(font-size, fs($step));
+    } @elseif ($unit == "em") {
+        @include em(font-size, fs($step));
+    } @else {
+        font-size: fs($step);
+    }
+}
+
+// headers selector helper
+// -> USAGE: #{headers()} { }
+@function headers($selector: false) {
+    @if ($selector == false) {
+        @return "h1, h2, h3, h4, h5, h6";
+    } @else {
+        @return "h1 #{$selector}, h2 #{$selector}, h3 #{$selector}, h4 #{$selector}, h5 #{$selector}, h6 #{$selector}";
+    }
+}

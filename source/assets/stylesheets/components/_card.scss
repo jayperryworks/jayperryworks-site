@@ -2,9 +2,9 @@
 // card box styles
 // ========================================================================== */
 
-@import "../core/*";
-@import "../atoms/button";
-@import "../atoms/heading";
+@import "../core/all";
+@import "../components/button";
+@import "../base/heading";
 
 $card-grid: ms(1) ms(7);
 $card-grid--large: ms(7) ms(1);
@@ -24,9 +24,9 @@ $card-bp: 'medium';
     @include align-items(flex-start);
     font-size: 0;
 
-    > * { @include type-default; }
+    > * { @include type-size-default; }
 
-    @include respond-to('xsmall') {
+    @include media('>xsmall') {
         .flexbox & { @include display(flex); }
     }
 }
@@ -36,10 +36,10 @@ $card-bp: 'medium';
 }
 
 .card.horizontal.large {
-    @include respond-to('xsmall') {
+    @include media('>xsmall') {
         .flexbox & { display: block; }
     }
-    @include respond-to('medium') {
+    @include media('>medium') {
         .flexbox & { @include display(flex); }
     }
 }
@@ -55,9 +55,9 @@ $card-bp: 'medium';
     display: block;
 
     .card.horizontal & {
-        @include type-default;
+        @include type-size-default;
 
-        @include respond-to('xsmall') {
+        @include media('>xsmall') {
             @include column(1, $card-grid);
 
             .flexbox & { display: block; }
@@ -65,13 +65,13 @@ $card-bp: 'medium';
     }
 
     .card.horizontal.large & {
-        @include respond-to('xsmall') {
+        @include media('>xsmall') {
             display: block;
             width: 100%;
             padding: 0;
         }
 
-        @include respond-to('medium') { @include column(1, $grid: $card-grid--large); }
+        @include media('>medium') { @include column(1, $grid: $card-grid--large); }
     }
 
     .card-centered & { vertical-align: center; }
@@ -82,7 +82,7 @@ $card-bp: 'medium';
     margin-top: 1.5em;
 
     .card.horizontal & {
-        @include respond-to('xsmall') {
+        @include media('>xsmall') {
             @include column(2, $card-grid);
             margin-top: 0;
         }
@@ -95,7 +95,7 @@ $card-bp: 'medium';
         width: 100%;
         flex: none;
 
-        @include respond-to('medium') {
+        @include media('>medium') {
             @include column(2, $grid: $card-grid--large);
             flex: 1;
             margin-top: 0;

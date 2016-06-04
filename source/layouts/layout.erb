@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html class="no-js" lang="">
+<html class="no-js" lang="en">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
 
         <!-- Use title if it's in the page YAML frontmatter -->
         <title><%= data.site.site_title %><% if current_page.data.title.present? && current_page.data.title != "home" %> | <%= current_page.data.title %><% end %></title>
@@ -11,15 +11,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <!-- Place favicon.ico in the root directory -->
-
-        <script>
-            // HTML5 element HTML5 shiv
-            document.createElement("main");
-            document.createElement("picture");
-        </script>
-        <%= javascript_include_tag "libs" %>
-        <%= stylesheet_link_tag "main" %>
+        <%= stylesheet_link_tag :main %>
+        <%= javascript_include_tag "javascripts/critical.bundle" %>
     </head>
 
     <%= partial "layouts/partials/spritemap" %>
@@ -63,7 +56,7 @@
             </div>
         </footer>
 
-        <%= javascript_include_tag  "main" %>
+        <%= javascript_include_tag "main" %>
         <%= google_analytics_universal_tag %>
     </body>
 </html>

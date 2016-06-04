@@ -2,12 +2,12 @@
 // Post styles
 // ========================================================================== */
 
-@import "../core/*";
-@import "../atoms/heading";
-@import "../atoms/text";
-@import "../atoms/list";
-@import "../molecules/cover";
-@import "../organisms/gallery";
+@import "../core/all";
+@import "../base/heading";
+@import "../base/text";
+@import "../base/list";
+@import "../components/cover";
+@import "../components/gallery";
 
 /* Base
 // -------------------------------------------------------------------------- */
@@ -23,7 +23,7 @@
 
 .post-header {
     @extend .l-wrapper;
-    @extend .l-wrapper.narrow;
+    @extend .l-wrapper;
     margin-top: 2em;
     margin-bottom: 2em;
 
@@ -39,7 +39,7 @@
     p {
         margin-left: auto;
         margin-right: auto;
-        max-width: $layout-w--narrow;
+        max-width: layout-w('default');
 
         &:first-child, &:first-of-type { @extend .lead; }
 
@@ -86,7 +86,7 @@
     }
 
     &.sidebar {
-        @include respond-to('large') {
+        @include media('>large') {
             $w: 200px;
             @include rem(width, $w);
             @include rem(margin-right, -($w + $gutter));
@@ -95,14 +95,14 @@
         }
     }
 
-    // @include respond-to('small') { display: flex; }
+    // @include media('>small') { display: flex; }
 }
 
 .post-date {
     @extend .date;
     display: block;
 
-    @include respond-to('small') {
+    @include media('>small') {
         @include border(right);
         display: inline;
         margin-right: 0.8em;
@@ -110,7 +110,7 @@
     }
 
     .post-meta.sidebar & {
-        @include respond-to('large') {
+        @include media('>large') {
             display: block;
             margin-right: 0;
             padding-right: 0;
@@ -124,14 +124,14 @@
     display: block;
     margin: 0.5em 0 0;
 
-    @include respond-to('small') {
+    @include media('>small') {
         display: inline;
         // margin-left: 1em;
         margin-top: 0.2em;
     }
 
     &.right {
-        @include respond-to('small') {
+        @include media('>small') {
             display: inline-block;
             // @include flex(1);
             // @include align-self(flex-end);
@@ -142,7 +142,7 @@
     }
 
     .post-meta.sidebar & {
-        @include respond-to('large') {
+        @include media('>large') {
             display: block;
             margin: 0.5em 0 0;
         }

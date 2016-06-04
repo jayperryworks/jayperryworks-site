@@ -2,10 +2,11 @@
 // Footer styles
 // ========================================================================== */
 
-@import "../core/*";
-@import "../atoms/heading";
-@import "../atoms/text";
-@import "../organisms/gallery";
+@import "../core/all";
+@import "../base/heading";
+@import "../base/text";
+@import "../components/gallery";
+@import "../components/logo";
 
 /* Base
 // -------------------------------------------------------------------------- */
@@ -45,7 +46,7 @@
     .logo-jpw-jay_perry { fill: theme(text primary); }
     .logo-jpw-works { fill: theme(highlight); }
 
-    @include respond-to('small') {
+    @include media('>small') {
         display: inline-block;
         vertical-align: top;
         margin-top: -0.3em; // move up slightly so lowercase aligns with other elements
@@ -61,7 +62,7 @@
     text-transform: uppercase;
     color: theme(text tertiary);
 
-    @include respond-to('small') {
+    @include media('>small') {
         display: inline-block;
         vertical-align: top;
         margin-left: 1em;

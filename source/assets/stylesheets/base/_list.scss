@@ -2,7 +2,7 @@
 //  Global list styles
 // ========================================================================== */
 
-@import "../core/*";
+@import "../core/all";
 
 /* Globals
 // -------------------------------------------------------------------------- */
@@ -23,7 +23,7 @@ ol, ul {
     margin-left: 1.5em; /* bump to the right a little @ mobile sizes so the numbers/bullets don't run off */
     padding-left: 0;
 
-    @include respond-to("small") {
+    @include media(">small") {
         margin-left: 0;
     }
 }

@@ -2,8 +2,8 @@
 // Nav styles
 // ========================================================================== */
 
-@import "../core/*";
-@import "../atoms/button";
+@import "../core/all";
+@import "../components/button";
 
 $jump-w: 30px;
 $jump-margin: $gutter $gutter-outside;
@@ -12,9 +12,6 @@ $jump-margin: $gutter $gutter-outside;
 // -------------------------------------------------------------------------- */
 
 .jump_nav {
-    // @extend %l-abs;
-    @include unstyled-list;
-    // @include rem(width, $jump-w);
     display: none;
     position: relative;
     left: nth($jump-margin, 1);
@@ -23,19 +20,20 @@ $jump-margin: $gutter $gutter-outside;
     margin-top: -1em;
     padding-top: 1em;
     z-index: $z--high;
+    list-style: none;
 
     > ul {
-        @include unstyled-list;
+        list-style: none;
         margin: 0;
     }
 
     > li { display: block; }
 
-    @include respond-to("xsmall") {
+    @include media(">xsmall") {
         display: block;
     }
 
-    @include respond-to("small") {
+    @include media(">small") {
         left: nth($jump-margin, 2);
     }
 }
@@ -57,8 +55,8 @@ $jump-margin: $gutter $gutter-outside;
 
     // add left margin to a jump nav's siblings
     .jump_nav ~ * {
-        @include respond-to('xsmall') { @include rem(padding-left, (nth($jump-margin, 1) + $jump-w + $gutter)); }
-        @include respond-to('small') { @include rem(padding-left, (nth($jump-margin, 2) + $jump-w + $gutter)); }
+        @include media('>xsmall') { @include rem(padding-left, (nth($jump-margin, 1) + $jump-w + $gutter)); }
+        @include media('>small') { @include rem(padding-left, (nth($jump-margin, 2) + $jump-w + $gutter)); }
     }
 }
 
