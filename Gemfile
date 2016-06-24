@@ -20,6 +20,8 @@ gem "middleman-google-analytics"
 gem "middleman-imageoptim"
 gem "middleman-blog"
 
+gem "nokogiri"
+
 # Markdown renderer
 gem "kramdown"
 
