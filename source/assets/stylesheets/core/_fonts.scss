@@ -70,16 +70,16 @@ $trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
 /* ----- Publico ------------------------------------------------------------- */
 
 // headline
-@include font-face("Publico Headline", font_path("PublicoHeadline-Roman-Web"), $file-formats: eot woff ttf svg);
+@include font-face("Publico Headline", "#{$path-fonts}/PublicoHeadline-Roman-Web", $file-formats: eot woff ttf svg);
 
 // text
-@include font-face("Publico Text", font_path("PublicoText-Roman-Web"), $file-formats: eot woff ttf svg);
-@include font-face("Publico Text Italic", font_path("PublicoText-Italic-Web"), italic, $file-formats: eot woff ttf svg);
+@include font-face("Publico Text", "#{$path-fonts}/PublicoText-Roman-Web", $file-formats: eot woff ttf svg);
+@include font-face("Publico Text Italic", "#{$path-fonts}/PublicoText-Italic-Web", italic, $file-formats: eot woff ttf svg);
 
 /* ----- Guardian ---------------------------------------------------- */
 
-@include font-face("Guardian Sans", font_path("GuardianSans-Light-Web"), $file-formats: eot woff ttf svg);
-@include font-face("Guardian Sans Bold", font_path("GuardianSans-Bold-Web"), bold, $file-formats: eot woff ttf svg);
+@include font-face("Guardian Sans", "#{$path-fonts}/GuardianSans-Light-Web", $file-formats: eot woff ttf svg);
+@include font-face("Guardian Sans Bold", "#{$path-fonts}/GuardianSans-Bold-Web", bold, $file-formats: eot woff ttf svg);
 
 /* Font styles
 // -> PUBLIC, use these to style type globally & in modules

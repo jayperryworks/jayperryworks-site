@@ -113,6 +113,7 @@ The animation library sets global defaults for CSS transitions. Use it in your m
 */
 a, input, textarea, select, .button-price, .tag {
   -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
   transition: all 0.5s; }
 
 /* Globals
@@ -164,32 +165,32 @@ Please DO NOT use your own font-family attributes in any circumstance. Always ex
   font-family: "Publico Headline";
   font-style: normal;
   font-weight: normal;
-  src: url('font_path("PublicoHeadline-Roman-Web").eot?#iefix') format("embedded-opentype"), url('font_path("PublicoHeadline-Roman-Web").woff') format("woff"), url('font_path("PublicoHeadline-Roman-Web").ttf') format("truetype"), url('font_path("PublicoHeadline-Roman-Web").svg#Publico Headline') format("svg"); }
+  src: url("/assets/fonts/PublicoHeadline-Roman-Web.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/PublicoHeadline-Roman-Web.woff") format("woff"), url("/assets/fonts/PublicoHeadline-Roman-Web.ttf") format("truetype"), url("/assets/fonts/PublicoHeadline-Roman-Web.svg#Publico Headline") format("svg"); }
 
 @font-face {
   font-family: "Publico Text";
   font-style: normal;
   font-weight: normal;
-  src: url('font_path("PublicoText-Roman-Web").eot?#iefix') format("embedded-opentype"), url('font_path("PublicoText-Roman-Web").woff') format("woff"), url('font_path("PublicoText-Roman-Web").ttf') format("truetype"), url('font_path("PublicoText-Roman-Web").svg#Publico Text') format("svg"); }
+  src: url("/assets/fonts/PublicoText-Roman-Web.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/PublicoText-Roman-Web.woff") format("woff"), url("/assets/fonts/PublicoText-Roman-Web.ttf") format("truetype"), url("/assets/fonts/PublicoText-Roman-Web.svg#Publico Text") format("svg"); }
 
 @font-face {
   font-family: "Publico Text Italic";
   font-style: normal;
   font-weight: italic;
-  src: url('font_path("PublicoText-Italic-Web").eot?#iefix') format("embedded-opentype"), url('font_path("PublicoText-Italic-Web").woff') format("woff"), url('font_path("PublicoText-Italic-Web").ttf') format("truetype"), url('font_path("PublicoText-Italic-Web").svg#Publico Text Italic') format("svg"); }
+  src: url("/assets/fonts/PublicoText-Italic-Web.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/PublicoText-Italic-Web.woff") format("woff"), url("/assets/fonts/PublicoText-Italic-Web.ttf") format("truetype"), url("/assets/fonts/PublicoText-Italic-Web.svg#Publico Text Italic") format("svg"); }
 
 /* ----- Guardian ---------------------------------------------------- */
 @font-face {
   font-family: "Guardian Sans";
   font-style: normal;
   font-weight: normal;
-  src: url('font_path("GuardianSans-Light-Web").eot?#iefix') format("embedded-opentype"), url('font_path("GuardianSans-Light-Web").woff') format("woff"), url('font_path("GuardianSans-Light-Web").ttf') format("truetype"), url('font_path("GuardianSans-Light-Web").svg#Guardian Sans') format("svg"); }
+  src: url("/assets/fonts/GuardianSans-Light-Web.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/GuardianSans-Light-Web.woff") format("woff"), url("/assets/fonts/GuardianSans-Light-Web.ttf") format("truetype"), url("/assets/fonts/GuardianSans-Light-Web.svg#Guardian Sans") format("svg"); }
 
 @font-face {
   font-family: "Guardian Sans Bold";
   font-style: normal;
   font-weight: bold;
-  src: url('font_path("GuardianSans-Bold-Web").eot?#iefix') format("embedded-opentype"), url('font_path("GuardianSans-Bold-Web").woff') format("woff"), url('font_path("GuardianSans-Bold-Web").ttf') format("truetype"), url('font_path("GuardianSans-Bold-Web").svg#Guardian Sans Bold') format("svg"); }
+  src: url("/assets/fonts/GuardianSans-Bold-Web.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/GuardianSans-Bold-Web.woff") format("woff"), url("/assets/fonts/GuardianSans-Bold-Web.ttf") format("truetype"), url("/assets/fonts/GuardianSans-Bold-Web.svg#Guardian Sans Bold") format("svg"); }
 
 /* Font styles
 // -> PUBLIC, use these to style type globally & in modules
@@ -563,9 +564,7 @@ Some mixins that allow us to keep our border styles DRY and control them from on
   text-align: center; }
   .csstransforms .l-centered {
     left: 50%;
-    -webkit-transform: translateX(-50%);
-        -ms-transform: translateX(-50%);
-            transform: translateX(-50%); }
+    transform: translateX(-50%); }
 
 .l-centered-block {
   display: block;
@@ -670,6 +669,7 @@ Sidebars
       display: -webkit-box;
       display: -moz-box;
       display: box;
+      display: -webkit-flex;
       display: -moz-flex;
       display: -ms-flexbox;
       display: flex; } }
@@ -694,7 +694,9 @@ Sidebars
 @media (min-width: 42.01em) {
     .l-has-sidebar\@small .l-sidebar--left {
       -webkit-box-ordinal-group: -1;
+      -moz-box-ordinal-group: -1;
       box-ordinal-group: -1;
+      -webkit-order: -1;
       -moz-order: -1;
       order: -1;
       -ms-flex-order: -1;
@@ -708,7 +710,9 @@ Sidebars
 @media (min-width: 42.01em) {
     .l-has-sidebar\@small .l-sidebar--right {
       -webkit-box-ordinal-group: 1;
+      -moz-box-ordinal-group: 1;
       box-ordinal-group: 1;
+      -webkit-order: 1;
       -moz-order: 1;
       order: 1;
       -ms-flex-order: 1;
@@ -726,7 +730,9 @@ Sidebars
       width: 63.34311%; }
       .flexbox .l-has-sidebar\@small .l-sidebar-main {
         -webkit-box-flex: 1;
+        -moz-box-flex: 1;
         box-flex: 1;
+        -webkit-flex: 1;
         -moz-flex: 1;
         -ms-flex: 1;
         flex: 1;
@@ -734,9 +740,7 @@ Sidebars
     @media (min-width: 42.01em) and (min-width: 75.01em) {
       .l-has-sidebar\@small .l-sidebar-main {
         display: block;
-        -webkit-box-flex: 0;
-            -ms-flex: none;
-                flex: none;
+        flex: none;
         width: auto; } }
 
 @media (min-width: 62.01em) {
@@ -749,6 +753,7 @@ Sidebars
       display: -webkit-box;
       display: -moz-box;
       display: box;
+      display: -webkit-flex;
       display: -moz-flex;
       display: -ms-flexbox;
       display: flex; } }
@@ -773,7 +778,9 @@ Sidebars
 @media (min-width: 62.01em) {
     .l-has-sidebar\@medium .l-sidebar--left {
       -webkit-box-ordinal-group: -1;
+      -moz-box-ordinal-group: -1;
       box-ordinal-group: -1;
+      -webkit-order: -1;
       -moz-order: -1;
       order: -1;
       -ms-flex-order: -1;
@@ -787,7 +794,9 @@ Sidebars
 @media (min-width: 62.01em) {
     .l-has-sidebar\@medium .l-sidebar--right {
       -webkit-box-ordinal-group: 1;
+      -moz-box-ordinal-group: 1;
       box-ordinal-group: 1;
+      -webkit-order: 1;
       -moz-order: 1;
       order: 1;
       -ms-flex-order: 1;
@@ -805,7 +814,9 @@ Sidebars
       width: 63.34311%; }
       .flexbox .l-has-sidebar\@medium .l-sidebar-main {
         -webkit-box-flex: 1;
+        -moz-box-flex: 1;
         box-flex: 1;
+        -webkit-flex: 1;
         -moz-flex: 1;
         -ms-flex: 1;
         flex: 1;
@@ -813,9 +824,7 @@ Sidebars
     @media (min-width: 62.01em) and (min-width: 75.01em) {
       .l-has-sidebar\@medium .l-sidebar-main {
         display: block;
-        -webkit-box-flex: 0;
-            -ms-flex: none;
-                flex: none;
+        flex: none;
         width: auto; } }
 
 @media (min-width: 75.01em) {
@@ -828,6 +837,7 @@ Sidebars
       display: -webkit-box;
       display: -moz-box;
       display: box;
+      display: -webkit-flex;
       display: -moz-flex;
       display: -ms-flexbox;
       display: flex; } }
@@ -852,7 +862,9 @@ Sidebars
 @media (min-width: 75.01em) {
     .l-has-sidebar\@large .l-sidebar--left {
       -webkit-box-ordinal-group: -1;
+      -moz-box-ordinal-group: -1;
       box-ordinal-group: -1;
+      -webkit-order: -1;
       -moz-order: -1;
       order: -1;
       -ms-flex-order: -1;
@@ -866,7 +878,9 @@ Sidebars
 @media (min-width: 75.01em) {
     .l-has-sidebar\@large .l-sidebar--right {
       -webkit-box-ordinal-group: 1;
+      -moz-box-ordinal-group: 1;
       box-ordinal-group: 1;
+      -webkit-order: 1;
       -moz-order: 1;
       order: 1;
       -ms-flex-order: 1;
@@ -884,7 +898,9 @@ Sidebars
       width: 63.34311%; }
       .flexbox .l-has-sidebar\@large .l-sidebar-main {
         -webkit-box-flex: 1;
+        -moz-box-flex: 1;
         box-flex: 1;
+        -webkit-flex: 1;
         -moz-flex: 1;
         -ms-flex: 1;
         flex: 1;
@@ -892,9 +908,7 @@ Sidebars
     @media (min-width: 75.01em) and (min-width: 75.01em) {
       .l-has-sidebar\@large .l-sidebar-main {
         display: block;
-        -webkit-box-flex: 0;
-            -ms-flex: none;
-                flex: none;
+        flex: none;
         width: auto; } }
 
 /* =============================================================================
@@ -926,8 +940,7 @@ Sidebars
      * https://www.drupal.org/node/897638
      */ }
     .is-visually_hidden.focusable:active, .is-visually_hidden.focusable:focus {
-      -webkit-clip-path: auto;
-              clip-path: auto;
+      clip-path: auto;
       height: auto;
       overflow: visible;
       position: static;
@@ -959,8 +972,7 @@ Inline text is mostly styled globally and doesn't change a whole lot from one co
 /* Globals
 // -------------------------------------------------------------------------- */
 body {
-  -webkit-font-feature-settings: "liga","dlig";
-          font-feature-settings: "liga","dlig";
+  font-feature-settings: "liga","dlig";
   line-height: 1.7; }
 
 p {
@@ -1416,12 +1428,13 @@ button.text, .button.text, .card-button {
 // ---------------------------------------------------------------------------*/
 .card.horizontal {
   -webkit-box-align: start;
+  -moz-box-align: start;
   box-align: start;
+  -webkit-align-items: flex-start;
   -moz-align-items: flex-start;
   -ms-align-items: flex-start;
   -o-align-items: flex-start;
-  -ms-grid-row-align: flex-start;
-      align-items: flex-start;
+  align-items: flex-start;
   -ms-flex-align: start;
   font-size: 0; }
   .card.horizontal > * {
@@ -1432,6 +1445,7 @@ button.text, .button.text, .card-button {
       display: -webkit-box;
       display: -moz-box;
       display: box;
+      display: -webkit-flex;
       display: -moz-flex;
       display: -ms-flexbox;
       display: flex; } }
@@ -1445,18 +1459,20 @@ button.text, .button.text, .card-button {
     display: -webkit-box;
     display: -moz-box;
     display: box;
+    display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flexbox;
     display: flex; } }
 
 .card.horizontal.centered {
   -webkit-box-align: center;
+  -moz-box-align: center;
   box-align: center;
+  -webkit-align-items: center;
   -moz-align-items: center;
   -ms-align-items: center;
   -o-align-items: center;
-  -ms-grid-row-align: center;
-      align-items: center;
+  align-items: center;
   -ms-flex-align: center; }
 
 /* Submodules
@@ -1523,7 +1539,9 @@ button.text, .button.text, .card-button {
       .flexbox .card.horizontal .card-content {
         display: block;
         -webkit-box-flex: 1;
+        -moz-box-flex: 1;
         box-flex: 1;
+        -webkit-flex: 1;
         -moz-flex: 1;
         -ms-flex: 1;
         flex: 1;
@@ -1533,9 +1551,7 @@ button.text, .button.text, .card-button {
     margin-top: 1.5em;
     padding: 0;
     width: 100%;
-    -webkit-box-flex: 0;
-        -ms-flex: none;
-            flex: none; }
+    flex: none; }
     @media (min-width: 62.01em) {
       .card.horizontal.large .card-content {
         font-size: 16px;
@@ -1544,9 +1560,7 @@ button.text, .button.text, .card-button {
         width: 25.08791%;
         padding-left: 9.5px;
         padding-right: 9.5px;
-        -webkit-box-flex: 1;
-            -ms-flex: 1;
-                flex: 1;
+        flex: 1;
         margin-top: 0; }
         .card.horizontal.large .card-content:first-child {
           padding-left: 0; }
@@ -1555,7 +1569,9 @@ button.text, .button.text, .card-button {
         .flexbox .card.horizontal.large .card-content {
           display: block;
           -webkit-box-flex: 1;
+          -moz-box-flex: 1;
           box-flex: 1;
+          -webkit-flex: 1;
           -moz-flex: 1;
           -ms-flex: 1;
           flex: 1;
@@ -1746,8 +1762,7 @@ button.text, .button.text, .card-button {
   text-align: center;
   text-transform: uppercase; }
   .jump_nav-label:active, .jump_nav-label:focus {
-    -webkit-clip-path: auto;
-            clip-path: auto;
+    clip-path: auto;
     height: auto;
     overflow: visible;
     position: static;
@@ -1807,24 +1822,30 @@ There are three (column) size variations: small, medium, and large. Medium is de
   padding-bottom: 0;
   font-size: 0;
   -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
   box-orient: horizontal;
   -webkit-box-direction: normal;
+  -moz-box-direction: normal;
   box-direction: normal;
+  -webkit-flex-direction: row;
   -moz-flex-direction: row;
   flex-direction: row;
   -ms-flex-direction: row;
   -webkit-box-lines: multiple;
   -moz-box-lines: multiple;
   box-lines: multiple;
+  -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   -webkit-box-align: stretch;
+  -moz-box-align: stretch;
   box-align: stretch;
+  -webkit-align-items: stretch;
   -moz-align-items: stretch;
   -ms-align-items: stretch;
   -o-align-items: stretch;
-  -ms-grid-row-align: stretch;
-      align-items: stretch;
+  align-items: stretch;
   -ms-flex-align: stretch; }
   .gallery ul, .post-content > ul ul {
     padding-left: 0;
@@ -1834,6 +1855,7 @@ There are three (column) size variations: small, medium, and large. Medium is de
       display: -webkit-box;
       display: -moz-box;
       display: box;
+      display: -webkit-flex;
       display: -moz-flex;
       display: -ms-flexbox;
       display: flex;
@@ -1847,6 +1869,7 @@ There are three (column) size variations: small, medium, and large. Medium is de
     display: -webkit-box;
     display: -moz-box;
     display: box;
+    display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flexbox;
     display: flex;
@@ -1858,6 +1881,7 @@ There are three (column) size variations: small, medium, and large. Medium is de
     display: -webkit-box;
     display: -moz-box;
     display: box;
+    display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flexbox;
     display: flex;
@@ -1866,7 +1890,9 @@ There are three (column) size variations: small, medium, and large. Medium is de
 
 .gallery.centered, .post-content > ul.centered {
   -webkit-box-pack: center;
+  -moz-box-pack: center;
   box-pack: center;
+  -webkit-justify-content: center;
   -moz-justify-content: center;
   -ms-justify-content: center;
   -o-justify-content: center;
@@ -1892,9 +1918,7 @@ There are three (column) size variations: small, medium, and large. Medium is de
       .flexbox .gallery-item, .flexbox .post-content li, .post-content .flexbox li {
         display: block;
         width: auto;
-        -webkit-box-flex: 0;
-            -ms-flex: 0 0 50%;
-                flex: 0 0 50%; } }
+        flex: 0 0 50%; } }
   @media (min-width: 62.01em) {
     .gallery-item, .post-content li {
       display: inline-block;
@@ -1904,9 +1928,7 @@ There are three (column) size variations: small, medium, and large. Medium is de
       .flexbox .gallery-item, .flexbox .post-content li, .post-content .flexbox li {
         display: block;
         width: auto;
-        -webkit-box-flex: 0;
-            -ms-flex: 0 0 33.33333%;
-                flex: 0 0 33.33333%; } }
+        flex: 0 0 33.33333%; } }
   @media (min-width: 30.01em) {
     .gallery.small .gallery-item, .post-content > ul.small .gallery-item, .gallery.small .post-content li, .post-content .gallery.small li, .post-content > ul.small li, .gallery-item ul.small .post-content li, ul.small .post-content .gallery-item li, ul.small .post-content li li {
       display: inline-block;
@@ -1916,9 +1938,7 @@ There are three (column) size variations: small, medium, and large. Medium is de
       .flexbox .gallery.small .gallery-item, .flexbox .post-content > ul.small .gallery-item, .flexbox .gallery.small .post-content li, .post-content .flexbox .gallery.small li, .flexbox .post-content > ul.small li, .flexbox .gallery-item ul.small .post-content li, ul.small .post-content .flexbox .gallery-item li, .flexbox ul.small .post-content li li, ul.small .flexbox .post-content li li, ul.small .post-content .flexbox li li {
         display: block;
         width: auto;
-        -webkit-box-flex: 0;
-            -ms-flex: 0 0 50%;
-                flex: 0 0 50%; } }
+        flex: 0 0 50%; } }
   @media (min-width: 42.01em) {
     .gallery.small .gallery-item, .post-content > ul.small .gallery-item, .gallery.small .post-content li, .post-content .gallery.small li, .post-content > ul.small li, .gallery-item ul.small .post-content li, ul.small .post-content .gallery-item li, ul.small .post-content li li {
       display: inline-block;
@@ -1928,9 +1948,7 @@ There are three (column) size variations: small, medium, and large. Medium is de
       .flexbox .gallery.small .gallery-item, .flexbox .post-content > ul.small .gallery-item, .flexbox .gallery.small .post-content li, .post-content .flexbox .gallery.small li, .flexbox .post-content > ul.small li, .flexbox .gallery-item ul.small .post-content li, ul.small .post-content .flexbox .gallery-item li, .flexbox ul.small .post-content li li, ul.small .flexbox .post-content li li, ul.small .post-content .flexbox li li {
         display: block;
         width: auto;
-        -webkit-box-flex: 0;
-            -ms-flex: 0 0 33.33333%;
-                flex: 0 0 33.33333%; } }
+        flex: 0 0 33.33333%; } }
   @media (min-width: 62.01em) {
     .gallery.small .gallery-item, .post-content > ul.small .gallery-item, .gallery.small .post-content li, .post-content .gallery.small li, .post-content > ul.small li, .gallery-item ul.small .post-content li, ul.small .post-content .gallery-item li, ul.small .post-content li li {
       display: inline-block;
@@ -1940,9 +1958,7 @@ There are three (column) size variations: small, medium, and large. Medium is de
       .flexbox .gallery.small .gallery-item, .flexbox .post-content > ul.small .gallery-item, .flexbox .gallery.small .post-content li, .post-content .flexbox .gallery.small li, .flexbox .post-content > ul.small li, .flexbox .gallery-item ul.small .post-content li, ul.small .post-content .flexbox .gallery-item li, .flexbox ul.small .post-content li li, ul.small .flexbox .post-content li li, ul.small .post-content .flexbox li li {
         display: block;
         width: auto;
-        -webkit-box-flex: 0;
-            -ms-flex: 0 0 25%;
-                flex: 0 0 25%; } }
+        flex: 0 0 25%; } }
   @media (min-width: 42.01em) {
     .gallery.large .gallery-item, .post-content > ul.large .gallery-item, .gallery.large .post-content li, .post-content .gallery.large li, .post-content > ul.large li, .gallery-item ul.large .post-content li, ul.large .post-content .gallery-item li, ul.large .post-content li li {
       display: inline-block;
@@ -1952,9 +1968,7 @@ There are three (column) size variations: small, medium, and large. Medium is de
       .flexbox .gallery.large .gallery-item, .flexbox .post-content > ul.large .gallery-item, .flexbox .gallery.large .post-content li, .post-content .flexbox .gallery.large li, .flexbox .post-content > ul.large li, .flexbox .gallery-item ul.large .post-content li, ul.large .post-content .flexbox .gallery-item li, .flexbox ul.large .post-content li li, ul.large .flexbox .post-content li li, ul.large .post-content .flexbox li li {
         display: block;
         width: auto;
-        -webkit-box-flex: 0;
-            -ms-flex: 0 0 50%;
-                flex: 0 0 50%; } }
+        flex: 0 0 50%; } }
 
 /* ==========================================================================
 //  Logo modules

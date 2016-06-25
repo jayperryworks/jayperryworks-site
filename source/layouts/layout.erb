@@ -15,11 +15,11 @@
         <%= javascript_include_tag "javascripts/critical.bundle" %>
     </head>
 
-    <%= partial "layouts/partials/spritemap" %>
+    <%= partial "components/spritemap" %>
 
     <body>
         <header class="header" role="banner">
-            <%= partial("layouts/partials/logo-jp") %>
+            <%= partial("components/logo-jp") %>
             <% if current_page.data.title == "home" %>
             <div class="header-intro">
                 <p class="header-title"><%= data.site.intro %></p>
@@ -49,7 +49,7 @@
             <% end %>
             <div class="footer-section">
                 <div class="l-wrapper narrow">
-                    <%= partial("layouts/partials/logo-jpw", :locals => { :classes => "footer-logo" }) %>
+                    <%= partial("components/logo-jpw", :locals => { :classes => "footer-logo" }) %>
                     <small class="footer-copyright">&copy; copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>
                     <!-- <a href="" class="footer-utility">Colophon</a> -->
                 </div>
