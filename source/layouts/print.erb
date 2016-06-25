@@ -65,7 +65,7 @@
 <section class="panel">
     <h1 class="panel-slug">More work</h1>
     <div class="l-wrapper">
-        <%= partial("components/work_list", :locals => { :current => true, :tags => false }) %>
+        <%= partial("components/work_list", :locals => { :prints => blog("work").articles, :current => true, :tags => false }) %>
     </div>
 </section>
 <% end %>

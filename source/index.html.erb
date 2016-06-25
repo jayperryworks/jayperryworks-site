@@ -6,7 +6,7 @@ title: home
 <section class="panel">
     <h1 class="panel-slug">Work</h1>
     <div class="l-wrapper">
-        <%= partial "components/work_list" %>
+        <%= partial "components/work_list", :locals => { :prints => blog("work").articles } %>
 
         <div class="l-centered">
             <a class="button large l-has-margin top" href="https://www.etsy.com/shop/jayperry" target="_blank">More prints &amp; paintings available at <strong>Etsy</strong></a>
@@ -16,26 +16,10 @@ title: home
 
 <!-- Blog section -->
 <% if blog("writing").articles.length > 0 %>
-<section class="panel">
-    <h1 class="panel-slug">Writing</h1>
-    <ul class="feed l-wrapper narrow">
-        <% blog("writing").articles[0...5].each do |article| %>
-        <li class="feed-item card horizontal">
-            <% if article.data.image.present? %>
-            <% link_to article, :class => "card-figure" do %>
-                <%= image_tag article.url + article.data.image, :alt => article.title %>
-            <% end %>
-            <% end %>
-            <div class="card-content">
-                <h2 class="card-title"><%= link_to article.title, article %></h2>
-                <% if article.data.subtitle.present? %>
-                <%= link_to article.data.subtitle, article, :class => "card-subtitle cappa" %>
-                <% end %>
-                <%= article.summary %>
-                <%= link_to "Read more &rsaquo;", article, :class => "card-button" %>
-            </div>
-        </li>
-        <% end %>
-    </ul>
-</section>
+    <section class="panel">
+        <h1 class="panel-slug">Writing</h1>
+        <div class="l-wrapper narrow">
+            <%= partial "components/writing_list", :locals => { :articles => blog("writing").articles[0...5] } %>
+        </div>
+    </section>
 <% end %>
