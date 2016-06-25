@@ -30,31 +30,7 @@
 
         <%= yield %>
 
-        <footer class="footer" role="contentinfo">
-            <% unless current_page.data.title == "home" %>
-            <div class="card horizontal centered l-wrapper narrow l-margin bottom">
-                <figure class="card-figure">
-                    <%= image_tag "portrait.jpg", :alt => "Jay Perry" %>
-                </figure>
-                <div class="card-content">
-                    <p>Jay Perry is a designer, illustrator, and writer living near Baltimore. He likes books, old rusty cars, and forests.</p>
-                    <dl class="tags">
-                        <dt class="tags-label inline">Say hi</dt>
-                        <% data.site.social.each do |site| %>
-                        <dd><%= link_to site.name, site.link, :class => "tag" %></dd>
-                        <% end %>
-                    </dl>
-                </div>
-            </div>
-            <% end %>
-            <div class="footer-section">
-                <div class="l-wrapper narrow">
-                    <%= partial("components/logo-jpw", :locals => { :classes => "footer-logo" }) %>
-                    <small class="footer-copyright">&copy; copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>
-                    <!-- <a href="" class="footer-utility">Colophon</a> -->
-                </div>
-            </div>
-        </footer>
+        <%= partial "components/main_footer", :locals => { :show_bio => current_page.data.title == "home" ? false : true } %>
 
         <%= javascript_include_tag "main" %>
         <%= google_analytics_universal_tag %>

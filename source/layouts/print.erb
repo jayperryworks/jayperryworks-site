@@ -31,7 +31,6 @@
     </section><!-- /.panel -->
 
     <!-- Editions -->
-
     <% if current_page.data.editions.present? %>
     <!-- jump nav -->
     <section class="panel has-jump">
@@ -40,27 +39,13 @@
         <!-- edition cards -->
         <div class="feed l-wrapper">
             <% current_page.data.editions.each do |edition| %>
-            <figure class="card horizontal large feed-item" id="edition_<%= edition.name %>">
-                <%= image_tag current_page.url + edition.image, :class => "card-figure", :alt => edition.name + " edition" %>
-                <figcaption class="card-content">
-                    <h2 class="cappa subtitle"><strong><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
-                    <dl class="card-stats">
-                        <dt>Print Size</dt>
-                        <dd><%= edition.height %>" &times; <%= edition.width %>"</dd>
-                        <dt>Paper Size</dt>
-                        <dd><%= edition.height + (edition.border * 2) %>" &times; <%= edition.width + (edition.border * 2) %>"</dd>
-                        <dt>Edition</dt>
-                        <dd><% if edition.limit.present? %>edition.limit<% else %>Open<% end %></dd>
-                    </dl>
-                    <p class="card-caption">Printed at Archival Arts in Baltimore on heavy, textured, acid-free Hahnemuhle cotton rag paper, using archival pigment-based inks. Individually signed and numbered.</p>
-                    <a class="button" href="<%= edition.url %>" target="_blank">Buy on Etsy</a>
-                </figcaption>
-            </figure><!-- /.card.feed-item -->
+                <%= partial "components/print_edition", :locals => { :edition => edition } %>
             <% end %>
         </div><!-- /.feed -->
     </section><!-- /.panel -->
     <% end %>
 </article>
+
 <!-- More work -->
 <section class="panel">
     <h1 class="panel-slug">More work</h1>
