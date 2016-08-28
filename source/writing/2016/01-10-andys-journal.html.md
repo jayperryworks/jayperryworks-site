@@ -1,3 +1,5 @@
+
+
 ---
 title: Andy's letters
 subtitle: A handmade book for my brother's travel journal
@@ -41,7 +43,3 @@ Once I had the pages printed and set up correctly, I got to work folding and sew
 There's something incredibly satisfying about folding and sewing signatures. It's a simple, methodical task, for one. You can let your mind wander a little. 
 
 But the *really* scary, high-stakes part is 
-
-
-
-
