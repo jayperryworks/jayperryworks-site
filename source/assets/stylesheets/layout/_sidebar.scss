@@ -55,22 +55,22 @@ $l-sidebar-w: column-w(1, ms(1) $l-sidebar-ratio);
     // left and right sidebar positioning
     .l-sidebar--left {
         @include order(-1);
-        padding-right: $gutter;
+        padding-right: $grid-gutter;
 
         @include media(">large") {
             float: left;
             margin-left: -($l-sidebar-w);
-            padding-right: $gutter;
+            padding-right: $grid-gutter;
         }
     }
     .l-sidebar--right {
         @include order(+1);
-        padding-left: $gutter;
+        padding-left: $grid-gutter;
 
         @include media(">large") {
             float: right;
             margin-right: -($l-sidebar-w);
-            padding-left: $gutter;
+            padding-left: $grid-gutter;
         }
     }
 

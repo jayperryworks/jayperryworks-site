@@ -1,141 +1,90 @@
 /* =============================================================================
-//  Webfonts
+//  Type config & scale
 // ========================================================================== */
 
 /*doc
 ---
 title: Fonts
 name: fonts
-category: core
+category: Core
 ---
 
-Fonts are accessed through SASS placeholders. Just extend the appropriate one. Fonts are applied to type, globally, in _text.scss, and individual modules can set up their own font styles.
+Fonts are accessed through SASS placeholders. Just extend the appropriate one. Fonts are applied to type, globally, in _type.scss, and individual modules can set up their own font styles.
 
-Please DO NOT use your own font-family attributes in any circumstance. Always extend the placeholder.
+Please DO NOT use your own font-family attributes in any circumstance. Always use the mixins.
 
 ```
 // display fonts
 // -> headlines, buttons, labels, etc.
 
-@extend %font-display
+@include font-display
+@include font-display(bold)
 
 // body fonts
 // -> paragraphs, captions, etc.
 
-@extend %font-body
-@extend %font-body-italic
-@extend %font-body-bold
+@include font-body
+@include font-body(normal, italic)
+@include font-body(bold)
 ```
 
 */
 
-// requires bourbon
 @import "libs";
+@import "paths";
 
-
-// Config & mixins
-// -----------------------------------------------------------------------------
-
-// default type sizes
-$type-size--default: 16px;
-$type-size-amp: 1.1em; // size of ampersands relative to their context
-$type-line_height: 1.7;
-
-@mixin type-size-default {
-  @include rem(font-size, $type-size--default);
-}
-
-// modular scale
-// -> requires SASS Type Helpers
-// -> minor third (1.2, 5:6), 16px base (http://www.modularscale.com/?16&px&1.2&web&text)
-$font-scale: 11px 13px 16px 19px 23px 28px 33px 39px 48px 57px 69px 83px 99px;
-
-$trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
-
-/* Globals
+/* Fonts
 // -------------------------------------------------------------------------- */
+// -> font-face mixins use Bourbon
 
-/*
-    This font software is the property of Commercial Type.
+/* ----- Example ------------------------------------------------------------ */
+// -> accent font
 
-    You may not modify the font software, use it on another website, or install it on a computer.
+// @include font-face("gibson-normal", "#{$asset-path-fonts}/gibson/Gibson-Regular-webfont", $file-formats: eot ttf woff svg);
+// @include font-face("gibson-bold", "#{$asset-path-fonts}/gibson/Gibson-SemiBold-webfont", bold, $file-formats: eot ttf woff svg);
 
-    License information is available at http://commercialtype.com/eula
-    For more information please visit Commercial Type at http://commercialtype.com or email us at info[at]commercialtype.com
 
-    Copyright (C) 2013 Schwartzco Inc.
-    License: 1510-UFDUPE
-*/
-
-/* ----- Publico ------------------------------------------------------------- */
-
-// headline
-@include font-face("Publico Headline", "#{$path-fonts}/PublicoHeadline-Roman-Web", $file-formats: eot woff ttf svg);
-
-// text
-@include font-face("Publico Text", "#{$path-fonts}/PublicoText-Roman-Web", $file-formats: eot woff ttf svg);
-@include font-face("Publico Text Italic", "#{$path-fonts}/PublicoText-Italic-Web", italic, $file-formats: eot woff ttf svg);
-
-/* ----- Guardian ---------------------------------------------------- */
-
-@include font-face("Guardian Sans", "#{$path-fonts}/GuardianSans-Light-Web", $file-formats: eot woff ttf svg);
-@include font-face("Guardian Sans Bold", "#{$path-fonts}/GuardianSans-Bold-Web", bold, $file-formats: eot woff ttf svg);
-
-/* Font styles
+/* Font mixins
+// -------------------------------------------------------------------------- */
 // -> PUBLIC, use these to style type globally & in modules
-// -------------------------------------------------------------------------- */
 
 /* ----- Display type ------------------------------------------------------- */
 
-%font-display {
-    font-family: 'Publico Headline', $georgia;
-    font-weight: normal;
-    font-style: normal;
-}
+@mixin font-display($weight: 'normal', $style: 'normal') {
+    font-family: $helvetica;
+    font-weight: $weight;
+    font-style: $style;
 
-%font-display--italic {
-    @extend %font-display;
-    font-family: 'Publico Text Italic', $georgia;
-    font-style: italic;
-}
-
-%font-accent {
-    font-family: 'Guardian Sans', $trebuchet;
-    font-weight: normal;
-    font-style: normal;
-}
-
-%font-accent--bold {
-    @extend %font-accent;
-    font-family: 'Guardian Sans Bold', $trebuchet;
-    font-weight: bold;
+    // -> with custom fonts
+    // font-family: "gibson-#{$weight}", $helvetica;
+    // font-weight: #{$weight};
 }
 
 /* ----- Body type ---------------------------------------------------------- */
 
-%font-body {
-    font-family: 'Publico Text', $georgia;
-    font-weight: normal;
-    font-style: normal;
-}
-
-%font-body--italic {
-    @extend %font-display--italic;
-    font-family: 'Publico Text Italic', $georgia;
-    font-style: italic;
+@mixin font-body($weight: 'normal', $style: 'normal') {
+    font-family: $helvetica;
+    font-weight: $weight;
+    font-style: $style;
 }
 
 /* ----- Ampersands --------------------------------------------------------- */
+// -> if you'd like to "use the best ampersand"
+// -> http://vault.simplebits.com/notebook/2008/08/14/ampersands-2/
 
-%amp-system {
+@mixin font-ampersand {
   font-family: "Baskerville", "Palatino", "Book Antiqua", serif;
   font-style: italic;
   font-weight: normal;
 }
 
-/* use the best ampersands from common system fonts... */
-.amp {
-    @extend %amp-system;
-    font-size: $type-size-amp; /* relative to whatever type surrounds it -- it renders slightly bigger */
-    color: inherit;
-}
+/* Utilities
+// -------------------------------------------------------------------------- */
+// -> PUBLIC, use these to style type globally & in modules
+
+.font-display { @include font-display; }
+    .font-display-bold { @include font-display('bold'); }
+
+.font-body { @include font-body; }
+    .font-body-bold { @include font-body('bold'); }
+    .font-body-italic { @include font-body($style: 'italic'); }

@@ -4,10 +4,11 @@
 //    as-needed in modules
 // -> NOTE: the dependency scheme in this framework requires sass's
 //    "import once" library. make sure it's installed somewhere.
+//    (it ships with middleman)
 // =============================================================================
 
 // --- NPM libs ----------------------------------------------------------------
-// -> in /node_modules
+// -> in /node_modules via $ npm install
 
 @import "bourbon/app/assets/stylesheets/bourbon";
 @import "modernizr-mixin/stylesheets/modernizr";
@@ -18,4 +19,3 @@
 // -> in assets/stylesheets/vendor
 
 @import "../vendor/sass-units";
-@import "../vendor/sass-type-helpers";

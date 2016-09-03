@@ -17,18 +17,18 @@ Wrappers
 
 */
 
-@import "../core/libs";
+// @import "libs";
 // @import "grid";
-// @import "../core/breakpoints";
+// @import "breakpoints";
 
 /* Settings & mixins
 // -------------------------------------------------------------------------- */
 
-// $outcrop-margin: -4em;
+$outcrop-margin: -4em;
 
 // width of main layout
 $layout-widths: (
-    'default' : 680px,
+    'default' : 600px,
     'wide'    : 1024px,
 );
 
@@ -55,8 +55,8 @@ $layout-widths: (
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    padding-left: $l-margin--wide;
-    padding-right: $l-margin--wide;
+    padding-left: gutter('wide');
+    padding-right: gutter('wide');
 }
 
     // wide version of the layout wrapper
@@ -65,27 +65,27 @@ $layout-widths: (
 
 // a child element of a layout wrapper which is actually wider than its parent
 // -> it sticks out on either side
-// .l-wrapper-outcrop {
-//     margin-left: $outcrop-margin;
-//     margin-right: $outcrop-margin;
-// }
+.l-wrapper-outcrop {
+    margin-left: $outcrop-margin;
+    margin-right: $outcrop-margin;
+}
 
-// .l-wrapper-outcrop\@medium {
-//     margin-left: 0;
-//     margin-right: 0;
+.l-wrapper-outcrop\@medium {
+    margin-left: 0;
+    margin-right: 0;
 
-//     @include media(">medium") {
-//         margin-left: $outcrop-margin;
-//         margin-right: $outcrop-margin;
-//     }
-// }
+    @include media(">medium") {
+        margin-left: $outcrop-margin;
+        margin-right: $outcrop-margin;
+    }
+}
 
-// .l-wrapper-outcrop\@large {
-//     margin-left: 0;
-//     margin-right: 0;
+.l-wrapper-outcrop\@large {
+    margin-left: 0;
+    margin-right: 0;
 
-//     @include media(">large") {
-//         margin-left: $outcrop-margin;
-//         margin-right: $outcrop-margin;
-//     }
-// }
+    @include media(">large") {
+        margin-left: $outcrop-margin;
+        margin-right: $outcrop-margin;
+    }
+}

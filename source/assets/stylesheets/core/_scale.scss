@@ -1,0 +1,55 @@
+/* =============================================================================
+//  Type & layout scale
+// ========================================================================== */
+
+/*doc
+---
+title: Scale
+name: scale
+category: Core
+---
+
+A single, modular scale is used for the entire site: not only type scaling but also spacing and relative proportions throughout the layout.
+
+*/
+
+@import "libs";
+
+// Config & mixins
+// -----------------------------------------------------------------------------
+
+// 1:1.618 "golden section" scale
+// -> http://www.modularscale.com/?16,13&px&1.618&web&text
+$scale-global: 1.618 !default;
+
+// --- type scale & sizing -----------------------------------------------------
+
+// global type scale
+// -> we could compute this via the modular scale mixins,
+// -> but doing it by hand allows us to tweak certain sizes to suit the fonts we're using
+// -> also, even numbers probably work better in old browsers when using px units
+$scale-type: (
+    'alpha'   : 60px,
+    'beta'    : 37px,
+    'cappa'   : 26px,
+    'delta'   : 23px,
+    'epsilon' : 16px,
+    'zeta'    : 13px,
+    'eta'     : 10px,
+) !default;
+
+@function scale-type($size) {
+    @return map-get($scale-type, $size);
+}
+
+@mixin scale-type($size) {
+    @include rem(font-size, scale-type($size));
+}
+
+// --- modular scale config ----------------------------------------------------
+// -> for layout and spacing
+
+$ms-base: 1 !default;
+$ms-ratio: $scale-global !default;
+
+// @debug ms-list(1, 10, $ms-base, $ms-ratio);

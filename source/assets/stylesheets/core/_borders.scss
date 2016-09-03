@@ -14,7 +14,7 @@ Some mixins that allow us to keep our border styles DRY and control them from on
 ```
 .your-selector {
     // add the default border radius
-    @extend %base-radius;
+    @extend %border-radius;
 
     // add a thin border on all sides
     @include border(all, thin);
@@ -24,78 +24,105 @@ Some mixins that allow us to keep our border styles DRY and control them from on
 }
 ```
 
+There are also utility classes that allow you to quickly add a border to a container:
+
+```html_example
+<div class="border">
+    <p>I have borders on all sides!</p>
+</div>
+
+<div class="border border-round">
+    <p>I have rounded corners!</p>
+</div>
+
+<div class="border-top">
+    <p>I have borders on just the top!</p>
+</div>
+
+<div class="border-bottom border-right">
+    <p>I have borders on a couple sides. You can combine border classes to cover as many sides as you like.</p>
+</div>
+
+<div class="no-border">
+    <p>I have no borders! Even if I normally would.</p>
+</div>
+```
+
 */
 
 @import "libs";
 @import "color";
-@import "../layout/spacing";
 
 // Rounded corners
 // -----------------------------------------------------------------------------
 
-$base-radius: 3px !default;
+$border-radius: 3px !default;
 
-%base-radius {
-  border-radius: $base-radius;
+@mixin border-radius {
+  border-radius: $border-radius;
 }
 
 // Border width & style
 // -----------------------------------------------------------------------------
 
 $border-w--default: 'thin' !default;
+$border-style: solid !default;
+$border-sides: top right bottom left;
 
 $border-widths: (
     'thin'  : 1px,
-    'mid'   : 2px,
     'thick' : 4px,
-);
-
-$border-style: solid !default;
+) !default;
 
 // get function for border widths
 @function border-w($w: $border-w--default) {
     @if (type-of($w) == "number") {
         @return #{$w};
     } @else {
-        @each $name, $value in $border-widths {
-            @if ($w == $name) {
-                @return map-get($border-widths, $name);
-            }
-        }
+        @return map-get($border-widths, $w);
     }
 }
 
 // make a standard border/hairline that works with the parent color theme
-@mixin border($sides: all, $w: $border-w--default, $color: theme('border'), $style: $border-style) {
+@mixin border($sides: all, $w: $border-w--default, $color: 'border', $style: $border-style, $important: false) {
     @if ($sides == all) {
-        border: border-w($w) #{$style} #{$color};
+        border: #{border-w($w)} #{$style} #{theme($color)}#{if($important == true, " !important", "")};
     } @else {
         @each $side in $sides {
-            border-#{$side}: border-w($w) #{$style} #{$color};
+            border-#{$side}: #{border-w($w)} #{$style} #{theme($color)}#{if($important == true, " !important", "")};
         }
+    }
+
+    // if no color is specified, set up border-color for each theme
+    @if (type-of($color) != 'color') {
+        @include color($color, 'border-color');
     }
 }
 
-// Helper classes
+// Utilities
 // -----------------------------------------------------------------------------
 
-.border {
+// .border, .border@[screen]
+@include breakpointify(".border", true) {
+    @include border;
+}
 
-    $sides: top right bottom left;
-
-    @each $side in $sides {
-        &.#{$side} {
-            @include border($side);
-        }
-    }
-
-    &.all {
-        @include border;
+// .border-[side], .border-[side]@[screen]
+@each $side in $border-sides {
+    @include breakpointify(".border-#{$side}", true) {
+        @include border($side);
     }
 }
 
-.no-borders {
-    border: none !important;
+// .no-border, .no-border@[screen]
+@include breakpointify(".no-border", true) { border: none !important; }
+
+// .no-border-[side], .no-border-[side]@[screen]
+@each $side in $border-sides {
+    @include breakpointify(".no-border-#{$side}", true) { border-#{$side}: none !important; }
 }
 
-.round { border-radius: 50%; }
+/* --- Modifiers ------------------------------------------------------------ */
+
+// make a border thicker
+.border--thick { border-width: border-w('thick'); }

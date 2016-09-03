@@ -1,0 +1,109 @@
+/* =============================================================================
+//  Global type styles
+// ========================================================================== */
+
+/*doc
+
+*/
+
+@import "../core/libs";
+@import "../core/scale";
+@import "../core/fonts";
+
+// default type sizes
+$type-size-default: 16px;
+$type-size-amp: 1.1em; // size of ampersands relative to their context
+$type-line_height: 1.5;
+
+// set type to default body size using REMs
+// -> useful for resetting type size on a container to override parents
+@mixin type-size-default {
+    @include rem(font-size, $type-size-default);
+}
+
+/* Globals
+// -------------------------------------------------------------------------- */
+
+body {
+    @include font-body;
+    line-height: $type-line_height;
+}
+
+// headings
+h1, h2, h3, h4, h5, h6,
+.t-heading {
+    @include font-display;
+    line-height: 1.2;
+    margin: 0;
+
+    a { color: inherit; }
+
+    strong {
+        font-family: inherit;
+        font-style: normal;
+        font-weight: bold;
+    }
+}
+
+// body/inline text
+p {
+    @include scale-type('zeta');
+    @include color('text' 'secondary');
+}
+
+a {
+    @include color('highlight');
+    text-decoration: none;
+}
+
+strong,
+.t-strong { @include font-body('bold'); }
+
+em,
+.t-em { @include font-body('normal', 'italic'); }
+
+small,
+.t-small {
+    @include scale-type('theta');
+    @include color('text' 'tertiary');
+}
+
+figcaption,
+.t-caption {
+    @include scale-type('theta');
+    @include color('text' 'secondary');
+}
+
+address,
+.t-address {
+    @include scale-type('eta');
+    @include color('text' 'secondary');
+}
+
+/* Utilities
+// -------------------------------------------------------------------------- */
+
+// type scale helpers
+@each $name, $size in $scale-type {
+    .t-scale-#{$name} { @include scale-type($size); }
+}
+
+// the first paragraph, often set slightly bigger
+.t-lead {
+    @include scale-type('epsilon');
+    @include color('text' 'primary');
+}
+
+.t-caps { text-transform: uppercase !important; }
+
+// position text
+.t-centered { text-align: center; }
+.t-left { text-align: left; }
+.t-right { text-align: right; }
+
+/* use the best ampersands from common system fonts... */
+// .t-amp {
+//     @include font-ampersand;
+//     font-size: $type-size-amp; /* relative to whatever type surrounds it -- it renders slightly bigger */
+//     color: inherit;
+// }

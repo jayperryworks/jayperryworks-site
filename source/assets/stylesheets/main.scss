@@ -19,11 +19,11 @@
 // -> global utility classes for basic layout
 ///////////////////////////////////////////////////////////////////////////// */
 
-@import "layout/spacing";
+@import "layout/gutter";
 @import "layout/positioning";
 @import "layout/grid";
 @import "layout/wrapper";
-@import "layout/sidebar";
+// @import "layout/sidebar";
 @import "layout/visibility";
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -31,10 +31,10 @@
 // -> global default element styles & utilities
 ///////////////////////////////////////////////////////////////////////////// */
 
-@import "base/text";
+@import "base/html";
+@import "base/type";
 @import "base/list";
 @import "base/form";
-@import "base/heading";
 @import "base/media";
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -43,25 +43,25 @@
 ///////////////////////////////////////////////////////////////////////////// */
 
 /* --- Atoms ---------------------------------------------------------------- */
-@import "components/button";
-@import "components/icon";
-@import "components/portrait";
-@import "components/tag";
+// @import "components/button";
+// @import "components/icon";
+// @import "components/portrait";
+// @import "components/tag";
 
 /* --- Molecules ------------------------------------------------------------ */
-@import "components/card";
-@import "components/cover";
-@import "components/feed";
-@import "components/header";
-@import "components/jump_nav";
+// @import "components/card";
+// @import "components/cover";
+// @import "components/feed";
+// @import "components/header";
+// @import "components/jump_nav";
 
 /* --- Organisms ------------------------------------------------------------ */
-@import "components/footer";
-@import "components/gallery";
-@import "components/panel";
+// @import "components/footer";
+// @import "components/gallery";
+// @import "components/panel";
 
 /* --- Regions -------------------------------------------------------------- */
-@import "components/post";
+// @import "components/post";
 
 /* /////////////////////////////////////////////////////////////////////////////
 // Styles of Shame

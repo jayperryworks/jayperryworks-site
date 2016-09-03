@@ -1,8 +1,6 @@
 /* =============================================================================
-//  Form module
+//  Base form styles
 // ========================================================================== */
-
-@import "../core/all";
 
 /*doc
 ---
@@ -13,80 +11,59 @@ category: atoms
 
 */
 
+@import "../core/animation";
+@import "../base/type";
+
 /* Base
 // -------------------------------------------------------------------------- */
 
-form {
-	@extend %font-body;
-}
+.form,
+form { @include font-body; }
 
-fieldset {
+.form-fieldset,
+fieldset {}
 
-}
+.form-legend,
+legend {}
 
-legend {
-
-}
-
+.form-field,
 input, textarea, select {
-	@extend %font-body;
-	@extend %base-transition;
+	@include font-body;
+    @include transition-default;
 	padding: 0.5em 1em;
 	border-radius: 3px;
 	box-sizing: border-box;
 	box-shadow: none;
 	text-shadow: none;
-    color: theme(text--secondary);
-    background: theme(well);
-    border-color: theme(border);
-
-    // http://css-tricks.com/snippets/css/style-placeholder-text/
-    &::-webkit-input-placeholder,
-    &:-moz-placeholder,
-    &::-moz-placeholder,
-    &:-ms-input-placeholder  {
-        color: theme(text--tertiary);
-    }
 
 	&:focus {
-        border-color: theme(highlight);
 		outline: 0;
 		outline: thin dotted \9; /* IE6-9 */
 		box-shadow: none;
 	}
 }
 
-input, textarea {
-
-}
-
+.form-checkbox,
 [type="checkbox"] {
 	width: 1em;
 	height: 1em;
 }
 
+.form-search,
 input[type="search"] {
 
-	&:focus {
-
-	}
+	&:focus {}
 }
 
 // Allow only vertical resizing of textareas.
+.form-textarea,
 textarea {
+    @extend .form-field;
 	resize: vertical;
-
-	&:focus {
-		// outline: 0;
-		// outline: thin dotted \9; /* IE6-9 */
-		// border-color: $color--secondary;
-	}
 }
 
-select {
+.form-select,
+select {}
 
-}
-
-label {
-
-}
+.form-label,
+label {}

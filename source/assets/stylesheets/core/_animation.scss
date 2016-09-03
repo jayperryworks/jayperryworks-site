@@ -13,7 +13,7 @@ The animation library sets global defaults for CSS transitions. Use it in your m
 
 ```
 .your-selector {
-    @extend %base-transition;
+    @include transition-default;
 }
 ```
 
@@ -24,16 +24,9 @@ The animation library sets global defaults for CSS transitions. Use it in your m
 // Config & mixins
 // -----------------------------------------------------------------------------
 
-$base-duration: 0.5s !default; // in seconds
+$transition-duration: 0.25s !default; // in seconds
 
-%base-transition {
-  // base transition used globally
-  @include transition (all $base-duration);
-}
-
-/* Globals
-// -------------------------------------------------------------------------- */
-
-a {
-    @extend %base-transition;
+@mixin transition-default {
+    // base transition used globally
+    @include transition (all $transition-duration);
 }
