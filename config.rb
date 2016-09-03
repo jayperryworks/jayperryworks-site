@@ -100,15 +100,11 @@ helpers do
         end
     end
 
-    # {current_page.date.strftime("%Y")}
-    # def figure(image, &block)
-    #     concat(content_tag(:figure, :class => 'feature') do
-    #         image_tag("/writing/2016/#{image}", :class => "feature") +
-    #         content_tag(:figcaption, :class => 'caption') do
-    #             capture(&block)
-    #         end
-    #     end, block.binding)
-    # end
+    # "Component" decorator for partial function
+    # -> just used to point automatically to "components" dir so you don't have to type the full path
+    def component(name, opts = {}, &block)
+        partial("components/#{name}", opts, &block)
+    end
 end
 
 set :url_root, 'http://jayperryworks.com'
