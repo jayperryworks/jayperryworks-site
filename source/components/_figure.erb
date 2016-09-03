@@ -5,9 +5,9 @@
 <%# source - REQUIRED %>
 <% alt ||= "" %>
 
-<% content_tag :figure, :class => 'feature' do %>
-    <%= image_tag "#{source}", :class => 'feature-image', :alt => alt %>
-    <% content_tag :figcaption, :class => "feature-caption" do %>
+<figure class="feature">
+    <img class="feature-image" src="<%= source %>"<%=  "alt='#{alt}'" if alt %>>
+    <figcation class="feature-caption">
         <%= yield %>
-    <% end %>
-<% end %>
+    </figcation>
+</figure>

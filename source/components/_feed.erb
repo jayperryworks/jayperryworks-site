@@ -1,0 +1,25 @@
+<%#
+  Feed component
+  - A vertical list of content references (e.g. cards or listings)
+
+  Locals:
+  - ARRAY items: items to list
+  - STRING classes (optional): additional modifier classes (e.g. .l-margin, etc.)
+  - STRING item_classes (optional): additional modifier classes for each item (e.g. .card, etc.)
+
+  Styles:
+  - components/feed.scss
+%>
+
+<%
+  classes ||= false
+  item_classes ||= false
+%>
+
+<ul class="feed<%= ' #{classes}' if classes %>">
+  <% items.each do |item| %>
+    <li class="feed-item<%= ' #{item_classes}' if item_classes %>">
+      <%= yield %>
+    </li>
+  <% end %>
+</ul>

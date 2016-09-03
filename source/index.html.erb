@@ -3,23 +3,23 @@ title: home
 ---
 
 <!-- Work section -->
-<section class="panel">
-    <h1 class="panel-slug">Work</h1>
-    <div class="l-wrapper">
-        <%= partial "components/work_list", :locals => { :prints => blog("work").articles } %>
+<% component "panel", locals: { slug: "Recent work" } do %>
+  <div class="l-wrapper">
+    <%= component "work_gallery", :locals => { :prints => blog("work").articles } %>
 
-        <div class="l-centered">
-            <a class="button large l-has-margin top" href="https://www.etsy.com/shop/jayperry" target="_blank">More prints &amp; paintings available at <strong>Etsy</strong></a>
-        </div>
+    <div class="t-centered">
+      <a class="button button--large l-margin-top" href="https://www.etsy.com/shop/jayperry" target="_blank">
+        More prints &amp; paintings available at <strong>Etsy</strong>
+      </a>
     </div>
-</section>
+  </div>
+<% end %>
 
 <!-- Blog section -->
 <% if blog("writing").articles.length > 0 %>
-    <section class="panel">
-        <h1 class="panel-slug">Writing</h1>
-        <div class="l-wrapper narrow">
-            <%= partial "components/writing_list", :locals => { :articles => blog("writing").articles[0...5] } %>
-        </div>
-    </section>
+  <% component "panel", locals: { slug: "Writing" } do %>
+    <div class="l-wrapper narrow">
+      <%= component "writing_feed", :locals => { :articles => blog("writing").articles[0...5] } %>
+    </div>
+  <% end %>
 <% end %>

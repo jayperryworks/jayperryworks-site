@@ -1,0 +1,40 @@
+<%#
+  Card component
+  - A content reference with headline, excerpt, action, and optional image
+
+  Locals:
+  - STRING link: url the card links to
+  - STRING heading: card heading
+  - STRING subheading (optional): a subheading, if you'd like one
+  - STRING image (optional): path or url of image to include
+  - STRING action (optional): the action for the button, e.g. "Read more"
+  - STRING classes (optional): additional modifier classes, e.g. .l-margin
+
+  Styles:
+  - components/card.scss
+  - components/button.scss
+%>
+
+<%
+  subheading ||= false
+  image ||= false
+  action ||= false
+  classes ||= false
+%>
+
+
+<div class="card<%= ' #{classes}' if classes %>">
+  <% if image %>
+    <% link_to link, :class => "card-figure" do %>
+      <%= image_tag image, :alt => heading %>
+    <% end %>
+  <% end %>
+  <div class="card-content">
+    <h2 class="card-title"><%= link_to heading, link %></h2>
+    <% if subheading %>
+      <%= link_to subheading, link, :class => "card-subtitle cappa" %>
+    <% end %>
+    <%= yield %>
+    <%= link_to "Read more &rsaquo;", link, :class => "card-button" %>
+  </div>
+</div>

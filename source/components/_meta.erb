@@ -1,0 +1,37 @@
+<%#
+  Meta component
+  - Metadata appearing on post and print pages
+
+  Locals:
+  - STRING date: date in whatever format you'd like to pass in
+  - ARRAY tags: list of tags to be included
+  - ARRAY borders: sides to add borders to, e.g. ["top", "bottom"]
+  - STRING classes: additional modifier classes for container
+
+  Styles:
+  - components/card.scss
+  - components/button.scss
+%>
+
+<%
+  date ||= false
+  tags ||= false
+  borders ||= ["bottom"]
+  classes ||= false
+%>
+
+<aside class="post-meta<% borders.each do |border| %><%= " border-#{border}" %><% end %><%= ' #{classes}' if classes %>">
+  <% if date %>
+    <time class="post-date"><%= date %></time>
+  <% end %>
+  <span class="meta">
+    <%= yield %>
+  </span>
+  <% if tags %>
+    <ul class="post-tags">
+      <% tags.each do |tag| %>
+        <li class="tag"><a href=""><%= tag %></a></li>
+      <% end %>
+    </ul>
+  <% end %>
+</aside>

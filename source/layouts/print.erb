@@ -1,56 +1,46 @@
 <% wrap_layout :layout do %>
-<article class="post">
-    <section class="panel top">
-        <%= image_tag current_page.url + current_page.data.cover, :class => "post-cover", :alt => current_page.data.title %>
+  <article class="post">
+    <% component "panel", locals: { classes: "top" } do %>
+      <%= image_tag current_page.url + current_page.data.cover, :class => "post-cover", :alt => current_page.data.title %>
 
-        <!-- cover image and info -->
-        <header class="post-header">
-            <div class="post-meta top">
-                <time class="post-date"><%= current_page.date.strftime('%Y') %></time>
-                <span class="meta"><% if current_page.data.width.present? %><%= current_page.data.width %> &times; <%= current_page.data.height %>, <% end %><% if current_page.data.format.present? %><%= current_page.data.format %><% end %></span>
-                <ul class="post-tags right">
-                    <% current_page.data.tags.each do |tag| %>
-                    <li><a class="tag" href="#"><%= tag %></a></li>
-                    <% end %>
-                </ul>
-            </div>
-            <h1><%= current_page.data.title %></h1>
-        </header><!-- /.post-header -->
+      <!-- cover image and info -->
+      <header class="post-header">
+        <% component "meta", locals: { date: current_page.date.strftime('%Y'), tags: current_page.data.tags } do %> <% end %>
+          <h1><%= current_page.data.title %></h1>
+      </header><!-- /.post-header -->
 
-        <!-- writeup -->
-        <div class="post-content l-wrapper">
-            <%= yield %>
+      <!-- writeup -->
+      <div class="post-content l-wrapper">
+        <%= yield %>
 
-            <% if current_page.data.edition_placeholder == true %>
-            <div class="l-centered">
-                <a class="button large l-has-margin top" href="https://www.etsy.com/shop/jayperry" target="_blank">Print editions available at <strong>Etsy</strong></a>
-            </div>
-            <% end %>
-        </div><!-- /.post-content -->
+        <% if current_page.data.edition_placeholder == true %>
+          <div class="l-centered">
+              <a class="button large l-has-margin top" href="https://www.etsy.com/shop/jayperry" target="_blank">Print editions available at <strong>Etsy</strong></a>
+          </div>
+        <% end %>
+      </div>
 
-    </section><!-- /.panel -->
+      <% end %>
 
-    <!-- Editions -->
-    <% if current_page.data.editions.present? %>
-    <!-- jump nav -->
-    <section class="panel has-jump">
-        <h2 class="panel-slug">Available Editions</h2>
+      <!-- Editions -->
+      <% if current_page.data.editions.present? %>
+        <% component "panel", locals: { slug: "Available editions" } do %>
+          <!-- edition cards -->
+          <div class="l-wrapper">
+            <ul class="feed">
+              <% current_page.data.editions.each do |edition| %>
+                <%= component "print_edition", :locals => { :edition => edition } %>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+      <% end %>
+  </article>
 
-        <!-- edition cards -->
-        <div class="feed l-wrapper">
-            <% current_page.data.editions.each do |edition| %>
-                <%= partial "components/print_edition", :locals => { :edition => edition } %>
-            <% end %>
-        </div><!-- /.feed -->
-    </section><!-- /.panel -->
-    <% end %>
-</article>
-
-<!-- More work -->
-<section class="panel">
-    <h1 class="panel-slug">More work</h1>
-    <div class="l-wrapper">
-        <%= partial("components/work_list", :locals => { :prints => blog("work").articles, :current => true, :tags => false }) %>
-    </div>
-</section>
+  <!-- More work -->
+  <% component "panel", locals: { slug: "More work" } do %>
+      <div class="l-wrapper">
+          <%= partial("components/work_gallery", :locals => { :prints => blog("work").articles, :current => true, :tags => false }) %>
+      </div>
+  <% end %>
 <% end %>

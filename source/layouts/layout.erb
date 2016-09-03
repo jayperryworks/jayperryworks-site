@@ -15,22 +15,22 @@
         <%= javascript_include_tag "javascripts/critical.bundle" %>
     </head>
 
-    <%= partial "components/spritemap" %>
+    <%= component "spritemap" %>
 
     <body>
         <header class="header" role="banner">
-            <%= partial("components/logo-jp") %>
+            <%= component "logo-jp" %>
             <% if current_page.data.title == "home" %>
             <div class="header-intro">
                 <p class="header-title"><%= data.site.intro %></p>
-                <p class="header-subtitle"><%= data.site.statuses[rand(data.site.statuses.length)] %></p>
+                <p class="header-subtitle"><%= data.site.statuses[0] %></p>
             </div>
             <% end %>
         </header>
 
         <%= yield %>
 
-        <%= partial "components/main_footer", :locals => { :show_bio => current_page.data.title == "home" ? false : true } %>
+        <%= component "main_footer", :locals => { :show_bio => current_page.data.title == "home" ? false : true } %>
 
         <%= javascript_include_tag "main" %>
         <%= google_analytics_universal_tag %>

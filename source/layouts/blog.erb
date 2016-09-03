@@ -1,28 +1,29 @@
 <% wrap_layout :layout do %>
     <article class="post">
-            <header class="post-header">
-                <h1><%= current_page.data.title %></h1>
-                <span class="subtitle beta"><%= current_page.data.subtitle %></span>
-            </header>
-            <div class="post-content l-wrapper narrow">
+      <header class="post-header">
+          <h1><%= current_page.data.title %></h1>
+          <% if current_page.data.subtitle.present? %>
+            <span class="subtitle beta"><%= current_page.data.subtitle %></span>
+          <% end %>
+      </header>
+      <div class="post-content l-wrapper narrow">
 
-                <aside class="post-meta">
-                    <time class="post-date"><%= current_page.date.strftime("%B %-d, %Y") %></time>
-                    <dl class="post-tags">
-                        <dt class="tags-label">Filed under</dt>
-                        <% current_page.data.tags.each do |tag| %>
-                            <dd class="tag"><a href=""><%= tag %></a></dd>
-                        <% end %>
-                    </dl>
-                </aside>
-
-                <% if current_page.data.image.present? %>
-                    <%= image_tag current_page.url + current_page.data.image, :class => "post-feature_image", :alt => current_page.data.title %>
+        <aside class="post-meta">
+            <time class="post-date"><%= current_page.date.strftime("%B %-d, %Y") %></time>
+            <dl class="post-tags">
+                <dt class="tags-label">Filed under</dt>
+                <% current_page.data.tags.each do |tag| %>
+                    <dd class="tag"><a href=""><%= tag %></a></dd>
                 <% end %>
+            </dl>
+        </aside>
 
-                <%= yield %>
+        <% if current_page.data.image.present? %>
+            <%= image_tag current_page.url + current_page.data.image, :class => "post-feature_image", :alt => current_page.data.title %>
+        <% end %>
 
-        </div>
+        <%= yield %>
+      </div>
     </article>
     <nav class="pagination">
         <%#= current_page.date %>
