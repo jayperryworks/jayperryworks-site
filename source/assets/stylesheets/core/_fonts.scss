@@ -33,15 +33,23 @@ Please DO NOT use your own font-family attributes in any circumstance. Always us
 @import "libs";
 @import "paths";
 
+$trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
+
 /* Fonts
 // -------------------------------------------------------------------------- */
 // -> font-face mixins use Bourbon
 
-/* ----- Example ------------------------------------------------------------ */
-// -> accent font
+// headline
+@include font-face("publico-headline-normal", font_path("PublicoHeadline-Roman-Web"), $file-formats: eot woff ttf svg);
 
-// @include font-face("gibson-normal", "#{$asset-path-fonts}/gibson/Gibson-Regular-webfont", $file-formats: eot ttf woff svg);
-// @include font-face("gibson-bold", "#{$asset-path-fonts}/gibson/Gibson-SemiBold-webfont", bold, $file-formats: eot ttf woff svg);
+// text
+@include font-face("publico-text-normal-normal", font_path("PublicoText-Roman-Web"), $file-formats: eot woff ttf svg);
+@include font-face("publico-text-normal-italic", font_path("PublicoText-Italic-Web"), italic, $file-formats: eot woff ttf svg);
+
+/* ----- Guardian ---------------------------------------------------- */
+
+@include font-face("guardian-sans-normal", font_path("GuardianSans-Light-Web"), $file-formats: eot woff ttf svg);
+@include font-face("guardian-sans-bold", font_path("GuardianSans-Bold-Web"), bold, $file-formats: eot woff ttf svg);
 
 
 /* Font mixins
@@ -50,22 +58,24 @@ Please DO NOT use your own font-family attributes in any circumstance. Always us
 
 /* ----- Display type ------------------------------------------------------- */
 
-@mixin font-display($weight: 'normal', $style: 'normal') {
-    font-family: $helvetica;
-    font-weight: $weight;
-    font-style: $style;
+@mixin font-display($style: 'normal') {
+  font-family: "publico-headline-#{$style}", $georgia;
+  font-weight: normal;
+  font-style: $style;
+}
 
-    // -> with custom fonts
-    // font-family: "gibson-#{$weight}", $helvetica;
-    // font-weight: #{$weight};
+@mixin font-accent($weight) {
+  font-family: "guardian-sans-#{$style}", $georgia;
+  font-weight: normal;
+  font-style: $style;
 }
 
 /* ----- Body type ---------------------------------------------------------- */
 
-@mixin font-body($weight: 'normal', $style: 'normal') {
-    font-family: $helvetica;
-    font-weight: $weight;
-    font-style: $style;
+@mixin font-body($style: 'normal') {
+  font-family: "publico-text-#{$weight}-#{$style}", $georgia;
+  font-weight: $weight;
+  font-style: $style;
 }
 
 /* ----- Ampersands --------------------------------------------------------- */
@@ -83,8 +93,8 @@ Please DO NOT use your own font-family attributes in any circumstance. Always us
 // -> PUBLIC, use these to style type globally & in modules
 
 .font-display { @include font-display; }
-    .font-display-bold { @include font-display('bold'); }
+  .font-display-bold { @include font-display('bold'); }
 
 .font-body { @include font-body; }
-    .font-body-bold { @include font-body('bold'); }
-    .font-body-italic { @include font-body($style: 'italic'); }
+  .font-body-bold { @include font-body('bold'); }
+  .font-body-italic { @include font-body($style: 'italic'); }
