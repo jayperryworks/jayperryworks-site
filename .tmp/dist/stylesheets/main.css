@@ -1619,11 +1619,9 @@ You can mix and match classes to get the hierarchy/size you need. "small primary
 
 ```html_example
 <a href="#" class="button">Default</a>
-<a href="#" class="button primary">Primary</a>
-<a href="#" class="button secondary">Secondary</a>
-<a href="#" class="button tertiary">Tertiary</a>
-<a href="#" class="button small">Small</a>
-<a href="#" class="button large">Large</a>
+<a href="#" class="button button--small">Small</a>
+<a href="#" class="button button--large">Large</a>
+<a href="#" class="button button--text">Text-only</a>
 ```
 
 */
@@ -1664,7 +1662,7 @@ button, .button {
 .button--large {
   font-size: 16px;
   font-size: 1rem;
-  padding: 0.8em 2em; }
+  padding: 0.8em 1.6em; }
 
 .button--purchase {
   padding: 0 0.8em 0 0;

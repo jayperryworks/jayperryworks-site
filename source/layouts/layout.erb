@@ -32,7 +32,7 @@
 
         <%= component "main_footer", :locals => { :show_bio => current_page.data.title == "home" ? false : true } %>
 
-        <%= javascript_include_tag "main" %>
+        <%= javascript_include_tag :bundle %>
         <%= google_analytics_universal_tag %>
     </body>
 </html>
