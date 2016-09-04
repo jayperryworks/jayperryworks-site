@@ -54,7 +54,7 @@
 }
 
 .footer-copyright {
-    @extend %font-accent;
+    @include font-accent;
     display: block;
     // margin-left: $gutter;
     margin-top: 0.8em;

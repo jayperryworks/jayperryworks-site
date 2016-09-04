@@ -17,7 +17,7 @@ Right now, the only globals we need are a few file path helpers: `$asset-path-im
 
 // Asset paths
 // -----------------------------------------------------------------------------
-$asset-path: "../../";
-$asset-path-images: "#{$asset-path}images";
-$asset-path-icons: "#{$asset-path-images}icons";
-$asset-path-fonts: "#{$asset-path}fonts";
+$asset-path: "/assets";
+$asset-path-images: "#{$asset-path}/images";
+$asset-path-icons: "#{$asset-path-images}/icons";
+$asset-path-fonts: "#{$asset-path}/fonts";

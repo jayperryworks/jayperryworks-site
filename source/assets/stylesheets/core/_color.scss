@@ -56,6 +56,16 @@ The second parameter is optional, and theme() will default to the 'default' them
 $black        : lighten(#474747, 3);
 $gray         : #b1b1b1;
 
+// highlights
+$orange: #f4b64e;
+$orange--dark: #ea8e4d;
+$blue: #3077ab;
+$blue--dark: #1e6299;
+$red: #d82333;
+$red--dark: #a0262b;
+$green: #00a556;
+$green--dark: #187042;
+
 // Themes
 // ----------------------------------------------------------------------
 // -> PUBLIC, use these for color references
@@ -72,7 +82,7 @@ $themes: (
         'bg'              : #fff,
         'well'            : lighten($gray, 20),
         'border'          : lighten($gray, 20),
-        'highlight'       : $black
+        'highlight'       : $blue
     ),
     'reverse': (
         'text': (
@@ -84,7 +94,7 @@ $themes: (
         'bg'              : $black,
         'well'            : darken($black, 20),
         'border'          : lighten($black, 20),
-        'highlight'       : $black
+        'highlight'       : $blue
     )
 );
 
@@ -161,7 +171,7 @@ $themes: (
 // -> use the helper class to apply a theme to a module
 // -------------------------------------------------------------------------- */
 
-body, .c-theme-default, %theme--default {
+body, .c-theme-default {
     @include theme('default');
 }
 

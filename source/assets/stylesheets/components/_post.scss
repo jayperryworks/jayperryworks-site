@@ -69,8 +69,8 @@
 }
 
 .post-meta {
-    @extend %font-accent;
-    @include font-scale(2);
+    @include font-accent;
+    @include scale-type('zeta');
     @include border(top bottom);
     display: block;
     padding: 1em 0;

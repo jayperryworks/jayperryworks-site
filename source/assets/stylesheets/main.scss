@@ -5,7 +5,8 @@
  * https://github.com/jayperryworks
  */
 
- // @import "normalize-css/normalize.css";
+// install via npm
+@import "normalize-css/normalize.css";
 
 /* /////////////////////////////////////////////////////////////////////////////
 // Core
@@ -43,7 +44,7 @@
 ///////////////////////////////////////////////////////////////////////////// */
 
 /* --- Atoms ---------------------------------------------------------------- */
-// @import "components/button";
+@import "components/button";
 // @import "components/icon"; // not using any icons yet
 // @import "components/portrait";
 // @import "components/tag";

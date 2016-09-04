@@ -66,8 +66,8 @@ $jump-margin: $gutter $gutter-outside;
 /* --- nav items ------------------------------------------------------------ */
 
 .jump_nav-item {
-    @extend %font-accent--bold;
-    @include font-scale(2);
+    @include font-accent('bold');
+    @include scale-type('zeta');
     @include rem(width, $jump-w);
     display: block;
     margin-bottom: 0.5em;
@@ -91,7 +91,7 @@ $jump-margin: $gutter $gutter-outside;
 // -> label hidden on larger screens
 
 .jump_nav-label {
-    @extend %font-accent--bold;
+    @include font-accent('bold');
     @include visually_hidden(true);
     display: block;
     text-align: center;

@@ -12,7 +12,7 @@ $tag-color: theme(text tertiary);
 
 .tag {
     @extend %base-transition;
-    @extend %font-accent;
+    @include font-accent;
     @extend .meta;
     @include border;
     // @include font-scale(1);
@@ -27,7 +27,7 @@ $tag-color: theme(text tertiary);
     }
 
     a {
-        @extend %font-accent;
+        @include font-accent;
         color: inherit;
 
         &:hover, &:active { color: inherit; }

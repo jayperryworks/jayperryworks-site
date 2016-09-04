@@ -40,16 +40,16 @@ $trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
 // -> font-face mixins use Bourbon
 
 // headline
-@include font-face("publico-headline-normal", font_path("PublicoHeadline-Roman-Web"), $file-formats: eot woff ttf svg);
+@include font-face("publico-headline-normal", "#{$asset-path-fonts}/PublicoHeadline-Roman-Web", $file-formats: eot woff ttf svg);
 
 // text
-@include font-face("publico-text-normal-normal", font_path("PublicoText-Roman-Web"), $file-formats: eot woff ttf svg);
-@include font-face("publico-text-normal-italic", font_path("PublicoText-Italic-Web"), italic, $file-formats: eot woff ttf svg);
+@include font-face("publico-text-normal-normal", "#{$asset-path-fonts}/PublicoText-Roman-Web", $file-formats: eot woff ttf svg);
+@include font-face("publico-text-normal-italic", "#{$asset-path-fonts}/PublicoText-Italic-Web", italic, $file-formats: eot woff ttf svg);
 
 /* ----- Guardian ---------------------------------------------------- */
 
-@include font-face("guardian-sans-normal", font_path("GuardianSans-Light-Web"), $file-formats: eot woff ttf svg);
-@include font-face("guardian-sans-bold", font_path("GuardianSans-Bold-Web"), bold, $file-formats: eot woff ttf svg);
+@include font-face("guardian-sans-normal", "#{$asset-path-fonts}/GuardianSans-Light-Web", $file-formats: eot woff ttf svg);
+@include font-face("guardian-sans-bold", "#{$asset-path-fonts}/GuardianSans-Bold-Web", bold, $file-formats: eot woff ttf svg);
 
 
 /* Font mixins
@@ -64,7 +64,7 @@ $trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
   font-style: $style;
 }
 
-@mixin font-accent($weight) {
+@mixin font-accent($style: 'normal') {
   font-family: "guardian-sans-#{$style}", $georgia;
   font-weight: normal;
   font-style: $style;
@@ -72,7 +72,7 @@ $trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
 
 /* ----- Body type ---------------------------------------------------------- */
 
-@mixin font-body($style: 'normal') {
+@mixin font-body($weight: 'normal', $style: 'normal') {
   font-family: "publico-text-#{$weight}-#{$style}", $georgia;
   font-weight: $weight;
   font-style: $style;
