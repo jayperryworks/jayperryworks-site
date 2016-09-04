@@ -3,9 +3,8 @@
 // -> for icon sprites, vector graphics, etc.
 // ========================================================================== */
 
-
-/* SVG Sprite Icons
-// -------------------------------------------------------------------------- */
+// SVG Sprite Icons
+// -----------------------------------------------------------------------------
 .icon {
     display: inline-block;
     height: 1.4em;
@@ -23,24 +22,3 @@
         max-height: 100%;
     }
 }
-
-/* Modifiers
-// ---------------------------------------------------------------------------*/
-
-.icon.logo-jp {
-    @include rem(width, 40px);
-    @include rem(height, 39px);
-    fill: theme(text primary);
-    color: white;
-}
-    .logo-jp-bg {
-        fill: theme(text primary);
-    }
-    .logo-jp-letter {
-        fill: white;
-    }
-
-/* Submodules
-// ---------------------------------------------------------------------------*/
-
-
