@@ -30,11 +30,6 @@
     <% end %>
   <% end %>
   <div class="card-content">
-    <h2 class="card-title"><%= link_to heading, link %></h2>
-    <% if subheading %>
-      <%= link_to subheading, link, :class => "card-subtitle cappa" %>
-    <% end %>
     <%= yield %>
-    <%= link_to "Read more &rsaquo;", link, :class => "card-button" %>
   </div>
 </div>
