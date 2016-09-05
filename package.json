@@ -55,6 +55,7 @@
   },
   "dependencies": {
     "bourbon": "^4.2.6",
+    "cq-prolyfill": "^0.3.2",
     "include-media": "^1.4.1",
     "jquery": "^2.1.4",
     "modernizr": "^3.3.1",

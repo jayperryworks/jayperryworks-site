@@ -3,8 +3,6 @@
 // ========================================================================== */
 
 @import "../core/all";
-@import "../components/button";
-@import "../base/heading";
 
 $card-grid: ms(7) ms(1);
 $card-grid--large: ms(7) ms(1);
@@ -14,127 +12,46 @@ $card-bp: 'medium';
 // ---------------------------------------------------------------------------*/
 
 .card {
-    display: block;
-}
+  display: block;
+  font-size: 0;
 
-/* Modifiers
-// ---------------------------------------------------------------------------*/
-
-.card.horizontal {
+  @include yep(flexbox, no-ie) {
+    @include display(flex);
     @include align-items(flex-start);
-    font-size: 0;
-
-    > * { @include type-size-default; }
-
-    @include media('>xsmall') {
-        .flexbox & { @include display(flex); }
-    }
-}
-
-.card.large {
-    // see .card-figure
-}
-
-.card.horizontal.large {
-    @include media('>xsmall') {
-        .flexbox & { display: block; }
-    }
-    @include media('>medium') {
-        .flexbox & { @include display(flex); }
-    }
-}
-
-.card.horizontal.centered {
-    @include align-items(center);
+  }
 }
 
 /* Submodules
 // ---------------------------------------------------------------------------*/
 
 .card-figure {
-    display: block;
+  @include type-size-default;
+  display: block;
 
-    .card.horizontal & {
-        @include type-size-default;
+  &:container("width >= 500px") {
+    @include column(2, $card-grid);
 
-        @include media('>xsmall') {
-            @include column(1, $card-grid);
+    @include yep(flexbox, no-ie) { display: block; }
+  }
 
-            .flexbox & { display: block; }
-        }
-    }
-
-    .card.horizontal.large & {
-        @include media('>xsmall') {
-            display: block;
-            width: 100%;
-            padding: 0;
-        }
-
-        @include media('>medium') { @include column(1, $grid: $card-grid--large); }
-    }
-
-    .card-centered & { vertical-align: center; }
+  .card-content + & { margin-top: 1.5em; }
 }
+
+  .card-figure--large:container(width >= 500) { @include column(1, $grid: $card-grid--large); }
 
 .card-content {
     display: block;
-    margin-top: 1.5em;
 
-    .card.horizontal & {
-        @include media('>xsmall') {
-            @include column(2, $card-grid);
-            margin-top: 0;
-        }
+    .card-figure + & { margin-top: 1.5em; }
+
+    &:container("width >= 500px") {
+        @include column(1, $card-grid);
+        margin-top: 0;
     }
 
-    .card.horizontal.large & {
-        display: block;
-        margin-top: 1.5em;
-        padding: 0;
-        width: 100%;
-        flex: none;
+    .card-figure--large &:container("width >= 500px") {
+      @include column(2, $grid: $card-grid--large);
 
-        @include media('>medium') {
-            @include column(2, $grid: $card-grid--large);
-            flex: 1;
-            margin-top: 0;
-        }
+      @include yep(flexbox, no-ie) { @include flex(1); }
     }
-
-    .card-centered & { vertical-align: center; }
-
-    p:first-child { margin-top: 0; }
-}
-
-.card-button {
-    @extend .button;
-    @extend .button.text;
-    display: block;
-    margin-top: 1em;
-}
-
-.card-title {
-    @extend .title;
-    margin: 0;
-}
-
-.card-subtitle {
-    @extend .subtitle;
-    margin: 0;
-}
-
-.card-stats {
-    @extend .tabular;
-    @include font-scale(1);
-}
-
-.card-caption {
-    @include font-scale(1);
-    color: theme('text--tertiary');
-
-    // .card-stats + & {
-    //     @include border(top);
-    //     padding-top: 1em;
-    // }
 }
