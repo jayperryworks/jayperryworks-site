@@ -127,7 +127,6 @@ dfn {
  * Address differences between Firefox and other browsers.
  */
 hr {
-  -moz-box-sizing: content-box;
   box-sizing: content-box;
   height: 0; }
 
@@ -303,8 +302,6 @@ input[type="radio"] {
 input[type="search"] {
   -webkit-appearance: textfield;
   /* 1 */
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
   /* 2 */
   box-sizing: content-box; }
 
@@ -1248,7 +1245,9 @@ There are also utility classes that allow you to quickly add a border to a conta
   text-align: center; }
   .csstransforms .l-centered {
     left: 50%;
-    transform: translateX(-50%); }
+    -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+            transform: translateX(-50%); }
 
 .l-centered-block {
   display: block;
@@ -1373,7 +1372,8 @@ Wrappers
      * https://www.drupal.org/node/897638
      */ }
     .is-visually_hidden.focusable:active, .is-visually_hidden.focusable:focus {
-      clip-path: auto;
+      -webkit-clip-path: auto;
+              clip-path: auto;
       height: auto;
       overflow: visible;
       position: static;
@@ -1564,7 +1564,6 @@ input, textarea, select {
   font-weight: "normal";
   font-style: "normal";
   -webkit-transition: all 0.25s;
-  -moz-transition: all 0.25s;
   transition: all 0.25s;
   padding: 0.5em 1em;
   border-radius: 3px;
@@ -1629,7 +1628,6 @@ You can mix and match classes to get the hierarchy/size you need. "small primary
 // -------------------------------------------------------------------------- */
 button, .button {
   -webkit-transition: all 0.25s;
-  -moz-transition: all 0.25s;
   transition: all 0.25s;
   font-family: "guardian-sans-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
   font-weight: normal;
@@ -1686,7 +1684,6 @@ button, .button {
 // -------------------------------------------------------------------------- */
 .button-price {
   -webkit-transition: all 0.25s;
-  -moz-transition: all 0.25s;
   transition: all 0.25s;
   display: inline-block;
   margin-right: 1em;

@@ -22,7 +22,7 @@
       } do %>
         <h2 class="t-heading t-beta"><%= article.title %></h2>
         <% if article.data.subtitle.present? %>
-          <span class="t-heading t-heading--sub t-cappa"><%= article.subtitle %></span>
+          <span class="t-heading t-heading--sub t-cappa"><%= article.data.subtitle %></span>
         <% end %>
         <%= article.summary %>
         <button class="button button--text l-margin-top">Read more &rsaquo;</button>
