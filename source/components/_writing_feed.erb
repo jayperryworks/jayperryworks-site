@@ -16,13 +16,16 @@
 <ul class="feed<%= ' #{classes}' if classes %>">
   <% articles.each do |article| %>
     <li class="feed-item">
-      <% component "card", locals: { image: article.data.image.present? ? article.url + article.data.image : false } do %>
-        <h2 class="t-heading t-beta"><%= link_to article.title, article.url %></h2>
+      <% component "card", locals: {
+        link: article.url,
+        image: article.data.image.present? ? article.url + article.data.image : false
+      } do %>
+        <h2 class="t-heading t-beta"><%= article.title %></h2>
         <% if article.data.subtitle.present? %>
-          <%= link_to article.data.subtitle, article.url, :class => "t-heading t-heading--sub t-cappa" %>
+          <span class="t-heading t-heading--sub t-cappa"><%= article.subtitle %></span>
         <% end %>
         <%= article.summary %>
-        <%= link_to "Read more &rsaquo;", article.url, :class => "button button--text l-margin-top" %>
+        <button class="button button--text l-margin-top">Read more &rsaquo;</button>
       <% end %>
     </li>
   <% end %>

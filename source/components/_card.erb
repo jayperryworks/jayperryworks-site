@@ -12,24 +12,22 @@
 
   Styles:
   - components/card.scss
-  - components/button.scss
 %>
 
 <%
-  subheading ||= false
   image ||= false
-  action ||= false
+  alt ||= false
   classes ||= false
 %>
 
 
-<div class="card<%= ' #{classes}' if classes %>">
+<a class="card<%= ' #{classes}' if classes %>" href="<%= link %>">
   <% if image %>
-    <% link_to link, :class => "card-figure" do %>
-      <%= image_tag image, :alt => heading %>
-    <% end %>
+    <div class="card-figure">
+      <%= image_tag image, :alt => alt || "Figure" %>
+    </div>
   <% end %>
   <div class="card-content">
     <%= yield %>
   </div>
-</div>
+</a>
