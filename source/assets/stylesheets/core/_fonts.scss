@@ -65,7 +65,7 @@ $trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
 }
 
 @mixin font-accent($style: 'normal') {
-  font-family: "guardian-sans-#{$style}", $georgia;
+  font-family: "guardian-sans-#{$style}", $trebuchet;
   font-weight: normal;
   font-style: $style;
 }
