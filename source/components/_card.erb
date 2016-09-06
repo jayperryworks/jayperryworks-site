@@ -4,9 +4,9 @@
 
   Locals:
   - STRING link: url the card links to
-  - STRING heading: card heading
-  - STRING subheading (optional): a subheading, if you'd like one
-  - STRING image (optional): path or url of image to include
+  - STRING figure (optional): path or url of image to include
+  - STRING figure_pos (optional): on wider screens, does the image appear on the left or right side? (default is right)
+  - STRING figure_size
   - STRING action (optional): the action for the button, e.g. "Read more"
   - STRING classes (optional): additional modifier classes, e.g. .l-margin
 
@@ -15,19 +15,21 @@
 %>
 
 <%
-  image ||= false
+  figure ||= false
+  figure_pos ||= "right"
+  figure_size ||= "default"
   alt ||= false
   classes ||= false
 %>
 
 
-<a class="card<%= ' #{classes}' if classes %>" href="<%= link %>">
-  <% if image %>
-    <div class="card-figure">
-      <%= image_tag image, :alt => alt || "Figure" %>
-    </div>
+<div class="card<%= ' #{classes}' if classes %>">
+  <% if figure %>
+    <a class="card-figure<%= ' #{card-figure--left}' if figure_pos == "left" %><%= ' #{card-figure--large}' if figure_size == "large" %>" href="<%= link %>">
+      <%= image_tag figure, :alt => alt || "Figure" %>
+    </a>
   <% end %>
   <div class="card-content">
     <%= yield %>
   </div>
-</a>
+</div>

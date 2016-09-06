@@ -33,10 +33,16 @@ body {
 h1, h2, h3, h4, h5, h6,
 .t-heading {
     @include font-display;
+    @include color('text' 'primary');
+    display: block;
     line-height: 1.2;
     margin: 0;
 
-    a { color: inherit; }
+    a {
+      color: inherit;
+
+      &:hover, &:active { @include color('highlight'); }
+    }
 
     strong {
         font-family: inherit;
@@ -45,13 +51,25 @@ h1, h2, h3, h4, h5, h6,
     }
 }
 
+  a.t-heading {
+    @include color('text' 'primary');
+
+    &:hover, &:active { @include color('highlight'); }
+  }
+
 // body/inline text
 p {
     @include scale-type('zeta');
     @include color('text' 'secondary');
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+
+    & + &,
+    &:first-of-type { margin-top: 1em; }
 }
 
 a {
+    @include transition-default;
     @include color('highlight');
     text-decoration: none;
 }
@@ -85,8 +103,19 @@ address,
 
 // type scale helpers
 @each $name, $size in $scale-type {
-    .t-scale-#{$name} { @include scale-type($size); }
+    .t-scale-#{$name} { @include scale-type($name); }
 }
+
+.t-heading--sub {
+  @include font-accent;
+  @include color('text' 'tertiary');
+
+  .t-heading + & { margin-top: 0.25em; }
+
+  strong { @include font-accent('bold'); }
+}
+
+  a.t-heading--sub { @include color('text' 'tertiary'); }
 
 // the first paragraph, often set slightly bigger
 .t-lead {

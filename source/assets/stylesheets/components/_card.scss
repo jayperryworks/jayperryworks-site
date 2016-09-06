@@ -34,24 +34,25 @@ $card-bp: 'medium';
     @include yep(flexbox, no-ie) { display: block; }
   }
 
-  .card-content + & { margin-top: 1.5em; }
+  .card-content + & { @include rem(margin-top, gutter()); }
 }
 
-  .card-figure--large:container(width >= 500) { @include column(1, $grid: $card-grid--large); }
+  .card-figure--large:container("width >= 500px") { @include column(1, $grid: $card-grid--large); }
 
 .card-content {
-    display: block;
+  @include type-size-default;
+  display: block;
 
-    .card-figure + & { margin-top: 1.5em; }
+  .card-figure + & { @include rem(margin-top, gutter()); }
 
-    &:container("width >= 500px") {
-        @include column(1, $card-grid);
-        margin-top: 0;
-    }
+  &:container("width >= 500px") {
+      @include column(1, $card-grid);
+      margin-top: 0;
+  }
 
-    .card-figure--large &:container("width >= 500px") {
-      @include column(2, $grid: $card-grid--large);
+  .card-figure--large &:container("width >= 500px") {
+    @include column(2, $grid: $card-grid--large);
 
-      @include yep(flexbox, no-ie) { @include flex(1); }
-    }
+    @include yep(flexbox, no-ie) { @include flex(1); }
+  }
 }

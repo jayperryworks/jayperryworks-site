@@ -37,11 +37,11 @@ $scale-type: (
     'alpha'   : 57px,
     'beta'    : 39px,
     'cappa'   : 28px,
-    'delta'   : 23px,
+    'delta'   : 19px,
     'epsilon' : 16px,
     'zeta'    : 13px,
     'eta'     : 11px,
-) !default;
+);
 
 @function scale-type($size) {
     @return map-get($scale-type, $size);

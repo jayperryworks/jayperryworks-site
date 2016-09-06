@@ -18,14 +18,14 @@
     <li class="feed-item">
       <% component "card", locals: {
         link: article.url,
-        image: article.data.image.present? ? article.url + article.data.image : false
+        figure: article.data.image.present? ? article.url + article.data.image : false
       } do %>
-        <h2 class="t-heading t-beta"><%= article.title %></h2>
+        <h2 class="t-heading t-scale-cappa"><%= link_to article.title, article.url %></h2>
         <% if article.data.subtitle.present? %>
-          <span class="t-heading t-heading--sub t-cappa"><%= article.data.subtitle %></span>
+          <%= link_to article.data.subtitle, article.url, class: "t-heading t-heading--sub t-scale-delta" %>
         <% end %>
         <%= article.summary %>
-        <button class="button button--text l-margin-top">Read more &rsaquo;</button>
+        <%= link_to "Read more &rsaquo;", article.url, class: "button button--text l-margin-top" %>
       <% end %>
     </li>
   <% end %>
