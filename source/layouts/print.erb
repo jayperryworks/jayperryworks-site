@@ -1,7 +1,7 @@
 <% wrap_layout :layout do %>
   <article class="post">
     <% component "panel", locals: { classes: "top" } do %>
-      <%= image_tag current_page.url + current_page.data.cover, :class => "cover", :alt => current_page.data.title %>
+      <%= image_tag current_page.url + current_page.data.cover, class: "cover", alt: current_page.data.title %>
 
       <!-- cover image and info -->
       <header class="post-header">
