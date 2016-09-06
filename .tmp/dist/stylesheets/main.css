@@ -1074,8 +1074,8 @@ There are also utility classes that allow you to quickly add a border to a conta
   margin: 0.6875rem !important; }
 
 .l-margin--wide {
-  margin: 39px !important;
-  margin: 2.4375rem !important; }
+  margin: 28px !important;
+  margin: 1.75rem !important; }
 
 .l-margin-left {
   margin-left: 16px !important;
@@ -1086,8 +1086,8 @@ There are also utility classes that allow you to quickly add a border to a conta
   margin-left: 0.6875rem !important; }
 
 .l-margin-left--wide {
-  margin-left: 39px !important;
-  margin-left: 2.4375rem !important; }
+  margin-left: 28px !important;
+  margin-left: 1.75rem !important; }
 
 .l-margin-right {
   margin-right: 16px !important;
@@ -1098,8 +1098,8 @@ There are also utility classes that allow you to quickly add a border to a conta
   margin-right: 0.6875rem !important; }
 
 .l-margin-right--wide {
-  margin-right: 39px !important;
-  margin-right: 2.4375rem !important; }
+  margin-right: 28px !important;
+  margin-right: 1.75rem !important; }
 
 .l-margin-top {
   margin-top: 16px !important;
@@ -1110,8 +1110,8 @@ There are also utility classes that allow you to quickly add a border to a conta
   margin-top: 0.6875rem !important; }
 
 .l-margin-top--wide {
-  margin-top: 39px !important;
-  margin-top: 2.4375rem !important; }
+  margin-top: 28px !important;
+  margin-top: 1.75rem !important; }
 
 .l-margin-bottom {
   margin-bottom: 16px !important;
@@ -1122,8 +1122,8 @@ There are also utility classes that allow you to quickly add a border to a conta
   margin-bottom: 0.6875rem !important; }
 
 .l-margin-bottom--wide {
-  margin-bottom: 39px !important;
-  margin-bottom: 2.4375rem !important; }
+  margin-bottom: 28px !important;
+  margin-bottom: 1.75rem !important; }
 
 .l-no-margin {
   margin: 0 !important;
@@ -1156,8 +1156,8 @@ There are also utility classes that allow you to quickly add a border to a conta
   padding: 0.6875rem !important; }
 
 .l-padding--wide {
-  padding: 39px !important;
-  padding: 2.4375rem !important; }
+  padding: 28px !important;
+  padding: 1.75rem !important; }
 
 .l-padding-left {
   padding-left: 16px !important;
@@ -1168,8 +1168,8 @@ There are also utility classes that allow you to quickly add a border to a conta
   padding-left: 0.6875rem !important; }
 
 .l-padding-left--wide {
-  padding-left: 39px !important;
-  padding-left: 2.4375rem !important; }
+  padding-left: 28px !important;
+  padding-left: 1.75rem !important; }
 
 .l-padding-right {
   padding-right: 16px !important;
@@ -1180,8 +1180,8 @@ There are also utility classes that allow you to quickly add a border to a conta
   padding-right: 0.6875rem !important; }
 
 .l-padding-right--wide {
-  padding-right: 39px !important;
-  padding-right: 2.4375rem !important; }
+  padding-right: 28px !important;
+  padding-right: 1.75rem !important; }
 
 .l-padding-top {
   padding-top: 16px !important;
@@ -1192,8 +1192,8 @@ There are also utility classes that allow you to quickly add a border to a conta
   padding-top: 0.6875rem !important; }
 
 .l-padding-top--wide {
-  padding-top: 39px !important;
-  padding-top: 2.4375rem !important; }
+  padding-top: 28px !important;
+  padding-top: 1.75rem !important; }
 
 .l-padding-bottom {
   padding-bottom: 16px !important;
@@ -1204,8 +1204,8 @@ There are also utility classes that allow you to quickly add a border to a conta
   padding-bottom: 0.6875rem !important; }
 
 .l-padding-bottom--wide {
-  padding-bottom: 39px !important;
-  padding-bottom: 2.4375rem !important; }
+  padding-bottom: 28px !important;
+  padding-bottom: 1.75rem !important; }
 
 .l-no-padding {
   padding: 0 !important;
@@ -1309,20 +1309,20 @@ Wrappers
 /* Utilities
 // -------------------------------------------------------------------------- */
 .l-wrapper {
-  max-width: 678px;
+  max-width: 656px;
   display: block;
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 39px;
-  padding-right: 39px; }
+  padding-left: 28px;
+  padding-right: 28px; }
   .l-wrapper::after {
     clear: both;
     content: "";
     display: table; }
 
 .l-wrapper--wide {
-  max-width: 1102px; }
+  max-width: 1080px; }
 
 .l-wrapper-outcrop {
   margin-left: -4em;
@@ -1890,6 +1890,36 @@ button, .button {
       -moz-flex: 1;
       -ms-flex: 1;
       flex: 1; }
+
+/* ==========================================================================
+// Feed component
+// -> a vertical list of things, usually content references (e.g. blog post excerpts)
+// ========================================================================== */
+/* Base
+// ---------------------------------------------------------------------------*/
+.feed {
+  display: block;
+  list-style: none;
+  margin-left: 0; }
+  .feed ul, .feed li {
+    padding-left: 0; }
+
+/* Submodules
+// ---------------------------------------------------------------------------*/
+.feed-item {
+  padding-bottom: 28px;
+  padding-bottom: 1.75rem;
+  margin-bottom: 28px;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid #e4e4e4;
+  border-color: #e4e4e4;
+  display: block; }
+  .feed-item.c-theme-reverse, .c-theme-reverse .feed-item {
+    border-color: #828282; }
+  .feed-item:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none; }
 
 /* --- Organisms ------------------------------------------------------------ */
 /* --- Regions -------------------------------------------------------------- */

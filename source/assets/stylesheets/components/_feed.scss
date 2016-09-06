@@ -1,11 +1,9 @@
 /* ==========================================================================
-// Header styles
+// Feed component
+// -> a vertical list of things, usually content references (e.g. blog post excerpts)
 // ========================================================================== */
 
 @import "../core/all";
-
-
-// $header-h: 50px;
 
 /* Base
 // ---------------------------------------------------------------------------*/
@@ -18,17 +16,13 @@
     ul, li { padding-left: 0; }
 }
 
-/* Modifiers
-// ---------------------------------------------------------------------------*/
-.feed.l-wrapper { margin-left: auto; }
-
 /* Submodules
 // ---------------------------------------------------------------------------*/
 
 .feed-item {
-    @include rem(padding-bottom, fs(7));
-    @include rem(margin-bottom, fs(7));
-    @include border(bottom);
+    @include rem(padding-bottom, gutter('wide'));
+    @include rem(margin-bottom, gutter('wide'));
+    @include border('bottom');
     display: block;
 
     &:last-child {
