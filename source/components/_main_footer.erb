@@ -1,11 +1,15 @@
-<%# --- Dependencies --- %>
-<%# core/all.scss %>
-<%# compoennts/card.scss %>
-<%# components/footer.scss %>
+<%#
+  Main Footer component
+  - lives at the bottom of each page
 
-<%# components/logo-jpw.erb %>
+  Locals:
+  BOOLEAN show_bio (optional): show the bio card? (only shown on interior pages, usually)
 
-<%# --- Locals --- %>
+  Styles:
+  components/card
+  components/main_footer
+%>
+
 <% show_bio ||= false %>
 
 <footer class="footer" role="contentinfo">

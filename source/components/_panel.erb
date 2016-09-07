@@ -8,18 +8,21 @@
     - STRING classes (optional): additional modifier classes for the container
 
     Styles:
-    components/_panel.scss
+    core/color
+    base/type
+    components/panel
 %>
 
 <%
   theme ||= "default"
   classes ||= false
   slug ||= false
+
 %>
 
 <section class="panel<%= " c-theme-#{theme}" if theme != "default" %><%= " #{classes}" if classes %>">
     <% if slug %>
-        <h1 class="panel-slug"><%= slug %></h1>
+        <h1 class="t-heading t-heading--slug t-scale-zeta t-centered"><%= slug %></h1>
     <% end %>
     <%= yield %>
 </section>

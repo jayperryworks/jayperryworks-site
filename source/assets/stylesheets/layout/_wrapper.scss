@@ -62,6 +62,8 @@ $layout-widths: (
     // wide version of the layout wrapper
     .l-wrapper--wide { @include l-base-w("wide"); }
 
+    .l-wrapper--full { max-width: 100%; }
+
 
 // a child element of a layout wrapper which is actually wider than its parent
 // -> it sticks out on either side

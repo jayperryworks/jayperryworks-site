@@ -1,38 +1,36 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-        <!-- Use title if it's in the page YAML frontmatter -->
-        <title><%= data.site.site_title %><% if current_page.data.title.present? && current_page.data.title != "home" %> | <%= current_page.data.title %><% end %></title>
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title><%= data.site.site_title %><% if current_page.data.title.present? && current_page.data.title != "home" %> | <%= current_page.data.title %><% end %></title>
 
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <%= stylesheet_link_tag :main %>
-        <%= javascript_include_tag "javascripts/critical.bundle" %>
-    </head>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <%= stylesheet_link_tag :main %>
+    <%= javascript_include_tag "javascripts/critical.bundle" %>
+  </head>
 
-    <%# component "spritemap" %>
+  <%# component "spritemap" %>
 
-    <body>
-        <header class="header" role="banner">
-            <%= component "logo-jp" %>
-            <% if current_page.data.title == "home" %>
-            <div class="header-intro">
-                <p class="header-title"><%= data.site.intro %></p>
-                <p class="header-subtitle"><%= data.site.statuses[0] %></p>
-            </div>
-            <% end %>
-        </header>
+  <body>
+    <%= component "main_header", locals: {
+      show_intro: current_page.data.title == "home" ? true : false,
+      intro: data.site.intro,
+      status: data.site.statuses[0]
+    } %>
 
-        <%= yield %>
+    <%= yield %>
 
-        <%= component "main_footer", :locals => { :show_bio => current_page.data.title == "home" ? false : true } %>
+    <%= component "main_footer", locals: {
+      show_bio: current_page.data.title == "home" ? false : true
+    } %>
 
-        <%= javascript_include_tag :bundle %>
-        <%= google_analytics_universal_tag %>
-    </body>
+    <%= javascript_include_tag :bundle %>
+    <%= google_analytics_universal_tag %>
+  </body>
 </html>

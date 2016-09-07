@@ -35,8 +35,10 @@ h1, h2, h3, h4, h5, h6,
     @include font-display;
     @include color('text' 'primary');
     display: block;
-    line-height: 1.2;
+    line-height: 1.3;
     margin: 0;
+
+    & + & { margin-top: 0.25em; }
 
     a {
       color: inherit;
@@ -106,16 +108,22 @@ address,
     .t-scale-#{$name} { @include scale-type($name); }
 }
 
-.t-heading--sub {
-  @include font-accent;
-  @include color('text' 'tertiary');
+.t-heading { /* see h1, h2, etc. above */ }
+  .t-heading--sub {
+    @include font-accent;
+    @include color('text' 'tertiary');
 
-  .t-heading + & { margin-top: 0.25em; }
+    .t-heading + & { margin-top: 0.25em; }
 
-  strong { @include font-accent('bold'); }
-}
+    strong { @include font-accent('bold'); }
+  }
 
-  a.t-heading--sub { @include color('text' 'tertiary'); }
+    a.t-heading--sub { @include color('text' 'tertiary'); }
+
+  .t-heading--slug {
+    @include font-accent("bold");
+    text-transform: uppercase;
+  }
 
 // the first paragraph, often set slightly bigger
 .t-lead {
