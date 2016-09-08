@@ -46,8 +46,7 @@
 /* --- Atoms ---------------------------------------------------------------- */
 @import "components/button";
 // @import "components/icon"; // not using any icons yet
-// @import "components/portrait";
-// @import "components/tag";
+@import "components/tag";
 
 /* --- Molecules ------------------------------------------------------------ */
 @import "components/card";
@@ -56,9 +55,8 @@
 // @import "components/jump_nav";
 
 /* --- Organisms ------------------------------------------------------------ */
-// @import "components/footer";
+@import "components/main_footer";
 // @import "components/gallery";
-@import "components/panel";
 
 /* --- Regions -------------------------------------------------------------- */
 // @import "components/post";

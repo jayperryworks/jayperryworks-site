@@ -12,28 +12,25 @@
 
 <% show_bio ||= false %>
 
-<footer class="footer" role="contentinfo">
-    <% unless show_bio == false %>
-        <div class="card horizontal centered l-wrapper narrow l-margin bottom">
-            <figure class="card-figure">
-                <%= image_tag "portrait.jpg", :alt => "Jay Perry" %>
-            </figure>
-            <div class="card-content">
-                <p><%= data.site.bio_blurb %></p>
-                <dl class="tags">
-                    <dt class="tags-label inline">Say hi</dt>
-                    <% data.site.social.each do |site| %>
-                    <dd><%= link_to site.name, site.link, :class => "tag" %></dd>
-                    <% end %>
-                </dl>
-            </div>
+<footer class="main_footer" role="contentinfo">
+  <% unless show_bio == false %>
+    <div class="l-wrapper l-margin-bottom">
+      <div class="card">
+        <figure class="card-figure">
+            <%= image_tag "portrait.jpg", :alt => "Jay Perry" %>
+        </figure>
+        <div class="card-content">
+            <p><%= data.site.bio_blurb %></p>
+            <dl class="tags">
+                <dt class="tags-label inline">Say hi</dt>
+                <% data.site.social.each do |site| %>
+                <dd><%= link_to site.name, site.link, :class => "tag" %></dd>
+                <% end %>
+            </dl>
         </div>
-    <% end %>
-    <div class="footer-section">
-        <div class="l-wrapper narrow">
-            <%= partial("components/logo-jpw", :locals => { :classes => "footer-logo" }) %>
-            <small class="footer-copyright">&copy; copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>
-            <!-- <a href="" class="footer-utility">Colophon</a> -->
-        </div>
+      </div>
+      <%= component "logo-jpw", locals: { classes: "footer-logo" } %>
+      <small class="footer-copyright">&copy; copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>
     </div>
+  <% end %>
 </footer>

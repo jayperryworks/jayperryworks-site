@@ -122,6 +122,9 @@ $border-widths: (
     @include breakpointify(".no-border-#{$side}", true) { border-#{$side}: none !important; }
 }
 
+.border-round { border-radius: $border-radius; }
+.border-circular { border-radius: 50%; }
+
 /* --- Modifiers ------------------------------------------------------------ */
 
 // make a border thicker

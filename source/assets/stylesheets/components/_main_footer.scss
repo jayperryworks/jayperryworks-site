@@ -3,41 +3,38 @@
 // ========================================================================== */
 
 @import "../core/all";
-@import "../base/heading";
-@import "../base/text";
-@import "../components/gallery";
 @import "../components/logo";
 
 /* Base
 // -------------------------------------------------------------------------- */
 
-.footer, footer {
-    @include border(top);
+.main_footer {
+    @include border('top');
     // margin-top: $gutter;
-    padding-top: $gutter-outside;
-    padding-bottom: $gutter-outside;
+    padding-top: gutter('wide');
+    padding-bottom: gutter('wide');
 }
 
 /* Submodules
 // -------------------------------------------------------------------------- */
 
-.footer-section {
-    @include border(top);
-    // margin-top: $gutter;
-    padding: $gutter-outside 0;
+// .main_footer-section {
+//     @include border(top);
+//     // margin-top: $gutter;
+//     padding: $gutter-outside 0;
 
-    &:first-child {
-        border-top: none;
-        // margin-top: 0;
-        padding-top: 0;
-    }
+//     &:first-child {
+//         border-top: none;
+//         // margin-top: 0;
+//         padding-top: 0;
+//     }
 
-    &:last-child {
-        padding-bottom: 0;
-    }
-}
+//     &:last-child {
+//         padding-bottom: 0;
+//     }
+// }
 
-.footer-logo {
+.main_footer-logo {
     @extend .logo;
     // margin-left: $gutter;
     height: em(26px);
@@ -53,7 +50,7 @@
     }
 }
 
-.footer-copyright {
+.main_footer-copyright {
     @include font-accent;
     display: block;
     // margin-left: $gutter;

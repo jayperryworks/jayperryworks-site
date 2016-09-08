@@ -20,17 +20,17 @@
   classes ||= false
 %>
 
-<aside class="post-meta<% borders.each do |border| %><%= " border-#{border}" %><% end %><%= ' #{classes}' if classes %>">
+<aside class="<% borders.each do |border| %><%= " border-#{border}" %><% end %><%= ' #{classes}' if classes %>">
   <% if date %>
     <time class="post-date"><%= date %></time>
   <% end %>
-  <span class="meta">
+  <span class="t-font-accent t-scale-zeta c-text-tertiary">
     <%= yield %>
   </span>
   <% if tags %>
-    <ul class="post-tags">
+    <ul class="tag-group">
       <% tags.each do |tag| %>
-        <li class="tag"><a href=""><%= tag %></a></li>
+        <li><%= link_to tag, tag.url, class: "tag" %></li>
       <% end %>
     </ul>
   <% end %>
