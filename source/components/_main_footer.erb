@@ -13,24 +13,24 @@
 <% show_bio ||= false %>
 
 <footer class="main_footer" role="contentinfo">
-    <div class="l-wrapper l-margin-bottom">
-      <% unless show_bio == false %>
-        <div class="card">
-          <figure class="card-figure">
-              <%= image_tag "portrait.jpg", :alt => "Jay Perry" %>
-          </figure>
-          <div class="card-content">
-              <p><%= data.site.bio_blurb %></p>
-              <dl class="tags">
-                  <dt class="tags-label inline">Say hi</dt>
-                  <% data.site.social.each do |site| %>
-                  <dd><%= link_to site.name, site.link, :class => "tag" %></dd>
-                  <% end %>
-              </dl>
-          </div>
+  <div class="l-wrapper l-margin-bottom">
+    <% unless show_bio == false %>
+      <div class="card">
+        <figure class="card-figure">
+          <%= image_tag "portrait.jpg", :alt => "Jay Perry" %>
+        </figure>
+        <div class="card-content">
+          <p><%= data.site.bio_blurb %></p>
+          <dl class="tag-group">
+            <dt class="tags-label">Say hi</dt>
+            <% data.site.social.each do |site| %>
+            <dd><%= link_to site.name, site.link, :class => "tag" %></dd>
+            <% end %>
+          </dl>
         </div>
-      <% end %>
-      <%= component "logo-jpw", locals: { classes: "footer-logo" } %>
-      <small class="footer-copyright">&copy; copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>
-    </div>
+      </div>
+    <% end %>
+    <%= component "logo-jpw", locals: { classes: "footer-logo" } %>
+    <small class="footer-copyright">&copy; copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>
+  </div>
 </footer>
