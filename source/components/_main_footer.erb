@@ -13,7 +13,7 @@
 <% show_bio ||= false %>
 
 <footer class="main_footer" role="contentinfo">
-  <div class="l-wrapper l-margin-bottom">
+  <div class="l-wrapper">
     <% unless show_bio == false %>
       <div class="card">
         <figure class="card-figure">
@@ -30,7 +30,7 @@
         </div>
       </div>
     <% end %>
-    <%= component "logo-jpw", locals: { classes: "footer-logo" } %>
-    <small class="footer-copyright">&copy; copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>
+    <%= component "logo-jpw", locals: { classes: "main_footer-lockup logo logo--jpw" } %>
+    <small class="main_footer-copyright">&copy; copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>
   </div>
 </footer>
