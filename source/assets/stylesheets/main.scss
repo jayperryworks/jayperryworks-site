@@ -23,8 +23,9 @@
 @import "layout/gutter";
 @import "layout/positioning";
 @import "layout/grid";
+@import "layout/gallery";
+@import "layout/feed";
 @import "layout/wrapper";
-// @import "layout/sidebar";
 @import "layout/visibility";
 
 /* /////////////////////////////////////////////////////////////////////////////
@@ -52,12 +53,9 @@
 /* --- Molecules ------------------------------------------------------------ */
 @import "components/card";
 @import "components/cover";
-@import "components/feed";
-// @import "components/jump_nav";
 
 /* --- Organisms ------------------------------------------------------------ */
 @import "components/main_footer";
-// @import "components/gallery";
 
 /* --- Regions -------------------------------------------------------------- */
 // @import "components/post";

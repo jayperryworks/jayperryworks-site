@@ -4,11 +4,11 @@ title: home
 
 <!-- Work section -->
 <% component "panel", locals: { slug: "Recent work" } do %>
-  <div class="l-wrapper">
+  <div class="l-wrapper l-wrapper--wide l-margin-top-wide">
     <%= component "work_gallery", :locals => { :prints => blog("work").articles } %>
 
-    <div class="t-centered">
-      <a class="button button--large l-margin-top" href="https://www.etsy.com/shop/jayperry" target="_blank">
+    <div class="t-centered l-margin-top-wide">
+      <a class="button button--large" href="https://www.etsy.com/shop/jayperry" target="_blank">
         More prints &amp; paintings available at <strong>Etsy</strong>
       </a>
     </div>

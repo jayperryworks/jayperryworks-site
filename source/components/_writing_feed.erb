@@ -13,9 +13,9 @@
 
 <% classes ||= false %>
 
-<ul class="feed<%= ' #{classes}' if classes %>">
+<ul class="l-feed<%= ' #{classes}' if classes %>">
   <% articles.each do |article| %>
-    <li class="feed-item">
+    <li class="l-feed-item">
       <% component "card", locals: {
         link: article.url,
         figure: article.data.image.present? ? article.url + article.data.image : false

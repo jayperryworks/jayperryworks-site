@@ -1294,123 +1294,9 @@ Grids
 /* Utilities
 // -------------------------------------------------------------------------- */
 /* =============================================================================
-// Wrapper layout classes
-// ===========================================================================*/
-/*doc
----
-title: Wrapper
-name: wrapper
-category: Layout
----
-
-Wrappers
-
-```html_example
-<a href="#" class="button l-abs top right">Button @ top right</a>
-```
-
-*/
-/* Settings & mixins
-// -------------------------------------------------------------------------- */
-/* Utilities
-// -------------------------------------------------------------------------- */
-.l-wrapper {
-  max-width: 656px;
-  display: block;
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 28px;
-  padding-right: 28px; }
-  .l-wrapper::after {
-    clear: both;
-    content: "";
-    display: table; }
-
-.l-wrapper--wide {
-  max-width: 1080px; }
-
-.l-wrapper--full {
-  max-width: 100%; }
-
-.l-wrapper-outcrop {
-  margin-left: -4em;
-  margin-right: -4em; }
-
-.l-wrapper-outcrop\@medium {
-  margin-left: 0;
-  margin-right: 0; }
-  @media (min-width: 62.01em) {
-    .l-wrapper-outcrop\@medium {
-      margin-left: -4em;
-      margin-right: -4em; } }
-
-.l-wrapper-outcrop\@large {
-  margin-left: 0;
-  margin-right: 0; }
-  @media (min-width: 75.01em) {
-    .l-wrapper-outcrop\@large {
-      margin-left: -4em;
-      margin-right: -4em; } }
-
-/* =============================================================================
-// Visibility
-// -> hide and show things in various ways
+//  Gallery utilities
+// -> arrange child elements into rows and columns
 // ========================================================================== */
-.is-visually_hidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  width: 1px;
-  /*
-     * Extends the .visuallyhidden class to allow the element
-     * to be focusable when navigated to via the keyboard:
-     * https://www.drupal.org/node/897638
-     */ }
-  .is-visually_hidden.focusable {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    width: 1px;
-    /*
-     * Extends the .visuallyhidden class to allow the element
-     * to be focusable when navigated to via the keyboard:
-     * https://www.drupal.org/node/897638
-     */ }
-    .is-visually_hidden.focusable:active, .is-visually_hidden.focusable:focus {
-      clip-path: auto;
-      height: auto;
-      overflow: visible;
-      position: static;
-      width: auto; }
-
-.is-hidden {
-  display: none !important; }
-
-/* /////////////////////////////////////////////////////////////////////////////
-// Base
-// -> global default element styles & utilities
-///////////////////////////////////////////////////////////////////////////// */
-/* =============================================================================
-// Global box model and scaling
-// ========================================================================== */
-html {
-  font-size: 95%;
-  box-sizing: border-box; }
-  @media (min-width: 42.01em) {
-    html {
-      font-size: 100%; } }
-  @media (min-width: 62.01em) {
-    html {
-      font-size: 110%; } }
-
-*, *:before, *:after {
-  box-sizing: inherit; }
-
 /* =============================================================================
 //  Global type styles
 // ========================================================================== */
@@ -1648,6 +1534,264 @@ a.t-heading--sub {
   text-align: right; }
 
 /* use the best ampersands from common system fonts... */
+/* Base
+// -------------------------------------------------------------------------- */
+.l-gallery {
+  display: block;
+  position: relative;
+  font-size: 0;
+  list-style: none; }
+  .flexbox.no-ie .l-gallery {
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -moz-box-direction: normal;
+    box-direction: normal;
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-direction: row;
+    -webkit-box-lines: multiple;
+    -moz-box-lines: multiple;
+    box-lines: multiple;
+    -webkit-flex-wrap: wrap;
+    -moz-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: stretch;
+    -moz-box-align: stretch;
+    box-align: stretch;
+    -webkit-align-items: stretch;
+    -moz-align-items: stretch;
+    -ms-align-items: stretch;
+    -o-align-items: stretch;
+    align-items: stretch;
+    -ms-flex-align: stretch; }
+  .l-gallery > ul {
+    padding-left: 0;
+    margin-left: 0;
+    list-style: none; }
+  @media (min-width: 30.01em) {
+    .l-gallery {
+      margin-left: -2px;
+      margin-right: -2px; }
+      .flexbox.no-ie .l-gallery {
+        display: -webkit-box;
+        display: -moz-box;
+        display: box;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flexbox;
+        display: flex; } }
+
+/* Subcomponents
+// -------------------------------------------------------------------------- */
+/* --- Gallery Items -------------------------------------------------------- */
+.l-gallery-item {
+  font-size: 16px;
+  font-size: 1rem;
+  display: block;
+  position: relative;
+  margin: 0;
+  padding-bottom: 4px;
+  vertical-align: top; }
+  @media (min-width: 30.01em) {
+    .l-gallery-item {
+      display: inline-block;
+      width: 50%;
+      padding-right: 2px;
+      padding-left: 2px;
+      vertical-align: top; }
+      .flexbox.no-ie .l-gallery-item {
+        -webkit-box-flex: 0;
+        -moz-box-flex: 0;
+        box-flex: 0;
+        -webkit-flex: 0 0 auto;
+        -moz-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+        flex: 0 0 auto;
+        display: -webkit-box;
+        display: -moz-box;
+        display: box;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flexbox;
+        display: flex; } }
+  @media (min-width: 42.01em) {
+    .l-gallery-item {
+      display: inline-block;
+      width: 33.33333%;
+      padding-right: 2px;
+      padding-left: 2px;
+      vertical-align: top; }
+      .flexbox.no-ie .l-gallery-item {
+        -webkit-box-flex: 0;
+        -moz-box-flex: 0;
+        box-flex: 0;
+        -webkit-flex: 0 0 auto;
+        -moz-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+        flex: 0 0 auto;
+        display: -webkit-box;
+        display: -moz-box;
+        display: box;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flexbox;
+        display: flex; } }
+
+/* Modifiers
+// -------------------------------------------------------------------------- */
+/* --- Column sizing -------------------------------------------------------- */
+/* ==========================================================================
+// Feed component
+// -> a vertical list of things, usually content references (e.g. blog post excerpts)
+// ========================================================================== */
+/* Base
+// ---------------------------------------------------------------------------*/
+.l-feed {
+  display: block;
+  list-style: none;
+  margin-left: 0; }
+  .l-feed ul, .l-feed li {
+    padding-left: 0; }
+
+/* Submodules
+// ---------------------------------------------------------------------------*/
+.l-feed-item {
+  padding-bottom: 28px;
+  padding-bottom: 1.75rem;
+  margin-bottom: 28px;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid #e4e4e4;
+  border-color: #e4e4e4;
+  display: block; }
+  .l-feed-item.c-theme-reverse, .c-theme-reverse .l-feed-item {
+    border-color: #828282; }
+  .l-feed-item:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none; }
+
+/* =============================================================================
+// Wrapper layout classes
+// ===========================================================================*/
+/*doc
+---
+title: Wrapper
+name: wrapper
+category: Layout
+---
+
+Wrappers
+
+```html_example
+<a href="#" class="button l-abs top right">Button @ top right</a>
+```
+
+*/
+/* Settings & mixins
+// -------------------------------------------------------------------------- */
+/* Utilities
+// -------------------------------------------------------------------------- */
+.l-wrapper {
+  max-width: 656px;
+  display: block;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 28px;
+  padding-right: 28px; }
+  .l-wrapper::after {
+    clear: both;
+    content: "";
+    display: table; }
+
+.l-wrapper--wide {
+  max-width: 1080px; }
+
+.l-wrapper--full {
+  max-width: 100%; }
+
+.l-wrapper-outcrop {
+  margin-left: -4em;
+  margin-right: -4em; }
+
+.l-wrapper-outcrop\@medium {
+  margin-left: 0;
+  margin-right: 0; }
+  @media (min-width: 62.01em) {
+    .l-wrapper-outcrop\@medium {
+      margin-left: -4em;
+      margin-right: -4em; } }
+
+.l-wrapper-outcrop\@large {
+  margin-left: 0;
+  margin-right: 0; }
+  @media (min-width: 75.01em) {
+    .l-wrapper-outcrop\@large {
+      margin-left: -4em;
+      margin-right: -4em; } }
+
+/* =============================================================================
+// Visibility
+// -> hide and show things in various ways
+// ========================================================================== */
+.is-visually_hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+  /*
+     * Extends the .visuallyhidden class to allow the element
+     * to be focusable when navigated to via the keyboard:
+     * https://www.drupal.org/node/897638
+     */ }
+  .is-visually_hidden.focusable {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    /*
+     * Extends the .visuallyhidden class to allow the element
+     * to be focusable when navigated to via the keyboard:
+     * https://www.drupal.org/node/897638
+     */ }
+    .is-visually_hidden.focusable:active, .is-visually_hidden.focusable:focus {
+      clip-path: auto;
+      height: auto;
+      overflow: visible;
+      position: static;
+      width: auto; }
+
+.is-hidden {
+  display: none !important; }
+
+/* /////////////////////////////////////////////////////////////////////////////
+// Base
+// -> global default element styles & utilities
+///////////////////////////////////////////////////////////////////////////// */
+/* =============================================================================
+// Global box model and scaling
+// ========================================================================== */
+html {
+  font-size: 95%;
+  box-sizing: border-box; }
+  @media (min-width: 42.01em) {
+    html {
+      font-size: 100%; } }
+  @media (min-width: 62.01em) {
+    html {
+      font-size: 110%; } }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
 /* =============================================================================
 //  Global list styles
 // ========================================================================== */
@@ -2038,36 +2182,6 @@ button, .button {
   padding: 0 28px;
   max-height: 600px;
   max-height: 80vh; }
-
-/* ==========================================================================
-// Feed component
-// -> a vertical list of things, usually content references (e.g. blog post excerpts)
-// ========================================================================== */
-/* Base
-// ---------------------------------------------------------------------------*/
-.feed {
-  display: block;
-  list-style: none;
-  margin-left: 0; }
-  .feed ul, .feed li {
-    padding-left: 0; }
-
-/* Submodules
-// ---------------------------------------------------------------------------*/
-.feed-item {
-  padding-bottom: 28px;
-  padding-bottom: 1.75rem;
-  margin-bottom: 28px;
-  margin-bottom: 1.75rem;
-  border-bottom: 1px solid #e4e4e4;
-  border-color: #e4e4e4;
-  display: block; }
-  .feed-item.c-theme-reverse, .c-theme-reverse .feed-item {
-    border-color: #828282; }
-  .feed-item:last-child {
-    padding-bottom: 0;
-    margin-bottom: 0;
-    border-bottom: none; }
 
 /* --- Organisms ------------------------------------------------------------ */
 /* =============================================================================
