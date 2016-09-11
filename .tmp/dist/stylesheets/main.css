@@ -2083,12 +2083,13 @@ button, .button {
   display: block;
   position: relative;
   padding-left: 0;
+  margin-left: 0;
+  margin-top: 0;
   list-style: none; }
-  .tag-group .tag {
-    margin-top: 0;
-    margin-right: 0.25em;
-    margin-bottom: 0.5em; }
-    .tag-group .tag:last-child {
+  .tag-group > li, .tag-group .tag-group-item {
+    display: inline-block;
+    margin: 0 0.25em 0.5em 0; }
+    .tag-group > li:last-child, .tag-group .tag-group-item:last-child {
       margin-right: 0; }
 
 /* --- Molecules ------------------------------------------------------------ */

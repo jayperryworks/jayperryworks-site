@@ -24,15 +24,10 @@
     </main>
 
     <footer class="l-wrapper l-margin-top-wide l-margin-bottom">
-      <dl class="tag-group border-top l-padding-top">
-        <dt class="t-heading t-heading--slug t-scale-eta l-margin-bottom-narrow c-text-tertiary">Filed under:</dt>
-          <% current_page.data.tags.each do |tag| %>
-            <dd class="tag"><a href=""><%= tag %></a></dd>
-          <% end %>
-          <% current_page.data.tags.each do |tag| %>
-            <dd class="tag"><a href=""><%= tag %></a></dd>
-          <% end %>
-        </dl>
+      <div class="border-top l-padding-top">
+        <h1 class="t-heading t-heading--slug t-scale-eta l-margin-bottom-narrow c-text-tertiary">Filed under:</h1>
+        <%= component "tag_list", locals: { tags: current_page.data.tags } %>
+      </div>
     </footer>
 
   </article>
