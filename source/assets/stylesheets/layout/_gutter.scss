@@ -10,13 +10,17 @@ $gutters: (
     'narrow'     : scale-type('eta'),
     'default'    : scale-type('epsilon'),
     'wide'       : scale-type('cappa'),
-    'extra-wide' : scale-type('alpha')
+    'extra_wide' : scale-type('alpha')
 );
 
 $gutter-sides: left right top bottom;
 
 @function gutter($size: 'default') {
+  @if $size != 'extra wide' {
     @return map-get($gutters, $size);
+  } @else {
+    @return map-get($gutters, 'extra_wide');
+  }
 }
 
 // add wide gutters (on either side) to a given container width
@@ -30,13 +34,20 @@ $gutter-sides: left right top bottom;
 
 .l-margin { @include rem(margin, gutter()); }
 
-.l-margin-narrow { @include rem(margin, gutter('narrow') !important); }
-.l-margin-wide { @include rem(margin, gutter('wide') !important); }
+@each $name, $length in $gutters {
+  @if $name != 'default' {
+    .l-margin-#{$name} { @include rem(margin, gutter($name) !important); }
+  }
+}
 
 @each $side in $gutter-sides {
     .l-margin-#{$side} { @include rem(margin-#{$side}, gutter() !important); }
-    .l-margin-#{$side}-narrow { @include rem(margin-#{$side}, gutter('narrow') !important); }
-    .l-margin-#{$side}-wide { @include rem(margin-#{$side}, gutter('wide') !important); }
+
+    @each $name, $length in $gutters {
+      @if $name != 'default' {
+        .l-margin-#{$side}-#{$name} { @include rem(margin-#{$side}, gutter($name) !important); }
+      }
+    }
 }
 
 .l-no-margin { @include rem(margin, 0 !important); }
@@ -50,13 +61,20 @@ $gutter-sides: left right top bottom;
 
 .l-padding { @include rem(padding, gutter() !important); }
 
-.l-padding-narrow { @include rem(padding, gutter('narrow') !important); }
-.l-padding-wide { @include rem(padding, gutter('wide') !important); }
+@each $name, $length in $gutters {
+  @if $name != 'default' {
+    .l-padding-#{$name} { @include rem(padding, gutter($name) !important); }
+  }
+}
 
 @each $side in $gutter-sides {
     .l-padding-#{$side} { @include rem(padding-#{$side}, gutter() !important); }
-    .l-padding-#{$side}-narrow { @include rem(padding-#{$side}, gutter('narrow') !important); }
-    .l-padding-#{$side}-wide { @include rem(padding-#{$side}, gutter('wide') !important); }
+
+    @each $name, $length in $gutters {
+      @if $name != 'default' {
+        .l-padding-#{$side}-#{$name} { @include rem(padding-#{$side}, gutter($name) !important); }
+      }
+    }
 }
 
 .l-no-padding { @include rem(padding, 0 !important); }

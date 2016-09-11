@@ -26,6 +26,7 @@ $type-line_height: 1.5;
 
 body {
     @include font-body;
+    @include type-size-default;
     line-height: $type-line_height;
 }
 
@@ -61,7 +62,7 @@ h1, h2, h3, h4, h5, h6,
 
 // body/inline text
 p {
-    @include scale-type('zeta');
+    @include scale-type('epsilon');
     @include color('text' 'secondary');
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;

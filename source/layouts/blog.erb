@@ -1,32 +1,43 @@
 <% wrap_layout :layout do %>
-    <article class="post">
-      <header class="post-header">
-          <h1><%= current_page.data.title %></h1>
-          <% if current_page.data.subtitle.present? %>
-            <span class="subtitle beta"><%= current_page.data.subtitle %></span>
-          <% end %>
-      </header>
-      <div class="post-content l-wrapper narrow">
+  <article class="l-margin-top-wide">
+    <header class="l-wrapper">
+      <h1 class="t-heading t-scale-beta"><%= current_page.data.title %></h1>
+      <% if current_page.data.subtitle.present? %>
+        <span class="t-heading t-heading--sub t-scale-cappa">Lorem ipsum dolor sit amet adipiscig elit<%# current_page.data.subtitle %></span>
+      <% end %>
+    </header>
 
-        <aside class="post-meta">
-            <time class="post-date"><%= current_page.date.strftime("%B %-d, %Y") %></time>
-            <dl class="post-tags">
-                <dt class="tags-label">Filed under</dt>
-                <% current_page.data.tags.each do |tag| %>
-                    <dd class="tag"><a href=""><%= tag %></a></dd>
-                <% end %>
-            </dl>
-        </aside>
+    <main class="l-wrapper l-margin-top-narrow">
+      <%= component "meta", locals: {
+        date: current_page.date.strftime("%B %-d, %Y"),
+        borders: "none",
+        classes: "l-margin-bottom"
+      } %>
 
-        <% if current_page.data.image.present? %>
-            <%= image_tag current_page.url + current_page.data.image, :class => "post-feature_image", :alt => current_page.data.title %>
-        <% end %>
+      <% if current_page.data.image.present? %>
+        <%= image_tag current_page.url + current_page.data.image, :class => "l-margin-bottom-narrow", :alt => current_page.data.title %>
+      <% end %>
 
+      <div class="content">
         <%= yield %>
       </div>
-    </article>
-    <nav class="pagination">
-        <%#= current_page.date %>
-        <%# blog.articles.select {|article| article.data[:public] }.each do |article| %>
-    </nav>
+    </main>
+
+    <footer class="l-wrapper l-margin-top-wide l-margin-bottom">
+      <dl class="tag-group border-top l-padding-top">
+        <dt class="t-heading t-heading--slug t-scale-eta l-margin-bottom-narrow c-text-tertiary">Filed under:</dt>
+          <% current_page.data.tags.each do |tag| %>
+            <dd class="tag"><a href=""><%= tag %></a></dd>
+          <% end %>
+          <% current_page.data.tags.each do |tag| %>
+            <dd class="tag"><a href=""><%= tag %></a></dd>
+          <% end %>
+        </dl>
+    </footer>
+
+  </article>
+  <nav class="pagination">
+      <%#= current_page.date %>
+      <%# blog.articles.select {|article| article.data[:public] }.each do |article| %>
+  </nav>
 <% end %>

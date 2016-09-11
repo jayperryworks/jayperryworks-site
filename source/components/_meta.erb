@@ -5,6 +5,7 @@
   Locals:
   - STRING date: date in whatever format you'd like to pass in
   - ARRAY tags: list of tags to be included
+  - STRING info: additional info to add
   - ARRAY borders: sides to add borders to, e.g. ["top", "bottom"]
   - STRING classes: additional modifier classes for container
 
@@ -16,17 +17,28 @@
 <%
   date ||= false
   tags ||= false
-  borders ||= ["bottom"]
-  classes ||= false
+  info ||= false
+  borders ||= [ "bottom" ]
+
+  # make a list of border classes from the borders array
+  border_list = ""
+
+  if borders != "none"
+    borders.each do |side|
+      border_list << " border-#{side} l-padding-#{side}-narrow"
+    end
+  end
 %>
 
-<aside class="<% borders.each do |border| %><%= " border-#{border}" %><% end %><%= ' #{classes}' if classes %>">
+<aside class="<%= border_list %><%= " #{classes}" if classes %>">
   <% if date %>
-    <time class="post-date"><%= date %></time>
+    <time class="t-font-accent t-scale-zeta c-text-tertiary"><%= date %></time>
   <% end %>
-  <span class="t-font-accent t-scale-zeta c-text-tertiary">
-    <%= yield %>
-  </span>
+  <% if info %>
+    <span class="t-font-accent t-scale-zeta c-text-tertiary">
+      <%= info %>
+    </span>
+  <% end %>
   <% if tags %>
     <ul class="tag-group">
       <% tags.each do |tag| %>
