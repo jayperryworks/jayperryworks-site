@@ -36,7 +36,7 @@ h1, h2, h3, h4, h5, h6,
     @include font-display;
     @include color('text' 'primary');
     display: block;
-    line-height: 1.15;
+    line-height: 1.2;
     margin: 0;
 
     & + & { margin-top: 0.25em; }
@@ -127,9 +127,18 @@ address,
   }
 
 // the first paragraph, often set slightly bigger
-.t-lead {
-    @include scale-type('epsilon');
-    @include color('text' 'primary');
+.t-lead,
+.content p:first-of-type {
+    &:first-letter {
+        @include font-display;
+        @include color('text' 'primary');
+        display: inline-block;
+        float: left;
+        vertical-align: baseline;
+        margin: 0em 0.1em -0.2em -0.03em;
+        font-size: 3.2em;
+        line-height: 1;
+    }
 }
 
 .t-caps { text-transform: uppercase !important; }

@@ -75,7 +75,7 @@ $themes: (
     'default': (
         'text': (
             'primary'   : $black,
-            'secondary' : darken($gray, 10),
+            'secondary' : lighten($black, 15),
             'tertiary'  : $gray,
             'body'      : darken($gray, 30),
         ),

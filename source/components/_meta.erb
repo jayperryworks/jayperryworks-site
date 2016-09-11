@@ -16,7 +16,6 @@
 
 <%
   date ||= false
-  tags ||= false
   info ||= false
   borders ||= [ "bottom" ]
 
@@ -38,12 +37,5 @@
     <span class="t-font-accent t-scale-zeta c-text-tertiary">
       <%= info %>
     </span>
-  <% end %>
-  <% if tags %>
-    <ul class="tag-group">
-      <% tags.each do |tag| %>
-        <li><%# link_to tag, tag.url, class: "tag" %></li>
-      <% end %>
-    </ul>
   <% end %>
 </aside>

@@ -127,7 +127,6 @@ dfn {
  * Address differences between Firefox and other browsers.
  */
 hr {
-  -moz-box-sizing: content-box;
   box-sizing: content-box;
   height: 0; }
 
@@ -303,8 +302,6 @@ input[type="radio"] {
 input[type="search"] {
   -webkit-appearance: textfield;
   /* 1 */
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
   /* 2 */
   box-sizing: content-box; }
 
@@ -609,7 +606,7 @@ The second parameter is optional, and theme() will default to the 'default' them
 // -> use the helper class to apply a theme to a module
 // -------------------------------------------------------------------------- */
 body, .c-theme-default {
-  color: #989898;
+  color: #757575;
   background-color: #fff;
   border-color: #e4e4e4 !important; }
   body ::selection, .c-theme-default ::selection {
@@ -643,7 +640,7 @@ body, .c-theme-default {
     color: #fff !important; }
 
 .c-text-secondary {
-  color: #989898 !important; }
+  color: #757575 !important; }
   .c-text-secondary.c-theme-reverse, .c-theme-reverse .c-text-secondary {
     color: #e4e4e4 !important; }
 
@@ -1294,7 +1291,9 @@ There are also utility classes that allow you to quickly add a border to a conta
   text-align: center; }
   .csstransforms .l-centered {
     left: 50%;
-    transform: translateX(-50%); }
+    -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+            transform: translateX(-50%); }
 
 .l-centered-block {
   display: block;
@@ -1360,7 +1359,7 @@ h1, h2, h3, h4, h5, h6,
   font-style: "normal";
   color: #4f4f4f;
   display: block;
-  line-height: 1.15;
+  line-height: 1.2;
   margin: 0; }
   h1.c-theme-reverse, .c-theme-reverse h1, h2.c-theme-reverse, .c-theme-reverse h2, h3.c-theme-reverse, .c-theme-reverse h3, h4.c-theme-reverse, .c-theme-reverse h4, h5.c-theme-reverse, .c-theme-reverse h5, h6.c-theme-reverse, .c-theme-reverse h6,
   .t-heading.c-theme-reverse, .c-theme-reverse
@@ -1413,7 +1412,7 @@ a.t-heading {
 p {
   font-size: 16px;
   font-size: 1rem;
-  color: #989898;
+  color: #757575;
   -webkit-margin-before: 0;
   -webkit-margin-after: 0; }
   p.c-theme-reverse, .c-theme-reverse p {
@@ -1423,7 +1422,6 @@ p {
 
 a {
   -webkit-transition: all 0.25s;
-  -moz-transition: all 0.25s;
   transition: all 0.25s;
   color: #3077ab;
   text-decoration: none; }
@@ -1452,7 +1450,7 @@ small,
 
 figcaption,
 .t-caption {
-  color: #989898; }
+  color: #757575; }
   figcaption.c-theme-reverse, .c-theme-reverse figcaption,
   .t-caption.c-theme-reverse, .c-theme-reverse
   .t-caption {
@@ -1462,7 +1460,7 @@ address,
 .t-address {
   font-size: 11px;
   font-size: 0.6875rem;
-  color: #989898; }
+  color: #757575; }
   address.c-theme-reverse, .c-theme-reverse address,
   .t-address.c-theme-reverse, .c-theme-reverse
   .t-address {
@@ -1526,11 +1524,21 @@ a.t-heading--sub {
   font-style: "bold";
   text-transform: uppercase; }
 
-.t-lead {
-  font-size: 16px;
-  font-size: 1rem;
-  color: #4f4f4f; }
-  .t-lead.c-theme-reverse, .c-theme-reverse .t-lead {
+.t-lead:first-letter,
+.content p:first-of-type:first-letter {
+  font-family: "publico-headline-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: normal;
+  font-style: "normal";
+  color: #4f4f4f;
+  display: inline-block;
+  float: left;
+  vertical-align: baseline;
+  margin: 0em 0.1em -0.2em -0.03em;
+  font-size: 3.2em;
+  line-height: 1; }
+  .t-lead:first-letter.c-theme-reverse, .c-theme-reverse .t-lead:first-letter,
+  .content p:first-of-type:first-letter.c-theme-reverse, .c-theme-reverse
+  .content p:first-of-type:first-letter {
     color: #fff; }
 
 .t-caps {
@@ -1585,30 +1593,24 @@ a.t-heading--sub {
   list-style: none; }
   .flexbox.no-ie .l-gallery {
     -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
     box-orient: horizontal;
     -webkit-box-direction: normal;
-    -moz-box-direction: normal;
     box-direction: normal;
-    -webkit-flex-direction: row;
     -moz-flex-direction: row;
     flex-direction: row;
     -ms-flex-direction: row;
     -webkit-box-lines: multiple;
     -moz-box-lines: multiple;
     box-lines: multiple;
-    -webkit-flex-wrap: wrap;
-    -moz-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     -webkit-box-align: stretch;
-    -moz-box-align: stretch;
     box-align: stretch;
-    -webkit-align-items: stretch;
     -moz-align-items: stretch;
     -ms-align-items: stretch;
     -o-align-items: stretch;
-    align-items: stretch;
+    -ms-grid-row-align: stretch;
+        align-items: stretch;
     -ms-flex-align: stretch; }
   .l-gallery > ul {
     padding-left: 0;
@@ -1622,7 +1624,6 @@ a.t-heading--sub {
         display: -webkit-box;
         display: -moz-box;
         display: box;
-        display: -webkit-flex;
         display: -moz-flex;
         display: -ms-flexbox;
         display: flex; } }
@@ -1647,16 +1648,13 @@ a.t-heading--sub {
       vertical-align: top; }
       .flexbox.no-ie .l-gallery-item {
         -webkit-box-flex: 0;
-        -moz-box-flex: 0;
         box-flex: 0;
-        -webkit-flex: 0 0 auto;
         -moz-flex: 0 0 auto;
         -ms-flex: 0 0 auto;
         flex: 0 0 auto;
         display: -webkit-box;
         display: -moz-box;
         display: box;
-        display: -webkit-flex;
         display: -moz-flex;
         display: -ms-flexbox;
         display: flex; } }
@@ -1669,16 +1667,13 @@ a.t-heading--sub {
       vertical-align: top; }
       .flexbox.no-ie .l-gallery-item {
         -webkit-box-flex: 0;
-        -moz-box-flex: 0;
         box-flex: 0;
-        -webkit-flex: 0 0 auto;
         -moz-flex: 0 0 auto;
         -ms-flex: 0 0 auto;
         flex: 0 0 auto;
         display: -webkit-box;
         display: -moz-box;
         display: box;
-        display: -webkit-flex;
         display: -moz-flex;
         display: -ms-flexbox;
         display: flex; } }
@@ -1805,7 +1800,8 @@ Wrappers
      * https://www.drupal.org/node/897638
      */ }
     .is-visually_hidden.focusable:active, .is-visually_hidden.focusable:focus {
-      clip-path: auto;
+      -webkit-clip-path: auto;
+              clip-path: auto;
       height: auto;
       overflow: visible;
       position: static;
@@ -1879,7 +1875,6 @@ input, textarea, select {
   font-weight: "normal";
   font-style: "normal";
   -webkit-transition: all 0.25s;
-  -moz-transition: all 0.25s;
   transition: all 0.25s;
   padding: 0.5em 1em;
   border-radius: 3px;
@@ -1944,7 +1939,6 @@ You can mix and match classes to get the hierarchy/size you need. "small primary
 // -------------------------------------------------------------------------- */
 button, .button {
   -webkit-transition: all 0.25s;
-  -moz-transition: all 0.25s;
   transition: all 0.25s;
   font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
   font-weight: normal;
@@ -2002,7 +1996,6 @@ button, .button {
 // -------------------------------------------------------------------------- */
 .button-price {
   -webkit-transition: all 0.25s;
-  -moz-transition: all 0.25s;
   transition: all 0.25s;
   display: inline-block;
   margin-right: 1em;
@@ -2044,7 +2037,6 @@ button, .button {
 // -------------------------------------------------------------------------- */
 .tag {
   -webkit-transition: all 0.25s;
-  -moz-transition: all 0.25s;
   transition: all 0.25s;
   border: 1px solid #e4e4e4;
   border-color: #e4e4e4;
@@ -2105,14 +2097,11 @@ button, .button {
     display: -webkit-box;
     display: -moz-box;
     display: box;
-    display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: start;
-    -moz-box-align: start;
     box-align: start;
-    -webkit-align-items: flex-start;
     -moz-align-items: flex-start;
     -ms-align-items: flex-start;
     -o-align-items: flex-start;
@@ -2139,9 +2128,7 @@ button, .button {
     .flexbox .card-figure:container("width >= 500px") {
       display: block;
       -webkit-box-flex: 1;
-      -moz-box-flex: 1;
       box-flex: 1;
-      -webkit-flex: 1;
       -moz-flex: 1;
       -ms-flex: 1;
       flex: 1;
@@ -2201,18 +2188,14 @@ button, .button {
     .flexbox .card-figure--large .card-content:container("width >= 500px") {
       display: block;
       -webkit-box-flex: 1;
-      -moz-box-flex: 1;
       box-flex: 1;
-      -webkit-flex: 1;
       -moz-flex: 1;
       -ms-flex: 1;
       flex: 1;
       width: auto; }
     .flexbox.no-ie .card-figure--large .card-content:container("width >= 500px") {
       -webkit-box-flex: 1;
-      -moz-box-flex: 1;
       box-flex: 1;
-      -webkit-flex: 1;
       -moz-flex: 1;
       -ms-flex: 1;
       flex: 1; }

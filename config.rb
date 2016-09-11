@@ -91,20 +91,65 @@ end
 # Methods defined in the helpers block are available in templates
 helpers do
 
-    # check to see if a highlight color is one of the defaults listed in colors.yml
-    def highlight(color)
-        if data.colors.include? color
-            return data.colors[color.to_s]
-        else
-            return color
-        end
-    end
+  # check to see if a highlight color is one of the defaults listed in colors.yml
+  def highlight(color)
+      if data.colors.include? color
+          return data.colors[color.to_s]
+      else
+          return color
+      end
+  end
 
-    # "Component" decorator for partial function
-    # -> just used to point automatically to "components" dir so you don't have to type the full path
-    def component(name, opts = {}, &block)
-        partial("components/#{name}", opts, &block)
+  # "Component" decorator for partial function
+  # -> just used to point automatically to "components" dir so you don't have to type the full path
+  def component(name, opts = {}, &block)
+      partial("components/#{name}", opts, &block)
+  end
+
+  # build an array of the posts from a given blog
+  # STRING
+  def get_posts(name)
+    posts = []
+    blog(name).articles.each do |post|
+      posts.push(post)
     end
+    return posts
+  end
+
+  def find_post_index(post, blog_name = "writing")
+    posts = get_posts(blog_name)
+    if posts.include?(post)
+      return posts.index(post)
+    else
+      return false
+    end
+  end
+
+  def next_post(post, blog_name = "writing")
+    # find next post in TOC
+    if find_post_index(post, blog_name) < (get_posts.length - 1)
+      return get_posts[find_post_index(post, blog_name) + 1]
+    else
+      return false
+    end
+  end
+
+  def prev_post(post, blog_name = "writing")
+    # find previous post in TOC
+    if find_post_index(post, blog_name) > 0
+      return get_posts[find_post_index(post, blog_name) - 1]
+    else
+      return false
+    end
+  end
+
+  def current_page?(url)
+    if current_page.url == url then
+      return true
+    else
+      return false
+    end
+  end
 end
 
 set :url_root, 'http://jayperryworks.com'
