@@ -85,14 +85,17 @@ em,
 
 small,
 .t-small {
-    @include scale-type('theta');
+    @include scale-type('eta');
     @include color('text' 'tertiary');
 }
 
 figcaption,
 .t-caption {
-    @include scale-type('theta');
-    @include color('text' 'secondary');
+    @include scale-type('eta');
+    @include font-accent;
+    @include color('text' 'tertiary');
+
+    strong { @include font-accent('bold'); }
 }
 
 address,
