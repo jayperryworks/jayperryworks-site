@@ -3,6 +3,7 @@
 // ========================================================================== */
 
 @import "../core/all";
+@import "../layout/grid";
 
 $card-grid: ms(7) ms(1);
 $card-grid--large: ms(7) ms(1);
@@ -13,11 +14,30 @@ $card-bp: 'medium';
 
 .card {
   display: block;
+
+}
+
+/* Modifiers
+// ---------------------------------------------------------------------------*/
+
+.card--has-figure {
   font-size: 0;
 
   @include yep(flexbox, no-ie) {
     @include display(flex);
-    @include align-items(flex-start);
+    // @include align-items(flex-start);
+  }
+
+  &:container("width >= 600px") {
+
+    .card-figure {
+      @include column(1, $grid: $card-grid--large);
+    }
+
+    .card-content {
+      @include column(2, $grid: $card-grid--large);
+      margin-top: 0;
+    }
   }
 }
 
@@ -28,16 +48,14 @@ $card-bp: 'medium';
   @include type-size-default;
   display: block;
 
-  &:container("width >= 500px") {
-    @include column(2, $card-grid);
+  // &:container("width >= 500px") {
+  //   @include column(2, $card-grid);
 
-    @include yep(flexbox, no-ie) { display: block; }
-  }
+  //   @include yep(flexbox, no-ie) { display: block; }
+  // }
 
   .card-content + & { @include rem(margin-top, gutter()); }
 }
-
-  .card-figure--large:container("width >= 500px") { @include column(1, $grid: $card-grid--large); }
 
 .card-content {
   @include type-size-default;
@@ -45,14 +63,8 @@ $card-bp: 'medium';
 
   .card-figure + & { @include rem(margin-top, gutter()); }
 
-  &:container("width >= 500px") {
-      @include column(1, $card-grid);
-      margin-top: 0;
-  }
-
-  .card-figure--large &:container("width >= 500px") {
-    @include column(2, $grid: $card-grid--large);
-
-    @include yep(flexbox, no-ie) { @include flex(1); }
-  }
+  // &:container("width >= 500px") {
+  //     @include column(1, $card-grid);
+  //     margin-top: 0;
+  // }
 }

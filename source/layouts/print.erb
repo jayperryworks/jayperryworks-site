@@ -5,7 +5,7 @@
 
       <!-- cover image, info, and title -->
       <header class="l-wrapper l-margin-top-narrow">
-        <% info = current_page.data.width.present? ? "#{current_page.data.format} | #{current_page.data.width} &times; #{current_page.data.height}" : current_page.data.format %>
+        <% info = current_page.data.width.present? ? "#{current_page.data.format}, #{current_page.data.width} &times; #{current_page.data.height}" : current_page.data.format %>
         <%= component "meta", locals: {
           date: current_page.date.strftime('%Y'),
           info: info

@@ -91,7 +91,7 @@ small,
 
 figcaption,
 .t-caption {
-    @include scale-type('eta');
+    @include scale-type('zeta');
     @include font-accent;
     @include color('text' 'tertiary');
 

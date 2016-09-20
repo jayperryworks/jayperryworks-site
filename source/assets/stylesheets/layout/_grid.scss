@@ -71,6 +71,7 @@ $grid-default: ms(1) ms(4);
     @include type-size-default;
     display: inline-block;
     width: column-w($loc, $grid);
+    vertical-align: top;
 
     @if ($split == true) {
         padding-left: ($grid-gutter/2);
@@ -84,7 +85,7 @@ $grid-default: ms(1) ms(4);
     &:last-child { padding-right: 0; }
 
     // override inline block if flexbox is supported
-    @include yep(flexbox) {
+    @include yep(flexbox, no-ie) {
         display: block;
 
         // if this is the last column, tell the element to fill the remaining space
@@ -92,7 +93,7 @@ $grid-default: ms(1) ms(4);
         @if ($last_fill == true) {
             @if ($loc == length($grid)) {
                 @include flex(1);
-                width: auto;
+                // width: auto;
             }
         }
     }

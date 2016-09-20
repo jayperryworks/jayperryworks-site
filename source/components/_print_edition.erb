@@ -7,10 +7,10 @@
 <%# edition - REQUIRED %>
 <% asset_path ||= current_page.url %>
 
-<figure class="card l-feed-item" id="edition_<%= edition.name %>">
+<figure class="card card--has-figure l-feed-item" id="edition_<%= edition.name %>">
     <%= image_tag asset_path + edition.image, :class => "card-figure card-figure--large", :alt => edition.name + " edition" %>
     <figcaption class="card-content">
-        <h2 class="t-heading t-heading--sub t-scale-cappa c-text-primary"><strong><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
+        <h2 class="t-heading t-heading--sub t-scale-delta c-text-primary"><strong><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
         <dl class="meta">
             <dt class="meta-label">Print Size</dt>
             <dd><%= edition.height %>" &times; <%= edition.width %>"</dd>
