@@ -1862,17 +1862,10 @@ html {
 /* Globals
 // -------------------------------------------------------------------------- */
 li {
-  font-size: 11px;
-  font-size: 0.6875rem; }
-  li strong {
-    font-weight: bold; }
-
-li {
   margin-bottom: 0.5em; }
 
 ol, ul {
   margin-left: 1.5em;
-  /* bump to the right a little @ mobile sizes so the numbers/bullets don't run off */
   padding-left: 0; }
 
 /* =============================================================================
@@ -2114,6 +2107,57 @@ button, .button {
     .tag-group > li:last-child, .tag-group .tag-group-item:last-child {
       margin-right: 0; }
 
+/* =============================================================================
+//  Stat component
+// -> a set of stats, or metadata/numbers, for a given piece of content
+// ========================================================================== */
+/* Base
+// -------------------------------------------------------------------------- */
+.stat {
+  font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+  font-weight: normal;
+  font-style: "normal";
+  font-size: 13px;
+  font-size: 0.8125rem;
+  color: #757575;
+  display: inline-block;
+  vertical-align: baseline; }
+  .stat.c-theme-reverse, .c-theme-reverse .stat {
+    color: #e4e4e4; }
+
+/* Modifiers
+// -------------------------------------------------------------------------- */
+.stat--label {
+  color: #b1b1b1; }
+  .stat--label.c-theme-reverse, .c-theme-reverse .stat--label {
+    color: #828282; }
+
+/* Subcomponents
+// -------------------------------------------------------------------------- */
+.stat-group {
+  margin: 0; }
+  .stat-group .stat {
+    display: block; }
+  .stat-group.\:container\(width\>\=150px\) .stat {
+    display: inline-block; }
+  .stat-group.\:container\(width\>\=150px\) .stat--label:after {
+    content: ":"; }
+
+.stat-list {
+  margin-left: 0;
+  list-style: none; }
+  .stat-list.\:container\(width\>\=300px\) {
+    font-size: 0; }
+    .stat-list.\:container\(width\>\=300px\) .stat-group {
+      font-size: 16px;
+      font-size: 1rem;
+      display: inline-block;
+      padding-right: 1.5em; }
+    .stat-list.\:container\(width\>\=300px\) .stat {
+      display: block; }
+      .stat-list.\:container\(width\>\=300px\) .stat:after {
+        content: none; }
+
 /* --- Molecules ------------------------------------------------------------ */
 /* ==========================================================================
 // card box styles
@@ -2122,55 +2166,6 @@ button, .button {
 // ---------------------------------------------------------------------------*/
 .card {
   display: block; }
-
-/* Modifiers
-// ---------------------------------------------------------------------------*/
-.card--has-figure {
-  font-size: 0; }
-  .flexbox.no-ie .card--has-figure {
-    display: -webkit-box;
-    display: -moz-box;
-    display: box;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex; }
-  .card--has-figure.\:container\(width\>\=600px\) .card-figure {
-    font-size: 16px;
-    font-size: 1rem;
-    display: inline-block;
-    width: 74.91209%;
-    vertical-align: top;
-    padding-left: 8px;
-    padding-right: 8px; }
-    .card--has-figure.\:container\(width\>\=600px\) .card-figure:first-child {
-      padding-left: 0; }
-    .card--has-figure.\:container\(width\>\=600px\) .card-figure:last-child {
-      padding-right: 0; }
-    .flexbox.no-ie .card--has-figure.\:container\(width\>\=600px\) .card-figure {
-      display: block; }
-  .card--has-figure.\:container\(width\>\=600px\) .card-content {
-    font-size: 16px;
-    font-size: 1rem;
-    display: inline-block;
-    width: 25.08791%;
-    vertical-align: top;
-    padding-left: 8px;
-    padding-right: 8px;
-    margin-top: 0; }
-    .card--has-figure.\:container\(width\>\=600px\) .card-content:first-child {
-      padding-left: 0; }
-    .card--has-figure.\:container\(width\>\=600px\) .card-content:last-child {
-      padding-right: 0; }
-    .flexbox.no-ie .card--has-figure.\:container\(width\>\=600px\) .card-content {
-      display: block;
-      -webkit-box-flex: 1;
-      -moz-box-flex: 1;
-      box-flex: 1;
-      -webkit-flex: 1;
-      -moz-flex: 1;
-      -ms-flex: 1;
-      flex: 1; }
 
 /* Submodules
 // ---------------------------------------------------------------------------*/
@@ -2189,6 +2184,64 @@ button, .button {
   .card-figure + .card-content {
     margin-top: 16px;
     margin-top: 1rem; }
+
+/* Modifiers
+// ---------------------------------------------------------------------------*/
+.card--has-figure {
+  font-size: 0; }
+  .flexbox.no-ie .card--has-figure {
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -moz-box-align: start;
+    box-align: start;
+    -webkit-align-items: flex-start;
+    -moz-align-items: flex-start;
+    -ms-align-items: flex-start;
+    -o-align-items: flex-start;
+    align-items: flex-start;
+    -ms-flex-align: start; }
+  .card--has-figure.\:container\(width\>\=600px\) .card-figure--large {
+    font-size: 16px;
+    font-size: 1rem;
+    display: inline-block;
+    width: 74.91209%;
+    vertical-align: top;
+    padding-left: 8px;
+    padding-right: 8px; }
+    .card--has-figure.\:container\(width\>\=600px\) .card-figure--large:first-child {
+      padding-left: 0; }
+    .card--has-figure.\:container\(width\>\=600px\) .card-figure--large:last-child {
+      padding-right: 0; }
+    .flexbox.no-ie .card--has-figure.\:container\(width\>\=600px\) .card-figure--large {
+      display: block; }
+    .card--has-figure.\:container\(width\>\=600px\) .card-figure--large + .card-content {
+      font-size: 16px;
+      font-size: 1rem;
+      display: inline-block;
+      width: 25.08791%;
+      vertical-align: top;
+      padding-left: 8px;
+      padding-right: 8px;
+      margin-top: 0; }
+      .card--has-figure.\:container\(width\>\=600px\) .card-figure--large + .card-content:first-child {
+        padding-left: 0; }
+      .card--has-figure.\:container\(width\>\=600px\) .card-figure--large + .card-content:last-child {
+        padding-right: 0; }
+      .flexbox.no-ie .card--has-figure.\:container\(width\>\=600px\) .card-figure--large + .card-content {
+        display: block;
+        -webkit-box-flex: 1;
+        -moz-box-flex: 1;
+        box-flex: 1;
+        -webkit-flex: 1;
+        -moz-flex: 1;
+        -ms-flex: 1;
+        flex: 1; }
 
 /* ==========================================================================
 // Cover image styles

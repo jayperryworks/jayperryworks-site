@@ -17,29 +17,6 @@ $card-bp: 'medium';
 
 }
 
-/* Modifiers
-// ---------------------------------------------------------------------------*/
-
-.card--has-figure {
-  font-size: 0;
-
-  @include yep(flexbox, no-ie) {
-    @include display(flex);
-    // @include align-items(flex-start);
-  }
-
-  &:container("width >= 600px") {
-
-    .card-figure {
-      @include column(1, $grid: $card-grid--large);
-    }
-
-    .card-content {
-      @include column(2, $grid: $card-grid--large);
-      margin-top: 0;
-    }
-  }
-}
 
 /* Submodules
 // ---------------------------------------------------------------------------*/
@@ -67,4 +44,28 @@ $card-bp: 'medium';
   //     @include column(1, $card-grid);
   //     margin-top: 0;
   // }
+}
+
+/* Modifiers
+// ---------------------------------------------------------------------------*/
+
+.card--has-figure {
+  font-size: 0;
+
+  @include yep(flexbox, no-ie) {
+    @include display(flex);
+    @include align-items(flex-start);
+  }
+
+  &:container("width >= 600px") {
+
+    .card-figure--large {
+      @include column(1, $grid: $card-grid--large);
+
+      + .card-content {
+        @include column(2, $grid: $card-grid--large);
+        margin-top: 0;
+      }
+    }
+  }
 }

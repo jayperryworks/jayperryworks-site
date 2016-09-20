@@ -43,7 +43,7 @@
 
   <!-- More work -->
   <% component "panel", locals: { slug: "More work" } do %>
-      <div class="l-wrapper">
+      <div class="l-wrapper l-wrapper--wide">
           <%= partial("components/work_gallery", :locals => { :prints => blog("work").articles, :current => false, :tags => false }) %>
       </div>
   <% end %>
