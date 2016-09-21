@@ -14,7 +14,6 @@ $card-bp: 'medium';
 
 .card {
   display: block;
-
 }
 
 
@@ -25,12 +24,6 @@ $card-bp: 'medium';
   @include type-size-default;
   display: block;
 
-  // &:container("width >= 500px") {
-  //   @include column(2, $card-grid);
-
-  //   @include yep(flexbox, no-ie) { display: block; }
-  // }
-
   .card-content + & { @include rem(margin-top, gutter()); }
 }
 
@@ -39,11 +32,6 @@ $card-bp: 'medium';
   display: block;
 
   .card-figure + & { @include rem(margin-top, gutter()); }
-
-  // &:container("width >= 500px") {
-  //     @include column(1, $card-grid);
-  //     margin-top: 0;
-  // }
 }
 
 /* Modifiers
@@ -59,12 +47,20 @@ $card-bp: 'medium';
 
   &:container("width >= 600px") {
 
+    .card-figure {
+      @include column(2, $grid: $card-grid);
+    }
+
+    .card-content {
+      @include column(1, $grid: $card-grid);
+      margin-top: 0;
+    }
+
     .card-figure--large {
       @include column(1, $grid: $card-grid--large);
 
       + .card-content {
         @include column(2, $grid: $card-grid--large);
-        margin-top: 0;
       }
     }
   }

@@ -15,19 +15,22 @@
 %>
 
 <%
+  link ||= false
   figure ||= false
   figure_pos ||= "right"
   figure_size ||= "default"
   alt ||= false
   classes ||= false
+
+  tag = link ? "a" : "figure"
 %>
 
 
-<div class="card<%= ' #{classes}' if classes %>">
+<div class="card<%= " card--has-figure" if figure %><%= " #{classes}" if classes %>">
   <% if figure %>
-    <a class="card-figure<%= ' #{card-figure--left}' if figure_pos == "left" %><%= ' #{card-figure--large}' if figure_size == "large" %>" href="<%= link %>">
+    <<%= tag %> class="card-figure<%= ' #{card-figure--left}' if figure_pos == "left" %><%= ' #{card-figure--large}' if figure_size == "large" %>" <%= "href='#{link}'" if link %>>
       <%= image_tag figure, :alt => alt || "Figure" %>
-    </a>
+    </<%= tag %>>
   <% end %>
   <div class="card-content">
     <%= yield %>

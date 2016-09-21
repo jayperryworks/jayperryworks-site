@@ -191,7 +191,7 @@ Please DO NOT use your own font-family attributes in any circumstance. Always us
 .font-display {
   font-family: "publico-headline-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
   font-weight: normal;
-  font-style: "normal"; }
+  font-style: normal; }
 
 .font-display-bold {
   font-family: "publico-headline-bold", "Georgia", "Cambria", "Times New Roman", "Times", serif;
@@ -200,17 +200,17 @@ Please DO NOT use your own font-family attributes in any circumstance. Always us
 
 .font-body {
   font-family: "publico-text-normal-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
-  font-weight: "normal";
-  font-style: "normal"; }
+  font-weight: normal;
+  font-style: normal; }
 
 .font-body-bold {
   font-family: "publico-text-bold-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
   font-weight: "bold";
-  font-style: "normal"; }
+  font-style: normal; }
 
 .font-body-italic {
   font-family: "publico-text-normal-italic", "Georgia", "Cambria", "Times New Roman", "Times", serif;
-  font-weight: "normal";
+  font-weight: normal;
   font-style: "italic"; }
 
 /* ==========================================================================
@@ -725,8 +725,8 @@ There are also utility classes that allow you to quickly add a border to a conta
 // -------------------------------------------------------------------------- */
 body {
   font-family: "publico-text-normal-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
-  font-weight: "normal";
-  font-style: "normal";
+  font-weight: normal;
+  font-style: normal;
   font-size: 16px;
   font-size: 1rem;
   line-height: 1.5; }
@@ -735,7 +735,7 @@ h1, h2, h3, h4, h5, h6,
 .t-heading {
   font-family: "publico-headline-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
   font-weight: normal;
-  font-style: "normal";
+  font-style: normal;
   color: #4f4f4f;
   display: block;
   line-height: 1.2;
@@ -798,6 +798,10 @@ p {
     color: #e4e4e4; }
   p + p, p:first-of-type {
     margin-top: 1em; }
+  p strong {
+    font-family: "publico-text-bold-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+    font-weight: "bold";
+    font-style: normal; }
 
 a {
   -webkit-transition: all 0.25s;
@@ -812,7 +816,7 @@ strong,
 .t-strong {
   font-family: "publico-text-bold-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
   font-weight: "bold";
-  font-style: "normal"; }
+  font-style: normal; }
 
 em,
 .t-em {
@@ -836,7 +840,7 @@ figcaption,
   font-size: 0.8125rem;
   font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
   font-weight: normal;
-  font-style: "normal";
+  font-style: normal;
   color: #b1b1b1; }
   figcaption.c-theme-reverse, .c-theme-reverse figcaption,
   .t-caption.c-theme-reverse, .c-theme-reverse
@@ -894,7 +898,7 @@ address,
 .t-heading--sub {
   font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
   font-weight: normal;
-  font-style: "normal";
+  font-style: normal;
   color: #b1b1b1; }
   .t-heading--sub.c-theme-reverse, .c-theme-reverse .t-heading--sub {
     color: #828282; }
@@ -920,7 +924,7 @@ a.t-heading--sub {
 .content p:first-of-type:first-letter {
   font-family: "publico-headline-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
   font-weight: normal;
-  font-style: "normal";
+  font-style: normal;
   color: #4f4f4f;
   display: inline-block;
   float: left;
@@ -939,12 +943,12 @@ a.t-heading--sub {
 .t-font-display {
   font-family: "publico-headline-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
   font-weight: normal;
-  font-style: "normal"; }
+  font-style: normal; }
 
 .t-font-accent {
   font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
   font-weight: normal;
-  font-style: "normal"; }
+  font-style: normal; }
 
 .t-font-accent-bold {
   font-family: "guardian-sans-bold", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
@@ -953,17 +957,17 @@ a.t-heading--sub {
 
 .t-font-body {
   font-family: "publico-text-normal-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
-  font-weight: "normal";
-  font-style: "normal"; }
+  font-weight: normal;
+  font-style: normal; }
 
 .t-font-body-bold {
   font-family: "publico-text-bold-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
   font-weight: "bold";
-  font-style: "normal"; }
+  font-style: normal; }
 
 .t-font-body-italic {
   font-family: "publico-text-normal-italic", "Georgia", "Cambria", "Times New Roman", "Times", serif;
-  font-weight: "normal";
+  font-weight: normal;
   font-style: "italic"; }
 
 .t-centered {
@@ -981,7 +985,7 @@ a.t-heading--sub {
 .stat {
   font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
   font-weight: normal;
-  font-style: "normal";
+  font-style: normal;
   font-size: 13px;
   font-size: 0.8125rem;
   color: #757575;

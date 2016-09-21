@@ -58,13 +58,13 @@ $trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
 
 /* ----- Display type ------------------------------------------------------- */
 
-@mixin font-display($style: 'normal') {
+@mixin font-display($style: normal) {
   font-family: "publico-headline-#{$style}", $georgia;
   font-weight: normal;
   font-style: $style;
 }
 
-@mixin font-accent($style: 'normal') {
+@mixin font-accent($style: normal) {
   font-family: "guardian-sans-#{$style}", $trebuchet;
   font-weight: normal;
   font-style: $style;
@@ -72,7 +72,7 @@ $trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
 
 /* ----- Body type ---------------------------------------------------------- */
 
-@mixin font-body($weight: 'normal', $style: 'normal') {
+@mixin font-body($weight: normal, $style: normal) {
   font-family: "publico-text-#{$weight}-#{$style}", $georgia;
   font-weight: $weight;
   font-style: $style;

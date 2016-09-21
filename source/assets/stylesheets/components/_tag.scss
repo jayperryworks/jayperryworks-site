@@ -37,13 +37,13 @@
 // -------------------------------------------------------------------------- */
 
 // a label for a list of tags
-// .tag-label {
-//   @include font-accent;
-//   @include scale-type('zeta');
-//   @include color('text' 'secondary');
-//   display: block;
-//   vertical-align: middle;
-// }
+.tag-label {
+  @include font-accent;
+  @include scale-type('zeta');
+  @include color('text' 'secondary');
+  display: block;
+  vertical-align: middle;
+}
 
 // list of tags
 .tag-group {

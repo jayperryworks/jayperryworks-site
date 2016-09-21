@@ -15,20 +15,20 @@
 <footer class="main_footer" role="contentinfo">
   <div class="l-wrapper">
     <% unless show_bio == false %>
-      <div class="card">
-        <figure class="card-figure">
-          <%= image_tag "portrait.jpg", :alt => "Jay Perry" %>
-        </figure>
-        <div class="card-content">
-          <p><%= data.site.bio_blurb %></p>
-          <dl class="tag-group">
-            <dt class="tags-label">Say hi</dt>
-            <% data.site.social.each do |site| %>
-            <dd><%= link_to site.name, site.link, :class => "tag" %></dd>
-            <% end %>
-          </dl>
-        </div>
-      </div>
+      <% component "card", locals: {
+        figure: "portrait.jpg",
+        alt: "Jay Perry",
+        figure_pos: "left",
+        classes: "l-margin-bottom-wide l-padding-bottom border-bottom"
+      } do %>
+        <p><%= data.site.bio_blurb %></p>
+        <dl class="tag-group l-margin-top">
+          <dt class="t-heading t-heading--slug t-scale-zeta l-margin-bottom-narrow c-text-tertiary">Say hi</dt>
+          <% data.site.social.each do |site| %>
+          <dd class="tag-group-item"><%= link_to site.name, site.link, class: "tag" %></dd>
+          <% end %>
+        </dl>
+      <% end %>
     <% end %>
     <%= component "logo-jpw", locals: { classes: "main_footer-lockup logo logo--jpw" } %>
     <small class="main_footer-copyright">&copy; copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>

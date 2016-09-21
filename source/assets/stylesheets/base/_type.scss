@@ -69,6 +69,8 @@ p {
 
     & + &,
     &:first-of-type { margin-top: 1em; }
+
+    strong { @include font-body('bold'); }
 }
 
 a {
