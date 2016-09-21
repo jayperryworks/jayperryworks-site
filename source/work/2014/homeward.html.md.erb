@@ -24,9 +24,13 @@ Every now and then I get lucky and the night is perfectly clear. On those nights
 
 I get a lot of good thinking done on these drives.
 
-- ![](<%= current_page.url %>IMG_3804.JPG)
-- ![](<%= current_page.url %>IMG_3795.JPG)
-{:.centered}
+<%= component "image_gallery", locals: {
+  images: {
+    "View of the mountains" => "#{current_page.url}IMG_3804.JPG",
+    "Sunrise" => "#{current_page.url}IMG_3795.JPG"
+  },
+  columns: 2
+} %>
 
 I decided to do this picture as a digital composite, using the workflow I worked out over the last year or so. For this one, though, I needed dense, black tones and textures but wanted to keep the clean lines that digital is so great for. I strugged for a long time with how to approach the mountains; I needed the wash to be _just so_ and the horizon needed to feel really wide. The perspective was really hard to get right.
 

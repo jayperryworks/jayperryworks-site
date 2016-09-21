@@ -1,0 +1,20 @@
+<%#
+  Gallery component
+  -> a grid of images
+
+  Locals:
+  HASH images: the images to display
+    -> structure: { alt => source }
+  NUMBER columns: number of columns to display at the largest width (> 600px)
+
+  Styles:
+  components/gallery
+%>
+
+<% columns ||= 3 %>
+
+<ul class="l-gallery l-margin-top-wide l-margin-bottom-wide">
+  <% images.each do |alt, image| %>
+    <li class="l-gallery-item"><img src="<%= image %>" alt="<%= alt %>"></li>
+  <% end %>
+</ul>

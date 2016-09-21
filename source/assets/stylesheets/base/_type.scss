@@ -70,7 +70,8 @@ p {
     & + &,
     &:first-of-type { margin-top: 1em; }
 
-    strong { @include font-body('bold'); }
+    strong { @include font-body(bold); }
+    em { @include font-body(normal, italic); }
 }
 
 a {
@@ -80,10 +81,10 @@ a {
 }
 
 strong,
-.t-strong { @include font-body('bold'); }
+.t-strong { @include font-body(bold); }
 
 em,
-.t-em { @include font-body('normal', 'italic'); }
+.t-em { @include font-body(normal, italic); }
 
 small,
 .t-small {
@@ -97,7 +98,7 @@ figcaption,
     @include font-accent;
     @include color('text' 'tertiary');
 
-    strong { @include font-accent('bold'); }
+    strong { @include font-accent(bold); }
 }
 
 address,
@@ -121,13 +122,13 @@ address,
 
     .t-heading + & { margin-top: 0.25em; }
 
-    strong { @include font-accent('bold'); }
+    strong { @include font-accent(bold); }
   }
 
     a.t-heading--sub { @include color('text' 'tertiary'); }
 
   .t-heading--slug {
-    @include font-accent("bold");
+    @include font-accent(bold);
     text-transform: uppercase;
   }
 
@@ -150,10 +151,10 @@ address,
 
 .t-font-display { @include font-display; }
 .t-font-accent { @include font-accent; }
-  .t-font-accent-bold { @include font-accent('bold'); }
+  .t-font-accent-bold { @include font-accent(bold); }
 .t-font-body { @include font-body; }
-  .t-font-body-bold { @include font-body('bold'); }
-  .t-font-body-italic { @include font-body($style: 'italic'); }
+  .t-font-body-bold { @include font-body(bold); }
+  .t-font-body-italic { @include font-body($style: italic); }
 
 // position text
 .t-centered { text-align: center; }

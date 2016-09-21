@@ -1,9 +1,13 @@
-<%# --- Dependencies --- %>
-<%# core/all.scss %>
+<%#
+  Feature figure component
+  - A large image with caption
 
-<%# --- Locals --- %>
-<%# source - REQUIRED %>
-<% alt ||= "" %>
+  Locals:
+  STRING source: the path to the image
+  STRING alt: alt for the image
+%>
+
+<% alt ||= false %>
 
 <figure class="feature">
     <img class="feature-image" src="<%= source %>"<%=  "alt='#{alt}'" if alt %>>

@@ -44,7 +44,7 @@ $trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
 
 // text
 @include font-face("publico-text-normal-normal", "#{$asset-path-fonts}/PublicoText-Roman-Web", $file-formats: eot woff ttf svg);
-@include font-face("publico-text-normal-italic", "#{$asset-path-fonts}/PublicoText-Italic-Web", italic, $file-formats: eot woff ttf svg);
+@include font-face("publico-text-normal-italic", "#{$asset-path-fonts}/PublicoText-Italic-Web", normal, italic, $file-formats: eot woff ttf svg);
 
 /* ----- Guardian ---------------------------------------------------- */
 

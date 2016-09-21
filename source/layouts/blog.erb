@@ -1,26 +1,25 @@
 <% wrap_layout :layout do %>
   <article class="l-margin-top-wide">
-    <header class="l-wrapper">
-      <h1 class="t-heading t-scale-beta"><%= current_page.data.title %></h1>
-      <% if current_page.data.subtitle.present? %>
-        <span class="t-heading t-heading--sub t-scale-cappa">Lorem ipsum dolor sit amet adipiscig elit<%# current_page.data.subtitle %></span>
+    <header>
+      <% if current_page.data.image.present? %>
+        <%= image_tag current_page.url + current_page.data.image, class: "cover l-margin-bottom", alt: current_page.data.title %>
       <% end %>
+      <div class="l-wrapper">
+        <%= component "meta", locals: {
+          date: current_page.date.strftime("%B %-d, %Y"),
+          borders: ["bottom"],
+          classes: "l-margin-bottom"
+        } %>
+        <h1 class="t-heading t-scale-beta"><%= current_page.data.title %></h1>
+        <% if current_page.data.subtitle.present? %>
+          <span class="t-heading t-heading--sub t-scale-cappa"><%= current_page.data.subtitle %></span>
+        <% end %>
+
+      </div>
     </header>
 
-    <main class="l-wrapper l-margin-top-narrow l-margin-bottom-wide">
-      <%= component "meta", locals: {
-        date: current_page.date.strftime("%B %-d, %Y"),
-        borders: "none",
-        classes: "l-margin-bottom"
-      } %>
-
-      <% if current_page.data.image.present? %>
-        <%= image_tag current_page.url + current_page.data.image, :class => "l-margin-bottom-narrow", :alt => current_page.data.title %>
-      <% end %>
-
-      <div class="content">
-        <%= yield %>
-      </div>
+    <main class="content l-wrapper l-margin-bottom-wide">
+      <%= yield %>
     </main>
 
     <!-- <footer class="l-wrapper l-margin-top-wide l-margin-bottom">
