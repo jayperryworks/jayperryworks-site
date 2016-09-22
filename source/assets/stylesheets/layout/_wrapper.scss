@@ -62,32 +62,29 @@ $layout-widths: (
     // wide version of the layout wrapper
     .l-wrapper--wide { @include l-base-w("wide"); }
 
+    // full-screen width wrapper
     .l-wrapper--full { max-width: 100%; }
 
 
 // a child element of a layout wrapper which is actually wider than its parent
-// -> it sticks out on either side
+// -> use to expand a child of a default wrapper to the width of a 'wide' wrapper
+// -> great trick stolen from CSS-Tricks: https://css-tricks.com/full-width-containers-limited-width-parents/
 .l-wrapper-outcrop {
-    margin-left: $outcrop-margin;
-    margin-right: $outcrop-margin;
-}
+  display: block;
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding-left: gutter('wide');
+  padding-right: gutter('wide');
 
-.l-wrapper-outcrop\@medium {
-    margin-left: 0;
-    margin-right: 0;
-
-    @include media(">medium") {
-        margin-left: $outcrop-margin;
-        margin-right: $outcrop-margin;
-    }
-}
-
-.l-wrapper-outcrop\@large {
-    margin-left: 0;
-    margin-right: 0;
-
-    @include media(">large") {
-        margin-left: $outcrop-margin;
-        margin-right: $outcrop-margin;
-    }
+  @include media(">#{layout-w('wide')}") {
+    width: auto;
+    left: 0;
+    right: 0;
+    margin-left: ((layout-w() - layout-w('wide'))/2);
+    margin-right: ((layout-w() - layout-w('wide'))/2);
+  }
 }

@@ -74,15 +74,19 @@ $grid-default: ms(1) ms(4);
     vertical-align: top;
 
     @if ($split == true) {
+      @if ($loc != 1) {
         padding-left: ($grid-gutter/2);
+      }
+      @if ($loc != length($grid)) {
         padding-right: ($grid-gutter/2);
+      }
     } @else {
         padding-right: $grid-gutter;
     }
 
     // adjust padding if this is the first or last element
-    &:first-child { padding-left: 0; }
-    &:last-child { padding-right: 0; }
+    // &:first-child { padding-left: 0; }
+    // &:last-child { padding-right: 0; }
 
     // override inline block if flexbox is supported
     @include yep(flexbox, no-ie) {

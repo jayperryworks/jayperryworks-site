@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<!--[if lte IE 9]><html class="no-js ie ie-old" lang="en-US"><![endif]-->
+<!--[if gt IE 9]><html class="no-js ie ie-9" lang="en-US"><![endif]-->
+<html class="no-js no-ie" lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -13,6 +15,16 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <%= stylesheet_link_tag :main %>
     <%= javascript_include_tag "javascripts/critical.bundle" %>
+
+    <script type="text/javascript">
+      // Test for IE 11 support
+      if(!(window.ActiveXObject) && "ActiveXObject" in window){
+        var htmlClass = document.querySelector('html').classList;
+        htmlClass.remove('no-ie');
+        htmlClass.add('ie');
+        htmlClass.add('ie-11');
+      }
+    </script>
   </head>
 
   <%# component "spritemap" %>

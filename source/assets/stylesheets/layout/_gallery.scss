@@ -10,7 +10,8 @@
 
 $gallery-gutter: 4px;
 
-$gallery-sizes: 2, 3, 4;
+$gallery-sizes: 2, 3, 4, 6;
+$gallery-breaks: 300px, 600px, 1200px;
 
 @mixin gallery-columns($number: 2, $g: $gallery-gutter) {
     display: inline-block;
@@ -35,32 +36,30 @@ $gallery-sizes: 2, 3, 4;
 .l-gallery {
     display: block; // in case flexbox isn't supported
     position: relative;
+    margin-left: -($gallery-gutter/2); // offset for column gutters
+    margin-right: -($gallery-gutter/2); // offset for column gutters
     font-size: 0;
     list-style: none;
 
-    @include yep(flexbox, no-ie) {
-        @include flex-direction(row);
-        @include flex-wrap(wrap);
-        @include align-items(stretch);
-    }
-
     > ul {
-        padding-left: 0;
-        margin-left: 0;
-        list-style: none;
+      padding-left: 0;
+      margin-left: 0;
+      list-style: none;
     }
 
-    // convert to container query
-    @include media('>xsmall') {
-        // offset for column gutters
-        margin-left: -($gallery-gutter/2);
-        margin-right: -($gallery-gutter/2);
-
-        @include yep(flexbox, no-ie) {
-            @include display(flex);
-        }
+    @include yep(flexbox, no-ie) {
+      @include display(flex);
+      @include flex-direction(row);
+      @include flex-wrap(wrap);
+      @include align-items(stretch);
     }
 }
+
+/* Modifiers
+// -------------------------------------------------------------------------- */
+
+.l-gallery--small {} // see .l-gallery-item for styles
+.l-gallery--large {} // see .l-gallery-item for styles
 
 
 /* Subcomponents
@@ -68,32 +67,40 @@ $gallery-sizes: 2, 3, 4;
 
 /* --- Gallery Items -------------------------------------------------------- */
 .l-gallery-item {
+
     @include type-size-default;
-    display: block;
+    display: inline-block;
     position: relative;
     margin: 0;
+    padding-right: ($gallery-gutter/2);
+    padding-left: ($gallery-gutter/2);
     padding-bottom: $gallery-gutter;
+    width: 100%;
     vertical-align: top;
 
-    // convert to container query
-    @include media('>xsmall') { @include gallery-columns(2); }
-    @include media('>small') { @include gallery-columns(3); }
+    @include yep(flexbox, no-ie) {
+        // use conventional width attribute instead of flexbox b/c of IE 11 box model bug
+        // http://stackoverflow.com/questions/21942183/multiline-flexbox-in-ie11-calculating-widths-incorrectly
+        // https://github.com/philipwalton/flexbugs#7-flex-basis-doesnt-account-for-box-sizingborder-box
+        // http://codepen.io/philipwalton/pen/XJMWem
+        @include flex(0 0 auto);
+        @include display(flex);
+        @include flex-direction(column);
+    }
+
+    .l-gallery--small & { width: 50%; }
+
+    @for $i from 1 through length($gallery-breaks) {
+      .l-gallery:container("width >= #{nth($gallery-breaks, $i)}") & {
+        width: (100%/($i + 1));
+      }
+
+      .l-gallery--small:container("width >= #{nth($gallery-breaks, $i)}") & {
+        width: (100%/($i + 2));
+      }
+      .l-gallery--large:container("width >= #{nth($gallery-breaks, $i)}") & {
+        width: (100%/$i);
+      }
+
+    }
 }
-
-
-/* Modifiers
-// -------------------------------------------------------------------------- */
-
-/* --- Column sizing -------------------------------------------------------- */
-// TODO: specificity issues in media query order -- each successive size overrides the previous ones
-// -- figure out how to make modifiers flexible without conf
-
-// @each $number in $gallery-sizes {
-//     @include breakpointify('.l-gallery--#{$number}', $sizes: 'small' 'medium' 'large') {
-//         @include display('flex');
-//         margin-left: -($gallery-gutter/2);
-//         margin-right: -($gallery-gutter/2);
-
-//         .l-gallery-item { @include gallery-columns($number); }
-//     }
-// }

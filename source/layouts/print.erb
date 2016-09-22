@@ -17,9 +17,10 @@
       <div class="content l-wrapper">
         <%= yield %>
 
+        <!-- 'editions available on etsy' button -->
         <% if current_page.data.edition_placeholder == true %>
-          <div class="t-centered">
-              <a class="button button--large l-margin-top" href="https://www.etsy.com/shop/jayperry" target="_blank">Print editions available at <strong>Etsy</strong></a>
+          <div class="t-centered l-margin-top-wide">
+              <a class="button button--large" href="https://www.etsy.com/shop/jayperry" target="_blank">Print editions available at <strong>Etsy</strong></a>
           </div>
         <% end %>
       </div>

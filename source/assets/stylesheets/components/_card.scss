@@ -5,7 +5,7 @@
 @import "../core/all";
 @import "../layout/grid";
 
-$card-grid: ms(7) ms(1);
+$card-grid: ms(1) ms(7);
 $card-grid--large: ms(7) ms(1);
 $card-bp: 'medium';
 
@@ -37,7 +37,7 @@ $card-bp: 'medium';
 /* Modifiers
 // ---------------------------------------------------------------------------*/
 
-.card--has-figure {
+.card--multicolumn {
   font-size: 0;
 
   @include yep(flexbox, no-ie) {
@@ -48,12 +48,16 @@ $card-bp: 'medium';
   &:container("width >= 600px") {
 
     .card-figure {
-      @include column(2, $grid: $card-grid);
+      @include column(1, $grid: $card-grid);
+
+      @include yep(flexbox, no-ie) { @include order(-1); }
     }
 
     .card-content {
-      @include column(1, $grid: $card-grid);
+      @include column(2, $grid: $card-grid);
       margin-top: 0;
+
+      @include yep(flexbox, no-ie) { @include order(0); }
     }
 
     .card-figure--large {
@@ -61,6 +65,18 @@ $card-bp: 'medium';
 
       + .card-content {
         @include column(2, $grid: $card-grid--large);
+      }
+    }
+
+    .card-figure--right {
+      padding-right: 0;
+      padding-left: gutter();
+
+      @include yep(flexbox, no-ie) { @include order(1); }
+
+      + .card-content {
+        padding-right: gutter();
+        padding-left: 0;
       }
     }
   }

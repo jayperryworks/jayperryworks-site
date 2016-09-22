@@ -6,8 +6,8 @@
   - STRING link: url the card links to
   - STRING figure (optional): path or url of image to include
   - STRING figure_pos (optional): on wider screens, does the image appear on the left or right side? (default is right)
-  - STRING figure_size
-  - STRING action (optional): the action for the button, e.g. "Read more"
+  - STRING figure_size (optional): large or regular figure
+  - STRING multicolumn (optional): should the figure and text be side-by-side?
   - STRING classes (optional): additional modifier classes, e.g. .l-margin
 
   Styles:
@@ -17,18 +17,19 @@
 <%
   link ||= false
   figure ||= false
-  figure_pos ||= "right"
+  figure_pos ||= "left"
   figure_size ||= "default"
   alt ||= false
+  multicolumn ||= false
   classes ||= false
 
   tag = link ? "a" : "figure"
 %>
 
 
-<div class="card<%= " card--has-figure" if figure %><%= " #{classes}" if classes %>">
+<div class="card<%= " card--multicolumn" if multicolumn %><%= " #{classes}" if classes %>">
   <% if figure %>
-    <<%= tag %> class="card-figure<%= ' #{card-figure--left}' if figure_pos == "left" %><%= ' #{card-figure--large}' if figure_size == "large" %>" <%= "href='#{link}'" if link %>>
+    <<%= tag %> class="card-figure<%= " card-figure--right" if figure_pos == "right" %><%= ' #{card-figure--large}' if figure_size == "large" %>" <%= "href='#{link}'" if link %>>
       <%= image_tag figure, :alt => alt || "Figure" %>
     </<%= tag %>>
   <% end %>
