@@ -29,8 +29,9 @@
 
 <div class="card<%= " card--multicolumn" if multicolumn %><%= " #{classes}" if classes %>">
   <% if figure %>
-    <<%= tag %> class="card-figure<%= " card-figure--right" if figure_pos == "right" %><%= ' #{card-figure--large}' if figure_size == "large" %>" <%= "href='#{link}'" if link %>>
-      <%= image_tag figure, :alt => alt || "Figure" %>
+    <<%= tag %> class="card-figure t-centered<%= " card-figure--right" if figure_pos == "right" %><%= ' #{card-figure--large}' if figure_size == "large" %>" <%= "href='#{link}'" if link %>>
+      <%# image_tag figure, alt: alt || "Figure" %>
+      <span<%= " style='display: inline-block; max-width: #{figure_size};'" if figure_size.include?("px") %>><img src="<%= figure %>" alt="<%= alt || "Figure" %>"></span>
     </<%= tag %>>
   <% end %>
   <div class="card-content">

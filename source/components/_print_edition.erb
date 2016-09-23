@@ -7,25 +7,25 @@
 <%# edition - REQUIRED %>
 <% asset_path ||= current_page.url %>
 
-<figure class="card card--has-figure l-feed-item" id="edition_<%= edition.name %>">
-    <%= image_tag asset_path + edition.image, :class => "card-figure card-figure--large", :alt => edition.name + " edition" %>
-    <figcaption class="card-content">
-        <h2 class="t-heading t-heading--sub t-scale-delta c-text-primary"><strong><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
-        <ul class="stat-list l-margin-top-narrow">
-          <li class="stat-group">
-            <span class="stat stat--label">Print Size</span>
-            <span class="stat"><%= edition.height %>" &times; <%= edition.width %>"</span>
-          </li>
-          <li class="stat-group">
-            <span class="stat stat--label">Paper Size</span>
-            <span class="stat"><%= edition.height + (edition.border * 2) %>" &times; <%= edition.width + (edition.border * 2) %>"</span>
-          </li>
-          <li class="stat-group">
-            <span class="stat stat--label">Edition</span>
-            <span class="stat"><% if edition.limit.present? %>edition.limit<% else %>Open<% end %></span>
-          </li>
-        </ul>
-        <p class="t-caption">Printed at Archival Arts in Baltimore on heavy, textured, acid-free Hahnemuhle cotton rag paper, using archival pigment-based inks. Individually signed and numbered.</p>
-        <a class="button l-margin-top" href="<%= edition.url %>" target="_blank">Buy on Etsy</a>
-    </figcaption>
+<figure class="card card--multicolumn l-feed-item" id="edition_<%= edition.name %>">
+  <%= image_tag asset_path + edition.image, :class => "card-figure card-figure--large", :alt => edition.name + " edition" %>
+  <figcaption class="card-content">
+    <h2 class="t-heading t-heading--sub t-scale-delta c-text-primary"><strong><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
+    <ul class="stat-list l-margin-top-narrow">
+      <li class="stat-group">
+        <span class="stat stat--label">Print Size</span>
+        <span class="stat"><%= edition.height %>" &times; <%= edition.width %>"</span>
+      </li>
+      <li class="stat-group">
+        <span class="stat stat--label">Paper Size</span>
+        <span class="stat"><%= edition.height + (edition.border * 2) %>" &times; <%= edition.width + (edition.border * 2) %>"</span>
+      </li>
+      <li class="stat-group">
+        <span class="stat stat--label">Edition</span>
+        <span class="stat"><% if edition.limit.present? %>edition.limit<% else %>Open<% end %></span>
+      </li>
+    </ul>
+    <p class="t-caption">Printed at Archival Arts in Baltimore on heavy, textured, acid-free Hahnemuhle cotton rag paper, using archival pigment-based inks. Individually signed and numbered.</p>
+    <a class="button l-margin-top" href="<%= edition.url %>" target="_blank">Buy on Etsy</a>
+  </figcaption>
 </figure>

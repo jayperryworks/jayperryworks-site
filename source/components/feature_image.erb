@@ -14,8 +14,9 @@
 
 <%
   alt ||= ""
-  outcrop ||= true
+  outcrop ||= "true"
   margins ||= ["top", "bottom"]
+  classes ||= false
 
   # make a list of border classes from the borders array
   margin_list = ""
@@ -27,6 +28,6 @@
   end
 %>
 
-<div class="<%= "l-wrapper-outcrop" if outcrop %><%= margin_list %> t-center">
+<div class="<%= "l-wrapper-outcrop" if outcrop == "true" %><%= margin_list %> t-center<%= " #{classes}" if classes %>">
   <%= image_tag source, alt: alt %>
 </div>

@@ -2045,6 +2045,10 @@ button, .button {
 .logo {
   display: block; }
 
+.logo-jp-bg {
+  fill: #4f4f4f;
+  color: #4f4f4f; }
+
 .logo--jpw {
   display: block;
   height: 26px;
@@ -2178,7 +2182,8 @@ button, .button {
 .card-figure {
   font-size: 16px;
   font-size: 1rem;
-  display: block; }
+  display: block;
+  width: 100%; }
   .card-content + .card-figure {
     margin-top: 16px;
     margin-top: 1rem; }
@@ -2186,7 +2191,8 @@ button, .button {
 .card-content {
   font-size: 16px;
   font-size: 1rem;
-  display: block; }
+  display: block;
+  width: 100%; }
   .card-figure + .card-content {
     margin-top: 16px;
     margin-top: 1rem; }
@@ -2195,7 +2201,7 @@ button, .button {
 // ---------------------------------------------------------------------------*/
 .card--multicolumn {
   font-size: 0; }
-  .flexbox.no-ie .card--multicolumn {
+  .flexbox.no-ie .card--multicolumn.\:container\(width\>\=600px\) {
     display: -webkit-box;
     display: -moz-box;
     display: box;

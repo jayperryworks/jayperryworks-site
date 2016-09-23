@@ -23,6 +23,7 @@ $card-bp: 'medium';
 .card-figure {
   @include type-size-default;
   display: block;
+  width: 100%;
 
   .card-content + & { @include rem(margin-top, gutter()); }
 }
@@ -30,6 +31,7 @@ $card-bp: 'medium';
 .card-content {
   @include type-size-default;
   display: block;
+  width: 100%;
 
   .card-figure + & { @include rem(margin-top, gutter()); }
 }
@@ -40,12 +42,12 @@ $card-bp: 'medium';
 .card--multicolumn {
   font-size: 0;
 
-  @include yep(flexbox, no-ie) {
-    @include display(flex);
-    @include align-items(flex-start);
-  }
-
   &:container("width >= 600px") {
+
+    @include yep(flexbox, no-ie) {
+      @include display(flex);
+      @include align-items(flex-start);
+    }
 
     .card-figure {
       @include column(1, $grid: $card-grid);
