@@ -1,5 +1,3 @@
-
-
 ---
 title: Andy's letters
 subtitle: A handmade book for my brother's travel journal
@@ -14,10 +12,6 @@ published: false
 ---
 
 My brother Andy went to Germany this summer as part of a research project for the engineering degree he's working on. My brother is a gearhead, talented mechanic, and a fan of stout-style beer; Germany is essentially paradise for him. This three-month trip would be his first experience living abroad, immersed in a language that he didn't speak natively (he had a few years of German classes under his belt, though). In short: there was adventure to be had.
-
-<% partial "components/figure", :locals => { :source => "/writing/2016/01-10-andys-journal/cover.jpg" } do %>
-    Test test test
-<% end %>
 
 Once he'd caught up with his jetlag and found a few minutes, Andy wrote us an email update that described a pretty great week: meeting lots of other students and professors, digging into his research, and lots of excellent-but-inexpensive beer available at picturesque sidewalk cafes. Germany was more than living up to expectations, and Andy started sending similar updates each Friday. He's an excellent writer and his emails were filled with funny stories and interesting details. The _Fritag Abend_ ("Friday Update"), as the subject line always read, became a kind of newsletter with a growing list of followers.
 

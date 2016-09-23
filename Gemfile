@@ -17,7 +17,7 @@ gem "middleman-minify-html"
 gem "middleman-google-analytics"
 # gem "middleman-autoprefixer"
 # gem "middleman-search_engine_sitemap"
-gem "middleman-imageoptim"
+# gem "middleman-imageoptim"
 gem "middleman-blog"
 
 gem "nokogiri"
