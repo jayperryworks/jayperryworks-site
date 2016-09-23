@@ -2,18 +2,20 @@
 // Frameworks & vendor stuff
 // -> all dependencies should be imported here, then imported
 //    as-needed in modules
-// -> NOTE: the dependency scheme in this framework requires compass's
+// -> NOTE: the dependency scheme in this framework requires sass's
 //    "import once" library. make sure it's installed somewhere.
 //    (it ships with middleman)
 // =============================================================================
 
-// bower components
+// --- NPM libs ----------------------------------------------------------------
+// -> in /node_modules via $ npm install
+
 @import "bourbon/app/assets/stylesheets/bourbon";
-@import "breakpoint-sass/stylesheets/breakpoint";
-@import "jacket/stylesheets/jacket";
-@import "sassy-maps/sass/sassy-maps";
-@import "SassyLists/stylesheets/SassyLists";
-@import "sass-units/units";
-@import "sass-list-helpers/helpers-lists";
-@import "sass-type-helpers/type-helpers";
 @import "modernizr-mixin/stylesheets/modernizr";
+@import "modularscale-sass/stylesheets/modular-scale";
+@import "include-media/dist/include-media";
+
+// --- vendor libs -------------------------------------------------------------
+// -> in assets/stylesheets/vendor
+
+@import "../vendor/sass-units";

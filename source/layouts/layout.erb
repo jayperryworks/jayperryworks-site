@@ -1,69 +1,48 @@
 <!DOCTYPE html>
-<html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!--[if lte IE 9]><html class="no-js ie ie-old" lang="en-US"><![endif]-->
+<!--[if gt IE 9]><html class="no-js ie ie-9" lang="en-US"><![endif]-->
+<html class="no-js no-ie" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-        <!-- Use title if it's in the page YAML frontmatter -->
-        <title><%= data.site.site_title %><% if current_page.data.title.present? && current_page.data.title != "home" %> | <%= current_page.data.title %><% end %></title>
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title><%= data.site.site_title %><% if current_page.data.title.present? && current_page.data.title != "home" %> | <%= current_page.data.title %><% end %></title>
 
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <!-- Place favicon.ico in the root directory -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <%= stylesheet_link_tag :main %>
+    <%= javascript_include_tag "javascripts/critical.bundle" %>
 
-        <script>
-            // HTML5 element HTML5 shiv
-            document.createElement("main");
-            document.createElement("picture");
-        </script>
-        <%= javascript_include_tag "libs" %>
-        <%= stylesheet_link_tag "main" %>
-    </head>
+    <script type="text/javascript">
+      // Test for IE 11 support
+      if(!(window.ActiveXObject) && "ActiveXObject" in window){
+        var htmlClass = document.querySelector('html').classList;
+        htmlClass.remove('no-ie');
+        htmlClass.add('ie');
+        htmlClass.add('ie-11');
+      }
+    </script>
+  </head>
 
-    <%= partial "layouts/partials/spritemap" %>
+  <%# component "spritemap" %>
 
-    <body>
-        <header class="header" role="banner">
-            <%= partial("layouts/partials/logo-jp") %>
-            <% if current_page.data.title == "home" %>
-            <div class="header-intro">
-                <p class="header-title"><%= data.site.intro %></p>
-                <p class="header-subtitle"><%= data.site.statuses[rand(data.site.statuses.length)] %></p>
-            </div>
-            <% end %>
-        </header>
+  <body>
+    <%= component "main_header", locals: {
+      show_intro: current_page.data.title == "home" ? true : false,
+      intro: data.site.intro,
+      status: data.site.statuses[0]
+    } %>
 
-        <%= yield %>
+    <%= yield %>
 
-        <footer class="footer" role="contentinfo">
-            <% unless current_page.data.title == "home" %>
-            <div class="card horizontal centered l-wrapper narrow l-margin bottom">
-                <figure class="card-figure">
-                    <%= image_tag "portrait.jpg", :alt => "Jay Perry" %>
-                </figure>
-                <div class="card-content">
-                    <p>Jay Perry is a designer, illustrator, and writer living near Baltimore. He likes books, old rusty cars, and forests.</p>
-                    <dl class="tags">
-                        <dt class="tags-label inline">Say hi</dt>
-                        <% data.site.social.each do |site| %>
-                        <dd><%= link_to site.name, site.link, :class => "tag" %></dd>
-                        <% end %>
-                    </dl>
-                </div>
-            </div>
-            <% end %>
-            <div class="footer-section">
-                <div class="l-wrapper narrow">
-                    <%= partial("layouts/partials/logo-jpw", :locals => { :classes => "footer-logo" }) %>
-                    <small class="footer-copyright">&copy; copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>
-                    <!-- <a href="" class="footer-utility">Colophon</a> -->
-                </div>
-            </div>
-        </footer>
+    <%= component "main_footer", locals: {
+      show_bio: current_page.data.title == "home" ? false : true
+    } %>
 
-        <%= javascript_include_tag  "main" %>
-        <%= google_analytics_tag %>
-    </body>
+    <%= javascript_include_tag :bundle %>
+    <%= google_analytics_universal_tag %>
+  </body>
 </html>

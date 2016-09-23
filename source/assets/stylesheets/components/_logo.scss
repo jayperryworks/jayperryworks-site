@@ -1,0 +1,20 @@
+/* ==========================================================================
+//  Logo modules
+// ========================================================================== */
+
+/* Main logo
+// -------------------------------------------------------------------------- */
+.logo { display: block; }
+
+.logo-jp-bg {
+  fill: theme('text' 'primary');
+  color: theme('text' 'primary');
+}
+
+.logo--jpw {
+  display: block;
+  @include rem(height, 26px);
+  @include rem(width, 175px);
+}
+.logo--jpw-jay_perry { fill: theme('text' 'primary'); }
+.logo--jpw-works { fill: theme('highlight'); }

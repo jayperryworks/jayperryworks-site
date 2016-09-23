@@ -1,0 +1,169 @@
+/* =============================================================================
+//  Global type styles
+// ========================================================================== */
+
+/*doc
+
+*/
+
+@import "../core/libs";
+@import "../core/scale";
+@import "../core/fonts";
+
+// default type sizes
+$type-size-default: 16px;
+$type-size-amp: 1.1em; // size of ampersands relative to their context
+$type-line_height: 1.5;
+
+// set type to default body size using REMs
+// -> useful for resetting type size on a container to override parents
+@mixin type-size-default {
+    @include rem(font-size, $type-size-default);
+}
+
+/* Globals
+// -------------------------------------------------------------------------- */
+
+body {
+    @include font-body;
+    @include type-size-default;
+    line-height: $type-line_height;
+}
+
+// headings
+h1, h2, h3, h4, h5, h6,
+.t-heading {
+    @include font-display;
+    @include color('text' 'primary');
+    display: block;
+    line-height: 1.2;
+    margin: 0;
+
+    & + & { margin-top: 0.25em; }
+
+    a {
+      color: inherit;
+
+      &:hover, &:active { @include color('highlight'); }
+    }
+
+    strong {
+        font-family: inherit;
+        font-style: normal;
+        font-weight: bold;
+    }
+}
+
+  a.t-heading {
+    @include color('text' 'primary');
+
+    &:hover, &:active { @include color('highlight'); }
+  }
+
+// body/inline text
+p {
+    @include scale-type('epsilon');
+    @include color('text' 'secondary');
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+
+    & + &,
+    &:first-of-type { margin-top: 1em; }
+
+    strong { @include font-body(bold); }
+    em { @include font-body(normal, italic); }
+}
+
+a {
+    @include transition-default;
+    @include color('highlight');
+    text-decoration: none;
+}
+
+strong,
+.t-strong { @include font-body(bold); }
+
+em,
+.t-em { @include font-body(normal, italic); }
+
+small,
+.t-small {
+    @include scale-type('eta');
+    @include color('text' 'tertiary');
+}
+
+figcaption,
+.t-caption {
+    @include scale-type('zeta');
+    @include font-accent;
+    @include color('text' 'tertiary');
+
+    strong { @include font-accent(bold); }
+}
+
+address,
+.t-address {
+    @include scale-type('eta');
+    @include color('text' 'secondary');
+}
+
+/* Utilities
+// -------------------------------------------------------------------------- */
+
+// type scale helpers
+@each $name, $size in $scale-type {
+    .t-scale-#{$name} { @include scale-type($name); }
+}
+
+.t-heading { /* see h1, h2, etc. above */ }
+  .t-heading--sub {
+    @include font-accent;
+    @include color('text' 'tertiary');
+
+    .t-heading + & { margin-top: 0.25em; }
+
+    strong { @include font-accent(bold); }
+  }
+
+    a.t-heading--sub { @include color('text' 'tertiary'); }
+
+  .t-heading--slug {
+    @include font-accent(bold);
+    text-transform: uppercase;
+  }
+
+// the first paragraph, often set slightly bigger
+.t-lead,
+.content p:first-of-type {
+    &:first-letter {
+        @include font-display;
+        @include color('text' 'primary');
+        display: inline-block;
+        float: left;
+        vertical-align: baseline;
+        margin: 0em 0.1em -0.2em -0.03em;
+        font-size: 3.2em;
+        line-height: 1;
+    }
+}
+
+.t-caps { text-transform: uppercase !important; }
+
+.t-font-display { @include font-display; }
+.t-font-accent { @include font-accent; }
+  .t-font-accent-bold { @include font-accent(bold); }
+.t-font-body { @include font-body; }
+  .t-font-body-bold { @include font-body(bold); }
+  .t-font-body-italic { @include font-body($style: italic); }
+
+// position text
+.t-centered { text-align: center; }
+.t-left { text-align: left; }
+.t-right { text-align: right; }
+
+/* use the best ampersands from common system fonts... */
+// .t-amp {
+//     @include font-ampersand;
+//     font-size: $type-size-amp; /* relative to whatever type surrounds it -- it renders slightly bigger */
+//     color: inherit;
+// }

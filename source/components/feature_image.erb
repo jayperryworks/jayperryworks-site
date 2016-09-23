@@ -1,0 +1,33 @@
+<%#
+  Feature image component
+  -> a large image shown in the content
+
+  Locals:
+  STRING source: the images to display
+  STRING alt (optional): alt tag
+  BOOLEAN outcrop (optional): should it 'outcrop' from its container?
+  ARRAY margins (optional): add margins to various sides
+
+  Styles:
+  components/gallery
+%>
+
+<%
+  alt ||= ""
+  outcrop ||= "true"
+  margins ||= ["top", "bottom"]
+  classes ||= false
+
+  # make a list of border classes from the borders array
+  margin_list = ""
+
+  if margins != "none"
+    margins.each do |side|
+      margin_list << " l-margin-#{side}-wide"
+    end
+  end
+%>
+
+<div class="<%= "l-wrapper-outcrop" if outcrop == "true" %><%= margin_list %> t-center<%= " #{classes}" if classes %>">
+  <%= image_tag source, alt: alt %>
+</div>

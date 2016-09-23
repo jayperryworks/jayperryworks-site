@@ -1,0 +1,209 @@
+/* ==========================================================================
+//  Global color styles
+// -> base colors are set here on global elements, but modules apply their own
+// -> refer to colors ONLY via the $theme maps
+// ========================================================================== */
+
+/*doc
+---
+title: Color
+name: color
+category: core
+---
+
+Some functions and globals to keep the color scheme DRY and easy to manage in one place. Color for the entire site is handled through structured SASS maps, assigning each color a role:
+
+```
+$theme--default: (
+    text--primary   : $black,
+    text--secondary : #706F6F,
+    text--tertiary  : darken($gray, 10),
+    bg              : #fff,
+    well            : $gray--superlight,
+    border          : $gray--light,
+    highlight       : $highlight--default,
+    accent          : $blue--dark
+);
+
+```
+You can easily access these colors by "role" with the `theme()` function, like so:
+
+```
+.your-module {
+    color: theme(highlight);
+    background-color: theme(bg);
+
+}
+```
+
+If the site has multiple color schemes (say, "default" and "reverse" themes), you can specify the theme by passing in a second parameter:
+
+```
+background-color: theme(bg, reverse);
+```
+
+The second parameter is optional, and theme() will default to the 'default' theme map.
+
+*/
+
+@import "libs";
+
+// Base Palette
+// ----------------------------------------------------------------------
+// -> PRIVATE, do not use outside this settings file
+
+// neutrals
+$black        : lighten(#474747, 3);
+$gray         : #b1b1b1;
+
+// highlights
+$orange: #f4b64e;
+$orange--dark: #ea8e4d;
+$blue: #3077ab;
+$blue--dark: #1e6299;
+$red: #d82333;
+$red--dark: #a0262b;
+$green: #00a556;
+$green--dark: #187042;
+
+// Themes
+// ----------------------------------------------------------------------
+// -> PUBLIC, use these for color references
+
+// note: highlight is default; variations are assigned in local styles
+$themes: (
+    'default': (
+        'text': (
+            'primary'   : $black,
+            'secondary' : lighten($black, 15),
+            'tertiary'  : $gray,
+            'body'      : darken($gray, 30),
+        ),
+        'bg'              : #fff,
+        'well'            : lighten($gray, 20),
+        'border'          : lighten($gray, 20),
+        'highlight'       : $blue
+    ),
+    'reverse': (
+        'text': (
+            'primary'   : #fff,
+            'secondary' : lighten($gray, 20),
+            'tertiary'  : lighten($black, 20),
+            'body'      : $gray,
+        ),
+        'bg'              : $black,
+        'well'            : darken($black, 20),
+        'border'          : lighten($black, 20),
+        'highlight'       : $blue
+    )
+);
+
+// "get" function to access theme map values
+// -> PUBLIC
+// -> USAGE:
+//      color: theme('text' 'primary');
+//      color: theme('highlight', 'reverse');
+@function theme($colors, $name: 'default') {
+    // first extract the 'theme' nested map
+    $theme: map-get($themes, $name);
+
+    // now get the nested map for the first color value
+    $color: map-get($theme, nth($colors, 1));
+    // @debug "#{$name}: #{$colors} - #{map-get($theme, nth($colors, 1))}";
+
+    // if there's more than one color string in the $colors list, dig deeper
+    @if length($colors) > 1 {
+        @for $i from 2 through length($colors) {
+            // keep updating $color with the next nested map until we've reached the end of the list
+            $color: map-get($color, nth($colors, $i));
+            // @debug(nth($colors, 1), $i);
+        }
+    }
+    // @debug(type-of($color));
+    @return $color;
+}
+
+// add colors for each theme
+// -> PUBLIC
+// -> USAGE:
+//      @include color(text primary, background-color);
+@mixin color($color, $attr: color, $important: false) {
+    // set color for default theme
+    #{$attr}: theme($color)#{if($important != false, " !important", "")};
+
+    // set the color of this element to match the theme of this context
+    @each $theme, $colors in $themes {
+        // @debug($theme);
+        @if $theme != "default" {
+            // set color to theme of either this element or its parent
+            &.c-theme-#{$theme}, .c-theme-#{$theme} & {
+                #{$attr}: theme($color, $theme)#{if($important != false, " !important", "")};
+            }
+        }
+    }
+}
+
+// Theme Globals
+// ----------------------------------------------------------------------
+// -> set up helper classes and base colors
+
+@mixin theme($theme) {
+    color: theme('text' 'secondary', $theme);
+    background-color: theme('bg', $theme);
+    border-color: theme('border', $theme) !important;
+
+    // highlight color when you select something
+    ::selection {
+      background: theme('highlight', $theme);
+      color: #fff;
+      text-shadow: none;
+    }
+
+    // ditto, for mozilla engine
+    ::-moz-selection {
+      background: theme('highlight', $theme);
+      color: #fff;
+      text-shadow: none;
+    }
+}
+
+/* Themes
+// -> use the helper class to apply a theme to a module
+// -------------------------------------------------------------------------- */
+
+body, .c-theme-default {
+    @include theme('default');
+}
+
+// create utility classes for each color theme from the $themes map
+// e.g. ".c-theme-reverse" and ".c-theme-wash"
+@each $theme, $colors in $themes {
+    @if $theme != "default" {
+        .c-theme-#{$theme} { @include theme('#{$theme}'); }
+    }
+}
+
+
+/* Helper classes
+// -> use on individual elements to apply special color treatment
+// -------------------------------------------------------------------------- */
+
+.c-text-primary { @include color('text' 'primary', $important: true); }
+.c-text-secondary { @include color('text' 'secondary', $important: true); }
+.c-text-tertiary { @include color('text' 'tertiary', $important: true); }
+
+.c-highlight { @include color('highlight', $important: true); }
+.c-highlight-bg { @include color('highlight', 'background-color'); }
+
+.c-accent { @include color('accent', $important: true); }
+.c-accent-bg { @include color('accent', 'background-color'); }
+
+.c-well { @include color('well', 'background-color'); }
+
+.c-bg { @include color('bg'); }
+
+// kill background colors in print
+// -> note all elements are set to color: black in base/_print.scss
+@media print {
+    [class^="c-"] { background-color: transparent !important; }
+}

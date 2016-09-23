@@ -1,0 +1,85 @@
+/* ==========================================================================
+// card box styles
+// ========================================================================== */
+
+@import "../core/all";
+@import "../layout/grid";
+
+$card-grid: ms(1) ms(7);
+$card-grid--large: ms(7) ms(1);
+$card-bp: 'medium';
+
+/* Base
+// ---------------------------------------------------------------------------*/
+
+.card {
+  display: block;
+}
+
+
+/* Submodules
+// ---------------------------------------------------------------------------*/
+
+.card-figure {
+  @include type-size-default;
+  display: block;
+  width: 100%;
+
+  .card-content + & { @include rem(margin-top, gutter()); }
+}
+
+.card-content {
+  @include type-size-default;
+  display: block;
+  width: 100%;
+
+  .card-figure + & { @include rem(margin-top, gutter()); }
+}
+
+/* Modifiers
+// ---------------------------------------------------------------------------*/
+
+.card--multicolumn {
+  font-size: 0;
+
+  &:container("width >= 600px") {
+
+    @include yep(flexbox, no-ie) {
+      @include display(flex);
+      @include align-items(flex-start);
+    }
+
+    .card-figure {
+      @include column(1, $grid: $card-grid);
+
+      @include yep(flexbox, no-ie) { @include order(-1); }
+    }
+
+    .card-content {
+      @include column(2, $grid: $card-grid);
+      margin-top: 0;
+
+      @include yep(flexbox, no-ie) { @include order(0); }
+    }
+
+    .card-figure--large {
+      @include column(1, $grid: $card-grid--large);
+
+      + .card-content {
+        @include column(2, $grid: $card-grid--large);
+      }
+    }
+
+    .card-figure--right {
+      padding-right: 0;
+      padding-left: gutter();
+
+      @include yep(flexbox, no-ie) { @include order(1); }
+
+      + .card-content {
+        padding-right: gutter();
+        padding-left: 0;
+      }
+    }
+  }
+}

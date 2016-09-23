@@ -1,0 +1,2358 @@
+/*
+ * jayperryworks.com/jayperry.us
+ *
+ * Designed & built by Jay Perry Works
+ * https://github.com/jayperryworks
+ */
+/*! normalize.css v2.1.3 | MIT License | git.io/normalize */
+/* ==========================================================================
+   HTML5 display definitions
+   ========================================================================== */
+/**
+ * Correct `block` display not defined in IE 8/9.
+ */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+  display: block; }
+
+/**
+ * Correct `inline-block` display not defined in IE 8/9.
+ */
+audio,
+canvas,
+video {
+  display: inline-block; }
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+audio:not([controls]) {
+  display: none;
+  height: 0; }
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9.
+ * Hide the `template` element in IE, Safari, and Firefox < 22.
+ */
+[hidden],
+template {
+  display: none; }
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+html {
+  font-family: sans-serif;
+  /* 1 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */ }
+
+/**
+ * Remove default margin.
+ */
+body {
+  margin: 0; }
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+a {
+  background: transparent; }
+
+/**
+ * Address `outline` inconsistency between Chrome and other browsers.
+ */
+a:focus {
+  outline: thin dotted; }
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+a:active,
+a:hover {
+  outline: 0; }
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari 5, and Chrome.
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0; }
+
+/**
+ * Address styling not present in IE 8/9, Safari 5, and Chrome.
+ */
+abbr[title] {
+  border-bottom: 1px dotted; }
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
+ */
+b,
+strong {
+  font-weight: bold; }
+
+/**
+ * Address styling not present in Safari 5 and Chrome.
+ */
+dfn {
+  font-style: italic; }
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0; }
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+mark {
+  background: #ff0;
+  color: #000; }
+
+/**
+ * Correct font family set oddly in Safari 5 and Chrome.
+ */
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, serif;
+  font-size: 1em; }
+
+/**
+ * Improve readability of pre-formatted text in all browsers.
+ */
+pre {
+  white-space: pre-wrap; }
+
+/**
+ * Set consistent quote types.
+ */
+q {
+  quotes: "\201C" "\201D" "\2018" "\2019"; }
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+small {
+  font-size: 80%; }
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+sup {
+  top: -0.5em; }
+
+sub {
+  bottom: -0.25em; }
+
+/* ==========================================================================
+   Embedded content
+   ========================================================================== */
+/**
+ * Remove border when inside `a` element in IE 8/9.
+ */
+img {
+  border: 0; }
+
+/**
+ * Correct overflow displayed oddly in IE 9.
+ */
+svg:not(:root) {
+  overflow: hidden; }
+
+/* ==========================================================================
+   Figures
+   ========================================================================== */
+/**
+ * Address margin not present in IE 8/9 and Safari 5.
+ */
+figure {
+  margin: 0; }
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+/**
+ * Define consistent border, margin, and padding.
+ */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em; }
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+legend {
+  border: 0;
+  /* 1 */
+  padding: 0;
+  /* 2 */ }
+
+/**
+ * 1. Correct font family not being inherited in all browsers.
+ * 2. Correct font size not being inherited in all browsers.
+ * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
+ */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  /* 1 */
+  font-size: 100%;
+  /* 2 */
+  margin: 0;
+  /* 3 */ }
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+button,
+input {
+  line-height: normal; }
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+.
+ * Correct `select` style inheritance in Firefox 4+ and Opera.
+ */
+button,
+select {
+  text-transform: none; }
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */ }
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+button[disabled],
+html input[disabled] {
+  cursor: default; }
+
+/**
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */ }
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
+ *    (include `-moz` to future-proof).
+ */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  /* 2 */
+  box-sizing: content-box; }
+
+/**
+ * Remove inner padding and search cancel button in Safari 5 and Chrome
+ * on OS X.
+ */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0; }
+
+/**
+ * 1. Remove default vertical scrollbar in IE 8/9.
+ * 2. Improve readability and alignment in all browsers.
+ */
+textarea {
+  overflow: auto;
+  /* 1 */
+  vertical-align: top;
+  /* 2 */ }
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+/**
+ * Remove most spacing between table cells.
+ */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* /////////////////////////////////////////////////////////////////////////////
+// Core
+// -> global settings, resets, helper classes
+///////////////////////////////////////////////////////////////////////////// */
+/* =============================================================================
+//  Core Sass variables, mixins, & utilities
+// ========================================================================== */
+/* ==========================================================================
+ * Helpers for converting units (rems, percent, etc.)
+ * ========================================================================== */
+/*doc
+---
+title: Global Variables
+name: settings
+category: Core
+---
+
+We keep global settings to a minimum, to keep variables closely tied to the relevant modules/libraries.
+
+Right now, the only globals we need are a few file path helpers: `$asset-path-images`, `$asset-path-icons`, and `$asset-path-fonts`.
+
+*/
+/* =============================================================================
+// Global breakpoints
+// -> uses include-media library (http://include-media.com)
+// ===========================================================================*/
+/*doc
+---
+title: Global Breakpoints
+name: breakpoints
+category: Core
+---
+
+A series of global breakpoints are used throughout the site. Note that components often use their own local breakpoints (or "tweakpoints") to handle their layout, but the overall layout is based on the globals.
+
+The breakpoints are simply labelled by size: "xsmall," "small," "medium," "large," and "xlarge."
+
+Utility classes are available for each: `.show@[SIZE]`, e.g. `.show@small` These will hide an element below a particular screen width.
+
+```html_example
+<div class="show@medium">You can only see me above "medium" screen sizes.</div>
+```
+
+To access a specific breakpoint value in Sass, use the `screen()` function, as in `max-width: screen('large');`, which will compile to `max-width: 75em;`
+
+*/
+/* Utility classes
+// -------------------------------------------------------------------------- */
+@media (max-width: 29.99em) {
+  .show\@xsmall {
+    display: none !important; } }
+
+@media (min-width: 30.01em) {
+  .hide\@xsmall {
+    display: none !important; } }
+
+@media (max-width: 41.99em) {
+  .show\@small {
+    display: none !important; } }
+
+@media (min-width: 42.01em) {
+  .hide\@small {
+    display: none !important; } }
+
+@media (max-width: 61.99em) {
+  .show\@medium {
+    display: none !important; } }
+
+@media (min-width: 62.01em) {
+  .hide\@medium {
+    display: none !important; } }
+
+@media (max-width: 74.99em) {
+  .show\@large {
+    display: none !important; } }
+
+@media (min-width: 75.01em) {
+  .hide\@large {
+    display: none !important; } }
+
+@media (max-width: 99.99em) {
+  .show\@huge {
+    display: none !important; } }
+
+@media (min-width: 100.01em) {
+  .hide\@huge {
+    display: none !important; } }
+
+/* =============================================================================
+//  Global animation styles
+// ========================================================================== */
+/*doc
+---
+title: Animation
+name: animation
+category: core
+---
+
+The animation library sets global defaults for CSS transitions. Use it in your modules like this:
+
+```
+.your-selector {
+    @include transition-default;
+}
+```
+
+*/
+/* =============================================================================
+//  Type & layout scale
+// ========================================================================== */
+/*doc
+---
+title: Scale
+name: scale
+category: Core
+---
+
+A single, modular scale is used for the entire site: not only type scaling but also spacing and relative proportions throughout the layout.
+
+*/
+/* =============================================================================
+//  Type config & scale
+// ========================================================================== */
+/*doc
+---
+title: Fonts
+name: fonts
+category: Core
+---
+
+Fonts are accessed through SASS placeholders. Just extend the appropriate one. Fonts are applied to type, globally, in _type.scss, and individual modules can set up their own font styles.
+
+Please DO NOT use your own font-family attributes in any circumstance. Always use the mixins.
+
+```
+// display fonts
+// -> headlines, buttons, labels, etc.
+
+@include font-display
+@include font-display(bold)
+
+// body fonts
+// -> paragraphs, captions, etc.
+
+@include font-body
+@include font-body(normal, italic)
+@include font-body(bold)
+```
+
+*/
+/* Fonts
+// -------------------------------------------------------------------------- */
+@font-face {
+  font-family: "publico-headline-normal";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/assets/fonts/PublicoHeadline-Roman-Web.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/PublicoHeadline-Roman-Web.woff") format("woff"), url("/assets/fonts/PublicoHeadline-Roman-Web.ttf") format("truetype"), url("/assets/fonts/PublicoHeadline-Roman-Web.svg#publico-headline-normal") format("svg"); }
+
+@font-face {
+  font-family: "publico-text-normal-normal";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/assets/fonts/PublicoText-Roman-Web.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/PublicoText-Roman-Web.woff") format("woff"), url("/assets/fonts/PublicoText-Roman-Web.ttf") format("truetype"), url("/assets/fonts/PublicoText-Roman-Web.svg#publico-text-normal-normal") format("svg"); }
+
+@font-face {
+  font-family: "publico-text-normal-italic";
+  font-style: italic;
+  font-weight: normal;
+  src: url("/assets/fonts/PublicoText-Italic-Web.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/PublicoText-Italic-Web.woff") format("woff"), url("/assets/fonts/PublicoText-Italic-Web.ttf") format("truetype"), url("/assets/fonts/PublicoText-Italic-Web.svg#publico-text-normal-italic") format("svg"); }
+
+/* ----- Guardian ---------------------------------------------------- */
+@font-face {
+  font-family: "guardian-sans-normal";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/assets/fonts/GuardianSans-Light-Web.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/GuardianSans-Light-Web.woff") format("woff"), url("/assets/fonts/GuardianSans-Light-Web.ttf") format("truetype"), url("/assets/fonts/GuardianSans-Light-Web.svg#guardian-sans-normal") format("svg"); }
+
+@font-face {
+  font-family: "guardian-sans-bold";
+  font-style: normal;
+  font-weight: bold;
+  src: url("/assets/fonts/GuardianSans-Bold-Web.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/GuardianSans-Bold-Web.woff") format("woff"), url("/assets/fonts/GuardianSans-Bold-Web.ttf") format("truetype"), url("/assets/fonts/GuardianSans-Bold-Web.svg#guardian-sans-bold") format("svg"); }
+
+/* Font mixins
+// -------------------------------------------------------------------------- */
+/* ----- Display type ------------------------------------------------------- */
+/* ----- Body type ---------------------------------------------------------- */
+/* ----- Ampersands --------------------------------------------------------- */
+/* Utilities
+// -------------------------------------------------------------------------- */
+.font-display {
+  font-family: "publico-headline-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: normal;
+  font-style: normal; }
+
+.font-display-bold {
+  font-family: "publico-headline-bold", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: normal;
+  font-style: "bold"; }
+
+.font-body {
+  font-family: "publico-text-normal-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: normal;
+  font-style: normal; }
+
+.font-body-bold {
+  font-family: "publico-text-bold-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: "bold";
+  font-style: normal; }
+
+.font-body-italic {
+  font-family: "publico-text-normal-italic", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: normal;
+  font-style: "italic"; }
+
+/* ==========================================================================
+//  Global color styles
+// -> base colors are set here on global elements, but modules apply their own
+// -> refer to colors ONLY via the $theme maps
+// ========================================================================== */
+/*doc
+---
+title: Color
+name: color
+category: core
+---
+
+Some functions and globals to keep the color scheme DRY and easy to manage in one place. Color for the entire site is handled through structured SASS maps, assigning each color a role:
+
+```
+$theme--default: (
+    text--primary   : $black,
+    text--secondary : #706F6F,
+    text--tertiary  : darken($gray, 10),
+    bg              : #fff,
+    well            : $gray--superlight,
+    border          : $gray--light,
+    highlight       : $highlight--default,
+    accent          : $blue--dark
+);
+
+```
+You can easily access these colors by "role" with the `theme()` function, like so:
+
+```
+.your-module {
+    color: theme(highlight);
+    background-color: theme(bg);
+
+}
+```
+
+If the site has multiple color schemes (say, "default" and "reverse" themes), you can specify the theme by passing in a second parameter:
+
+```
+background-color: theme(bg, reverse);
+```
+
+The second parameter is optional, and theme() will default to the 'default' theme map.
+
+*/
+/* Themes
+// -> use the helper class to apply a theme to a module
+// -------------------------------------------------------------------------- */
+body, .c-theme-default {
+  color: #757575;
+  background-color: #fff;
+  border-color: #e4e4e4 !important; }
+  body ::selection, .c-theme-default ::selection {
+    background: #3077ab;
+    color: #fff;
+    text-shadow: none; }
+  body ::-moz-selection, .c-theme-default ::-moz-selection {
+    background: #3077ab;
+    color: #fff;
+    text-shadow: none; }
+
+.c-theme-reverse {
+  color: #e4e4e4;
+  background-color: #4f4f4f;
+  border-color: #828282 !important; }
+  .c-theme-reverse ::selection {
+    background: #3077ab;
+    color: #fff;
+    text-shadow: none; }
+  .c-theme-reverse ::-moz-selection {
+    background: #3077ab;
+    color: #fff;
+    text-shadow: none; }
+
+/* Helper classes
+// -> use on individual elements to apply special color treatment
+// -------------------------------------------------------------------------- */
+.c-text-primary {
+  color: #4f4f4f !important; }
+  .c-text-primary.c-theme-reverse, .c-theme-reverse .c-text-primary {
+    color: #fff !important; }
+
+.c-text-secondary {
+  color: #757575 !important; }
+  .c-text-secondary.c-theme-reverse, .c-theme-reverse .c-text-secondary {
+    color: #e4e4e4 !important; }
+
+.c-text-tertiary {
+  color: #b1b1b1 !important; }
+  .c-text-tertiary.c-theme-reverse, .c-theme-reverse .c-text-tertiary {
+    color: #828282 !important; }
+
+.c-highlight {
+  color: #3077ab !important; }
+  .c-highlight.c-theme-reverse, .c-theme-reverse .c-highlight {
+    color: #3077ab !important; }
+
+.c-highlight-bg {
+  background-color: #3077ab; }
+  .c-highlight-bg.c-theme-reverse, .c-theme-reverse .c-highlight-bg {
+    background-color: #3077ab; }
+
+.c-accent {
+  color:  !important; }
+  .c-accent.c-theme-reverse, .c-theme-reverse .c-accent {
+    color:  !important; }
+
+.c-well {
+  background-color: #e4e4e4; }
+  .c-well.c-theme-reverse, .c-theme-reverse .c-well {
+    background-color: #1c1c1c; }
+
+.c-bg {
+  color: #fff; }
+  .c-bg.c-theme-reverse, .c-theme-reverse .c-bg {
+    color: #4f4f4f; }
+
+@media print {
+  [class^="c-"] {
+    background-color: transparent !important; } }
+
+/* =============================================================================
+// Border settings & helpers
+// ===========================================================================*/
+/*doc
+---
+title: Border settings & helpers
+name: borders
+category: core
+---
+
+Some mixins that allow us to keep our border styles DRY and control them from one place. Use these mixins and placeholders instead of writing your own CSS.
+
+```
+.your-selector {
+    // add the default border radius
+    @extend %border-radius;
+
+    // add a thin border on all sides
+    @include border(all, thin);
+
+    // add a thick border on the top and left sides with the highlight color
+    @include border(top left, thick, theme(highlight));
+}
+```
+
+There are also utility classes that allow you to quickly add a border to a container:
+
+```html_example
+<div class="border">
+    <p>I have borders on all sides!</p>
+</div>
+
+<div class="border border-round">
+    <p>I have rounded corners!</p>
+</div>
+
+<div class="border-top">
+    <p>I have borders on just the top!</p>
+</div>
+
+<div class="border-bottom border-right">
+    <p>I have borders on a couple sides. You can combine border classes to cover as many sides as you like.</p>
+</div>
+
+<div class="no-border">
+    <p>I have no borders! Even if I normally would.</p>
+</div>
+```
+
+*/
+.border {
+  border: 1px solid #e4e4e4;
+  border-color: #e4e4e4; }
+  .border.c-theme-reverse, .c-theme-reverse .border {
+    border-color: #828282; }
+
+@media (min-width: 30.01em) {
+  .border\@xsmall {
+    border: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border\@xsmall.c-theme-reverse, .c-theme-reverse .border\@xsmall {
+      border-color: #828282; } }
+
+@media (min-width: 42.01em) {
+  .border\@small {
+    border: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border\@small.c-theme-reverse, .c-theme-reverse .border\@small {
+      border-color: #828282; } }
+
+@media (min-width: 62.01em) {
+  .border\@medium {
+    border: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border\@medium.c-theme-reverse, .c-theme-reverse .border\@medium {
+      border-color: #828282; } }
+
+@media (min-width: 75.01em) {
+  .border\@large {
+    border: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border\@large.c-theme-reverse, .c-theme-reverse .border\@large {
+      border-color: #828282; } }
+
+@media (min-width: 100.01em) {
+  .border\@huge {
+    border: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border\@huge.c-theme-reverse, .c-theme-reverse .border\@huge {
+      border-color: #828282; } }
+
+.border-top {
+  border-top: 1px solid #e4e4e4;
+  border-color: #e4e4e4; }
+  .border-top.c-theme-reverse, .c-theme-reverse .border-top {
+    border-color: #828282; }
+
+@media (min-width: 30.01em) {
+  .border-top\@xsmall {
+    border-top: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-top\@xsmall.c-theme-reverse, .c-theme-reverse .border-top\@xsmall {
+      border-color: #828282; } }
+
+@media (min-width: 42.01em) {
+  .border-top\@small {
+    border-top: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-top\@small.c-theme-reverse, .c-theme-reverse .border-top\@small {
+      border-color: #828282; } }
+
+@media (min-width: 62.01em) {
+  .border-top\@medium {
+    border-top: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-top\@medium.c-theme-reverse, .c-theme-reverse .border-top\@medium {
+      border-color: #828282; } }
+
+@media (min-width: 75.01em) {
+  .border-top\@large {
+    border-top: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-top\@large.c-theme-reverse, .c-theme-reverse .border-top\@large {
+      border-color: #828282; } }
+
+@media (min-width: 100.01em) {
+  .border-top\@huge {
+    border-top: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-top\@huge.c-theme-reverse, .c-theme-reverse .border-top\@huge {
+      border-color: #828282; } }
+
+.border-right {
+  border-right: 1px solid #e4e4e4;
+  border-color: #e4e4e4; }
+  .border-right.c-theme-reverse, .c-theme-reverse .border-right {
+    border-color: #828282; }
+
+@media (min-width: 30.01em) {
+  .border-right\@xsmall {
+    border-right: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-right\@xsmall.c-theme-reverse, .c-theme-reverse .border-right\@xsmall {
+      border-color: #828282; } }
+
+@media (min-width: 42.01em) {
+  .border-right\@small {
+    border-right: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-right\@small.c-theme-reverse, .c-theme-reverse .border-right\@small {
+      border-color: #828282; } }
+
+@media (min-width: 62.01em) {
+  .border-right\@medium {
+    border-right: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-right\@medium.c-theme-reverse, .c-theme-reverse .border-right\@medium {
+      border-color: #828282; } }
+
+@media (min-width: 75.01em) {
+  .border-right\@large {
+    border-right: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-right\@large.c-theme-reverse, .c-theme-reverse .border-right\@large {
+      border-color: #828282; } }
+
+@media (min-width: 100.01em) {
+  .border-right\@huge {
+    border-right: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-right\@huge.c-theme-reverse, .c-theme-reverse .border-right\@huge {
+      border-color: #828282; } }
+
+.border-bottom {
+  border-bottom: 1px solid #e4e4e4;
+  border-color: #e4e4e4; }
+  .border-bottom.c-theme-reverse, .c-theme-reverse .border-bottom {
+    border-color: #828282; }
+
+@media (min-width: 30.01em) {
+  .border-bottom\@xsmall {
+    border-bottom: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-bottom\@xsmall.c-theme-reverse, .c-theme-reverse .border-bottom\@xsmall {
+      border-color: #828282; } }
+
+@media (min-width: 42.01em) {
+  .border-bottom\@small {
+    border-bottom: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-bottom\@small.c-theme-reverse, .c-theme-reverse .border-bottom\@small {
+      border-color: #828282; } }
+
+@media (min-width: 62.01em) {
+  .border-bottom\@medium {
+    border-bottom: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-bottom\@medium.c-theme-reverse, .c-theme-reverse .border-bottom\@medium {
+      border-color: #828282; } }
+
+@media (min-width: 75.01em) {
+  .border-bottom\@large {
+    border-bottom: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-bottom\@large.c-theme-reverse, .c-theme-reverse .border-bottom\@large {
+      border-color: #828282; } }
+
+@media (min-width: 100.01em) {
+  .border-bottom\@huge {
+    border-bottom: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-bottom\@huge.c-theme-reverse, .c-theme-reverse .border-bottom\@huge {
+      border-color: #828282; } }
+
+.border-left {
+  border-left: 1px solid #e4e4e4;
+  border-color: #e4e4e4; }
+  .border-left.c-theme-reverse, .c-theme-reverse .border-left {
+    border-color: #828282; }
+
+@media (min-width: 30.01em) {
+  .border-left\@xsmall {
+    border-left: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-left\@xsmall.c-theme-reverse, .c-theme-reverse .border-left\@xsmall {
+      border-color: #828282; } }
+
+@media (min-width: 42.01em) {
+  .border-left\@small {
+    border-left: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-left\@small.c-theme-reverse, .c-theme-reverse .border-left\@small {
+      border-color: #828282; } }
+
+@media (min-width: 62.01em) {
+  .border-left\@medium {
+    border-left: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-left\@medium.c-theme-reverse, .c-theme-reverse .border-left\@medium {
+      border-color: #828282; } }
+
+@media (min-width: 75.01em) {
+  .border-left\@large {
+    border-left: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-left\@large.c-theme-reverse, .c-theme-reverse .border-left\@large {
+      border-color: #828282; } }
+
+@media (min-width: 100.01em) {
+  .border-left\@huge {
+    border-left: 1px solid #e4e4e4;
+    border-color: #e4e4e4; }
+    .border-left\@huge.c-theme-reverse, .c-theme-reverse .border-left\@huge {
+      border-color: #828282; } }
+
+.no-border {
+  border: none !important; }
+
+@media (min-width: 30.01em) {
+  .no-border\@xsmall {
+    border: none !important; } }
+
+@media (min-width: 42.01em) {
+  .no-border\@small {
+    border: none !important; } }
+
+@media (min-width: 62.01em) {
+  .no-border\@medium {
+    border: none !important; } }
+
+@media (min-width: 75.01em) {
+  .no-border\@large {
+    border: none !important; } }
+
+@media (min-width: 100.01em) {
+  .no-border\@huge {
+    border: none !important; } }
+
+.no-border-top {
+  border-top: none !important; }
+
+@media (min-width: 30.01em) {
+  .no-border-top\@xsmall {
+    border-top: none !important; } }
+
+@media (min-width: 42.01em) {
+  .no-border-top\@small {
+    border-top: none !important; } }
+
+@media (min-width: 62.01em) {
+  .no-border-top\@medium {
+    border-top: none !important; } }
+
+@media (min-width: 75.01em) {
+  .no-border-top\@large {
+    border-top: none !important; } }
+
+@media (min-width: 100.01em) {
+  .no-border-top\@huge {
+    border-top: none !important; } }
+
+.no-border-right {
+  border-right: none !important; }
+
+@media (min-width: 30.01em) {
+  .no-border-right\@xsmall {
+    border-right: none !important; } }
+
+@media (min-width: 42.01em) {
+  .no-border-right\@small {
+    border-right: none !important; } }
+
+@media (min-width: 62.01em) {
+  .no-border-right\@medium {
+    border-right: none !important; } }
+
+@media (min-width: 75.01em) {
+  .no-border-right\@large {
+    border-right: none !important; } }
+
+@media (min-width: 100.01em) {
+  .no-border-right\@huge {
+    border-right: none !important; } }
+
+.no-border-bottom {
+  border-bottom: none !important; }
+
+@media (min-width: 30.01em) {
+  .no-border-bottom\@xsmall {
+    border-bottom: none !important; } }
+
+@media (min-width: 42.01em) {
+  .no-border-bottom\@small {
+    border-bottom: none !important; } }
+
+@media (min-width: 62.01em) {
+  .no-border-bottom\@medium {
+    border-bottom: none !important; } }
+
+@media (min-width: 75.01em) {
+  .no-border-bottom\@large {
+    border-bottom: none !important; } }
+
+@media (min-width: 100.01em) {
+  .no-border-bottom\@huge {
+    border-bottom: none !important; } }
+
+.no-border-left {
+  border-left: none !important; }
+
+@media (min-width: 30.01em) {
+  .no-border-left\@xsmall {
+    border-left: none !important; } }
+
+@media (min-width: 42.01em) {
+  .no-border-left\@small {
+    border-left: none !important; } }
+
+@media (min-width: 62.01em) {
+  .no-border-left\@medium {
+    border-left: none !important; } }
+
+@media (min-width: 75.01em) {
+  .no-border-left\@large {
+    border-left: none !important; } }
+
+@media (min-width: 100.01em) {
+  .no-border-left\@huge {
+    border-left: none !important; } }
+
+.border-round {
+  border-radius: 3px; }
+
+.border-circular {
+  border-radius: 50%; }
+
+/* --- Modifiers ------------------------------------------------------------ */
+.border--thick {
+  border-width: 4px; }
+
+/* /////////////////////////////////////////////////////////////////////////////
+// Layout
+// -> global utility classes for basic layout
+///////////////////////////////////////////////////////////////////////////// */
+/* =============================================================================
+// Global spacing
+// -> used to keep whitespace in the layout consistent
+// ========================================================================== */
+/* Margins
+// -------------------------------------------------------------------------- */
+.l-margin {
+  margin: 16px;
+  margin: 1rem; }
+
+.l-margin-narrow {
+  margin: 11px !important;
+  margin: 0.6875rem !important; }
+
+.l-margin-wide {
+  margin: 28px !important;
+  margin: 1.75rem !important; }
+
+.l-margin-extra_wide {
+  margin: 57px !important;
+  margin: 3.5625rem !important; }
+
+.l-margin-left {
+  margin-left: 16px !important;
+  margin-left: 1rem !important; }
+
+.l-margin-left-narrow {
+  margin-left: 11px !important;
+  margin-left: 0.6875rem !important; }
+
+.l-margin-left-wide {
+  margin-left: 28px !important;
+  margin-left: 1.75rem !important; }
+
+.l-margin-left-extra_wide {
+  margin-left: 57px !important;
+  margin-left: 3.5625rem !important; }
+
+.l-margin-right {
+  margin-right: 16px !important;
+  margin-right: 1rem !important; }
+
+.l-margin-right-narrow {
+  margin-right: 11px !important;
+  margin-right: 0.6875rem !important; }
+
+.l-margin-right-wide {
+  margin-right: 28px !important;
+  margin-right: 1.75rem !important; }
+
+.l-margin-right-extra_wide {
+  margin-right: 57px !important;
+  margin-right: 3.5625rem !important; }
+
+.l-margin-top {
+  margin-top: 16px !important;
+  margin-top: 1rem !important; }
+
+.l-margin-top-narrow {
+  margin-top: 11px !important;
+  margin-top: 0.6875rem !important; }
+
+.l-margin-top-wide {
+  margin-top: 28px !important;
+  margin-top: 1.75rem !important; }
+
+.l-margin-top-extra_wide {
+  margin-top: 57px !important;
+  margin-top: 3.5625rem !important; }
+
+.l-margin-bottom {
+  margin-bottom: 16px !important;
+  margin-bottom: 1rem !important; }
+
+.l-margin-bottom-narrow {
+  margin-bottom: 11px !important;
+  margin-bottom: 0.6875rem !important; }
+
+.l-margin-bottom-wide {
+  margin-bottom: 28px !important;
+  margin-bottom: 1.75rem !important; }
+
+.l-margin-bottom-extra_wide {
+  margin-bottom: 57px !important;
+  margin-bottom: 3.5625rem !important; }
+
+.l-no-margin {
+  margin: 0 !important;
+  margin: 0 !important; }
+
+.l-no-margin-left {
+  margin-left: 0 !important;
+  margin-left: 0 !important; }
+
+.l-no-margin-right {
+  margin-right: 0 !important;
+  margin-right: 0 !important; }
+
+.l-no-margin-top {
+  margin-top: 0 !important;
+  margin-top: 0 !important; }
+
+.l-no-margin-bottom {
+  margin-bottom: 0 !important;
+  margin-bottom: 0 !important; }
+
+/* Padding
+// -------------------------------------------------------------------------- */
+.l-padding {
+  padding: 16px !important;
+  padding: 1rem !important; }
+
+.l-padding-narrow {
+  padding: 11px !important;
+  padding: 0.6875rem !important; }
+
+.l-padding-wide {
+  padding: 28px !important;
+  padding: 1.75rem !important; }
+
+.l-padding-extra_wide {
+  padding: 57px !important;
+  padding: 3.5625rem !important; }
+
+.l-padding-left {
+  padding-left: 16px !important;
+  padding-left: 1rem !important; }
+
+.l-padding-left-narrow {
+  padding-left: 11px !important;
+  padding-left: 0.6875rem !important; }
+
+.l-padding-left-wide {
+  padding-left: 28px !important;
+  padding-left: 1.75rem !important; }
+
+.l-padding-left-extra_wide {
+  padding-left: 57px !important;
+  padding-left: 3.5625rem !important; }
+
+.l-padding-right {
+  padding-right: 16px !important;
+  padding-right: 1rem !important; }
+
+.l-padding-right-narrow {
+  padding-right: 11px !important;
+  padding-right: 0.6875rem !important; }
+
+.l-padding-right-wide {
+  padding-right: 28px !important;
+  padding-right: 1.75rem !important; }
+
+.l-padding-right-extra_wide {
+  padding-right: 57px !important;
+  padding-right: 3.5625rem !important; }
+
+.l-padding-top {
+  padding-top: 16px !important;
+  padding-top: 1rem !important; }
+
+.l-padding-top-narrow {
+  padding-top: 11px !important;
+  padding-top: 0.6875rem !important; }
+
+.l-padding-top-wide {
+  padding-top: 28px !important;
+  padding-top: 1.75rem !important; }
+
+.l-padding-top-extra_wide {
+  padding-top: 57px !important;
+  padding-top: 3.5625rem !important; }
+
+.l-padding-bottom {
+  padding-bottom: 16px !important;
+  padding-bottom: 1rem !important; }
+
+.l-padding-bottom-narrow {
+  padding-bottom: 11px !important;
+  padding-bottom: 0.6875rem !important; }
+
+.l-padding-bottom-wide {
+  padding-bottom: 28px !important;
+  padding-bottom: 1.75rem !important; }
+
+.l-padding-bottom-extra_wide {
+  padding-bottom: 57px !important;
+  padding-bottom: 3.5625rem !important; }
+
+.l-no-padding {
+  padding: 0 !important;
+  padding: 0 !important; }
+
+.l-no-padding-left {
+  padding-left: 0 !important;
+  padding-left: 0 !important; }
+
+.l-no-padding-right {
+  padding-right: 0 !important;
+  padding-right: 0 !important; }
+
+.l-no-padding-top {
+  padding-top: 0 !important;
+  padding-top: 0 !important; }
+
+.l-no-padding-bottom {
+  padding-bottom: 0 !important;
+  padding-bottom: 0 !important; }
+
+/* =============================================================================
+// Global positioning utilities
+// -> place an element relative to its parent
+// ========================================================================== */
+/* Mixins
+// -------------------------------------------------------------------------- */
+/* Utilities
+// -------------------------------------------------------------------------- */
+.l-display-inline {
+  display: inline; }
+
+.l-display-inline_block {
+  display: inline-block; }
+
+.l-display-block {
+  display: block; }
+
+.l-centered {
+  text-align: center; }
+  .csstransforms .l-centered {
+    left: 50%;
+    transform: translateX(-50%); }
+
+.l-centered-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+
+.l-float-right {
+  float: right; }
+
+.l-float-left {
+  float: left; }
+
+.l-z-top {
+  z-index: 2 !important; }
+
+/* =============================================================================
+// Grid layout classes
+// ===========================================================================*/
+/*doc
+---
+title: Grids
+name: grids
+category: Layout
+---
+
+Grids
+
+```html_example
+<a href="#" class="button l-abs top right">Button @ top right</a>
+```
+
+*/
+/* Gutters
+// -------------------------------------------------------------------------- */
+/* Grid columns
+// -------------------------------------------------------------------------- */
+/* Utilities
+// -------------------------------------------------------------------------- */
+/* =============================================================================
+//  Gallery utilities
+// -> arrange child elements into rows and columns
+// ========================================================================== */
+/* =============================================================================
+//  Global type styles
+// ========================================================================== */
+/*doc
+
+*/
+/* Globals
+// -------------------------------------------------------------------------- */
+body {
+  font-family: "publico-text-normal-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.5; }
+
+h1, h2, h3, h4, h5, h6,
+.t-heading {
+  font-family: "publico-headline-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: normal;
+  font-style: normal;
+  color: #4f4f4f;
+  display: block;
+  line-height: 1.2;
+  margin: 0; }
+  h1.c-theme-reverse, .c-theme-reverse h1, h2.c-theme-reverse, .c-theme-reverse h2, h3.c-theme-reverse, .c-theme-reverse h3, h4.c-theme-reverse, .c-theme-reverse h4, h5.c-theme-reverse, .c-theme-reverse h5, h6.c-theme-reverse, .c-theme-reverse h6,
+  .t-heading.c-theme-reverse, .c-theme-reverse
+  .t-heading {
+    color: #fff; }
+  h1 + h1, h2 + h1, h3 + h1, h4 + h1, h5 + h1, h6 + h1,
+  .t-heading + h1, h1 + h2, h2 + h2, h3 + h2, h4 + h2, h5 + h2, h6 + h2,
+  .t-heading + h2, h1 + h3, h2 + h3, h3 + h3, h4 + h3, h5 + h3, h6 + h3,
+  .t-heading + h3, h1 + h4, h2 + h4, h3 + h4, h4 + h4, h5 + h4, h6 + h4,
+  .t-heading + h4, h1 + h5, h2 + h5, h3 + h5, h4 + h5, h5 + h5, h6 + h5,
+  .t-heading + h5, h1 + h6, h2 + h6, h3 + h6, h4 + h6, h5 + h6, h6 + h6,
+  .t-heading + h6, h1 +
+  .t-heading, h2 +
+  .t-heading, h3 +
+  .t-heading, h4 +
+  .t-heading, h5 +
+  .t-heading, h6 +
+  .t-heading,
+  .t-heading +
+  .t-heading {
+    margin-top: 0.25em; }
+  h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
+  .t-heading a {
+    color: inherit; }
+    h1 a:hover, h1 a:active, h2 a:hover, h2 a:active, h3 a:hover, h3 a:active, h4 a:hover, h4 a:active, h5 a:hover, h5 a:active, h6 a:hover, h6 a:active,
+    .t-heading a:hover,
+    .t-heading a:active {
+      color: #3077ab; }
+      h1 a:hover.c-theme-reverse, .c-theme-reverse h1 a:hover, h1 a:active.c-theme-reverse, .c-theme-reverse h1 a:active, h2 a:hover.c-theme-reverse, .c-theme-reverse h2 a:hover, h2 a:active.c-theme-reverse, .c-theme-reverse h2 a:active, h3 a:hover.c-theme-reverse, .c-theme-reverse h3 a:hover, h3 a:active.c-theme-reverse, .c-theme-reverse h3 a:active, h4 a:hover.c-theme-reverse, .c-theme-reverse h4 a:hover, h4 a:active.c-theme-reverse, .c-theme-reverse h4 a:active, h5 a:hover.c-theme-reverse, .c-theme-reverse h5 a:hover, h5 a:active.c-theme-reverse, .c-theme-reverse h5 a:active, h6 a:hover.c-theme-reverse, .c-theme-reverse h6 a:hover, h6 a:active.c-theme-reverse, .c-theme-reverse h6 a:active,
+      .t-heading a:hover.c-theme-reverse, .c-theme-reverse
+      .t-heading a:hover,
+      .t-heading a:active.c-theme-reverse, .c-theme-reverse
+      .t-heading a:active {
+        color: #3077ab; }
+  h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong,
+  .t-heading strong {
+    font-family: inherit;
+    font-style: normal;
+    font-weight: bold; }
+
+a.t-heading {
+  color: #4f4f4f; }
+  a.t-heading.c-theme-reverse, .c-theme-reverse a.t-heading {
+    color: #fff; }
+  a.t-heading:hover, a.t-heading:active {
+    color: #3077ab; }
+    a.t-heading:hover.c-theme-reverse, .c-theme-reverse a.t-heading:hover, a.t-heading:active.c-theme-reverse, .c-theme-reverse a.t-heading:active {
+      color: #3077ab; }
+
+p {
+  font-size: 16px;
+  font-size: 1rem;
+  color: #757575;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0; }
+  p.c-theme-reverse, .c-theme-reverse p {
+    color: #e4e4e4; }
+  p + p, p:first-of-type {
+    margin-top: 1em; }
+  p strong {
+    font-family: "publico-text-bold-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+    font-weight: bold;
+    font-style: normal; }
+  p em {
+    font-family: "publico-text-normal-italic", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+    font-weight: normal;
+    font-style: italic; }
+
+a {
+  -webkit-transition: all 0.25s;
+  -moz-transition: all 0.25s;
+  transition: all 0.25s;
+  color: #3077ab;
+  text-decoration: none; }
+  a.c-theme-reverse, .c-theme-reverse a {
+    color: #3077ab; }
+
+strong,
+.t-strong {
+  font-family: "publico-text-bold-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: bold;
+  font-style: normal; }
+
+em,
+.t-em {
+  font-family: "publico-text-normal-italic", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: normal;
+  font-style: italic; }
+
+small,
+.t-small {
+  font-size: 11px;
+  font-size: 0.6875rem;
+  color: #b1b1b1; }
+  small.c-theme-reverse, .c-theme-reverse small,
+  .t-small.c-theme-reverse, .c-theme-reverse
+  .t-small {
+    color: #828282; }
+
+figcaption,
+.t-caption {
+  font-size: 13px;
+  font-size: 0.8125rem;
+  font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  color: #b1b1b1; }
+  figcaption.c-theme-reverse, .c-theme-reverse figcaption,
+  .t-caption.c-theme-reverse, .c-theme-reverse
+  .t-caption {
+    color: #828282; }
+  figcaption strong,
+  .t-caption strong {
+    font-family: "guardian-sans-bold", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+    font-weight: normal;
+    font-style: bold; }
+
+address,
+.t-address {
+  font-size: 11px;
+  font-size: 0.6875rem;
+  color: #757575; }
+  address.c-theme-reverse, .c-theme-reverse address,
+  .t-address.c-theme-reverse, .c-theme-reverse
+  .t-address {
+    color: #e4e4e4; }
+
+/* Utilities
+// -------------------------------------------------------------------------- */
+.t-scale-alpha {
+  font-size: 57px;
+  font-size: 3.5625rem; }
+
+.t-scale-beta {
+  font-size: 39px;
+  font-size: 2.4375rem; }
+
+.t-scale-cappa {
+  font-size: 28px;
+  font-size: 1.75rem; }
+
+.t-scale-delta {
+  font-size: 19px;
+  font-size: 1.1875rem; }
+
+.t-scale-epsilon {
+  font-size: 16px;
+  font-size: 1rem; }
+
+.t-scale-zeta {
+  font-size: 13px;
+  font-size: 0.8125rem; }
+
+.t-scale-eta {
+  font-size: 11px;
+  font-size: 0.6875rem; }
+
+.t-heading {
+  /* see h1, h2, etc. above */ }
+
+.t-heading--sub {
+  font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  color: #b1b1b1; }
+  .t-heading--sub.c-theme-reverse, .c-theme-reverse .t-heading--sub {
+    color: #828282; }
+  .t-heading + .t-heading--sub {
+    margin-top: 0.25em; }
+  .t-heading--sub strong {
+    font-family: "guardian-sans-bold", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+    font-weight: normal;
+    font-style: bold; }
+
+a.t-heading--sub {
+  color: #b1b1b1; }
+  a.t-heading--sub.c-theme-reverse, .c-theme-reverse a.t-heading--sub {
+    color: #828282; }
+
+.t-heading--slug {
+  font-family: "guardian-sans-bold", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+  font-weight: normal;
+  font-style: bold;
+  text-transform: uppercase; }
+
+.t-lead:first-letter,
+.content p:first-of-type:first-letter {
+  font-family: "publico-headline-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: normal;
+  font-style: normal;
+  color: #4f4f4f;
+  display: inline-block;
+  float: left;
+  vertical-align: baseline;
+  margin: 0em 0.1em -0.2em -0.03em;
+  font-size: 3.2em;
+  line-height: 1; }
+  .t-lead:first-letter.c-theme-reverse, .c-theme-reverse .t-lead:first-letter,
+  .content p:first-of-type:first-letter.c-theme-reverse, .c-theme-reverse
+  .content p:first-of-type:first-letter {
+    color: #fff; }
+
+.t-caps {
+  text-transform: uppercase !important; }
+
+.t-font-display {
+  font-family: "publico-headline-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: normal;
+  font-style: normal; }
+
+.t-font-accent {
+  font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+  font-weight: normal;
+  font-style: normal; }
+
+.t-font-accent-bold {
+  font-family: "guardian-sans-bold", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+  font-weight: normal;
+  font-style: bold; }
+
+.t-font-body {
+  font-family: "publico-text-normal-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: normal;
+  font-style: normal; }
+
+.t-font-body-bold {
+  font-family: "publico-text-bold-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: bold;
+  font-style: normal; }
+
+.t-font-body-italic {
+  font-family: "publico-text-normal-italic", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: normal;
+  font-style: italic; }
+
+.t-centered {
+  text-align: center; }
+
+.t-left {
+  text-align: left; }
+
+.t-right {
+  text-align: right; }
+
+/* use the best ampersands from common system fonts... */
+/* Base
+// -------------------------------------------------------------------------- */
+.l-gallery {
+  display: block;
+  position: relative;
+  margin-left: -2px;
+  margin-right: -2px;
+  font-size: 0;
+  list-style: none; }
+  .l-gallery > ul {
+    padding-left: 0;
+    margin-left: 0;
+    list-style: none; }
+  .flexbox.no-ie .l-gallery {
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -moz-box-direction: normal;
+    box-direction: normal;
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-direction: row;
+    -webkit-box-lines: multiple;
+    -moz-box-lines: multiple;
+    box-lines: multiple;
+    -webkit-flex-wrap: wrap;
+    -moz-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: stretch;
+    -moz-box-align: stretch;
+    box-align: stretch;
+    -webkit-align-items: stretch;
+    -moz-align-items: stretch;
+    -ms-align-items: stretch;
+    -o-align-items: stretch;
+    align-items: stretch;
+    -ms-flex-align: stretch; }
+
+/* Modifiers
+// -------------------------------------------------------------------------- */
+/* Subcomponents
+// -------------------------------------------------------------------------- */
+/* --- Gallery Items -------------------------------------------------------- */
+.l-gallery-item {
+  font-size: 16px;
+  font-size: 1rem;
+  display: inline-block;
+  position: relative;
+  margin: 0;
+  padding-right: 2px;
+  padding-left: 2px;
+  padding-bottom: 4px;
+  width: 100%;
+  vertical-align: top; }
+  .flexbox.no-ie .l-gallery-item {
+    -webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    box-flex: 0;
+    -webkit-flex: 0 0 auto;
+    -moz-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    box-orient: vertical;
+    -webkit-box-direction: normal;
+    -moz-box-direction: normal;
+    box-direction: normal;
+    -webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-direction: column; }
+  .l-gallery--small .l-gallery-item {
+    width: 50%; }
+  .l-gallery.\:container\(width\>\=300px\) .l-gallery-item {
+    width: 50%; }
+  .l-gallery--small.\:container\(width\>\=300px\) .l-gallery-item {
+    width: 33.33333%; }
+  .l-gallery--large.\:container\(width\>\=300px\) .l-gallery-item {
+    width: 100%; }
+  .l-gallery.\:container\(width\>\=600px\) .l-gallery-item {
+    width: 33.33333%; }
+  .l-gallery--small.\:container\(width\>\=600px\) .l-gallery-item {
+    width: 25%; }
+  .l-gallery--large.\:container\(width\>\=600px\) .l-gallery-item {
+    width: 50%; }
+  .l-gallery.\:container\(width\>\=1200px\) .l-gallery-item {
+    width: 25%; }
+  .l-gallery--small.\:container\(width\>\=1200px\) .l-gallery-item {
+    width: 20%; }
+  .l-gallery--large.\:container\(width\>\=1200px\) .l-gallery-item {
+    width: 33.33333%; }
+
+/* ==========================================================================
+// Feed component
+// -> a vertical list of things, usually content references (e.g. blog post excerpts)
+// ========================================================================== */
+/* Base
+// ---------------------------------------------------------------------------*/
+.l-feed {
+  display: block;
+  list-style: none;
+  margin-left: 0; }
+  .l-feed ul, .l-feed li {
+    padding-left: 0; }
+
+/* Submodules
+// ---------------------------------------------------------------------------*/
+.l-feed-item {
+  padding-bottom: 28px;
+  padding-bottom: 1.75rem;
+  margin-bottom: 28px;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid #e4e4e4;
+  border-color: #e4e4e4;
+  display: block; }
+  .l-feed-item.c-theme-reverse, .c-theme-reverse .l-feed-item {
+    border-color: #828282; }
+  .l-feed-item:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none; }
+
+/* =============================================================================
+// Wrapper layout classes
+// ===========================================================================*/
+/*doc
+---
+title: Wrapper
+name: wrapper
+category: Layout
+---
+
+Wrappers
+
+```html_example
+<a href="#" class="button l-abs top right">Button @ top right</a>
+```
+
+*/
+/* Settings & mixins
+// -------------------------------------------------------------------------- */
+/* Utilities
+// -------------------------------------------------------------------------- */
+.l-wrapper {
+  max-width: 656px;
+  display: block;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 28px;
+  padding-right: 28px; }
+  .l-wrapper::after {
+    clear: both;
+    content: "";
+    display: table; }
+
+.l-wrapper--wide {
+  max-width: 1080px; }
+
+.l-wrapper--full {
+  max-width: 100%; }
+
+.l-wrapper-outcrop {
+  display: block;
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding-left: 28px;
+  padding-right: 28px; }
+  @media (min-width: 1025px) {
+    .l-wrapper-outcrop {
+      width: auto;
+      left: 0;
+      right: 0;
+      margin-left: -212px;
+      margin-right: -212px; } }
+
+/* =============================================================================
+// Visibility
+// -> hide and show things in various ways
+// ========================================================================== */
+.is-visually_hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+  /*
+     * Extends the .visuallyhidden class to allow the element
+     * to be focusable when navigated to via the keyboard:
+     * https://www.drupal.org/node/897638
+     */ }
+  .is-visually_hidden.focusable {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    /*
+     * Extends the .visuallyhidden class to allow the element
+     * to be focusable when navigated to via the keyboard:
+     * https://www.drupal.org/node/897638
+     */ }
+    .is-visually_hidden.focusable:active, .is-visually_hidden.focusable:focus {
+      clip-path: auto;
+      height: auto;
+      overflow: visible;
+      position: static;
+      width: auto; }
+
+.is-hidden {
+  display: none !important; }
+
+/* /////////////////////////////////////////////////////////////////////////////
+// Base
+// -> global default element styles & utilities
+///////////////////////////////////////////////////////////////////////////// */
+/* =============================================================================
+// Global box model and scaling
+// ========================================================================== */
+html {
+  font-size: 95%;
+  box-sizing: border-box; }
+  @media (min-width: 42.01em) {
+    html {
+      font-size: 100%; } }
+  @media (min-width: 62.01em) {
+    html {
+      font-size: 110%; } }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+/* =============================================================================
+//  Global list styles
+// ========================================================================== */
+/* Globals
+// -------------------------------------------------------------------------- */
+li {
+  margin-bottom: 0.5em; }
+
+ol, ul {
+  margin-left: 1.5em;
+  padding-left: 0; }
+
+/* =============================================================================
+//  Base form styles
+// ========================================================================== */
+/*doc
+---
+title: Forms
+name: Form
+category: atoms
+---
+
+*/
+/* Base
+// -------------------------------------------------------------------------- */
+.form,
+form {
+  font-family: "publico-text-normal-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: normal;
+  font-style: normal; }
+
+.form-field, .form-textarea,
+textarea,
+input, textarea, select {
+  font-family: "publico-text-normal-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: normal;
+  font-style: normal;
+  -webkit-transition: all 0.25s;
+  -moz-transition: all 0.25s;
+  transition: all 0.25s;
+  padding: 0.5em 1em;
+  border-radius: 3px;
+  box-sizing: border-box;
+  box-shadow: none;
+  text-shadow: none; }
+  .form-field:focus, .form-textarea:focus,
+  textarea:focus,
+  input:focus, textarea:focus, select:focus {
+    outline: 0;
+    outline: thin dotted \9;
+    /* IE6-9 */
+    box-shadow: none; }
+
+.form-checkbox,
+[type="checkbox"] {
+  width: 1em;
+  height: 1em; }
+
+.form-textarea,
+textarea {
+  resize: vertical; }
+
+/* ==========================================================================
+//  Global media styles
+// ========================================================================== */
+audio,
+canvas,
+img,
+video {
+  vertical-align: middle;
+  max-width: 100%; }
+
+/* /////////////////////////////////////////////////////////////////////////////
+// Components
+// -> reusable, composable, self-contained interface elements
+///////////////////////////////////////////////////////////////////////////// */
+/* --- Atoms ---------------------------------------------------------------- */
+/* =============================================================================
+//  Button module
+// ========================================================================== */
+/*doc
+---
+title: Buttons
+name: button
+category: atoms
+---
+
+You can apply button styles to pretty much anything you'd like. Anchors and button elements, though, would be the winners on the semantics front.
+
+You can mix and match classes to get the hierarchy/size you need. "small primary" and "large tertiary" are both kosher.
+
+```html_example
+<a href="#" class="button">Default</a>
+<a href="#" class="button button--small">Small</a>
+<a href="#" class="button button--large">Large</a>
+<a href="#" class="button button--text">Text-only</a>
+```
+
+*/
+/* Base
+// -------------------------------------------------------------------------- */
+button, .button {
+  -webkit-transition: all 0.25s;
+  -moz-transition: all 0.25s;
+  transition: all 0.25s;
+  font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  border: 1px solid;
+  font-size: 13px;
+  font-size: 0.8125rem;
+  display: inline-block;
+  padding: 0.5em 1.2em;
+  border-radius: 0.2em;
+  color: #4f4f4f;
+  background-color: transparent; }
+  button:hover, button:active, .button:hover, .button:active {
+    border-color: #3077ab;
+    background-color: #3077ab;
+    color: #fff; }
+  button sup, .button sup {
+    font-size: 0.6em; }
+  button strong, .button strong {
+    font-family: "guardian-sans-bold", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+    font-weight: normal;
+    font-style: "bold"; }
+
+/* Modifiers
+// -------------------------------------------------------------------------- */
+.button--small {
+  font-size: 11px;
+  font-size: 0.6875rem;
+  padding: 0.3em 0.8em; }
+
+.button--large {
+  font-size: 16px;
+  font-size: 1rem;
+  padding: 0.8em 1.6em; }
+
+.button--purchase {
+  padding: 0 0.8em 0 0;
+  vertical-align: middle; }
+
+.button--text {
+  font-family: "guardian-sans-bold", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+  font-weight: normal;
+  font-style: "bold";
+  font-size: 11px;
+  font-size: 0.6875rem;
+  padding: 0;
+  border: none;
+  text-transform: uppercase; }
+  .button--text:hover, .button--text:active {
+    color: #3077ab;
+    background-color: transparent;
+    border: none; }
+
+/* Submodules
+// -------------------------------------------------------------------------- */
+.button-price {
+  -webkit-transition: all 0.25s;
+  -moz-transition: all 0.25s;
+  transition: all 0.25s;
+  display: inline-block;
+  margin-right: 1em;
+  padding: 0.6em 1em;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.2em;
+  color: #fff; }
+  .button-price:hover, .button-price:active,
+  .button:hover .button-price, .button:active .button-price {
+    background-color: #3077ab; }
+
+/* ==========================================================================
+//  Logo modules
+// ========================================================================== */
+/* Main logo
+// -------------------------------------------------------------------------- */
+.logo {
+  display: block; }
+
+.logo-jp-bg {
+  fill: #4f4f4f;
+  color: #4f4f4f; }
+
+.logo--jpw {
+  display: block;
+  height: 26px;
+  height: 1.625rem;
+  width: 175px;
+  width: 10.9375rem; }
+
+.logo--jpw-jay_perry {
+  fill: #4f4f4f; }
+
+.logo--jpw-works {
+  fill: #3077ab; }
+
+/* =============================================================================
+// Tag/tag list styles
+// ========================================================================== */
+/* Base
+// -------------------------------------------------------------------------- */
+.tag {
+  -webkit-transition: all 0.25s;
+  -moz-transition: all 0.25s;
+  transition: all 0.25s;
+  border: 1px solid #e4e4e4;
+  border-color: #e4e4e4;
+  font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 13px;
+  font-size: 0.8125rem;
+  color: #b1b1b1;
+  display: inline-block;
+  padding: 0.15em 0.4em 0.05em;
+  margin-left: 0;
+  border-radius: 0.1em;
+  vertical-align: middle; }
+  .tag.c-theme-reverse, .c-theme-reverse .tag {
+    border-color: #828282; }
+  .tag.c-theme-reverse, .c-theme-reverse .tag {
+    color: #828282; }
+  .tag:hover, .tag:active {
+    color: #3077ab;
+    border-color: #3077ab; }
+    .tag:hover.c-theme-reverse, .c-theme-reverse .tag:hover, .tag:active.c-theme-reverse, .c-theme-reverse .tag:active {
+      color: #3077ab; }
+    .tag:hover.c-theme-reverse, .c-theme-reverse .tag:hover, .tag:active.c-theme-reverse, .c-theme-reverse .tag:active {
+      border-color: #3077ab; }
+  .tag a {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit; }
+    .tag a:hover, .tag a:active {
+      color: inherit; }
+
+/* Subcomponents
+// -------------------------------------------------------------------------- */
+.tag-group {
+  display: block;
+  position: relative;
+  padding-left: 0;
+  margin-left: 0;
+  margin-top: 0;
+  list-style: none; }
+  .tag-group > li, .tag-group .tag-group-item {
+    display: inline-block;
+    margin: 0 0.25em 0.5em 0; }
+    .tag-group > li:last-child, .tag-group .tag-group-item:last-child {
+      margin-right: 0; }
+
+/* =============================================================================
+//  Stat component
+// -> a set of stats, or metadata/numbers, for a given piece of content
+// ========================================================================== */
+/* Base
+// -------------------------------------------------------------------------- */
+.stat {
+  font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 13px;
+  font-size: 0.8125rem;
+  color: #757575;
+  display: inline-block;
+  vertical-align: baseline; }
+  .stat.c-theme-reverse, .c-theme-reverse .stat {
+    color: #e4e4e4; }
+
+/* Modifiers
+// -------------------------------------------------------------------------- */
+.stat--label {
+  color: #b1b1b1; }
+  .stat--label.c-theme-reverse, .c-theme-reverse .stat--label {
+    color: #828282; }
+
+/* Subcomponents
+// -------------------------------------------------------------------------- */
+.stat-group {
+  margin: 0; }
+  .stat-group .stat {
+    display: block; }
+  .stat-group.\:container\(width\>\=150px\) .stat {
+    display: inline-block; }
+  .stat-group.\:container\(width\>\=150px\) .stat--label:after {
+    content: ":"; }
+
+.stat-list {
+  margin-left: 0;
+  list-style: none; }
+  .stat-list.\:container\(width\>\=300px\) {
+    font-size: 0; }
+    .stat-list.\:container\(width\>\=300px\) .stat-group {
+      font-size: 16px;
+      font-size: 1rem;
+      display: inline-block;
+      padding-right: 1.5em; }
+    .stat-list.\:container\(width\>\=300px\) .stat {
+      display: block; }
+      .stat-list.\:container\(width\>\=300px\) .stat:after {
+        content: none; }
+
+/* --- Molecules ------------------------------------------------------------ */
+/* ==========================================================================
+// card box styles
+// ========================================================================== */
+/* Base
+// ---------------------------------------------------------------------------*/
+.card {
+  display: block; }
+
+/* Submodules
+// ---------------------------------------------------------------------------*/
+.card-figure {
+  font-size: 16px;
+  font-size: 1rem;
+  display: block;
+  width: 100%; }
+  .card-content + .card-figure {
+    margin-top: 16px;
+    margin-top: 1rem; }
+
+.card-content {
+  font-size: 16px;
+  font-size: 1rem;
+  display: block;
+  width: 100%; }
+  .card-figure + .card-content {
+    margin-top: 16px;
+    margin-top: 1rem; }
+
+/* Modifiers
+// ---------------------------------------------------------------------------*/
+.card--multicolumn {
+  font-size: 0; }
+  .flexbox.no-ie .card--multicolumn.\:container\(width\>\=600px\) {
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -moz-box-align: start;
+    box-align: start;
+    -webkit-align-items: flex-start;
+    -moz-align-items: flex-start;
+    -ms-align-items: flex-start;
+    -o-align-items: flex-start;
+    align-items: flex-start;
+    -ms-flex-align: start; }
+  .card--multicolumn.\:container\(width\>\=600px\) .card-figure {
+    font-size: 16px;
+    font-size: 1rem;
+    display: inline-block;
+    width: 25.08791%;
+    vertical-align: top;
+    padding-right: 8px; }
+    .flexbox.no-ie .card--multicolumn.\:container\(width\>\=600px\) .card-figure {
+      display: block; }
+    .flexbox.no-ie .card--multicolumn.\:container\(width\>\=600px\) .card-figure {
+      -webkit-box-ordinal-group: -1;
+      -moz-box-ordinal-group: -1;
+      box-ordinal-group: -1;
+      -webkit-order: -1;
+      -moz-order: -1;
+      order: -1;
+      -ms-flex-order: -1; }
+  .card--multicolumn.\:container\(width\>\=600px\) .card-content {
+    font-size: 16px;
+    font-size: 1rem;
+    display: inline-block;
+    width: 74.91209%;
+    vertical-align: top;
+    padding-left: 8px;
+    margin-top: 0; }
+    .flexbox.no-ie .card--multicolumn.\:container\(width\>\=600px\) .card-content {
+      display: block;
+      -webkit-box-flex: 1;
+      -moz-box-flex: 1;
+      box-flex: 1;
+      -webkit-flex: 1;
+      -moz-flex: 1;
+      -ms-flex: 1;
+      flex: 1; }
+    .flexbox.no-ie .card--multicolumn.\:container\(width\>\=600px\) .card-content {
+      -webkit-box-ordinal-group: 0;
+      -moz-box-ordinal-group: 0;
+      box-ordinal-group: 0;
+      -webkit-order: 0;
+      -moz-order: 0;
+      order: 0;
+      -ms-flex-order: 0; }
+  .card--multicolumn.\:container\(width\>\=600px\) .card-figure--large {
+    font-size: 16px;
+    font-size: 1rem;
+    display: inline-block;
+    width: 74.91209%;
+    vertical-align: top;
+    padding-right: 8px; }
+    .flexbox.no-ie .card--multicolumn.\:container\(width\>\=600px\) .card-figure--large {
+      display: block; }
+    .card--multicolumn.\:container\(width\>\=600px\) .card-figure--large + .card-content {
+      font-size: 16px;
+      font-size: 1rem;
+      display: inline-block;
+      width: 25.08791%;
+      vertical-align: top;
+      padding-left: 8px; }
+      .flexbox.no-ie .card--multicolumn.\:container\(width\>\=600px\) .card-figure--large + .card-content {
+        display: block;
+        -webkit-box-flex: 1;
+        -moz-box-flex: 1;
+        box-flex: 1;
+        -webkit-flex: 1;
+        -moz-flex: 1;
+        -ms-flex: 1;
+        flex: 1; }
+  .card--multicolumn.\:container\(width\>\=600px\) .card-figure--right {
+    padding-right: 0;
+    padding-left: 16px; }
+    .flexbox.no-ie .card--multicolumn.\:container\(width\>\=600px\) .card-figure--right {
+      -webkit-box-ordinal-group: 1;
+      -moz-box-ordinal-group: 1;
+      box-ordinal-group: 1;
+      -webkit-order: 1;
+      -moz-order: 1;
+      order: 1;
+      -ms-flex-order: 1; }
+    .card--multicolumn.\:container\(width\>\=600px\) .card-figure--right + .card-content {
+      padding-right: 16px;
+      padding-left: 0; }
+
+/* ==========================================================================
+// Cover image styles
+// ========================================================================== */
+/* Base
+// ---------------------------------------------------------------------------*/
+.cover {
+  margin: 0 auto;
+  margin: 0 auto;
+  display: block;
+  padding: 0 28px;
+  max-height: 600px;
+  max-height: 80vh; }
+
+/* --- Organisms ------------------------------------------------------------ */
+/* =============================================================================
+// Footer styles
+// ========================================================================== */
+/* Base
+// -------------------------------------------------------------------------- */
+.main_footer {
+  border-top: 1px solid #e4e4e4;
+  border-color: #e4e4e4;
+  padding-top: 28px;
+  padding-bottom: 28px; }
+  .main_footer.c-theme-reverse, .c-theme-reverse .main_footer {
+    border-color: #828282; }
+
+/* Submodules
+// -------------------------------------------------------------------------- */
+@media (min-width: 42.01em) {
+  .main_footer-lockup {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: -0.3em; } }
+
+.main_footer-copyright {
+  font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  display: block;
+  margin-top: 0.8em;
+  font-size: 0.5em;
+  text-transform: uppercase;
+  color: #b1b1b1; }
+  @media (min-width: 42.01em) {
+    .main_footer-copyright {
+      display: inline-block;
+      vertical-align: top;
+      margin-left: 1em;
+      margin-top: 0; } }
+
+/* --- Regions -------------------------------------------------------------- */
+/* /////////////////////////////////////////////////////////////////////////////
+// Styles of Shame
+// -> put quick and dirty hacks here, then clean up & organize later
+///////////////////////////////////////////////////////////////////////////// */

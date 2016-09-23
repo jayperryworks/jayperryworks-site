@@ -1,0 +1,60 @@
+/* =============================================================================
+//  Type & layout scale
+// ========================================================================== */
+
+/*doc
+---
+title: Scale
+name: scale
+category: Core
+---
+
+A single, modular scale is used for the entire site: not only type scaling but also spacing and relative proportions throughout the layout.
+
+*/
+
+@import "libs";
+
+// Config & mixins
+// -----------------------------------------------------------------------------
+
+// -> minor third scale (1.2, 5:6)
+// -> 16px base (http://www.modularscale.com/?16&px&1.2&web&text)
+$scale-global: 1.2 !default;
+
+// --- type scale & sizing -----------------------------------------------------
+
+// modular scale
+// -> requires SASS Type Helpers
+// -> minor third (1.2, 5:6), 16px base (http://www.modularscale.com/?16&px&1.2&web&text)
+// $font-scale: 11px 13px 16px 19px 23px 28px 33px 39px 48px 57px 69px 83px 99px;
+
+// global type scale
+// -> we could compute this via the modular scale mixins,
+// -> but doing it by hand allows us to tweak certain sizes to suit the fonts we're using
+// -> also, even numbers probably work better in old browsers when using px units
+$scale-type: (
+    'alpha'   : 57px,
+    'beta'    : 39px,
+    'cappa'   : 28px,
+    'delta'   : 19px,
+    'epsilon' : 16px,
+    'zeta'    : 13px,
+    'eta'     : 11px,
+);
+
+@function scale-type($size) {
+    @return map-get($scale-type, $size);
+}
+
+@mixin scale-type($size) {
+    @include rem(font-size, scale-type($size));
+}
+
+// --- modular scale config ----------------------------------------------------
+// -> for layout and spacing
+
+$ms-base: 1 !default;
+$ms-ratio: $scale-global !default;
+
+// @debug ms-list(1, 10, $ms-base, $ms-ratio);

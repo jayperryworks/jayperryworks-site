@@ -1,31 +1,40 @@
 <% wrap_layout :layout do %>
-    <article class="post">
-            <header class="post-header">
-                <h1><%= current_page.data.title %></h1>
-                <span class="subtitle beta"><%= current_page.data.subtitle %></span>
-            </header>
-            <div class="post-content l-wrapper narrow">
+  <article class="l-margin-top-wide">
+    <header>
+      <% if current_page.data.image.present? %>
+        <%= image_tag current_page.url + current_page.data.image, class: "cover l-margin-bottom", alt: current_page.data.title %>
+      <% end %>
+      <div class="l-wrapper">
+        <%= component "meta", locals: {
+          date: current_page.date.strftime("%B %-d, %Y"),
+          borders: ["bottom"],
+          classes: "l-margin-bottom"
+        } %>
+        <h1 class="t-heading t-scale-beta"><%= current_page.data.title %></h1>
+        <% if current_page.data.subtitle.present? %>
+          <span class="t-heading t-heading--sub t-scale-cappa"><%= current_page.data.subtitle %></span>
+        <% end %>
 
-                <aside class="post-meta sidebar">
-                    <time class="post-date"><%= current_page.date.strftime("%B %-d, %Y") %></time>
-                    <dl class="post-tags">
-                        <dt class="tags-label">Filed under</dt>
-                        <% current_page.data.tags.each do |tag| %>
-                        <dd class="tag"><a href=""><%= tag %></a></dd>
-                        <% end %>
-                    </dl>
-                </aside>
+      </div>
+    </header>
 
-                <% if current_page.data.image.present? %>
-                    <%= image_tag current_page.url + current_page.data.image, :class => "post-feature_image", :alt => current_page.data.title %>
-                <% end %>
+    <main class="content l-wrapper l-margin-bottom-wide">
+      <%= yield %>
+    </main>
 
-                <%= yield %>
+    <!-- <footer class="l-wrapper l-margin-top-wide l-margin-bottom">
+      <div class="border-top l-padding-top">
+        <h1 class="t-heading t-heading--slug t-scale-eta l-margin-bottom-narrow c-text-tertiary">Filed under:</h1>
+        <%# component "tag_list", locals: { tags: current_page.data.tags } %>
+      </div>
+    </footer> -->
 
-        </div>
-    </article>
-    <nav class="pagination">
-        <%#= current_page.date %>
-        <%# blog.articles.select {|article| article.data[:public] }.each do |article| %>
-    </nav>
+  </article>
+
+  <!-- <nav class="border-top">
+    <%# prev_post(current_page.data.title) %>
+    <div>
+      <h1></h1>
+    </div>
+  </nav> -->
 <% end %>

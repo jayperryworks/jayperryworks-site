@@ -1,0 +1,41 @@
+{
+  "minify": true,
+  "options": [
+    "html5shiv",
+    "setClasses"
+  ],
+  "feature-detects": [
+    "test/canvas",
+    "test/canvastext",
+    "test/ligatures",
+    "test/requestanimationframe",
+    "test/svg",
+    "test/video",
+    "test/css/backgroundposition-xy",
+    "test/css/backgroundsize",
+    "test/css/backgroundsizecover",
+    "test/css/borderimage",
+    "test/css/calc",
+    "test/css/checked",
+    "test/css/flexbox",
+    "test/css/flexboxlegacy",
+    "test/css/flexboxtweener",
+    "test/css/flexwrap",
+    "test/css/gradients",
+    "test/css/lastchild",
+    "test/css/multiplebgs",
+    "test/css/objectfit",
+    "test/css/remunit",
+    "test/css/rgba",
+    "test/css/transforms",
+    "test/css/vhunit",
+    "test/css/vmaxunit",
+    "test/css/vminunit",
+    "test/css/vwunit",
+    "test/svg/asimg",
+    "test/svg/clippaths",
+    "test/svg/filters",
+    "test/svg/foreignobject",
+    "test/svg/inline"
+  ]
+}

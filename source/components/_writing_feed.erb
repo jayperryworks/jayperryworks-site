@@ -1,0 +1,32 @@
+<%#
+  Writing Feed component
+  - A feed of blog article excerpts
+
+  Locals:
+  - ARRAY articles: articles to list
+  - STRING classes (optional): additional modifier classes (e.g. .l-margin, etc.)
+
+  Styles:
+  - components/feed.scss
+  - components/card.scss
+%>
+
+<% classes ||= false %>
+
+<ul class="l-feed<%= ' #{classes}' if classes %>">
+  <% articles.each do |article| %>
+    <li class="l-feed-item">
+      <% component "card", locals: {
+        link: article.url,
+        figure: article.data.image.present? ? article.url + article.data.image : false
+      } do %>
+        <h2 class="t-heading t-scale-cappa"><%= link_to article.title, article.url %></h2>
+        <% if article.data.subtitle.present? %>
+          <%= link_to article.data.subtitle, article.url, class: "t-heading t-heading--sub t-scale-delta" %>
+        <% end %>
+        <%= article.summary %>
+        <%= link_to "Read more &rsaquo;", article.url, class: "button button--text l-margin-top" %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

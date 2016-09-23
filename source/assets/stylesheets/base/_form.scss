@@ -1,0 +1,69 @@
+/* =============================================================================
+//  Base form styles
+// ========================================================================== */
+
+/*doc
+---
+title: Forms
+name: Form
+category: atoms
+---
+
+*/
+
+@import "../core/animation";
+@import "../base/type";
+
+/* Base
+// -------------------------------------------------------------------------- */
+
+.form,
+form { @include font-body; }
+
+.form-fieldset,
+fieldset {}
+
+.form-legend,
+legend {}
+
+.form-field,
+input, textarea, select {
+	@include font-body;
+    @include transition-default;
+	padding: 0.5em 1em;
+	border-radius: 3px;
+	box-sizing: border-box;
+	box-shadow: none;
+	text-shadow: none;
+
+	&:focus {
+		outline: 0;
+		outline: thin dotted \9; /* IE6-9 */
+		box-shadow: none;
+	}
+}
+
+.form-checkbox,
+[type="checkbox"] {
+	width: 1em;
+	height: 1em;
+}
+
+.form-search,
+input[type="search"] {
+
+	&:focus {}
+}
+
+// Allow only vertical resizing of textareas.
+.form-textarea,
+textarea {
+    @extend .form-field;
+	resize: vertical;
+}
+
+.form-select,
+select {}
+
+.form-label,
+label {}

@@ -1,71 +1,51 @@
 <% wrap_layout :layout do %>
-<article class="post">
-    <section class="panel top">
-        <%= image_tag current_page.url + current_page.data.cover, :class => "post-cover", :alt => current_page.data.title %>
+  <article>
+    <% component "panel", locals: { borders: "none" } do %>
+      <%= image_tag current_page.url + current_page.data.cover, class: "cover", alt: current_page.data.title %>
 
-        <!-- cover image and info -->
-        <header class="post-header">
-            <div class="post-meta top">
-                <time class="post-date"><%= current_page.date.strftime('%Y') %></time>
-                <span class="meta"><% if current_page.data.width.present? %><%= current_page.data.width %> &times; <%= current_page.data.height %>, <% end %><% if current_page.data.format.present? %><%= current_page.data.format %><% end %></span>
-                <ul class="post-tags right">
-                    <% current_page.data.tags.each do |tag| %>
-                    <li><a class="tag" href="#"><%= tag %></a></li>
-                    <% end %>
-                </ul>
-            </div>
-            <h1><%= current_page.data.title %></h1>
-        </header><!-- /.post-header -->
+      <!-- cover image, info, and title -->
+      <header class="l-wrapper l-margin-top-narrow">
+        <% info = current_page.data.width.present? ? "#{current_page.data.format}, #{current_page.data.width} &times; #{current_page.data.height}" : current_page.data.format %>
+        <%= component "meta", locals: {
+          date: current_page.date.strftime('%Y'),
+          info: info
+        } %>
+        <h1 class="t-heading t-scale-beta l-margin-top"><%= current_page.data.title %></h1>
+      </header>
 
-        <!-- writeup -->
-        <div class="post-content l-wrapper">
-            <%= yield %>
+      <!-- writeup -->
+      <div class="content l-wrapper">
+        <%= yield %>
 
-            <% if current_page.data.edition_placeholder == true %>
-            <div class="l-centered">
-                <a class="button large l-has-margin top" href="https://www.etsy.com/shop/jayperry" target="_blank">Print editions available at <strong>Etsy</strong></a>
-            </div>
-            <% end %>
-        </div><!-- /.post-content -->
+        <!-- 'editions available on etsy' button -->
+        <% if current_page.data.edition_placeholder == true %>
+          <div class="t-centered l-margin-top-wide">
+              <a class="button button--large" href="https://www.etsy.com/shop/jayperry" target="_blank">Print editions available at <strong>Etsy</strong></a>
+          </div>
+        <% end %>
+      </div>
 
-    </section><!-- /.panel -->
+      <% end %>
 
-    <!-- Editions -->
+      <!-- Editions -->
+      <% if current_page.data.editions.present? %>
+        <% component "panel", locals: { slug: "Available editions" } do %>
+          <!-- edition cards -->
+          <div class="l-wrapper l-wrapper--wide">
+            <ul class="l-feed">
+              <% current_page.data.editions.each do |edition| %>
+                <%= component "print_edition", :locals => { :edition => edition } %>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+      <% end %>
+  </article>
 
-    <% if current_page.data.editions.present? %>
-    <!-- jump nav -->
-    <section class="panel has-jump">
-        <h2 class="panel-slug">Available Editions</h2>
-
-        <!-- edition cards -->
-        <div class="feed l-wrapper">
-            <% current_page.data.editions.each do |edition| %>
-            <figure class="card horizontal large feed-item" id="edition_<%= edition.name %>">
-                <%= image_tag current_page.url + edition.image, :class => "card-figure", :alt => edition.name + " edition" %>
-                <figcaption class="card-content">
-                    <h2 class="cappa subtitle"><strong><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
-                    <dl class="card-stats">
-                        <dt>Print Size</dt>
-                        <dd><%= edition.height %>" &times; <%= edition.width %>"</dd>
-                        <dt>Paper Size</dt>
-                        <dd><%= edition.height + (edition.border * 2) %>" &times; <%= edition.width + (edition.border * 2) %>"</dd>
-                        <dt>Edition</dt>
-                        <dd><% if edition.limit.present? %>edition.limit<% else %>Open<% end %></dd>
-                    </dl>
-                    <p class="card-caption">Printed at Archival Arts in Baltimore on heavy, textured, acid-free Hahnemuhle cotton rag paper, using archival pigment-based inks. Individually signed and numbered.</p>
-                    <a class="button" href="<%= edition.url %>" target="_blank">Buy on Etsy</a>
-                </figcaption>
-            </figure><!-- /.card.feed-item -->
-            <% end %>
-        </div><!-- /.feed -->
-    </section><!-- /.panel -->
-    <% end %>
-</article>
-<!-- More work -->
-<section class="panel">
-    <h1 class="panel-slug">More work</h1>
-    <div class="l-wrapper">
-        <%= partial("layouts/partials/work", :locals => { :current => true, :tags => false }) %>
-    </div>
-</section>
+  <!-- More work -->
+  <% component "panel", locals: { slug: "More work" } do %>
+      <div class="l-wrapper l-wrapper--wide">
+          <%= partial("components/work_gallery", :locals => { :prints => blog("work").articles, :current => false, :tags => false }) %>
+      </div>
+  <% end %>
 <% end %>

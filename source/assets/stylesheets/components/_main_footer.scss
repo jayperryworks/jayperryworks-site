@@ -1,0 +1,42 @@
+/* =============================================================================
+// Footer styles
+// ========================================================================== */
+
+@import "../core/all";
+@import "../components/logo";
+
+/* Base
+// -------------------------------------------------------------------------- */
+
+.main_footer {
+    @include border('top');
+    padding-top: gutter('wide');
+    padding-bottom: gutter('wide');
+}
+
+/* Submodules
+// -------------------------------------------------------------------------- */
+
+.main_footer-lockup {
+  @include media('>small') {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: -0.3em; // move up slightly so lowercase aligns with other elements
+  }
+}
+
+.main_footer-copyright {
+  @include font-accent;
+  display: block;
+  margin-top: 0.8em;
+  font-size: 0.5em;
+  text-transform: uppercase;
+  color: theme('text' 'tertiary');
+
+  @include media('>small') {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 1em;
+    margin-top: 0;
+  }
+}
