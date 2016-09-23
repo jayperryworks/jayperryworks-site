@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <%= stylesheet_link_tag :main %>
+    <%= stylesheet_link_tag build? ? "main.min.css" : "main.css" %>
     <%= javascript_include_tag "javascripts/critical.bundle" %>
 
     <script type="text/javascript">

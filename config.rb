@@ -177,9 +177,9 @@ configure :build do
 
     # Compress/optimize images
     # -> svg optimization is handled by svgo
-    activate :imageoptim do |options|
-        options.image_extensions = %w(.png .jpg .gif .svg)
-    end
+    # activate :imageoptim do |options|
+    #     options.image_extensions = %w(.png .jpg .gif .svg)
+    # end
 
     # Or use a different image path
     # set :http_prefix, "/Content/images/"
