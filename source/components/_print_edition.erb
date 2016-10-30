@@ -16,16 +16,18 @@
         <span class="stat stat--label">Print Size</span>
         <span class="stat"><%= edition.height %>" &times; <%= edition.width %>"</span>
       </li>
+      <% if edition.border.present? %>
       <li class="stat-group">
         <span class="stat stat--label">Paper Size</span>
         <span class="stat"><%= edition.height + (edition.border * 2) %>" &times; <%= edition.width + (edition.border * 2) %>"</span>
       </li>
+      <% end %>
       <li class="stat-group">
         <span class="stat stat--label">Edition</span>
         <span class="stat"><% if edition.limit.present? %>edition.limit<% else %>Open<% end %></span>
       </li>
     </ul>
-    <p class="t-caption">Printed at Archival Arts in Baltimore on heavy, textured, acid-free Hahnemuhle cotton rag paper, using archival pigment-based inks. Individually signed and numbered.</p>
+    <p class="t-caption">Printed at Archival Arts in Baltimore on heavy, textured, acid-free cotton rag paper, using archival pigment-based inks. Individually signed and numbered.</p>
     <a class="button l-margin-top" href="<%= edition.url %>" target="_blank">Buy on Etsy</a>
   </figcaption>
 </figure>
