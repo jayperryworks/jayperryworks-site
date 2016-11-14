@@ -1,15 +1,13 @@
 var Clean = require("clean-webpack-plugin"),
     webpack = require("webpack");
 
-var jsPath = "/source/assets/javascripts",
-    cssPath = "/source/assets/stylesheets";
+var jsPath = "/source/assets/javascripts";
 
 // split output JS into "critical" (above-the-fold) scripts and the rest (which can be loaded on-demand)
 module.exports = {
   entry: {
     critical: ["vendor/modernizr.js", "picturefill"],
-    main: "." + jsPath + "/main.js",
-    styles: "." + cssPath + "/main.scss"
+    main: "." + jsPath + "/main.js"
   },
   resolve: {
     root: __dirname + jsPath
