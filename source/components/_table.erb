@@ -1,0 +1,30 @@
+<%#
+  Table component
+
+  Locals:
+  URL file: a CSV file to display
+
+  Styles:
+  base/table
+%>
+
+<%
+  data: getYML(file)
+%>
+
+<table>
+  <thead>
+    <th>
+      <%# data.each do | paper | %>
+      <td><%# paper.key %></td>
+      <%# end %>
+    </th>
+  </thead>
+  <tbody>
+    <%# data.each do | paper | %>
+    <tr>
+      <td><%# paper["name"] %></td>
+    </tr>
+    <%# end %>
+  </tbody>
+</table>

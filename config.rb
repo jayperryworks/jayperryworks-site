@@ -63,6 +63,8 @@ end
 activate :directory_indexes
 page "404.html", :directory_index => false
 
+set :markdown_engine, :kramdown
+
 # Use relative URLs
 activate :relative_assets
 
@@ -93,12 +95,19 @@ helpers do
 
   # check to see if a highlight color is one of the defaults listed in colors.yml
   def highlight(color)
-      if data.colors.include? color
-          return data.colors[color.to_s]
-      else
-          return color
-      end
+    if data.colors.include? color
+      return data.colors[color.to_s]
+    else
+      return color
+    end
   end
+
+  # grab a yml file from an arbitrary location and read it
+  # -> used for storing data outside of the 'data' folder
+  # -> http://stackoverflow.com/questions/13310488/how-can-i-read-a-yaml-file
+  def getYML(file) {
+    return YAML.load_file(file)
+  }
 
   # "Component" decorator for partial function
   # -> just used to point automatically to "components" dir so you don't have to type the full path
