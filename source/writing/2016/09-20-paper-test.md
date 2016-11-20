@@ -26,11 +26,13 @@ On each sheet, I did a series of brush- and pen- strokes in a particular order. 
 1. A wet-on-wet swirl with a very loaded brush, and then a swirl of dry brush on top.
 2. A few wet-on-dry strokes, going from dark to light (loaded brush to light brush).
 3. A super light wet-on-dry stroke.
-4–5. A few dark strokes going from dry to wet brush, with a thin, dry stroke through them.
+4. – 5. A few dark strokes going from dry to wet brush, with a thin, dry stroke through them.
 6. A few dry strokes of varying widths, and an eyeball drawn with fine lines.
-7–9. Some pen lines: mid-weight fountain pen, fine-weight fountain pen, and felt-tip marker.
+7. – 9. Some pen lines: mid-weight fountain pen, fine-weight fountain pen, and felt-tip marker.
 
 ## Bristol Board
+
+![Bristol Board paper test scan](paper_test-screen-v1-bristol_board.jpg)
 
 Bristol board is great stuff, but I'd always assumed it was for dry media only. I saw it as a cartoonist’s paper - great for precise dry-brush and marker. And that's true: a #3 sable brush and Bristol board go together like white wine and fish. Hard to go wrong. 
 
@@ -40,6 +42,8 @@ Bristol board has always been a pretty ideal paper for scanning, thanks to its s
 
 ## Strathmore Mixed Media paper
 
+![Mixed Media paper test scan](paper_test-screen-v2-mixed_media.jpg)
+
 “Mixed media” paper is, I had supposed, a paper designed exactly for what I needed: wet and dry stuff in the same place. Where I had assumed, before, that Bristol board was for dry media, I'd likewise assumed that it's wet-media-friendly counterpart was this stuff. So I used it for awhile but was disappointed here and there by it. Sometimes it wouldn't handle a wash as well as I'd hoped. Tones might shift as the ink dried; it didn't seem to preserve contrast.
 
 And, unfortunately, it did pretty much everything poorly in my test. The washes have dark “halos” at their edges, lots of unpredictable pooling and blotchiness, and the paper buckles like wet tissue. It also seems to wash out most tones except for the darkest dry strokes, leaving things looking muddy and gray. In general: it's very hard to control brush strokes on this paper because they dry so unpredictably.
@@ -48,13 +52,17 @@ I noticed, for the first time, that this paper is also slightly cold-toned relat
 
 ## Fabriano Hot Press watercolor paper
 
+![Fabriano hot-press paper test scan](paper_test-screen-v3-hot_press.jpg)
+
 This is the hot-press paper I've been using, so it's sort of the “control" of this experiment. But I also partly wanted to see if it really held up as well as I thought it did against cheaper siblings. I wasn't disappointed; it handled washes and dry-brush alike well, and seemed to also preserve tone and contrast the best.
 
 That said, this paper is versatile but not necessarily spectacular at all extremes. There was still a little haloing at the edges of my lighter washes, and occasionally a little pooling or swirling where it got super wet. But all in all it was the most predictable and controllable surface for the widest range of dry and wet strokes. It took a really wet wash but also allowed smooth, fine lines.
 
 This Fabriano paper is, I believe, their lower-cost/student-grade version, and the artist-grade stuff probably performs even better. It would also be, I expect, more archival.
 
-## Cold-Press Watercolor Paper
+## Cold-Press watercolor paper
+
+![cold press paper test scan](paper_test-screen-v4-cold_press.jpg)
 
 Finally, I did the test on some traditional cold-press watercolor paper. This is fairly inexpensive 300-series, 140 lb. (middle-weight) Strathmore paper from a pad.
 
@@ -65,6 +73,8 @@ I see the cold-press as the most specialized surface here: it’s “watercolor�
 ## In a nutshell
 
 [all 4 images tiled]
+
+<%= component "table", locals: { data: "papers.yml" } %>
 
 ## Conclusions
 
