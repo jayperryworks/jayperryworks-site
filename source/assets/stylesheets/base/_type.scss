@@ -112,10 +112,14 @@ address,
 
 // type scale helpers
 @each $name, $size in $scale-type {
-    .t-scale-#{$name} { @include scale-type($name); }
+  .t-scale-#{$name} { @include scale-type($name); }
 }
 
-.t-heading { /* see h1, h2, etc. above */ }
+.t-heading {
+  /* see h1, h2, etc. above */
+  &.t-scale-alpha { letter-spacing: -0.4em; }
+}
+
   .t-heading--sub {
     @include font-accent;
     @include color('text' 'tertiary');
