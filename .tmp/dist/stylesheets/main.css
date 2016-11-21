@@ -609,7 +609,7 @@ The second parameter is optional, and theme() will default to the 'default' them
 // -> use the helper class to apply a theme to a module
 // -------------------------------------------------------------------------- */
 body, .c-theme-default {
-  color: #757575;
+  color: #5b5b5b;
   background-color: #fff;
   border-color: #e4e4e4 !important; }
   body ::selection, .c-theme-default ::selection {
@@ -643,7 +643,7 @@ body, .c-theme-default {
     color: #fff !important; }
 
 .c-text-secondary {
-  color: #757575 !important; }
+  color: #5b5b5b !important; }
   .c-text-secondary.c-theme-reverse, .c-theme-reverse .c-text-secondary {
     color: #e4e4e4 !important; }
 
@@ -1382,6 +1382,44 @@ h1, h2, h3, h4, h5, h6,
   .t-heading +
   .t-heading {
     margin-top: 0.25em; }
+  .content > p + h1,
+  .content > ul + h1,
+  .content > ol + h1, .content > p + h2,
+  .content > ul + h2,
+  .content > ol + h2, .content > p + h3,
+  .content > ul + h3,
+  .content > ol + h3, .content > p + h4,
+  .content > ul + h4,
+  .content > ol + h4, .content > p + h5,
+  .content > ul + h5,
+  .content > ol + h5, .content > p + h6,
+  .content > ul + h6,
+  .content > ol + h6, .content > p +
+  .t-heading,
+  .content > ul +
+  .t-heading,
+  .content > ol +
+  .t-heading {
+    margin-top: 1.5em; }
+  .content > h1 + p,
+  .content > h1 + ul,
+  .content > h1 + ol, .content > h2 + p,
+  .content > h2 + ul,
+  .content > h2 + ol, .content > h3 + p,
+  .content > h3 + ul,
+  .content > h3 + ol, .content > h4 + p,
+  .content > h4 + ul,
+  .content > h4 + ol, .content > h5 + p,
+  .content > h5 + ul,
+  .content > h5 + ol, .content > h6 + p,
+  .content > h6 + ul,
+  .content > h6 + ol, .content >
+  .t-heading + p,
+  .content >
+  .t-heading + ul,
+  .content >
+  .t-heading + ol {
+    margin-top: 0.5em; }
   h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
   .t-heading a {
     color: inherit; }
@@ -1413,12 +1451,12 @@ a.t-heading {
 p {
   font-size: 16px;
   font-size: 1rem;
-  color: #757575;
+  color: #5b5b5b;
   -webkit-margin-before: 0;
   -webkit-margin-after: 0; }
   p.c-theme-reverse, .c-theme-reverse p {
     color: #e4e4e4; }
-  p + p, p:first-of-type {
+  p + p {
     margin-top: 1em; }
   p strong {
     font-family: "publico-text-bold-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
@@ -1437,6 +1475,8 @@ a {
   text-decoration: none; }
   a.c-theme-reverse, .c-theme-reverse a {
     color: #3077ab; }
+  a small {
+    color: inherit; }
 
 strong,
 .t-strong {
@@ -1482,7 +1522,7 @@ address,
 .t-address {
   font-size: 11px;
   font-size: 0.6875rem;
-  color: #757575; }
+  color: #5b5b5b; }
   address.c-theme-reverse, .c-theme-reverse address,
   .t-address.c-theme-reverse, .c-theme-reverse
   .t-address {
@@ -1549,7 +1589,7 @@ a.t-heading--sub {
   text-transform: uppercase; }
 
 .t-lead:first-letter,
-.content p:first-of-type:first-letter {
+.content > p:first-child:first-letter {
   font-family: "publico-headline-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
   font-weight: normal;
   font-style: normal;
@@ -1561,9 +1601,47 @@ a.t-heading--sub {
   font-size: 3.2em;
   line-height: 1; }
   .t-lead:first-letter.c-theme-reverse, .c-theme-reverse .t-lead:first-letter,
-  .content p:first-of-type:first-letter.c-theme-reverse, .c-theme-reverse
-  .content p:first-of-type:first-letter {
+  .content > p:first-child:first-letter.c-theme-reverse, .c-theme-reverse
+  .content > p:first-child:first-letter {
     color: #fff; }
+
+.footnotes {
+  border-top: 1px solid #e4e4e4;
+  border-color: #e4e4e4;
+  margin-top: 16px;
+  margin-top: 1rem;
+  font-size: 13px;
+  font-size: 0.8125rem;
+  color: #b1b1b1; }
+  .footnotes.c-theme-reverse, .c-theme-reverse .footnotes {
+    border-color: #828282; }
+  .footnotes.c-theme-reverse, .c-theme-reverse .footnotes {
+    color: #828282; }
+  .footnotes li, .footnotes p {
+    font-size: 13px;
+    font-size: 0.8125rem;
+    font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    color: #b1b1b1;
+    letter-spacing: 0.02em; }
+    .footnotes li.c-theme-reverse, .c-theme-reverse .footnotes li, .footnotes p.c-theme-reverse, .c-theme-reverse .footnotes p {
+      color: #828282; }
+
+.footnote {
+  font-size: 11px;
+  font-size: 0.6875rem;
+  border-radius: 3px;
+  color: #fff;
+  background-color: #3077ab;
+  display: inline-block;
+  margin-left: 0.25em;
+  padding: 0.25em 0.5em;
+  line-height: 1; }
+  .footnote.c-theme-reverse, .c-theme-reverse .footnote {
+    color: #4f4f4f; }
+  .footnote.c-theme-reverse, .c-theme-reverse .footnote {
+    background-color: #3077ab; }
 
 .t-caps {
   text-transform: uppercase !important; }
@@ -1876,6 +1954,11 @@ ol, ul {
   margin-left: 1.5em;
   padding-left: 0; }
 
+/* Utilities
+// -------------------------------------------------------------------------- */
+.list-undecorated {
+  list-style: none !important; }
+
 /* =============================================================================
 //  Base form styles
 // ========================================================================== */
@@ -2131,7 +2214,7 @@ button, .button {
   font-style: normal;
   font-size: 13px;
   font-size: 0.8125rem;
-  color: #757575;
+  color: #5b5b5b;
   display: inline-block;
   vertical-align: baseline; }
   .stat.c-theme-reverse, .c-theme-reverse .stat {

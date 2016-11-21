@@ -7,11 +7,26 @@
   STRING alt: alt for the image
 %>
 
-<% alt ||= false %>
+<%
+  alt ||= ""
+  outcrop ||= "true"
+  margins ||= ["top", "bottom"]
+  border ||= false
+  classes ||= false
 
-<figure class="feature">
-    <img class="feature-image" src="<%= source %>"<%=  "alt='#{alt}'" if alt %>>
-    <figcation class="feature-caption">
-        <%= yield %>
-    </figcation>
+  # make a list of border classes from the borders array
+  margin_list = ""
+
+  if margins != "none"
+    margins.each do |side|
+      margin_list << " l-margin-#{side}-wide"
+    end
+  end
+%>
+
+<figure class="<%= "l-wrapper-outcrop" if outcrop == "true" %><%= margin_list %> t-center<%= " #{classes}" if classes %>">
+  <%= image_tag source, alt: alt, class: border ? "border" : "" %>
+  <figcation class="l-display-inline_block t-caption l-margin-top-narrow">
+    <%= yield %>
+  </figcation>
 </figure>

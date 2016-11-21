@@ -41,6 +41,14 @@ h1, h2, h3, h4, h5, h6,
 
     & + & { margin-top: 0.25em; }
 
+    .content > p + &,
+    .content > ul + &,
+    .content > ol + & { margin-top: 1.5em; }
+
+    .content > & + p,
+    .content > & + ul,
+    .content > & + ol { margin-top: 0.5em; }
+
     a {
       color: inherit;
 
@@ -67,8 +75,7 @@ p {
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
 
-    & + &,
-    &:first-of-type { margin-top: 1em; }
+    & + & { margin-top: 1em; }
 
     strong { @include font-body(bold); }
     em { @include font-body(normal, italic); }
@@ -78,6 +85,8 @@ a {
     @include transition-default;
     @include color('highlight');
     text-decoration: none;
+
+    small { color: inherit; }
 }
 
 strong,
@@ -138,7 +147,7 @@ address,
 
 // the first paragraph, often set slightly bigger
 .t-lead,
-.content p:first-of-type {
+.content > p:first-child {
     &:first-letter {
         @include font-display;
         @include color('text' 'primary');
@@ -150,6 +159,31 @@ address,
         line-height: 1;
     }
 }
+
+.footnotes {
+  @include border(top);
+  @include rem(margin-top, gutter());
+  @include scale-type('zeta');
+  @include color('text' 'tertiary');
+
+  li, p {
+    @include scale-type('zeta');
+    @include font-accent;
+    @include color('text' 'tertiary');
+    letter-spacing: 0.02em;
+  }
+}
+
+  .footnote {
+    @include scale-type('eta');
+    @include border-radius;
+    @include color('bg');
+    @include color('highlight', background-color);
+    display: inline-block;
+    margin-left: 0.25em;
+    padding: 0.25em 0.5em;
+    line-height: 1;
+  }
 
 .t-caps { text-transform: uppercase !important; }
 
