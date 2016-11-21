@@ -1,0 +1,45 @@
+/* =============================================================================
+//  Table globals and utilities
+// ========================================================================== */
+
+@import "../core/all";
+
+
+/* Globals
+// -------------------------------------------------------------------------- */
+
+table,
+.table {
+  @include font-accent;
+  @include scale-type('epsilon');
+  width: 100%;
+}
+
+thead,
+.table-header {
+  @include font-accent('bold');
+  @include scale-type('eta');
+  @include border(bottom, thick, $color: "text" "primary");
+  @include color("text" "primary");
+  vertical-align: bottom;
+  text-transform: uppercase;
+  text-align: left;
+
+  td,
+  .table-cell { padding-bottom: 0.5em; }
+}
+
+tbody,
+.table-body {
+  // width: 100%;
+}
+
+tr,
+.table-row {
+
+}
+
+td, th,
+.table-cell {
+  padding: 0.25em 0.5em;
+}

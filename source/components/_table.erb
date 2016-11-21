@@ -9,21 +9,21 @@
 %>
 
 <%
-  data: getYML(file)
+  # data = csv_data("papers-ratings.csv")
 %>
 
 <table>
   <thead>
     <th>
-      <%# data.each do | paper | %>
-      <td><%# paper.key %></td>
-      <%# end %>
+      <% data.each do | table | %>
+      <td><%= table %></td>
+      <% end %>
     </th>
   </thead>
   <tbody>
-    <%# data.each do | paper | %>
+    <%# data.each do | table | %>
     <tr>
-      <td><%# paper["name"] %></td>
+      <td><%# table["name"] %></td>
     </tr>
     <%# end %>
   </tbody>

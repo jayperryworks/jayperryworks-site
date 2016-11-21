@@ -1,3 +1,7 @@
+# CSV libs - http://www.ict4g.net/adolfo/notes/2015/05/30/csv_data_in_middleman.html
+require 'lib/csv_helpers.rb'
+activate :csv_helpers
+
 ###
 # Page options, layouts, aliases and proxies
 ###
@@ -105,9 +109,9 @@ helpers do
   # grab a yml file from an arbitrary location and read it
   # -> used for storing data outside of the 'data' folder
   # -> http://stackoverflow.com/questions/13310488/how-can-i-read-a-yaml-file
-  def getYML(file) {
-    return YAML.load_file(file)
-  }
+  # def getYML(file) {
+  #   return YAML.load_file(file)
+  # }
 
   # "Component" decorator for partial function
   # -> just used to point automatically to "components" dir so you don't have to type the full path

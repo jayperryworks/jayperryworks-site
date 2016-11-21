@@ -27,9 +27,8 @@
     </script>
   </head>
 
-  <%# component "spritemap" %>
-
   <body>
+    <%# component "spritemap" %>
     <%= component "main_header", locals: {
       show_intro: current_page.data.title == "home" ? true : false,
       intro: data.site.intro,
