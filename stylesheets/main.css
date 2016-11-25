@@ -1350,7 +1350,7 @@ body {
   font-style: normal;
   font-size: 16px;
   font-size: 1rem;
-  line-height: 1.5; }
+  line-height: 1.6; }
 
 h1, h2, h3, h4, h5, h6,
 .t-heading {
@@ -1596,7 +1596,7 @@ a.t-heading--sub {
   float: left;
   vertical-align: baseline;
   margin: 0em 0.1em -0.2em -0.03em;
-  font-size: 3.2em;
+  font-size: 3.5em;
   line-height: 1; }
   .t-lead:first-letter.c-theme-reverse, .c-theme-reverse .t-lead:first-letter,
   .content > p:first-child:first-letter.c-theme-reverse, .c-theme-reverse
