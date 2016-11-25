@@ -175,7 +175,7 @@ address,
 }
 
   .footnote {
-    @include scale-type('eta');
+    @include font-accent;
     @include border-radius;
     @include color('bg');
     @include color('highlight', background-color);

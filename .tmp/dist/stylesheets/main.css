@@ -1629,8 +1629,9 @@ a.t-heading--sub {
       color: #828282; }
 
 .footnote {
-  font-size: 11px;
-  font-size: 0.6875rem;
+  font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+  font-weight: normal;
+  font-style: normal;
   border-radius: 3px;
   color: #fff;
   background-color: #3077ab;
