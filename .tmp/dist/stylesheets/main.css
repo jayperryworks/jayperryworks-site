@@ -2029,8 +2029,8 @@ table,
   font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
   font-weight: normal;
   font-style: normal;
-  font-size: 16px;
-  font-size: 1rem;
+  font-size: 13px;
+  font-size: 0.8125rem;
   width: 100%; }
 
 thead,
@@ -2060,9 +2060,59 @@ thead,
   .table-header .table-cell {
     padding-bottom: 0.5em; }
 
+tr:nth-child(even),
+.table-row:nth-child(even) {
+  background-color: #f1f1f1; }
+
 td, th,
 .table-cell {
+  position: relative;
   padding: 0.25em 0.5em; }
+
+/* make tables act like a definition list on small screens */
+@media (max-width: 41.99em) {
+  table, .table,
+  thead, .table-header,
+  tbody, .table-body,
+  th, td, tr {
+    display: block; }
+  thead, .table-header {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    /*
+     * Extends the .visuallyhidden class to allow the element
+     * to be focusable when navigated to via the keyboard:
+     * https://www.drupal.org/node/897638
+     */ }
+  tr {
+    border-top: 1px solid #e4e4e4;
+    border-color: #e4e4e4;
+    padding-top: 1em;
+    padding-bottom: 1em; }
+    tr.c-theme-reverse, .c-theme-reverse tr {
+      border-color: #828282; }
+    tr:last-child {
+      border-bottom: 1px solid #e4e4e4;
+      border-color: #e4e4e4; }
+      tr:last-child.c-theme-reverse, .c-theme-reverse tr:last-child {
+        border-color: #828282; }
+  td {
+    padding-left: 25% !important; }
+    td::before {
+      font-family: "guardian-sans-bold", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
+      font-weight: normal;
+      font-style: "bold";
+      content: attr(data-label);
+      position: absolute;
+      top: 0.25em;
+      left: 0.5em;
+      width: 25%;
+      padding-right: 1em;
+      white-space: nowrap; } }
 
 /* /////////////////////////////////////////////////////////////////////////////
 // Components

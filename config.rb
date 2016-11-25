@@ -1,6 +1,6 @@
 # CSV libs - http://www.ict4g.net/adolfo/notes/2015/05/30/csv_data_in_middleman.html
-require 'lib/csv_helpers.rb'
-activate :csv_helpers
+# require 'lib/csv_helpers.rb'
+# activate :csv_helpers
 
 ###
 # Page options, layouts, aliases and proxies

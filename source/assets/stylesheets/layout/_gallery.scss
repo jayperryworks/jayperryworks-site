@@ -5,7 +5,7 @@
 
 // requires Bourbon & Modernizr
 @import "../core/all";
-@import "../layout/grid";
+// @import "../layout/grid";
 @import "../base/type";
 
 $gallery-gutter: 4px;
@@ -13,22 +13,22 @@ $gallery-gutter: 4px;
 $gallery-sizes: 2, 3, 4, 6;
 $gallery-breaks: 300px, 600px, 1200px;
 
-@mixin gallery-columns($number: 2, $g: $gallery-gutter) {
-    display: inline-block;
-    width: (100%/$number);
-    padding-right: ($g/2);
-    padding-left: ($g/2);
-    vertical-align: top;
+// @mixin gallery-columns($number: 2, $g: $gallery-gutter) {
+//     display: inline-block;
+//     width: (100%/$number);
+//     padding-right: ($g/2);
+//     padding-left: ($g/2);
+//     vertical-align: top;
 
-    @include yep(flexbox, no-ie) {
-        // use conventional width attribute instead of flexbox b/c of IE 11 box model bug
-        // http://stackoverflow.com/questions/21942183/multiline-flexbox-in-ie11-calculating-widths-incorrectly
-        // https://github.com/philipwalton/flexbugs#7-flex-basis-doesnt-account-for-box-sizingborder-box
-        // http://codepen.io/philipwalton/pen/XJMWem
-        @include flex(0 0 auto);
-        @include display(flex);
-    }
-}
+//     @include yep(flexbox, no-ie) {
+//         // use conventional width attribute instead of flexbox b/c of IE 11 box model bug
+//         // http://stackoverflow.com/questions/21942183/multiline-flexbox-in-ie11-calculating-widths-incorrectly
+//         // https://github.com/philipwalton/flexbugs#7-flex-basis-doesnt-account-for-box-sizingborder-box
+//         // http://codepen.io/philipwalton/pen/XJMWem
+//         @include flex(0 0 auto);
+//         @include display(flex);
+//     }
+// }
 
 /* Base
 // -------------------------------------------------------------------------- */
