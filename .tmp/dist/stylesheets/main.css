@@ -2068,7 +2068,7 @@ tr:nth-child(even),
 td, th,
 .table-cell {
   position: relative;
-  padding: 0.25em 0.5em; }
+  padding: 0.5em 0.5em; }
 
 /* make tables act like a definition list on small screens */
 @media (max-width: 41.99em) {
@@ -2109,7 +2109,7 @@ td, th,
       font-style: "bold";
       content: attr(data-label);
       position: absolute;
-      top: 0.25em;
+      top: 0.5em;
       left: 0.5em;
       width: 25%;
       padding-right: 1em;

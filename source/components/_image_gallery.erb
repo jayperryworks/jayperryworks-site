@@ -17,6 +17,7 @@
   size ||= 'default'
   outcrop ||= true
   margins ||= ["top", "bottom"]
+  borders ||= false
 
   # make a list of border classes from the borders array
   margin_list = ""
@@ -31,7 +32,7 @@
 <div class="<%= "l-wrapper-outcrop" if outcrop %><%= margin_list %>">
   <ul class="l-gallery<%= " l-gallery--#{size}" if size != 'default' %>">
     <% images.each do |image, alt| %>
-      <li class="l-gallery-item"><img src="<%= image %>" alt="<%= alt %>"></li>
+      <li class="l-gallery-item"><img<%= " class='border'" if borders == true %> src="<%= image %>" alt="<%= alt %>"></li>
     <% end %>
   </ul>
 </div>
