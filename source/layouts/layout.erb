@@ -38,7 +38,7 @@
     <%= yield %>
 
     <%= component "main_footer", locals: {
-      show_bio: current_page.data.title == "home" ? false : true
+      show_bio: current_page.data.title == "home" || current_page.data.hide_bio == true ? false : true
     } %>
 
     <%= javascript_include_tag :bundle %>

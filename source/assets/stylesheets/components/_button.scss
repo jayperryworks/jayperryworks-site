@@ -30,7 +30,7 @@ You can mix and match classes to get the hierarchy/size you need. "small primary
 button, .button {
   @include transition-default;
   @include font-accent;
-  @include border('all', $color: lighten(theme('text' 'primary'), 20));
+  @include border('all', $color: 'text' 'primary');
   @include scale-type('zeta');
   display: inline-block;
   padding: 0.5em 1.2em;
@@ -54,7 +54,7 @@ button, .button {
 /* Modifiers
 // -------------------------------------------------------------------------- */
 
-// --- sizes ---------------------------------------------------------------
+/* --- sizes ---------------------------------------------------------------- */
 // -> default size is "medium." add these classes to go bigger or smaller.
 
 .button--small {
@@ -68,7 +68,15 @@ button, .button {
   padding: 0.8em 1.6em;
 }
 
-// --- special variations --------------------------------------------------
+/* --- prominence ----------------------------------------------------------- */
+// -> how obnoxious shall your button be?
+
+.button--secondary {
+  color: theme('text' 'tertiary');
+  border-color: theme('text' 'tertiary');
+}
+
+/* --- special variations --------------------------------------------------- */
 // -> buttons of a strange and amazing nature
 
 // a "buy this" button, usually with a price

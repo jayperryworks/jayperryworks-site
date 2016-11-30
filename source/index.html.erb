@@ -3,7 +3,7 @@ title: home
 ---
 
 <!-- Work section -->
-<% component "panel", locals: { slug: "Recent work" } do %>
+<% component "panel", locals: { slug: "Recent work", id: "work" } do %>
   <div class="l-wrapper l-wrapper--wide l-margin-top-wide">
     <%= component "work_gallery", :locals => { :prints => blog("work").articles } %>
 
@@ -17,7 +17,7 @@ title: home
 
 <!-- Blog section -->
 <% if blog("writing").articles.length > 0 %>
-  <% component "panel", locals: { slug: "Writing" } do %>
+  <% component "panel", locals: { slug: "Writing", id: "writing" } do %>
     <div class="l-wrapper narrow">
       <%= component "writing_feed", :locals => { :articles => blog("writing").articles[0...5] } %>
     </div>
