@@ -11,11 +11,15 @@ html {
     font-size: 95%;
 
     @include media(">small") {
-        font-size: 100%;
+      font-size: 105%;
     }
 
     @include media(">medium") {
-        font-size: 110%;
+      font-size: 115%;
+    }
+
+    @include media(">large") {
+      font-size: 130%;
     }
 
     // set everything to roll with border-box sizing
@@ -24,6 +28,4 @@ html {
     box-sizing: border-box;
 }
 
-*, *:before, *:after {
-    box-sizing: inherit;
-}
+*, *:before, *:after { box-sizing: inherit; }

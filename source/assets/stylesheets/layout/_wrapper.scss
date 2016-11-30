@@ -18,7 +18,7 @@ Wrappers
 */
 
 @import "libs";
-@import "grid";
+@import "gutter";
 @import "breakpoints";
 
 /* Settings & mixins
@@ -28,7 +28,7 @@ $outcrop-margin: -4em;
 
 // width of main layout
 $layout-widths: (
-    'default' : 600px,
+    'default' : 680px,
     'wide'    : 1024px,
 );
 

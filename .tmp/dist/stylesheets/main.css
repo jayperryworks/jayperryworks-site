@@ -1849,7 +1849,7 @@ Wrappers
 /* Utilities
 // -------------------------------------------------------------------------- */
 .l-wrapper {
-  max-width: 656px;
+  max-width: 736px;
   display: block;
   position: relative;
   margin-left: auto;
@@ -1882,8 +1882,8 @@ Wrappers
       width: auto;
       left: 0;
       right: 0;
-      margin-left: -212px;
-      margin-right: -212px; } }
+      margin-left: -172px;
+      margin-right: -172px; } }
 
 /* =============================================================================
 // Visibility
@@ -1935,10 +1935,13 @@ html {
   box-sizing: border-box; }
   @media (min-width: 42.01em) {
     html {
-      font-size: 100%; } }
+      font-size: 105%; } }
   @media (min-width: 62.01em) {
     html {
-      font-size: 110%; } }
+      font-size: 115%; } }
+  @media (min-width: 75.01em) {
+    html {
+      font-size: 130%; } }
 
 *, *:before, *:after {
   box-sizing: inherit; }
