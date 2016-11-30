@@ -2134,7 +2134,8 @@ button, .button {
   font-family: "guardian-sans-normal", "Trebuchet", "Lucida Grande", "Verdana", sans-serif;
   font-weight: normal;
   font-style: normal;
-  border: 1px solid;
+  border: 1px solid #4f4f4f;
+  border-color: #4f4f4f;
   font-size: 13px;
   font-size: 0.8125rem;
   display: inline-block;
@@ -2142,6 +2143,8 @@ button, .button {
   border-radius: 0.2em;
   color: #4f4f4f;
   background-color: transparent; }
+  button.c-theme-reverse, .c-theme-reverse button, .button.c-theme-reverse, .c-theme-reverse .button {
+    border-color: #fff; }
   button:hover, button:active, .button:hover, .button:active {
     border-color: #3077ab;
     background-color: #3077ab;
@@ -2155,6 +2158,7 @@ button, .button {
 
 /* Modifiers
 // -------------------------------------------------------------------------- */
+/* --- sizes ---------------------------------------------------------------- */
 .button--small {
   font-size: 11px;
   font-size: 0.6875rem;
@@ -2165,6 +2169,12 @@ button, .button {
   font-size: 1rem;
   padding: 0.8em 1.6em; }
 
+/* --- prominence ----------------------------------------------------------- */
+.button--secondary {
+  color: #b1b1b1;
+  border-color: #b1b1b1; }
+
+/* --- special variations --------------------------------------------------- */
 .button--purchase {
   padding: 0 0.8em 0 0;
   vertical-align: middle; }
