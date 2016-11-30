@@ -1849,7 +1849,8 @@ Wrappers
 /* Utilities
 // -------------------------------------------------------------------------- */
 .l-wrapper {
-  max-width: 736px;
+  max-width: 656px;
+  max-width: 41rem;
   display: block;
   position: relative;
   margin-left: auto;
@@ -1862,7 +1863,8 @@ Wrappers
     display: table; }
 
 .l-wrapper--wide {
-  max-width: 1080px; }
+  max-width: 1080px;
+  max-width: 67.5rem; }
 
 .l-wrapper--full {
   max-width: 100%; }
@@ -1882,8 +1884,8 @@ Wrappers
       width: auto;
       left: 0;
       right: 0;
-      margin-left: -172px;
-      margin-right: -172px; } }
+      margin-left: -212px;
+      margin-right: -212px; } }
 
 /* =============================================================================
 // Visibility

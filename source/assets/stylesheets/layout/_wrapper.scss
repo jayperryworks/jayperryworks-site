@@ -28,7 +28,7 @@ $outcrop-margin: -4em;
 
 // width of main layout
 $layout-widths: (
-    'default' : 680px,
+    'default' : 600px,
     'wide'    : 1024px,
 );
 
@@ -41,7 +41,7 @@ $layout-widths: (
 // Set a base width with gutter
 // -> PUBLIC
 @mixin l-base-w($w: "default") {
-    max-width: add_outside_gutters(layout-w($w));
+    @include rem(max-width, add_outside_gutters(layout-w($w)));
 }
 
 /* Utilities
