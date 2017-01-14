@@ -12,14 +12,14 @@ intro_note: "Last year I made my brother Andy a book for Christmas, and I'm fina
 published: true
 ---
 
-My brother Andy went to Germany last summer as part of a research project for the engineering degree he's working on. My brother is a gearhead, talented mechanic, and a fan of stout-style beer; Germany is essentially paradise for him. This three-month trip would be his first experience living abroad, in a place where he didn't know anyone, immersed in a language that he didn't speak natively (though he had a few years of German classes under his belt).
+My brother Andy went to Germany last summer as part of a research project for the engineering degree he's working on. My brother is a gearhead, talented mechanic, and a fan of stout-style beer; Germany is essentially paradise for him. This three-month trip would be his first experience living abroad, in a place where he didn't know anyone, and where he would be immersed in a language that he didn't speak natively (though he had a few years of German classes under his belt).
 EXCERPT
 
 In short: there was adventure to be had.
 
 Once he'd caught up with his jetlag and found a few minutes, Andy sent out an email update that described a pretty great week: meeting lots of other students and professors, digging into his research, and lots of excellent-but-inexpensive beer available at picturesque sidewalk cafes. Germany was more than living up to expectations, and Andy started sending similar updates each Friday. He's an excellent writer and his emails were full of funny stories and interesting details. The _Fritag Abend_ ("Friday Update"), as the subject line always read, became a kind of newsletter with a growing list of followers.
 
-As a Christmas gift, I decided to print and bind all his emails in a hardcover book that he could keep as a momento. Bookbinding is a hobby of mine; I've done half a dozen blank sketchbooks and journals for myself and friends, but this would be the first time I'd worked with typeset pages. It'd been a few years since my last book, though, and I was rusty. I used a few online tutorials that were enormously helpful:
+As a Christmas gift, I decided to print and bind all his emails in a hardcover book that he could keep as a momento. Bookbinding is a hobby of mine; I've done half a dozen blank sketchbooks and journals for myself and friends, but this would be the first time I'd worked with typeset pages. It'd been a few years since my last book, though, and I was rusty. I found a few tutorials that were enormously helpful:
 
 
 - [A bookbinding tutorial](http://www.davethedesigner.net/booktut/index.html) by Dave the Designer
@@ -33,9 +33,9 @@ As a Christmas gift, I decided to print and bind all his emails in a hardcover b
   The title page
 <% end %>
 
-Because the content was fairly simple (running text, photos, a couple levels of subheaders), I decided to handle formatting with [Markdown](http://daringfireball.net/projects/markdown/) in my favorite writing app,  [Ulysses](http://www.ulyssesapp.com). Ulysses was particularly good for this as it has its own CSS-like theming langage, ["Ulysses Style Sheets."](http://www.ulyssesapp.com/styles/) It took some trial and error but I was able to set up the basic styling and page layout I needed&mdash; all in all it worked pretty well.
+Because the content was fairly simple (running text, photos, a couple levels of subheaders), I decided to handle formatting with [Markdown language](http://daringfireball.net/projects/markdown/) in my favorite writing app, [Ulysses](http://www.ulyssesapp.com), which has its own CSS-like theming langage, ["Ulysses Style Sheets."](http://www.ulyssesapp.com/styles/) This combination of tools ended up working well, all in all; it took some trial and error but I was able to set up the basic styling and page layout I needed.
 
-I was actually hoping to lay out the book with regular CSS using a markdown processor like [Marked](http://marked2app.com) (which is excellent) or [Pandocs](http://pandoc.org), but unfortunately the CSS print spec isn't quite there for what I needed to do. Ulysses' formatting language is excellent and makes slightly more complex stuff like running headers and page numbering relatively simple. Its only drawback is that it's proprietary[^1], and I'd have really preferred an open-source solution.
+I was actually hoping to lay out the book with regular CSS and a markdown processor like [Marked](http://marked2app.com) or [Pandocs](http://pandoc.org), but unfortunately the CSS print spec isn't quite there for what I needed to do. Ulysses' own formatting language is excellent and makes slightly more difficult stuff like running headers and page numbering relatively simple. The only drawback is the fact that the language is proprietary,[^1] and, ideally, I'd have  preferred an open-source solution.
 
 <% component "feature_figure", locals: {
   source: "#{current_page.url}early_spread.jpg"
@@ -44,11 +44,11 @@ I was actually hoping to lay out the book with regular CSS using a markdown proc
 <% end %>
 
 ## Pagination
-The hardest part, as it turned out, was handling *imposition*, or the way pages need to be ordered to appear correctly in the folded signatures. This is mathematically complex and very difficult to do by hand. On larger book projects, where I've used Adobe's [InDesign](http://www.adobe.com/products/indesign.html), this is a simple matter of checking a box on the PDF export setup. I could have done that here, too, but this time I *really* wanted to finish an entire book using simple, inexpensive, and ideally code-based tools. I was feeling stubborn. This was the last piece of the puzzle I needed.
+The hardest formatting challenge, as it turned out, was handling *imposition*, or the way the pages need to be rearranged to read in the correct order in the finished book. This is mathematically complex and very difficult to do by hand. On larger book projects, where I've used Adobe's [InDesign](http://www.adobe.com/products/indesign.html), this is a simple matter of checking a box on the PDF export setup. I could have done that here, too, but this time I *really* wanted to finish an entire book using simple, inexpensive, and ideally code-based tools. I was feeling stubborn and this was the last piece of the puzzle I needed.
 
 After lots of digging I eventually found a little Mac app called [BookLightning](https://itunes.apple.com/us/app/booklightning/id480149078?mt=12), for about $10, which worked really well. Just give it a PDF, tell it how many pages you'll have in each signature, and it spits out a new file with the correct page order.
 
-One thing I love about web design is the fact that pretty much anybody can create a website with nothing more than a computer, an internet connection, a text editor, and some kind of FTP/SSH/Git client[^2]. In the print world, however, the tools are surprisingly less accessible despite being a much older technology. For this project, I was able to design the whole thing with a little over $100 in software (Ulysses, Book Lightning, and an image editor called [Affinity Photo](https://affinity.serif.com/en-us/photo/)); not bad, but if my layouts were any more complex I'd have needed the much pricier Adobe stuff. Hopefully someday it will be possible to do complex, rich page layouts with (mostly) free, open tools.
+One thing I love about web design is the fact that pretty much anybody can create a website with (basically) nothing more than a computer, an internet connection, and a text editor. In the print world, however, the tools are surprisingly less accessible despite being a much older technology. For this project, I was able to design the whole thing with a little over $100 in software (Ulysses, Book Lightning, and an image editor called [Affinity Photo](https://affinity.serif.com/en-us/photo/)); not bad, but if my layouts were any more complex I'd have needed the much pricier Adobe stuff. Hopefully someday it will be possible to do complex, rich page layouts with (mostly) free, open tools.
 
 ## Binding
 
