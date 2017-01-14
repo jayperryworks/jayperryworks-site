@@ -133,7 +133,7 @@ address,
     @include font-accent;
     @include color('text' 'tertiary');
 
-    .t-heading + & { margin-top: 0.25em; }
+    .t-heading + & { margin-top: 0.16em; }
 
     strong { @include font-accent(bold); }
   }

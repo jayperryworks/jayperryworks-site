@@ -1,5 +1,5 @@
 ---
-title: Andy's letters
+title: Fritag Abend
 subtitle: A handmade book for my brother's travel journal
 tags:
   - bookbinding
@@ -7,13 +7,13 @@ tags:
   - layout
   - side project
 color: red
-image: image.jpg
-published: false
+image: cover.jpg
+intro_note: "Last year I made my brother Andy a book for Christmas, and I'm finally getting around to finishing a post about it. Better late than never I suppose..."
+published: true
 ---
 
-_Last year I made my brother Andy a book for Christmas, and I'm finally getting around to finishing a post about it. Better late than never I suppose..._
-
-Andy went to Germany last summer as part of a research project for the engineering degree he's working on. My brother is a gearhead, talented mechanic, and a fan of stout-style beer; Germany is essentially paradise for him. This three-month trip would be his first experience living abroad, in a place where he didn't know anyone, immersed in a language that he didn't speak natively (though he had a few years of German classes under his belt). 
+My brother Andy went to Germany last summer as part of a research project for the engineering degree he's working on. My brother is a gearhead, talented mechanic, and a fan of stout-style beer; Germany is essentially paradise for him. This three-month trip would be his first experience living abroad, in a place where he didn't know anyone, immersed in a language that he didn't speak natively (though he had a few years of German classes under his belt).
+EXCERPT
 
 In short: there was adventure to be had.
 
@@ -27,13 +27,21 @@ As a Christmas gift, I decided to print and bind all his emails in a hardcover b
 
 ## Layout and formatting
 
-![](image-2.jpeg "The title page")
+<% component "feature_figure", locals: {
+  source: "#{current_page.url}title_page.jpg"
+} do %>
+  The title page
+<% end %>
 
-Because the content was fairly simple (running text, photos, a couple levels of subheaders), I decided to handle formatting with [Markdown](http://daringfireball.net/projects/markdown/) in my favorite writing app,  [Ulysses](http://www.ulyssesapp.com). Ulysses was particularly good for this as it has its own CSS-like theming langage, ["Ulysses Style Sheets."](http://www.ulyssesapp.com/styles/) It took some trial and error but I was able to set up the basic styling and page layout I needed-- all in all it worked pretty well. 
+Because the content was fairly simple (running text, photos, a couple levels of subheaders), I decided to handle formatting with [Markdown](http://daringfireball.net/projects/markdown/) in my favorite writing app,  [Ulysses](http://www.ulyssesapp.com). Ulysses was particularly good for this as it has its own CSS-like theming langage, ["Ulysses Style Sheets."](http://www.ulyssesapp.com/styles/) It took some trial and error but I was able to set up the basic styling and page layout I needed&mdash; all in all it worked pretty well.
 
 I was actually hoping to lay out the book with regular CSS using a markdown processor like [Marked](http://marked2app.com) (which is excellent) or [Pandocs](http://pandoc.org), but unfortunately the CSS print spec isn't quite there for what I needed to do. Ulysses' formatting language is excellent and makes slightly more complex stuff like running headers and page numbering relatively simple. Its only drawback is that it's proprietary[^1], and I'd have really preferred an open-source solution.
 
-![](image-3.jpeg "A photo spread")
+<% component "feature_figure", locals: {
+  source: "#{current_page.url}early_spread.jpg"
+} do %>
+  A photo spread
+<% end %>
 
 ## Pagination
 The hardest part, as it turned out, was handling *imposition*, or the way pages need to be ordered to appear correctly in the folded signatures. This is mathematically complex and very difficult to do by hand. On larger book projects, where I've used Adobe's [InDesign](http://www.adobe.com/products/indesign.html), this is a simple matter of checking a box on the PDF export setup. I could have done that here, too, but this time I *really* wanted to finish an entire book using simple, inexpensive, and ideally code-based tools. I was feeling stubborn. This was the last piece of the puzzle I needed.
@@ -44,31 +52,58 @@ One thing I love about web design is the fact that pretty much anybody can creat
 
 ## Binding
 
-![](DSCF6369.JPG "Folded signatures")
+<% component "feature_figure", locals: {
+  source: "#{current_page.url}signatures.jpg"
+} do %>
+  Folded signatures
+<% end %>
 
 Once I had the pages printed and set up correctly, I got to work folding and sewing signatures. This is a little terrifying when you have actual copy printed on the pages. When I've done blank notebooks, the cost of a mistake is having to cut a new sheet of paper, or about 3 minutes and 30 cents. In this book, I'd have to reprint that leaf, and I'd already burned 2 sets of ink cartridges. But I was roughly as careful/anal with this as I imagine the techs in the engine room of a nuclear submarine are, and it paid off. No ruined pages, no midnight runs for printer ink. Yay.
 
-![](DSCF6372.JPG "Sewing")![](DSCF6373.JPG "Sewing in the ribbons")![](DSCF6377.JPG "The finished block with ribbons")
+<%= component "image_gallery", locals: {
+  images: {
+    "#{current_page.url}sewing.jpg" => "Sewing",
+    "#{current_page.url}straps1.jpg" => "Sewing in the ribbons",
+    "#{current_page.url}straps2.jpg" => "The finished block with ribbons"
+  }
+} %>
 
-But the *really* scary, high-stakes part is cutting the block and attaching the cover. Making a mistake while _folding_ means reprinting a _page_.[^3] A mistake while _covering_ means reprinting the _book_ (and also re-sewing and gluing). 
 
-On the other hand, this is the point where it finally starts to feel like a finished book, and that makes it exciting. Before I glue the cover on, I like to wrap it around the block and pick it up. The weight of it in my hand, for the first time, is so nice: it feels like a real book for the first time. 
+But the *really* scary, high-stakes part is cutting the block and attaching the cover. Making a mistake while _folding_ means reprinting a _page_.[^3] A mistake while _covering_ means reprinting the _book_ (and also re-sewing and gluing).
 
-![](DSCF6380.JPG "Tipping on endpapers")![](DSCF6381.JPG "I picked a marbled endpaper with these great red streaks")
+On the other hand, this is the point where it finally starts to feel like a finished book, and that makes it exciting. Before I glue the cover on, I like to wrap it around the block and pick it up. The weight of it in my hand, for the first time, is so nice: it feels like a real book for the first time.
+
+<%= component "image_gallery", locals: {
+  images: {
+    "#{current_page.url}spine.jpg" => "Tipping on endpapers",
+    "#{current_page.url}endpaper.jpg" => "I picked a marbled endpaper with these great red streaks"
+  },
+  size: "large"
+} %>
 
 For this book I carefully followed the instructions in [Sage Reynold's Youtube videos](https://www.youtube.com/watch?v=8gc9wnUCfIk&list=PLHLPxhK9q222MPRhMq_jK0chDYsUn5-5u) and, for the first time, I didn't get ripples in the endpapers from applying too much glue. His hints on getting the covers aligned right was also really helpful.
 
-![](DSCF6379.JPG "Sizing the cover boards")![](DSCF6382.JPG "Cutting fabric for the cover")![](DSCF6384.JPG "Ready to glue the cover")
+<%= component "image_gallery", locals: {
+  images: {
+    "#{current_page.url}cover-board.jpg" => "Sizing the cover boards",
+    "#{current_page.url}cover-cutting.jpg" => "Cutting fabric for the cover",
+    "#{current_page.url}cover-gluing.jpg" => "Ready to glue the cover"
+  }
+} %>
 
-All in all, I'm really happy with how it turned out. If I did a printed book like this again, I don't think I'd try to print it myself. Instead I think I'd just pay an on-demand/digital printer to handle my folios-- their print quality will be better, more archival, and of course they'll be faster. That aside, though, the labor difference between binding a printed book versus a blank one surprised me. The stakes are generally much higher and there's a lot more time needed to make sure that everything is where it should be. I imagine I'll mostly stick to making blank books from now on, just because it's so much simpler.
+All in all, I'm really happy with how it turned out. If I did a printed book like this again, I don't think I'd try to print it myself. Instead I think I'd just pay an on-demand/digital printer to handle my folios&mdash; their print quality will be better, more archival, and of course they'll be faster. That aside, though, the labor difference between binding a printed book versus a blank one surprised me. The stakes are generally much higher and there's a lot more time needed to make sure that everything is where it should be. I imagine I'll mostly stick to making blank books from now on, just because it's so much simpler.
 
-Bookbinding, in general, is just such a satisfying, enjoyable thing to do; I love the quiet and precision and simplicity of the work. I love how it feels to fold the paper. I love how the bone folder feels in my hand. I love gluing down the cover fabric, then pushing it into the crevices of the spine. And most of all I love holding a book I just finished-- pulling the weights off it, picking it up, smelling the paper and fresh glue, hearing the brand new spine crack a little as I open it for the first time.
+Bookbinding, in general, is just such a satisfying, enjoyable thing to do; I love the quiet and precision and simplicity of the work. I love how it feels to fold the paper. I love how the bone folder feels in my hand. I love gluing down the cover fabric, then pushing it into the crevices of the spine. And most of all I love holding a book I just finished&mdash; pulling the weights off it, picking it up, smelling the paper and fresh glue, hearing the brand new spine crack a little as I open it for the first time.
 
-![](DSCF6565.JPG "Finished!")
+<% component "feature_figure", locals: {
+  source: "#{current_page.url}interior.jpg"
+} do %>
+  Finished!
+<% end %>
 
-It's satisfying how a handmade book _feels_, but I also love how it connects you to a very old tradition-- a nice contrast to the web design world where I spend most of my days. That world is an exciting place to be, sure, but it also changes so fast and feels so constantly new that you're all but making it up as you go along. But as I fold pages and glue bindings, I'm doing a thing that people have done for _thousands_ of years, using essentially the same tools and techniques.
+It's satisfying how a handmade book _feels_, but I also love how it connects you to a very old tradition&mdash; a nice contrast to the web design world where I spend most of my days. That world is an exciting place to be, sure, but it also changes so fast and feels so constantly new that you're all but making it up as you go along. But as I fold pages and glue bindings, I'm doing a thing that people have done for _thousands_ of years, using essentially the same tools and techniques.
 
-The irony of all this, though, is that these days I use less and less paper in my life and have less and less need for notebooks. I do still draw on paper, but that's mostly _finishing_ work these days-- final inking-- rather than the kind of idea-capturing and doodling I would use sketchbooks for. These days most of my sketches and notes happen on a tablet or phone, simply because it's much easier to keep iterating on a digital draft: it's all but infinitely malleable, reversible, and portable.
+The irony of all this, though, is that these days I use less and less paper in my life and have less and less need for notebooks. I do still draw on paper, but that's mostly _finishing_ work these days&mdash; final inking&mdash; rather than the kind of idea-capturing and doodling I would use sketchbooks for. These days most of my sketches and notes happen on a tablet or phone, simply because it's much easier to keep iterating on a digital draft: it's all but infinitely malleable, reversible, and portable.
 
 Still, I might continue making sketchbooks to carry around anyway, for the sake of getting a chance to bind a new book every now and then, if nothing else. And sometimes there's just nothing like the weight and smell of a good hardcover to inspire.
 

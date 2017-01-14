@@ -129,3 +129,5 @@ $border-widths: (
 
 // make a border thicker
 .border--thick { border-width: border-w('thick'); }
+
+.content > hr { @include border; }

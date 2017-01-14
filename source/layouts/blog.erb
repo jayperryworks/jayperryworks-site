@@ -5,7 +5,7 @@
       <div class="l-wrapper l-wrapper--full">
         <h1 class="t-heading t-scale-beta t-centered"><%= current_page.data.title %></h1>
         <% if current_page.data.subtitle.present? %>
-          <span class="t-heading t-heading--sub t-scale-cappa"><%= current_page.data.subtitle %></span>
+          <p class="t-heading t-heading--sub t-scale-cappa t-centered"><%= current_page.data.subtitle %></p>
         <% end %>
       </div>
 
@@ -14,15 +14,13 @@
         <%= image_tag current_page.data.image, class: "cover l-margin-top-wide l-margin-bottom-wide", alt: current_page.data.title %>
       <% end %>
 
-      <% if current_page.data.date.present? %>
-        <div class="l-wrapper">
-          <%= component "meta", locals: {
-            date: current_page.date.strftime("%B %-d, %Y"),
-            borders: ["bottom"],
-            classes: "l-margin-top-wide"
-          } %>
-        </div>
-      <% end %>
+      <div class="l-wrapper">
+        <%= component "meta", locals: {
+          date: current_page.date.strftime("%B %-d, %Y"),
+          borders: ["bottom"],
+          classes: "l-margin-top-wide"
+        } %>
+      </div>
     </header>
 
     <!-- Main content -->
