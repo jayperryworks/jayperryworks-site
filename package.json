@@ -14,7 +14,7 @@
     "start": "npm run build && parallelshell 'npm run javascripts:watch' 'npm run styles:watch'",
     "modernizr": "cd $npm_package_config_js_src/vendor && modernizr -c modernizr.config.json",
     "postmodernizr": "npm run javascripts:build",
-    "javascripts:build": "webpack -p --bail --optimize-minimize --optimize-dedupe --",
+    "javascripts:build": "webpack -p --bail --",
     "javascripts:watch": "webpack --watch -d --",
     "styles": "node-sass --include-path node_modules --importer ./node_modules/node-sass-import-once/index.js --output $npm_package_config_css_bundle $npm_package_config_css_src",
     "styles:cq": "postcss --use cq-prolyfill/postcss-plugin -r $npm_package_config_css_bundle/*.css",
