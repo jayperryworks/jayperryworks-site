@@ -147,7 +147,7 @@ address,
 
 // the first paragraph, often set slightly bigger
 .t-lead,
-.content > p:first-child {
+.content > p:first-of-type:not(.t-note) {
     &:first-letter {
         @include font-display;
         @include color('text' 'primary');
@@ -158,6 +158,11 @@ address,
         font-size: 3.5em;
         line-height: 1;
     }
+}
+
+.t-note {
+  @include font-body('italic');
+  @include color('text' 'tertiary');
 }
 
 .footnotes {

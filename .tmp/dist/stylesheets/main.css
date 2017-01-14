@@ -1589,7 +1589,7 @@ a.t-heading--sub {
   text-transform: uppercase; }
 
 .t-lead:first-letter,
-.content > p:first-child:first-letter {
+.content > p:first-of-type:not(.t-note):first-letter {
   font-family: "publico-headline-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
   font-weight: normal;
   font-style: normal;
@@ -1601,9 +1601,17 @@ a.t-heading--sub {
   font-size: 3.5em;
   line-height: 1; }
   .t-lead:first-letter.c-theme-reverse, .c-theme-reverse .t-lead:first-letter,
-  .content > p:first-child:first-letter.c-theme-reverse, .c-theme-reverse
-  .content > p:first-child:first-letter {
+  .content > p:first-of-type:not(.t-note):first-letter.c-theme-reverse, .c-theme-reverse
+  .content > p:first-of-type:not(.t-note):first-letter {
     color: #fff; }
+
+.t-note {
+  font-family: "publico-text-italic-normal", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+  font-weight: "italic";
+  font-style: normal;
+  color: #b1b1b1; }
+  .t-note.c-theme-reverse, .c-theme-reverse .t-note {
+    color: #828282; }
 
 .footnotes {
   border-top: 1px solid #e4e4e4;
