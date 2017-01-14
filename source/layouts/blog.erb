@@ -14,13 +14,17 @@
         <%= image_tag current_page.data.image, class: "cover l-margin-top-wide l-margin-bottom-wide", alt: current_page.data.title %>
       <% end %>
 
-      <div class="l-wrapper">
-        <%= component "meta", locals: {
-          date: current_page.date.strftime("%B %-d, %Y"),
-          borders: ["bottom"],
-          classes: "l-margin-top-wide"
-        } %>
-      </div>
+      <%# If there's date metadata, list it %>
+      <%# note: using current_page.date instead of current_page.data.date b/c date is listed in filename of blog posts %>
+      <% if current_page.respond_to?(:date) %>
+        <div class="l-wrapper">
+          <%= component "meta", locals: {
+            date: current_page.date.strftime("%B %-d, %Y"),
+            borders: ["bottom"],
+            classes: "l-margin-top-wide"
+          } %>
+        </div>
+      <% end %>
     </header>
 
     <!-- Main content -->

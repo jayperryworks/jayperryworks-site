@@ -10,11 +10,11 @@ module.exports = {
     main: "." + jsPath + "/main.js"
   },
   resolve: {
-    root: __dirname + jsPath
+    modules: ["node_modules", __dirname + jsPath]
   },
   output: {
     path: __dirname + '/.tmp/dist/javascripts',
-    filename: "bundle.js"
+    filename: "[name].bundle.js"
   },
   module: {
     loaders: [
@@ -29,7 +29,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin("critical", "critical.bundle.js"),
     new Clean(['.tmp/dist/javscripts'])
   ]
 };
