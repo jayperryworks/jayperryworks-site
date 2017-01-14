@@ -130,4 +130,13 @@ $border-widths: (
 // make a border thicker
 .border--thick { border-width: border-w('thick'); }
 
-.content > hr { @include border; }
+
+/* --- Content -------------------------------------------------------------- */
+// style generated <hr> elements in content containers
+
+.content > hr {
+  margin: 1em 0;
+  border: 0;
+  height: 0;
+  @include border('top');
+}

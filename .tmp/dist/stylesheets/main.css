@@ -1061,8 +1061,12 @@ There are also utility classes that allow you to quickly add a border to a conta
 .border--thick {
   border-width: 4px; }
 
+/* --- Content -------------------------------------------------------------- */
 .content > hr {
-  border: 1px solid #e4e4e4;
+  margin: 1em 0;
+  border: 0;
+  height: 0;
+  border-top: 1px solid #e4e4e4;
   border-color: #e4e4e4; }
   .content > hr.c-theme-reverse, .c-theme-reverse .content > hr {
     border-color: #828282; }
