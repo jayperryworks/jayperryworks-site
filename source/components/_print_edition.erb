@@ -24,7 +24,7 @@
       <% end %>
       <li class="stat-group">
         <span class="stat stat--label">Edition</span>
-        <span class="stat"><% if edition.limit.present? %>edition.limit<% else %>Open<% end %></span>
+        <span class="stat"><%= edition.limit.present? ? edition.limit : "Open" %></span>
       </li>
     </ul>
     <p class="t-caption">Printed at Archival Arts in Baltimore on heavy, textured, acid-free cotton rag paper, using archival pigment-based inks. Individually signed and numbered.</p>
