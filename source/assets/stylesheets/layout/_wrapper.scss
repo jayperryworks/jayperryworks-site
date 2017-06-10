@@ -28,20 +28,20 @@ $outcrop-margin: -4em;
 
 // width of main layout
 $layout-widths: (
-    'default' : 600px,
-    'wide'    : 1024px,
+  'default' : 600px,
+  'wide'    : 1024px
 );
 
 // Getter function for layout widths
 // -> PUBLIC
 @function layout-w($w: 'default') {
-    @return map-get($layout-widths, $w);
+  @return map-get($layout-widths, $w);
 }
 
 // Set a base width with gutter
 // -> PUBLIC
 @mixin l-base-w($w: "default") {
-    @include rem(max-width, add_outside_gutters(layout-w($w)));
+  @include rem(max-width, add_outside_gutters(layout-w($w)));
 }
 
 /* Utilities
@@ -49,21 +49,21 @@ $layout-widths: (
 
 // basic layout wrapper, for constraining at large screen sizes
 .l-wrapper {
-    @include l-base-w;
-    @include clearfix;
-    display: block;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: gutter('wide');
-    padding-right: gutter('wide');
+  @include l-base-w;
+  @include clearfix;
+  display: block;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: gutter('wide');
+  padding-right: gutter('wide');
 }
 
-    // wide version of the layout wrapper
-    .l-wrapper--wide { @include l-base-w("wide"); }
+// wide version of the layout wrapper
+.l-wrapper--wide { @include l-base-w("wide"); }
 
-    // full-screen width wrapper
-    .l-wrapper--full { max-width: 100%; }
+// full-screen width wrapper
+.l-wrapper--full { max-width: 100%; }
 
 
 // a child element of a layout wrapper which is actually wider than its parent
