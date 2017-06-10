@@ -1,28 +1,13 @@
-/* =============================================================================
+// =============================================================================
 //  Global type styles
-// ========================================================================== */
+// =============================================================================
 
-/*doc
+@import "../config/libs";
+@import "../config/scale";
+@import "../config/fonts";
 
-*/
-
-@import "../core/libs";
-@import "../core/scale";
-@import "../core/fonts";
-
-// default type sizes
-$type-size-default: 16px;
-$type-size-amp: 1.1em; // size of ampersands relative to their context
-$type-line_height: 1.6;
-
-// set type to default body size using REMs
-// -> useful for resetting type size on a container to override parents
-@mixin type-size-default {
-    @include rem(font-size, $type-size-default);
-}
-
-/* Globals
-// -------------------------------------------------------------------------- */
+// Defaults
+// -----------------------------------------------------------------------------
 
 body {
     @include font-body;

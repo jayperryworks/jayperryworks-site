@@ -1,0 +1,10 @@
+// default type sizes
+$type-size-default: 16px;
+$type-size-amp: 1.1em; // size of ampersands relative to their context
+$type-line_height: 1.6;
+
+// set type to default body size using REMs
+// -> useful for resetting type size on a container to override parents
+@mixin type-size-default {
+  @include rem(font-size, $type-size-default);
+}
