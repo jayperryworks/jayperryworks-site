@@ -1,33 +1,37 @@
-/* ==========================================================================
-// Feed component
+// ==========================================================================
+// Feed layout
 // -> a vertical list of things, usually content references (e.g. blog post excerpts)
-// ========================================================================== */
+// ========================================================================== 
 
-@import "../core/all";
+@import "../config/spacing";
+@import "../config/border";
 
-/* Base
-// ---------------------------------------------------------------------------*/
+// Base
+// --------------------------------------------------------------------------
 
 .l-feed {
-    display: block;
-    list-style: none;
-    margin-left: 0;
+  display: block;
+  list-style: none;
+  margin-left: 0;
 
-    ul, li { padding-left: 0; }
+  ul,
+  li {
+    padding-left: 0;
+  }
 }
 
-/* Submodules
-// ---------------------------------------------------------------------------*/
+// Elements
+// --------------------------------------------------------------------------
 
 .l-feed-item {
-    @include rem(padding-bottom, gutter('wide'));
-    @include rem(margin-bottom, gutter('wide'));
-    @include border('bottom');
-    display: block;
+  @include rem(padding-bottom, gutter('wide'));
+  @include rem(margin-bottom, gutter('wide'));
+  @include border('bottom');
+  display: block;
 
-    &:last-child {
-        padding-bottom: 0;
-        margin-bottom: 0;
-        border-bottom: none;
-    }
+  &:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+  }
 }

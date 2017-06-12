@@ -1,32 +1,17 @@
-/* =============================================================================
-// Grid layout classes
-// ===========================================================================*/
+// =========================================================================
+// Grid layout
+// =========================================================================
 
-/*doc
----
-title: Grids
-name: grids
-category: Layout
----
+@import "../config/spacing";
 
-Grids
-
-```html_example
-<a href="#" class="button l-abs top right">Button @ top right</a>
-```
-
-*/
-
-@import "../core/all";
-
-/* Gutters
-// -------------------------------------------------------------------------- */
+// Gutters
+// -------------------------------------------------------------------------
 
 $grid-gutter: gutter(); // local reference to global spacing -> see layout/spacing
 $grid-gutter--outside: gutter('wide'); // local reference to global spacing -> see layout/spacing
 
-/* Grid columns
-// -------------------------------------------------------------------------- */
+// Grid columns
+// ------------------------------------------------------------------------- 
 
 // scale for ratio-based grids and/or type
 // -> http://alistapart.com/article/content-out-layout
@@ -121,8 +106,8 @@ $grid-default: ms(1) ms(4);
     display: $display;
 }
 
-/* Utilities
-// -------------------------------------------------------------------------- */
+// Utilities
+// -------------------------------------------------------------------------- 
 
 // .l-cols-1-4 {
 //     $grid: ms(1) ms(4);

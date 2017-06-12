@@ -1,63 +1,46 @@
-/* =============================================================================
+// ==========================================================================
 // Global positioning utilities
 // -> place an element relative to its parent
-// ========================================================================== */
+// ========================================================================== 
 
-// Settings
-// -----------------------------------------------------------------------------
-
-// --- z-indexes ---------------------------------------------------------------
-$z--low    : 0;
-$z--middle : 1;
-$z--high   : 2;
-
-$z--admin  : 3; // put admin/drupal navs above all the things
-
-
-/* Mixins
-// -------------------------------------------------------------------------- */
-
-// vertically center the children of an inline block element
-@mixin inline-block--centered($h: 100%) {
-    display: inline-block;
-    vertical-align: middle;
-    height: $h;
-
-    &::before, &:before {
-        display: inline-block;
-        content: " ";
-        vertical-align: middle;
-        height: 100%;
-    }
+.l-display-inline {
+  display: inline;
 }
 
-/* Utilities
-// -------------------------------------------------------------------------- */
+.l-display-inline_block {
+  display: inline-block;
+}
 
-.l-display-inline { display: inline; }
-.l-display-inline_block { display: inline-block; }
-.l-display-block { display: block; }
+.l-display-block {
+  display: block;
+}
 
 // center inline and inline-block elements
 .l-centered {
-    text-align: center;
+  text-align: center;
 
-    @include yep('csstransforms') {
-        left: 50%;
-        transform: translateX(-50%);
-    }
+  @include yep('csstransforms') {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 // center a block element
 .l-centered-block {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.l-float-right { float: right; }
-.l-float-left { float: left; }
+.l-float-right {
+  float: right;
+}
+.l-float-left {
+  float: left; 
+}
 
 // make a panel rise to the top of a layout
 // -> useful if it contains, for instance, stuff like a jump nav that needs to overlay elements below
-.l-z-top { z-index: $z--high !important; }
+.l-z-top {
+  z-index: z('top') !important;
+}
