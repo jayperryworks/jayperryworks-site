@@ -1,7 +1,7 @@
-/* =============================================================================
+// =============================================================================
 // Visibility
 // -> hide and show things in various ways
-// ========================================================================== */
+// =============================================================================
 
 @mixin visually_hidden($focusable: false) {
     border: 0;
@@ -46,8 +46,23 @@
 .is-visually_hidden {
     @include visually_hidden;
 
-    &.focusable { @include visually_hidden(true); }
+    &.focusable {
+      @include visually_hidden(true);
+    }
 }
 
 // completely hide
 .is-hidden { display: none !important; }
+
+// screen-size helper classes
+// -> hide content until screen reaches specified breakpoint size
+// usage: <span class="show@small">
+@each $name, $size in $breakpoints {
+  .show\@#{$name} {
+    @include media("<#{$size}") { display: none !important; }
+  }
+
+  .hide\@#{$name} {
+    @include media(">#{$size}") { display: none !important; }
+  }
+}

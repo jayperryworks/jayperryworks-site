@@ -1,3 +1,12 @@
+// =============================================================================
+//  Type config
+// =============================================================================
+
+@import "libs";
+@import "paths";
+
+$trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
+
 // default type sizes
 $type-size-default: 16px;
 $type-size-amp: 1.1em; // size of ampersands relative to their context
@@ -7,4 +16,57 @@ $type-line_height: 1.6;
 // -> useful for resetting type size on a container to override parents
 @mixin type-size-default {
   @include rem(font-size, $type-size-default);
+}
+
+/* Fonts
+// -------------------------------------------------------------------------- */
+// -> font-face mixins use Bourbon
+
+// headline
+@include font-face("publico-headline-normal", "#{$asset-path-fonts}/PublicoHeadline-Roman-Web", $file-formats: eot woff ttf svg);
+
+// text
+@include font-face("publico-text-normal-normal", "#{$asset-path-fonts}/PublicoText-Roman-Web", $file-formats: eot woff ttf svg);
+@include font-face("publico-text-normal-italic", "#{$asset-path-fonts}/PublicoText-Italic-Web", normal, italic, $file-formats: eot woff ttf svg);
+
+/* ----- Guardian ---------------------------------------------------- */
+
+@include font-face("guardian-sans-normal", "#{$asset-path-fonts}/GuardianSans-Light-Web", $file-formats: eot woff ttf svg);
+@include font-face("guardian-sans-bold", "#{$asset-path-fonts}/GuardianSans-Bold-Web", bold, $file-formats: eot woff ttf svg);
+
+
+/* Font mixins
+// -------------------------------------------------------------------------- */
+// -> PUBLIC, use these to style type globally & in modules
+
+/* ----- Display type ------------------------------------------------------- */
+
+@mixin font-display($style: normal) {
+  font-family: "publico-headline-#{$style}", $georgia;
+  font-weight: normal;
+  font-style: $style;
+}
+
+@mixin font-accent($style: normal) {
+  font-family: "guardian-sans-#{$style}", $trebuchet;
+  font-weight: normal;
+  font-style: $style;
+}
+
+/* ----- Body type ---------------------------------------------------------- */
+
+@mixin font-body($weight: normal, $style: normal) {
+  font-family: "publico-text-#{$weight}-#{$style}", $georgia;
+  font-weight: $weight;
+  font-style: $style;
+}
+
+/* ----- Ampersands --------------------------------------------------------- */
+// -> if you'd like to "use the best ampersand"
+// -> http://vault.simplebits.com/notebook/2008/08/14/ampersands-2/
+
+@mixin font-ampersand {
+  font-family: "Baskerville", "Palatino", "Book Antiqua", serif;
+  font-style: italic;
+  font-weight: normal;
 }

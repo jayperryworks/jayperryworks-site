@@ -104,6 +104,14 @@ address,
 /* Utilities
 // -------------------------------------------------------------------------- */
 
+t-display { @include font-display; }
+  .t-display-bold { @include font-display('bold'); }
+
+.t-body { @include font-body; }
+  .t-body-bold { @include font-body('bold'); }
+  .t-body-italic { @include font-body($style: 'italic'); }
+
+
 // type scale helpers
 @each $name, $size in $scale-type {
   .t-scale-#{$name} { @include scale-type($name); }
