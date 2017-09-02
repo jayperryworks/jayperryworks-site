@@ -17,36 +17,35 @@ $border-radius: 3px !default;
 // Border width & style
 // -----------------------------------------------------------------------------
 
-$border-w--default: 'thin' !default;
+$border-w-default: 'thin' !default;
 $border-style: solid !default;
-$border-sides: top right bottom left;
 
 $border-widths: (
-    'thin'  : 1px,
-    'thick' : 4px,
+  'thin': 1px,
+  'thick': 4px,
 ) !default;
 
 // get function for border widths
-@function border-w($w: $border-w--default) {
-    @if (type-of($w) == "number") {
-        @return #{$w};
-    } @else {
-        @return map-get($border-widths, $w);
-    }
+@function border-w($w: $border-w-default) {
+  @if type-of($w) == 'number' {
+    @return #{$w};
+  } @else {
+    @return map-get($border-widths, $w);
+  }
 }
 
 // make a standard border/hairline that works with the parent color theme
-@mixin border($sides: all, $w: $border-w--default, $color: 'border', $style: $border-style, $important: false) {
-    @if ($sides == all) {
-        border: #{border-w($w)} #{$style} #{theme($color)}#{if($important == true, " !important", "")};
-    } @else {
-        @each $side in $sides {
-            border-#{$side}: #{border-w($w)} #{$style} #{theme($color)}#{if($important == true, " !important", "")};
-        }
+@mixin border($sides: all, $w: $border-w-default, $color: 'border', $style: $border-style, $important: false) {
+  @if $sides == all {
+    border: #{border-w($w)} #{$style} #{theme($color)}#{if($important == true, ' !important', '')};
+  } @else {
+    @each $side in $sides {
+      border-#{$side}: #{border-w($w)} #{$style} #{theme($color)}#{if($important == true, ' !important', '')};
     }
+  }
 
-    // if no color is specified, set up border-color for each theme
-    @if (type-of($color) != 'color') {
-        @include color($color, 'border-color');
-    }
+  // if no color is specified, set up border-color for each theme
+  @if type-of($color) != 'color' {
+    @include color($color, 'border-color');
+  }
 }

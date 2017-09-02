@@ -2,9 +2,9 @@
 //  Global color styles
 // =============================================================================
 
-/* Themes
+// Themes
 // -> use the helper class to apply a theme to a module
-// -------------------------------------------------------------------------- */
+// -----------------------------------------------------------------------------
 
 body, .c-theme-default {
     @include theme('default');
@@ -18,10 +18,9 @@ body, .c-theme-default {
     }
 }
 
-
-/* Helper classes
+// Helper classes
 // -> use on individual elements to apply special color treatment
-// -------------------------------------------------------------------------- */
+// -----------------------------------------------------------------------------
 
 .c-text-primary { @include color('text' 'primary', $important: true); }
 .c-text-secondary { @include color('text' 'secondary', $important: true); }
