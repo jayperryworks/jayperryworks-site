@@ -2,16 +2,12 @@
 // Frameworks & vendor stuff
 // -> all dependencies should be imported here, then imported
 //    as-needed in modules
-// -> NOTE: the dependency scheme in this framework requires sass's
-//    "import once" library. make sure it's installed somewhere.
-//    (it ships with middleman)
 // =============================================================================
 
 // --- NPM libs ----------------------------------------------------------------
 // -> in /node_modules via $ npm install
 
 @import "bourbon/app/assets/stylesheets/bourbon";
-@import "modernizr-mixin/stylesheets/modernizr";
 @import "modularscale-sass/stylesheets/modular-scale";
 @import "include-media/dist/include-media";
 

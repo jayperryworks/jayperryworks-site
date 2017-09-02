@@ -1,32 +1,17 @@
-/* =============================================================================
-// Grid layout classes
-// ===========================================================================*/
+// =========================================================================
+// Grid layout
+// =========================================================================
 
-/*doc
----
-title: Grids
-name: grids
-category: Layout
----
+@import "../config/spacing";
 
-Grids
-
-```html_example
-<a href="#" class="button l-abs top right">Button @ top right</a>
-```
-
-*/
-
-@import "../core/all";
-
-/* Gutters
-// -------------------------------------------------------------------------- */
+// Gutters
+// -------------------------------------------------------------------------
 
 $grid-gutter: gutter(); // local reference to global spacing -> see layout/spacing
 $grid-gutter--outside: gutter('wide'); // local reference to global spacing -> see layout/spacing
 
-/* Grid columns
-// -------------------------------------------------------------------------- */
+// Grid columns
+// -------------------------------------------------------------------------
 
 // scale for ratio-based grids and/or type
 // -> http://alistapart.com/article/content-out-layout
@@ -38,9 +23,6 @@ $grid-gutter--outside: gutter('wide'); // local reference to global spacing -> s
 
 $ms-base: 1;
 $ms-ratio: 1.2;
-
-@debug ms-list(1, 10, $ms-base, $ms-ratio);
-
 $grid-default: ms(1) ms(4);
 
 // get the total of the columns
@@ -89,15 +71,14 @@ $grid-default: ms(1) ms(4);
     // &:last-child { padding-right: 0; }
 
     // override inline block if flexbox is supported
-    @include yep(flexbox, no-ie) {
+    @supports (display: flex) {
         display: block;
 
         // if this is the last column, tell the element to fill the remaining space
         // -> only works with flexbox. otherwise it just uses percentage width.
         @if ($last_fill == true) {
             @if ($loc == length($grid)) {
-                @include flex(1);
-                // width: auto;
+                flex: 1;
             }
         }
     }
@@ -109,9 +90,8 @@ $grid-default: ms(1) ms(4);
     font-size: 0;
 
     @include media(">#{$breakpoint}") {
-        @include yep(flexbox) {
-            @include display(flex);
-            // @include align-items(flex-start);
+        @supports (display: flex) {
+            display: flex;
         }
     }
 }
@@ -121,8 +101,8 @@ $grid-default: ms(1) ms(4);
     display: $display;
 }
 
-/* Utilities
-// -------------------------------------------------------------------------- */
+// Utilities
+// --------------------------------------------------------------------------
 
 // .l-cols-1-4 {
 //     $grid: ms(1) ms(4);

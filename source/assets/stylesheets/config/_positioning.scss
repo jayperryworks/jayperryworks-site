@@ -1,0 +1,37 @@
+// ==========================================================================
+// Global positioning config
+// -> place an element relative to its parent
+// ========================================================================== 
+
+// Settings
+// --------------------------------------------------------------------------
+
+// --- z-indexes ------------------------------------------------------------
+$z-indexes: (
+  'low': 0,
+  'middle': 1,
+  'high': 2,
+  'top': 3
+);
+
+@function z($index) {
+  @return map-get($z-indexes, $index);
+}
+
+
+// Mixins
+// -------------------------------------------------------------------------- 
+
+// vertically center the children of an inline block element
+@mixin inline-block--centered($h: 100%) {
+  display: inline-block;
+  vertical-align: middle;
+  height: $h;
+
+  &::before, &:before {
+    display: inline-block;
+    content: "";
+    vertical-align: middle;
+    height: 100%;
+  }
+}

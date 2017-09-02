@@ -1,12 +1,11 @@
-/* =============================================================================
-//  Gallery utilities
+// =========================================================================
+//  Gallery layout
 // -> arrange child elements into rows and columns
-// ========================================================================== */
+// =========================================================================
 
 // requires Bourbon & Modernizr
-@import "../core/all";
-// @import "../layout/grid";
-@import "../base/type";
+@import "../config/spacing";
+@import "../config/type";
 
 $gallery-gutter: 4px;
 
@@ -20,18 +19,18 @@ $gallery-breaks: 300px, 600px, 1200px;
 //     padding-left: ($g/2);
 //     vertical-align: top;
 
-//     @include yep(flexbox, no-ie) {
+//     @supports (display: flex) {
 //         // use conventional width attribute instead of flexbox b/c of IE 11 box model bug
 //         // http://stackoverflow.com/questions/21942183/multiline-flexbox-in-ie11-calculating-widths-incorrectly
 //         // https://github.com/philipwalton/flexbugs#7-flex-basis-doesnt-account-for-box-sizingborder-box
 //         // http://codepen.io/philipwalton/pen/XJMWem
 //         @include flex(0 0 auto);
-//         @include display(flex);
+//         display: flex;
 //     }
 // }
 
-/* Base
-// -------------------------------------------------------------------------- */
+// Base
+// --------------------------------------------------------------------------
 
 .l-gallery {
     display: block; // in case flexbox isn't supported
@@ -47,25 +46,25 @@ $gallery-breaks: 300px, 600px, 1200px;
       list-style: none;
     }
 
-    @include yep(flexbox, no-ie) {
-      @include display(flex);
-      @include flex-direction(row);
-      @include flex-wrap(wrap);
-      @include align-items(stretch);
+    @supports (display: flex) {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: stretch;
     }
 }
 
-/* Modifiers
-// -------------------------------------------------------------------------- */
+// Modifiers
+// --------------------------------------------------------------------------
 
 .l-gallery--small {} // see .l-gallery-item for styles
 .l-gallery--large {} // see .l-gallery-item for styles
 
 
-/* Subcomponents
-// -------------------------------------------------------------------------- */
+// Subcomponents
+// --------------------------------------------------------------------------
 
-/* --- Gallery Items -------------------------------------------------------- */
+// --- Gallery Items --------------------------------------------------------
 .l-gallery-item {
 
     @include type-size-default;
@@ -78,14 +77,14 @@ $gallery-breaks: 300px, 600px, 1200px;
     width: 100%;
     vertical-align: top;
 
-    @include yep(flexbox, no-ie) {
+    @supports (display: flex) {
         // use conventional width attribute instead of flexbox b/c of IE 11 box model bug
         // http://stackoverflow.com/questions/21942183/multiline-flexbox-in-ie11-calculating-widths-incorrectly
         // https://github.com/philipwalton/flexbugs#7-flex-basis-doesnt-account-for-box-sizingborder-box
         // http://codepen.io/philipwalton/pen/XJMWem
-        @include flex(0 0 auto);
-        @include display(flex);
-        @include flex-direction(column);
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
     }
 
     .l-gallery--small & { width: 50%; }

@@ -6,7 +6,7 @@ var jsPath = "/source/assets/javascripts";
 // split output JS into "critical" (above-the-fold) scripts and the rest (which can be loaded on-demand)
 module.exports = {
   entry: {
-    critical: ["vendor/modernizr.js", "picturefill"],
+    critical: ["picturefill"],
     main: "." + jsPath + "/main.js"
   },
   resolve: {

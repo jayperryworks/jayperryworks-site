@@ -1,93 +1,82 @@
-/* =============================================================================
+// ==========================================================================
 // Sidebar layout classes
-// ========================================================================== */
+// ==========================================================================
 
-/*doc
----
-title: Sidebar
-name: sidebar
-category: Layout
----
-
-Sidebars
-
-```html_example
-<a href="#" class="button l-abs top right">Button @ top right</a>
-```
-
-*/
-
-@import "../core/all";
+@import "../config/breakpoints";
+@import "../config/spacing";
 @import "grid";
 
 $l-sidebar-ratio: ms(4);
 $l-sidebar-w: column-w(1, ms(1) $l-sidebar-ratio);
 
-/* Utilities
-// -------------------------------------------------------------------------- */
+
+// Base
+// --------------------------------------------------------------------------
 
 @include breakpointify(".l-has-sidebar", $default: false, $sizes: 'small' 'medium' 'large') {
-    @include column-wrapper;
-    position: relative;
+  @include column-wrapper;
+  position: relative;
+
+  @include media(">large") {
+    display: block;
+  }
+
+  // base sidebar styles
+  // -> used for both sides
+  .l-sidebar {
+    @include type-size-default;
+
+    display: inline-block;
+    width: $l-sidebar-w;
+
+    @supports (display: flex) {
+      display: block;
+    }
 
     @include media(">large") {
-        display: block;
+      display: block;
+      position: relative;
+      top: 0;
+    }
+  }
+
+  // left and right sidebar positioning
+  .l-sidebar--left {
+    @include order(-1);
+    padding-right: $grid-gutter;
+
+    @include media(">large") {
+      float: left;
+      margin-left: -($l-sidebar-w);
+      padding-right: $grid-gutter;
+    }
+  }
+
+  .l-sidebar--right {
+    @include order(+1);
+    padding-left: $grid-gutter;
+
+    @include media(">large") {
+      float: right;
+      margin-right: -($l-sidebar-w);
+      padding-left: $grid-gutter;
+    }
+  }
+
+  // the 'main' area beside the sidebar
+  .l-sidebar-main {
+    @include type-size-default;
+    width: column-w(2, ms(1) $l-sidebar-ratio);
+
+    @supports (display: flex) {
+      flex: 1;
+      width: auto;
     }
 
-    // base sidebar styles
-    // -> used for both sides
-    .l-sidebar {
-        // @include column(1, ms(1) $l-sidebar-ratio, $split: false);
-        @include type-size-default;
-
-        display: inline-block;
-        width: $l-sidebar-w;
-
-        @include yep("flexbox") { display: block; }
-
-        @include media(">large") {
-            display: block;
-            position: relative;
-            top: 0;
-        }
+    @include media(">large") {
+      display: block;
+      flex: none;
+      width: auto;
     }
-
-    // left and right sidebar positioning
-    .l-sidebar--left {
-        @include order(-1);
-        padding-right: $grid-gutter;
-
-        @include media(">large") {
-            float: left;
-            margin-left: -($l-sidebar-w);
-            padding-right: $grid-gutter;
-        }
-    }
-    .l-sidebar--right {
-        @include order(+1);
-        padding-left: $grid-gutter;
-
-        @include media(">large") {
-            float: right;
-            margin-right: -($l-sidebar-w);
-            padding-left: $grid-gutter;
-        }
-    }
-
-    // the 'main' area beside the sidebar
-    .l-sidebar-main {
-        @include type-size-default;
-        width: column-w(2, ms(1) $l-sidebar-ratio);
-
-        @include yep("flexbox") {
-            @include flex(1);
-            width: auto;
-        }
-
-        @include media(">large") {
-            display: block;
-            flex: none;
-            width: auto;
-        }
-    }
+  }
 }

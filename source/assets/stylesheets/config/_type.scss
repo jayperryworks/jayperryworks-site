@@ -1,39 +1,22 @@
-/* =============================================================================
-//  Type config & scale
-// ========================================================================== */
-
-/*doc
----
-title: Fonts
-name: fonts
-category: Core
----
-
-Fonts are accessed through SASS placeholders. Just extend the appropriate one. Fonts are applied to type, globally, in _type.scss, and individual modules can set up their own font styles.
-
-Please DO NOT use your own font-family attributes in any circumstance. Always use the mixins.
-
-```
-// display fonts
-// -> headlines, buttons, labels, etc.
-
-@include font-display
-@include font-display(bold)
-
-// body fonts
-// -> paragraphs, captions, etc.
-
-@include font-body
-@include font-body(normal, italic)
-@include font-body(bold)
-```
-
-*/
+// =============================================================================
+//  Type config
+// =============================================================================
 
 @import "libs";
 @import "paths";
 
 $trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
+
+// default type sizes
+$type-size-default: 16px;
+$type-size-amp: 1.1em; // size of ampersands relative to their context
+$type-line_height: 1.6;
+
+// set type to default body size using REMs
+// -> useful for resetting type size on a container to override parents
+@mixin type-size-default {
+  @include rem(font-size, $type-size-default);
+}
 
 /* Fonts
 // -------------------------------------------------------------------------- */
@@ -87,14 +70,3 @@ $trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
   font-style: italic;
   font-weight: normal;
 }
-
-/* Utilities
-// -------------------------------------------------------------------------- */
-// -> PUBLIC, use these to style type globally & in modules
-
-.font-display { @include font-display; }
-  .font-display-bold { @include font-display('bold'); }
-
-.font-body { @include font-body; }
-  .font-body-bold { @include font-body('bold'); }
-  .font-body-italic { @include font-body($style: 'italic'); }
