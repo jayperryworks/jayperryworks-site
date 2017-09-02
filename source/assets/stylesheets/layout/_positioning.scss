@@ -1,7 +1,7 @@
 // ==========================================================================
 // Global positioning utilities
 // -> place an element relative to its parent
-// ========================================================================== 
+// ==========================================================================
 
 .l-display-inline {
   display: inline;
@@ -19,7 +19,7 @@
 .l-centered {
   text-align: center;
 
-  @include yep('csstransforms') {
+  @supports (transform: translateX(-50%)) {
     left: 50%;
     transform: translateX(-50%);
   }
@@ -36,7 +36,7 @@
   float: right;
 }
 .l-float-left {
-  float: left; 
+  float: left;
 }
 
 // make a panel rise to the top of a layout

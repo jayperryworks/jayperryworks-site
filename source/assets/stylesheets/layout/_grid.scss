@@ -11,7 +11,7 @@ $grid-gutter: gutter(); // local reference to global spacing -> see layout/spaci
 $grid-gutter--outside: gutter('wide'); // local reference to global spacing -> see layout/spacing
 
 // Grid columns
-// ------------------------------------------------------------------------- 
+// -------------------------------------------------------------------------
 
 // scale for ratio-based grids and/or type
 // -> http://alistapart.com/article/content-out-layout
@@ -74,7 +74,7 @@ $grid-default: ms(1) ms(4);
     // &:last-child { padding-right: 0; }
 
     // override inline block if flexbox is supported
-    @include yep(flexbox, no-ie) {
+    @supports (display: flex) {
         display: block;
 
         // if this is the last column, tell the element to fill the remaining space
@@ -94,7 +94,7 @@ $grid-default: ms(1) ms(4);
     font-size: 0;
 
     @include media(">#{$breakpoint}") {
-        @include yep(flexbox) {
+        @supports (display: flex) {
             @include display(flex);
             // @include align-items(flex-start);
         }
@@ -107,7 +107,7 @@ $grid-default: ms(1) ms(4);
 }
 
 // Utilities
-// -------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------
 
 // .l-cols-1-4 {
 //     $grid: ms(1) ms(4);

@@ -11,7 +11,7 @@ $l-sidebar-w: column-w(1, ms(1) $l-sidebar-ratio);
 
 
 // Base
-// -------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------
 
 @include breakpointify(".l-has-sidebar", $default: false, $sizes: 'small' 'medium' 'large') {
   @include column-wrapper;
@@ -29,7 +29,7 @@ $l-sidebar-w: column-w(1, ms(1) $l-sidebar-ratio);
     display: inline-block;
     width: $l-sidebar-w;
 
-    @include yep("flexbox") {
+    @supports (display: flex) {
       display: block;
     }
 
@@ -51,7 +51,7 @@ $l-sidebar-w: column-w(1, ms(1) $l-sidebar-ratio);
       padding-right: $grid-gutter;
     }
   }
-  
+
   .l-sidebar--right {
     @include order(+1);
     padding-left: $grid-gutter;
@@ -68,7 +68,7 @@ $l-sidebar-w: column-w(1, ms(1) $l-sidebar-ratio);
     @include type-size-default;
     width: column-w(2, ms(1) $l-sidebar-ratio);
 
-    @include yep("flexbox") {
+    @supports (display: flex) {
       @include flex(1);
       width: auto;
     }

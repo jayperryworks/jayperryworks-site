@@ -48,7 +48,7 @@ $card-grid--large: ms(7) ms(1);
 
   &:container("width >= 600px") {
 
-    @include yep(flexbox, no-ie) {
+    @supports (display: flex) {
       @include display(flex);
       @include align-items(flex-start);
     }
@@ -56,7 +56,7 @@ $card-grid--large: ms(7) ms(1);
     .card-figure {
       @include column(1, $grid: $card-grid);
 
-      @include yep(flexbox, no-ie) {
+      @supports (display: flex) {
         @include order(-1);
       }
     }
@@ -65,7 +65,7 @@ $card-grid--large: ms(7) ms(1);
       @include column(2, $grid: $card-grid);
       margin-top: 0;
 
-      @include yep(flexbox, no-ie) {
+      @supports (display: flex) {
         @include order(0);
       }
     }
@@ -82,7 +82,7 @@ $card-grid--large: ms(7) ms(1);
       padding-right: 0;
       padding-left: gutter();
 
-      @include yep(flexbox, no-ie) {
+      @supports (display: flex) {
         @include order(1);
       }
 

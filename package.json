@@ -16,7 +16,7 @@
     "postmodernizr": "npm run javascripts:build",
     "javascripts:build": "webpack -p --bail --",
     "javascripts:watch": "webpack --watch -d --",
-    "styles": "node-sass --include-path node_modules --importer ./node_modules/node-sass-import-once/index.js --output $npm_package_config_css_bundle $npm_package_config_css_src",
+    "styles": "node-sass --include-path node_modules --output $npm_package_config_css_bundle $npm_package_config_css_src",
     "styles:cq": "postcss --use cq-prolyfill/postcss-plugin -r $npm_package_config_css_bundle/*.css",
     "styles:autoprefixer": "postcss --use autoprefixer --autoprefixer.browsers '> 5%, ie >= 8' -r $npm_package_config_css_bundle/*.css",
     "styles:compress": "uglifycss $npm_package_config_css_bundle/main.css > $npm_package_config_css_bundle/main.min.css",
