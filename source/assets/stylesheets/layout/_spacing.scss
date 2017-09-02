@@ -1,0 +1,60 @@
+// ==========================================================================
+// Global spacing
+// -> used to keep whitespace in the layout consistent
+// ========================================================================== 
+
+@import "../config/spacing";
+
+// Margins
+// -------------------------------------------------------------------------- 
+
+.l-margin { @include rem(margin, gutter()); }
+
+@each $name, $length in $gutters {
+  @if $name != 'default' {
+    .l-margin-#{$name} { @include rem(margin, gutter($name) !important); }
+  }
+}
+
+@each $side in $gutter-sides {
+  .l-margin-#{$side} { @include rem(margin-#{$side}, gutter() !important); }
+
+  @each $name, $length in $gutters {
+    @if $name != 'default' {
+      .l-margin-#{$side}-#{$name} { @include rem(margin-#{$side}, gutter($name) !important); }
+    }
+  }
+}
+
+.l-no-margin { @include rem(margin, 0 !important); }
+
+@each $side in $gutter-sides {
+  .l-no-margin-#{$side} { @include rem(margin-#{$side}, 0 !important); }
+}
+
+// Padding
+// -------------------------------------------------------------------------- 
+
+.l-padding { @include rem(padding, gutter() !important); }
+
+@each $name, $length in $gutters {
+  @if $name != 'default' {
+    .l-padding-#{$name} { @include rem(padding, gutter($name) !important); }
+  }
+}
+
+@each $side in $gutter-sides {
+    .l-padding-#{$side} { @include rem(padding-#{$side}, gutter() !important); }
+
+    @each $name, $length in $gutters {
+      @if $name != 'default' {
+        .l-padding-#{$side}-#{$name} { @include rem(padding-#{$side}, gutter($name) !important); }
+      }
+    }
+}
+
+.l-no-padding { @include rem(padding, 0 !important); }
+
+@each $side in $gutter-sides {
+    .l-no-padding-#{$side} { @include rem(padding-#{$side}, 0 !important); }
+}

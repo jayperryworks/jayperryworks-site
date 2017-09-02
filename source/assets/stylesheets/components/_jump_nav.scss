@@ -1,99 +1,108 @@
-/* ==========================================================================
-// Nav styles
-// ========================================================================== */
+// =========================================================================
+// Jump Nav component
+// ========================================================================= 
 
-@import "../core/all";
-@import "../components/button";
+@import "../config/breakpoints";
+@import "../config/visibility";
+@import "../config/spacing";
 
 $jump-w: 30px;
 $jump-margin: $gutter $gutter-outside;
 
-/* Base
-// -------------------------------------------------------------------------- */
+// Base
+// ------------------------------------------------------------------------- 
 
 .jump_nav {
-    display: none;
-    position: relative;
-    left: nth($jump-margin, 1);
-    float: left;
-    // top: 1em; // make a little room against the browser window
-    margin-top: -1em;
-    padding-top: 1em;
-    z-index: $z--high;
+  display: none;
+  position: relative;
+  left: nth($jump-margin, 1);
+  float: left;
+  margin-top: -1em;
+  padding-top: 1em;
+  z-index: $z--high;
+  list-style: none;
+
+  > ul {
     list-style: none;
+    margin: 0;
+  }
 
-    > ul {
-        list-style: none;
-        margin: 0;
-    }
+  > li {
+    display: block;
+  }
 
-    > li { display: block; }
+  @include media(">xsmall") {
+    display: block;
+  }
 
-    @include media(">xsmall") {
-        display: block;
-    }
-
-    @include media(">small") {
-        left: nth($jump-margin, 2);
-    }
+  @include media(">small") {
+    left: nth($jump-margin, 2);
+  }
 }
 
 
-/* Modifers
-// -------------------------------------------------------------------------- */
+// Elements
+// ------------------------------------------------------------------------- 
 
-/* --- States --------------------------------------------------------------- */
-.jump_nav.is-sticky {
-    position: fixed !important;
-    top: 0 !important;
-    margin-top: 0;
-    float: none;
-}
-
-.has-jump {
-    position: relative;
-
-    // add left margin to a jump nav's siblings
-    .jump_nav ~ * {
-        @include media('>xsmall') { @include rem(padding-left, (nth($jump-margin, 1) + $jump-w + $gutter)); }
-        @include media('>small') { @include rem(padding-left, (nth($jump-margin, 2) + $jump-w + $gutter)); }
-    }
-}
-
-/* Submodules
-// -------------------------------------------------------------------------- */
-
-/* --- nav items ------------------------------------------------------------ */
+// --- nav items -----------------------------------------------------------
 
 .jump_nav-item {
-    @include font-accent('bold');
-    @include scale-type('zeta');
-    @include rem(width, $jump-w);
-    display: block;
-    margin-bottom: 0.5em;
-    padding: 0.4em 0.8em 0.2em;
-    vertical-align: middle;
-    text-align: center;
-    text-transform: uppercase;
+  @include font-accent('bold');
+  @include scale-type('zeta');
+  @include rem(width, $jump-w);
+  display: block;
+  margin-bottom: 0.5em;
+  padding: 0.4em 0.8em 0.2em;
+  vertical-align: middle;
+  text-align: center;
+  text-transform: uppercase;
+  color: theme('text' 'primary');
+
+  &:before {
+    content: attr(data-initial);
+  }
+
+  &:hover, &:active {}
+
+  &.is-active {
+    @include border;
     color: theme('text' 'primary');
-
-    &:before { content: attr(data-initial); }
-
-    &:hover, &:active {  }
-
-    &.is-active {
-        @include border;
-        color: theme('text' 'primary');
-    }
+  }
 }
 
-/* --- nav labels ----------------------------------------------------------- */
+// --- nav labels ----------------------------------------------------------- 
 // -> label hidden on larger screens
 
 .jump_nav-label {
-    @include font-accent('bold');
-    @include visually_hidden(true);
-    display: block;
-    text-align: center;
-    text-transform: uppercase;
+  @include font-accent('bold');
+  @include visually_hidden(true);
+  display: block;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+
+// Modifers
+// ------------------------------------------------------------------------- 
+
+// --- States --------------------------------------------------------------
+.jump_nav.is-sticky {
+  position: fixed !important;
+  top: 0 !important;
+  margin-top: 0;
+  float: none;
+}
+
+.has-jump {
+  position: relative;
+
+  // add left margin to a jump nav's siblings
+  .jump_nav ~ * {
+    @include media('>xsmall') {
+      @include rem(padding-left, (nth($jump-margin, 1) + $jump-w + $gutter));
+    }
+    @include media('>small') {
+      @include rem(padding-left, (nth($jump-margin, 2) + $jump-w + $gutter));
+    }
+  }
 }

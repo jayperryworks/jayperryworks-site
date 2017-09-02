@@ -1,49 +1,42 @@
-/* =============================================================================
-// Tag/tag list styles
-// ========================================================================== */
+// ==========================================================================
+// Tag component
+// ==========================================================================
 
-@import "../core/all";
+@import "../config/type";
+@import "../config/color";
+@import "../config/animation";
 
-/* Base
-// -------------------------------------------------------------------------- */
+// Base
+// -------------------------------------------------------------------------- 
 
 .tag {
-    @include transition-default;
-    @include border;
-    @include font-accent;
-    @include scale-type('zeta');
-    @include color('text' 'tertiary');
-    display: inline-block;
-    padding: 0.15em 0.4em 0.05em;
-    margin-left: 0;
-    border-radius: 0.1em;
-    vertical-align: middle;
+  @include transition-default;
+  @include border;
+  @include font-accent;
+  @include scale-type('zeta');
+  @include color('text' 'tertiary');
+  display: inline-block;
+  padding: 0.15em 0.4em 0.05em;
+  margin-left: 0;
+  border-radius: 0.1em;
+  vertical-align: middle;
 
-    &:hover, &:active {
-      @include color('highlight');
-      @include color('highlight', 'border-color');
-    }
+  &:hover, &:active {
+    @include color('highlight');
+    @include color('highlight', 'border-color');
+  }
 
-    a {
-      font-family: inherit;
-      font-size: inherit;
-      color: inherit;
+  a {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
 
-      &:hover, &:active { color: inherit; }
-    }
+    &:hover, &:active { color: inherit; }
+  }
 }
 
-/* Subcomponents
-// -------------------------------------------------------------------------- */
-
-// a label for a list of tags
-// .tag-label {
-//   @include font-accent;
-//   @include scale-type('zeta');
-//   @include color('text' 'secondary');
-//   display: block;
-//   vertical-align: middle;
-// }
+// Subcomponents
+// -------------------------------------------------------------------------- 
 
 // list of tags
 .tag-group {

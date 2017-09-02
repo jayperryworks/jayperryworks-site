@@ -1,33 +1,16 @@
-/* =============================================================================
+// =========================================================================
 //  Button module
-// ========================================================================== */
+// =========================================================================
 
-@import "../core/all";
+@import "../config/color";
+@import "../config/type";
+@import "../config/border";
 
-/*doc
----
-title: Buttons
-name: button
-category: atoms
----
+// Base
+// -------------------------------------------------------------------------
 
-You can apply button styles to pretty much anything you'd like. Anchors and button elements, though, would be the winners on the semantics front.
-
-You can mix and match classes to get the hierarchy/size you need. "small primary" and "large tertiary" are both kosher.
-
-```html_example
-<a href="#" class="button">Default</a>
-<a href="#" class="button button--small">Small</a>
-<a href="#" class="button button--large">Large</a>
-<a href="#" class="button button--text">Text-only</a>
-```
-
-*/
-
-/* Base
-// -------------------------------------------------------------------------- */
-
-button, .button {
+button,
+.button {
   @include transition-default;
   @include font-accent;
   @include border('all', $color: 'text' 'primary');
@@ -51,10 +34,10 @@ button, .button {
 
 
 
-/* Modifiers
-// -------------------------------------------------------------------------- */
+// Modifiers
+// -------------------------------------------------------------------------
 
-/* --- sizes ---------------------------------------------------------------- */
+// --- sizes ---------------------------------------------------------------
 // -> default size is "medium." add these classes to go bigger or smaller.
 
 .button--small {
@@ -68,7 +51,7 @@ button, .button {
   padding: 0.8em 1.6em;
 }
 
-/* --- prominence ----------------------------------------------------------- */
+// --- prominence ----------------------------------------------------------
 // -> how obnoxious shall your button be?
 
 .button--secondary {
@@ -76,7 +59,7 @@ button, .button {
   border-color: theme('text' 'tertiary');
 }
 
-/* --- special variations --------------------------------------------------- */
+// --- special variations --------------------------------------------------
 // -> buttons of a strange and amazing nature
 
 // a "buy this" button, usually with a price
@@ -99,11 +82,8 @@ button, .button {
   }
 }
 
-/* Submodules
-// -------------------------------------------------------------------------- */
-
-// group/row of buttons joined together
-.button-group {}
+// Elements
+// -------------------------------------------------------------------------
 
 // price callout on a purchase button
 // -> use inside .button.purchase

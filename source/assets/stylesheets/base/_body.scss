@@ -1,10 +1,13 @@
-/* =============================================================================
+// =============================================================================
 // Global box model and scaling
-// ========================================================================== */
+// =============================================================================
 
-@import "../core/all";
+@import "../config/breakpoints";
 
-html {
+// Defaults
+// -----------------------------------------------------------------------------
+
+body {
     // set up the base font size at each breakpoint
     // this will scale the whole layout proportionately as the screen size changes
     // and we only have to change one thing
@@ -28,4 +31,6 @@ html {
     box-sizing: border-box;
 }
 
-*, *:before, *:after { box-sizing: inherit; }
+*,
+*:before,
+*:after { box-sizing: inherit; }

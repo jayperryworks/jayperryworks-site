@@ -1,50 +1,7 @@
-/* ==========================================================================
-//  Global color styles
-// -> base colors are set here on global elements, but modules apply their own
+// =============================================================================
+//  Global color
 // -> refer to colors ONLY via the $theme maps
-// ========================================================================== */
-
-/*doc
----
-title: Color
-name: color
-category: core
----
-
-Some functions and globals to keep the color scheme DRY and easy to manage in one place. Color for the entire site is handled through structured SASS maps, assigning each color a role:
-
-```
-$theme--default: (
-    text--primary   : $black,
-    text--secondary : #706F6F,
-    text--tertiary  : darken($gray, 10),
-    bg              : #fff,
-    well            : $gray--superlight,
-    border          : $gray--light,
-    highlight       : $highlight--default,
-    accent          : $blue--dark
-);
-
-```
-You can easily access these colors by "role" with the `theme()` function, like so:
-
-```
-.your-module {
-    color: theme(highlight);
-    background-color: theme(bg);
-
-}
-```
-
-If the site has multiple color schemes (say, "default" and "reverse" themes), you can specify the theme by passing in a second parameter:
-
-```
-background-color: theme(bg, reverse);
-```
-
-The second parameter is optional, and theme() will default to the 'default' theme map.
-
-*/
+// =============================================================================
 
 @import "libs";
 
@@ -165,45 +122,4 @@ $themes: (
       color: #fff;
       text-shadow: none;
     }
-}
-
-/* Themes
-// -> use the helper class to apply a theme to a module
-// -------------------------------------------------------------------------- */
-
-body, .c-theme-default {
-    @include theme('default');
-}
-
-// create utility classes for each color theme from the $themes map
-// e.g. ".c-theme-reverse" and ".c-theme-wash"
-@each $theme, $colors in $themes {
-    @if $theme != "default" {
-        .c-theme-#{$theme} { @include theme('#{$theme}'); }
-    }
-}
-
-
-/* Helper classes
-// -> use on individual elements to apply special color treatment
-// -------------------------------------------------------------------------- */
-
-.c-text-primary { @include color('text' 'primary', $important: true); }
-.c-text-secondary { @include color('text' 'secondary', $important: true); }
-.c-text-tertiary { @include color('text' 'tertiary', $important: true); }
-
-.c-highlight { @include color('highlight', $important: true); }
-.c-highlight-bg { @include color('highlight', 'background-color'); }
-
-.c-accent { @include color('accent', $important: true); }
-.c-accent-bg { @include color('accent', 'background-color'); }
-
-.c-well { @include color('well', 'background-color'); }
-
-.c-bg { @include color('bg'); }
-
-// kill background colors in print
-// -> note all elements are set to color: black in base/_print.scss
-@media print {
-    [class^="c-"] { background-color: transparent !important; }
 }
