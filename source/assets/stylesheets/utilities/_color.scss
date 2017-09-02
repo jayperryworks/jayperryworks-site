@@ -7,15 +7,15 @@
 // -----------------------------------------------------------------------------
 
 body, .c-theme-default {
-    @include theme('default');
+  @include theme('default');
 }
 
 // create utility classes for each color theme from the $themes map
 // e.g. ".c-theme-reverse" and ".c-theme-wash"
 @each $theme, $colors in $themes {
-    @if $theme != "default" {
-        .c-theme-#{$theme} { @include theme('#{$theme}'); }
-    }
+  @if $theme != "default" {
+    .c-theme-#{$theme} { @include theme('#{$theme}'); }
+  }
 }
 
 // Helper classes
@@ -39,5 +39,5 @@ body, .c-theme-default {
 // kill background colors in print
 // -> note all elements are set to color: black in base/_print.scss
 @media print {
-    [class^="c-"] { background-color: transparent !important; }
+  [class^="c-"] { background-color: transparent !important; }
 }

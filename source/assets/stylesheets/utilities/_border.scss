@@ -4,29 +4,27 @@
 
 @import "../config/border";
 
-$border-sides: top right bottom left;
-
 // Base
 // -----------------------------------------------------------------------------
 
 // .border, .border@[screen]
 @include breakpointify(".border", true) {
-    @include border;
-}
-
-// .border-[side], .border-[side]@[screen]
-@each $side in $border-sides {
-    @include breakpointify(".border-#{$side}", true) {
-        @include border($side);
-    }
+  @include border;
 }
 
 // .no-border, .no-border@[screen]
 @include breakpointify(".no-border", true) { border: none !important; }
 
-// .no-border-[side], .no-border-[side]@[screen]
-@each $side in $border-sides {
-    @include breakpointify(".no-border-#{$side}", true) { border-#{$side}: none !important; }
+@each $side in (top, right, bottom, left) {
+  // .border-[side], .border-[side]@[screen]
+  @include breakpointify(".no-border-#{$side}", true) {
+    border-#{$side}: none !important;
+  }
+
+  // .no-border-[side], .no-border-[side]@[screen]
+  @include breakpointify(".border-#{$side}", true) {
+    @include border($side);
+  }
 }
 
 .border-round { border-radius: $border-radius; }
