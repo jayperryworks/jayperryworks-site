@@ -11,22 +11,22 @@
     "icons_dest": "./source/layouts/partials"
   },
   "scripts": {
-    "start": "npm run build && parallelshell 'npm run javascripts:watch' 'npm run styles:watch'",
+    "start": "yarn run build && parallelshell 'yarn run javascripts:watch' 'yarn run styles:watch'",
     "modernizr": "cd $npm_package_config_js_src/vendor && modernizr -c modernizr.config.json",
-    "postmodernizr": "npm run javascripts:build",
+    "postmodernizr": "yarn run javascripts:build",
     "javascripts:build": "webpack -p --bail --",
     "javascripts:watch": "webpack --watch -d --",
     "styles": "node-sass --include-path node_modules --output $npm_package_config_css_bundle $npm_package_config_css_src",
     "styles:cq": "postcss --use cq-prolyfill/postcss-plugin -r $npm_package_config_css_bundle/*.css",
     "styles:autoprefixer": "postcss --use autoprefixer --autoprefixer.browsers '> 5%, ie >= 8' -r $npm_package_config_css_bundle/*.css",
     "styles:compress": "uglifycss $npm_package_config_css_bundle/main.css > $npm_package_config_css_bundle/main.min.css",
-    "styles:build": "npm run styles && npm run styles:cq && npm run styles:autoprefixer && npm run styles:compress",
-    "styles:watch": "watch 'npm run styles && npm run styles:cq' $npm_package_config_css_src",
+    "styles:build": "yarn run styles && yarn run styles:cq && yarn run styles:autoprefixer && yarn run styles:compress",
+    "styles:watch": "watch 'yarn run styles && yarn run styles:cq' $npm_package_config_css_src",
     "icons": "svg-sprite --symbol --symbol-dest $npm_package_config_icons_dest --symbol-sprite 'spritemap.inc' --symbol-inline --symbol-prefix 'icon-%s' $npm_package_config_icons_src/**/*.svg",
     "middleman": "bundle exec middleman build --",
-    "predeploy": "npm run middleman",
+    "predeploy": "yarn run middleman",
     "deploy": "git-directory-deploy --directory build --branch master",
-    "build": "npm run styles:build && npm run javascripts:build"
+    "build": "yarn run styles:build && yarn run javascripts:build"
   },
   "repository": {
     "type": "git",

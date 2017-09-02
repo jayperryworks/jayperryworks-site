@@ -23,9 +23,6 @@ $grid-gutter--outside: gutter('wide'); // local reference to global spacing -> s
 
 $ms-base: 1;
 $ms-ratio: 1.2;
-
-@debug ms-list(1, 10, $ms-base, $ms-ratio);
-
 $grid-default: ms(1) ms(4);
 
 // get the total of the columns
@@ -81,8 +78,7 @@ $grid-default: ms(1) ms(4);
         // -> only works with flexbox. otherwise it just uses percentage width.
         @if ($last_fill == true) {
             @if ($loc == length($grid)) {
-                @include flex(1);
-                // width: auto;
+                flex: 1;
             }
         }
     }
@@ -95,8 +91,7 @@ $grid-default: ms(1) ms(4);
 
     @include media(">#{$breakpoint}") {
         @supports (display: flex) {
-            @include display(flex);
-            // @include align-items(flex-start);
+            display: flex;
         }
     }
 }

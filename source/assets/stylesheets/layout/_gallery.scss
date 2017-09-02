@@ -25,7 +25,7 @@ $gallery-breaks: 300px, 600px, 1200px;
 //         // https://github.com/philipwalton/flexbugs#7-flex-basis-doesnt-account-for-box-sizingborder-box
 //         // http://codepen.io/philipwalton/pen/XJMWem
 //         @include flex(0 0 auto);
-//         @include display(flex);
+//         display: flex;
 //     }
 // }
 
@@ -47,10 +47,10 @@ $gallery-breaks: 300px, 600px, 1200px;
     }
 
     @supports (display: flex) {
-      @include display(flex);
-      @include flex-direction(row);
-      @include flex-wrap(wrap);
-      @include align-items(stretch);
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: stretch;
     }
 }
 
@@ -82,9 +82,9 @@ $gallery-breaks: 300px, 600px, 1200px;
         // http://stackoverflow.com/questions/21942183/multiline-flexbox-in-ie11-calculating-widths-incorrectly
         // https://github.com/philipwalton/flexbugs#7-flex-basis-doesnt-account-for-box-sizingborder-box
         // http://codepen.io/philipwalton/pen/XJMWem
-        @include flex(0 0 auto);
-        @include display(flex);
-        @include flex-direction(column);
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
     }
 
     .l-gallery--small & { width: 50%; }
