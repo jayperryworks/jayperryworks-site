@@ -54,6 +54,8 @@ activate :blog do |blog|
     blog.layout = "print"
 end
 
+config[:blog_summary_separator] = /EXCERPT/
+
 activate :blog do |blog|
     blog.name = "writing"
     blog.prefix = "writing"
@@ -61,7 +63,7 @@ activate :blog do |blog|
     blog.permalink = "{year}/{month}/{title}.html"
     blog.taglink = "tags/{tag}.html"
     blog.summary_length = nil
-    blog.summary_separator = /EXCERPT/
+    blog.summary_separator = config[:blog_summary_separator]
     blog.layout = "blog"
 end
 

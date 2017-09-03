@@ -28,7 +28,9 @@
           <%= link_to article.data.subtitle, article.url, class: "t-heading t-heading--sub t-scale-delta" %>
         <% end %>
         <div class="l-margin-top-narrow"><%= article.summary %></div>
-        <%= link_to "Read more &rsaquo;", article.url, class: "button button--text l-margin-top" %>
+        <% unless article.data.show_full %>
+          <%= link_to "Read more &rsaquo;", article.url, class: "button button--text l-margin-top" %>
+        <% end %>
       <% end %>
     </li>
   <% end %>

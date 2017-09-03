@@ -4,6 +4,7 @@ tags:
   - musing
   - list
 color: blue
+show_full: true
 ---
 
 An acoustic album, spinning on the record player  
