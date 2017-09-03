@@ -60,6 +60,7 @@ activate :blog do |blog|
     blog.sources = "{year}/{month}-{day}-{title}.html"
     blog.permalink = "{year}/{month}/{title}.html"
     blog.taglink = "tags/{tag}.html"
+    blog.summary_length = nil
     blog.summary_separator = /EXCERPT/
     blog.layout = "blog"
 end
