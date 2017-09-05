@@ -1,0 +1,57 @@
+/* ==========================================================================
+ * Helpers for converting units (rems, percent, etc.)
+ * ========================================================================== */
+
+$units-size--default: 16px !default;
+
+// Eric Meyer's awesome strip unit helper
+// -> http://stackoverflow.com/questions/12328259/how-do-you-strip-the-unit-from-any-number-in-sass/12335841#12335841
+@function strip-units($number) {
+  @return $number / ($number * 0 + 1);
+}
+
+// convert to rem
+// @param $base (optional): base font size
+// -> based on http://www.stubbornella.org/content/2013/07/01/easy-peasy-rem-conversion-with-sass/
+// -> and http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
+// -> https://gist.github.com/bitmanic/1134548
+@function rem($px-size, $base: $units-size--default) {
+  @return #{strip-units($px-size/$base)}rem;
+}
+
+@function em($px-size, $base: $units-size--default) {
+    @return #{strip-units($px-size/$base)}em;
+}
+
+@function percent($px-size, $base: $units-size--default) {
+  @return (strip-units($px-size/$base))*100%;
+}
+
+@function px($em-size, $base: $units-size--default) {
+  @return (strip-units($em-size) * $base);
+}
+
+// a fork of https://github.com/bitmanic/rem
+// @param $px-values: number or list of numbers (0 3px 3px 0)
+// -> NONZERO VALUES MUST HAVE UNITS
+@mixin rem($property, $px-values, $base: $units-size--default) {
+  // Print the first line in pixel values
+  #{$property}: $px-values;
+  // If there is only one (numeric) value, return the property/value line for it.
+  @if type-of($px-values) == "number" {
+    #{$property}: rem($px-values, $base);
+  } @else {
+    // Create an empty list that we can dump values into
+    $rem-values: ();
+    @each $value in $px-values {
+      // If the value is zero or not a number, return it
+      @if $value == 0 or type-of( $value ) != "number" {
+        $rem-values: append($rem-values, $value);
+      } @else {
+        $rem-values: append($rem-values, rem($value, $base));
+      }
+    }
+    // Return the property and its list of converted values
+    #{$property}: $rem-values;
+  }
+}

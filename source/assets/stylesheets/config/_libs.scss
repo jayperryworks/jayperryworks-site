@@ -1,0 +1,17 @@
+// =============================================================================
+// Frameworks & vendor stuff
+// -> all dependencies should be imported here, then imported
+//    as-needed in modules
+// =============================================================================
+
+// --- NPM libs ----------------------------------------------------------------
+// -> in /node_modules via $ npm install
+
+@import "bourbon/app/assets/stylesheets/bourbon";
+@import "modularscale-sass/stylesheets/modular-scale";
+@import "include-media/dist/include-media";
+
+// --- vendor libs -------------------------------------------------------------
+// -> in assets/stylesheets/vendor
+
+@import "../vendor/sass-units";

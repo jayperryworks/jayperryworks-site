@@ -1,0 +1,30 @@
+<%#
+  Work Gallery component
+  - A content reference with headline, excerpt, action, and optional image
+
+  Locals:
+  - ARRAY prints: list of prints to display
+  - BOOLEAN current (optional): show the current page in the list?
+  - BOOLEAN tags (optional): add data tags to each item, for sorting?
+
+  Styles:
+  - components/gallery.scss
+%>
+
+<%
+  current ||= false
+  tags ||= true
+%>
+
+<ul class="l-gallery">
+  <% prints.each do |print| %>
+    <% unless current == false && print.title == current_page.data.title %>
+      <li class="l-gallery-item" <% if tags == true %>data-year="<%= print.date.strftime('%Y') %><% if print.data.tags.present? %>" data-tags="<% print.data.tags.each_with_index do |tag, index| %><%= tag.urlize %><% unless index == (print.data.tags.length - 1) %> <% end %><% end %>"<% end %><% end %>>
+          <% link_to print do %>
+            <% img_filename = print.data.thumb.present? ? print.data.thumb : print.data.cover %>
+            <%= image_tag print.url + img_filename, :alt => print.data.title, :class => "l-constrained-content" %>
+          <% end %>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

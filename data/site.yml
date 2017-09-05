@@ -1,0 +1,18 @@
+site_title: "Jay Perry"
+
+intro: "My name is Jay and I'm a designer, illustrator, and writer living near Baltimore."
+
+bio_blurb: "Jay Perry is a designer, illustrator, and writer living near Baltimore. He likes books, old rusty cars, and forests."
+
+statuses:
+  - "And I could use another cup of tea."
+
+social:
+  - name: "Etsy"
+    link: https://www.etsy.com/shop/jayperry
+  - name: "Twitter"
+    link: https://twitter.com/inkpixelsrust
+  - name: "Pinterest"
+    link: https://www.pinterest.com/jayperryworks/
+  - name: "Github"
+    link: https://github.com/jayperryworks

@@ -1,0 +1,39 @@
+<%#
+  Main Footer component
+  - lives at the bottom of each page
+
+  Locals:
+  BOOLEAN show_bio (optional): show the bio card? (only shown on interior pages, usually)
+
+  Styles:
+  components/card
+  components/main_footer
+%>
+
+<% show_bio ||= false %>
+
+<footer class="main_footer" role="contentinfo">
+  <div class="l-wrapper">
+    <% unless show_bio == false %>
+      <figure class="card card--multicolumn l-margin-bottom-wide l-padding-bottom border-bottom">
+        <div class="card-figure t-centered">
+          <div style="display: inline-block; max-width: 200px;">
+            <%= image_tag "portrait.jpg", alt: data.site.title %>
+          </div>
+        </div>
+        <figcaption class="card-content">
+          <p class="t-font-body"><%= data.site.bio_blurb %></p>
+          <%= link_to "More about Jay &rsaquo;", "/about", class: "button button--text l-margin-top-narrow" %>
+          <dl class="tag-group l-margin-top l-padding-top border-top border--secondary">
+            <dt class="t-heading t-heading--slug t-scale-eta l-margin-bottom-narrow">Say hi</dt>
+            <% data.site.social.each do |site| %>
+            <dd class="tag-group-item"><%= link_to site.name, site.link, class: "tag" %></dd>
+            <% end %>
+          </dl>
+        </figcaption>
+      </figure>
+    <% end %>
+    <%= component "logo-jpw", locals: { classes: "main_footer-lockup logo logo--jpw" } %>
+    <small class="main_footer-copyright">&copy; copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>
+  </div>
+</footer>

@@ -1,0 +1,46 @@
+// ==========================================================================
+// Global positioning utilities
+// -> place an element relative to its parent
+// ==========================================================================
+
+.l-display-inline {
+  display: inline;
+}
+
+.l-display-inline_block {
+  display: inline-block;
+}
+
+.l-display-block {
+  display: block;
+}
+
+// center inline and inline-block elements
+.l-centered {
+  text-align: center;
+
+  @supports (transform: translateX(-50%)) {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+// center a block element
+.l-centered-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.l-float-right {
+  float: right;
+}
+.l-float-left {
+  float: left;
+}
+
+// make a panel rise to the top of a layout
+// -> useful if it contains, for instance, stuff like a jump nav that needs to overlay elements below
+.l-z-top {
+  z-index: z('top') !important;
+}

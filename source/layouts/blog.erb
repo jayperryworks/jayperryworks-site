@@ -1,0 +1,50 @@
+<% wrap_layout :layout do %>
+  <article class="l-margin-top-wide">
+    <header class="l-margin-bottom">
+      <!-- Titles -->
+      <div class="l-wrapper l-wrapper--full">
+        <h1 class="t-heading t-scale-beta t-centered"><%= current_page.data.title %></h1>
+        <% if current_page.data.subtitle.present? %>
+          <p class="t-heading t-heading--sub t-scale-cappa t-centered"><%= current_page.data.subtitle %></p>
+        <% end %>
+      </div>
+
+      <!-- Cover image -->
+      <% if current_page.data.image.present? %>
+        <%= image_tag current_page.data.image, class: "cover l-margin-top-wide l-margin-bottom-wide", alt: current_page.data.title %>
+      <% end %>
+
+      <%# If there's date metadata, list it %>
+      <%# note: using current_page.date instead of current_page.data.date b/c date is listed in filename of blog posts %>
+      <% if current_page.respond_to?(:date) %>
+        <div class="l-wrapper">
+          <%= component "meta", locals: {
+            date: current_page.date.strftime("%B %-d, %Y"),
+            borders: ["bottom"],
+            classes: "l-margin-top-wide"
+          } %>
+        </div>
+      <% end %>
+    </header>
+
+    <!-- Main content -->
+    <main class="content l-wrapper l-margin-bottom-extra_wide">
+      <%= yield %>
+    </main>
+
+    <!-- <footer class="l-wrapper l-margin-top-wide l-margin-bottom">
+      <div class="border-top l-padding-top">
+        <h1 class="t-heading t-heading--slug t-scale-eta l-margin-bottom-narrow c-text-tertiary">Filed under:</h1>
+        <%# component "tag_list", locals: { tags: current_page.data.tags } %>
+      </div>
+    </footer> -->
+
+  </article>
+
+  <!-- <nav class="border-top">
+    <%# prev_post(current_page.data.title) %>
+    <div>
+      <h1></h1>
+    </div>
+  </nav> -->
+<% end %>

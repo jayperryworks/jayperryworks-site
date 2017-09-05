@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--[if lte IE 9]><html class="no-js ie ie-old" lang="en-US"><![endif]-->
+<!--[if gt IE 9]><html class="no-js ie ie-9" lang="en-US"><![endif]-->
+<html class="no-js no-ie" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title><%= data.site.site_title %><% if current_page.data.title.present? && current_page.data.title != "home" %> | <%= current_page.data.title %><% end %></title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <%= stylesheet_link_tag build? ? "main.min.css" : "main.css" %>
+    <%= javascript_include_tag "javascripts/critical.bundle" %>
+
+    <script type="text/javascript">
+      // Test for IE 11 support
+      if(!(window.ActiveXObject) && "ActiveXObject" in window){
+        var htmlClass = document.querySelector('html').classList;
+        htmlClass.remove('no-ie');
+        htmlClass.add('ie');
+        htmlClass.add('ie-11');
+      }
+    </script>
+  </head>
+
+  <body>
+    <%# component "spritemap" %>
+    <%= component "main_header", locals: {
+      show_intro: current_page.data.title == "home" ? true : false,
+      intro: data.site.intro,
+      status: data.site.statuses[0]
+    } %>
+
+    <%= yield %>
+
+    <%= component "main_footer", locals: {
+      show_bio: current_page.data.title == "home" || current_page.data.hide_bio == true ? false : true
+    } %>
+
+    <%= javascript_include_tag "javascripts/main.bundle" %>
+    <%= google_analytics_universal_tag %>
+  </body>
+</html>

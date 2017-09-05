@@ -1,0 +1,105 @@
+// =========================================================================
+//  Button module
+// =========================================================================
+
+@import "../config/color";
+@import "../config/type";
+@import "../config/border";
+
+// Base
+// -------------------------------------------------------------------------
+
+button,
+.button {
+  @include transition-default;
+  @include font-accent;
+  @include border('all', $color: 'text' 'primary');
+  @include scale-type('zeta');
+  display: inline-block;
+  padding: 0.5em 1.2em;
+  border-radius: 0.2em;
+  color: theme('text' 'primary');
+  background-color: transparent;
+
+  &:hover, &:active {
+    border-color: theme('highlight');
+    background-color: theme('highlight');
+    color: theme('bg'); // override default link hover color
+  }
+
+  sup { font-size: 0.6em; }
+
+  strong { @include font-accent('bold'); }
+}
+
+
+
+// Modifiers
+// -------------------------------------------------------------------------
+
+// --- sizes ---------------------------------------------------------------
+// -> default size is "medium." add these classes to go bigger or smaller.
+
+.button--small {
+  @include scale-type('eta');
+  padding: 0.3em 0.8em;
+  border-width: border-w('mid');
+}
+
+.button--large {
+  @include scale-type('epsilon');
+  padding: 0.8em 1.6em;
+}
+
+// --- prominence ----------------------------------------------------------
+// -> how obnoxious shall your button be?
+
+.button--secondary {
+  color: theme('text' 'tertiary');
+  border-color: theme('text' 'tertiary');
+}
+
+// --- special variations --------------------------------------------------
+// -> buttons of a strange and amazing nature
+
+// a "buy this" button, usually with a price
+.button--purchase {
+  padding: 0 0.8em 0 0; // override default button padding
+  vertical-align: middle;
+}
+
+.button--text {
+  @include font-accent('bold');
+  @include scale-type('eta');
+  padding: 0;
+  border: none;
+  text-transform: uppercase;
+
+  &:hover, &:active {
+    color: theme(highlight);
+    background-color: transparent;
+    border: none;
+  }
+}
+
+// Elements
+// -------------------------------------------------------------------------
+
+// price callout on a purchase button
+// -> use inside .button.purchase
+.button-price {
+  @include transition-default;
+  display: inline-block;
+  margin-right: 1em;
+  padding: 0.6em 1em;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.2em;
+  color: theme('text' 'primary', 'reverse');
+
+  &:hover, &:active,
+  .button:hover &, .button:active & {
+    background-color: theme('highlight', 'reverse');
+  }
+}

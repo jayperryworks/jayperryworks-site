@@ -1,0 +1,35 @@
+<%#
+  Main Header component
+  - lives at the top of each page
+
+  Locals:
+  BOOLEAN show_intro (optional): want to show the intro?
+  STRING intro (optional): the intro statement
+  STRING status (optional): the status statement
+
+  Styles:
+  base/type
+  layout/wrapper
+  layout/gutter
+%>
+
+<%
+  show_intro ||= false
+  intro ||= false
+  status ||= false
+%>
+
+<header class="t-centered" role="banner">
+  <%= component "logo-jp" %>
+  <% if show_intro == true %>
+    <div class="l-wrapper l-wrapper--full l-margin-top-wide l-margin-bottom-wide">
+      <% if intro %>
+        <p class="t-heading t-scale-delta"><%= intro %></p>
+      <% end %>
+      <% if status %>
+        <p class="t-heading t-scale-epsilon c-text-tertiary" style="margin-top: 0.4em;"><%= status %></p>
+      <% end %>
+      <%= link_to "A bit more about me &rsaquo;", "/about", class: "button button--small l-margin-top" %>
+    </div>
+  <% end %>
+</header>

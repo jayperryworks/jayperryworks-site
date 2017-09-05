@@ -1,0 +1,18 @@
+// ==========================================================================
+// Cover image component
+// -> an image that scales to almost fill the screen
+// ==========================================================================
+
+@import "../config/spacing";
+
+
+// Base
+// --------------------------------------------------------------------------
+
+.cover {
+  @include rem(margin, 0 auto);
+  display: block;
+  padding: 0 gutter('wide');
+  max-height: 600px;
+  max-height: 80vh;
+}
