@@ -10,7 +10,7 @@
 // -> PRIVATE, do not use outside this settings file
 
 // neutrals
-$black        : lighten(#474747, 3);
+$black        : #333;
 $gray         : #b1b1b1;
 
 // highlights
@@ -32,7 +32,7 @@ $themes: (
     'default': (
         'text': (
             'primary'   : $black,
-            'secondary' : lighten($black, 5),
+            'secondary' : #444,
             'tertiary'  : $gray,
             'body'      : darken($gray, 30),
         ),

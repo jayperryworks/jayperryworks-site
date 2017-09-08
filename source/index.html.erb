@@ -2,6 +2,12 @@
 title: home
 ---
 
+<%= component "main_header", locals: {
+  show_intro: true,
+  intro: data.site.intro,
+  status: data.site.statuses[0]
+} %>
+
 <!-- Work section -->
 <% component "panel", locals: { slug: "Recent work", id: "work" } do %>
   <div class="l-wrapper l-wrapper--wide l-margin-top-wide">

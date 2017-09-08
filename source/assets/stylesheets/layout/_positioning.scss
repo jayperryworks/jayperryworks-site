@@ -3,11 +3,13 @@
 // -> place an element relative to its parent
 // ==========================================================================
 
+@import "../config/breakpoints";
+
 .l-display-inline {
   display: inline;
 }
 
-.l-display-inline_block {
+@include breakpointify(".l-display-inline_block", true, $sizes: "xsmall") {
   display: inline-block;
 }
 

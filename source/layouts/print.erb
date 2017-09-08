@@ -1,18 +1,31 @@
 <% wrap_layout :layout do %>
+  <%= component "main_header", locals: {
+    theme: "reverse"
+  } %>
+
   <article>
-    <% component "panel", locals: { borders: "none" } do %>
+    <% component "panel", locals: { borders: "none", theme: "reverse" } do %>
       <%= image_tag current_page.url + current_page.data.cover, class: "cover", alt: current_page.data.title %>
 
       <!-- cover image, info, and title -->
-      <header class="l-wrapper l-margin-top-narrow l-margin-bottom">
-        <% info = current_page.data.width.present? ? "#{current_page.data.format}, #{current_page.data.width} &times; #{current_page.data.height}" : current_page.data.format %>
-        <%= component "meta", locals: {
-          date: current_page.date.strftime('%Y'),
-          info: info
-        } %>
-        <h1 class="t-heading t-scale-beta l-margin-top"><%= current_page.data.title %></h1>
-      </header>
+      <div class="l-wrapper l-padding-top-wide t-centered">
 
+        <%
+          # if the painting has dimension metadata, add it to the format listing
+          info = if current_page.data.width.present?
+            "#{current_page.data.format}, #{current_page.data.width} &times; #{current_page.data.height}"
+            else
+              current_page.data.format
+            end
+        %>
+
+        <h1 class="t-font-accent-bold t-scale-epsilon l-display-inline_block@xsmall"><%= current_page.data.title %></h1>
+        <time class="t-font-accent t-scale-epsilon c-text-tertiary l-display-inline_block l-padding-left-narrow l-margin-left-narrow border-left"><%= current_page.date.strftime('%Y') %></time>
+        <span class="t-font-accent t-scale-epsilon c-text-tertiary l-display-inline_block l-padding-left-narrow l-margin-left-narrow border-left"><%= info %></span>
+      </div>
+    <% end %>
+
+    <% component "panel" do %>
       <!-- writeup -->
       <div class="content l-wrapper">
         <%= yield %>
@@ -24,22 +37,22 @@
           </div>
         <% end %>
       </div>
+    <% end %>
 
-      <% end %>
-
-      <!-- Editions -->
+    <!-- Editions -->
+    <% component "panel" do %>
+      <h1 class="t-heading t-centered l-padding-bottom">Available editions</h1>
       <% if current_page.data.editions.present? %>
-        <% component "panel", locals: { slug: "Available editions" } do %>
-          <!-- edition cards -->
-          <div class="l-wrapper l-wrapper--wide">
-            <ul class="l-feed">
-              <% current_page.data.editions.each do |edition| %>
-                <%= component "print_edition", :locals => { :edition => edition } %>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
+        <!-- edition cards -->
+        <div class="l-wrapper l-wrapper--wide">
+          <ul class="l-feed">
+            <% current_page.data.editions.each do |edition| %>
+              <%= component "print_edition", :locals => { :edition => edition } %>
+            <% end %>
+          </ul>
+        </div>
       <% end %>
+    <% end %>
   </article>
 
   <!-- More work -->

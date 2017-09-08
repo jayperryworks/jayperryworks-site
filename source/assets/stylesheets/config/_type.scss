@@ -32,7 +32,7 @@ $type-line_height: 1.6;
 /* ----- Guardian ---------------------------------------------------- */
 
 @include font-face("guardian-sans-normal", "#{$asset-path-fonts}/GuardianSans-Light-Web", $file-formats: eot woff ttf svg);
-@include font-face("guardian-sans-bold", "#{$asset-path-fonts}/GuardianSans-Bold-Web", bold, $file-formats: eot woff ttf svg);
+@include font-face("guardian-sans-bold", "#{$asset-path-fonts}/GuardianSans-Semibold-Web", bold, $file-formats: eot woff ttf svg);
 
 
 /* Font mixins
