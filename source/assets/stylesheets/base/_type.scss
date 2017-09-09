@@ -10,40 +10,40 @@
 // -----------------------------------------------------------------------------
 
 body {
-    @include font-body;
-    @include type-size-default;
-    line-height: $type-line_height;
+  @include font-body;
+  @include type-size-default;
+  line-height: $type-line_height;
 }
 
 // headings
 h1, h2, h3, h4, h5, h6,
 .t-heading {
-    @include font-display;
-    @include color('text' 'primary');
-    display: block;
-    line-height: 1.2;
-    margin: 0;
+  @include font-display;
+  @include color('text' 'primary');
+  display: block;
+  line-height: 1.2;
+  margin: 0;
 
-    & + & { margin-top: 0.25em; }
+  & + & { margin-top: 0.25em; }
 
-    .content > p + &,
-    .content > ul + &,
-    .content > ol + & { margin-top: 1.5em; }
+  .content > p + &,
+  .content > ul + &,
+  .content > ol + & { margin-top: 1.5em; }
 
-    .content > & + p,
-    .content > & + ul,
-    .content > & + ol { margin-top: 0.5em; }
+  .content > & + p,
+  .content > & + ul,
+  .content > & + ol { margin-top: 0.5em; }
 
-    a {
-      color: inherit;
+  a {
+    color: inherit;
 
-      &:hover, &:active { @include color('highlight'); }
-    }
+    &:hover, &:active { @include color('highlight'); }
+  }
 
-    strong {
-      font-family: inherit;
-      font-style: normal;
-    }
+  strong {
+    font-family: inherit;
+    font-style: normal;
+  }
 }
 
   a.t-heading {
@@ -54,23 +54,23 @@ h1, h2, h3, h4, h5, h6,
 
 // body/inline text
 p {
-    @include scale-type('epsilon');
-    @include color('text' 'secondary');
-    -webkit-margin-before: 0;
-    -webkit-margin-after: 0;
+  @include scale-type('epsilon');
+  @include color('text' 'secondary');
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
 
-    & + & { margin-top: 1em; }
+  & + & { margin-top: 1em; }
 
-    strong { @include font-body(bold); }
-    em { @include font-body(normal, italic); }
+  strong { @include font-body(bold); }
+  em { @include font-body(normal, italic); }
 }
 
 a {
-    @include transition-default;
-    @include color('highlight');
-    text-decoration: none;
+  @include transition-default;
+  @include color('highlight');
+  text-decoration: none;
 
-    small { color: inherit; }
+  small { color: inherit; }
 }
 
 strong,
@@ -81,23 +81,23 @@ em,
 
 small,
 .t-small {
-    @include scale-type('eta');
-    @include color('text' 'tertiary');
+  @include scale-type('eta');
+  @include color('text' 'tertiary');
 }
 
 figcaption,
 .t-caption {
-    @include scale-type('zeta');
-    @include font-accent;
-    @include color('text' 'tertiary');
+  @include scale-type('zeta');
+  @include font-accent;
+  @include color('text' 'tertiary');
 
-    strong { @include font-accent(bold); }
+  strong { @include font-accent(bold); }
 }
 
 address,
 .t-address {
-    @include scale-type('eta');
-    @include color('text' 'secondary');
+  @include scale-type('eta');
+  @include color('text' 'secondary');
 }
 
 /* Utilities
@@ -107,8 +107,8 @@ address,
 .t-display-bold { @include font-display('bold'); }
 
 .t-body { @include font-body; }
-  .t-body-bold { @include font-body('bold'); }
-  .t-body-italic { @include font-body($style: 'italic'); }
+.t-body-bold { @include font-body('bold'); }
+.t-body-italic { @include font-body($style: 'italic'); }
 
 
 // type scale helpers
