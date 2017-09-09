@@ -41,24 +41,24 @@ $type-line_height: 1.6;
 
 /* ----- Display type ------------------------------------------------------- */
 
-@mixin font-display($style: normal) {
-  font-family: "publico-headline-#{$style}", $georgia;
+@mixin font-display($style: 'normal') {
+  font-family: "publico-headline-#{unquote($style)}", $georgia;
   font-weight: normal;
-  font-style: $style;
+  font-style: unquote($style);
 }
 
-@mixin font-accent($style: normal) {
-  font-family: "guardian-sans-#{$style}", $trebuchet;
+@mixin font-accent($style: 'normal') {
+  font-family: "guardian-sans-#{unquote($style)}", $trebuchet;
   font-weight: normal;
-  font-style: $style;
+  font-style: unquote($style);
 }
 
 /* ----- Body type ---------------------------------------------------------- */
 
-@mixin font-body($weight: normal, $style: normal) {
-  font-family: "publico-text-#{$weight}-#{$style}", $georgia;
-  font-weight: $weight;
-  font-style: $style;
+@mixin font-body($weight: 'normal', $style: 'normal') {
+  font-family: "publico-text-#{unquote($weight)}-#{unquote($style)}", $georgia;
+  font-weight: unquote($weight);
+  font-style: unquote($style);
 }
 
 /* ----- Ampersands --------------------------------------------------------- */

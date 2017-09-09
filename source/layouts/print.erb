@@ -17,10 +17,12 @@
             else
               current_page.data.format
             end
+
+          cover_breakpoint = "xsmall"
         %>
 
-        <h1 class="t-font-accent-bold t-scale-epsilon l-display-inline_block@xsmall"><%= current_page.data.title %></h1>
-        <time class="t-font-accent t-scale-epsilon c-text-tertiary l-display-inline_block l-padding-left-narrow l-margin-left-narrow border-left"><%= current_page.date.strftime('%Y') %></time>
+        <h1 class="t-font-accent-bold t-scale-epsilon l-display-inline_block@<%= cover_breakpoint %>"><%= current_page.data.title %></h1>
+        <time class="t-font-accent t-scale-epsilon c-text-tertiary l-display-inline_block l-padding-left-narrow l-margin-left-narrow border-left@<%= cover_breakpoint %>"><%= current_page.date.strftime('%Y') %></time>
         <span class="t-font-accent t-scale-epsilon c-text-tertiary l-display-inline_block l-padding-left-narrow l-margin-left-narrow border-left"><%= info %></span>
       </div>
     <% end %>
@@ -40,25 +42,32 @@
     <% end %>
 
     <!-- Editions -->
-    <% component "panel" do %>
-      <h1 class="t-heading t-centered l-padding-bottom">Available editions</h1>
+    <% component "panel", locals: { heading: "Available editions" } do %>
       <% if current_page.data.editions.present? %>
         <!-- edition cards -->
         <div class="l-wrapper l-wrapper--wide">
           <ul class="l-feed">
             <% current_page.data.editions.each do |edition| %>
-              <%= component "print_edition", :locals => { :edition => edition } %>
+              <li class="l-feed-item">
+                <%= component "print_edition", :locals => { :edition => edition } %>
+              </li>
             <% end %>
           </ul>
+          <aside class="border-top l-margin-top-wide">
+            <div class="l-wrapper l-wrapper--narrow t-centered">
+              <h2 class="t-heading t-scale-delta l-padding-top-wide l-padding-bottom-narrow">About Giclee prints</h2>
+              <p class="t-body-italic t-scale-epsilon c-text-tertiary">Printed at Archival Arts in Baltimore on heavy, textured, acid-free cotton rag paper, using archival pigment-based inks. Individually signed and numbered.</p>
+            </div>
+          </aside>
         </div>
       <% end %>
     <% end %>
   </article>
 
   <!-- More work -->
-  <% component "panel", locals: { slug: "More work" } do %>
-      <div class="l-wrapper l-wrapper--wide">
-          <%= partial("components/work_gallery", :locals => { :prints => blog("work").articles, :current => false, :tags => false }) %>
-      </div>
+  <% component "panel", locals: { heading: "More work" } do %>
+    <div class="l-wrapper l-wrapper--wide">
+      <%= partial("components/work_gallery", :locals => { :prints => blog("work").articles, :current => false, :tags => false }) %>
+    </div>
   <% end %>
 <% end %>

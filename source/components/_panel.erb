@@ -3,7 +3,7 @@
   - For short content in scrolling sections. Meant to be full-width.
 
   Locals:
-  - STRING slug (optional): a slug header for the top of the panel, e.g. "Recent work"
+  - STRING heading (optional): a heading header for the top of the panel, e.g. "Recent work"
   - STRING theme (optional): name of color theme, e.g. "reverse" or "wash"
   - STRING classes (optional): additional modifier classes for the container
   - STRING id (optional): assign an id to help with anchor links
@@ -19,7 +19,7 @@
   theme ||= "default"
   classes ||= false
   id ||= false
-  slug ||= false
+  heading ||= false
   borders ||= [ "top" ]
 
   # make a list of border classes from the borders array
@@ -33,8 +33,8 @@
 %>
 
 <section class="l-padding-top-wide l-padding-bottom-wide<%= border_list %><%= " c-theme-#{theme}" if theme != "default" %><%= " #{classes}" if classes %>"<% if id %> id="<%= id %>"<% end %>>
-    <% if slug %>
-      <h1 class="t-heading t-heading--slug t-scale-zeta t-centered l-margin-bottom-wide"><%= slug %></h1>
+    <% if heading %>
+      <h1 class="t-heading t-centered l-margin-bottom-wide"><%= heading %></h1>
     <% end %>
     <%= yield %>
 </section>
