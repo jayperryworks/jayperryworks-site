@@ -5,7 +5,7 @@
     <header class="l-margin-bottom">
       <!-- Titles -->
       <div class="l-wrapper l-wrapper--full">
-        <h1 class="t-heading t-scale-beta t-centered"><%= current_page.data.title %></h1>
+        <h1 class="t-display t-scale-alpha t-centered"><%= current_page.data.title %></h1>
         <% if current_page.data.subtitle.present? %>
           <p class="t-heading t-heading--sub t-scale-cappa t-centered"><%= current_page.data.subtitle %></p>
         <% end %>
@@ -30,7 +30,7 @@
     </header>
 
     <!-- Main content -->
-    <main class="content content--dropcap l-wrapper l-margin-bottom-extra_wide">
+    <main class="t-content t-content--dropcap l-wrapper l-margin-bottom-extra_wide">
       <%= yield %>
     </main>
 

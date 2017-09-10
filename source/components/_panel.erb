@@ -33,8 +33,8 @@
 %>
 
 <section class="l-padding-top-wide l-padding-bottom-wide<%= border_list %><%= " c-theme-#{theme}" if theme != "default" %><%= " #{classes}" if classes %>"<% if id %> id="<%= id %>"<% end %>>
-    <% if heading %>
-      <h1 class="t-heading t-centered l-margin-bottom-wide"><%= heading %></h1>
-    <% end %>
-    <%= yield %>
+  <% if heading %>
+    <h1 class="t-display t-scale-alpha t-centered l-margin-bottom-wide"><%= heading %></h1>
+  <% end %>
+  <%= yield %>
 </section>

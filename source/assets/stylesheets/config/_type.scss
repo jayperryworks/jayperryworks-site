@@ -18,8 +18,42 @@ $type-line_height: 1.6;
   @include rem(font-size, $type-size-default);
 }
 
-/* Fonts
-// -------------------------------------------------------------------------- */
+// set up viewport-sized fluid type scaling, with minimum and maximum sizes
+// -> a modified version of Indrek Paas' fluid type mixin: https://www.sassmeister.com/gist/7f22e44ace49b5124eec
+// -> which is based on Mike Riethmuller's formula: https://madebymike.com.au/writing/fluid-type-calc-examples/
+// -> also inspired by Eduardo Boucas' mixin: https://eduardoboucas.com/blog/2015/06/18/viewport-sized-typography-with-minimum-and-maximum-sizes.html
+@mixin type-fluid($properties, $size-min: 'eta', $size-max: 'alpha', $screen-min: 'xsmall', $screen-max: 'large') {
+  $screen-min-px: (strip-units(screen($screen-min)) * $type-size-default);
+  $screen-max-px: (strip-units(screen($screen-max)) * $type-size-default);
+
+  // set base (min) size as default
+  @each $property in $properties {
+    @include rem($property, scale-type($size-min));
+  }
+
+  // start to scale up at the minimum screen size
+  @include media(">#{$screen-min}") {
+    // use an in-between value as the fallback where vw units or calc aren't supported
+    $size-middle-fallback: ((scale-type($size-min) + scale-type($size-max)) / 2);
+
+    @each $property in $properties {
+      @include rem($property, $size-middle-fallback);
+
+      // use calc and vw units to make the type scale fluidly between two sizes
+      #{$property}: calc(#{scale-type($size-min)} + #{strip-units(scale-type($size-max) - scale-type($size-min))} * (100vw - #{$screen-min-px}) / #{strip-units($screen-max-px - $screen-min-px)});
+    }
+  }
+
+  // stop scaling at the maximum screen size
+  @include media(">#{$screen-max}") {
+    @each $property in $properties {
+      @include rem($property, $size-max);
+    }
+  }
+}
+
+// Fonts
+// -----------------------------------------------------------------------------
 // -> font-face mixins use Bourbon
 
 // headline
@@ -29,44 +63,43 @@ $type-line_height: 1.6;
 @include font-face("publico-text-normal-normal", "#{$asset-path-fonts}/PublicoText-Roman-Web", $file-formats: eot woff ttf svg);
 @include font-face("publico-text-normal-italic", "#{$asset-path-fonts}/PublicoText-Italic-Web", normal, italic, $file-formats: eot woff ttf svg);
 
-/* ----- Guardian ---------------------------------------------------- */
+// accent
+@include font-face("guardian-sans-light", "#{$asset-path-fonts}/GuardianSans-Light-Web", $file-formats: eot woff ttf svg);
+@include font-face("guardian-sans-normal", "#{$asset-path-fonts}/GuardianSans-Regular-Web", $file-formats: eot woff woff2);
+@include font-face("guardian-sans-bold", "#{$asset-path-fonts}/GuardianSans-Semibold-Web", bold, $file-formats: eot woff woff2);
 
-@include font-face("guardian-sans-normal", "#{$asset-path-fonts}/GuardianSans-Light-Web", $file-formats: eot woff ttf svg);
-@include font-face("guardian-sans-bold", "#{$asset-path-fonts}/GuardianSans-Semibold-Web", bold, $file-formats: eot woff ttf svg);
 
-
-/* Font mixins
-// -------------------------------------------------------------------------- */
+// Font mixins
+// -----------------------------------------------------------------------------
 // -> PUBLIC, use these to style type globally & in modules
 
-/* ----- Display type ------------------------------------------------------- */
-
-@mixin font-display($style: 'normal') {
-  font-family: "publico-headline-#{unquote($style)}", $georgia;
+// Display
+@mixin font-display() {
+  font-family: "publico-headline-normal", $georgia;
   font-weight: normal;
-  font-style: unquote($style);
+  font-style: normal;
 }
 
-@mixin font-accent($style: 'normal') {
-  font-family: "guardian-sans-#{unquote($style)}", $trebuchet;
-  font-weight: normal;
-  font-style: unquote($style);
+// Accent
+@mixin font-accent($weight: 'normal') {
+  font-family: "guardian-sans-#{unquote($weight)}", $trebuchet;
+  font-weight: if($weight == 'light', normal, unquote($weight));
+  font-style: normal;
 }
 
-/* ----- Body type ---------------------------------------------------------- */
-
+// Body
 @mixin font-body($weight: 'normal', $style: 'normal') {
   font-family: "publico-text-#{unquote($weight)}-#{unquote($style)}", $georgia;
   font-weight: unquote($weight);
   font-style: unquote($style);
 }
 
-/* ----- Ampersands --------------------------------------------------------- */
+// ----- Ampersands ------------------------------------------------------------
 // -> if you'd like to "use the best ampersand"
 // -> http://vault.simplebits.com/notebook/2008/08/14/ampersands-2/
 
-@mixin font-ampersand {
-  font-family: "Baskerville", "Palatino", "Book Antiqua", serif;
-  font-style: italic;
-  font-weight: normal;
-}
+// @mixin font-ampersand {
+//   font-family: "Baskerville", "Palatino", "Book Antiqua", serif;
+//   font-style: italic;
+//   font-weight: normal;
+// }
