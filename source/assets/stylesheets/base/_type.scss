@@ -175,6 +175,10 @@ h6,
 // --- type styles -------------------------------------------------------------
 .t-display {
   @include font-display;
+
+  &.t-scale-alpha {
+    letter-spacing: -0.01em;
+  }
 }
 
 .t-accent {
