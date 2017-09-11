@@ -230,6 +230,8 @@ h6,
 .footnotes {
   @include border(top);
   @include rem(margin-top, gutter());
+  @include rem(margin-bottom, gutter());
+  @include rem(padding-top, gutter());
   @include scale-type('zeta');
   @include color('text' 'tertiary');
 

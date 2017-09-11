@@ -31,8 +31,8 @@ $green--dark: #187042;
 $themes: (
   'default': (
     'text': (
-      'primary': $black,
-      'secondary': #444,
+      'primary': #444,
+      'secondary': #555,
       'tertiary': $gray,
       'body': darken($gray, 30),
     ),

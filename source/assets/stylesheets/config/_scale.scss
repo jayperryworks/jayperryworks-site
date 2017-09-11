@@ -48,7 +48,8 @@ $scale-type: (
 // --- modular scale config ----------------------------------------------------
 // -> for layout and spacing
 
-$ms-base: 1 !default;
-$ms-ratio: $scale-global !default;
+$ms-base: 16px;
+$ms-ratio: $scale-global;
 
-// @debug ms-list(1, 10, $ms-base, $ms-ratio);
+@debug $ms-ratio;
+@debug ms-list(1, 10, $ms-base, $ms-ratio);

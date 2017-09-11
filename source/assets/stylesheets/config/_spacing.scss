@@ -8,18 +8,18 @@
 // standard spacing for margins and padding, etc.
 $gutters: (
   'narrow'     : scale-type('eta'),
-  'default'    : scale-type('epsilon'),
-  'wide'       : scale-type('gamma'),
-  'extra_wide' : scale-type('alpha')
+  'default'    : scale-type('delta'),
+  'wide'       : scale-type('beta'),
+  'extra wide' : ms(6)
 );
 
 $gutter-sides: left right top bottom;
 
-@function gutter($size: 'default') {
-  @if $size != 'extra wide' {
+@function gutter($size: 'default', $split: false) {
+  @if $split == false {
     @return map-get($gutters, $size);
   } @else {
-    @return map-get($gutters, 'extra_wide');
+    @return (map-get($gutters, $size) / 2);
   }
 }
 
