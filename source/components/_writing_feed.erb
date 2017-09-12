@@ -16,18 +16,18 @@
   id ||= false
 %>
 
-<ul class="l-feed<%= ' #{classes}' if classes %>">
+<ul class="list-undecorated<%= ' #{classes}' if classes %>">
   <% articles.each do |article| %>
-    <li class="l-feed-item">
+    <li class="l-display-block l-padding-top-xwide l-margin-top-xwide border-top">
       <% component "card", locals: {
         link: article.url,
         figure: article.data.image.present? ? article.url + article.data.image : false
       } do %>
         <h2 class="t-display t-scale-beta"><%= link_to article.title, article.url %></h2>
         <% if article.data.subtitle.present? %>
-          <%= link_to article.data.subtitle, article.url, class: "t-accent-light t-scale-delta c-text-tertiary" %>
+          <%= link_to article.data.subtitle, article.url, class: "l-display-inline_block t-accent-light t-scale-gamma t-link-undecorated t-leading-tight c-text-tertiary l-padding-top-xxnarrow" %>
         <% end %>
-        <div class="l-margin-top-narrow"><%= article.summary %></div>
+        <div class="l-padding-top"><%= article.summary %></div>
         <% unless article.data.show_full %>
           <%= link_to "Read more &rsaquo;", article.url, class: "button button--text l-margin-top" %>
         <% end %>

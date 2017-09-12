@@ -7,7 +7,7 @@
       <div class="l-wrapper l-wrapper--full">
         <h1 class="t-display t-scale-alpha t-centered"><%= current_page.data.title %></h1>
         <% if current_page.data.subtitle.present? %>
-          <p class="t-accent-light t-scale-gamma t-centered c-text-tertiary"><%= current_page.data.subtitle %></p>
+          <p class="t-accent-light t-leading-tight t-scale-gamma t-centered l-padding-top-xxnarrow c-text-tertiary"><%= current_page.data.subtitle %></p>
         <% end %>
       </div>
 
@@ -30,7 +30,7 @@
     </header>
 
     <!-- Main content -->
-    <main class="t-content t-content--dropcap l-wrapper l-margin-bottom-extra_wide">
+    <main class="t-content t-content--dropcap l-wrapper l-margin-bottom-xwide">
       <%= yield %>
     </main>
 

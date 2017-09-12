@@ -9,13 +9,13 @@ title: home
 } %>
 
 <!-- Work section -->
-<% component "panel", locals: { heading: "Recent work", id: "work" } do %>
+<% component "panel", locals: { heading: "Recent work", id: "work", border: "none" } do %>
   <div class="l-wrapper l-wrapper--wide l-margin-top-wide">
     <%= component "work_gallery", :locals => { :prints => blog("work").articles } %>
 
     <div class="t-centered l-margin-top-wide">
       <a class="button button--large" href="https://www.etsy.com/shop/jayperry" target="_blank">
-        More prints &amp; paintings available at <strong>Etsy</strong>
+        More prints available at <strong>Etsy</strong> &rsaquo;
       </a>
     </div>
   </div>
@@ -24,7 +24,7 @@ title: home
 <!-- Blog section -->
 <% if blog("writing").articles.length > 0 %>
   <% component "panel", locals: { heading: "Writing", id: "writing" } do %>
-    <div class="l-wrapper narrow">
+    <div class="l-wrapper">
       <%= component "writing_feed", :locals => { :articles => blog("writing").articles[0...5] } %>
     </div>
   <% end %>

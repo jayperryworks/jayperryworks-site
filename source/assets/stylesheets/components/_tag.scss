@@ -7,7 +7,7 @@
 @import "../config/animation";
 
 // Base
-// -------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------
 
 .tag {
   @include transition-default;
@@ -22,8 +22,8 @@
   vertical-align: middle;
 
   &:hover, &:active {
-    @include color('highlight');
-    @include color('highlight', 'border-color');
+    @include color('text' 'primary');
+    @include color('text' 'primary', 'border-color');
   }
 
   a {
@@ -36,7 +36,7 @@
 }
 
 // Subcomponents
-// -------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------
 
 // list of tags
 .tag-group {

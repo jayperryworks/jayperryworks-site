@@ -10,7 +10,15 @@ $trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
 // default type sizes
 $type-size-default: 16px;
 $type-size-amp: 1.1em; // size of ampersands relative to their context
-$type-line_height: 1.6;
+
+$leading: (
+  'tight': 1.2,
+  'default': 1.7
+);
+
+@function leading($name) {
+  @return map-get($leading, $name);
+}
 
 // set type to default body size using REMs
 // -> useful for resetting type size on a container to override parents

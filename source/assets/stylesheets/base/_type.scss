@@ -12,8 +12,7 @@
 
 body {
   @include font-body;
-  @include type-size-default;
-  line-height: $type-line_height;
+  line-height: leading('default');
 }
 
 // headings
@@ -26,7 +25,7 @@ h6 {
   @include font-display;
   @include color('text' 'primary');
   display: block;
-  line-height: 1.2;
+  line-height: leading('tight');
   margin: 0;
 
   & + & {
@@ -46,11 +45,12 @@ h6 {
   }
 
   a {
-    color: inherit;
+    border: none;
 
     &:hover,
     &:active {
-      @include color('highlight');
+      @include border('bottom', $style: 'secondary');
+      border-color: inherit;
     }
   }
 
@@ -89,8 +89,10 @@ p {
 
 a {
   @include transition-default;
-  @include color('highlight');
   text-decoration: none;
+  color: inherit;
+  @include border('bottom', $style: 'secondary');
+  border-color: inherit;
 
   small {
     color: inherit;
@@ -205,6 +207,20 @@ h6,
   text-transform: uppercase !important;
 }
 
+.t-leading-tight {
+  line-height: leading('tight') !important;
+}
+
+.t-link-undecorated {
+  border: none;
+
+  &:hover,
+  &:active {
+    @include border('bottom', $style: 'secondary');
+    border-color: inherit;
+  }
+}
+
 // --- body text ---------------------------------------------------------------
 
 // the first paragraph, often set slightly bigger
@@ -228,7 +244,7 @@ h6,
 }
 
 .footnotes {
-  @include border(top);
+  @include border('top');
   @include rem(margin-top, gutter());
   @include rem(margin-bottom, gutter());
   @include rem(padding-top, gutter());
@@ -247,12 +263,21 @@ h6,
 .footnote {
   @include font-accent;
   @include border-radius;
-  @include color('bg');
-  @include color('highlight', background-color);
+  @include border($style: 'secondary');
   display: inline-block;
   margin-left: 0.25em;
   padding: 0.25em 0.5em;
   line-height: 1;
+  color: inherit;
+  border-color: inherit;
+  background-color: transparent;
+}
+
+.t-content > hr {
+  margin: 1.2em 0;
+  border: 0;
+  height: 0;
+  @include border('top');
 }
 
 // --- position text -----------------------------------------------------------

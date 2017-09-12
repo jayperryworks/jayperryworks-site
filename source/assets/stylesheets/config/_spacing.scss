@@ -7,10 +7,12 @@
 
 // standard spacing for margins and padding, etc.
 $gutters: (
-  'narrow'     : scale-type('eta'),
-  'default'    : scale-type('delta'),
-  'wide'       : scale-type('beta'),
-  'extra wide' : ms(6)
+  'xxnarrow': ms(-6),
+  'xnarrow': ms(-4),
+  'narrow': ms(-2),
+  'default': ms(1),
+  'wide': ms(3),
+  'xwide': ms(6)
 );
 
 $gutter-sides: left right top bottom;

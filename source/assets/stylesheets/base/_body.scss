@@ -14,11 +14,11 @@ body {
     font-size: 95%;
 
     @include media(">small") {
-      font-size: 105%;
+      font-size: 110%;
     }
 
     @include media(">medium") {
-      font-size: 115%;
+      font-size: 120%;
     }
 
     @include media(">large") {

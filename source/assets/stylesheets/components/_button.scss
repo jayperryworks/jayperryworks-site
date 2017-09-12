@@ -11,6 +11,7 @@
 
 button,
 .button {
+  $color: 'text' 'primary';
   @include transition-default;
   @include font-accent;
   @include border('all', $color: 'text' 'primary');
@@ -18,18 +19,29 @@ button,
   display: inline-block;
   padding: 0.5em 1.2em;
   border-radius: 0.2em;
-  color: theme('text' 'primary');
+  color: theme($color);
   background-color: transparent;
 
-  &:hover, &:active {
-    border-color: theme('highlight');
-    background-color: theme('highlight');
+  &:hover,
+  &:active {
+    background-color: theme($color);
     color: theme('bg'); // override default link hover color
   }
 
   sup { font-size: 0.6em; }
 
   strong { @include font-accent('bold'); }
+
+  &.c-theme-reverse, .c-theme-reverse & {
+    color: theme($color, 'reverse');
+
+    &:hover,
+    &:active {
+      border-color: theme($color, 'reverse');
+      background-color: theme($color, 'reverse');
+      color: theme('bg', 'reverse'); // override default link hover color
+    }
+  }
 }
 
 
@@ -41,7 +53,7 @@ button,
 // -> default size is "medium." add these classes to go bigger or smaller.
 
 .button--small {
-  @include scale-type('eta');
+  @include scale-type('zeta');
   padding: 0.3em 0.8em;
   border-width: border-w('mid');
 }

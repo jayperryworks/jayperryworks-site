@@ -21,6 +21,8 @@
   id ||= false
   heading ||= false
   borders ||= [ "top" ]
+  padding_top ||= 'xwide'
+  padding_bottom ||= 'xwide'
 
   # make a list of border classes from the borders array
   border_list = ""
@@ -32,7 +34,7 @@
   end
 %>
 
-<section class="l-padding-top-wide l-padding-bottom-wide<%= border_list %><%= " c-theme-#{theme}" if theme != "default" %><%= " #{classes}" if classes %>"<% if id %> id="<%= id %>"<% end %>>
+<section class="l-padding-top-<%= padding_top %> l-padding-bottom-<%= padding_bottom %><%= border_list %><%= " c-theme-#{theme}" if theme != "default" %><%= " #{classes}" if classes %>"<% if id %> id="<%= id %>"<% end %>>
   <% if heading %>
     <h1 class="t-display t-scale-alpha t-centered l-margin-bottom-wide"><%= heading %></h1>
   <% end %>

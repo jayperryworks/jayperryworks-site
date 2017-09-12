@@ -25,7 +25,7 @@
           <p class="t-body"><%= data.site.bio_blurb %></p>
           <%= link_to "More about Jay &rsaquo;", "/about", class: "button button--text l-margin-top-narrow" %>
           <dl class="tag-group l-margin-top l-padding-top border-top border--secondary">
-            <dt class="t-accent-bold t-caps t-scale-eta l-margin-bottom-narrow">Say hi</dt>
+            <dt class="t-accent-bold t-caps t-scale-eta t-leading-tight l-margin-bottom-narrow">Say hi</dt>
             <% data.site.social.each do |site| %>
             <dd class="tag-group-item"><%= link_to site.name, site.link, class: "tag" %></dd>
             <% end %>
