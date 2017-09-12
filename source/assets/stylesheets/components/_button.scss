@@ -14,7 +14,7 @@ button,
   $color: 'text' 'primary';
   @include transition-default;
   @include font-accent;
-  @include border('all', $color: 'text' 'primary');
+  @include border('all', $color: $color);
   @include scale-type('zeta');
   display: inline-block;
   padding: 0.5em 1.2em;
@@ -74,23 +74,19 @@ button,
 // --- special variations --------------------------------------------------
 // -> buttons of a strange and amazing nature
 
-// a "buy this" button, usually with a price
-.button--purchase {
-  padding: 0 0.8em 0 0; // override default button padding
-  vertical-align: middle;
-}
-
 .button--text {
   @include font-accent('bold');
   @include scale-type('eta');
+  @include color('text' 'primary');
   padding: 0;
   border: none;
   text-transform: uppercase;
 
   &:hover, &:active {
-    color: theme(highlight);
+    @include color('text' 'primary');
+    @include border('bottom', $style: 'secondary');
     background-color: transparent;
-    border: none;
+    border-color: inherit;
   }
 }
 
