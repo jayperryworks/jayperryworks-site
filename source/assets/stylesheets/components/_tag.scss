@@ -7,7 +7,7 @@
 @import "../config/animation";
 
 // Base
-// -------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------
 
 .tag {
   @include transition-default;
@@ -21,9 +21,10 @@
   border-radius: 0.1em;
   vertical-align: middle;
 
-  &:hover, &:active {
-    @include color('highlight');
-    @include color('highlight', 'border-color');
+  &:hover,
+  &:active {
+    @include color('text' 'secondary');
+    border-color: inherit;
   }
 
   a {
@@ -31,12 +32,15 @@
     font-size: inherit;
     color: inherit;
 
-    &:hover, &:active { color: inherit; }
+    &:hover,
+    &:active {
+      color: inherit;
+    }
   }
 }
 
 // Subcomponents
-// -------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------
 
 // list of tags
 .tag-group {
@@ -51,6 +55,8 @@
     display: inline-block;
     margin: 0 0.25em 0.5em 0;
 
-    &:last-child { margin-right: 0; }
+    &:last-child {
+      margin-right: 0;
+    }
   }
 }

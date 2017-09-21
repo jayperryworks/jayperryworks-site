@@ -26,7 +26,7 @@ $card-grid--large: ms(7) ms(1);
   width: 100%;
 
   .card-content + & {
-    @include rem(margin-top, gutter());
+    @include rem(margin-top, gutter('wide'));
   }
 }
 
@@ -36,7 +36,7 @@ $card-grid--large: ms(7) ms(1);
   width: 100%;
 
   .card-figure + & {
-    @include rem(margin-top, gutter());
+    @include rem(margin-top, gutter('wide'));
   }
 }
 

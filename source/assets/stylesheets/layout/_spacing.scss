@@ -1,60 +1,67 @@
-// ==========================================================================
+// =============================================================================
 // Global spacing
 // -> used to keep whitespace in the layout consistent
-// ========================================================================== 
+// =============================================================================
 
 @import "../config/spacing";
 
-// Margins
-// -------------------------------------------------------------------------- 
+// Margin & padding utils
+// -----------------------------------------------------------------------------
 
-.l-margin { @include rem(margin, gutter()); }
-
-@each $name, $length in $gutters {
-  @if $name != 'default' {
-    .l-margin-#{$name} { @include rem(margin, gutter($name) !important); }
+@each $prop in (padding, margin) {
+  .l-#{$prop} {
+    @include rem($prop, gutter());
   }
-}
-
-@each $side in $gutter-sides {
-  .l-margin-#{$side} { @include rem(margin-#{$side}, gutter() !important); }
+  .l-no-#{$prop} {
+    @include rem($prop, 0 !important);
+  }
 
   @each $name, $length in $gutters {
     @if $name != 'default' {
-      .l-margin-#{$side}-#{$name} { @include rem(margin-#{$side}, gutter($name) !important); }
+      .l-#{$prop}-#{$name} {
+        @include rem($prop, gutter($name) !important);
+      }
     }
   }
-}
 
-.l-no-margin { @include rem(margin, 0 !important); }
-
-@each $side in $gutter-sides {
-  .l-no-margin-#{$side} { @include rem(margin-#{$side}, 0 !important); }
-}
-
-// Padding
-// -------------------------------------------------------------------------- 
-
-.l-padding { @include rem(padding, gutter() !important); }
-
-@each $name, $length in $gutters {
-  @if $name != 'default' {
-    .l-padding-#{$name} { @include rem(padding, gutter($name) !important); }
-  }
-}
-
-@each $side in $gutter-sides {
-    .l-padding-#{$side} { @include rem(padding-#{$side}, gutter() !important); }
+  @each $side in $gutter-sides {
+    .l-#{$prop}-#{$side} {
+      @include rem(#{$prop}-#{$side}, gutter() !important);
+    }
+    .l-no-#{$prop}-#{$side} {
+      @include rem(#{$prop}-#{$side}, 0 !important);
+    }
 
     @each $name, $length in $gutters {
       @if $name != 'default' {
-        .l-padding-#{$side}-#{$name} { @include rem(padding-#{$side}, gutter($name) !important); }
+        .l-#{$prop}-#{$side}-#{$name} {
+          @include rem(#{$prop}-#{$side}, gutter($name) !important);
+        }
       }
     }
+  }
 }
 
-.l-no-padding { @include rem(padding, 0 !important); }
+// Split gutters
+// -----------------------------------------------------------------------------
 
-@each $side in $gutter-sides {
-    .l-no-padding-#{$side} { @include rem(padding-#{$side}, 0 !important); }
+// add uniform gutters to a group of elements
+.l-gutter-wrapper {
+  @include rem(padding, gutter($split: true));
+
+  .l-gutter {
+    @include rem(padding, gutter($split: true));
+  }
+}
+
+@each $name, $size in $gutters {
+  @if $name != 'default' {
+    .l-gutter-wrapper.l-gutter--#{$name} {
+      @include rem(padding, gutter($name, $split: true));
+
+      .l-gutter {
+        @include rem(padding, gutter($name, $split: true));
+      }
+    }
+  }
 }

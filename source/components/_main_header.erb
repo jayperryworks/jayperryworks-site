@@ -17,19 +17,21 @@
   show_intro ||= false
   intro ||= false
   status ||= false
+  theme ||= "default"
 %>
 
-<header class="t-centered" role="banner">
+<header class="t-centered <%= " c-theme-#{theme}" if theme != "default" %>" role="banner">
   <%= component "logo-jp" %>
+
   <% if show_intro == true %>
-    <div class="l-wrapper l-wrapper--full l-margin-top-wide l-margin-bottom-wide">
+    <div class="l-wrapper l-wrapper--full l-margin-top-wide l-padding-bottom-xwide">
       <% if intro %>
-        <p class="t-heading t-scale-delta"><%= intro %></p>
+        <p class="t-display t-scale-gamma"><%= intro %></p>
       <% end %>
       <% if status %>
-        <p class="t-heading t-scale-epsilon c-text-tertiary" style="margin-top: 0.4em;"><%= status %></p>
+        <p class="t-display t-scale-delta c-text-tertiary" style="margin-top: 0;"><%= status %></p>
       <% end %>
-      <%= link_to "A bit more about me &rsaquo;", "/about", class: "button button--small l-margin-top" %>
+      <%= link_to "A bit more about me &rsaquo;", "/about", class: "button l-margin-top" %>
     </div>
   <% end %>
 </header>

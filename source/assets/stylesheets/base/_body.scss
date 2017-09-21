@@ -7,22 +7,22 @@
 // Defaults
 // -----------------------------------------------------------------------------
 
-body {
+html {
     // set up the base font size at each breakpoint
     // this will scale the whole layout proportionately as the screen size changes
     // and we only have to change one thing
-    font-size: 95%;
+    font-size: 100%;
 
     @include media(">small") {
       font-size: 105%;
     }
 
     @include media(">medium") {
-      font-size: 115%;
+      font-size: 110%;
     }
 
     @include media(">large") {
-      font-size: 130%;
+      font-size: 120%;
     }
 
     // set everything to roll with border-box sizing

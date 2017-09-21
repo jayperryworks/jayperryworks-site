@@ -7,10 +7,10 @@
 <%# edition - REQUIRED %>
 <% asset_path ||= current_page.url %>
 
-<figure class="card card--multicolumn l-feed-item" id="edition_<%= edition.name %>">
+<figure class="card card--multicolumn" id="edition_<%= edition.name %>">
   <%= image_tag asset_path + edition.image, :class => "card-figure card-figure--large", :alt => edition.name + " edition" %>
   <figcaption class="card-content">
-    <h2 class="t-heading t-heading--sub t-scale-delta c-text-primary"><strong><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
+    <h2 class="t-display t-scale-gamma c-text-tertiary"><strong class="c-text-primary t-display"><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
     <ul class="stat-list l-margin-top-narrow">
       <li class="stat-group">
         <span class="stat stat--label">Print Size</span>
@@ -27,7 +27,7 @@
         <span class="stat"><%= edition.limit.present? ? edition.limit : "Open" %></span>
       </li>
     </ul>
-    <p class="t-caption">Printed at Archival Arts in Baltimore on heavy, textured, acid-free cotton rag paper, using archival pigment-based inks. Individually signed and numbered.</p>
+    <p class="t-caption l-margin-top-narrow"></p>
     <a class="button l-margin-top" href="<%= edition.url %>" target="_blank">Buy on Etsy</a>
   </figcaption>
 </figure>

@@ -10,7 +10,7 @@
 // -> PRIVATE, do not use outside this settings file
 
 // neutrals
-$black        : lighten(#474747, 3);
+$black        : #333;
 $gray         : #b1b1b1;
 
 // highlights
@@ -29,30 +29,30 @@ $green--dark: #187042;
 
 // note: highlight is default; variations are assigned in local styles
 $themes: (
-    'default': (
-        'text': (
-            'primary'   : $black,
-            'secondary' : lighten($black, 5),
-            'tertiary'  : $gray,
-            'body'      : darken($gray, 30),
-        ),
-        'bg'              : #fff,
-        'well'            : lighten($gray, 20),
-        'border'          : lighten($gray, 20),
-        'highlight'       : $blue
+  'default': (
+    'text': (
+      'primary': #444,
+      'secondary': #555,
+      'tertiary': $gray,
+      'body': darken($gray, 30),
     ),
-    'reverse': (
-        'text': (
-            'primary'   : #fff,
-            'secondary' : lighten($gray, 20),
-            'tertiary'  : lighten($black, 20),
-            'body'      : $gray,
-        ),
-        'bg'              : $black,
-        'well'            : darken($black, 20),
-        'border'          : lighten($black, 20),
-        'highlight'       : $blue
-    )
+    'bg': #fff,
+    'well': lighten($gray, 20),
+    'border': lighten($gray, 20),
+    'highlight': $blue
+  ),
+  'reverse': (
+    'text': (
+      'primary': #fff,
+      'secondary': lighten($gray, 20),
+      'tertiary': lighten($black, 35),
+      'body': $gray,
+    ),
+    'bg': $black,
+    'well': darken($black, 20),
+    'border': lighten($black, 20),
+    'highlight': $blue
+  )
 );
 
 // "get" function to access theme map values
@@ -61,23 +61,20 @@ $themes: (
 //      color: theme('text' 'primary');
 //      color: theme('highlight', 'reverse');
 @function theme($colors, $name: 'default') {
-    // first extract the 'theme' nested map
-    $theme: map-get($themes, $name);
+  // first extract the 'theme' nested map
+  $theme: map-get($themes, $name);
 
-    // now get the nested map for the first color value
-    $color: map-get($theme, nth($colors, 1));
-    // @debug "#{$name}: #{$colors} - #{map-get($theme, nth($colors, 1))}";
+  // now get the nested map for the first color value
+  $color: map-get($theme, nth($colors, 1));
 
-    // if there's more than one color string in the $colors list, dig deeper
-    @if length($colors) > 1 {
-        @for $i from 2 through length($colors) {
-            // keep updating $color with the next nested map until we've reached the end of the list
-            $color: map-get($color, nth($colors, $i));
-            // @debug(nth($colors, 1), $i);
-        }
-    }
-    // @debug(type-of($color));
-    @return $color;
+  // if there's more than one color string in the $colors list, dig deeper
+  @if length($colors) > 1 {
+      @for $i from 2 through length($colors) {
+        // keep updating $color with the next nested map until we've reached the end of the list
+        $color: map-get($color, nth($colors, $i));
+      }
+  }
+  @return $color;
 }
 
 // add colors for each theme
@@ -85,19 +82,19 @@ $themes: (
 // -> USAGE:
 //      @include color(text primary, background-color);
 @mixin color($color, $attr: color, $important: false) {
-    // set color for default theme
-    #{$attr}: theme($color)#{if($important != false, " !important", "")};
+  // set color for default theme
+  #{$attr}: theme($color)#{if($important != false, " !important", "")};
 
-    // set the color of this element to match the theme of this context
-    @each $theme, $colors in $themes {
-        // @debug($theme);
-        @if $theme != "default" {
-            // set color to theme of either this element or its parent
-            &.c-theme-#{$theme}, .c-theme-#{$theme} & {
-                #{$attr}: theme($color, $theme)#{if($important != false, " !important", "")};
-            }
-        }
+  // set the color of this element to match the theme of this context
+  @each $theme, $colors in $themes {
+    // @debug($theme);
+    @if $theme != "default" {
+      // set color to theme of either this element or its parent
+      &.c-theme-#{$theme}, .c-theme-#{$theme} & {
+        #{$attr}: theme($color, $theme)#{if($important != false, " !important", "")};
+      }
     }
+  }
 }
 
 // Theme Globals
@@ -105,21 +102,21 @@ $themes: (
 // -> set up helper classes and base colors
 
 @mixin theme($theme) {
-    color: theme('text' 'secondary', $theme);
-    background-color: theme('bg', $theme);
-    border-color: theme('border', $theme) !important;
+  color: theme('text' 'secondary', $theme);
+  background-color: theme('bg', $theme);
+  border-color: theme('border', $theme) !important;
 
-    // highlight color when you select something
-    ::selection {
-      background: theme('highlight', $theme);
-      color: #fff;
-      text-shadow: none;
-    }
+  // highlight color when you select something
+  ::selection {
+    background: theme('highlight', $theme);
+    color: #fff;
+    text-shadow: none;
+  }
 
-    // ditto, for mozilla engine
-    ::-moz-selection {
-      background: theme('highlight', $theme);
-      color: #fff;
-      text-shadow: none;
-    }
+  // ditto, for mozilla engine
+  ::-moz-selection {
+    background: theme('highlight', $theme);
+    color: #fff;
+    text-shadow: none;
+  }
 }
