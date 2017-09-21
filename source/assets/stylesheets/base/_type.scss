@@ -12,6 +12,7 @@
 
 body {
   @include font-body;
+  @include type-size-default;
   line-height: leading('default');
 }
 
@@ -273,11 +274,17 @@ h6,
   background-color: transparent;
 }
 
-.t-content > hr {
-  margin: 1.2em 0;
-  border: 0;
-  height: 0;
-  @include border('top');
+.t-content {
+  > * + * {
+    margin-top: 1em;
+  }
+
+  > hr {
+    margin: 1.2em 0;
+    border: 0;
+    height: 0;
+    @include border('top');
+  }
 }
 
 // --- position text -----------------------------------------------------------
