@@ -200,3 +200,9 @@ configure :build do
     # Or use a different image path
     # set :http_prefix, "/Content/images/"
 end
+
+# Copy the server config files in /public after build
+# Cheers to Makzan for posting this. https://www.makzan.net/2015/09/configure-files-to-copy-without-middleman-building-process/
+after_build do |builder|
+  FileUtils.cp_r 'public/.', 'build'
+end
