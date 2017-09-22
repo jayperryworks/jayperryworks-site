@@ -22,7 +22,8 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+.t-heading {
   @include font-display;
   @include color('text' 'primary');
   display: block;
@@ -45,7 +46,7 @@ h6 {
     margin-top: 0.5em;
   }
 
-  a {
+  a, {
     border: none;
 
     &:hover,
@@ -60,14 +61,6 @@ h6 {
     font-style: normal;
   }
 }
-
-  a.t-display {
-    @include color('text' 'primary');
-
-    &:hover, &:active {
-      @include color('highlight');
-    }
-  }
 
 // body/inline text
 p {
@@ -94,6 +87,15 @@ a {
   color: inherit;
   @include border('bottom', $style: 'secondary');
   border-color: inherit;
+
+  &.t-link-undecorated {
+    border-bottom: none;
+
+    &:hover,
+    &:active {
+      border-bottom: none;
+    }
+  }
 
   small {
     color: inherit;

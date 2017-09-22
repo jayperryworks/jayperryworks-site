@@ -23,10 +23,12 @@
         link: article.url,
         figure: article.data.image.present? ? article.url + article.data.image : false
       } do %>
-        <time class="l-display-block l-padding-bottom-narrow t-accent-bold t-leading-tight t-scale-eta c-text-tertiary"><%= article.date.strftime("%B %-d, %Y") %></time>
-        <h2 class="t-display t-scale-beta"><%= link_to article.title, article.url %></h2>
+        <time class="t-heading t-accent-bold t-scale-eta c-text-tertiary"><%= article.date.strftime("%B %-d, %Y") %></time>
+        <h2 class="t-scale-beta"><%= link_to article.title, article.url %></h2>
         <% if article.data.subtitle.present? %>
-          <%= link_to article.data.subtitle, article.url, class: "l-display-inline_block t-accent-light t-scale-gamma t-link-undecorated t-leading-tight c-text-tertiary l-padding-top-xxnarrow" %>
+          <span class="t-heading t-accent-light t-scale-gamma c-text-tertiary">
+            <%= link_to article.data.subtitle, article.url %>
+          </span>
         <% end %>
         <div class="l-padding-top"><%= article.summary %></div>
         <% unless article.data.show_full %>

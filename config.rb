@@ -64,7 +64,7 @@ activate :blog do |blog|
     blog.taglink = "tags/{tag}.html"
     blog.summary_length = nil
     blog.summary_separator = config[:blog_summary_separator]
-    blog.layout = "blog"
+    blog.layout = "blog_post"
     blog.paginate = true
     blog.per_page = 20
 end

@@ -9,7 +9,7 @@ title: home
 } %>
 
 <!-- Work section -->
-<% component "panel", locals: { heading: "Recent work", id: "work", borders: "none" } do %>
+<% component "panel", locals: { heading: "Recent work", id: "work" } do %>
   <div class="l-wrapper l-wrapper--wide l-margin-top-wide">
     <%= component "work_gallery", :locals => { :prints => blog("work").articles } %>
 
