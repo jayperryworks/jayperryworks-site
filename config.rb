@@ -65,6 +65,8 @@ activate :blog do |blog|
     blog.summary_length = nil
     blog.summary_separator = config[:blog_summary_separator]
     blog.layout = "blog"
+    blog.paginate = true
+    blog.per_page = 20
 end
 
 activate :directory_indexes

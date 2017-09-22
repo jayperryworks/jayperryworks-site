@@ -9,7 +9,7 @@ title: home
 } %>
 
 <!-- Work section -->
-<% component "panel", locals: { heading: "Recent work", id: "work", border: "none" } do %>
+<% component "panel", locals: { heading: "Recent work", id: "work", borders: "none" } do %>
   <div class="l-wrapper l-wrapper--wide l-margin-top-wide">
     <%= component "work_gallery", :locals => { :prints => blog("work").articles } %>
 
@@ -26,6 +26,12 @@ title: home
   <% component "panel", locals: { heading: "Writing", id: "writing" } do %>
     <div class="l-wrapper">
       <%= component "writing_feed", :locals => { :articles => blog("writing").articles[0...5] } %>
+
+      <% if blog("writing").articles.length > 5 %>
+        <div class="l-margin-top-wide l-padding-top-wide border-top t-centered">
+          <%= link_to "More writing &rsaquo;", "/writing.html", class: "button button--large" %>
+        </div>
+      <% end %>
     </div>
   <% end %>
 <% end %>
