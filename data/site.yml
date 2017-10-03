@@ -4,8 +4,10 @@ intro: "My name is Jay and I'm a designer, illustrator, and writer living near B
 
 bio_blurb: "Jay Perry is a designer, illustrator, and writer living near Baltimore. He likes books, old rusty cars, and forests."
 
-statuses:
-  - "And I could use another cup of tea."
+status: "And I could use another cup of tea."
+
+print_descriptions:
+  giclee: "<a href='https://en.wikipedia.org/wiki/Giclée'>'Giclee'</a> is a term for high-quality digital prints. Mine are printed at <a href='http://archivalarts.com'>Archival Arts</a> in Baltimore on heavy, textured, acid-free cotton rag paper, using archival, pigment-based inks. All prints are individually signed and numbered."
 
 social:
   - name: "Etsy"

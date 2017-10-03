@@ -27,18 +27,21 @@
       </div>
     <% end %>
 
-    <% component "panel" do %>
-      <!-- writeup -->
-      <div class="t-content l-wrapper">
-        <%= yield %>
+    <%# check if page has actual content before rendering the panel %>
+    <% unless yield.blank? %>
+      <% component "panel" do %>
+        <!-- writeup -->
+        <div class="t-content l-wrapper">
+          <%= yield %>
 
-        <!-- 'editions available on etsy' button -->
-        <% if current_page.data.edition_placeholder == true %>
-          <div class="t-centered l-margin-top-wide">
-              <a class="button button--large" href="https://www.etsy.com/shop/jayperry" target="_blank">Print editions available at <strong>Etsy</strong></a>
-          </div>
-        <% end %>
-      </div>
+          <!-- 'editions available on etsy' button -->
+          <% if current_page.data.edition_placeholder == true %>
+            <div class="t-centered l-margin-top-wide">
+                <a class="button button--large" href="https://www.etsy.com/shop/jayperry" target="_blank">Print editions available at <strong>Etsy</strong></a>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
 
     <!-- Editions -->
@@ -56,7 +59,7 @@
           <aside class="border-top l-margin-top-wide">
             <div class="l-wrapper l-wrapper--narrow t-centered">
               <h2 class="t-display t-scale-delta l-padding-top-wide l-padding-bottom-narrow">About Giclee prints</h2>
-              <p class="t-body-italic t-scale-epsilon c-text-tertiary">Printed at Archival Arts in Baltimore on heavy, textured, acid-free cotton rag paper, using archival pigment-based inks. Individually signed and numbered.</p>
+              <p class="t-body-italic t-scale-epsilon c-text-tertiary"><%= data.site.print_descriptions.giclee %></p>
             </div>
           </aside>
         </div>
