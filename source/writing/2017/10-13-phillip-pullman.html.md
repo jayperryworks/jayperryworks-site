@@ -3,6 +3,7 @@ title: An interview with Phillip Pullman in the New York Times
 tags:
   - writing
   - inspiration
+show_full: true
 ---
 
 [This interview piece in the Times](https://www.nytimes.com/2017/10/12/magazine/philip-pullman-returns-to-his-fantasy-world.html) is excellent. I’m a huge fan of the _Golden Compass/Northern Lights_ series and I was happy to find that Pullman himself seems like someone who’d be fun to get a cup of tea with.
