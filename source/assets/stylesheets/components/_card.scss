@@ -12,7 +12,8 @@ $card-grid--large: ms(7) ms(1);
 // Base
 // --------------------------------------------------------------------------
 
-.card {
+.card,
+[data-card] {
   display: block;
 }
 
@@ -20,22 +21,26 @@ $card-grid--large: ms(7) ms(1);
 // Elements
 // --------------------------------------------------------------------------
 
-.card-figure {
+.card-figure,
+[data-card-figure] {
   @include type-size-default;
   display: block;
   width: 100%;
 
-  .card-content + & {
+  .card-content + &,
+  [data-card-content] + & {
     @include rem(margin-top, gutter('wide'));
   }
 }
 
-.card-content {
+.card-content,
+[data-card-content] {
   @include type-size-default;
   display: block;
   width: 100%;
 
-  .card-figure + & {
+  .card-figure + &,
+  [data-card-figure] + & {
     @include rem(margin-top, gutter('wide'));
   }
 }
@@ -43,7 +48,8 @@ $card-grid--large: ms(7) ms(1);
 // Modifiers
 // --------------------------------------------------------------------------
 
-.card--multicolumn {
+.card--multicolumn,
+[data-card="multicolumn"] {
   font-size: 0;
 
   &:container("width >= 600px") {
@@ -53,7 +59,8 @@ $card-grid--large: ms(7) ms(1);
       align-items: flex-start;
     }
 
-    .card-figure {
+    .card-figure,
+    [data-card-figure] {
       @include column(1, $grid: $card-grid);
 
       @supports (display: flex) {
@@ -61,7 +68,8 @@ $card-grid--large: ms(7) ms(1);
       }
     }
 
-    .card-content {
+    .card-content,
+    [data-card-content] {
       @include column(2, $grid: $card-grid);
       margin-top: 0;
 
@@ -70,15 +78,18 @@ $card-grid--large: ms(7) ms(1);
       }
     }
 
-    .card-figure--large {
+    .card-figure--large,
+    [data-card-figure='large'] {
       @include column(1, $grid: $card-grid--large);
 
-      + .card-content {
+      + .card-content,
+      + [data-card-content] {
         @include column(2, $grid: $card-grid--large);
       }
     }
 
-    .card-figure--right {
+    .card-figure--right,
+    [data-card-figure='right'] {
       padding-right: 0;
       padding-left: gutter();
 
@@ -86,7 +97,8 @@ $card-grid--large: ms(7) ms(1);
         order: 1;
       }
 
-      + .card-content {
+      + .card-content,
+      + [data-card-content] {
         padding-right: gutter();
         padding-left: 0;
       }

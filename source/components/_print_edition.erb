@@ -7,10 +7,10 @@
 <%# edition - REQUIRED %>
 <% asset_path ||= current_page.url %>
 
-<figure class="card card--multicolumn" id="edition_<%= edition.name %>">
-  <%= image_tag asset_path + edition.image, :class => "card-figure card-figure--large", :alt => edition.name + " edition" %>
-  <figcaption class="card-content">
-    <h2 class="t-display t-scale-gamma c-text-tertiary"><strong class="c-text-primary t-display"><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
+<figure data-card="multicolumn" id="edition_<%= edition.name %>">
+  <%= image_tag asset_path + edition.image, data: { card_figure: "large" }, alt: edition.name + " edition" %>
+  <figcaption data-card-content>
+    <h2 class="t-scale-gamma c-text-tertiary"><strong class="c-text-primary t-display"><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
     <ul class="stat-list l-margin-top-narrow">
       <li class="stat-group">
         <span class="stat stat--label">Print Size</span>
@@ -28,6 +28,6 @@
       </li>
     </ul>
     <p class="t-caption l-margin-top-narrow"></p>
-    <a class="button l-margin-top" href="<%= edition.url %>" target="_blank">Buy on Etsy</a>
+    <%= link_to "Buy on Etsy", edition.url, data: { button: "primary" }, class: "l-margin-top", target: "_blank" %>
   </figcaption>
 </figure>

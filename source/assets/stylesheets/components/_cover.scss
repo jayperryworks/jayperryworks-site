@@ -9,7 +9,8 @@
 // Base
 // --------------------------------------------------------------------------
 
-.cover {
+.cover,
+[data-cover] {
   @include rem(margin, 0 auto);
   display: block;
   padding: 0 gutter('wide');
