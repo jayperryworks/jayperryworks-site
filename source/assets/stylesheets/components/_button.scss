@@ -1,16 +1,17 @@
-// =========================================================================
-//  Button module
-// =========================================================================
+// =============================================================================
+//  Button component
+// =============================================================================
 
 @import "../config/color";
 @import "../config/type";
 @import "../config/border";
 
 // Base
-// -------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 button,
-.button {
+.button,
+[data-button] {
   $color: 'text' 'primary';
   @include transition-default;
   @include font-accent;
@@ -47,18 +48,20 @@ button,
 
 
 // Modifiers
-// -------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // --- sizes ---------------------------------------------------------------
 // -> default size is "medium." add these classes to go bigger or smaller.
 
-.button--small {
+.button--small,
+[data-button~='small'] {
   @include scale-type('zeta');
   padding: 0.3em 0.8em;
   border-width: border-w('mid');
 }
 
-.button--large {
+.button--large,
+[data-button~='large'] {
   @include scale-type('epsilon');
   padding: 0.8em 1.6em;
 }
@@ -66,7 +69,21 @@ button,
 // --- prominence ----------------------------------------------------------
 // -> how obnoxious shall your button be?
 
-.button--secondary {
+.button--primary,
+[data-button~='primary'] {
+  color: theme('bg');
+  background-color: theme('text' 'primary');
+  border-color: theme('text' 'primary');
+
+  &:hover,
+  &:active {
+    background-color: darken(theme('text' 'primary'), 10);
+    border-color: darken(theme('text' 'primary'), 10);
+  }
+}
+
+.button--secondary,
+[data-button~='secondary'] {
   color: theme('text' 'tertiary');
   border-color: theme('text' 'tertiary');
 }
@@ -74,7 +91,8 @@ button,
 // --- special variations --------------------------------------------------
 // -> buttons of a strange and amazing nature
 
-.button--text {
+.button--text,
+[data-button~='text'] {
   @include font-accent('bold');
   @include scale-type('eta');
   @include color('text' 'primary');
@@ -91,11 +109,12 @@ button,
 }
 
 // Elements
-// -------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // price callout on a purchase button
 // -> use inside .button.purchase
-.button-price {
+.button-price,
+[data-button_price] {
   @include transition-default;
   display: inline-block;
   margin-right: 1em;

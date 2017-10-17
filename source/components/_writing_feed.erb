@@ -32,7 +32,7 @@
         <% end %>
         <div class="l-padding-top"><%= article.summary %></div>
         <% unless article.data.show_full %>
-          <%= link_to "Read more &rsaquo;", article.url, class: "button button--text l-margin-top" %>
+          <%= link_to "Read more &rsaquo;", article.url, data: { button: "text" }, class: "l-margin-top" %>
         <% end %>
       <% end %>
     </li>

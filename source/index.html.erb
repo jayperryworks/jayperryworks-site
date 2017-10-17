@@ -14,9 +14,9 @@ title: home
     <%= component "work_gallery", :locals => { :prints => blog("work").articles } %>
 
     <div class="t-centered l-margin-top-wide">
-      <a class="button button--large" href="https://www.etsy.com/shop/jayperry" target="_blank">
+      <% link_to "https://jayperry.etsy.com/", target: "_blank", data: { button: 'primary large' } do %>
         More prints available at <strong>Etsy</strong> &rsaquo;
-      </a>
+      <% end %>
     </div>
   </div>
 <% end %>
@@ -29,7 +29,7 @@ title: home
 
       <% if blog("writing").articles.length > 5 %>
         <div class="l-margin-top-wide l-padding-top-wide border-top t-centered">
-          <%= link_to "More writing &rsaquo;", "/writing.html", class: "button button--large" %>
+          <%= link_to "More writing &rsaquo;", "/writing.html", data: { button: 'primary large' } %>
         </div>
       <% end %>
     </div>
