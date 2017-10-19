@@ -64,7 +64,9 @@ activate :blog do |blog|
     blog.taglink = "tags/{tag}.html"
     blog.summary_length = nil
     blog.summary_separator = config[:blog_summary_separator]
-    blog.layout = "blog"
+    blog.layout = "blog_post"
+    blog.paginate = true
+    blog.per_page = 20
 end
 
 activate :directory_indexes
@@ -199,4 +201,10 @@ configure :build do
 
     # Or use a different image path
     # set :http_prefix, "/Content/images/"
+end
+
+# Copy the server config files in /public after build
+# Cheers to Makzan for posting this. https://www.makzan.net/2015/09/configure-files-to-copy-without-middleman-building-process/
+after_build do |builder|
+  FileUtils.cp_r 'public/.', 'build'
 end

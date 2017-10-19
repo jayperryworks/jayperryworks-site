@@ -15,15 +15,15 @@
 <footer class="main_footer" role="contentinfo">
   <div class="l-wrapper">
     <% unless show_bio == false %>
-      <figure class="card card--multicolumn l-margin-bottom-wide l-padding-bottom border-bottom">
-        <div class="card-figure t-centered">
+      <figure data-card="multicolumn" class="l-margin-bottom-wide l-padding-bottom border-bottom">
+        <div data-card-figure class="t-centered">
           <div style="display: inline-block; max-width: 200px;">
             <%= image_tag "portrait.jpg", alt: data.site.title %>
           </div>
         </div>
-        <figcaption class="card-content">
+        <figcaption data-card-content>
           <p class="t-body"><%= data.site.bio_blurb %></p>
-          <%= link_to "More about Jay &rsaquo;", "/about", class: "button button--text l-margin-top-narrow" %>
+          <%= link_to "More about Jay &rsaquo;", "/about", data: { button: "text" }, class: "l-margin-top-narrow" %>
           <dl class="tag-group l-margin-top l-padding-top border-top border--secondary">
             <dt class="t-accent-bold t-caps t-scale-eta t-leading-tight l-margin-bottom-narrow">Say hi</dt>
             <% data.site.social.each do |site| %>
