@@ -102,13 +102,11 @@ a {
   }
 }
 
-strong,
-.t-strong {
+strong {
   @include font-body(bold);
 }
 
-em,
-.t-em {
+em {
   @include font-body(normal, italic);
 }
 
@@ -179,7 +177,7 @@ h6,
 
 // --- type styles -------------------------------------------------------------
 .t-display {
-  @include font-display;
+  @include font-display($important: true);
 
   &.t-scale-alpha {
     letter-spacing: -0.01em;
@@ -187,23 +185,23 @@ h6,
 }
 
 .t-accent {
-  @include font-accent;
+  @include font-accent($important: true);
 }
 .t-accent-light {
-  @include font-accent('light');
+  @include font-accent('light', $important: true);
 }
 .t-accent-bold {
-  @include font-accent('bold');
+  @include font-accent('bold', $important: true);
 }
 
 .t-body {
-  @include font-body;
+  @include font-body($important: true);
 }
 .t-body-bold {
-  @include font-body('bold');
+  @include font-body('bold', $important: true);
 }
 .t-body-italic {
-  @include font-body($style: 'italic');
+  @include font-body($style: 'italic', $important: true);
 }
 
 .t-caps {
@@ -290,13 +288,13 @@ h6,
 }
 
 // --- position text -----------------------------------------------------------
-.t-centered {
+@include breakpointify(".t-centered", true) {
   text-align: center;
 }
-.t-left {
+@include breakpointify(".t-left", true) {
   text-align: left;
 }
-.t-right {
+@include breakpointify(".t-right", true) {
   text-align: right;
 }
 

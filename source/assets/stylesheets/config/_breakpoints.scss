@@ -20,8 +20,7 @@ $breakpoints: (
 
 // getter/helper function to pull breakpoints from the map
 @function screen($size) {
-    @return map-get($breakpoints, $size);
-    // @debug map-get($breakpoints, $size);
+  @return map-get($breakpoints, $size);
 }
 
 // Breakpointify mixin by Hugo Giraudel, lightly modified
@@ -30,21 +29,21 @@ $breakpoints: (
 // -> to make it effective starting certain breakpoints.
 // -> @param {String} $class - Class to “breakpointify”
 @mixin breakpointify($class, $default: false, $sizes: all, $direction: '>') {
-    @if $default == true {
-       #{$class} { @content; }
-    }
+  @if $default == true {
+   #{$class} { @content; }
+  }
 
-    @if $sizes == 'all' {
-        @each $name, $size in $breakpoints {
-            @include media("#{$direction}#{$name}") {
-               #{$class}\@#{$name} { @content; }
-            }
-        }
-    } @else {
-        @each $name in $sizes {
-            @include media("#{$direction}#{$name}") {
-               #{$class}\@#{$name} { @content; }
-            }
-        }
+  @if $sizes == 'all' {
+    @each $name, $size in $breakpoints {
+      @include media("#{$direction}#{$name}") {
+        #{$class}\@#{$name} { @content; }
+      }
     }
+  } @else {
+    @each $name in $sizes {
+      @include media("#{$direction}#{$name}") {
+        #{$class}\@#{$name} { @content; }
+      }
+    }
+  }
 }

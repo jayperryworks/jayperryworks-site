@@ -17,6 +17,16 @@
   display: block;
 }
 
+@include breakpointify(".l-display-flex", true) {
+  // @supports (display: flex) {
+    display: flex !important;
+  // }
+}
+
+.l-flex-fill {
+  flex: 1;
+}
+
 // center inline and inline-block elements
 .l-centered {
   text-align: center;
