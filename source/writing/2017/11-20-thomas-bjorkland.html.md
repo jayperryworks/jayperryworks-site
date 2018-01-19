@@ -1,5 +1,6 @@
 ---
 title: Thom Björkland’s beautiful illustration
+show_full: true
 tags:
   - painting
   - illustration

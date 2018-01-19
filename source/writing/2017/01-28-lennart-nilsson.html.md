@@ -1,6 +1,7 @@
 ---
 titile: Lennart Nilsson
 subtitle: 1922, 2017
+show_full: true
 tags:
   - photography
   - inspiration

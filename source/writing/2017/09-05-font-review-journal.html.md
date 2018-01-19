@@ -1,5 +1,6 @@
 ---
 title: Font review journal
+show_full: true
 tags:
   - typography
   - inspiration

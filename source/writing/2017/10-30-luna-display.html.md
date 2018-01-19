@@ -1,8 +1,10 @@
 ---
 title: Luna Display from Astropad
+show_full: true
 tags:
   - gear
   - process
+
 ---
 
 I’m excited about this: “[Luna Display](http://blog.astropad.com/using-luna/)” is a new hardware piece from Astropad, allowing you to use your iPad as a Cintiq-like second display with a Mac.
