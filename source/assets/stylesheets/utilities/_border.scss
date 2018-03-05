@@ -9,7 +9,7 @@
 
 // .border, .border@[screen]
 @include breakpointify(".border", true) {
-  @include border;
+  @include border();
 }
 
 // .no-border, .no-border@[screen]
