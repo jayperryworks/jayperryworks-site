@@ -9,7 +9,7 @@
 
 // .border, .border@[screen]
 @include breakpointify(".border", true) {
-  @include border;
+  @include border($important: true);
 }
 
 // .no-border, .no-border@[screen]
@@ -23,7 +23,7 @@
 
   // .no-border-[side], .no-border-[side]@[screen]
   @include breakpointify(".border-#{$side}", true) {
-    @include border($side);
+    @include border($side, $important: true);
   }
 }
 
