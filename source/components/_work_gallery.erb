@@ -22,7 +22,7 @@
       <li class="l-gallery-item" <% if tags == true %>data-year="<%= print.date.strftime('%Y') %><% if print.data.tags.present? %>" data-tags="<% print.data.tags.each_with_index do |tag, index| %><%= tag.urlize %><% unless index == (print.data.tags.length - 1) %> <% end %><% end %>"<% end %><% end %>>
           <% link_to print, class: "t-link-undecorated" do %>
             <% img_filename = print.data.thumb.present? ? print.data.thumb : print.data.cover %>
-            <%= image_tag print.url + img_filename, :alt => print.data.title, :class => "l-constrained-content" %>
+            <%= image_tag print.url + img_filename, :alt => print.data.title, :class => "border" %>
           <% end %>
       </li>
     <% end %>
