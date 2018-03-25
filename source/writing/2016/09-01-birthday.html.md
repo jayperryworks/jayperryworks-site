@@ -1,6 +1,6 @@
 ---
 title: Happy birthday
-Subtitle: A one-act play
+subtitle: A one-act play
 tags:
   - random
   - life
