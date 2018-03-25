@@ -8,7 +8,7 @@ tags:
 show_full: true
 ---
 
-Designer Tobias Van Schneider posted a [really interesting post-mortem reflection on his ".Mail" email client project](http://www.vanschneider.com/story-dotmail).
+Designer Tobias van Schneider posted a [really interesting post-mortem reflection on his ".Mail" email client project](http://www.vanschneider.com/story-dotmail).
 
 I remember seeing his concepts for the app back in 2010 or so, and they were really brilliant. You can see a lot of ideas in there that have become standard in modern email clients: swiping for actions, simplified account sidebar, avatars/social integration, and lovely minimalist type treatments. His case study/pitch was the first place I’d seen them; I can’t say for sure he invented those UI patterns, but they certainly weren’t common before. As a product it may have failed to launch, but as a piece of UI design it was really influential.
 
