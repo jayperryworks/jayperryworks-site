@@ -75,7 +75,7 @@ page "404.html", :directory_index => false
 set :markdown_engine, :kramdown
 
 # Use relative URLs
-activate :relative_assets
+# activate :relative_assets
 
 # Enable cache buster
 # activate :asset_hash
