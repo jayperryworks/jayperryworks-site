@@ -1,0 +1,11 @@
+---
+title: Nightshift by Florian Mueller
+image: FlorianMueller_06_630-0.jpg
+show_full: true
+tags:
+  - inspiration
+  - photography
+  - travel
+---
+
+I love this photo series [documenting Shanghai’s late-night food stalls](https://www.thisiscolossal.com/2018/11/nightshift-by-florian-mueller/) from [Florian Mueller](https://www.florianwmueller.com/). Although I can imagine these streets are busy and full of noise -- horns, bikes, passing trucks, talking -- there's a wonderful sense of peace to these images. Each stall is framed by darkness, the owner quietly attending in the shadows; each feels almost like a side chapel in a shadowy (skyscraper-filled) cathedral.
