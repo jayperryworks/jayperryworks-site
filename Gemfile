@@ -9,13 +9,13 @@ gem 'wdm', '~> 0.1.0', platforms: [:mswin, :mingw]
 gem 'tzinfo-data', platforms: [:mswin, :mingw, :jruby]
 
 # Middleman Gems
-gem "middleman", "~>4.0"
+gem "middleman", ">= 4.0"
 gem 'middleman-livereload'
 
 # Middleman extensions
 gem "middleman-minify-html"
 gem "middleman-google-analytics"
-# gem "middleman-autoprefixer"
+gem "middleman-autoprefixer"
 # gem "middleman-search_engine_sitemap"
 # gem "middleman-imageoptim"
 gem "middleman-blog"
@@ -26,7 +26,7 @@ gem "nokogiri", ">= 1.8.2"
 gem "kramdown"
 
 # Use LibSass instead of RubySass
-# gem "sassc"
+gem "sassc"
 
 # URL-ize strings
 gem "string-urlize"
