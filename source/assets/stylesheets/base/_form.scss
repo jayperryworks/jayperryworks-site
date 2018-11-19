@@ -9,7 +9,9 @@
 // -----------------------------------------------------------------------------
 
 .form,
-form { @include font-body; }
+form {
+  @include font-body;
+}
 
 .form-fieldset,
 fieldset {}
