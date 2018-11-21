@@ -12,7 +12,6 @@
   },
   "scripts": {
     "start": "yarn run build && parallelshell 'yarn run javascripts:watch' 'yarn run styles:watch'",
-    "modernizr": "cd $npm_package_config_js_src/vendor && modernizr -c modernizr.config.json",
     "postmodernizr": "yarn run javascripts:build",
     "javascripts:build": "webpack -p --bail --",
     "javascripts:watch": "webpack --watch -d --",
