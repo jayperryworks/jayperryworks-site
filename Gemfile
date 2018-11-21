@@ -12,6 +12,7 @@ gem "middleman-autoprefixer"
 # gem "middleman-imageoptim"
 gem "middleman-blog"
 
+# For blog post summaries
 gem "nokogiri", ">= 1.8.2"
 
 # Use LibSass instead of RubySass
