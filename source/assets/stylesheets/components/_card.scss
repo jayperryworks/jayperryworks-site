@@ -52,56 +52,56 @@ $card-grid--large: ms(7) ms(1);
 [data-card="multicolumn"] {
   font-size: 0;
 
-  &:container("width >= 600px") {
+  // &:container("width >= 600px") {
 
-    @supports (display: flex) {
-      display: flex;
-      align-items: flex-start;
-    }
+  //   @supports (display: flex) {
+  //     display: flex;
+  //     align-items: flex-start;
+  //   }
 
-    .card-figure,
-    [data-card-figure] {
-      @include column(1, $grid: $card-grid);
+  //   .card-figure,
+  //   [data-card-figure] {
+  //     @include column(1, $grid: $card-grid);
 
-      @supports (display: flex) {
-        order: -1;
-      }
-    }
+  //     @supports (display: flex) {
+  //       order: -1;
+  //     }
+  //   }
 
-    .card-content,
-    [data-card-content] {
-      @include column(2, $grid: $card-grid);
-      margin-top: 0;
+  //   .card-content,
+  //   [data-card-content] {
+  //     @include column(2, $grid: $card-grid);
+  //     margin-top: 0;
 
-      @supports (display: flex) {
-        order: 0;
-      }
-    }
+  //     @supports (display: flex) {
+  //       order: 0;
+  //     }
+  //   }
 
-    .card-figure--large,
-    [data-card-figure='large'] {
-      @include column(1, $grid: $card-grid--large);
+  //   .card-figure--large,
+  //   [data-card-figure='large'] {
+  //     @include column(1, $grid: $card-grid--large);
 
-      + .card-content,
-      + [data-card-content] {
-        @include column(2, $grid: $card-grid--large);
-      }
-    }
+  //     + .card-content,
+  //     + [data-card-content] {
+  //       @include column(2, $grid: $card-grid--large);
+  //     }
+  //   }
 
-    .card-figure--right,
-    [data-card-figure='right'] {
-      padding-right: 0;
-      padding-left: gutter();
+  //   .card-figure--right,
+  //   [data-card-figure='right'] {
+  //     padding-right: 0;
+  //     padding-left: gutter();
 
-      @supports (display: flex) {
-        order: 1;
-      }
+  //     @supports (display: flex) {
+  //       order: 1;
+  //     }
 
-      + .card-content,
-      + [data-card-content] {
-        padding-right: gutter();
-        padding-left: 0;
-      }
-    }
-  }
+  //     + .card-content,
+  //     + [data-card-content] {
+  //       padding-right: gutter();
+  //       padding-left: 0;
+  //     }
+  //   }
+  // }
 }

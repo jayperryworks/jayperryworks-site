@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<!--[if lte IE 9]><html class="no-js ie ie-old" lang="en-US"><![endif]-->
-<!--[if gt IE 9]><html class="no-js ie ie-9" lang="en-US"><![endif]-->
-<html class="no-js no-ie" lang="en">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <!-- Use title if it's in the page YAML frontmatter -->
+    <%# Use title if it's in the page YAML frontmatter %>
     <title><%= data.site.site_title %><% if current_page.data.title.present? && current_page.data.title != "home" %> | <%= current_page.data.title %><% end %></title>
 
     <meta name="description" content="">

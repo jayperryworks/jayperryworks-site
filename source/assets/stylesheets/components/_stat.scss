@@ -7,7 +7,7 @@
 @import "../config/color";
 
 // Base
-// -------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------
 
 .stat {
   @include font-accent;
@@ -19,7 +19,7 @@
 
 
 // Elements
-// -------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------
 
 // a small group of stats, like a stat-label pair
 .stat-group {
@@ -27,13 +27,13 @@
 
   .stat { display: block; }
 
-  &:container("width >= 150px") {
-    .stat {
-      display: inline-block;
-    }
+  // &:container("width >= 150px") {
+  //   .stat {
+  //     display: inline-block;
+  //   }
 
-    .stat--label:after { content: ":"; }
-  }
+  //   .stat--label:after { content: ":"; }
+  // }
 }
 
 // a list of stats
@@ -41,27 +41,27 @@
   margin-left: 0;
   list-style: none;
 
-  &:container("width >= 300px") {
-    font-size: 0;
+  // &:container("width >= 300px") {
+  //   font-size: 0;
 
-    .stat-group {
-      @include type-size-default;
-      display: inline-block;
-      // width: (100%/4);
-      padding-right: 1.5em;
-    }
+  //   .stat-group {
+  //     @include type-size-default;
+  //     display: inline-block;
+  //     // width: (100%/4);
+  //     padding-right: 1.5em;
+  //   }
 
-    .stat {
-      display: block;
+  //   .stat {
+  //     display: block;
 
-      &:after { content: none; }
-    }
-  }
+  //     &:after { content: none; }
+  //   }
+  // }
 }
 
 
 // Modifiers
-// -------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------
 
 .stat--label {
   @include color('text' 'tertiary');

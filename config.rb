@@ -78,11 +78,6 @@ config[:markdown_engine] = :kramdown
 # Enable cache buster
 # activate :asset_hash
 
-# autoprefix CSS
-activate :autoprefixer do |config|
-  config.browsers = ['last 2 versions', 'Explorer >= 9']
-end
-
 activate :google_analytics do |ga|
     ga.tracking_id = 'UA-51213824-1' # Replace with your property ID.
 end
@@ -180,9 +175,12 @@ configure :build do
     # Enable cache buster
     # activate :asset_hash
 
-    activate :minify_html
+    # autoprefix CSS
+    activate :autoprefixer do |config|
+      config.browsers = ['last 2 versions', 'Explorer >= 9']
+    end
 
-    # For example, change the Compass output style for deployment
+    activate :minify_html
     activate :minify_css
 
     # "Ignore" JS so webpack has full control.

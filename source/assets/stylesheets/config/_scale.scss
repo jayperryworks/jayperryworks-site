@@ -2,17 +2,6 @@
 //  Type & layout scale
 // ========================================================================== */
 
-/*doc
----
-title: Scale
-name: scale
-category: Core
----
-
-A single, modular scale is used for the entire site: not only type scaling but also spacing and relative proportions throughout the layout.
-
-*/
-
 @import "libs";
 
 // Config & mixins
@@ -51,5 +40,5 @@ $scale-type: (
 $ms-base: 16px;
 $ms-ratio: $scale-global;
 
-@debug $ms-ratio;
-@debug ms-list(1, 10, $ms-base, $ms-ratio);
+// @debug $ms-ratio;
+// @debug ms-list(1, 10, $ms-base, $ms-ratio);

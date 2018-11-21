@@ -89,17 +89,16 @@ $gallery-breaks: 300px, 600px, 1200px;
 
     .l-gallery--small & { width: 50%; }
 
-    @for $i from 1 through length($gallery-breaks) {
-      .l-gallery:container("width >= #{nth($gallery-breaks, $i)}") & {
-        width: (100%/($i + 1));
-      }
+    // @for $i from 1 through length($gallery-breaks) {
+    //   .l-gallery:container("width >= #{nth($gallery-breaks, $i)}") & {
+    //     width: (100%/($i + 1));
+    //   }
 
-      .l-gallery--small:container("width >= #{nth($gallery-breaks, $i)}") & {
-        width: (100%/($i + 2));
-      }
-      .l-gallery--large:container("width >= #{nth($gallery-breaks, $i)}") & {
-        width: (100%/$i);
-      }
-
-    }
+    //   .l-gallery--small:container("width >= #{nth($gallery-breaks, $i)}") & {
+    //     width: (100%/($i + 2));
+    //   }
+    //   .l-gallery--large:container("width >= #{nth($gallery-breaks, $i)}") & {
+    //     width: (100%/$i);
+    //   }
+    // }
 }
