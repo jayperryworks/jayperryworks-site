@@ -6,57 +6,56 @@
  */
 
 // install via yarn
-@import "normalize-css/normalize.css";
+@import 'normalize-css/normalize';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Layout
 // -> global utility classes for basic layout
 ////////////////////////////////////////////////////////////////////////////////
 
-@import "layout/positioning";
-@import "layout/spacing";
-@import "layout/grid";
-@import "layout/gallery";
-@import "layout/feed";
-@import "layout/wrapper";
-@import "layout/visibility";
+@import 'layout/positioning';
+@import 'layout/spacing';
+@import 'layout/grid';
+@import 'layout/gallery';
+@import 'layout/feed';
+@import 'layout/wrapper';
+@import 'layout/visibility';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Base
 // -> global default element styles & utilities
 ////////////////////////////////////////////////////////////////////////////////
 
-@import "base/body";
-@import "base/type";
-@import "base/list";
-@import "base/form";
-@import "base/media";
-@import "base/table";
+@import 'base/body';
+@import 'base/type';
+@import 'base/list';
+@import 'base/form';
+@import 'base/media';
+@import 'base/table';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Utilities
 ////////////////////////////////////////////////////////////////////////////////
 
-@import "utilities/border";
-@import "utilities/color";
+@import 'utilities/border';
+@import 'utilities/color';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Components
 // -> reusable, composable, self-contained interface elements
 ////////////////////////////////////////////////////////////////////////////////
 
-@import "components/button";
-@import "components/logo";
-// @import "components/icon"; // not using any icons yet
-@import "components/tag";
-@import "components/stat";
-@import "components/card";
-@import "components/cover";
-@import "components/main_footer";
+@import 'components/button';
+@import 'components/logo';
+// @import 'components/icon'; // not using any icons yet
+@import 'components/tag';
+@import 'components/stat';
+@import 'components/card';
+@import 'components/cover';
+@import 'components/main_footer';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Styles of Shame
 // -> put quick and dirty hacks here, then clean up & organize later
 ////////////////////////////////////////////////////////////////////////////////
-
 

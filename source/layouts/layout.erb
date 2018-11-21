@@ -12,26 +12,10 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- favicon stuff -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#474747">
-    <meta name="theme-color" content="#ffffff">
+    <%= component "favicon" %>
 
-    <%= stylesheet_link_tag build? ? "main.min.css" : "main.css" %>
+    <%= stylesheet_link_tag :main %>
     <%= javascript_include_tag "javascripts/critical.bundle" %>
-
-    <script type="text/javascript">
-      // Test for IE 11 support
-      if(!(window.ActiveXObject) && "ActiveXObject" in window){
-        var htmlClass = document.querySelector('html').classList;
-        htmlClass.remove('no-ie');
-        htmlClass.add('ie');
-        htmlClass.add('ie-11');
-      }
-    </script>
   </head>
 
   <body>
@@ -43,7 +27,7 @@
       show_bio: current_page.data.title == "home" || current_page.data.hide_bio == true ? false : true
     } %>
 
-    <%= javascript_include_tag "javascripts/main.bundle" %>
-    <%= google_analytics_universal_tag %>
+    <%#= javascript_include_tag "javascripts/main.bundle" %>
+    <%= google_analytics_tag %>
   </body>
 </html>

@@ -4,28 +4,15 @@
   "description": "Jay Perry's website",
   "main": "index.html",
   "config": {
-    "css_src": "source/assets/stylesheets",
-    "css_bundle": ".tmp/dist/stylesheets",
     "js_src": "source/assets/javascripts",
     "icons_src": "./source/assets/images/icons/_sprites",
     "icons_dest": "./source/layouts/partials"
   },
   "scripts": {
-    "start": "yarn run build && parallelshell 'yarn run javascripts:watch' 'yarn run styles:watch'",
-    "postmodernizr": "yarn run javascripts:build",
-    "javascripts:build": "webpack -p --bail --",
-    "javascripts:watch": "webpack --watch -d --",
-    "styles": "node-sass --include-path node_modules --importer ./node_modules/node-sass-import-once/index.js --output $npm_package_config_css_bundle $npm_package_config_css_src",
-    "styles:cq": "postcss --use cq-prolyfill/postcss-plugin -r $npm_package_config_css_bundle/*.css",
-    "styles:autoprefixer": "postcss --use autoprefixer --autoprefixer.browsers '> 5%, ie >= 8' -r $npm_package_config_css_bundle/*.css",
-    "styles:compress": "uglifycss $npm_package_config_css_bundle/main.css > $npm_package_config_css_bundle/main.min.css",
-    "styles:build": "yarn run styles && yarn run styles:cq && yarn run styles:autoprefixer && yarn run styles:compress",
-    "styles:watch": "watch 'yarn run styles && yarn run styles:cq' $npm_package_config_css_src",
-    "icons": "svg-sprite --symbol --symbol-dest $npm_package_config_icons_dest --symbol-sprite 'spritemap.inc' --symbol-inline --symbol-prefix 'icon-%s' $npm_package_config_icons_src/**/*.svg",
-    "middleman": "bundle exec middleman build --",
-    "predeploy": "yarn run middleman",
-    "deploy": "git-directory-deploy --directory build --branch master",
-    "build": "yarn run styles:build && yarn run javascripts:build"
+    "start": "yarn build && yarn watch",
+    "watch": "webpack --watch -d --",
+    "build": "webpack -p --bail --",
+    "icons": "svg-sprite --symbol --symbol-dest $npm_package_config_icons_dest --symbol-sprite 'spritemap.inc' --symbol-inline --symbol-prefix 'icon-%s' $npm_package_config_icons_src/**/*.svg"
   },
   "repository": {
     "type": "git",
@@ -34,34 +21,25 @@
   "author": "Jay Perry Works",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jayperryworks/jayperryworks.github.io/issues"
+    "url": "https://github.com/jayperryworks/jayperryworks-site/issues"
   },
-  "homepage": "http://jayperryworks.com",
+  "homepage": "https://jayperry.works",
   "devDependencies": {
-    "autoprefixer": "^6.3.3",
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "clean-webpack-plugin": "^0.1.6",
     "git-directory-deploy": "^1.3.0",
-    "node-sass": "^3.7.0",
-    "node-sass-import-once": "^1.2.0",
-    "parallelshell": "^2.0.0",
-    "postcss-cli": "^2.5.1",
     "svg-sprite": "^1.3.1",
     "svgo": "^0.6.6",
-    "uglifycss": "0.0.20",
-    "watch": "^0.19.1",
     "webpack": "^1.12.10"
   },
   "dependencies": {
     "bourbon": "^4.2.6",
-    "cq-prolyfill": "^0.3.2",
     "include-media": "^1.4.1",
     "modularscale-sass": "^2.1.1",
     "normalize-css": "^2.3.1",
-    "picturefill": "^3.0.1",
-    "sass-module-importer": "^1.4.0"
+    "picturefill": "^3.0.1"
   }
 }

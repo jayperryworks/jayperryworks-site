@@ -1,7 +1,3 @@
-# CSV libs - http://www.ict4g.net/adolfo/notes/2015/05/30/csv_data_in_middleman.html
-# require 'lib/csv_helpers.rb'
-# activate :csv_helpers
-
 ###
 # Page options, layouts, aliases and proxies
 ###
@@ -29,16 +25,17 @@ page '/*.txt', layout: false
 ###
 
 config[:images_dir] = 'assets/images'
-config[:css_dir] = 'stylesheets'
-config[:js_dir] = 'javascripts'
+config[:fonts_dir] = 'assets/fonts'
+config[:css_dir] = 'assets/stylesheets'
 
-# ignore css and js, b/c we're handling with external pipeline
-ignore 'assets/stylesheets/*'
+config[:sass_assets_paths] = ['node_modules']
+
+# ignore js, b/c we're handling with external pipeline
 ignore 'assets/javascripts/*'
 
 activate :external_pipeline,
     name: :npm,
-    command: build? ? 'yarn run build' : 'yarn run start',
+    command: build? ? 'yarn build' : 'yarn start',
     source: ".tmp/dist",
     latency: 1
 
@@ -72,7 +69,8 @@ end
 activate :directory_indexes
 page "404.html", :directory_index => false
 
-set :markdown_engine, :kramdown
+# explicitly set the markdown engine to Kramdown
+config[:markdown_engine] = :kramdown
 
 # Use relative URLs
 # activate :relative_assets
@@ -81,9 +79,9 @@ set :markdown_engine, :kramdown
 # activate :asset_hash
 
 # autoprefix CSS
-# activate :autoprefixer do |config|
-#     config.browsers = ['last 2 versions', 'Explorer >= 8']
-# end
+activate :autoprefixer do |config|
+  config.browsers = ['last 2 versions', 'Explorer >= 9']
+end
 
 activate :google_analytics do |ga|
     ga.tracking_id = 'UA-51213824-1' # Replace with your property ID.
@@ -185,7 +183,7 @@ configure :build do
     activate :minify_html
 
     # For example, change the Compass output style for deployment
-    # activate :minify_css
+    activate :minify_css
 
     # "Ignore" JS so webpack has full control.
     # ignore { |path| path =~ /\/(.*)\.js$/ && $1 != 'all' }
