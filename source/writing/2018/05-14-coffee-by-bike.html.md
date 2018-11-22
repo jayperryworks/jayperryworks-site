@@ -1,5 +1,6 @@
 ---
 title: Coffee by bike
+show_full: true
 tags:
   - random
   - bikes
