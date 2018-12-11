@@ -17,8 +17,8 @@
 %>
 
 <ul class="list-undecorated l-no-padding-left<%= ' #{classes}' if classes %>">
-  <% articles.each do |article| %>
-    <li class="l-display-block l-padding-top-xwide l-margin-top-xwide border-top">
+  <% articles.each_with_index do |article, index| %>
+    <li class="l-display-block l-padding-top-xwide<%= ' l-margin-top-xwide' unless index === 0 %> border-top">
       <% component "card", locals: {
         link: article.url,
         figure: article.data.image.present? ? article.url + article.data.image : false
