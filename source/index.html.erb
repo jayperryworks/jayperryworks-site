@@ -11,7 +11,7 @@ title: home
 
 <!-- Work section -->
 <% component "panel", locals: { heading: "Recent work", id: "work" } do %>
-  <div class="l-wrapper l-wrapper--wide l-margin-top-wide">
+  <div class="l-wrapper l-wrapper--wide">
     <%= component "work_gallery", :locals => { :prints => blog("work").articles } %>
 
     <div class="t-centered l-margin-top-wide">

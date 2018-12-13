@@ -93,6 +93,7 @@ end
 ###
 
 # Methods defined in the helpers block are available in templates
+# rubocop:disable Metrics/BlockLength
 helpers do
 
   # check to see if a highlight color is one of the defaults listed in colors.yml
@@ -114,7 +115,62 @@ helpers do
   # "Component" decorator for partial function
   # -> just used to point automatically to "components" dir so you don't have to type the full path
   def component(name, opts = {}, &block)
-      partial("components/#{name}", opts, &block)
+    partial("components/#{name}", opts, &block)
+  end
+
+  def class_list(classes)
+    list = classes.is_a?(String) ? classes : classes.join(' ')
+    return " class='#{list}'" unless classes.empty?
+  end
+
+  def props_list(props)
+    list = props.is_a?(String) ? props : props.join(' ')
+    return "='#{list}'" unless props.empty?
+  end
+
+  # figure out the utility padding classes to use
+  # arguments:
+  # STRING/HASH values (required): size of padding
+  # -> Pass in a string to apply the same padding to all sides, e.g. 'wide'
+  # -> Pass in a hash to apply padding to each side, e.g. { top: 'narrow' }.
+  #    Any sides you leave out will have no padding.
+  # rubocop:disable Metrics/MethodLength
+  # -> we need all this logic in this method, doesn't make sense to split it up
+  def padding_classes(values)
+    if values.is_a?(String)
+      case values
+      when 'none'
+        'no-padding'
+      when 'medium'
+        'padding'
+      else
+        "padding-#{values}"
+      end
+    else
+      values.collect do |side, width|
+        case width
+        when 'none'
+          "no-padding-#{side}"
+        when 'medium'
+          "padding-#{side}"
+        else
+          "padding-#{side}-#{width}"
+        end
+      end.join(' ')
+    end
+  end
+  # rubocop:enable Metrics/MethodLength
+
+  # figure out the utility border classes to use
+  # arguments:
+  # ARRAY list (required): a list of the sides that should get borders
+  def border_classes(sides)
+    if sides.is_a?(String)
+      return 'border' if sides == 'all'
+      "border-#{sides}"
+    else
+      sides.collect { |side| "border-#{side}" }.join(' ')
+    end
   end
 
   # build an array of the posts from a given blog
