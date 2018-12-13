@@ -1,11 +1,18 @@
-<%# --- Dependencies --- %>
-<%# core/all.scss %>
-<%# compoennts/card.scss %>
-<%# components/feed.scss %>
+<%#
+  Print edition component
+  -> a listing for a print edition, e.g. 'large print of waterfall painting'
 
-<%# --- Locals --- %>
-<%# edition - REQUIRED %>
-<% asset_path ||= current_page.url %>
+  Locals:
+  OBJECT edition: the edition content
+  STRING asset_path (optional): path to image
+
+  Styles:
+  components/card
+  components/feed
+%>
+<%
+  asset_path ||= current_page.url
+%>
 
 <figure data-card="multicolumn" id="edition_<%= edition.name %>">
   <%= image_tag asset_path + edition.image, data: { card_figure: "large" }, alt: edition.name + " edition" %>

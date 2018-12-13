@@ -12,8 +12,7 @@ $card-grid--large: ms(7) ms(1);
 // Base
 // --------------------------------------------------------------------------
 
-.card,
-[data-card] {
+[data-ui-card] {
   display: block;
 }
 
@@ -21,26 +20,22 @@ $card-grid--large: ms(7) ms(1);
 // Elements
 // --------------------------------------------------------------------------
 
-.card-figure,
-[data-card-figure] {
+[data-ui-card-figure] {
   @include type-size-default;
   display: block;
   width: 100%;
 
-  .card-content + &,
-  [data-card-content] + & {
+  [data-ui-card-content] + & {
     @include rem(margin-top, gutter('wide'));
   }
 }
 
-.card-content,
-[data-card-content] {
+[data-ui-card-content] {
   @include type-size-default;
   display: block;
   width: 100%;
 
-  .card-figure + &,
-  [data-card-figure] + & {
+  [data-ui-card-figure] + & {
     @include rem(margin-top, gutter('wide'));
   }
 }
@@ -48,8 +43,7 @@ $card-grid--large: ms(7) ms(1);
 // Modifiers
 // --------------------------------------------------------------------------
 
-.card--multicolumn,
-[data-card="multicolumn"] {
+[data-ui-card="multicolumn"] {
   font-size: 0;
 
   // &:container("width >= 600px") {
@@ -60,7 +54,7 @@ $card-grid--large: ms(7) ms(1);
   //   }
 
   //   .card-figure,
-  //   [data-card-figure] {
+  //   [data-ui-card-figure] {
   //     @include column(1, $grid: $card-grid);
 
   //     @supports (display: flex) {
@@ -69,7 +63,7 @@ $card-grid--large: ms(7) ms(1);
   //   }
 
   //   .card-content,
-  //   [data-card-content] {
+  //   [data-ui-card-content] {
   //     @include column(2, $grid: $card-grid);
   //     margin-top: 0;
 
@@ -79,17 +73,17 @@ $card-grid--large: ms(7) ms(1);
   //   }
 
   //   .card-figure--large,
-  //   [data-card-figure='large'] {
+  //   [data-ui-card-figure='large'] {
   //     @include column(1, $grid: $card-grid--large);
 
   //     + .card-content,
-  //     + [data-card-content] {
+  //     + [data-ui-card-content] {
   //       @include column(2, $grid: $card-grid--large);
   //     }
   //   }
 
   //   .card-figure--right,
-  //   [data-card-figure='right'] {
+  //   [data-ui-card-figure='right'] {
   //     padding-right: 0;
   //     padding-left: gutter();
 
@@ -98,7 +92,7 @@ $card-grid--large: ms(7) ms(1);
   //     }
 
   //     + .card-content,
-  //     + [data-card-content] {
+  //     + [data-ui-card-content] {
   //       padding-right: gutter();
   //       padding-left: 0;
   //     }
