@@ -9,12 +9,15 @@
 // Base
 // --------------------------------------------------------------------------
 
-.stat {
-  @include font-accent;
-  @include scale-type('zeta');
-  @include color('text' 'secondary');
-  display: inline-block;
-  vertical-align: baseline;
+[data-ui-stats] {
+  margin-left: 0;
+  list-style: none;
+
+  @supports (display: flex) {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
 }
 
 
@@ -22,47 +25,45 @@
 // --------------------------------------------------------------------------
 
 // a small group of stats, like a stat-label pair
-.stat-group {
+[data-ui-stats-group] {
   margin: 0;
 
-  .stat { display: block; }
+  @supports (display: flex) {
+    @include type-size-default;
+    flex: 1 7em 18em;
+    // display: flex;
+    // flex-wrap: wrap;
+    padding-right: 1.5em;
+  }
 
   // &:container("width >= 150px") {
   //   .stat {
   //     display: inline-block;
   //   }
 
-  //   .stat--label:after { content: ":"; }
   // }
 }
 
-// a list of stats
-.stat-list {
-  margin-left: 0;
-  list-style: none;
+[data-ui-stats-item] {
+  @include font-accent;
+  @include scale-type('zeta');
+  @include color('text' 'secondary');
+  display: block;
+  vertical-align: baseline;
+  margin-left: 0; // reset dt/dd default indent
 
-  // &:container("width >= 300px") {
-  //   font-size: 0;
-
-  //   .stat-group {
-  //     @include type-size-default;
-  //     display: inline-block;
-  //     // width: (100%/4);
-  //     padding-right: 1.5em;
-  //   }
-
-  //   .stat {
-  //     display: block;
-
-  //     &:after { content: none; }
-  //   }
+  // @supports (display: flex) {
+  //   flex: 1 6em 9em;
   // }
 }
 
 
-// Modifiers
+// Traits
 // --------------------------------------------------------------------------
-
-.stat--label {
+[data-ui-stats-item~='label'] {
   @include color('text' 'tertiary');
+
+  &:after {
+    content: ':';
+  }
 }

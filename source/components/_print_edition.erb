@@ -18,22 +18,22 @@
   <%= image_tag asset_path + edition.image, data: { card_figure: "large" }, alt: edition.name + " edition" %>
   <figcaption data-card-content>
     <h2 class="t-scale-gamma c-text-tertiary"><strong class="c-text-primary t-display"><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
-    <ul class="stat-list l-margin-top-narrow">
-      <li class="stat-group">
-        <span class="stat stat--label">Print Size</span>
-        <span class="stat"><%= edition.height %>" &times; <%= edition.width %>"</span>
-      </li>
+    <dl data-ui-stats class="l-margin-top-narrow">
+      <div data-ui-stats-group>
+        <dt data-ui-stats-item="label">Print Size</dt>
+        <dd data-ui-stats-item><%= edition.height %> &times; <%= edition.width %>"</dd>
+      </div>
       <% if edition.border.present? %>
-      <li class="stat-group">
-        <span class="stat stat--label">Paper Size</span>
-        <span class="stat"><%= edition.height + (edition.border * 2) %>" &times; <%= edition.width + (edition.border * 2) %>"</span>
-      </li>
+      <div data-ui-stats-group>
+        <dt data-ui-stats-item="label">Paper Size</dt>
+        <dd data-ui-stats-item><%= edition.height + (edition.border * 2) %> &times; <%= edition.width + (edition.border * 2) %>"</dd>
+      </div>
       <% end %>
-      <li class="stat-group">
-        <span class="stat stat--label">Edition</span>
-        <span class="stat"><%= edition.limit.present? ? edition.limit : "Open" %></span>
-      </li>
-    </ul>
+      <div data-ui-stats-group>
+        <dt data-ui-stats-item="label">Edition</dt>
+        <dd data-ui-stats-item><%= edition.limit.present? ? edition.limit : "Open" %></dd>
+      </div>
+    </dl>
     <p class="t-caption l-margin-top-narrow"></p>
     <%= link_to "Buy on Etsy", edition.url, data: { button: "primary" }, class: "l-margin-top", target: "_blank" %>
   </figcaption>

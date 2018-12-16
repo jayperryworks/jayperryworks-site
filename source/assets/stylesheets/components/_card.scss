@@ -43,7 +43,7 @@ $card-grid--large: ms(7) ms(1);
 // Modifiers
 // --------------------------------------------------------------------------
 
-[data-ui-card="multicolumn"] {
+[data-ui-card~="multicolumn"] {
   font-size: 0;
 
   // &:container("width >= 600px") {
