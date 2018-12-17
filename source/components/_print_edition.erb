@@ -14,11 +14,11 @@
   asset_path ||= current_page.url
 %>
 
-<figure data-card="multicolumn" id="edition_<%= edition.name %>">
-  <%= image_tag asset_path + edition.image, data: { card_figure: "large" }, alt: edition.name + " edition" %>
-  <figcaption data-card-content>
-    <h2 class="t-scale-gamma c-text-tertiary"><strong class="c-text-primary t-display"><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
-    <dl data-ui-stats class="l-margin-top-narrow">
+<figure data-ui-card="multicolumn" class="l-gutter-wrapper l-gutter--wide" id="edition_<%= edition.name %>">
+  <%= image_tag asset_path + edition.image, data: { ui_card_figure: "large" }, class: "l-gutter", alt: edition.name + " edition" %>
+  <figcaption data-ui-card-content class="l-gutter">
+    <h2 class="t-scale-gamma c-text-tertiary l-padding-bottom-narrow"><strong class="c-text-primary t-display"><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
+    <dl data-ui-stats>
       <div data-ui-stats-group>
         <dt data-ui-stats-item="label">Print Size</dt>
         <dd data-ui-stats-item><%= edition.height %> &times; <%= edition.width %>"</dd>
@@ -34,7 +34,6 @@
         <dd data-ui-stats-item><%= edition.limit.present? ? edition.limit : "Open" %></dd>
       </div>
     </dl>
-    <p class="t-caption l-margin-top-narrow"></p>
     <%= link_to "Buy on Etsy", edition.url, data: { button: "primary" }, class: "l-margin-top", target: "_blank" %>
   </figcaption>
 </figure>

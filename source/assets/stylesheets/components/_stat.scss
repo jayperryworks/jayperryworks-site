@@ -17,6 +17,8 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+    padding: gutter($split: true);
+    margin: -(gutter());
   }
 }
 
@@ -30,18 +32,9 @@
 
   @supports (display: flex) {
     @include type-size-default;
-    flex: 1 7em 18em;
-    // display: flex;
-    // flex-wrap: wrap;
-    padding-right: 1.5em;
+    min-width: 8rem;
+    padding: gutter($split: true);
   }
-
-  // &:container("width >= 150px") {
-  //   .stat {
-  //     display: inline-block;
-  //   }
-
-  // }
 }
 
 [data-ui-stats-item] {
@@ -51,10 +44,6 @@
   display: block;
   vertical-align: baseline;
   margin-left: 0; // reset dt/dd default indent
-
-  // @supports (display: flex) {
-  //   flex: 1 6em 9em;
-  // }
 }
 
 
