@@ -1,4 +1,4 @@
-&mdash;-
+---
 title: In praise of friction
 subtitle: The value of learning curves and context in UI/UX design
 image: joshs-guitar.jpg
@@ -7,7 +7,7 @@ tags:
   - ux
   - interactive
   - contemplating
-&mdash;-
+---
 
 "Easy" and "intuitive" are words you hear an awful lot if you make websites, apps, or any kind of interface. Over the last 20 to 30 years, they’ve become watchwords of user interface (UI) design; our metric for a design’s success is often based on how self-evident it seems to unfamiliar users. Can anyone, anywhere, pick it up and start using it without needing outside help? Does it "just work" for most people?
 
