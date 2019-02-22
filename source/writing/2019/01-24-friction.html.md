@@ -2,7 +2,7 @@
 title: In praise of friction
 subtitle: The value of learning curves and context in UI/UX design
 image: joshs-guitar.jpg
-intro_note: "This is an essay on interactive design that I originally wrote for <a href="https://medium.com/@biveeco">my company's blog</a>. You can find more good stuff there from my super smart colleagues."
+intro_note: "This is an essay on interactive design that I originally wrote for <a href='https://medium.com/@biveeco'>my company's blog</a>. You can find more good stuff there from my super smart colleagues."
 tags:
   - design
   - ux
