@@ -1,19 +1,10 @@
-<%#
-  Writing Feed component
-  - A feed of blog article excerpts
-
-  Locals:
-  - ARRAY articles: articles to list
-  - STRING classes (optional): additional modifier classes (e.g. .l-margin, etc.)
-
-  Styles:
-  - components/feed.scss
-  - components/card.scss
-%>
-
 <%
-  classes ||= false
-  id ||= false
+  # Writing Feed component
+  # - A feed of blog article excerpts
+
+  # Locals:
+  # articles - ARRAY: articles to list
+  classes ||= false # STRING (optional): additional modifier classes (e.g. .l-margin, etc.)
 %>
 
 <ul class="list-undecorated l-no-padding-left<%= ' #{classes}' if classes %>">
