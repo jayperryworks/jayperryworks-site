@@ -15,13 +15,13 @@
 <footer class="main_footer" role="contentinfo">
   <div class="l-wrapper">
     <% unless show_bio == false %>
-      <figure data-ui-card="multicolumn" class="l-margin-bottom-wide l-padding-bottom border-bottom">
-        <div data-ui-card-figure class="t-centered">
+      <figure data-ui-card="multicolumn" class="l-gutter-wrapper l-margin-bottom-wide l-padding-bottom border-bottom">
+        <div data-ui-card-figure="small" class="l-gutter t-centered">
           <div style="display: inline-block; max-width: 200px;">
             <%= image_tag "portrait.jpg", alt: data.site.title %>
           </div>
         </div>
-        <figcaption data-ui-card-content>
+        <figcaption data-ui-card-content class="l-gutter">
           <p class="t-body"><%= data.site.bio_blurb %></p>
           <%= link_to "More about Jay &rsaquo;", "/about", data: { button: "text" }, class: "l-margin-top-narrow" %>
           <dl class="tag-group l-margin-top l-padding-top border-top border--secondary">

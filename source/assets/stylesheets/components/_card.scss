@@ -24,80 +24,55 @@
   @include type-size-default;
   display: block;
   width: 100%;
-
-  [data-ui-card~='multicolumn'] & {
-    flex: 7.43 0 38rem;
-    order: -1;
-  }
 }
 
 [data-ui-card-content] {
   @include type-size-default;
   display: block;
   width: 100%;
-
-  [data-ui-card~='multicolumn'] & {
-    flex: 1 0 12rem;
-    order: 0;
-  }
 }
 
 // Traits
 // --------------------------------------------------------------------------
 
 [data-ui-card~='multicolumn'] {
+  font-size: 0;
 
-  @supports (display: flex) {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
+  $breakpoint: 55rem;
+  $figure-w: 76%;
+
+  [data-ui-card-figure] {
+    @include type-size-default;
+    display: inline-block;
+    max-width: 100%;
+    min-width: $figure-w;
+    vertical-align: top;
+    width: 100%; // fallback value if calc() isn't supported
+    width: calc((#{$breakpoint} - 100%) * 1000);
   }
 
-  // &:container('width >= 600px') {
+  [data-ui-card-content] {
+    @include type-size-default;
+    display: inline-block;
+    max-width: 100%;
+    min-width: (100% - $figure-w);
+    vertical-align: top;
+    width: 100%; // fallback value if calc() isn't supported
+    width: calc((#{$breakpoint} - 100%) * 1000);
+  }
 
-  //   .card-figure,
-  //   [data-ui-card-figure] {
-  //     @include column(1, $grid: $card-grid);
+  [data-ui-card-figure~='small'] {
+    $breakpoint: 30rem;
+    $figure-w: 33.49%;
 
-  //     @supports (display: flex) {
-  //       order: -1;
-  //     }
-  //   }
+    min-width: $figure-w;
+    width: 100%; // fallback value if calc() isn't supported
+    width: calc((#{$breakpoint} - 100%) * 1000);
 
-  //   .card-content,
-  //   [data-ui-card-content] {
-  //     @include column(2, $grid: $card-grid);
-  //     margin-top: 0;
-
-  //     @supports (display: flex) {
-  //       order: 0;
-  //     }
-  //   }
-
-  //   .card-figure--large,
-  //   [data-ui-card-figure='large'] {
-  //     @include column(1, $grid: $card-grid--large);
-
-  //     + .card-content,
-  //     + [data-ui-card-content] {
-  //       @include column(2, $grid: $card-grid--large);
-  //     }
-  //   }
-
-  //   .card-figure--right,
-  //   [data-ui-card-figure='right'] {
-  //     padding-right: 0;
-  //     padding-left: gutter();
-
-  //     @supports (display: flex) {
-  //       order: 1;
-  //     }
-
-  //     + .card-content,
-  //     + [data-ui-card-content] {
-  //       padding-right: gutter();
-  //       padding-left: 0;
-  //     }
-  //   }
-  // }
+    + [data-ui-card-content] {
+      min-width: (100% - $figure-w);
+      width: 100%; // fallback value if calc() isn't supported
+      width: calc((#{$breakpoint} - 100%) * 1000);
+    }
+  }
 }
