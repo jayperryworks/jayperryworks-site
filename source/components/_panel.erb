@@ -36,7 +36,7 @@
 
 <section class="l-padding-top-<%= padding_top %> l-padding-bottom-<%= padding_bottom %><%= border_list %><%= " c-theme-#{theme}" if theme != "default" %><%= " #{classes}" if classes %>"<% if id %> id="<%= id %>"<% end %>>
   <% if heading %>
-    <h1 class="t-centered l-margin-bottom-wide"><%= heading %></h1>
+    <h1 class="t-centered l-padding-bottom-wide"><%= heading %></h1>
   <% end %>
   <%= yield %>
 </section>

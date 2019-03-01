@@ -1,5 +1,5 @@
-import cq from 'cq-prolyfill';
+// import cq from 'cq-prolyfill';
 
-cq({
-  postcss: true
-});
+// cq({
+//   postcss: true
+// });

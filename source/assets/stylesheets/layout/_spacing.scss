@@ -48,6 +48,7 @@
 // add uniform gutters to a group of elements
 .l-gutter-wrapper {
   @include rem(padding, gutter($split: true));
+  @include rem(margin, -(gutter()));
 
   .l-gutter {
     @include rem(padding, gutter($split: true));
@@ -58,6 +59,7 @@
   @if $name != 'default' {
     .l-gutter-wrapper.l-gutter--#{$name} {
       @include rem(padding, gutter($name, $split: true));
+      @include rem(margin, -(gutter($name)));
 
       .l-gutter {
         @include rem(padding, gutter($name, $split: true));

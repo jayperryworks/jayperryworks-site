@@ -2,18 +2,17 @@
 // card box styles
 // ==========================================================================
 
-@import "../config/scale";
-@import "../config/color";
-@import "../layout/grid";
+@import '../config/scale';
+@import '../config/color';
+// @import '../layout/grid';
 
-$card-grid: ms(1) ms(7);
-$card-grid--large: ms(7) ms(1);
+// $card-grid: ms(1) ms(7);
+// $card-grid--large: ms(7) ms(1);
 
 // Base
 // --------------------------------------------------------------------------
 
-.card,
-[data-card] {
+[data-ui-card] {
   display: block;
 }
 
@@ -21,87 +20,59 @@ $card-grid--large: ms(7) ms(1);
 // Elements
 // --------------------------------------------------------------------------
 
-.card-figure,
-[data-card-figure] {
+[data-ui-card-figure] {
   @include type-size-default;
   display: block;
   width: 100%;
-
-  .card-content + &,
-  [data-card-content] + & {
-    @include rem(margin-top, gutter('wide'));
-  }
 }
 
-.card-content,
-[data-card-content] {
+[data-ui-card-content] {
   @include type-size-default;
   display: block;
   width: 100%;
-
-  .card-figure + &,
-  [data-card-figure] + & {
-    @include rem(margin-top, gutter('wide'));
-  }
 }
 
-// Modifiers
+// Traits
 // --------------------------------------------------------------------------
 
-.card--multicolumn,
-[data-card="multicolumn"] {
+[data-ui-card~='multicolumn'] {
   font-size: 0;
 
-  &:container("width >= 600px") {
+  $breakpoint: 55rem;
+  $figure-w: 76%;
 
-    @supports (display: flex) {
-      display: flex;
-      align-items: flex-start;
-    }
+  [data-ui-card-figure] {
+    @include type-size-default;
+    display: inline-block;
+    max-width: 100%;
+    min-width: $figure-w;
+    vertical-align: top;
+    width: 100%; // fallback value if calc() isn't supported
+    width: calc((#{$breakpoint} - 100%) * 1000);
+  }
 
-    .card-figure,
-    [data-card-figure] {
-      @include column(1, $grid: $card-grid);
+  [data-ui-card-content] {
+    @include type-size-default;
+    display: inline-block;
+    max-width: 100%;
+    min-width: (100% - $figure-w);
+    vertical-align: top;
+    width: 100%; // fallback value if calc() isn't supported
+    width: calc((#{$breakpoint} - 100%) * 1000);
+  }
 
-      @supports (display: flex) {
-        order: -1;
-      }
-    }
+  [data-ui-card-figure~='small'] {
+    $breakpoint: 30rem;
+    $figure-w: 33.49%;
 
-    .card-content,
-    [data-card-content] {
-      @include column(2, $grid: $card-grid);
-      margin-top: 0;
+    min-width: $figure-w;
+    width: 100%; // fallback value if calc() isn't supported
+    width: calc((#{$breakpoint} - 100%) * 1000);
 
-      @supports (display: flex) {
-        order: 0;
-      }
-    }
-
-    .card-figure--large,
-    [data-card-figure='large'] {
-      @include column(1, $grid: $card-grid--large);
-
-      + .card-content,
-      + [data-card-content] {
-        @include column(2, $grid: $card-grid--large);
-      }
-    }
-
-    .card-figure--right,
-    [data-card-figure='right'] {
-      padding-right: 0;
-      padding-left: gutter();
-
-      @supports (display: flex) {
-        order: 1;
-      }
-
-      + .card-content,
-      + [data-card-content] {
-        padding-right: gutter();
-        padding-left: 0;
-      }
+    + [data-ui-card-content] {
+      min-width: (100% - $figure-w);
+      width: 100%; // fallback value if calc() isn't supported
+      width: calc((#{$breakpoint} - 100%) * 1000);
     }
   }
 }

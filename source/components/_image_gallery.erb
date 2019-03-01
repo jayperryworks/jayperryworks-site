@@ -5,7 +5,7 @@
   Locals:
   HASH images: the images to display
     -> structure: { source => alt }
-  NUMBER columns (optional): number of columns to display at the largest width (> 600px)
+  NUMBER size (optional): number of columns to display at the largest width (> 600px)
   BOOLEAN outcrop (optional): should it 'outcrop' from its container?
   ARRAY margins (optional): margins to add to various sides
 
@@ -27,12 +27,16 @@
       margin_list << " l-margin-#{side}-wide"
     end
   end
+
+  props = [
+    (size unless size == 'default')
+  ]
 %>
 
 <div class="<%= "l-wrapper-outcrop" if outcrop %><%= margin_list %>">
-  <ul class="l-gallery<%= " l-gallery--#{size}" if size != 'default' %>">
+  <ul data-ui-gallery<%= props_list(props) if size != 'default' %>>
     <% images.each do |image, alt| %>
-      <li class="l-gallery-item"><img<%= " class='border'" if borders == true %> src="<%= image %>" alt="<%= alt %>"></li>
+      <li data-ui-gallery-item><img<%= " class='border'" if borders == true %> src="<%= image %>" alt="<%= alt %>"></li>
     <% end %>
   </ul>
 </div>
