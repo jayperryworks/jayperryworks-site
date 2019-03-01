@@ -19,22 +19,26 @@
 <ul class="list-undecorated l-no-padding-left<%= ' #{classes}' if classes %>">
   <% articles.each_with_index do |article, index| %>
     <li class="l-display-block l-padding-top-xwide<%= ' l-margin-top-xwide' unless index === 0 %> border-top">
-      <% component "card", locals: {
-        link: article.url,
-        figure: article.data.image.present? ? article.url + article.data.image : false
-      } do %>
-        <time class="t-heading t-accent-bold t-scale-eta c-text-tertiary"><%= article.date.strftime("%B %-d, %Y") %></time>
-        <h2 class="t-scale-beta"><%= link_to article.title, article.url %></h2>
-        <% if article.data.subtitle.present? %>
-          <span class="t-heading t-accent-light t-scale-gamma c-text-tertiary">
-            <%= link_to article.data.subtitle, article.url %>
-          </span>
+      <div class="l-gutter-wrapper">
+        <% if article.data.image.present? %>
+          <% link_to article.url, class: "l-display-block l-gutter t-link-undecorated t-centered" do %>
+            <img src="<%= article.url + article.data.image %>" alt="<%= article.title %>">
+          <% end %>
         <% end %>
-        <div class="l-padding-top"><%= article.summary %></div>
-        <% unless article.data.show_full %>
-          <%= link_to "Read more &rsaquo;", article.url, data: { button: "text" }, class: "l-margin-top" %>
-        <% end %>
-      <% end %>
+        <div class="l-gutter">
+          <time class="t-heading t-accent-bold t-scale-eta c-text-tertiary"><%= article.date.strftime("%B %-d, %Y") %></time>
+          <h2 class="t-scale-beta"><%= link_to article.title, article.url %></h2>
+          <% if article.data.subtitle.present? %>
+            <span class="t-heading t-accent-light t-scale-gamma c-text-tertiary">
+              <%= link_to article.data.subtitle, article.url %>
+            </span>
+          <% end %>
+          <div class="l-padding-top"><%= article.summary %></div>
+          <% unless article.data.show_full %>
+            <%= link_to "Read more &rsaquo;", article.url, data: { button: "text" }, class: "l-margin-top" %>
+          <% end %>
+        </div>
+      </div>
     </li>
   <% end %>
 </ul>
