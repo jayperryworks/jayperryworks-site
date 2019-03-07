@@ -119,13 +119,13 @@ helpers do
   end
 
   def class_list(classes)
-    list = classes.is_a?(String) ? classes : classes.join(' ')
-    return " class='#{list}'" unless classes.empty?
+    list = classes.is_a?(String) ? classes : classes.join(' ').rstrip
+    return " class='#{list}'" unless list.empty?
   end
 
   def props_list(props)
-    list = props.is_a?(String) ? props : props.join(' ')
-    return "='#{list}'" unless props.empty?
+    list = props.is_a?(String) ? props : props.join(' ').rstrip
+    return "='#{list}'" unless list.empty?
   end
 
   # figure out the utility padding classes to use
@@ -134,8 +134,8 @@ helpers do
   # -> Pass in a string to apply the same padding to all sides, e.g. 'wide'
   # -> Pass in a hash to apply padding to each side, e.g. { top: 'narrow' }.
   #    Any sides you leave out will have no padding.
-  # rubocop:disable Metrics/MethodLength
   # -> we need all this logic in this method, doesn't make sense to split it up
+  # rubocop:disable Metrics/MethodLength
   def padding_classes(values)
     if values.is_a?(String)
       case values
@@ -156,7 +156,7 @@ helpers do
         else
           "padding-#{side}-#{width}"
         end
-      end.join(' ')
+      end.join(' ').rstrip
     end
   end
   # rubocop:enable Metrics/MethodLength
@@ -164,12 +164,15 @@ helpers do
   # figure out the utility border classes to use
   # arguments:
   # ARRAY list (required): a list of the sides that should get borders
-  def border_classes(sides)
+  def border_classes(sides, class_prefix = 'border')
     if sides.is_a?(String)
-      return 'border' if sides == 'all'
-      "border-#{sides}"
+      return '' if sides == 'none'
+      return class_prefix if sides == 'all'
+      "#{class_prefix}-#{sides}"
     else
-      sides.collect { |side| "border-#{side}" }.join(' ')
+      sides.collect do |side|
+        "#{class_prefix}-#{side}"
+      end.join(' ').rstrip
     end
   end
 

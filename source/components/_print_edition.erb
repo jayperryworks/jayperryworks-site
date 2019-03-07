@@ -34,6 +34,13 @@
         <dd data-ui-stats-item><%= edition.limit.present? ? edition.limit : "Open" %></dd>
       </div>
     </dl>
-    <%= link_to "Buy on Etsy", edition.url, data: { button: "primary" }, class: "l-margin-top", target: "_blank" %>
+    <% component 'button_link', locals: {
+      url: edition.url,
+      target: '_blank',
+      role: 'primary',
+      classes: 'l-margin-top'
+    } do %>
+      Buy on Etsy
+    <% end %>
   </figcaption>
 </figure>

@@ -1,18 +1,28 @@
-<%# A simple partial for inserting SVG sprites. %>
-<%# @param id: (string) the ID of the sprite you want %>
-<%# @param classes: (string, optional) any classes you'd like to add.  %>
-<%# @param role: ARIA role. use either 'img' (default) or 'presentation'. %>
-<%# -> "presentation" designates it as simply decoration (and should be ignored by screenreaders) %>
-<%# -> while "img" says it should have its own description. In the latter case, the title attribute acts like an alt tag. %>
+<%
+  # Icon
+  # -> A simple partial for inserting SVG sprites.
+  # -> "presentation" designates it as simply decoration (and should be ignored by screenreaders)
+  # -> while "img" says it should have its own description. In the latter case, the title attribute acts like an alt tag.
 
-<% classes ||= "" %>
-<% title ||= "" %>
-<% role ||= "img" %>
-<% fallback ||= "#{id}.png" %>
-<svg class="icon <%= id %><%= " #{classes}" %>" title="<%= title %>" role="<%= role %>">
+  # Locals:
+  # STRING id: the ID of the sprite you want
+  classes ||= false # STRING: additional modifier classes, if needed.
+  size ||= false # STRING: how big it is
+  space ||= false # STRING: how much space (margin) around it
+  title ||= false # STRING: title attribute
+  role ||= "presentation" # STRING: ARIA role. use either 'img' (default) or 'presentation'.
+  parent ||= false # STRING: pass in a parent component to 'extend' this one, if needed; e.g. 'data-ui-button-icon'
+
+  props = [
+    (size if size),
+    ("space-#{space}" if space)
+  ]
+%>
+
+<svg data-ui-icon<%= props_list(props) %><%= " #{parent}" if parent %><%= " class='#{classes}'" if classes %><%= " title='#{title}'" if title %> role="<%= role %>">
+  <!-- This excellent icon is from iconmonstr.com -->
   <use xlink:href="#<%= id %>"></use>
-  <image src="<%= asset_url(fallback) %>" xlink:href="" />
+  <% unless role == "presentation" %>
+    <desc><%= title %></desc>
+  <% end %>
 </svg>
-
-<%# usage: %>
-<%# partial("components/icon", :locals => { :id => "[ NAME OF ICON ]", :classes => "[ ADDITIONAL CLASSES ]", :role => "img" }) %>

@@ -1,0 +1,33 @@
+<%
+  # Button link
+  # -> an anchor tag styled like a button
+
+  # Locals:
+  # STRING url (required): the address or anchor the button points to
+  target ||= false # STRING (optional): target a blank window or not
+  classes ||= '' # STRING (optional): any other classes you'd like to pass in
+  icon ||= false # STRING (optional): include an icon? if so, pass in the icon id
+  icon_position ||= 'right' # STRING (optional): which side should the icon be on?
+  label ||= '' # STRING (optional): the button's label, e.g. "Read more"
+  size ||= false # STRING (optional): the button's size
+  role ||= false
+
+  # Private vars
+  props = [
+    (role if role),
+    (size if size),
+    ("icon #{icon_position}" if icon)
+  ].join(' ').rstrip
+%>
+
+<% link_to url, data: { 'ui-button': props }, class: classes do %>
+  <%= component("icon", locals: {
+    id: icon,
+    parent: 'data-ui-button-icon'
+  }) if icon && icon_position == 'left' %>
+  <%= yield %>
+  <%= component("icon", locals: {
+    id: icon,
+    parent: 'data-ui-button-icon'
+  }) if icon && icon_position == 'right' %>
+<% end %>

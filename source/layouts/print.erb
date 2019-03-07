@@ -37,7 +37,12 @@
           <!-- 'editions available on etsy' button -->
           <% if current_page.data.edition_placeholder == true %>
             <div class="t-centered l-margin-top-wide">
-              <% link_to "https://jayperry.etsy.com/", data: { button: "primary large" }, target: "_blank" do %>
+              <% component 'button_link', locals: {
+                url: data.site.etsy_link,
+                role: 'primary',
+                size: 'large',
+                target: '_blank'
+              } do %>
                 Print editions available at <strong>Etsy</strong>
               <% end %>
             </div>

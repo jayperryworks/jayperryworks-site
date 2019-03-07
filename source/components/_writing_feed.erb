@@ -26,7 +26,13 @@
           <% end %>
           <div class="l-padding-top"><%= article.summary %></div>
           <% unless article.data.show_full %>
-            <%= link_to "Read more &rsaquo;", article.url, data: { button: "text" }, class: "l-margin-top" %>
+            <% component 'button_link', locals: {
+              url: article.url,
+              role: 'text',
+              classes: 'l-margin-top-narrow'
+            } do %>
+              Read more &rsaquo;
+            <% end %>
           <% end %>
         </div>
       </div>

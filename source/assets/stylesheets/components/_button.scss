@@ -9,9 +9,7 @@
 // Base
 // -----------------------------------------------------------------------------
 
-button,
-.button,
-[data-button] {
+[data-ui-button] {
   $color: 'text' 'primary';
   @include transition-default;
   @include font-accent;
@@ -53,15 +51,13 @@ button,
 // --- sizes ---------------------------------------------------------------
 // -> default size is "medium." add these classes to go bigger or smaller.
 
-.button--small,
-[data-button~='small'] {
+[data-ui-button~='small'] {
   @include scale-type('zeta');
   padding: 0.3em 0.8em;
   border-width: border-w('mid');
 }
 
-.button--large,
-[data-button~='large'] {
+[data-ui-button~='large'] {
   @include scale-type('epsilon');
   padding: 0.8em 1.6em;
 }
@@ -69,8 +65,7 @@ button,
 // --- prominence ----------------------------------------------------------
 // -> how obnoxious shall your button be?
 
-.button--primary,
-[data-button~='primary'] {
+[data-ui-button~='primary'] {
   color: theme('bg');
   background-color: theme('text' 'primary');
   border-color: theme('text' 'primary');
@@ -82,8 +77,7 @@ button,
   }
 }
 
-.button--secondary,
-[data-button~='secondary'] {
+[data-ui-button~='secondary'] {
   color: theme('text' 'tertiary');
   border-color: theme('text' 'tertiary');
 }
@@ -91,8 +85,7 @@ button,
 // --- special variations --------------------------------------------------
 // -> buttons of a strange and amazing nature
 
-.button--text,
-[data-button~='text'] {
+[data-ui-button~='text'] {
   @include font-accent('bold');
   @include scale-type('eta');
   @include color('text' 'primary');
@@ -105,28 +98,5 @@ button,
     @include border('bottom', $style: 'secondary');
     background-color: transparent;
     border-color: inherit;
-  }
-}
-
-// Elements
-// -----------------------------------------------------------------------------
-
-// price callout on a purchase button
-// -> use inside .button.purchase
-.button-price,
-[data-button_price] {
-  @include transition-default;
-  display: inline-block;
-  margin-right: 1em;
-  padding: 0.6em 1em;
-  height: 100%;
-  text-align: center;
-  vertical-align: middle;
-  font-size: 1.2em;
-  color: theme('text' 'primary', 'reverse');
-
-  &:hover, &:active,
-  .button:hover &, .button:active & {
-    background-color: theme('highlight', 'reverse');
   }
 }

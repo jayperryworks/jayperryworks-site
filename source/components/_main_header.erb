@@ -31,7 +31,12 @@
       <% if status %>
         <p class="t-display t-scale-delta c-text-tertiary l-margin-top-xxnarrow"><%= status %></p>
       <% end %>
-      <%= link_to "A bit more about me &rsaquo;", "/about.html", data: { button: "" }, class: "l-margin-top" %>
+      <% component 'button_link', locals: {
+        url: '/about',
+        classes: 'l-margin-top'
+      } do %>
+        A bit more about me &rsaquo;
+      <% end %>
     </div>
   <% end %>
 </header>

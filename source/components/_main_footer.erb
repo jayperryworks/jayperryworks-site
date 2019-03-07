@@ -23,7 +23,13 @@
         </div>
         <figcaption data-ui-card-content class="l-gutter">
           <p class="t-body"><%= data.site.bio_blurb %></p>
-          <%= link_to "More about Jay &rsaquo;", "/about", data: { button: "text" }, class: "l-margin-top-narrow" %>
+          <% component 'button_link', locals: {
+            url: '/about',
+            role: 'text',
+            classes: 'l-margin-top-narrow'
+          } do %>
+            More about Jay &rsaquo;
+          <% end %>
           <dl class="tag-group l-margin-top l-padding-top border-top border--secondary">
             <dt class="t-accent-bold t-caps t-scale-eta t-leading-tight l-margin-bottom-narrow">Say hi</dt>
             <% data.site.social.each do |site| %>
