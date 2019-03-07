@@ -5,7 +5,11 @@
 
   <article>
     <% component "panel", locals: { borders: "none", theme: "reverse", padding_top: "wide" } do %>
-      <%= image_tag current_page.url + current_page.data.cover, class: "cover", alt: current_page.data.title %>
+      <%= component 'cover_image', locals: {
+        source: "#{current_page.url}#{current_page.data.cover}",
+        alt: current_page.data.cover,
+        classes: 'padding-left-wide padding-right-wide'
+      } %>
 
       <!-- cover image, info, and title -->
       <div class="l-wrapper l-padding-top-wide t-centered">
