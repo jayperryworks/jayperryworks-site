@@ -12,7 +12,7 @@
 
 <% show_bio ||= false %>
 
-<footer class="main_footer" role="contentinfo">
+<footer data-ui-main-footer role="contentinfo">
   <div class="l-wrapper">
     <% unless show_bio == false %>
       <figure data-ui-card="multicolumn" class="l-gutter-wrapper l-margin-bottom-wide l-padding-bottom border-bottom">
@@ -39,7 +39,9 @@
         </figcaption>
       </figure>
     <% end %>
-    <%= component "logo-jpw", locals: { classes: "main_footer-lockup logo logo--jpw" } %>
-    <small class="main_footer-copyright">&copy; copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>
+    <div data-ui-main-footer-lockup>
+      <%= component 'logo-jpw' %>
+    </div>
+    <small data-ui-main-footer-copyright>&copy; copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>
   </div>
 </footer>
