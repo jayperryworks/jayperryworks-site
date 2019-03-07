@@ -13,7 +13,11 @@
 
       <!-- Cover image -->
       <% if current_page.data.image.present? %>
-        <%= image_tag current_page.data.image, class: "cover l-margin-top-wide l-margin-bottom-wide", alt: current_page.data.title %>
+        <%= component 'cover_image', locals: {
+          source: current_page.data.image,
+          alt: current_page.data.title,
+          classes: 'l-margin-top-wide l-margin-bottom-wide'
+        } %>
       <% end %>
 
       <%# If there's date metadata, list it %>
