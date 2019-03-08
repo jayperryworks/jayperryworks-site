@@ -3,6 +3,7 @@
 // =============================================================================
 
 @import "../config/animation";
+@import "../config/color";
 @import "../config/scale";
 @import "../config/type";
 
@@ -224,13 +225,43 @@ h6,
   }
 }
 
+.t-tag {
+  @include transition-default;
+  @include border;
+  @include font-accent;
+  @include scale-type('zeta');
+  @include color('text' 'tertiary');
+  display: inline-block;
+  padding: 0.15em 0.4em 0.05em;
+  margin-left: 0;
+  border-radius: 0.1em;
+  vertical-align: middle;
+
+  &:hover,
+  &:active {
+    @include color('text' 'secondary');
+    border-color: inherit;
+  }
+
+  a {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+
+    &:hover,
+    &:active {
+      color: inherit;
+    }
+  }
+}
+
 // --- body text ---------------------------------------------------------------
 
 // the first paragraph, often set slightly bigger
 .t-lead,
 .t-content.t-content--dropcap > p:first-of-type:not(.t-note) {
   &:first-letter {
-    @include font-display;
+    @include font-accent('bold');
     @include color('text' 'primary');
     display: inline-block;
     float: left;
