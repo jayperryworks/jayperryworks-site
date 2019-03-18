@@ -15,8 +15,6 @@
 
 @import 'layout/positioning';
 @import 'layout/spacing';
-@import 'layout/grid';
-@import 'layout/gallery';
 @import 'layout/feed';
 @import 'layout/wrapper';
 @import 'layout/visibility';
@@ -45,13 +43,14 @@
 // -> reusable, composable, self-contained interface elements
 ////////////////////////////////////////////////////////////////////////////////
 
-@import 'components/button';
-@import 'components/logo';
 // @import 'components/icon'; // not using any icons yet
-@import 'components/stat';
+@import 'components/button';
 @import 'components/card';
 @import 'components/cover';
+@import 'components/gallery';
+@import 'components/logo';
 @import 'components/main_footer';
+@import 'components/stat';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Styles of Shame
