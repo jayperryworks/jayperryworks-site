@@ -20,9 +20,3 @@ $layout-widths: (
 @function layout-w($w: 'default') {
   @return map-get($layout-widths, $w);
 }
-
-// Set a base width with gutter
-// -> PUBLIC
-@mixin l-base-w($w: "default") {
-  @include rem(max-width, layout-w($w));
-}

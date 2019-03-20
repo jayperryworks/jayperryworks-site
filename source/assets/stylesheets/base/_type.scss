@@ -66,12 +66,12 @@ h6,
 
 // body/inline text
 p {
-  @include scale-type('epsilon');
   @include color('text' 'secondary');
-  margin-top: 0;
-  margin-bottom: 0;
-  -webkit-margin-before: 0;
   -webkit-margin-after: 0;
+  -webkit-margin-before: 0;
+  font-size: scale-type('epsilon');
+  margin-bottom: 0;
+  margin-top: 0;
 
   & + & {
     margin-top: 1em;
@@ -86,11 +86,11 @@ p {
 }
 
 a {
-  @include transition-default;
-  text-decoration: none;
-  color: inherit;
   @include border('bottom', $style: 'secondary');
+  @include transition-default;
   border-color: inherit;
+  color: inherit;
+  text-decoration: none;
 
   &.t-link-undecorated {
     border-bottom: none;
@@ -116,15 +116,15 @@ em {
 
 small,
 .t-small {
-  @include scale-type('eta');
   @include color('text' 'tertiary');
+  font-size: scale-type('eta');
 }
 
 figcaption,
 .t-caption {
-  @include scale-type('zeta');
   @include font-accent;
   @include color('text' 'tertiary');
+  font-size: scale-type('zeta');
 
   strong {
     @include font-accent(bold);
@@ -133,8 +133,8 @@ figcaption,
 
 address,
 .t-address {
-  @include scale-type('eta');
   @include color('text' 'secondary');
+  font-size: scale-type('eta');
 }
 
 // Utilities
@@ -163,20 +163,20 @@ h4,
 
 h5,
 .t-scale-epsilon {
-  @include scale-type('epsilon');
+  font-size: scale-type('epsilon');
 }
 
 h6,
 .t-scale-zeta {
-  @include scale-type('zeta');
+  font-size: scale-type('zeta');
 }
 
 .t-scale-eta {
-  @include scale-type('eta');
+  font-size: scale-type('eta');
 }
 
 .t-scale-theta {
-  @include scale-type('theta');
+  font-size: scale-type('theta');
 }
 
 // --- type styles -------------------------------------------------------------
@@ -227,15 +227,15 @@ h6,
 }
 
 .t-tag {
-  @include transition-default;
   @include border;
-  @include font-accent;
-  @include scale-type('zeta');
   @include color('text' 'tertiary');
-  display: inline-block;
-  padding: 0.15em 0.4em 0.05em;
-  margin-left: 0;
+  @include font-accent;
+  @include transition-default;
   border-radius: 0.1em;
+  display: inline-block;
+  font-size: scale-type('zeta');
+  margin-left: 0;
+  padding: 0.15em 0.4em 0.05em;
   vertical-align: middle;
 
   &:hover,
@@ -262,14 +262,14 @@ h6,
 .t-lead,
 .t-content.t-content-dropcap > p:first-of-type:not(.t-note) {
   &:first-letter {
-    @include font-accent('bold');
     @include color('text' 'primary');
+    @include font-accent('bold');
     display: inline-block;
     float: left;
-    vertical-align: baseline;
-    margin: 0em 0.1em -0.2em -0.03em;
     font-size: 3.5em;
     line-height: 1;
+    margin: 0em 0.1em -0.2em -0.03em;
+    vertical-align: baseline;
   }
 }
 
@@ -280,32 +280,32 @@ h6,
 
 .footnotes {
   @include border('top');
-  @include rem(margin-top, space());
-  @include rem(margin-bottom, space());
-  @include rem(padding-top, space());
-  @include scale-type('zeta');
   @include color('text' 'tertiary');
+  font-size: scale-type('zeta');
+  margin-bottom: space();
+  margin-top: space();
+  padding-top: space();
 
   li,
   p {
-    @include scale-type('zeta');
-    @include font-accent;
     @include color('text' 'tertiary');
+    @include font-accent;
+    font-size: scale-type('zeta');
     letter-spacing: 0.02em;
   }
 }
 
 .footnote {
-  @include font-accent;
-  @include border-radius;
   @include border($style: 'secondary');
+  @include border-radius;
+  @include font-accent;
+  background-color: transparent;
+  border-color: inherit;
+  color: inherit;
   display: inline-block;
+  line-height: 1;
   margin-left: 0.25em;
   padding: 0.25em 0.5em;
-  line-height: 1;
-  color: inherit;
-  border-color: inherit;
-  background-color: transparent;
 }
 
 .t-content {
@@ -331,10 +331,3 @@ h6,
 @include breakpointify(".t-right", true) {
   text-align: right;
 }
-
-// use the best ampersands from common system fonts...---
-// .t-amp {
-//     @include font-ampersand;
-//     font-size: $type-size-amp; // relative to whatever type surrounds it -- it renders slightly bigger---
-//     color: inherit;
-// }
