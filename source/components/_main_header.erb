@@ -24,16 +24,16 @@
   <%= component "logo-jp" %>
 
   <% if show_intro == true %>
-    <div class="l-wrapper l-wrapper--full l-margin-top-wide l-padding-bottom-xwide">
+    <div class="l-wrapper l-wrapper--full margin-top-wide padding-bottom-xwide">
       <% if intro %>
         <p class="t-display t-scale-gamma"><%= intro %></p>
       <% end %>
       <% if status %>
-        <p class="t-display t-scale-delta c-text-tertiary l-margin-top-xxnarrow"><%= status %></p>
+        <p class="t-display t-scale-delta c-text-tertiary margin-top-xxnarrow"><%= status %></p>
       <% end %>
       <% component 'button_link', locals: {
         url: '/about',
-        classes: 'l-margin-top'
+        classes: 'margin-top'
       } do %>
         A bit more about me &rsaquo;
       <% end %>

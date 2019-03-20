@@ -14,10 +14,10 @@
   asset_path ||= current_page.url
 %>
 
-<figure data-ui-card="multicolumn" class="l-gutter-wrapper l-gutter--wide" id="edition_<%= edition.name %>">
-  <%= image_tag asset_path + edition.image, data: { ui_card_figure: "large" }, class: "l-gutter", alt: edition.name + " edition" %>
-  <figcaption data-ui-card-content class="l-gutter">
-    <h2 class="t-scale-gamma c-text-tertiary l-padding-bottom-narrow"><strong class="c-text-primary t-display"><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
+<figure data-ui-card="multicolumn" class="gutter-wrapper gutter--wide" id="edition_<%= edition.name %>">
+  <%= image_tag asset_path + edition.image, data: { ui_card_figure: "large" }, class: "gutter", alt: edition.name + " edition" %>
+  <figcaption data-ui-card-content class="gutter">
+    <h2 class="t-scale-gamma c-text-tertiary padding-bottom-narrow"><strong class="c-text-primary t-display"><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
     <dl data-ui-stats>
       <div data-ui-stats-group>
         <dt data-ui-stats-item="label">Print Size</dt>
@@ -38,7 +38,7 @@
       url: edition.url,
       target: '_blank',
       role: 'primary',
-      classes: 'l-margin-top'
+      classes: 'margin-top'
     } do %>
       Buy on Etsy
     <% end %>

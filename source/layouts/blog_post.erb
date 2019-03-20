@@ -1,8 +1,8 @@
 <% wrap_layout :layout do %>
   <%= component "main_header" %>
 
-  <article class="l-margin-top-wide">
-    <header class="l-margin-bottom">
+  <article class="margin-top-wide">
+    <header class="margin-bottom">
       <!-- Titles -->
       <div class="l-wrapper l-wrapper--full">
         <h1 class="t-centered"><%= current_page.data.title %></h1>
@@ -16,7 +16,7 @@
         <%= component 'cover_image', locals: {
           source: current_page.data.image,
           alt: current_page.data.title,
-          classes: 'l-margin-top-wide l-margin-bottom-wide'
+          classes: 'margin-top-wide margin-bottom-wide'
         } %>
       <% end %>
 
@@ -27,20 +27,20 @@
           <%= component "meta", locals: {
             date: current_page.date.strftime("%B %-d, %Y"),
             borders: ["bottom"],
-            classes: "l-margin-top-wide"
+            classes: "margin-top-wide"
           } %>
         </div>
       <% end %>
     </header>
 
     <!-- Main content -->
-    <main class="t-content t-content--dropcap l-wrapper l-margin-bottom-xwide">
+    <main class="t-content t-content--dropcap l-wrapper margin-bottom-xwide">
       <%= yield %>
     </main>
 
-    <!-- <footer class="l-wrapper l-margin-top-wide l-margin-bottom">
-      <div class="border-top l-padding-top">
-        <h1 class="t-display t-display--slug t-scale-eta l-margin-bottom-narrow c-text-tertiary">Filed under:</h1>
+    <!-- <footer class="l-wrapper margin-top-wide margin-bottom">
+      <div class="border-top padding-top">
+        <h1 class="t-display t-display--slug t-scale-eta margin-bottom-narrow c-text-tertiary">Filed under:</h1>
         <%# component "tag_list", locals: { tags: current_page.data.tags } %>
       </div>
     </footer> -->

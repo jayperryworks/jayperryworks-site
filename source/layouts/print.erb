@@ -12,7 +12,7 @@
       } %>
 
       <!-- cover image, info, and title -->
-      <div class="l-wrapper l-padding-top-wide t-centered">
+      <div class="l-wrapper padding-top-wide t-centered">
 
         <%
           # if the painting has dimension metadata, add it to the format listing
@@ -26,8 +26,8 @@
         %>
 
         <h1 class="t-accent-bold t-scale-epsilon display-inline_block@<%= cover_breakpoint %>"><%= current_page.data.title %></h1>
-        <time class="t-accent t-scale-epsilon c-text-tertiary display-inline_block l-padding-left-narrow l-margin-left-narrow border-left@<%= cover_breakpoint %>"><%= current_page.date.strftime('%Y') %></time>
-        <span class="t-accent t-scale-epsilon c-text-tertiary display-inline_block l-padding-left-narrow l-margin-left-narrow border-left"><%= info %></span>
+        <time class="t-accent t-scale-epsilon c-text-tertiary display-inline_block padding-left-narrow margin-left-narrow border-left@<%= cover_breakpoint %>"><%= current_page.date.strftime('%Y') %></time>
+        <span class="t-accent t-scale-epsilon c-text-tertiary display-inline_block padding-left-narrow margin-left-narrow border-left"><%= info %></span>
       </div>
     <% end %>
 
@@ -40,7 +40,7 @@
 
           <!-- 'editions available on etsy' button -->
           <% if current_page.data.edition_placeholder == true %>
-            <div class="t-centered l-margin-top-wide">
+            <div class="t-centered margin-top-wide">
               <% component 'button_link', locals: {
                 url: data.site.etsy_link,
                 role: 'primary',
@@ -62,14 +62,14 @@
         <div class="l-wrapper l-wrapper--wide">
           <ul class="list-undecorated">
             <% current_page.data.editions.each_with_index do |edition, index| %>
-              <li class="display-block l-padding-y-wide <%= ' border-top' unless index == 0 %>">
+              <li class="display-block padding-y-wide <%= ' border-top' unless index == 0 %>">
                 <%= component "print_edition", :locals => { :edition => edition } %>
               </li>
             <% end %>
           </ul>
-          <aside class="border-top l-margin-top-wide">
+          <aside class="border-top margin-top-wide">
             <div class="l-wrapper l-wrapper--narrow t-centered">
-              <h2 class="t-display t-scale-delta l-padding-top-wide l-padding-bottom-narrow">About Giclee prints</h2>
+              <h2 class="t-display t-scale-delta padding-top-wide padding-bottom-narrow">About Giclee prints</h2>
               <p class="t-body-italic t-scale-epsilon c-text-tertiary"><%= data.site.print_descriptions.giclee %></p>
             </div>
           </aside>

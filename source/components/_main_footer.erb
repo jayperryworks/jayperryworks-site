@@ -15,26 +15,26 @@
 <footer data-ui-main-footer role="contentinfo">
   <div class="l-wrapper">
     <% unless show_bio == false %>
-      <figure data-ui-card="multicolumn" class="l-gutter-wrapper l-margin-bottom-wide l-padding-bottom border-bottom">
-        <div data-ui-card-figure="small" class="l-gutter t-centered">
+      <figure data-ui-card="multicolumn" class="gutter-wrapper margin-bottom-wide padding-bottom border-bottom">
+        <div data-ui-card-figure="small" class="gutter t-centered">
           <div style="display: inline-block; max-width: 200px;">
             <%= image_tag "portrait.jpg", alt: data.site.title %>
           </div>
         </div>
-        <figcaption data-ui-card-content class="l-gutter">
+        <figcaption data-ui-card-content class="gutter">
           <p class="t-body"><%= data.site.bio_blurb %></p>
           <% component 'button_link', locals: {
             url: '/about',
             role: 'text',
-            classes: 'l-margin-top-narrow'
+            classes: 'margin-top-narrow'
           } do %>
             More about Jay &rsaquo;
           <% end %>
-          <dl class="tag-group l-margin-top l-padding-top border-top border--secondary">
-            <dt class="t-accent-bold t-caps t-scale-eta t-leading-tight l-margin-bottom-narrow">Say hi</dt>
-            <div class="l-gutter-wrapper l-gutter--xxxnarrow">
+          <dl class="tag-group margin-top padding-top border-top border--secondary">
+            <dt class="t-accent-bold t-caps t-scale-eta t-leading-tight margin-bottom-narrow">Say hi</dt>
+            <div class="gutter-wrapper gutter--xxxnarrow">
               <% data.site.social.each do |site| %>
-                <dd class="display-inline_block l-no-margin l-gutter"><%= link_to site.name, site.link, class: "t-tag" %></dd>
+                <dd class="display-inline_block l-no-margin gutter"><%= link_to site.name, site.link, class: "t-tag" %></dd>
               <% end %>
             </div>
           </dl>

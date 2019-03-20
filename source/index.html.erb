@@ -14,7 +14,7 @@ title: home
   <div class="l-wrapper l-wrapper--wide">
     <%= component "work_gallery", :locals => { :prints => blog("work").articles } %>
 
-    <div class="t-centered l-margin-top-wide">
+    <div class="t-centered margin-top-wide">
       <% component 'button_link', locals: {
         url: data.site.etsy_link,
         target: '_blank',
@@ -34,7 +34,7 @@ title: home
       <%= component "writing_feed", :locals => { :articles => blog("writing").articles[0...5] } %>
 
       <% if blog("writing").articles.length > 5 %>
-        <div class="l-margin-top-wide l-padding-top-wide border-top t-centered">
+        <div class="margin-top-wide padding-top-wide border-top t-centered">
           <% component 'button_link', locals: {
             url: '/writing',
             size: 'large',
