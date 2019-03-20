@@ -231,31 +231,34 @@ set :relative_links, true
 # Build-specific configuration
 configure :build do
 
-    # Enable cache buster
-    # activate :asset_hash
+  # Enable cache buster
+  # activate :asset_hash
 
-    # autoprefix CSS
-    activate :autoprefixer do |config|
-      config.browsers = ['last 2 versions', 'Explorer >= 9']
-    end
+  # autoprefix CSS
+  activate :autoprefixer do |config|
+    config.browsers = ['last 2 versions', 'Explorer >= 9']
+  end
 
-    activate :minify_html
-    activate :minify_css
+  set :url_root, 'http://jayperryworks.com'
+  activate :search_engine_sitemap
 
-    # "Ignore" JS so webpack has full control.
-    # ignore { |path| path =~ /\/(.*)\.js$/ && $1 != 'all' }
+  activate :minify_html
+  activate :minify_css
 
-    # Minify Javascript on build
-    # activate :minify_javascript
+  # "Ignore" JS so webpack has full control.
+  # ignore { |path| path =~ /\/(.*)\.js$/ && $1 != 'all' }
 
-    # Compress/optimize images
-    # -> svg optimization is handled by svgo
-    # activate :imageoptim do |options|
-    #     options.image_extensions = %w(.png .jpg .gif .svg)
-    # end
+  # Minify Javascript on build
+  # activate :minify_javascript
 
-    # Or use a different image path
-    # set :http_prefix, "/Content/images/"
+  # Compress/optimize images
+  # -> svg optimization is handled by svgo
+  # activate :imageoptim do |options|
+  #     options.image_extensions = %w(.png .jpg .gif .svg)
+  # end
+
+  # Or use a different image path
+  # set :http_prefix, "/Content/images/"
 end
 
 # Copy the server config files in /public after build
