@@ -30,10 +30,6 @@ $scale-type: (
   @return map-get($scale-type, $size);
 }
 
-@mixin scale-type($size) {
-  font-size: scale-type($size);
-}
-
 // --- modular scale config ----------------------------------------------------
 // -> for layout and spacing
 

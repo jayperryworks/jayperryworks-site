@@ -10,15 +10,15 @@
 // --------------------------------------------------------------------------
 
 [data-ui-stats] {
-  margin-left: 0;
   list-style: none;
+  margin-left: 0;
 
   @supports (display: flex) {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: row;
-    padding: space($split: true);
+    flex-wrap: wrap;
     margin: -(space());
+    padding: space($split: true);
   }
 }
 
@@ -38,12 +38,12 @@
 }
 
 [data-ui-stats-item] {
-  @include font-accent;
-  @include scale-type('zeta');
   @include color('text' 'secondary');
+  @include font-accent;
   display: block;
-  vertical-align: baseline;
+  font-size: scale-type('zeta');
   margin-left: 0; // reset dt/dd default indent
+  vertical-align: baseline;
 }
 
 

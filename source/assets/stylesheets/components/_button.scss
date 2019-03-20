@@ -11,15 +11,15 @@
 
 [data-ui-button] {
   $color: 'text' 'primary';
-  @include transition-default;
-  @include font-accent;
   @include border('all', $color: $color);
-  @include scale-type('zeta');
-  display: inline-block;
-  padding: 0.5em 1.2em;
+  @include font-accent;
+  @include transition-default;
+  background-color: transparent;
   border-radius: 0.2em;
   color: theme($color);
-  background-color: transparent;
+  display: inline-block;
+  font-size: scale-type('zeta');
+  padding: 0.5em 1.2em;
 
   &:hover,
   &:active {
@@ -27,17 +27,21 @@
     color: theme('bg'); // override default link hover color
   }
 
-  sup { font-size: 0.6em; }
+  sup {
+    font-size: 0.6em;
+  }
 
-  strong { @include font-accent('bold'); }
+  strong {
+    @include font-accent('bold');
+  }
 
   &.c-theme-reverse, .c-theme-reverse & {
     color: theme($color, 'reverse');
 
     &:hover,
     &:active {
-      border-color: theme($color, 'reverse');
       background-color: theme($color, 'reverse');
+      border-color: theme($color, 'reverse');
       color: theme('bg', 'reverse'); // override default link hover color
     }
   }
@@ -52,13 +56,13 @@
 // -> default size is "medium." add these classes to go bigger or smaller.
 
 [data-ui-button~='small'] {
-  @include scale-type('zeta');
-  padding: 0.3em 0.8em;
   border-width: border-w('mid');
+  font-size: scale-type('zeta');
+  padding: 0.3em 0.8em;
 }
 
 [data-ui-button~='large'] {
-  @include scale-type('epsilon');
+  font-size: scale-type('epsilon');
   padding: 0.8em 1.6em;
 }
 
@@ -66,9 +70,9 @@
 // -> how obnoxious shall your button be?
 
 [data-ui-button~='primary'] {
-  color: theme('bg');
   background-color: theme('text' 'primary');
   border-color: theme('text' 'primary');
+  color: theme('bg');
 
   &:hover,
   &:active {
@@ -78,24 +82,24 @@
 }
 
 [data-ui-button~='secondary'] {
-  color: theme('text' 'tertiary');
   border-color: theme('text' 'tertiary');
+  color: theme('text' 'tertiary');
 }
 
 // --- special variations --------------------------------------------------
 // -> buttons of a strange and amazing nature
 
 [data-ui-button~='text'] {
-  @include font-accent('bold');
-  @include scale-type('eta');
   @include color('text' 'primary');
-  padding: 0;
+  @include font-accent('bold');
   border: none;
+  font-size: scale-type('eta');
+  padding: 0;
   text-transform: uppercase;
 
   &:hover, &:active {
-    @include color('text' 'primary');
     @include border('bottom', $style: 'secondary');
+    @include color('text' 'primary');
     background-color: transparent;
     border-color: inherit;
   }

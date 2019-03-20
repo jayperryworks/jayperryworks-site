@@ -14,22 +14,24 @@ $table-padding: 0.5em 0.5em;
 table,
 .table {
   @include font-accent;
-  @include scale-type('zeta');
+  font-size: scale-type('zeta');
   width: 100%;
 }
 
 thead,
 .table-header {
-  @include font-accent('bold');
-  @include scale-type('eta');
   @include border(bottom, thick, $color: "text" "primary");
   @include color("text" "primary");
-  vertical-align: bottom;
-  text-transform: uppercase;
+  @include font-accent('bold');
+  font-size: scale-type('eta');
   text-align: left;
+  text-transform: uppercase;
+  vertical-align: bottom;
 
   td,
-  .table-cell { padding-bottom: 0.5em; }
+  .table-cell {
+    padding-bottom: 0.5em;
+  }
 }
 
 tbody,
@@ -39,7 +41,9 @@ tbody,
 
 tr,
 .table-row {
-  &:nth-child(even) { background-color: lighten(theme('well'), 5); }
+  &:nth-child(even) {
+    background-color: lighten(theme('well'), 5);
+  }
 }
 
 td,
@@ -55,7 +59,7 @@ th,
   thead, .table-header,
   tbody, .table-body,
   th, td, tr {
-    // @include scale-type('zeta');
+    // font-size: scale-type('zeta');
     display: block;
   }
 
@@ -77,13 +81,13 @@ th,
     &::before {
       @include font-accent('bold');
       content: attr(data-label);
+      left: nth($table-padding, 2);
+      padding-right: 1em;
       position: absolute;
       // should be same as padding for td's above
       top: nth($table-padding, 1);
-      left: nth($table-padding, 2);
-      width: $label-w;
-      padding-right: 1em;
       white-space: nowrap;
+      width: $label-w;
     }
   }
 }
