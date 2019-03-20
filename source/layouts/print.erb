@@ -70,7 +70,7 @@
         <% component 'wrapper', locals: { width: 'wide' } do %>
           <ul class="list-undecorated">
             <% current_page.data.editions.each_with_index do |edition, index| %>
-              <li class="display-block padding-y-wide overflow-hidden<%= ' border-top' unless index == 0 %>">
+              <li class="display-block padding-y-wide<%= ' border-top' unless index == 0 %>">
                 <%= component "print_edition", :locals => { :edition => edition } %>
               </li>
             <% end %>
