@@ -12,8 +12,8 @@
 
 [data-ui-main-footer] {
   @include border('top');
-  padding-top: gutter('wide');
-  padding-bottom: gutter('wide');
+  padding-top: space('wide');
+  padding-bottom: space('wide');
 }
 
 // Submodules

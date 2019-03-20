@@ -1,15 +1,13 @@
 <% wrap_layout :layout do %>
   <%= component "main_header" %>
 
-  <article class="margin-top-wide">
+  <article class="margin-top-wide padding-x-outside padding-bottom-xwide">
     <header class="margin-bottom">
       <!-- Titles -->
-      <div class="l-wrapper l-wrapper--full">
-        <h1 class="t-centered"><%= current_page.data.title %></h1>
-        <% if current_page.data.subtitle.present? %>
-          <span class="t-heading t-accent-light t-scale-gamma t-centered c-text-tertiary"><%= current_page.data.subtitle %></span>
-        <% end %>
-      </div>
+      <h1 class="t-centered"><%= current_page.data.title %></h1>
+      <% if current_page.data.subtitle.present? %>
+        <span class="t-heading t-accent-light t-scale-gamma t-centered c-text-tertiary"><%= current_page.data.subtitle %></span>
+      <% end %>
 
       <!-- Cover image -->
       <% if current_page.data.image.present? %>
@@ -23,34 +21,22 @@
       <%# If there's date metadata, list it %>
       <%# note: using current_page.date instead of current_page.data.date b/c date is listed in filename of blog posts %>
       <% if current_page.respond_to?(:date) %>
-        <div class="l-wrapper">
+        <% component 'wrapper' do %>
           <%= component "meta", locals: {
             date: current_page.date.strftime("%B %-d, %Y"),
             borders: ["bottom"],
             classes: "margin-top-wide"
           } %>
-        </div>
+        <% end %>
       <% end %>
     </header>
 
     <!-- Main content -->
-    <main class="t-content t-content--dropcap l-wrapper margin-bottom-xwide">
+    <% component 'wrapper', locals: {
+      el: 'main',
+      classes: 't-content t-content--dropcap'
+    } do %>
       <%= yield %>
-    </main>
-
-    <!-- <footer class="l-wrapper margin-top-wide margin-bottom">
-      <div class="border-top padding-top">
-        <h1 class="t-display t-display--slug t-scale-eta margin-bottom-narrow c-text-tertiary">Filed under:</h1>
-        <%# component "tag_list", locals: { tags: current_page.data.tags } %>
-      </div>
-    </footer> -->
-
+    <% end %>
   </article>
-
-  <!-- <nav class="border-top">
-    <%# prev_post(current_page.data.title) %>
-    <div>
-      <h1></h1>
-    </div>
-  </nav> -->
 <% end %>

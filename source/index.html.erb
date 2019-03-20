@@ -11,7 +11,7 @@ title: home
 
 <!-- Work section -->
 <% component "panel", locals: { heading: "Recent work", id: "work" } do %>
-  <div class="l-wrapper l-wrapper--wide">
+  <% component 'wrapper', locals: { width: 'wide' } do %>
     <%= component "work_gallery", :locals => { :prints => blog("work").articles } %>
 
     <div class="t-centered margin-top-wide">
@@ -24,13 +24,13 @@ title: home
         More prints available at <strong>Etsy</strong> &rsaquo;
       <% end %>
     </div>
-  </div>
+  <% end %>
 <% end %>
 
 <!-- Blog section -->
 <% if blog('writing').articles.length > 0 %>
   <% component 'panel', locals: { heading: 'Writing', id: 'writing' } do %>
-    <div class="l-wrapper">
+    <% component 'wrapper' do %>
       <%= component "writing_feed", :locals => { :articles => blog("writing").articles[0...5] } %>
 
       <% if blog("writing").articles.length > 5 %>
@@ -44,6 +44,6 @@ title: home
           <% end %>
         </div>
       <% end %>
-    </div>
+    <% end %>
   <% end %>
 <% end %>

@@ -24,8 +24,5 @@ ol, ul {
 .list-undecorated {
   list-style: none !important;
   display: block;
-
-  > li {
-    padding-left: 0;
-  }
+  padding-left: 0;
 }

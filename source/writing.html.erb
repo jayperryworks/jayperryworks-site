@@ -3,12 +3,12 @@ title: "Writing"
 pageable: true
 ---
 
-<%= component "main_header" %>
+<%= component 'main_header' %>
 
-<% component "panel", locals: { heading: "Writing", borders: "none" } do %>
-  <div class="l-wrapper">
+<% component 'panel', locals: { heading: 'Writing', borders: 'none' } do %>
+  <% component 'wrapper' do %>
     <%= component "writing_feed", :locals => { :articles => blog("writing").articles } %>
 
     <!-- pagination nav to go here -->
-  </div>
+  <% end %>
 <% end %>

@@ -10,53 +10,69 @@
 
 @each $prop in (padding, margin) {
   .#{$prop} {
-    @include rem($prop, gutter());
+    @include rem($prop, space());
   }
   .no-#{$prop} {
     @include rem($prop, 0 !important);
   }
 
   .#{$prop}-x {
-    @include rem(#{$prop}-left, gutter());
-    @include rem(#{$prop}-right, gutter());
+    @include rem(#{$prop}-left, space());
+    @include rem(#{$prop}-right, space());
   }
 
   .#{$prop}-y {
-    @include rem(#{$prop}-top, gutter());
-    @include rem(#{$prop}-bottom, gutter());
+    @include rem(#{$prop}-top, space());
+    @include rem(#{$prop}-bottom, space());
   }
 
-  @each $name, $length in $gutters {
+  @each $name, $length in $spacing {
     @if $name != 'default' {
       .#{$prop}-#{$name} {
-        @include rem($prop, gutter($name) !important);
+        @include rem($prop, space($name) !important);
       }
 
       .#{$prop}-x-#{$name} {
-        @include rem(#{$prop}-left, gutter($name) !important);
-        @include rem(#{$prop}-right, gutter($name) !important);
+        @include rem(#{$prop}-left, space($name) !important);
+        @include rem(#{$prop}-right, space($name) !important);
       }
 
       .#{$prop}-y-#{$name} {
-        @include rem(#{$prop}-top, gutter($name) !important);
-        @include rem(#{$prop}-bottom, gutter($name) !important);
+        @include rem(#{$prop}-top, space($name) !important);
+        @include rem(#{$prop}-bottom, space($name) !important);
       }
     }
   }
 
-  @each $side in $gutter-sides {
+  @each $side in [left, right, top, bottom] {
     .#{$prop}-#{$side} {
-      @include rem(#{$prop}-#{$side}, gutter() !important);
+      @include rem(#{$prop}-#{$side}, space() !important);
     }
     .no-#{$prop}-#{$side} {
       @include rem(#{$prop}-#{$side}, 0 !important);
     }
 
-    @each $name, $length in $gutters {
+    @each $name, $length in $spacing {
       @if $name != 'default' {
         .#{$prop}-#{$side}-#{$name} {
-          @include rem(#{$prop}-#{$side}, gutter($name) !important);
+          @include rem(#{$prop}-#{$side}, space($name) !important);
         }
+      }
+    }
+  }
+}
+
+// Outside gutters
+// -> opinionated class to set consistent, responsive outside padding on full-width containers
+.padding-x-outside {
+  @include rem(padding-left, space(space-outside()));
+  @include rem(padding-right, space(space-outside()));
+
+  @each $screen, $width in $spacing-outside {
+    @if $screen != 'default' {
+      @include media('>#{$screen}') {
+        @include rem(padding-left, space($width));
+        @include rem(padding-right, space($width));
       }
     }
   }
@@ -67,22 +83,22 @@
 
 // add uniform gutters to a group of elements
 .gutter-wrapper {
-  @include rem(padding, gutter($split: true));
-  @include rem(margin, -(gutter()));
+  @include rem(padding, space($split: true));
+  @include rem(margin, -(space()));
 
   .gutter {
-    @include rem(padding, gutter($split: true));
+    @include rem(padding, space($split: true));
   }
 }
 
-@each $name, $size in $gutters {
+@each $name, $size in $spacing {
   @if $name != 'default' {
-    .gutter-wrapper.gutter--#{$name} {
-      @include rem(padding, gutter($name, $split: true));
-      @include rem(margin, -(gutter($name)));
+    .gutter-wrapper.gutter-#{$name} {
+      @include rem(padding, space($name, $split: true));
+      @include rem(margin, -(space($name)));
 
       .gutter {
-        @include rem(padding, gutter($name, $split: true));
+        @include rem(padding, space($name, $split: true));
       }
     }
   }

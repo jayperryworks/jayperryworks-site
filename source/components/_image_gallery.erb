@@ -33,7 +33,7 @@
   ]
 %>
 
-<div class="<%= "l-wrapper-outcrop" if outcrop %><%= margin_list %>">
+<div<%= ' data-ui-wrapper-outcrop' if outcrop %><%= class_list(margin_list) %>>
   <ul data-ui-gallery<%= props_list(props) if size != 'default' %>>
     <% images.each do |image, alt| %>
       <li data-ui-gallery-item><img<%= " class='border'" if borders == true %> src="<%= image %>" alt="<%= alt %>"></li>

@@ -17,8 +17,8 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    padding: gutter($split: true);
-    margin: -(gutter());
+    padding: space($split: true);
+    margin: -(space());
   }
 }
 
@@ -33,7 +33,7 @@
   @supports (display: flex) {
     @include type-size-default;
     min-width: 8rem;
-    padding: gutter($split: true);
+    padding: space($split: true);
   }
 }
 

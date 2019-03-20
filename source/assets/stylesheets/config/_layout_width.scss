@@ -7,7 +7,7 @@
 @import "breakpoints";
 
 // Settings & mixins
-// -------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------
 
 // width of main layout
 $layout-widths: (
@@ -24,5 +24,5 @@ $layout-widths: (
 // Set a base width with gutter
 // -> PUBLIC
 @mixin l-base-w($w: "default") {
-  @include rem(max-width, add_outside_gutters(layout-w($w)));
+  @include rem(max-width, layout-w($w));
 }

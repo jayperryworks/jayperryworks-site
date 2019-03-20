@@ -14,7 +14,7 @@
   asset_path ||= current_page.url
 %>
 
-<figure data-ui-card="multicolumn" class="gutter-wrapper gutter--wide" id="edition_<%= edition.name %>">
+<figure data-ui-card="multicolumn" class="gutter-wrapper gutter-wide" id="edition_<%= edition.name %>">
   <%= image_tag asset_path + edition.image, data: { ui_card_figure: "large" }, class: "gutter", alt: edition.name + " edition" %>
   <figcaption data-ui-card-content class="gutter">
     <h2 class="t-scale-gamma c-text-tertiary padding-bottom-narrow"><strong class="c-text-primary t-display"><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>

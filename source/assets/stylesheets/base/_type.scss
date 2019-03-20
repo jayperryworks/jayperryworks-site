@@ -7,7 +7,7 @@
 @import "../config/scale";
 @import "../config/type";
 @import "../config/border";
-
+@import "../config/spacing";
 
 // Defaults
 // -----------------------------------------------------------------------------
@@ -280,9 +280,9 @@ h6,
 
 .footnotes {
   @include border('top');
-  @include rem(margin-top, gutter());
-  @include rem(margin-bottom, gutter());
-  @include rem(padding-top, gutter());
+  @include rem(margin-top, space());
+  @include rem(margin-bottom, space());
+  @include rem(padding-top, space());
   @include scale-type('zeta');
   @include color('text' 'tertiary');
 

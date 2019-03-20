@@ -3,7 +3,9 @@
 // -> hide and show things in various ways
 // ==========================================================================
 
-@mixin visually_hidden($focusable: false) {
+@import '../config/breakpoints';
+
+@mixin visually-hidden($focusable: false) {
   border: 0;
   clip: rect(0 0 0 0);
   height: 1px;
@@ -31,7 +33,7 @@
   }
 }
 
-@mixin restore-visually_hidden($overflow: visible) {
+@mixin restore-visually-hidden($overflow: visible) {
   clip-path: auto;
   height: auto;
   // margin: 0;
@@ -43,12 +45,16 @@
 // visibility helper classes
 
 // hide but keep it accessible
-.is-visually_hidden {
+.is-visually-hidden {
   @include visually_hidden;
 
   &.focusable {
     @include visually_hidden(true);
   }
+}
+
+.overflow-hidden {
+  overflow: hidden !important;
 }
 
 // completely hide
