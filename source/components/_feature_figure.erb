@@ -27,7 +27,7 @@
 
 <figure class="<%= "l-wrapper-outcrop" if outcrop == "true" %><%= margin_list %> t-center<%= " #{classes}" if classes %>">
   <%= image_tag source, alt: alt, class: border ? "border" : "" %>
-  <figcaption class="l-display-inline_block t-caption l-margin-top-narrow">
+  <figcaption class="display-inline_block t-caption l-margin-top-narrow">
     <%= yield %>
   </figcaption>
 </figure>

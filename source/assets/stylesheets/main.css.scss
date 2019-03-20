@@ -13,9 +13,7 @@
 // -> global utility classes for basic layout
 ////////////////////////////////////////////////////////////////////////////////
 
-@import 'layout/positioning';
 @import 'layout/spacing';
-@import 'layout/feed';
 @import 'layout/wrapper';
 @import 'layout/visibility';
 
@@ -35,6 +33,7 @@
 // Utilities
 ////////////////////////////////////////////////////////////////////////////////
 
+@import 'utilities/positioning';
 @import 'utilities/border';
 @import 'utilities/color';
 

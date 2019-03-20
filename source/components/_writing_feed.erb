@@ -9,10 +9,10 @@
 
 <ul class="list-undecorated l-no-padding-left<%= ' #{classes}' if classes %>">
   <% articles.each_with_index do |article, index| %>
-    <li class="l-display-block l-padding-top-xwide<%= ' l-margin-top-xwide' unless index === 0 %> border-top">
+    <li class="display-block l-padding-top-xwide<%= ' l-margin-top-xwide' unless index === 0 %> border-top">
       <div class="l-gutter-wrapper">
         <% if article.data.image.present? %>
-          <% link_to article.url, class: "l-display-block l-gutter t-link-undecorated t-centered" do %>
+          <% link_to article.url, class: "display-block l-gutter t-link-undecorated t-centered" do %>
             <img src="<%= article.url + article.data.image %>" alt="<%= article.title %>">
           <% end %>
         <% end %>

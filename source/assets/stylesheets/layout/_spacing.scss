@@ -16,10 +16,30 @@
     @include rem($prop, 0 !important);
   }
 
+  .l-#{$prop}-x {
+    @include rem(#{$prop}-left, gutter());
+    @include rem(#{$prop}-right, gutter());
+  }
+
+  .l-#{$prop}-y {
+    @include rem(#{$prop}-top, gutter());
+    @include rem(#{$prop}-bottom, gutter());
+  }
+
   @each $name, $length in $gutters {
     @if $name != 'default' {
       .l-#{$prop}-#{$name} {
         @include rem($prop, gutter($name) !important);
+      }
+
+      .l-#{$prop}-x-#{$name} {
+        @include rem(#{$prop}-left, gutter($name) !important);
+        @include rem(#{$prop}-right, gutter($name) !important);
+      }
+
+      .l-#{$prop}-y-#{$name} {
+        @include rem(#{$prop}-top, gutter($name) !important);
+        @include rem(#{$prop}-bottom, gutter($name) !important);
       }
     }
   }
