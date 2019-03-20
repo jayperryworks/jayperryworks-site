@@ -260,7 +260,7 @@ h6,
 
 // the first paragraph, often set slightly bigger
 .t-lead,
-.t-content.t-content--dropcap > p:first-of-type:not(.t-note) {
+.t-content.t-content-dropcap > p:first-of-type:not(.t-note) {
   &:first-letter {
     @include font-accent('bold');
     @include color('text' 'primary');
