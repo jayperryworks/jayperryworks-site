@@ -1,0 +1,19 @@
+---
+title: admin
+layout: false
+---
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= data.site.site_title %> | Content Manager</title>
+
+    <%= component "favicon" %>
+  </head>
+  <body>
+    <!-- Include the script that builds the page and powers Netlify CMS -->
+    <%= javascript_include_tag "javascripts/admin.bundle" %>
+  </body>
+</html>

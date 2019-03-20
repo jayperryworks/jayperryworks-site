@@ -2,13 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <%# Use title if it's in the page YAML frontmatter %>
     <title><%= data.site.site_title %><% if current_page.data.title.present? && current_page.data.title != "home" %> | <%= current_page.data.title %><% end %></title>
 
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <%= component "favicon" %>
 
@@ -24,8 +23,5 @@
     <%= component "main_footer", locals: {
       show_bio: current_page.data.title == "home" || current_page.data.hide_bio == true ? false : true
     } %>
-
-    <%#= javascript_include_tag "javascripts/main.bundle" %>
-    <%= google_analytics_tag %>
   </body>
 </html>

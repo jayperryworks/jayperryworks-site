@@ -8,8 +8,7 @@
 $trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
 
 // default type sizes
-$type-size-default: 16px;
-$type-size-amp: 1.1em; // size of ampersands relative to their context
+$type-size-default: 1rem;
 
 $leading: (
   'tight': 1.2,
@@ -30,9 +29,7 @@ $leading: (
 // -> a modified version of Indrek Paas' fluid type mixin: https://www.sassmeister.com/gist/7f22e44ace49b5124eec
 // -> which is based on Mike Riethmuller's formula: https://madebymike.com.au/writing/fluid-type-calc-examples/
 // -> also inspired by Eduardo Boucas' mixin: https://eduardoboucas.com/blog/2015/06/18/viewport-sized-typography-with-minimum-and-maximum-sizes.html
-@mixin type-fluid($properties, $size-min: 'eta', $size-max: 'alpha', $screen-min: 'xsmall', $screen-max: 'large') {
-  $screen-min-px: (strip-units(screen($screen-min)) * $type-size-default);
-  $screen-max-px: (strip-units(screen($screen-max)) * $type-size-default);
+@mixin type-fluid($properties: font-size, $size-min: 'eta', $size-max: 'alpha', $screen-min: 'xsmall', $screen-max: 'huge') {
 
   // set base (min) size as default
   @each $property in $properties {
@@ -40,22 +37,23 @@ $leading: (
   }
 
   // start to scale up at the minimum screen size
-  @include media(">#{$screen-min}") {
-    // use an in-between value as the fallback where vw units or calc aren't supported
-    $size-middle-fallback: ((scale-type($size-min) + scale-type($size-max)) / 2);
-
+  @include media('>#{$screen-min}') {
     @each $property in $properties {
-      #{$property}: $size-middle-fallback;
+      // sass-lint:disable no-duplicate-properties
+      // -> using redundant props as fallback here
+
+      // use an in-between value as the fallback where vw units or calc aren't supported
+      #{$property}: ((scale-type($size-min) + scale-type($size-max)) / 2);
 
       // use calc and vw units to make the type scale fluidly between two sizes
-      #{$property}: calc(#{scale-type($size-min)} + #{strip-units(scale-type($size-max) - scale-type($size-min))} * (100vw - #{$screen-min-px}) / #{strip-units($screen-max-px - $screen-min-px)});
+      #{$property}: calc(#{scale-type($size-min)} + #{strip-unit(scale-type($size-max) - scale-type($size-min))} * (100vw - #{strip-unit(screen($screen-min))}rem) / #{strip-unit(screen($screen-max) - screen($screen-min))});
     }
   }
 
   // stop scaling at the maximum screen size
-  @include media(">#{$screen-max}") {
+  @include media('>#{$screen-max}') {
     @each $property in $properties {
-      #{$property}: $size-max;
+      #{$property}: scale-type($size-max);
     }
   }
 }

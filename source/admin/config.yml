@@ -1,0 +1,8 @@
+backend:
+  name: github
+  branch: master # Branch to update (optional; defaults to master)
+
+media_folder: 'source/assets/images/uploads' # Folder where user uploaded files should go
+public_folder: 'source'
+
+publish_mode: editorial_workflow

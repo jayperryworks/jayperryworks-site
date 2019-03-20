@@ -1,32 +1,44 @@
-var path = require('path'),
-    Clean = require("clean-webpack-plugin"),
-    webpack = require("webpack");
+const path = require('path')
+const webpack = require('webpack')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
-var buildPath = '.tmp/dist/javascripts'
+const buildPath = '.tmp/javascripts'
 
 // split output JS into "critical" (above-the-fold) scripts and the rest (which can be loaded on-demand)
 module.exports = {
   entry: {
     critical: ['picturefill'],
-    main: './source/assets/javascripts/main.js',
+    admin: './source/assets/javascripts/admin.js'
   },
   output: {
     path: path.resolve(__dirname, buildPath),
-    filename: "[name].bundle.js"
+    filename: '[name].bundle.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
-        test: /source\/assets\/javascripts\/.*\.js$/,
-        exclude: /node_modules|\.tmp|vendor/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'react']
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
         }
       }
     ]
   },
   plugins: [
-    new Clean(['.tmp/dist/javscripts'])
+    new CleanWebpackPlugin([buildPath])
   ]
-};
+}
+
+// const path = require('path');
+
+// module.exports = {
+//   entry: './src/index.js',
+//   output: {
+//     filename: 'main.js',
+//     path: path.resolve(__dirname, 'dist')
+//   }
+// };

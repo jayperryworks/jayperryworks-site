@@ -36,7 +36,7 @@ ignore 'assets/javascripts/*'
 activate :external_pipeline,
     name: :npm,
     command: build? ? 'yarn build' : 'yarn start',
-    source: ".tmp/dist",
+    source: ".tmp",
     latency: 1
 
 # Automatic image dimensions on image_tag helper

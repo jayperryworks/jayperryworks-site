@@ -25,20 +25,20 @@
   },
   "homepage": "https://jayperry.works",
   "devDependencies": {
-    "babel-core": "^6.4.5",
-    "babel-loader": "^6.2.1",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-react": "^6.3.13",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.1",
+    "babel-loader": "^8.0.5",
     "clean-webpack-plugin": "^0.1.6",
-    "git-directory-deploy": "^1.3.0",
     "svg-sprite": "^1.3.1",
     "svgo": "^0.6.6",
-    "webpack": "^1.12.10"
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
   },
   "dependencies": {
     "bourbon": "^4.2.6",
     "include-media": "^1.4.1",
     "modularscale-sass": "^2.1.1",
+    "netlify-cms": "^2.6.1",
     "normalize-css": "^2.3.1",
     "picturefill": "^3.0.1"
   }
