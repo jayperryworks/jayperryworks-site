@@ -21,4 +21,8 @@ ol, ul {
 // Utilities
 // -----------------------------------------------------------------------------
 
-.list-undecorated { list-style: none !important; }
+.list-undecorated {
+  list-style: none !important;
+  display: block;
+  padding-left: 0;
+}

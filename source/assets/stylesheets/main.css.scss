@@ -13,13 +13,6 @@
 // -> global utility classes for basic layout
 ////////////////////////////////////////////////////////////////////////////////
 
-@import 'layout/positioning';
-@import 'layout/spacing';
-@import 'layout/grid';
-@import 'layout/gallery';
-@import 'layout/feed';
-@import 'layout/wrapper';
-@import 'layout/visibility';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Base
@@ -37,22 +30,26 @@
 // Utilities
 ////////////////////////////////////////////////////////////////////////////////
 
+@import 'utilities/visibility';
+@import 'utilities/positioning';
 @import 'utilities/border';
 @import 'utilities/color';
+@import 'utilities/spacing';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Components
 // -> reusable, composable, self-contained interface elements
 ////////////////////////////////////////////////////////////////////////////////
 
-@import 'components/button';
-@import 'components/logo';
 // @import 'components/icon'; // not using any icons yet
-@import 'components/tag';
-@import 'components/stat';
+@import 'components/button';
 @import 'components/card';
 @import 'components/cover';
+@import 'components/gallery';
+@import 'components/logo';
 @import 'components/main_footer';
+@import 'components/stat';
+@import 'components/wrapper';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Styles of Shame

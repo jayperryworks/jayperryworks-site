@@ -8,10 +8,6 @@
   - STRING info: additional info to add
   - ARRAY borders: sides to add borders to, e.g. ["top", "bottom"]
   - STRING classes: additional modifier classes for container
-
-  Styles:
-  - components/card.scss
-  - components/button.scss
 %>
 
 <%
@@ -25,7 +21,7 @@
 
   if borders != "none"
     borders.each do |side|
-      border_list << " border-#{side} l-padding-#{side}-narrow"
+      border_list << " border-#{side} padding-#{side}-narrow"
     end
   end
 %>
@@ -35,7 +31,7 @@
     <time class="t-accent-bold t-scale-zeta c-text-tertiary"><%= date %></time>
   <% end %>
   <% if info %>
-    <span class="t-accent t-scale-zeta c-text-tertiary l-padding-left-narrow l-margin-left-narrow border-left">
+    <span class="t-accent t-scale-zeta c-text-tertiary padding-left-narrow margin-left-narrow border-left">
       <%= info %>
     </span>
   <% end %>

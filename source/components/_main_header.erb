@@ -6,11 +6,6 @@
   BOOLEAN show_intro (optional): want to show the intro?
   STRING intro (optional): the intro statement
   STRING status (optional): the status statement
-
-  Styles:
-  base/type
-  layout/wrapper
-  layout/gutter
 %>
 
 <%
@@ -24,14 +19,19 @@
   <%= component "logo-jp" %>
 
   <% if show_intro == true %>
-    <div class="l-wrapper l-wrapper--full l-margin-top-wide l-padding-bottom-xwide">
+    <div class="margin-top-wide padding-bottom-xwide padding-x-outside">
       <% if intro %>
         <p class="t-display t-scale-gamma"><%= intro %></p>
       <% end %>
       <% if status %>
-        <p class="t-display t-scale-delta c-text-tertiary l-margin-top-xxnarrow"><%= status %></p>
+        <p class="t-display t-scale-delta c-text-tertiary margin-top-xxnarrow"><%= status %></p>
       <% end %>
-      <%= link_to "A bit more about me &rsaquo;", "/about.html", data: { button: "" }, class: "l-margin-top" %>
+      <% component 'button_link', locals: {
+        url: '/about',
+        classes: 'margin-top'
+      } do %>
+        A bit more about me &rsaquo;
+      <% end %>
     </div>
   <% end %>
 </header>

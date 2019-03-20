@@ -16,28 +16,24 @@ $scale-global: 1.2;
 // -> but doing it by hand allows us to tweak certain sizes to suit the fonts we're using
 // -> also, even numbers probably work better in old browsers when using px units
 $scale-type: (
-  'alpha': 39px,
-  'beta': 33px,
-  'gamma': 23px,
-  'delta': 19px,
-  'epsilon': 16px,
-  'zeta': 13px,
-  'eta': 11px,
-  'theta': 9px
+  'alpha': 2.48rem,
+  'beta': 2.07rem,
+  'gamma': 1.44rem,
+  'delta': 1.2rem,
+  'epsilon': 1rem,
+  'zeta': 0.83rem,
+  'eta': 0.69rem,
+  'theta': 0.58rem
 );
 
 @function scale-type($size) {
   @return map-get($scale-type, $size);
 }
 
-@mixin scale-type($size) {
-  @include rem(font-size, scale-type($size));
-}
-
 // --- modular scale config ----------------------------------------------------
 // -> for layout and spacing
 
-$ms-base: 16px;
+$ms-base: 1rem;
 $ms-ratio: $scale-global;
 
 // @debug $ms-ratio;

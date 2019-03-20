@@ -9,11 +9,9 @@
 // Base
 // --------------------------------------------------------------------------
 
-.cover,
-[data-cover] {
-  @include rem(margin, 0 auto);
+[data-ui-cover] {
   display: block;
-  padding: 0 gutter('wide');
+  margin: 0 auto;
   max-height: 600px;
   max-height: 80vh;
 }

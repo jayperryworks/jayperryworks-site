@@ -5,37 +5,38 @@
 // Base
 // --------------------------------------------------------------------------
 
-.logo {
+[data-ui-logo] {
   display: block;
   border: none; // override anchor tag borders
 }
 
 
-// Elements
+// Traits
 // --------------------------------------------------------------------------
 
-.logo-jp-bg {
-  @include color('text' 'primary');
+// The 'monogram' version of the logo appearing in the header
+[data-ui-logo~='monogram'] {
+
+  &[data-ui-logo~='jp'] {
+    @include color('bg');
+  }
+
+  &[data-ui-logo~='bg'] {
+    @include color('text' 'primary');
+  }
 }
 
-.logo-jp-letter {
-  @include color('bg');
-}
-
-
-// Modifiers
-// --------------------------------------------------------------------------
-
-.logo--jpw {
+// The 'full' version of the logo appearing in the footer
+[data-ui-logo~='full'] {
   display: block;
-  @include rem(height, 26px);
-  @include rem(width, 175px);
-}
+  height: 1.625rem;
+  width: 10.9375rem;
 
-.logo--jpw-jay_perry {
-  @include color('text' 'primary');
-}
+  &[data-ui-logo~='jay-perry'] {
+    @include color('text' 'primary');
+  }
 
-.logo--jpw-works {
-  @include color('text' 'tertiary');
+  &[data-ui-logo~='works'] {
+    @include color('text' 'tertiary');
+  }
 }

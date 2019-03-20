@@ -14,26 +14,35 @@
   asset_path ||= current_page.url
 %>
 
-<figure data-ui-card="multicolumn" class="l-gutter-wrapper l-gutter--wide" id="edition_<%= edition.name %>">
-  <%= image_tag asset_path + edition.image, data: { ui_card_figure: "large" }, class: "l-gutter", alt: edition.name + " edition" %>
-  <figcaption data-ui-card-content class="l-gutter">
-    <h2 class="t-scale-gamma c-text-tertiary l-padding-bottom-narrow"><strong class="c-text-primary t-display"><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
-    <dl data-ui-stats>
-      <div data-ui-stats-group>
-        <dt data-ui-stats-item="label">Print Size</dt>
-        <dd data-ui-stats-item><%= edition.height %> &times; <%= edition.width %>"</dd>
-      </div>
-      <% if edition.border.present? %>
-      <div data-ui-stats-group>
-        <dt data-ui-stats-item="label">Paper Size</dt>
-        <dd data-ui-stats-item><%= edition.height + (edition.border * 2) %> &times; <%= edition.width + (edition.border * 2) %>"</dd>
-      </div>
+<div class="overflow-hidden">
+  <figure data-ui-card="multicolumn" class="gutter-wrapper gutter-wide" id="edition_<%= edition.name %>">
+    <%= image_tag asset_path + edition.image, data: { ui_card_figure: "large" }, class: "gutter", alt: edition.name + " edition" %>
+    <figcaption data-ui-card-content class="gutter">
+      <h2 class="t-scale-gamma c-text-tertiary padding-bottom-narrow"><strong class="c-text-primary t-display"><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
+      <dl data-ui-stats>
+        <div data-ui-stats-group>
+          <dt data-ui-stats-item="label">Print Size</dt>
+          <dd data-ui-stats-item><%= edition.height %> &times; <%= edition.width %>"</dd>
+        </div>
+        <% if edition.border.present? %>
+        <div data-ui-stats-group>
+          <dt data-ui-stats-item="label">Paper Size</dt>
+          <dd data-ui-stats-item><%= edition.height + (edition.border * 2) %> &times; <%= edition.width + (edition.border * 2) %>"</dd>
+        </div>
+        <% end %>
+        <div data-ui-stats-group>
+          <dt data-ui-stats-item="label">Edition</dt>
+          <dd data-ui-stats-item><%= edition.limit.present? ? edition.limit : "Open" %></dd>
+        </div>
+      </dl>
+      <% component 'button_link', locals: {
+        url: edition.url,
+        target: '_blank',
+        role: 'primary',
+        classes: 'margin-top'
+      } do %>
+        Buy on Etsy
       <% end %>
-      <div data-ui-stats-group>
-        <dt data-ui-stats-item="label">Edition</dt>
-        <dd data-ui-stats-item><%= edition.limit.present? ? edition.limit : "Open" %></dd>
-      </div>
-    </dl>
-    <%= link_to "Buy on Etsy", edition.url, data: { button: "primary" }, class: "l-margin-top", target: "_blank" %>
-  </figcaption>
-</figure>
+    </figcaption>
+  </figure>
+</div>

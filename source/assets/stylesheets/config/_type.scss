@@ -23,7 +23,7 @@ $leading: (
 // set type to default body size using REMs
 // -> useful for resetting type size on a container to override parents
 @mixin type-size-default {
-  @include rem(font-size, $type-size-default);
+  font-size: $type-size-default;
 }
 
 // set up viewport-sized fluid type scaling, with minimum and maximum sizes
@@ -36,7 +36,7 @@ $leading: (
 
   // set base (min) size as default
   @each $property in $properties {
-    @include rem($property, scale-type($size-min));
+    #{$property}: scale-type($size-min);
   }
 
   // start to scale up at the minimum screen size
@@ -45,7 +45,7 @@ $leading: (
     $size-middle-fallback: ((scale-type($size-min) + scale-type($size-max)) / 2);
 
     @each $property in $properties {
-      @include rem($property, $size-middle-fallback);
+      #{$property}: $size-middle-fallback;
 
       // use calc and vw units to make the type scale fluidly between two sizes
       #{$property}: calc(#{scale-type($size-min)} + #{strip-units(scale-type($size-max) - scale-type($size-min))} * (100vw - #{$screen-min-px}) / #{strip-units($screen-max-px - $screen-min-px)});
@@ -55,7 +55,7 @@ $leading: (
   // stop scaling at the maximum screen size
   @include media(">#{$screen-max}") {
     @each $property in $properties {
-      @include rem($property, $size-max);
+      #{$property}: $size-max;
     }
   }
 }

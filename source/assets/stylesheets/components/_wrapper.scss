@@ -8,43 +8,37 @@
 // --------------------------------------------------------------------------
 
 // basic layout wrapper, for constraining at large screen sizes
-.l-wrapper {
-  @include l-base-w;
+[data-ui-wrapper] {
   @include clearfix;
-  @include rem(padding-left, gutter('wide'));
-  @include rem(padding-right, gutter('wide'));
   display: block;
-  position: relative;
   margin-left: auto;
   margin-right: auto;
+  max-width: layout-w();
+  position: relative;
 }
 
 // wide version of the layout wrapper
-.l-wrapper--wide { @include l-base-w("wide"); }
-
-// full-screen width wrapper
-.l-wrapper--full { max-width: 100%; }
-
+[data-ui-wrapper~='wide'] {
+  max-width: layout-w('wide');
+}
 
 // a child element of a layout wrapper which is actually wider than its parent
 // -> use to expand a child of a default wrapper to the width of a 'wide' wrapper
 // -> great trick stolen from CSS-Tricks: https://css-tricks.com/full-width-containers-limited-width-parents/
-.l-wrapper-outcrop {
+[data-ui-wrapper-outcrop] {
   display: block;
-  position: relative;
-  width: 100vw;
   left: 50%;
-  right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
-  padding-left: gutter('wide');
-  padding-right: gutter('wide');
+  max-width: 100vw;
+  position: relative;
+  right: 50%;
 
   @include media(">#{layout-w('wide')}") {
-    width: auto;
     left: 0;
-    right: 0;
     margin-left: ((layout-w() - layout-w('wide'))/2);
     margin-right: ((layout-w() - layout-w('wide'))/2);
+    right: 0;
+    width: auto;
   }
 }

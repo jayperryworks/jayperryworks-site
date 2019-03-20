@@ -9,25 +9,32 @@
 %>
 
 <%
-  alt ||= ""
-  outcrop ||= "true"
-  margins ||= ["top", "bottom"]
+  alt ||= ''
+  outcrop ||= 'true'
+  margins ||= [ 'top', 'bottom' ]
   border ||= false
-  classes ||= false
+  classes ||= ''
 
   # make a list of border classes from the borders array
-  margin_list = ""
+  margin_list = ''
 
-  if margins != "none"
+  if margins != 'none'
     margins.each do |side|
-      margin_list << " l-margin-#{side}-wide"
+      margin_list << " margin-#{side}-wide"
     end
   end
+
+  utils = [
+    margin_list,
+    't-center',
+    'padding-x-outside',
+    classes
+  ]
 %>
 
-<figure class="<%= "l-wrapper-outcrop" if outcrop == "true" %><%= margin_list %> t-center<%= " #{classes}" if classes %>">
-  <%= image_tag source, alt: alt, class: border ? "border" : "" %>
-  <figcaption class="l-display-inline_block t-caption l-margin-top-narrow">
+<figure<%= ' data-ui-wrapper-outcrop' if outcrop == 'true' %><%= class_list(utils) %>>
+  <%= image_tag source, alt: alt, class: border ? 'border' : '' %>
+  <figcaption class="display-inline_block t-caption margin-top-narrow">
     <%= yield %>
   </figcaption>
 </figure>

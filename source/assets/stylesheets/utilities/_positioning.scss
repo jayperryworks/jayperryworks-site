@@ -5,54 +5,44 @@
 
 @import "../config/breakpoints";
 
-.l-display-inline {
+.display-inline {
   display: inline;
 }
 
-@include breakpointify(".l-display-inline_block", true, $sizes: "xsmall") {
+@include breakpointify(".display-inline_block", true, $sizes: "xsmall") {
   display: inline-block;
 }
 
-.l-display-block {
+.display-block {
   display: block;
 }
 
-@include breakpointify(".l-display-flex", true) {
+@include breakpointify(".display-flex", true) {
   // @supports (display: flex) {
     display: flex !important;
   // }
 }
 
-.l-flex-fill {
+.flex-fill {
   flex: 1;
 }
 
-// center inline and inline-block elements
-.l-centered {
-  text-align: center;
-
-  @supports (transform: translateX(-50%)) {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
-
 // center a block element
-.l-centered-block {
+.centered-block {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-.l-float-right {
+.float-right {
   float: right;
 }
-.l-float-left {
+.float-left {
   float: left;
 }
 
 // make a panel rise to the top of a layout
 // -> useful if it contains, for instance, stuff like a jump nav that needs to overlay elements below
-.l-z-top {
+.z-top {
   z-index: z('top') !important;
 }
