@@ -74,6 +74,8 @@ collections:
       - name: 'about'
         label: 'About'
         file: 'source/about.html.md.erb'
+        extension: html.md.erb
+        format: frontmatter
         create: false
         fields:
           - label: 'Title'
