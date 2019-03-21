@@ -67,30 +67,30 @@ collections:
   #     - label: 'Body'
   #       name: 'body'
   #       widget: 'markdown'
-  #
-  # - name: 'pages'
-  #   label: 'Pages'
-  #   files:
-  #     - name: 'about'
-  #       label: 'About'
-  #       file: 'source/about.html.md.erb'
-  #       extension: html.md.erb
-  #       format: frontmatter
-  #       create: false
-  #       fields:
-  #         - label: 'Title'
-  #           name: 'title'
-  #           widget: 'string'
-  #         - label: 'Layout'
-  #           name: 'layout'
-  #           widget: 'hidden'
-  #           default: 'blog_post'
-  #         - label: 'Featured image'
-  #           name: 'image'
-  #           widget: 'image'
-  #         - label: 'Hide footer bio'
-  #           name: 'hide_bio'
-  #           widget: 'hidden'
-  #           default: true
+
+  - name: 'pages'
+    label: 'Pages'
+    files:
+      - name: 'about'
+        label: 'About'
+        file: 'source/about.html.md.erb'
+        extension: html.md.erb
+        format: frontmatter
+        create: false
+        fields:
+          - label: 'Title'
+            name: 'title'
+            widget: 'string'
+          - label: 'Layout'
+            name: 'layout'
+            widget: 'hidden'
+            default: 'blog_post'
+          - label: 'Featured image'
+            name: 'image'
+            widget: 'image'
+          - label: 'Hide footer bio'
+            name: 'hide_bio'
+            widget: 'hidden'
+            default: true
 
 
