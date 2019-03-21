@@ -1,7 +1,7 @@
 backend:
   name: github
   repo: jayperryworks/jayperryworks-site
-  branch: master # Branch to update (optional; defaults to master)
+  branch: install-netlify-cms # Branch to update (optional; defaults to master)
 
 media_folder: 'source/assets/images/uploads' # Folder where user uploaded files should go
 public_folder: '/assets/images'
