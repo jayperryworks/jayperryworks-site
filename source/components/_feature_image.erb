@@ -14,6 +14,7 @@
 
 <%
   alt ||= ''
+  upload ||= 'true'
   outcrop ||= 'true'
   margins ||= [ 'top', 'bottom' ]
   border ||= false
@@ -28,14 +29,16 @@
     end
   end
 
+  src = (upload == 'true' ? "uploads/#{source}" : source)
+
   utils = [
     margin_list,
     't-center',
-    'padding-x-outside',
+    ('padding-x-outside' if outcrop == 'true'),
     classes
   ]
 %>
 
 <div<%= ' data-ui-wrapper-outcrop' if outcrop == 'true' %><%= class_list(utils) %>>
-  <%= image_tag source, alt: alt, class: border ? 'border' : '' %>
+  <%= image_tag src, alt: alt, class: border ? 'border' : '' %>
 </div>

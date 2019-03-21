@@ -1,6 +1,6 @@
 ---
 title: A visit to the farm
-image: farm-05.jpeg
+image: farm-visit/farm-05.jpeg
 tags:
   - photography
 ---
@@ -10,29 +10,29 @@ When we visited my parents a few weeks back, we took my daughter Evelyn to a far
 EXCERPT
 
 <%= component "feature_image", locals: {
-  source: "#{current_page.url}farm-04.jpeg"
+  source: "farm-visit/farm-04.jpeg"
 } %>
 
 <% component "feature_figure", locals: {
-  source: "#{current_page.url}farm-07.jpeg"
+  source: "farm-visit/farm-07.jpeg"
 } do %>
   Human-sized hamster wheels!
 <% end %>
 
 <% component "feature_figure", locals: {
-  source: "#{current_page.url}farm-03.jpeg"
+  source: "farm-visit/farm-03.jpeg"
 } do %>
   My wife, Jackie, chilling on a pile of old tires.
 <% end %>
 
 <%= component "image_gallery", locals: {
   images: {
-    "#{current_page.url}farm-01.jpeg" => "Hill",
-    "#{current_page.url}farm-06.jpeg" => "Evie’s favorite stop was an old shed filled with toy musical instruments."
+    "farm-visit/farm-01.jpeg" => "Hill",
+    "farm-visit/farm-06.jpeg" => "Evie’s favorite stop was an old shed filled with toy musical instruments."
   },
   size: "large"
 } %>
 
 <%= component "feature_image", locals: {
-  source: "#{current_page.url}farm-02.jpeg"
+  source: "farm-visit/farm-02.jpeg"
 } %>

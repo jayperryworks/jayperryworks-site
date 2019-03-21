@@ -56,14 +56,14 @@ config[:blog_summary_separator] = /EXCERPT/
 activate :blog do |blog|
     blog.name = "writing"
     blog.prefix = "writing"
-    blog.sources = "{year}/{month}-{day}-{title}.html"
+    blog.sources = "{year}-{month}-{day}-{title}.html"
     blog.permalink = "{year}/{month}/{title}.html"
     blog.taglink = "tags/{tag}.html"
     blog.summary_length = nil
     blog.summary_separator = config[:blog_summary_separator]
     blog.layout = "blog_post"
     blog.paginate = true
-    blog.per_page = 20
+    blog.per_page = 10
 end
 
 activate :directory_indexes

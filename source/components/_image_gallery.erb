@@ -15,7 +15,8 @@
 
 <%
   size ||= 'default'
-  outcrop ||= true
+  upload ||= 'true'
+  outcrop ||= 'true'
   margins ||= ["top", "bottom"]
   borders ||= false
 
@@ -34,14 +35,17 @@
 
   utils = [
     margin_list,
-    'padding-x-outside'
+    ('padding-x-outside' if outcrop == 'true')
   ]
 %>
 
-<div<%= ' data-ui-wrapper-outcrop' if outcrop %><%= class_list(utils) %>>
+<div<%= ' data-ui-wrapper-outcrop' if outcrop == 'true' %><%= class_list(utils) %>>
   <ul data-ui-gallery<%= props_list(props) if size != 'default' %>>
     <% images.each do |image, alt| %>
-      <li data-ui-gallery-item><img<%= " class='border'" if borders == true %> src="<%= image %>" alt="<%= alt %>"></li>
+      <li data-ui-gallery-item>
+        <% src = (upload == 'true' ? "uploads/#{image}" : image) %>
+        <%= image_tag src, alt: alt, class: (borders ? 'border' : '') %>
+      </li>
     <% end %>
   </ul>
 </div>

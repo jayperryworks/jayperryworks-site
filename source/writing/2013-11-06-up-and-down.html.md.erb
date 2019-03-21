@@ -7,7 +7,7 @@ tags:
   - india ink
   - watercolor
   - digital
-image: "up_and_down.jpg"
+image: "up_and_down/up_and_down.jpg"
 published: false
 ---
 
@@ -20,7 +20,7 @@ It's a kind of death knell for a tree, isn't it? When the tree has died and star
 I wanted to try and get at those contrasts (contradictions?) in this piece.
 
 <%= component "feature_image", locals: {
-  source: "#{current_page.url}winter_fungus_s1.jpg",
+  source: "up_and_down/winter_fungus_s1.jpg",
   alt: "Sketch",
   outcrop: "false",
   classes: "border"
@@ -30,9 +30,9 @@ This was one of the first paintings where I attempted to combine digital and tra
 
 Starting with a pencil sketch, I did the ink in layers, using transparent vellum paper. First the outlines of the trunk, then the bark texture.
 
-<%= component "feature_image", locals: { source: "#{current_page.url}IMG_8956.jpg", alt: "Inking" } %>
+<%= component "feature_image", locals: { source: "up_and_down/IMG_8956.jpg", alt: "Inking" } %>
 
-<%= component "feature_image", locals: { source: "#{current_page.url}IMG_8959.jpg", alt: "Inking" } %>
+<%= component "feature_image", locals: { source: "up_and_down/IMG_8959.jpg", alt: "Inking" } %>
 
 Finally, I scanned everything in and started building the shelf fungus in Illustrator. I was hoping that I'd be able to make a "prototype" shelf and then duplicate all the way up the trunk. Unfortunately, because of the (slightly exaggerated) perspective, no two "shelves" are the same point of view: we look down on the bottom ones and up to the top ones. I experimented briefly with doing them in 3D using something like [Blender](https://www.blender.org/), but getting the shape right ended up being too hard (I wish I had more skill/experience with polygon modeling).
 
@@ -40,12 +40,13 @@ So I resigned myself to drawing each one, one at a time. It took forever, but th
 
 <%= component "image_gallery", locals: {
   images: {
-    "#{current_page.url}fungus.jpg" => "Fungus lines",
-    "#{current_page.url}fungus-color.jpg" => "Fungus color",
-    "#{current_page.url}haze.jpg" => "Haze",
-    "#{current_page.url}wash.jpg" => "Background wash",
+    "up_and_down/fungus.jpg" => "Fungus lines",
+    "up_and_down/fungus-color.jpg" => "Fungus color",
+    "up_and_down/haze.jpg" => "Haze",
+    "up_and_down/wash.jpg" => "Background wash",
   },
-  size: "small"
+  size: "small",
+  borders: true
 } %>
 
 I did a few watercolor washes to add texture to the background, but I ended up doing most of the coloring in Photoshop -- another first. I'm suspicious of digital color and especially of digital "brushes," which to me often look too slick. They're improving by the year, but I still believe that nothing can replace the glorious randomness -- and happy accidents -- of a brush filled with ink.
