@@ -2,7 +2,6 @@
 title: Sidewalk versus tree
 date: 2017-07-27 20:00 UTC
 category: prints
-color: red
 tags:
   - india ink
   - digital
