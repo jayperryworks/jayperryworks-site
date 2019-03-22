@@ -46,7 +46,7 @@ activate :external_pipeline,
 activate :blog do |blog|
     blog.name = "work"
     blog.prefix = "work"
-    blog.sources = "{year}/{title}.html"
+    blog.sources = "{year}-{title}.html"
     blog.permalink = "{category}/{year}/{title}.html"
     blog.layout = "print"
 end
@@ -68,6 +68,8 @@ end
 
 activate :directory_indexes
 page "404.html", :directory_index => false
+page "admin/config.yml", :directory_index => false
+page "admin/index.html", :directory_index => false
 
 # explicitly set the markdown engine to Kramdown
 config[:markdown_engine] = :kramdown

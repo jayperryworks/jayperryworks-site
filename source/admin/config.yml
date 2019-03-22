@@ -5,6 +5,7 @@ backend:
 
 media_folder: 'source/assets/images/uploads' # Folder where user uploaded files should go
 public_folder: '/assets/images'
+site_url: https:/www.jayperryworks.com
 
 publish_mode: editorial_workflow
 
@@ -35,6 +36,35 @@ collections:
       - label: 'Short post'
         name: 'show_full'
         widget: 'boolean'
+      - label: 'Body'
+        name: 'body'
+        widget: 'markdown'
+
+  - name: 'work' # Used in routes, e.g., /admin/collections/blog
+    label: 'Work' # Used in the UI
+    folder: 'source/work' # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: '{{year}}-{{slug}}.html' # Filename template, e.g., YYYY-MM-DD-title.md
+    fields: # The fields for each document, usually in front matter
+      - label: 'Title'
+        name: 'title'
+        widget: 'string'
+      - label: 'Date'
+        name: 'date'
+        widget: 'date'
+      - label: 'Category'
+        name: 'category'
+        widget: 'select'
+        options:
+          - prints
+          - paintings
+        default: prints
+      - label: 'Tags'
+        name: 'tags'
+        widget: 'list'
+      - label: 'Thumbnail image'
+        name: 'thumb'
+        widget: 'image'
       - label: 'Body'
         name: 'body'
         widget: 'markdown'
