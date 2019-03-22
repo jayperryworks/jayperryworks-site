@@ -44,7 +44,9 @@ collections:
     label: 'Work' # Used in the UI
     folder: 'source/work' # The path to the folder where the documents are stored
     create: true # Allow users to create new documents in this collection
-    slug: '{{year}}-{{slug}}.html' # Filename template, e.g., YYYY-MM-DD-title.md
+    slug: '{{year}}-{{slug}}' # Filename template, e.g., YYYY-MM-DD-title.md
+    extension: html.md
+    format: frontmatter
     fields: # The fields for each document, usually in front matter
       - label: 'Title'
         name: 'title'
@@ -62,6 +64,9 @@ collections:
       - label: 'Tags'
         name: 'tags'
         widget: 'list'
+      - label: 'Cover image'
+        name: 'cover'
+        widget: 'image'
       - label: 'Thumbnail image'
         name: 'thumb'
         widget: 'image'
