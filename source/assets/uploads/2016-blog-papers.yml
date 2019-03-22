@@ -1,0 +1,28 @@
+- name: Strathmore Bristol board (vellum finish)
+  heavy_wash: good
+  light_wash: very good
+  dry_brush: very good
+  fine_lines: very good
+  contrast: good
+  scanning: very good
+- name: Strathmore 300-series mixed media paper
+  heavy_wash: poor
+  light_wash: okay
+  dry_brush: good
+  fine_lines: very good
+  contrast: poor
+  scanning: very good
+- name: Fabriano studio hot-press watercolor paper (pad)
+  heavy_wash: good
+  light_wash: very good
+  dry_brush: very good
+  fine_lines: very good
+  contrast: very good
+  scanning: very good
+- name: Strathmore 300-series cold-press watercolor paper (pad)
+  heavy_wash: very good
+  light_wash: very good
+  dry_brush: very good
+  fine_lines: okay
+  contrast: good
+  scanning: poor
