@@ -70,6 +70,46 @@ collections:
       - label: 'Thumbnail image'
         name: 'thumb'
         widget: 'image'
+      - label: 'Editions'
+        name: editions
+        widget: list
+        fields:
+          - label: Edition
+            name: edition
+            widget: object
+            fields:
+              - label: Name (size)
+                name: name
+                widget: string
+              - label: Type
+                name: type
+                widget: select
+                default: giclee
+                options:
+                  - giclee
+                  - screenprint
+              - label: Height
+                name: height
+                widget: number
+                valueType: int
+              - label: Width
+                name: width
+                widget: number
+                valueType: int
+              - label: Border
+                name: border
+                widget: number
+                valueType: int
+                default: 1
+              - label: Price
+                name: price
+                valueType: int
+              - label: Image
+                name: image
+                widget: image
+              - label: Etsy listing
+                name: url
+                widget: string
       - label: 'Body'
         name: 'body'
         widget: 'markdown'
