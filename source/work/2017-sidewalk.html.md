@@ -9,7 +9,7 @@ cover: "work-2017-sidewalk-print@1200.jpg"
 thumb: "work-2017-sidewalk-thumb.jpg"
 format: "Digital painting"
 editions:
-  - name: small
+  - size: small
     type: giclee
     height: 12
     width: 8

@@ -11,7 +11,7 @@ cover: "work-2013-cliffs.jpg"
 thumb: "work-2013-cliffs-thumb.jpg"
 format: "Digital painting"
 editions:
-#  - name: large
+#  - size: large
 #    type: giclee
 #    height: 20
 #    width: 12
@@ -20,7 +20,7 @@ editions:
 #    limit: 250
 #    image: "work-2013-cliffs-12x20.jpg"
 #    url: https://www.etsy.com/listing/169108743/
-  - name: small
+  - size: small
     type: giclee
     height: 12
     width: 8

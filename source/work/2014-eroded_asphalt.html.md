@@ -11,7 +11,7 @@ cover: "work-2014-eroded_asphalt.jpg"
 thumb: "work-2014-eroded_asphalt-thumb.jpg"
 format: "Digital painting"
 editions:
-  - name: large
+  - size: large
     type: giclee
     height: 16
     width: 20
@@ -19,7 +19,7 @@ editions:
     price: 75
     image: "work-2014-eroded_asphalt-20x16.jpg"
     url: https://www.etsy.com/listing/219715197/eroded-asphalt-20-x-16-art-print
-  - name: medium
+  - size: medium
     type: giclee
     height: 12
     width: 14
@@ -27,7 +27,7 @@ editions:
     price: 45
     image: "work-2014-eroded_asphalt-12x14.jpg"
     url: https://www.etsy.com/listing/219713955/eroded-asphalt-14-x-12-art-print
-  - name: small
+  - size: small
     type: giclee
     height: 8
     width: 10

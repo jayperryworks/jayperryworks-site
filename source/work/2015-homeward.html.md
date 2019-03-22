@@ -11,7 +11,7 @@ cover: "work-2015-homeward.jpg"
 thumb: "work-2015-homeward-thumb.jpg"
 format: "Digital painting"
 editions:
-  - name: large
+  - size: large
     type: giclee
     height: 18
     width: 24
@@ -19,7 +19,7 @@ editions:
     price: 80
     image: "work-2015-homeward-20x24.jpg"
     url: https://www.etsy.com/listing/180250398/work-2015-homeward-16-x-24-art-print
-  - name: small
+  - size: small
     type: giclee
     height: 8
     width: 12

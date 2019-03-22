@@ -89,38 +89,21 @@ collections:
           name: 'edition'
           widget: 'object'
           fields:
-            - label: Name (size)
-              name: name
-              widget: string
-            - label: Type
-              name: type
-              widget: select
-              default: giclee
+            - {label: 'Size', name: 'size', widget: 'string'}
+            - label: 'Type'
+              name: 'type'
+              widget: 'select'
+              default: 'giclee'
               options:
                 - giclee
                 - screenprint
-            - label: Height (inches)
-              name: height
-              widget: number
-              valueType: int
-            - label: Width (inches)
-              name: width
-              widget: number
-              valueType: int
-            - label: Border
-              name: border
-              widget: number
-              valueType: int
-              default: 1
-            - label: Price
-              name: price
-              valueType: int
-            - label: Image
-              name: image
-              widget: image
-            - label: Etsy listing
-              name: url
-              widget: string
+            - {label: Width (inches), name: width, widget: number, valueType: int}
+            - {label: Height (inches), name: height, widget: number, valueType: int}
+            - {label: Border, name: border, widget: number, valueType: int, default: 1}
+            - {label: Price, name: price, widget: number, valueType: int}
+            - {label: Limit, name: limit, widget: number, valueType: int}
+            - {label: Image, name: image, widget: image}
+            - {label: Etsy listing, name: url, widget: string}
       - label: 'Body'
         name: 'body'
         widget: 'markdown'

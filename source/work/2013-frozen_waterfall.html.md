@@ -12,7 +12,7 @@ format: "Tryptych on panels"
 width: 72
 height: 48
 editions:
-  - name: large
+  - size: large
     type: giclee
     height: 16
     width: 24
@@ -20,7 +20,7 @@ editions:
     price: 80
     image: "work-2013-frozen_waterfall-24x16.jpg"
     url: https://www.etsy.com/listing/161673713/
-  - name: medium
+  - size: medium
     type: giclee
     height: 12
     width: 18
@@ -28,7 +28,7 @@ editions:
     price: 50
     image: "work-2013-frozen_waterfall-18x12.jpg"
     url: https://www.etsy.com/listing/161673713/
-  - name: small
+  - size: small
     type: giclee
     height: 8
     width: 12
