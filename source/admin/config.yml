@@ -3,8 +3,8 @@ backend:
   repo: jayperryworks/jayperryworks-site
   branch: install-netlify-cms # Branch to update (optional; defaults to master)
 
-media_folder: 'source/assets/uploads' # Folder where user uploaded files should go
-public_folder: '/assets/uploads'
+media_folder: 'source/assets/images/uploads' # Folder where user uploaded files should go
+public_folder: '/assets/images/uploads'
 site_url: https:/www.jayperryworks.com
 
 publish_mode: editorial_workflow
