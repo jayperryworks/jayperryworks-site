@@ -4,7 +4,7 @@ backend:
   branch: install-netlify-cms # Branch to update (optional; defaults to master)
 
 media_folder: 'source/assets/images/uploads' # Folder where user uploaded files should go
-public_folder: '/assets/images'
+public_folder: '/assets/images/uploads'
 site_url: https:/www.jayperryworks.com
 
 publish_mode: editorial_workflow
@@ -53,26 +53,11 @@ collections:
     extension: html.md
     format: frontmatter
     fields: # The fields for each document, usually in front matter
-      - label: 'Title'
-        name: 'title'
-        widget: 'string'
-      - label: 'Date'
-        name: 'date'
-        widget: 'date'
-      - label: Format
-        name: format
-        widget: string
-        required: false
-      - label: Height (inches)
-        name: height
-        widget: number
-        valueType: int
-        required: false
-      - label: Width (inches)
-        name: width
-        widget: number
-        valueType: int
-        required: false
+      - {label: 'Title', name: 'title', widget: 'string'}
+      - {label: 'Date', name: 'date', widget: 'date'}
+      - {label: Format, name: format, widget: string, required: false}
+      - {label: Height, name: height, hint: inches, widget: number, valueType: int, required: false}
+      - {label: Width, name: width, hint: inches, widget: number, valueType: int, required: false}
       - label: 'Category'
         name: 'category'
         widget: 'select'
@@ -80,40 +65,29 @@ collections:
           - prints
           - paintings
         default: prints
-      - label: 'Tags'
-        name: 'tags'
-        widget: 'list'
-        required: false
-      - label: 'Cover image'
-        name: 'cover'
-        widget: 'image'
-      - label: 'Thumbnail image'
-        name: 'thumb'
-        widget: 'image'
+      - {label: 'Tags', name: 'tags', widget: 'list', required: false
+      - {label: 'Cover image', name: 'cover', widget: 'image'
+      - {label: 'Thumbnail image', name: 'thumb', widget: 'image'
       - label: 'Editions'
         name: editions
         widget: list
         required: false
-        field:
-          label: 'Edition'
-          name: 'edition'
-          widget: 'object'
-          fields:
-            - {label: 'Size', name: 'size', widget: 'string'}
-            - label: 'Type'
-              name: 'type'
-              widget: 'select'
-              default: 'giclee'
-              options:
-                - giclee
-                - screenprint
-            - {label: Width (inches), name: width, widget: number, valueType: int}
-            - {label: Height (inches), name: height, widget: number, valueType: int}
-            - {label: Border, name: border, widget: number, valueType: int, default: 1}
-            - {label: Price, name: price, widget: number, valueType: int}
-            - {label: Limit, name: limit, widget: number, valueType: int}
-            - {label: Image, name: image, widget: image}
-            - {label: Etsy listing, name: url, widget: string}
+        fields:
+          - {label: 'Size', name: 'name', widget: 'string'}
+          - label: 'Type'
+            name: 'type'
+            widget: 'select'
+            default: 'giclee'
+            options:
+              - giclee
+              - screenprint
+          - {label: Width, name: width, hint: inches, widget: number, valueType: int}
+          - {label: Height, name: height, hint: inches, widget: number, valueType: int}
+          - {label: Border, name: border, hint: inches, widget: number, valueType: int, default: 1}
+          - {label: Price, name: price, widget: number, valueType: int}
+          - {label: Limit, name: limit, widget: number, valueType: int}
+          - {label: Image, name: image, widget: image}
+          - {label: Etsy listing, name: url, widget: string}
       - label: 'Body'
         name: 'body'
         widget: 'markdown'
