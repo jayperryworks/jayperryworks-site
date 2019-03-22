@@ -96,13 +96,10 @@ end
 # rubocop:disable Metrics/BlockLength
 helpers do
 
-  # check to see if a highlight color is one of the defaults listed in colors.yml
-  def highlight(color)
-    if data.colors.include? color
-      return data.colors[color.to_s]
-    else
-      return color
-    end
+  # render markdown from an any string
+  # https://stackoverflow.com/questions/43926754/how-to-output-data-from-yaml-variables-written-in-markdown-into-an-html-haml-f#44014190
+  def render_markdown(content)
+    Kramdown::Document.new(content).to_html
   end
 
   # grab a yml file from an arbitrary location and read it

@@ -81,7 +81,7 @@
               classes: 't-centered'
             } do %>
               <h2 class="t-display t-scale-delta padding-top-wide padding-bottom-narrow">About Giclee prints</h2>
-              <p class="t-body-italic t-scale-epsilon c-text-tertiary"><%= data.site.print_descriptions.giclee %></p>
+              <div class="t-body-italic t-scale-epsilon c-text-tertiary"><%= render_markdown(data.site.print_descriptions.giclee) %></div>
             <% end %>
           </aside>
         <% end %>

@@ -21,7 +21,7 @@
   <% if show_intro == true %>
     <div class="margin-top-wide padding-bottom-xwide padding-x-outside">
       <% if intro %>
-        <p class="t-display t-scale-gamma"><%= intro %></p>
+        <div class="t-display t-scale-gamma"><%= render_markdown(intro) %></div>
       <% end %>
       <% if status %>
         <p class="t-display t-scale-delta c-text-tertiary margin-top-xxnarrow"><%= status %></p>

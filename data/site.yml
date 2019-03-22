@@ -1,22 +1,28 @@
-site_title: "Jay Perry"
+site_title: Jay Perry
 
 etsy_link: https://jayperry.etsy.com/
 
-intro: "My name is Jay and I'm a designer, illustrator, and writer living near Baltimore."
+# markdown allowed here
+intro: |-
+  My name is Jay and I'm a designer, illustrator, and writer living near Baltimore.
 
-bio_blurb: "Jay Perry is a designer, illustrator, and writer living near Baltimore. He likes books, old rusty cars, and forests."
+status: And I could use another cup of tea.
 
-status: "And I could use another cup of tea."
+# markdown allowed here
+bio_blurb: |-
+  Jay Perry is a designer, illustrator, and writer living near Baltimore. He likes books, old rusty cars, and forests.
 
 print_descriptions:
-  giclee: "<a href='https://en.wikipedia.org/wiki/Giclée'>'Giclee'</a> is a term for high-quality digital prints. Mine are printed at <a href='http://archivalarts.com'>Archival Arts</a> in Baltimore on heavy, textured, acid-free cotton rag paper, using archival, pigment-based inks. All prints are individually signed and numbered."
+  # markdown allowed here
+  giclee: |-
+    ['Giclee'](https://en.wikipedia.org/wiki/Giclée) is a term for high-quality digital prints. Mine are printed at [Archival Arts](http://archivalarts.com) in Baltimore on heavy, textured, acid-free cotton rag paper, using archival, pigment-based inks. All prints are individually signed and numbered.
 
 social:
-  - name: "Etsy"
+  - name: Etsy
     link: https://www.etsy.com/shop/jayperry
-  - name: "Twitter"
+  - name: Twitter
     link: https://twitter.com/inkpixelswords
-  - name: "Pinterest"
+  - name: Pinterest
     link: https://www.pinterest.com/jayperryworks/
-  - name: "Github"
+  - name: Github
     link: https://github.com/jayperryworks
