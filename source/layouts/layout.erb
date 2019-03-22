@@ -13,7 +13,6 @@
 
     <%= stylesheet_link_tag :main %>
     <%= javascript_include_tag "javascripts/critical.bundle" %>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
 
   <body>
@@ -24,18 +23,5 @@
     <%= component "main_footer", locals: {
       show_bio: current_page.data.title == "home" || current_page.data.hide_bio == true ? false : true
     } %>
-
-    <!-- Redirect to Netlify admin on login -->
-    <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
-        });
-      }
-    </script>
   </body>
 </html>
