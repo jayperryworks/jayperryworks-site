@@ -3,8 +3,8 @@ backend:
   repo: jayperryworks/jayperryworks-site
   branch: install-netlify-cms # Branch to update (optional; defaults to master)
 
-media_folder: 'source/assets/images/uploads' # Folder where user uploaded files should go
-public_folder: '/assets/images/uploads'
+media_folder: 'source/assets/uploads' # Folder where user uploaded files should go
+public_folder: '/assets/uploads'
 site_url: https:/www.jayperryworks.com
 
 publish_mode: editorial_workflow
@@ -18,32 +18,13 @@ collections:
     extension: html.md.erb
     format: frontmatter
     fields: # The fields for each document, usually in front matter
-      - label: 'Title'
-        name: 'title'
-        widget: 'string'
-      - label: 'Subtitle'
-        name: 'subtitle'
-        widget: 'string'
-        required: false
-      - label: 'Featured image'
-        name: 'image'
-        widget: 'image'
-        required: false
-      - label: 'Intro note'
-        name: 'intro_note'
-        widget: 'text'
-        required: false
-      - label: 'Tags'
-        name: 'tags'
-        widget: 'list'
-        required: false
-      - label: 'Short post'
-        name: 'show_full'
-        widget: 'boolean'
-        default: true
-      - label: 'Body'
-        name: 'body'
-        widget: 'markdown'
+      - {label: 'Title', name: 'title', widget: 'string'}
+      - {label: 'Subtitle', name: 'subtitle', widget: 'string', required: false}
+      - {label: 'Featured image', name: 'image', widget: 'image', required: false}
+      - {label: 'Intro note', name: 'intro_note', widget: 'text', required: false}
+      - {label: 'Tags', name: 'tags', widget: 'list', required: false}
+      - {label: 'Short post', name: 'show_full', widget: 'boolean', default: true}
+      - {label: 'Body', name: 'body', widget: 'markdown'}
 
   - name: 'work' # Used in routes, e.g., /admin/collections/blog
     label: 'Work' # Used in the UI
@@ -65,9 +46,9 @@ collections:
           - prints
           - paintings
         default: prints
-      - {label: 'Tags', name: 'tags', widget: 'list', required: false
-      - {label: 'Cover image', name: 'cover', widget: 'image'
-      - {label: 'Thumbnail image', name: 'thumb', widget: 'image'
+      - {label: 'Tags', name: 'tags', widget: 'list', required: false}
+      - {label: 'Cover image', name: 'cover', widget: 'image'}
+      - {label: 'Thumbnail image', name: 'thumb', widget: 'image'}
       - label: 'Editions'
         name: editions
         widget: list
