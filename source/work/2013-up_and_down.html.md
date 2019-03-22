@@ -1,0 +1,30 @@
+---
+title: Up and Down and Through and Throughout
+date: 2013-11-06 00:00 UTC
+category: prints
+color: red
+tags:
+  - india ink
+  - watercolor
+  - digital
+cover: "work-2013-up_and_down.jpg"
+thumb: "work-2013-up_and_down-thumb.jpg"
+format: "Digital painting"
+editions:
+  - name: large
+    type: giclee
+    height: 18
+    width: 12
+    border: 1
+    price: 55
+    image: "work-2013-up_and_down-12x18.jpg"
+    url: https://www.etsy.com/listing/169108743/
+  - name: medium
+    type: giclee
+    height: 12
+    width: 8
+    border: 1
+    price: 30
+    image: "work-2013-up_and_down-8x12.jpg"
+    url: https://www.etsy.com/listing/169108743/
+---

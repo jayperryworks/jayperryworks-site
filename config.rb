@@ -36,7 +36,7 @@ ignore 'assets/javascripts/*'
 activate :external_pipeline,
     name: :npm,
     command: build? ? 'yarn build' : 'yarn start',
-    source: ".tmp/dist",
+    source: ".tmp",
     latency: 1
 
 # Automatic image dimensions on image_tag helper
@@ -46,7 +46,7 @@ activate :external_pipeline,
 activate :blog do |blog|
     blog.name = "work"
     blog.prefix = "work"
-    blog.sources = "{year}/{title}.html"
+    blog.sources = "{year}-{title}.html"
     blog.permalink = "{category}/{year}/{title}.html"
     blog.layout = "print"
 end
@@ -56,18 +56,20 @@ config[:blog_summary_separator] = /EXCERPT/
 activate :blog do |blog|
     blog.name = "writing"
     blog.prefix = "writing"
-    blog.sources = "{year}/{month}-{day}-{title}.html"
+    blog.sources = "{year}-{month}-{day}-{title}.html"
     blog.permalink = "{year}/{month}/{title}.html"
     blog.taglink = "tags/{tag}.html"
     blog.summary_length = nil
     blog.summary_separator = config[:blog_summary_separator]
     blog.layout = "blog_post"
     blog.paginate = true
-    blog.per_page = 20
+    blog.per_page = 10
 end
 
 activate :directory_indexes
 page "404.html", :directory_index => false
+page "admin/config.yml", :directory_index => false
+page "admin/index.html", :directory_index => false
 
 # explicitly set the markdown engine to Kramdown
 config[:markdown_engine] = :kramdown
@@ -96,13 +98,10 @@ end
 # rubocop:disable Metrics/BlockLength
 helpers do
 
-  # check to see if a highlight color is one of the defaults listed in colors.yml
-  def highlight(color)
-    if data.colors.include? color
-      return data.colors[color.to_s]
-    else
-      return color
-    end
+  # render markdown from an any string
+  # https://stackoverflow.com/questions/43926754/how-to-output-data-from-yaml-variables-written-in-markdown-into-an-html-haml-f#44014190
+  def render_markdown(content)
+    Kramdown::Document.new(content).to_html
   end
 
   # grab a yml file from an arbitrary location and read it

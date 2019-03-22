@@ -22,7 +22,7 @@
           </div>
         </div>
         <figcaption data-ui-card-content class="gutter">
-          <p class="t-body"><%= data.site.bio_blurb %></p>
+          <div class="t-body"><%= render_markdown(data.site.bio_blurb) %></div>
           <% component 'button_link', locals: {
             url: '/about',
             role: 'text',
