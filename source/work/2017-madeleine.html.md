@@ -10,7 +10,7 @@ cover: "work-2017-madeleine@1200.jpg"
 thumb: "work-2017-madeleine-thumb.jpg"
 format: "Digital painting"
 editions:
-  - size: small
+  - name: small
     type: giclee
     height: 12
     width: 8

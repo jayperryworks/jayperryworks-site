@@ -11,7 +11,7 @@ cover: "work-2013-up_and_down.jpg"
 thumb: "work-2013-up_and_down-thumb.jpg"
 format: "Digital painting"
 editions:
-  - size: large
+  - name: large
     type: giclee
     height: 18
     width: 12
@@ -19,7 +19,7 @@ editions:
     price: 55
     image: "work-2013-up_and_down-12x18.jpg"
     url: https://www.etsy.com/listing/169108743/
-  - size: medium
+  - name: medium
     type: giclee
     height: 12
     width: 8

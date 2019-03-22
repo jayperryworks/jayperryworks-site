@@ -13,7 +13,7 @@ width: 24
 height: 24
 published: true
 editions:
-  - size: small
+  - name: small
     type: giclee
     height: 8
     width: 8

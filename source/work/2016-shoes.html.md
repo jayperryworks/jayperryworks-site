@@ -10,7 +10,7 @@ cover: "work-2016-shoes@1200.jpg"
 thumb: "work-2016-shoes-thumb.jpg"
 format: "Digital painting"
 editions:
-  - size: small
+  - name: small
     type: giclee
     height: 8
     width: 12
