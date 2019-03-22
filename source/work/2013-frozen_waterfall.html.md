@@ -9,8 +9,8 @@ tags:
 cover: "work-2013-frozen_waterfall_r2.jpg"
 thumb: "work-2013-frozen_waterfall-thumb.jpg"
 format: "Tryptych on panels"
-width: 6'
-height: 4'
+width: 72
+height: 48
 editions:
   - name: large
     type: giclee

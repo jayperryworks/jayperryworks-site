@@ -9,8 +9,8 @@ tags:
 cover: "work-2012-creekbed.jpg"
 thumb: "work-2012-creekbed-thumb.jpg"
 format: "Panel"
-width: 2'
-height: 2'
+width: 24
+height: 24
 published: true
 editions:
   - name: small
