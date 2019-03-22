@@ -24,18 +24,23 @@ collections:
       - label: 'Subtitle'
         name: 'subtitle'
         widget: 'string'
+        required: false
       - label: 'Featured image'
         name: 'image'
         widget: 'image'
+        required: false
       - label: 'Intro note'
         name: 'intro_note'
         widget: 'text'
+        required: false
       - label: 'Tags'
         name: 'tags'
         widget: 'list'
+        required: false
       - label: 'Short post'
         name: 'show_full'
         widget: 'boolean'
+        default: true
       - label: 'Body'
         name: 'body'
         widget: 'markdown'
@@ -54,17 +59,20 @@ collections:
       - label: 'Date'
         name: 'date'
         widget: 'date'
+      - label: Format
+        name: format
+        widget: string
+        required: false
       - label: Height (inches)
         name: height
         widget: number
         valueType: int
-      - label: Format
-        name: format
-        widget: string
+        required: false
       - label: Width (inches)
         name: width
         widget: number
         valueType: int
+        required: false
       - label: 'Category'
         name: 'category'
         widget: 'select'
@@ -75,6 +83,7 @@ collections:
       - label: 'Tags'
         name: 'tags'
         widget: 'list'
+        required: false
       - label: 'Cover image'
         name: 'cover'
         widget: 'image'
@@ -84,6 +93,7 @@ collections:
       - label: 'Editions'
         name: editions
         widget: list
+        required: false
         field:
           label: 'Edition'
           name: 'edition'
@@ -107,6 +117,7 @@ collections:
       - label: 'Body'
         name: 'body'
         widget: 'markdown'
+        required: false
 
   - name: 'pages'
     label: 'Pages'
