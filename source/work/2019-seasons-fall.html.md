@@ -24,5 +24,14 @@ editions:
     url: 'https://www.etsy.com/listing/651598962/seasons-fall'
     width: 18
     height: 12
+  - border: 1
+    image: /assets/images/uploads/seasons-fall-small-1200.jpg
+    limit: 1
+    name: small
+    price: 30
+    type: giclee
+    url: 'https://www.etsy.com/listing/651598962/seasons-fall'
+    width: 12
+    height: 8
 ---
 
