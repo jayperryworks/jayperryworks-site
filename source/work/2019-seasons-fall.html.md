@@ -5,10 +5,10 @@ format: Digital print
 category: prints
 cover: /assets/images/uploads/work-2018-seasons-fall-1600w.jpg
 thumb: /assets/images/uploads/work-2018-seasons-thumb.jpg
+full_path: true
 editions:
   - border: 1
     image: /assets/images/uploads/seasons-fall-large-1200.jpg
-    limit: 1
     name: large
     price: 80
     type: giclee
@@ -17,7 +17,6 @@ editions:
     height: 16
   - border: 1
     image: /assets/images/uploads/seasons-fall-medium-1200.jpg
-    limit: 1
     name: medium
     price: 55
     type: giclee
@@ -26,7 +25,6 @@ editions:
     height: 12
   - border: 1
     image: /assets/images/uploads/seasons-fall-small-1200.jpg
-    limit: 1
     name: small
     price: 30
     type: giclee
