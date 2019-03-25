@@ -12,7 +12,9 @@ title: home
 <!-- Work section -->
 <% component "panel", locals: { heading: "Recent work", id: "work" } do %>
   <% component 'wrapper', locals: { width: 'wide' } do %>
-    <%= component "work_gallery", :locals => { :prints => blog("work").articles } %>
+    <%= component "work_gallery", locals: {
+      prints: blog("work").articles
+    } %>
 
     <div class="t-centered margin-top-wide">
       <% component 'button_link', locals: {
@@ -31,7 +33,7 @@ title: home
 <% if blog('writing').articles.length > 0 %>
   <% component 'panel', locals: { heading: 'Writing', id: 'writing' } do %>
     <% component 'wrapper' do %>
-      <%= component "writing_feed", :locals => { :articles => blog("writing").articles[0...5] } %>
+      <%= component "writing_feed", locals: { articles: blog("writing").articles[0...5] } %>
 
       <% if blog("writing").articles.length > 5 %>
         <div class="margin-top-wide padding-top-wide border-top t-centered">

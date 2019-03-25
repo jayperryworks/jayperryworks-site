@@ -23,7 +23,7 @@ collections:
       - {label: 'Featured image', name: 'image', widget: 'image', required: false}
       - {label: 'Intro note', name: 'intro_note', widget: 'text', required: false}
       - {label: 'Tags', name: 'tags', widget: 'list', required: false}
-      - {label: 'Short post', name: 'show_full', widget: 'boolean', default: true}
+      - {label: 'Short post', name: 'show_full', widget: 'boolean', default: true, required: false}
       - {label: 'Body', name: 'body', widget: 'markdown'}
 
   - name: 'work' # Used in routes, e.g., /admin/collections/blog
@@ -37,6 +37,7 @@ collections:
       - {label: 'Title', name: 'title', widget: 'string'}
       - {label: 'Date', name: 'date', widget: 'date'}
       - {label: Format, name: format, widget: string, required: false}
+      - {label: 'Full path', name: full_path, widget: hidden, default: true}
       - {label: Width, name: width, hint: inches, widget: number, valueType: int, required: false}
       - {label: Height, name: height, hint: inches, widget: number, valueType: int, required: false}
       - label: 'Category'
@@ -64,9 +65,9 @@ collections:
               - screenprint
           - {label: Width, name: width, hint: inches, widget: number, valueType: int}
           - {label: Height, name: height, hint: inches, widget: number, valueType: int}
-          - {label: Border, name: border, hint: inches, widget: number, valueType: int, default: 1}
+          - {label: Border, name: border, hint: inches, widget: number, valueType: int, default: 1, required: false}
           - {label: Price, name: price, widget: number, valueType: int}
-          - {label: Limit, name: limit, hint: 'Size of the edition; leave blank if open', widget: number, valueType: int}
+          - {label: Limit, name: limit, hint: 'Size of the edition; leave blank if open', widget: number, valueType: int, required: false}
           - {label: Image, name: image, widget: image}
           - {label: Etsy listing, name: url, widget: string}
       - label: 'Body'

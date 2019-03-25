@@ -14,7 +14,7 @@
       }
     } do %>
       <%= component 'cover_image', locals: {
-        source: "uploads/#{current_page.data.cover}",
+        source: (current_page.data.full_path ? current_page.data.cover : "uploads/#{current_page.data.cover}"),
         alt: current_page.data.cover,
         classes: 'padding-x-wide'
       } %>
@@ -71,7 +71,10 @@
           <ul class="list-undecorated">
             <% current_page.data.editions.each_with_index do |edition, index| %>
               <li class="display-block padding-y-wide<%= ' border-top' unless index == 0 %>">
-                <%= component "print_edition", :locals => { :edition => edition } %>
+                <% edition.image = "uploads/#{edition.image}" unless current_page.data.full_path %>
+                <%= component "print_edition", locals: {
+                  edition: edition
+                } %>
               </li>
             <% end %>
           </ul>
