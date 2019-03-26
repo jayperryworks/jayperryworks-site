@@ -65,6 +65,8 @@
 
     <!-- Editions -->
     <% component 'panel', locals: { heading: 'Available editions' } do %>
+      <print-edition>
+      </print-edition>
       <% if current_page.data.editions.present? %>
         <!-- edition cards -->
         <% component 'wrapper', locals: { width: 'wide' } do %>
@@ -95,7 +97,7 @@
   <!-- More work -->
   <% component "panel", locals: { heading: "More work" } do %>
     <% component 'wrapper', locals: { width: 'wide' } do %>
-      <%= partial("components/work_gallery", :locals => { :prints => blog("work").articles, :current => false, :tags => false }) %>
+      <%= component("work_gallery", :locals => { :prints => blog("work").articles, :current => false, :tags => false }) %>
     <% end %>
   <% end %>
 <% end %>
