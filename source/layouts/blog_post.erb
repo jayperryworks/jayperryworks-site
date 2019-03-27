@@ -12,7 +12,7 @@
       <!-- Cover image -->
       <% if current_page.data.image.present? %>
         <%= component 'cover_image', locals: {
-          source: (current_page.data.no_upload ? current_page.data.image : "uploads/#{current_page.data.image}"),
+          source: (current_page.data.full_path ? current_page.data.image : "uploads/#{current_page.data.image}"),
           alt: current_page.data.title,
           classes: 'margin-top-wide margin-bottom-wide'
         } %>

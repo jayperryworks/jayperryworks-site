@@ -15,7 +15,7 @@
 
 <%
   size ||= 'default'
-  upload ||= 'true'
+  full_path ||= false
   outcrop ||= 'true'
   margins ||= ["top", "bottom"]
   borders ||= false
@@ -43,7 +43,7 @@
   <ul data-ui-gallery<%= props_list(props) if size != 'default' %>>
     <% images.each do |image, alt| %>
       <li data-ui-gallery-item>
-        <% src = (upload == 'true' ? "uploads/#{image}" : image) %>
+        <% src = (full_path ? image : "uploads/#{image}") %>
         <%= image_tag src, alt: alt, class: (borders ? 'border' : '') %>
       </li>
     <% end %>
