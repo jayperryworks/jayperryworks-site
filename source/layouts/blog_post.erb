@@ -36,6 +36,11 @@
       el: 'main',
       classes: 't-content t-content-dropcap'
     } do %>
+      <% if current_page.data.intro_note %>
+        <div class="t-body-italic">
+          <%= render_markdown(current_page.data.intro_note) %>
+        </div>
+      <% end %>
       <%= yield %>
     <% end %>
   </article>
