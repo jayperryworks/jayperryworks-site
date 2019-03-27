@@ -68,11 +68,12 @@ $gallery-gutter: 4px;
   // CSS grid version
   // -> all the responsive things, all the time, all the glory
   // -> for modern browsers
-  @supports (display: grid) {
+  @supports (display: grid) and (display: flex) {
     // set the grid item as a flex container itself, so it can position its children better
     // use flex here b/c if grid is supported, flex most likely is too
     display: flex;
-    max-width: auto;
+    align-items: flex-start;
+    max-width: none;
     min-width: auto;
     padding: 0;
     width: auto;
@@ -105,6 +106,12 @@ $gallery-gutter: 4px;
     max-width: $max-percentage;
     min-width: $min-percentage;
     width: calc((#{$breakpoint} - 100%) * 1000);
+
+    @supports (display: grid) {
+      max-width: none;
+      min-width: auto;
+      width: auto;
+    }
   }
 }
 

@@ -14,7 +14,7 @@
 
 <%
   alt ||= ''
-  upload ||= 'true'
+  full_path ||= false
   outcrop ||= 'true'
   margins ||= [ 'top', 'bottom' ]
   border ||= false
@@ -29,7 +29,7 @@
     end
   end
 
-  src = (upload == 'true' ? "uploads/#{source}" : source)
+  src = (full_path ? source : "uploads/#{source}")
 
   utils = [
     margin_list,

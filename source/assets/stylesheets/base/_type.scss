@@ -259,22 +259,23 @@ h6,
 
 // the first paragraph, often set slightly bigger
 .t-lead,
-.t-content.t-content-dropcap > p:first-of-type:not(.t-note) {
-  &:first-letter {
+.t-content.t-content-dropcap > p:first-of-type {
+  &::first-letter {
     @include color('text' 'primary');
     @include font-accent('bold');
-    display: inline-block;
     float: left;
-    font-size: 3.5em;
-    line-height: 1;
-    margin: 0em 0.1em -0.2em -0.03em;
-    vertical-align: baseline;
-  }
-}
+    font-size: 3.5rem;
+    line-height: 1.7rem;
+    margin: 0.15em 0.1em 0 -0.03em;
 
-.t-note {
-  @include font-body('italic');
-  @include color('text' 'tertiary');
+    @supports (initial-letter: 2) or (-webkit-initial-letter: 2) {
+      -webkit-initial-letter: 2;
+      initial-letter: 2;
+      float: none;
+      margin: 0;
+      margin-right: 0.1em;
+    }
+  }
 }
 
 .footnotes {
