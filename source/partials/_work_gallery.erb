@@ -1,19 +1,11 @@
-<%#
-  Work Gallery component
-  - A content reference with headline, excerpt, action, and optional image
-
-  Locals:
-  - ARRAY prints: list of prints to display
-  - BOOLEAN current (optional): show the current page in the list?
-  - BOOLEAN tags (optional): add data tags to each item, for sorting?
-
-  Styles:
-  - components/gallery.scss
-%>
-
 <%
-  current ||= false
-  tags ||= true
+  # Work Gallery component
+  # -> A content reference with headline, excerpt, action, and optional image
+
+  # locals:
+  # prints - ARRAY: list of prints to display
+  current ||= false # BOOLEAN (optional): show the current page in the list?
+  tags ||= true # BOOLEAN (optional): add data tags to each item, for sorting?
 %>
 
 <ul data-ui-gallery>
