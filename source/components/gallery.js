@@ -13,12 +13,6 @@ const template = document.createElement('template')
 template.innerHTML = `
   <style>
     :host {
-      --gutter: var(--space-xnarrow, 0.25rem);
-      --min-width: 240px;
-      --breakpoint: 600px;
-      --min-percentage: 33.3333%;
-      --max-percentage: 100%;
-
       display: block;
       contain: content;
     }
@@ -28,6 +22,12 @@ template.innerHTML = `
     }
 
     .gallery {
+      --gutter: var(--space-xnarrow, 0.25rem);
+      --min-width: 240px;
+      --breakpoint: 600px;
+      --min-percentage: 33.3333%;
+      --max-percentage: 100%;
+
       display: block;
       font-size: 0;
       list-style: none;
@@ -35,6 +35,18 @@ template.innerHTML = `
       padding-left: 0;
       position: relative;
       text-align: left;
+    }
+
+    .small {
+      --min-width: 180px;
+      --breakpoint: 480px;
+      --min-percentage: 25%;
+    }
+
+    .large {
+      --min-width: 400px;
+      --breakpoint: 1000px;
+      --min-percentage: 25%;
     }
 
     ::slotted(li) {
@@ -90,21 +102,7 @@ export default class Gallery extends HTMLElement {
     this.attachShadow({ mode: 'open' })
     this.shadowRoot.appendChild(template.content.cloneNode(true))
 
-    this._host = this.shadowRoot.host
-
-    // configurable grid sizes
-    this.sizes = {
-      small: {
-        'min-width': '180px',
-        'breakpoint': '480px',
-        'min-percentage': '25%'
-      },
-      large: {
-        'min-width': '400px',
-        'breakpoint': '1000px',
-        'min-percentage': '25%'
-      }
-    }
+    this._gallery = this.shadowRoot.querySelector('.gallery')
   }
 
   static get observedAttributes() {
@@ -114,19 +112,6 @@ export default class Gallery extends HTMLElement {
   attributeChangedCallback(attrName, oldValue, newValue) {
     if (oldValue !== newValue) {
       this[attrName] = this.getAttribute(attrName);
-    }
-  }
-
-  connectedCallback() {
-    this._upgradeProperty('gutter')
-    this._upgradeProperty('size')
-  }
-
-  _upgradeProperty(prop) {
-    if (this.hasOwnProperty(prop)) {
-      let value = this[prop];
-      delete this[prop];
-      this[prop] = value;
     }
   }
 
@@ -141,7 +126,7 @@ export default class Gallery extends HTMLElement {
     }
 
     this.setAttribute('gutter', width)
-    this._host.style.setProperty('--gutter', `var(--space-${width})`);
+    this._gallery.style.setProperty('--gutter', `var(--space-${width})`);
   }
 
   get size() {
@@ -149,29 +134,21 @@ export default class Gallery extends HTMLElement {
   }
 
   set size(value) {
-
-    // custom properties used to adjust the grid size
-    const props = [
-      'min-width',
-      'breakpoint',
-      'min-percentage',
-      'max-percentage'
-    ]
-
     if (!value) {
       this.removeAttribute('size')
       return
     }
     this.setAttribute('size', value)
 
-    // loop through the custom props list and change each to match the size (e.g. 'small')
-    if (value in this.sizes) {
-      props.forEach(prop => {
-        this.sizes[value][prop] && this._host.style.setProperty(`--${prop}`, this.sizes[value][prop])
-      })
+    const sizes = ['small', 'large']
+
+    // add a modifier class to match the size attribute
+    if (sizes.indexOf(value) !== -1) {
+      this._gallery.classList.remove(sizes)
+      this._gallery.classList.add(value)
       return
     }
-    // Put a warning in the console if the size isn't available
+    // Put a warning in the console if the size class isn't available
     console.log(`The size '${value}' is not available in the jpw-gallery component.`)
   }
 }
