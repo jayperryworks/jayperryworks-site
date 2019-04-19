@@ -91,10 +91,24 @@ export default class Gallery extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true))
 
     this._host = this.shadowRoot.host
+
+    // configurable grid sizes
+    this.sizes = {
+      small: {
+        'min-width': '180px',
+        'breakpoint': '480px',
+        'min-percentage': '25%'
+      },
+      large: {
+        'min-width': '400px',
+        'breakpoint': '1000px',
+        'min-percentage': '25%'
+      }
+    }
   }
 
   static get observedAttributes() {
-    return ['gutter'];
+    return ['gutter', 'size'];
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
@@ -105,6 +119,7 @@ export default class Gallery extends HTMLElement {
 
   connectedCallback() {
     this._upgradeProperty('gutter')
+    this._upgradeProperty('size')
   }
 
   _upgradeProperty(prop) {
@@ -127,6 +142,37 @@ export default class Gallery extends HTMLElement {
 
     this.setAttribute('gutter', width)
     this._host.style.setProperty('--gutter', `var(--space-${width})`);
+  }
+
+  get size() {
+    return this.getAttribute('size')
+  }
+
+  set size(value) {
+
+    // custom properties used to adjust the grid size
+    const props = [
+      'min-width',
+      'breakpoint',
+      'min-percentage',
+      'max-percentage'
+    ]
+
+    if (!value) {
+      this.removeAttribute('size')
+      return
+    }
+    this.setAttribute('size', value)
+
+    // loop through the custom props list and change each to match the size (e.g. 'small')
+    if (value in this.sizes) {
+      props.forEach(prop => {
+        this.sizes[value][prop] && this._host.style.setProperty(`--${prop}`, this.sizes[value][prop])
+      })
+      return
+    }
+    // Put a warning in the console if the size isn't available
+    console.log(`The size '${value}' is not available in the jpw-gallery component.`)
   }
 }
 
