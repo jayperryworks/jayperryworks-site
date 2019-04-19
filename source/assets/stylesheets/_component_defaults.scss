@@ -3,7 +3,7 @@
 // -> so they're still usable if JS fails or they're not supported
 // =========================================================================
 
-jpw-gallery {
+jpw-gallery:not(:defined) {
   display: block;
-  list-decoration: none;
+  list-style: none;
 }

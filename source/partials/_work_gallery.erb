@@ -7,7 +7,7 @@
   current ||= false # BOOLEAN (optional): show the current page in the list?
   tags ||= true # BOOLEAN (optional): add data tags to each item, for sorting?
 %>
-<jpw-gallery>
+<jpw-gallery gutter="xnarrow">
   <% prints.each do |print| %>
     <% unless !current && print.title == current_page.data.title %>
       <li>
@@ -21,4 +21,3 @@
 </jpw-gallery>
 
 <%= javascript_include_tag 'components/gallery', type: 'module', async: true %>
-

@@ -13,7 +13,7 @@ const template = document.createElement('template')
 template.innerHTML = `
   <style>
     :host {
-      --gutter: 0.25rem;
+      --gutter: var(--space-xnarrow, 0.25rem);
       --min-width: 240px;
       --breakpoint: 600px;
       --min-percentage: 33.3333%;
@@ -23,9 +23,7 @@ template.innerHTML = `
       contain: content;
     }
 
-    *,
-    *::before,
-    *::after {
+    * {
       box-sizing: border-box;
     }
 
@@ -91,6 +89,44 @@ export default class Gallery extends HTMLElement {
 
     this.attachShadow({ mode: 'open' })
     this.shadowRoot.appendChild(template.content.cloneNode(true))
+
+    this._host = this.shadowRoot.host
+  }
+
+  static get observedAttributes() {
+    return ['gutter'];
+  }
+
+  attributeChangedCallback(attrName, oldValue, newValue) {
+    if (oldValue !== newValue) {
+      this[attrName] = this.getAttribute(attrName);
+    }
+  }
+
+  connectedCallback() {
+    this._upgradeProperty('gutter')
+  }
+
+  _upgradeProperty(prop) {
+    if (this.hasOwnProperty(prop)) {
+      let value = this[prop];
+      delete this[prop];
+      this[prop] = value;
+    }
+  }
+
+  get gutter() {
+    return this.getAttribute('gutter')
+  }
+
+  set gutter(width) {
+    if (!width) {
+      this.removeAttribute('gutter')
+      return
+    }
+
+    this.setAttribute('gutter', width)
+    this._host.style.setProperty('--gutter', `var(--space-${width})`);
   }
 }
 

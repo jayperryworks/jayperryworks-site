@@ -16,6 +16,12 @@ $spacing: (
   'xwide': ms(6)
 );
 
+:root {
+  @each $name, $length in $spacing {
+    --space-#{$name}: #{$length};
+  }
+}
+
 
 // outside margins for full-width containers
 // -> [screen size]: [margin width]
