@@ -10,9 +10,13 @@ template.innerHTML = `
   </style>
   <div class="overflow-hidden">
     <figure class="gutter-wrapper gutter-wide">
-      <figcaption class="gutter">
+      <div class="gutter">
         <slot name="image">Add an image</slot>
-        <slot name="title">Add a title</slot>
+      </div>
+      <figcaption class="gutter">
+        <div class="padding-bottom-narrow">
+          <slot name="title">Add a title</slot>
+        </div>
         <dl class="stats">
           <div class="stats-group">
             <dt class="stats-title">
