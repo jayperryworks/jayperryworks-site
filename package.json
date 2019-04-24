@@ -4,7 +4,6 @@
   "description": "Jay Perry's website",
   "main": "index.html",
   "config": {
-    "js_src": "source/assets/javascripts",
     "icons_src": "./source/assets/images/icons/_sprites",
     "icons_dest": "./source/layouts/partials"
   },
