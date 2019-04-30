@@ -14,7 +14,6 @@ $scale-global: 1.2;
 // global type scale
 // -> we could compute this via the modular scale mixins,
 // -> but doing it by hand allows us to tweak certain sizes to suit the fonts we're using
-// -> also, even numbers probably work better in old browsers when using px units
 $scale-type: (
   'alpha': 2.48rem,
   'beta': 2.07rem,

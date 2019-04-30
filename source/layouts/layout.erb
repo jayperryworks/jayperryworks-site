@@ -8,11 +8,9 @@
     <title><%= data.site.site_title %><% if current_page.data.title.present? && current_page.data.title != "home" %> | <%= current_page.data.title %><% end %></title>
 
     <meta name="description" content="">
-
     <%= component "favicon" %>
 
     <%= stylesheet_link_tag :main %>
-    <%= javascript_include_tag "javascripts/critical.bundle" %>
   </head>
 
   <body>
@@ -23,5 +21,8 @@
     <%= component 'main_footer', locals: {
       show_bio: current_page.data.title == 'home' || current_page.data.hide_bio == true ? false : true
     } %>
+    <% current_page.data.scripts && current_page.data.scripts.each do |script| %>
+      <%= javascript_include_tag "#{script}.bundle", type: 'module' %>
+    <% end %>
   </body>
 </html>

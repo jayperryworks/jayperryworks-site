@@ -6,7 +6,6 @@ ruby "2.4.3"
 gem "middleman", ">= 4.2.0"
 gem 'middleman-livereload'
 gem "middleman-minify-html"
-gem "middleman-google-analytics"
 gem "middleman-autoprefixer"
 gem "middleman-search_engine_sitemap"
 # gem "middleman-imageoptim"

@@ -231,14 +231,14 @@ set :relative_links, true
 configure :build do
 
   # Enable cache buster
-  # activate :asset_hash
+  activate :asset_hash
 
   # autoprefix CSS
   activate :autoprefixer do |config|
-    config.browsers = ['last 2 versions', 'Explorer >= 9']
+    config.browsers = ['last 2 versions', 'Explorer >= 10']
   end
 
-  set :url_root, 'http://jayperryworks.com'
+  set :url_root, 'https://jayperryworks.com'
   activate :search_engine_sitemap
 
   activate :minify_html
