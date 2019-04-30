@@ -13,7 +13,7 @@
     "watch": "webpack --config $npm_package_config_webpack/modern.config.js --watch -d",
     "build:modern": "webpack -p --config $npm_package_config_webpack/modern.config.js",
     "build:legacy": "webpack -p --config $npm_package_config_webpack/legacy.config.js",
-    "build": "npm run build:modern && npm run build:legacy",
+    "build": "npm run build:modern",
     "icons": "svg-sprite --symbol --symbol-dest $npm_package_config_icons_dest --symbol-sprite 'spritemap.inc' --symbol-inline --symbol-prefix 'icon-%s' $npm_package_config_icons_src/**/*.svg"
   },
   "repository": {

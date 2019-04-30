@@ -1,1 +1,1 @@
-import gallery from '../../components/gallery.js'
+import gallery from './components/gallery.mjs'

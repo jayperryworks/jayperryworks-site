@@ -13,7 +13,7 @@ module.exports = {
   // config used in both modern and legacy configs
   config: {
     entry: {
-      home: './source/assets/javascripts/home.mjs'
+      home: './source/assets/javascripts/home.js'
     },
     optimization: {
       minimizer: [
