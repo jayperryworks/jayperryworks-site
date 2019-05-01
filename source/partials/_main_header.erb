@@ -16,7 +16,7 @@
 %>
 
 <header class="t-centered <%= " c-theme-#{theme}" if theme != "default" %>" role="banner">
-  <%= component "logo-jp" %>
+  <%= partial "partials/logo-jp" %>
 
   <% if show_intro == true %>
     <div class="margin-top-wide padding-bottom-xwide padding-x-outside">
@@ -26,7 +26,7 @@
       <% if status %>
         <p class="t-display t-scale-delta c-text-tertiary margin-top-xxnarrow"><%= status %></p>
       <% end %>
-      <% component 'button_link', locals: {
+      <% partial 'partials/button_link', locals: {
         url: '/about',
         classes: 'margin-top'
       } do %>

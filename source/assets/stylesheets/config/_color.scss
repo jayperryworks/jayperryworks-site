@@ -13,15 +13,7 @@
 $black: #333;
 $gray: #b1b1b1;
 
-// highlights
-$orange: #f4b64e;
-$orange--dark: #ea8e4d;
-$blue: #3077ab;
-$blue--dark: #1e6299;
-$red: #d82333;
-$red--dark: #a0262b;
-$green: #00a556;
-$green--dark: #187042;
+$lavendar: #7999ec;
 
 // Themes
 // ----------------------------------------------------------------------
@@ -39,7 +31,7 @@ $themes: (
     'bg': #fff,
     'well': lighten($gray, 20),
     'border': lighten($gray, 20),
-    'highlight': $blue
+    'highlight': $lavendar
   ),
   'reverse': (
     'text': (
@@ -51,9 +43,26 @@ $themes: (
     'bg': $black,
     'well': darken($black, 20),
     'border': lighten($black, 20),
-    'highlight': $blue
+    'highlight': $lavendar
   )
 );
+
+$theme-default: (
+  'text-primary': #444,
+  'text-secondary': #555,
+  'text-tertiary': $gray,
+  'text-body': darken($gray, 30),
+  'bg': white,
+  'well': lighten($gray, 20),
+  'border': lighten($gray, 20),
+  'highlight': $lavendar
+);
+
+:root {
+  @each $name, $color in $theme-default {
+    --color-#{$name}: #{$color};
+  }
+}
 
 // "get" function to access theme map values
 // -> PUBLIC
