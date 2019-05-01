@@ -35,7 +35,7 @@ ignore 'assets/javascripts/*'
 
 activate :external_pipeline,
     name: :npm,
-    command: build? ? 'yarn build' : 'yarn start',
+    command: build? ? 'npm run build' : 'npm start',
     source: ".tmp",
     latency: 1
 
