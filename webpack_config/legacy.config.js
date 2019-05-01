@@ -5,7 +5,7 @@ const path = require('path')
 
 module.exports = Object.assign({}, base.config, {
   output: {
-    filename: '[name].es5.bundle.js',
+    filename: '[name].es5.js',
     path: base.outputPath
   },
   module: {

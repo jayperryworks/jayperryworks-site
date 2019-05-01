@@ -22,7 +22,7 @@
       show_bio: current_page.data.title == 'home' || current_page.data.hide_bio == true ? false : true
     } %>
     <% current_page.data.scripts && current_page.data.scripts.each do |script| %>
-      <%= javascript_include_tag "#{script}.bundle", type: 'module' %>
+      <%= javascript_include_tag script, type: 'module' %>
     <% end %>
   </body>
 </html>

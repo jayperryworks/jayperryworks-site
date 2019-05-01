@@ -7,57 +7,58 @@ const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 
-module.exports = {
-  prodMode: process.env.NODE_ENV !== 'production',
-
-  // config used in both modern and legacy configs
-  config: {
-    entry: {
-      home: './source/assets/javascripts/home.js'
-    },
-    optimization: {
-      minimizer: [
-        new TerserPlugin({
-          test: /\.m?js(\?.*)?$/i,
-          sourceMap: true,
-          terserOptions: {
-            safari10: true
-          }
-        })
-      ]
-    }
+// config used in both modern and legacy configs
+const config = {
+  entry: {
+    home: './source/assets/javascripts/home.js'
   },
-
-  // output path for all files
-  // -> relative to this file
-  outputPath: path.resolve(__dirname, '../.tmp/javascripts'),
-
-  // set up babel loader rules
-  // -> pass in desired browser targets for specific build
-  configureBabelLoader: browserlist => {
-    return {
-      test: /\.m?js$/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          babelrc: false,
-          presets: [
-            ['@babel/preset-env', {
-              debug: true,
-              modules: false,
-              useBuiltIns: 'entry',
-              targets: {
-                browsers: browserlist,
-              },
-            }],
-          ]
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        test: /\.m?js(\?.*)?$/i,
+        sourceMap: true,
+        terserOptions: {
+          safari10: true
         }
+      })
+    ]
+  }
+}
+
+// output path for all files
+// -> relative to this file
+const outputPath = path.resolve(__dirname, '../.tmp/javascripts')
+
+// set up babel loader rules
+// -> pass in desired browser targets for specific build
+const configureBabelLoader = (browserlist) => {
+  return {
+    test: /\.m?js$/,
+    use: {
+      loader: 'babel-loader',
+      options: {
+        babelrc: false,
+        presets: [
+          ['@babel/preset-env', {
+            debug: true,
+            modules: false,
+            useBuiltIns: 'entry',
+            targets: {
+              browsers: browserlist,
+            },
+          }],
+        ]
       }
     }
-  },
-
-  // plugins used in both modern and legacy configs
-  commonPlugins: () => {
-    //
   }
+}
+
+// plugins used in both modern and legacy configs
+const commonPlugins = () => {}
+
+module.exports = {
+  config,
+  outputPath,
+  configureBabelLoader,
+  commonPlugins
 }

@@ -80,13 +80,9 @@ config[:markdown_engine] = :kramdown
 # Enable cache buster
 # activate :asset_hash
 
-activate :google_analytics do |ga|
-    ga.tracking_id = 'UA-51213824-1' # Replace with your property ID.
-end
-
 # Reload the browser automatically whenever files change
 configure :development do
-    activate :livereload
+  activate :livereload
 end
 
 
@@ -98,7 +94,7 @@ end
 # rubocop:disable Metrics/BlockLength
 helpers do
 
-  # render markdown from an any string
+  # render markdown from any string
   # https://stackoverflow.com/questions/43926754/how-to-output-data-from-yaml-variables-written-in-markdown-into-an-html-haml-f#44014190
   def render_markdown(content)
     Kramdown::Document.new(content).to_html
