@@ -1,12 +1,12 @@
 // ==========================================================================
-//  Icon component
+//  Icons
 // -> for icon sprites, vector graphics, etc.
 // ==========================================================================
 
 // Base
 // --------------------------------------------------------------------------
 
-[data-ui-icon] {
+.icon {
   // sass-lint:disable no-important
   // -> use important here to ensure fill is always inherited
   color: inherit;
