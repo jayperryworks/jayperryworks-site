@@ -1,0 +1,9 @@
+// =========================================================================
+//  Default styles for components
+// -> so they're still usable if JS fails or they're not supported
+// =========================================================================
+
+jpw-gallery:not(:defined) {
+  display: block;
+  list-style: none;
+}

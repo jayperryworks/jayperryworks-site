@@ -35,7 +35,7 @@ ignore 'assets/javascripts/*'
 
 activate :external_pipeline,
     name: :npm,
-    command: build? ? 'yarn build' : 'yarn start',
+    command: build? ? 'npm run build' : 'npm start',
     source: ".tmp",
     latency: 1
 
@@ -80,13 +80,9 @@ config[:markdown_engine] = :kramdown
 # Enable cache buster
 # activate :asset_hash
 
-activate :google_analytics do |ga|
-    ga.tracking_id = 'UA-51213824-1' # Replace with your property ID.
-end
-
 # Reload the browser automatically whenever files change
 configure :development do
-    activate :livereload
+  activate :livereload
 end
 
 
@@ -98,7 +94,7 @@ end
 # rubocop:disable Metrics/BlockLength
 helpers do
 
-  # render markdown from an any string
+  # render markdown from any string
   # https://stackoverflow.com/questions/43926754/how-to-output-data-from-yaml-variables-written-in-markdown-into-an-html-haml-f#44014190
   def render_markdown(content)
     Kramdown::Document.new(content).to_html
@@ -114,7 +110,7 @@ helpers do
   # "Component" decorator for partial function
   # -> just used to point automatically to "components" dir so you don't have to type the full path
   def component(name, opts = {}, &block)
-    partial("components/#{name}", opts, &block)
+    partial("partials/#{name}", opts, &block)
   end
 
   def class_list(classes)
@@ -231,14 +227,14 @@ set :relative_links, true
 configure :build do
 
   # Enable cache buster
-  # activate :asset_hash
+  activate :asset_hash
 
   # autoprefix CSS
   activate :autoprefixer do |config|
-    config.browsers = ['last 2 versions', 'Explorer >= 9']
+    config.browsers = ['last 2 versions', 'Explorer >= 10']
   end
 
-  set :url_root, 'http://jayperryworks.com'
+  set :url_root, 'https://jayperryworks.com'
   activate :search_engine_sitemap
 
   activate :minify_html

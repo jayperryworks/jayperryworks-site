@@ -9,10 +9,10 @@
 @import 'normalize-css/normalize';
 
 ////////////////////////////////////////////////////////////////////////////////
-// Layout
-// -> global utility classes for basic layout
+// Component default styles
 ////////////////////////////////////////////////////////////////////////////////
 
+@import 'component_defaults';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Base
@@ -45,7 +45,6 @@
 @import 'components/button';
 @import 'components/card';
 @import 'components/cover';
-@import 'components/gallery';
 @import 'components/logo';
 @import 'components/main_footer';
 @import 'components/stat';

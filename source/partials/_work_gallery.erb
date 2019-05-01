@@ -1,0 +1,21 @@
+<%
+  # Work Gallery component
+  # -> A content reference with headline, excerpt, action, and optional image
+
+  # locals:
+  # prints - ARRAY: list of prints to display
+  current ||= false # BOOLEAN (optional): show the current page in the list?
+  tags ||= true # BOOLEAN (optional): add data tags to each item, for sorting?
+%>
+<jpw-gallery gutter="xwide" size="small">
+  <% prints.each do |print| %>
+    <% unless !current && print.title == current_page.data.title %>
+      <li>
+          <% link_to print, class: "t-link-undecorated" do %>
+            <% source = print.data.thumb.present? ? print.data.thumb : print.data.cover %>
+            <%= image_tag (print.data.full_path ? source : "uploads/#{source}"), :alt => print.data.title, :class => "border" %>
+          <% end %>
+      </li>
+    <% end %>
+  <% end %>
+</jpw-gallery>
