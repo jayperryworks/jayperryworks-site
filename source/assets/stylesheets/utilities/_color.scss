@@ -1,17 +1,15 @@
 //  Global color utilities
 
 // --- Theme containers ---
-@each $theme, $colors in $themes {
-  @if $theme != 'default' {
-    [data-theme~='#{$theme}'] {
-      @include theme($theme);
-    }
-  }
-}
-
 body,
 [data-theme] {
   @include theme('default', $include-props: true);
+}
+
+@each $theme, $colors in $themes {
+  [data-theme~='#{$theme}'] {
+    @include theme($theme);
+  }
 }
 
 // --- Utility classes ---
@@ -31,18 +29,18 @@ body,
   @include color-fg('highlight', $important: true);
 }
 .c-highlight-bg {
-  @include color-bg('highlight', 'background-color');
+  @include color-bg('highlight');
 }
 
 .c-accent {
   @include color-fg('accent', $important: true);
 }
 .c-accent-bg {
-  @include color-bg('accent', 'background-color');
+  @include color-bg('accent');
 }
 
 .c-well {
-  @include color-bg('well', 'background-color');
+  @include color-bg('well');
 }
 
 .c-bg {

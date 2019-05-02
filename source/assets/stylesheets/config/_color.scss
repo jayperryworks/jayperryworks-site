@@ -3,7 +3,8 @@
 // -> refer to colors ONLY via the $theme maps
 // =============================================================================
 
-@import "libs";
+@import 'libs';
+@import 'helpers';
 
 // Base Palette
 // ----------------------------------------------------------------------
@@ -21,16 +22,6 @@ $lavendar: #7999ec;
 
 // note: highlight is default; variations are assigned in local styles
 $themes: (
-  'default': (
-    'text-primary': #444,
-    'text-secondary': #555,
-    'text-tertiary': $gray,
-    'text-body': darken($gray, 30),
-    'bg': #fff,
-    'well': lighten($gray, 20),
-    'border': lighten($gray, 20),
-    'highlight': $lavendar
-  ),
   'reverse': (
     'text-primary': #fff,
     'text-secondary': lighten($gray, 20),
@@ -39,6 +30,16 @@ $themes: (
     'bg': $black,
     'well': darken($black, 20),
     'border': lighten($black, 20),
+    'highlight': $lavendar
+  ),
+  'default': (
+    'text-primary': #444,
+    'text-secondary': #555,
+    'text-tertiary': $gray,
+    'text-body': darken($gray, 30),
+    'bg': #fff,
+    'well': lighten($gray, 20),
+    'border': lighten($gray, 20),
     'highlight': $lavendar
   )
 );
@@ -60,7 +61,6 @@ $themes: (
 @function color($color, $theme-name: 'default', $grade: 0, $opacity: 1) {
   // first extract the 'theme' nested map
   $theme: map-get($themes, $theme-name);
-
   // grab the color value from the $themes map
   $value: map-get($theme, $color);
 
@@ -86,7 +86,7 @@ $themes: (
 //    - @include color(background-color, highlight);
 @mixin color($prop, $color, $theme: 'default', $important: false) {
   #{$prop}: important(color($color, $theme), $important);
-  #{$prop}: important(var(--color-#{$color}, color($color, $theme)), $important);
+  #{$prop}: important(var(--color-#{$color}), $important);
 }
 
 // decorator to set color ('foreground') property

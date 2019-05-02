@@ -4,8 +4,6 @@
 
 // --- Config & mixins ---
 
-$trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
-
 // default type sizes
 $type-size-default: 1rem;
 
@@ -124,23 +122,25 @@ $leading: (
 // Font mixins
 // -> PUBLIC, use these to style type globally & in modules
 
+$font-stack-trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
+
 // Display
 @mixin font-display($important: false) {
-  font-family: "publico-headline-normal", $georgia;
+  font-family: "publico-headline-normal", $font-stack-georgia;
   font-weight: normal;
   font-style: normal;
 }
 
 // Accent
 @mixin font-accent($weight: 'normal', $important: false) {
-  font-family: "guardian-sans-#{unquote($weight)}", $trebuchet#{if($important == true, " !important", "")};
+  font-family: "guardian-sans-#{unquote($weight)}", $font-stack-trebuchet#{if($important == true, " !important", "")};
   font-weight: if($weight == 'light', normal, unquote($weight));
   font-style: normal;
 }
 
 // Body
 @mixin font-body($weight: 'normal', $style: 'normal', $important: false) {
-  font-family: "publico-text-#{unquote($weight)}-#{unquote($style)}", $georgia#{if($important == true, " !important", "")};
+  font-family: "publico-text-#{unquote($weight)}-#{unquote($style)}", $font-stack-georgia#{if($important == true, " !important", "")};
   font-weight: unquote($weight);
   font-style: unquote($style);
 }

@@ -15,7 +15,7 @@
   theme ||= "default"
 %>
 
-<header class="t-centered <%= " c-theme-#{theme}" if theme != "default" %>" role="banner">
+<header<%= " data-theme='#{theme}'" unless theme == 'default' %> class="t-centered" role="banner">
   <%= partial "partials/logo-jp" %>
 
   <% if show_intro == true %>

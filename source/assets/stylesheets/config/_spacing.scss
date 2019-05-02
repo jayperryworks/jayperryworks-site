@@ -16,13 +16,6 @@ $spacing: (
   'xwide': ms(6)
 );
 
-:root {
-  @each $name, $length in $spacing {
-    --space-#{$name}: #{$length};
-  }
-}
-
-
 // outside margins for full-width containers
 // -> [screen size]: [margin width]
 // -> need to be responsive to keep content from getting too scrunched on small screens, and to add more air on larger screens

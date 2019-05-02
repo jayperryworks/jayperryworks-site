@@ -42,7 +42,7 @@ tbody,
 tr,
 .table-row {
   &:nth-child(even) {
-    background-color: lighten(theme('well'), 5);
+    background-color: lighten(color('well'), 5);
   }
 }
 
