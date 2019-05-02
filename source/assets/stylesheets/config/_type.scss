@@ -1,9 +1,8 @@
-// =============================================================================
 //  Type config
-// =============================================================================
-
 @import "libs";
 @import "paths";
+
+// --- Config & mixins ---
 
 $trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
 
@@ -58,25 +57,71 @@ $leading: (
   }
 }
 
-// Fonts
-// -----------------------------------------------------------------------------
+// --- Fonts ---
 // -> font-face mixins use Bourbon
 
 // headline
-@include font-face("publico-headline-normal", "#{$asset-path-fonts}/PublicoHeadline-Roman-Web", $file-formats: eot woff ttf svg);
+@include font-face(
+  "publico-headline-normal",
+  "#{$asset-path-fonts}/PublicoHeadline-Roman-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: normal;
+  font-weight: normal;
+}
 
-// text
-@include font-face("publico-text-normal-normal", "#{$asset-path-fonts}/PublicoText-Roman-Web", $file-formats: eot woff ttf svg);
-@include font-face("publico-text-normal-italic", "#{$asset-path-fonts}/PublicoText-Italic-Web", normal, italic, $file-formats: eot woff ttf svg);
+// body
+@include font-face(
+  "publico-text-normal-normal",
+  "#{$asset-path-fonts}/PublicoText-Roman-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: normal;
+  font-weight: normal;
+}
+@include font-face(
+  "publico-text-normal-italic",
+  "#{$asset-path-fonts}/PublicoText-Italic-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: italic;
+  font-weight: normal;
+}
 
 // accent
-@include font-face("guardian-sans-light", "#{$asset-path-fonts}/GuardianSans-Light-Web", $file-formats: eot woff ttf svg);
-@include font-face("guardian-sans-normal", "#{$asset-path-fonts}/GuardianSans-Regular-Web", $file-formats: eot woff woff2);
-@include font-face("guardian-sans-bold", "#{$asset-path-fonts}/GuardianSans-Semibold-Web", bold, $file-formats: eot woff woff2);
+@include font-face(
+  "guardian-sans-light",
+  "#{$asset-path-fonts}/GuardianSans-Light-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: normal;
+  font-weight: normal;
+}
+@include font-face(
+  "guardian-sans-normal",
+  "#{$asset-path-fonts}/GuardianSans-Regular-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: normal;
+  font-weight: normal;
+}
+@include font-face(
+  "guardian-sans-bold",
+  "#{$asset-path-fonts}/GuardianSans-Semibold-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: normal;
+  font-weight: bold;
+}
 
 
 // Font mixins
-// -----------------------------------------------------------------------------
 // -> PUBLIC, use these to style type globally & in modules
 
 // Display
@@ -99,13 +144,3 @@ $leading: (
   font-weight: unquote($weight);
   font-style: unquote($style);
 }
-
-// ----- Ampersands ------------------------------------------------------------
-// -> if you'd like to "use the best ampersand"
-// -> http://vault.simplebits.com/notebook/2008/08/14/ampersands-2/
-
-// @mixin font-ampersand {
-//   font-family: "Baskerville", "Palatino", "Book Antiqua", serif;
-//   font-style: italic;
-//   font-weight: normal;
-// }

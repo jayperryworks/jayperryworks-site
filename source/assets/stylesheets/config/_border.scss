@@ -55,6 +55,6 @@ $border-widths: (
 
   // if no color is specified, set up border-color for each theme
   @if type-of($color) != 'color' {
-    @include color($color, 'border-color');
+    @include color(border-color, $color);
   }
 }

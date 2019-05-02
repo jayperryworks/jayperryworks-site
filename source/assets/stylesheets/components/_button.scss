@@ -10,21 +10,21 @@
 // -----------------------------------------------------------------------------
 
 [data-ui-button] {
-  $color: 'text' 'primary';
+  $color: 'text-primary';
   @include border('all', $color: $color);
   @include font-accent;
   @include transition-default;
   background-color: transparent;
   border-radius: 0.2em;
-  color: theme($color);
+  color: color($color);
   display: inline-block;
   font-size: scale-type('zeta');
   padding: 0.5em 1.2em;
 
   &:hover,
   &:active {
-    background-color: theme($color);
-    color: theme('bg'); // override default link hover color
+    background-color: color($color);
+    color: color('bg'); // override default link hover color
   }
 
   sup {
@@ -36,13 +36,13 @@
   }
 
   &.c-theme-reverse, .c-theme-reverse & {
-    color: theme($color, 'reverse');
+    color: color($color, 'reverse');
 
     &:hover,
     &:active {
-      background-color: theme($color, 'reverse');
-      border-color: theme($color, 'reverse');
-      color: theme('bg', 'reverse'); // override default link hover color
+      background-color: color($color, 'reverse');
+      border-color: color($color, 'reverse');
+      color: color('bg', 'reverse'); // override default link hover color
     }
   }
 }
@@ -70,27 +70,27 @@
 // -> how obnoxious shall your button be?
 
 [data-ui-button~='primary'] {
-  background-color: theme('text' 'primary');
-  border-color: theme('text' 'primary');
-  color: theme('bg');
+  background-color: color('text-primary');
+  border-color: color('text-primary');
+  color: color('bg');
 
   &:hover,
   &:active {
-    background-color: darken(theme('text' 'primary'), 10);
-    border-color: darken(theme('text' 'primary'), 10);
+    background-color: darken(color('text-primary'), 10);
+    border-color: darken(color('text-primary'), 10);
   }
 }
 
 [data-ui-button~='secondary'] {
-  border-color: theme('text' 'tertiary');
-  color: theme('text' 'tertiary');
+  border-color: color('text-tertiary');
+  color: color('text-tertiary');
 }
 
 // --- special variations --------------------------------------------------
 // -> buttons of a strange and amazing nature
 
 [data-ui-button~='text'] {
-  @include color('text' 'primary');
+  @include color-fg('text-primary');
   @include font-accent('bold');
   border: none;
   font-size: scale-type('eta');
@@ -99,7 +99,7 @@
 
   &:hover, &:active {
     @include border('bottom', $style: 'secondary');
-    @include color('text' 'primary');
+    @include color-fg('text-primary');
     background-color: transparent;
     border-color: inherit;
   }

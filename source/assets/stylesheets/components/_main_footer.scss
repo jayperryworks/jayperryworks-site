@@ -33,7 +33,7 @@
   margin-top: 0.8em;
   font-size: 0.5em;
   text-transform: uppercase;
-  color: theme('text' 'tertiary');
+  color: theme('text-tertiary');
 
   @include media('>small') {
     display: inline-block;

@@ -22,24 +22,20 @@ $lavendar: #7999ec;
 // note: highlight is default; variations are assigned in local styles
 $themes: (
   'default': (
-    'text': (
-      'primary': #444,
-      'secondary': #555,
-      'tertiary': $gray,
-      'body': darken($gray, 30),
-    ),
+    'text-primary': #444,
+    'text-secondary': #555,
+    'text-tertiary': $gray,
+    'text-body': darken($gray, 30),
     'bg': #fff,
     'well': lighten($gray, 20),
     'border': lighten($gray, 20),
     'highlight': $lavendar
   ),
   'reverse': (
-    'text': (
-      'primary': #fff,
-      'secondary': lighten($gray, 20),
-      'tertiary': lighten($black, 35),
-      'body': $gray,
-    ),
+    'text-primary': #fff,
+    'text-secondary': lighten($gray, 20),
+    'text-tertiary': lighten($black, 35),
+    'text-body': $gray,
     'bg': $black,
     'well': darken($black, 20),
     'border': lighten($black, 20),
@@ -47,85 +43,88 @@ $themes: (
   )
 );
 
-$theme-default: (
-  'text-primary': #444,
-  'text-secondary': #555,
-  'text-tertiary': $gray,
-  'text-body': darken($gray, 30),
-  'bg': white,
-  'well': lighten($gray, 20),
-  'border': lighten($gray, 20),
-  'highlight': $lavendar
-);
+// --- Helpers & mixins ---
+// -> PUBLIC
 
-:root {
-  @each $name, $color in $theme-default {
+// getter function to access color map values
+// -> PARAMS
+//    - STRING/LIST $colors: the name(s) of the color roles, e.g. 'highlight'
+//    - STRING $name (optional): the name of the theme, e.g. 'default', 'dark'
+//    - NUMBER $grade (optional): 'grade' (as in 'gradation') the color to be darker or lighter
+//      -> pass in a negative number to darken the color
+//      -> pass in a positive number to lighten the color
+// -> PUBLIC
+// -> USAGE:
+//    - color: color('text-primary');
+//    - color: color('highlight' 'primary', 'reverse');
+@function color($color, $theme-name: 'default', $grade: 0, $opacity: 1) {
+  // first extract the 'theme' nested map
+  $theme: map-get($themes, $theme-name);
+
+  // grab the color value from the $themes map
+  $value: map-get($theme, $color);
+
+  // lighten or darken the color
+  @if ($grade < 0) {
+    $value: shade($value, abs($grade));
+  }
+
+  @if ($grade > 0) {
+    $value: tint($value, abs($grade));
+  }
+
+  @if ($opacity < 1) {
+    $value: rgba($value, $opacity);
+  }
+
+  @return $value;
+}
+
+// create default and custom property versions of a color
+// -> PUBLIC
+// -> USAGE
+//    - @include color(background-color, highlight);
+@mixin color($prop, $color, $theme: 'default', $important: false) {
+  #{$prop}: important(color($color, $theme), $important);
+  #{$prop}: important(var(--color-#{$color}, color($color, $theme)), $important);
+}
+
+// decorator to set color ('foreground') property
+@mixin color-fg($color, $props...) {
+  @include color(color, $color, $props...);
+}
+
+// decorator to set background-color property
+@mixin color-bg($color, $props...) {
+  @include color(background-color, $color, $props...);
+}
+
+// set up custom properties with the right values for a theme container
+// -> PUBLIC
+// -> USAGE
+//    - body { @include theme('default'); }
+@mixin theme($theme, $include-props: false) {
+
+  // create a list of custom properties for each color role in a theme
+  // -> e.g. --color-text-primary
+  $theme-colors: map-get($themes, $theme);
+
+  @each $name, $color in $theme-colors {
     --color-#{$name}: #{$color};
   }
-}
 
-// "get" function to access theme map values
-// -> PUBLIC
-// -> USAGE:
-//      color: theme('text' 'primary');
-//      color: theme('highlight', 'reverse');
-@function theme($colors, $name: 'default') {
-  // first extract the 'theme' nested map
-  $theme: map-get($themes, $name);
+  // include some background, border, etc. props in the selector?
+  // -> use this only for setting defaults. Modifier classes can just redefine the custom properties (e.g. --color-text-primary).
+  @if $include-props {
+    @include color('background-color', 'bg');
+    @include color('border-color', 'border');
+    @include color('color', 'text-secondary');
 
-  // now get the nested map for the first color value
-  $color: map-get($theme, nth($colors, 1));
-
-  // if there's more than one color string in the $colors list, dig deeper
-  @if length($colors) > 1 {
-      @for $i from 2 through length($colors) {
-        // keep updating $color with the next nested map until we've reached the end of the list
-        $color: map-get($color, nth($colors, $i));
-      }
-  }
-  @return $color;
-}
-
-// add colors for each theme
-// -> PUBLIC
-// -> USAGE:
-//      @include color(text primary, background-color);
-@mixin color($color, $attr: color, $important: false) {
-  // set color for default theme
-  #{$attr}: theme($color)#{if($important != false, " !important", "")};
-
-  // set the color of this element to match the theme of this context
-  @each $theme, $colors in $themes {
-    // @debug($theme);
-    @if $theme != "default" {
-      // set color to theme of either this element or its parent
-      &.c-theme-#{$theme}, .c-theme-#{$theme} & {
-        #{$attr}: theme($color, $theme)#{if($important != false, " !important", "")};
-      }
+    // highlight color when you select something
+    &::selection {
+      @include color('background-color', 'highlight');
+      @include color('color', 'bg');
+      text-shadow: none;
     }
-  }
-}
-
-// Theme Globals
-// ----------------------------------------------------------------------
-// -> set up helper classes and base colors
-
-@mixin theme($theme) {
-  color: theme('text' 'secondary', $theme);
-  background-color: theme('bg', $theme);
-  border-color: theme('border', $theme) !important;
-
-  // highlight color when you select something
-  ::selection {
-    background: theme('highlight', $theme);
-    color: #fff;
-    text-shadow: none;
-  }
-
-  // ditto, for mozilla engine
-  ::-moz-selection {
-    background: theme('highlight', $theme);
-    color: #fff;
-    text-shadow: none;
   }
 }
