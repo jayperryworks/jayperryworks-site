@@ -19,8 +19,8 @@
 
   &:hover,
   &:active {
-    @include color-fg('bg');
-    @include color-bg($color);
+    @include color-fg($color, $shade: 'light');
+    @include color-bg('island');
   }
 
   sup {
@@ -59,11 +59,13 @@
 
   &:hover {
     @include color(border-color, 'text-primary', $shade: 'light');
+    @include color-fg('bg');
     @include color-bg('text-primary', $shade: 'light');
   }
 
   &:active {
     @include color(border-color, 'text-primary', $shade: 'dark');
+    @include color-fg('bg');
     @include color-bg('text-primary', $shade: 'dark');
   }
 }
