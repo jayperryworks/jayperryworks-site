@@ -64,7 +64,7 @@ $gallery-max-percentage: 100%;
   max-width: var(--max-percentage);
   min-width: $gallery-min-percentage;
   min-width: var(--min-percentage);
-  width: calc(($gallery-breakpoint - 100%) * 1000);
+  width: calc((#{$gallery-breakpoint} - 100%) * 1000);
   width: calc((var(--breakpoint) - 100%) * 1000);
 
   @supports (display: grid) and (display: flex) {
