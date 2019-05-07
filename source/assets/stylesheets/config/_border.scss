@@ -46,15 +46,15 @@ $border-widths: (
 // make a standard border/hairline that works with the parent color theme
 @mixin border($sides: all, $w: $border-w-default, $color: 'border', $style: 'default', $important: false) {
   @if $sides == all {
-    border: #{border-w($w)} #{border-style($style)} #{theme($color)}#{if($important == true, ' !important', '')};
+    border: #{border-w($w)} #{border-style($style)} #{color($color)}#{if($important == true, ' !important', '')};
   } @else {
     @each $side in $sides {
-      border-#{$side}: #{border-w($w)} #{border-style($style)} #{theme($color)}#{if($important == true, ' !important', '')};
+      border-#{$side}: #{border-w($w)} #{border-style($style)} #{color($color)}#{if($important == true, ' !important', '')};
     }
   }
 
   // if no color is specified, set up border-color for each theme
   @if type-of($color) != 'color' {
-    @include color($color, 'border-color');
+    @include color(border-color, $color);
   }
 }

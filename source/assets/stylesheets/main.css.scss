@@ -5,24 +5,19 @@
  * https://github.com/jayperryworks
  */
 
-// install via yarn
+// install via npm
 @import 'normalize-css/normalize';
-
-////////////////////////////////////////////////////////////////////////////////
-// Component default styles
-////////////////////////////////////////////////////////////////////////////////
-
-@import 'component_defaults';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Base
 // -> global default element styles & utilities
 ////////////////////////////////////////////////////////////////////////////////
 
+// @import 'base/icon'; // not using any icons yet
 @import 'base/body';
 @import 'base/type';
 @import 'base/list';
-@import 'base/form';
+// @import 'base/form';
 @import 'base/media';
 @import 'base/table';
 
@@ -41,11 +36,10 @@
 // -> reusable, composable, self-contained interface elements
 ////////////////////////////////////////////////////////////////////////////////
 
-// @import 'components/icon'; // not using any icons yet
 @import 'components/button';
 @import 'components/card';
 @import 'components/cover';
-@import 'components/logo';
+@import 'components/gallery';
 @import 'components/main_footer';
 @import 'components/stat';
 @import 'components/wrapper';

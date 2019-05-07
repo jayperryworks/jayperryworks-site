@@ -33,11 +33,12 @@ config[:sass_assets_paths] = ['node_modules']
 # ignore js, b/c we're handling with external pipeline
 ignore 'assets/javascripts/*'
 
-activate :external_pipeline,
-    name: :npm,
-    command: build? ? 'npm run build' : 'npm start',
-    source: ".tmp",
-    latency: 1
+# disabled for now because there's not really any JS
+# activate :external_pipeline,
+#     name: :npm,
+#     command: build? ? 'npm run build' : 'npm start',
+#     source: ".tmp",
+#     latency: 1
 
 # Automatic image dimensions on image_tag helper
 # activate :automatic_image_sizes

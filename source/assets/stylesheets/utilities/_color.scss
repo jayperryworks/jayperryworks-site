@@ -1,43 +1,56 @@
-// =============================================================================
-//  Global color styles
-// =============================================================================
+//  Global color utilities
 
-// Themes
-// -> use the helper class to apply a theme to a module
-// -----------------------------------------------------------------------------
-
-body, .c-theme-default {
-  @include theme('default');
+// --- Theme containers ---
+body,
+[data-theme] {
+  @include theme('default', $include-props: true);
 }
 
-// create utility classes for each color theme from the $themes map
-// e.g. ".c-theme-reverse" and ".c-theme-wash"
 @each $theme, $colors in $themes {
-  @if $theme != "default" {
-    .c-theme-#{$theme} { @include theme('#{$theme}'); }
+  [data-theme~='#{$theme}'] {
+    @include theme($theme);
   }
 }
 
-// Helper classes
+// --- Utility classes ---
 // -> use on individual elements to apply special color treatment
-// -----------------------------------------------------------------------------
 
-.c-text-primary { @include color('text' 'primary', $important: true); }
-.c-text-secondary { @include color('text' 'secondary', $important: true); }
-.c-text-tertiary { @include color('text' 'tertiary', $important: true); }
+.c-text-primary {
+  @include color-fg('text-primary', $important: true);
+}
+.c-text-secondary {
+  @include color-fg('text-secondary', $important: true);
+}
+.c-text-tertiary {
+  @include color-fg('text-tertiary', $important: true);
+}
 
-.c-highlight { @include color('highlight', $important: true); }
-.c-highlight-bg { @include color('highlight', 'background-color'); }
+.c-highlight {
+  @include color-fg('highlight', $important: true);
+}
+.c-highlight-bg {
+  @include color-bg('highlight');
+}
 
-.c-accent { @include color('accent', $important: true); }
-.c-accent-bg { @include color('accent', 'background-color'); }
+.c-accent {
+  @include color-fg('accent', $important: true);
+}
+.c-accent-bg {
+  @include color-bg('accent');
+}
 
-.c-well { @include color('well', 'background-color'); }
+.c-well {
+  @include color-bg('well');
+}
 
-.c-bg { @include color('bg'); }
+.c-bg {
+  @include color-fg('bg');
+}
 
 // kill background colors in print
 // -> note all elements are set to color: black in base/_print.scss
 @media print {
-  [class^="c-"] { background-color: transparent !important; }
+  [class^="c-"] {
+    background-color: transparent !important;
+  }
 }

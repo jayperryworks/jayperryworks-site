@@ -1,30 +1,26 @@
-// =============================================================================
 //  Button component
-// =============================================================================
-
 @import "../config/color";
 @import "../config/type";
 @import "../config/border";
 
-// Base
-// -----------------------------------------------------------------------------
+// --- Base ---
 
 [data-ui-button] {
-  $color: 'text' 'primary';
+  $color: 'text-primary';
   @include border('all', $color: $color);
+  @include color-fg($color);
   @include font-accent;
   @include transition-default;
   background-color: transparent;
   border-radius: 0.2em;
-  color: theme($color);
   display: inline-block;
   font-size: scale-type('zeta');
   padding: 0.5em 1.2em;
 
   &:hover,
   &:active {
-    background-color: theme($color);
-    color: theme('bg'); // override default link hover color
+    @include color-fg($color, $shade: 'light');
+    @include color-bg('island');
   }
 
   sup {
@@ -34,25 +30,12 @@
   strong {
     @include font-accent('bold');
   }
-
-  &.c-theme-reverse, .c-theme-reverse & {
-    color: theme($color, 'reverse');
-
-    &:hover,
-    &:active {
-      background-color: theme($color, 'reverse');
-      border-color: theme($color, 'reverse');
-      color: theme('bg', 'reverse'); // override default link hover color
-    }
-  }
 }
 
 
+// --- Modifiers ---
 
-// Modifiers
-// -----------------------------------------------------------------------------
-
-// --- sizes ---------------------------------------------------------------
+// --- sizes
 // -> default size is "medium." add these classes to go bigger or smaller.
 
 [data-ui-button~='small'] {
@@ -66,31 +49,32 @@
   padding: 0.8em 1.6em;
 }
 
-// --- prominence ----------------------------------------------------------
+// --- prominence
 // -> how obnoxious shall your button be?
 
 [data-ui-button~='primary'] {
-  background-color: theme('text' 'primary');
-  border-color: theme('text' 'primary');
-  color: theme('bg');
+  @include color('border-color', 'text-primary');
+  @include color-bg('text-primary');
+  @include color-fg('bg');
 
-  &:hover,
+  &:hover {
+    @include color(border-color, 'text-primary', $shade: 'light');
+    @include color-fg('bg');
+    @include color-bg('text-primary', $shade: 'light');
+  }
+
   &:active {
-    background-color: darken(theme('text' 'primary'), 10);
-    border-color: darken(theme('text' 'primary'), 10);
+    @include color(border-color, 'text-primary', $shade: 'dark');
+    @include color-fg('bg');
+    @include color-bg('text-primary', $shade: 'dark');
   }
 }
 
-[data-ui-button~='secondary'] {
-  border-color: theme('text' 'tertiary');
-  color: theme('text' 'tertiary');
-}
-
-// --- special variations --------------------------------------------------
+// --- special variations
 // -> buttons of a strange and amazing nature
 
 [data-ui-button~='text'] {
-  @include color('text' 'primary');
+  @include color-fg('text-primary');
   @include font-accent('bold');
   border: none;
   font-size: scale-type('eta');
@@ -99,7 +83,7 @@
 
   &:hover, &:active {
     @include border('bottom', $style: 'secondary');
-    @include color('text' 'primary');
+    @include color-fg('text-primary');
     background-color: transparent;
     border-color: inherit;
   }

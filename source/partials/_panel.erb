@@ -24,12 +24,11 @@
   utils = [
     (padding_classes(padding) if padding),
     border_classes(borders),
-    ("c-theme-#{theme}" if theme != 'default'),
     classes
   ]
 %>
 
-<section<%= class_list(utils) %><%= " id=#{id}" if id %>>
+<section data-theme="<%= theme %>"<%= class_list(utils) %><%= " id=#{id}" if id %>>
   <% if heading %>
     <h<%= heading_level %> class="t-centered padding-bottom-wide"><%= heading %></h<%= heading_level %>>
   <% end %>

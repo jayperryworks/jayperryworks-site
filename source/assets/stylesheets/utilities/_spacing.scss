@@ -1,12 +1,16 @@
-// =============================================================================
 // Global spacing
 // -> used to keep whitespace in the layout consistent
-// =============================================================================
-
 @import "../config/spacing";
 
-// Margin & padding utils
-// -----------------------------------------------------------------------------
+// --- global custom props ---
+
+:root {
+  @each $name, $length in $spacing {
+    --space-#{$name}: #{$length};
+  }
+}
+
+// --- Margin & padding utils ---
 
 @each $prop in (padding, margin) {
   .#{$prop} {
@@ -17,13 +21,13 @@
   }
 
   .#{$prop}-x {
-    #{$prop}-left: space();
-    #{$prop}-right: space();
+    #{$prop}-left: space() !important;
+    #{$prop}-right: space() !important;
   }
 
   .#{$prop}-y {
-    #{$prop}-top: space();
-    #{$prop}-bottom: space();
+    #{$prop}-top: space() !important;
+    #{$prop}-bottom: space() !important;
   }
 
   @each $name, $length in $spacing {
@@ -78,8 +82,7 @@
   }
 }
 
-// Split gutters
-// -----------------------------------------------------------------------------
+// --- Split gutters ---
 
 // add uniform gutters to a group of elements
 .gutter-wrapper {

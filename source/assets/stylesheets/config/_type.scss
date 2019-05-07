@@ -1,11 +1,8 @@
-// =============================================================================
 //  Type config
-// =============================================================================
-
 @import "libs";
 @import "paths";
 
-$trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
+// --- Config & mixins ---
 
 // default type sizes
 $type-size-default: 1rem;
@@ -58,54 +55,92 @@ $leading: (
   }
 }
 
-// Fonts
-// -----------------------------------------------------------------------------
+// --- Fonts ---
 // -> font-face mixins use Bourbon
 
 // headline
-@include font-face("publico-headline-normal", "#{$asset-path-fonts}/PublicoHeadline-Roman-Web", $file-formats: eot woff ttf svg);
+@include font-face(
+  "publico-headline-normal",
+  "#{$asset-path-fonts}/PublicoHeadline-Roman-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: normal;
+  font-weight: normal;
+}
 
-// text
-@include font-face("publico-text-normal-normal", "#{$asset-path-fonts}/PublicoText-Roman-Web", $file-formats: eot woff ttf svg);
-@include font-face("publico-text-normal-italic", "#{$asset-path-fonts}/PublicoText-Italic-Web", normal, italic, $file-formats: eot woff ttf svg);
+// body
+@include font-face(
+  "publico-text-normal-normal",
+  "#{$asset-path-fonts}/PublicoText-Roman-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: normal;
+  font-weight: normal;
+}
+@include font-face(
+  "publico-text-normal-italic",
+  "#{$asset-path-fonts}/PublicoText-Italic-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: italic;
+  font-weight: normal;
+}
 
 // accent
-@include font-face("guardian-sans-light", "#{$asset-path-fonts}/GuardianSans-Light-Web", $file-formats: eot woff ttf svg);
-@include font-face("guardian-sans-normal", "#{$asset-path-fonts}/GuardianSans-Regular-Web", $file-formats: eot woff woff2);
-@include font-face("guardian-sans-bold", "#{$asset-path-fonts}/GuardianSans-Semibold-Web", bold, $file-formats: eot woff woff2);
+@include font-face(
+  "guardian-sans-light",
+  "#{$asset-path-fonts}/GuardianSans-Light-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: normal;
+  font-weight: normal;
+}
+@include font-face(
+  "guardian-sans-normal",
+  "#{$asset-path-fonts}/GuardianSans-Regular-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: normal;
+  font-weight: normal;
+}
+@include font-face(
+  "guardian-sans-bold",
+  "#{$asset-path-fonts}/GuardianSans-Semibold-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: normal;
+  font-weight: bold;
+}
 
 
 // Font mixins
-// -----------------------------------------------------------------------------
 // -> PUBLIC, use these to style type globally & in modules
+
+$font-stack-trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
 
 // Display
 @mixin font-display($important: false) {
-  font-family: "publico-headline-normal", $georgia;
+  font-family: "publico-headline-normal", $font-stack-georgia;
   font-weight: normal;
   font-style: normal;
 }
 
 // Accent
 @mixin font-accent($weight: 'normal', $important: false) {
-  font-family: "guardian-sans-#{unquote($weight)}", $trebuchet#{if($important == true, " !important", "")};
+  font-family: "guardian-sans-#{unquote($weight)}", $font-stack-trebuchet#{if($important == true, " !important", "")};
   font-weight: if($weight == 'light', normal, unquote($weight));
   font-style: normal;
 }
 
 // Body
 @mixin font-body($weight: 'normal', $style: 'normal', $important: false) {
-  font-family: "publico-text-#{unquote($weight)}-#{unquote($style)}", $georgia#{if($important == true, " !important", "")};
+  font-family: "publico-text-#{unquote($weight)}-#{unquote($style)}", $font-stack-georgia#{if($important == true, " !important", "")};
   font-weight: unquote($weight);
   font-style: unquote($style);
 }
-
-// ----- Ampersands ------------------------------------------------------------
-// -> if you'd like to "use the best ampersand"
-// -> http://vault.simplebits.com/notebook/2008/08/14/ampersands-2/
-
-// @mixin font-ampersand {
-//   font-family: "Baskerville", "Palatino", "Book Antiqua", serif;
-//   font-style: italic;
-//   font-weight: normal;
-// }

@@ -27,7 +27,7 @@ h5,
 h6,
 .t-heading {
   @include font-display;
-  @include color('text' 'primary');
+  @include color-fg('text-primary');
   display: block;
   line-height: leading('tight');
   margin: 0;
@@ -66,7 +66,7 @@ h6,
 
 // body/inline text
 p {
-  @include color('text' 'secondary');
+  @include color-fg('text-secondary');
   -webkit-margin-after: 0;
   -webkit-margin-before: 0;
   margin-bottom: 0;
@@ -115,14 +115,14 @@ em {
 
 small,
 .t-small {
-  @include color('text' 'tertiary');
+  @include color-fg('text-tertiary');
   font-size: scale-type('eta');
 }
 
 figcaption,
 .t-caption {
   @include font-accent;
-  @include color('text' 'tertiary');
+  @include color-fg('text-tertiary');
   font-size: scale-type('zeta');
 
   strong {
@@ -132,7 +132,7 @@ figcaption,
 
 address,
 .t-address {
-  @include color('text' 'secondary');
+  @include color-fg('text-secondary');
   font-size: scale-type('eta');
 }
 
@@ -227,7 +227,7 @@ h6,
 
 .t-tag {
   @include border;
-  @include color('text' 'tertiary');
+  @include color-fg('text-tertiary');
   @include font-accent;
   @include transition-default;
   border-radius: 0.1em;
@@ -239,7 +239,7 @@ h6,
 
   &:hover,
   &:active {
-    @include color('text' 'secondary');
+    @include color-fg('text-secondary');
     border-color: inherit;
   }
 
@@ -261,7 +261,7 @@ h6,
 .t-lead,
 .t-content.t-content-dropcap > p:first-of-type {
   &::first-letter {
-    @include color('text' 'primary');
+    @include color-fg('text-primary');
     @include font-accent('bold');
     float: left;
     font-size: 3.5rem;
@@ -280,7 +280,7 @@ h6,
 
 .footnotes {
   @include border('top');
-  @include color('text' 'tertiary');
+  @include color-fg('text-tertiary');
   font-size: scale-type('zeta');
   margin-bottom: space();
   margin-top: space();
@@ -288,7 +288,7 @@ h6,
 
   li,
   p {
-    @include color('text' 'tertiary');
+    @include color-fg('text-tertiary');
     @include font-accent;
     font-size: scale-type('zeta');
     letter-spacing: 0.02em;
