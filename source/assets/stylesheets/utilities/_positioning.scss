@@ -9,7 +9,7 @@
   display: inline;
 }
 
-@include breakpointify(".display-inline_block", true, $sizes: "xsmall") {
+@include breakpointify(".display-inline-block", true, $sizes: "xsmall") {
   display: inline-block;
 }
 
@@ -21,6 +21,10 @@
   // @supports (display: flex) {
     display: flex !important;
   // }
+}
+
+.display-flex-justify {
+  justify-content: space-between;
 }
 
 .flex-fill {

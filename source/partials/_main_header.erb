@@ -15,11 +15,20 @@
   theme ||= "default"
 %>
 
-<header<%= " data-theme='#{theme}'" unless theme == 'default' %> class="t-centered" role="banner">
-  <%= partial "partials/logo-jp" %>
+<header<%= " data-theme='#{theme}'" unless theme == 'default' %> class="padding-x-outside" role="banner">
+  <nav class="display-flex display-flex-justify">
+    <%= partial "partials/logo-jp" %>
+    <ul class="gutter-wrapper gutter-narrow">
+      <% data.site.main_nav.each do |item| %>
+        <li class="display-inline-block gutter">
+          <%= link_to item.label, item.url, class: 'display-inline-block t-accent t-link-undecorated t-scale-zeta' %>
+        </li>
+      <% end %>
+    </ul>
+  </nav>
 
   <% if show_intro == true %>
-    <div class="margin-top-wide padding-bottom-xwide padding-x-outside">
+    <div class="margin-top-wide padding-bottom-xwide t-centered">
       <% if intro %>
         <div class="t-display t-scale-gamma"><%= render_markdown(intro) %></div>
       <% end %>
