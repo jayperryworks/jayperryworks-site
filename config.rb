@@ -209,10 +209,10 @@ helpers do
     end
   end
 
-  # are we on the current page?
+  # is this url in the current directory?
   # -> return true if url is an exact match or a subdirectory (e.g. /prints/waterfall = /prints)
-  def current_page?(url)
-    return true if url.include?(current_page.url)
+  def current_dir?(url)
+    return true if url.include?(current_page.url.chomp('/'))
   end
 end
 
