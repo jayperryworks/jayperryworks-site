@@ -1,30 +1,40 @@
-<%#
-  Main Header component
-  - lives at the top of each page
-
-  Locals:
-  BOOLEAN show_intro (optional): want to show the intro?
-  STRING intro (optional): the intro statement
-  STRING status (optional): the status statement
-%>
-
 <%
-  show_intro ||= false
-  intro ||= false
-  status ||= false
-  theme ||= "default"
+  # Main Header component
+  # - lives at the top of each page
+
+  # Locals:
+  show_intro ||= false # BOOLEAN (optional): show the intro?
+  show_nav ||= false # BOOLEAN (optional): show the main nav?
+  intro ||= false # BOOLEAN (optional): add a custom intro message
+  status ||= false # STRING (optional): add a custom status message to the intro
+  theme ||= 'default' # STRING (optional): change the color theme
+
+  def show_highlight?(class_name, url)
+    return current_page?(url) ? class_name : ''
+  end
 %>
 
 <header<%= " data-theme='#{theme}'" unless theme == 'default' %> class="padding-x-outside" role="banner">
   <nav class="display-flex display-flex-justify">
     <%= partial "partials/logo-jp" %>
-    <ul class="gutter-wrapper gutter-narrow">
-      <% data.site.main_nav.each do |item| %>
-        <li class="display-inline-block gutter">
-          <%= link_to item.label, item.url, class: 'display-inline-block t-accent t-link-undecorated t-scale-zeta' %>
-        </li>
-      <% end %>
-    </ul>
+    <% if show_nav %>
+      <ul class="list-undecorated margin-x-between-narrow">
+        <% data.site.main_nav.each do |item| %>
+          <li class="display-inline-block no-margin-top">
+            <%= link_to item.label, item.url, class: "display-block padding-top-narrow t-accent t-link-undecorated t-scale-zeta #{show_highlight?('t-highlight-top', item.url)}" %>
+          </li>
+        <% end %>
+      </ul>
+      <div class="border border-round se-shadow position-absolute padding-y">
+        <ul class="list-undecorated margin-y-between-narrow">
+          <% data.site.main_nav.each do |item| %>
+          <li class="display-block">
+            <%= link_to item.label, item.url, class: "display-block padding-x t-accent t-link-undecorated t-scale-zeta t-leading-tight #{show_highlight?('t-highlight-left', item.url)}" %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   </nav>
 
   <% if show_intro == true %>

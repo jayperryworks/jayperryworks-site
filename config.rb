@@ -209,16 +209,14 @@ helpers do
     end
   end
 
+  # are we on the current page?
+  # -> return true if url is an exact match or a subdirectory (e.g. /prints/waterfall = /prints)
   def current_page?(url)
-    if current_page.url == url then
-      return true
-    else
-      return false
-    end
+    return true if url.include?(current_page.url)
   end
 end
 
-set :url_root, 'http://jayperryworks.com'
+set :url_root, 'https://jayperryworks.com'
 # activate :search_engine_sitemap
 
 # Use relative links all the time - helps catch url bugs before deployment

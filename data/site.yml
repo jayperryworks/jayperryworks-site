@@ -12,7 +12,7 @@ main_nav:
   - label: Bookshelf
     url: /reading
   - label: About
-    url: /about
+    url: /about/test
 
 # markdown allowed here
 intro: |-
@@ -31,7 +31,7 @@ print_descriptions:
 
 social:
   - name: Etsy
-    link: https://www.etsy.com/shop/jayperry
+    link: https://jayperry.etsy.com/
   - name: Twitter
     link: https://twitter.com/inkpixelswords
   - name: Pinterest

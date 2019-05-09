@@ -3,11 +3,12 @@
 // =============================================================================
 
 @import "../config/animation";
-@import "../config/color";
-@import "../config/scale";
-@import "../config/type";
 @import "../config/border";
+@import "../config/color";
+@import "../config/helpers";
+@import "../config/scale";
 @import "../config/spacing";
+@import "../config/type";
 
 // Defaults
 // -----------------------------------------------------------------------------
@@ -222,6 +223,36 @@ h6,
   &:active {
     @include border('bottom', $style: 'secondary');
     border-color: inherit;
+  }
+}
+
+[class*="t-highlight"] {
+  position: relative;
+
+  &:before {
+    @include color-bg('highlight');
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+  }
+}
+
+.t-highlight-top {
+  &:before {
+    height: border-w('thick');
+    left: 0;
+    right: 0;
+    top: 0;
+  }
+}
+
+.t-highlight-left {
+  &:before {
+    bottom: 0;
+    width: border-w('thick');
+    left: 0;
+    top: 0;
   }
 }
 

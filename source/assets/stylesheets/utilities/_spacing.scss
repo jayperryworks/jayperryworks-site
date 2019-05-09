@@ -30,6 +30,19 @@
     #{$prop}-bottom: space() !important;
   }
 
+  // add space between all children on a given axis
+  .#{$prop}-x-between {
+    > * + * {
+      #{$prop}-left: space();
+    }
+  }
+
+  .#{$prop}-y-between {
+    > * + * {
+      #{$prop}-top: space();
+    }
+  }
+
   @each $name, $length in $spacing {
     @if $name != 'default' {
       .#{$prop}-#{$name} {
@@ -44,6 +57,19 @@
       .#{$prop}-y-#{$name} {
         #{$prop}-top: space($name) !important;
         #{$prop}-bottom: space($name) !important;
+      }
+
+      // add space between all children on a given axis
+      .#{$prop}-x-between-#{$name} {
+        > * + * {
+          #{$prop}-left: space($name);
+        }
+      }
+
+      .#{$prop}-y-between-#{$name} {
+        > * + * {
+          #{$prop}-top: space($name);
+        }
       }
     }
   }
