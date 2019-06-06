@@ -38,8 +38,6 @@
     "bourbon": "^4.2.6",
     "include-media": "^1.4.1",
     "modularscale-sass": "^2.1.1",
-    "netlify-cms": "^2.6.1",
-    "normalize-css": "^2.3.1",
-    "picturefill": "^3.0.1"
+    "normalize-css": "^2.3.1"
   }
 }
