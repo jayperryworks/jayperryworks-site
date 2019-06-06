@@ -13,8 +13,7 @@
     <li class="display-block padding-top-xwide<%= ' margin-top-xwide' unless index === 0 %> border-top">
       <% if article.data.image.present? %>
         <% link_to article.url, class: "display-block padding-bottom t-link-undecorated t-centered" do %>
-          <% path = article.data.full_path ? article.data.image : "uploads/#{article.data.image}" %>
-          <%= image_tag path, alt: article.title %>
+          <%= image_tag "uploads/#{article.data.image}", alt: article.title %>
         <% end %>
       <% end %>
       <time class="t-heading t-accent-bold t-scale-eta c-text-tertiary"><%= article.date.strftime("%B %-d, %Y") %></time>
