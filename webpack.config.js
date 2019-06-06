@@ -7,8 +7,7 @@ const buildPath = '.tmp/javascripts'
 // split output JS into "critical" (above-the-fold) scripts and the rest (which can be loaded on-demand)
 module.exports = {
   entry: {
-    critical: ['picturefill'],
-    admin: './source/assets/javascripts/admin.js'
+    critical: ['picturefill']
   },
   output: {
     path: path.resolve(__dirname, buildPath),

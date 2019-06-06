@@ -34,10 +34,10 @@ config[:sass_assets_paths] = ['node_modules']
 ignore 'assets/javascripts/*'
 
 activate :external_pipeline,
-    name: :npm,
-    command: build? ? 'yarn build' : 'yarn start',
-    source: ".tmp",
-    latency: 1
+  name: :npm,
+  command: build? ? 'yarn build' : 'yarn start',
+  source: ".tmp",
+  latency: 1
 
 # Automatic image dimensions on image_tag helper
 # activate :automatic_image_sizes
