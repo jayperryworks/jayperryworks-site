@@ -28,7 +28,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin([buildPath])
+    new CleanWebpackPlugin()
   ]
 }
 
