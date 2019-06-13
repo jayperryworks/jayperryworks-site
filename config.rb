@@ -110,7 +110,7 @@ helpers do
   # "Component" decorator for partial function
   # -> just used to point automatically to "components" dir so you don't have to type the full path
   def component(name, opts = {}, &block)
-    partial("partials/#{name}", opts, &block)
+    partial("components/#{name}", opts, &block)
   end
 
   def class_list(classes)

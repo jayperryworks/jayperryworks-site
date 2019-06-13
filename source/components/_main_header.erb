@@ -16,10 +16,10 @@
 
 <header<%= " data-theme='#{theme}'" unless theme == 'default' %> class="padding-x-outside" role="banner">
   <nav class="display-flex display-flex-justify">
-    <%= partial "partials/logo-jp" %>
+    <%= partial "components/logo-jp" %>
     <% if show_nav %>
       <!-- large-screen nav -->
-      <ul class="list-undecorated margin-x-between-narrow">
+      <ul class="list-undecorated margin-x-between-narrow show@small">
         <% data.site.main_nav.each do |item| %>
           <li class="display-inline-block no-margin-top">
             <%= link_to item.label, item.url, class: "display-block padding-top-narrow t-accent t-link-undecorated t-scale-zeta #{show_highlight?('t-highlight-top', item.url)}" %>
@@ -27,15 +27,18 @@
         <% end %>
       </ul>
       <!-- small-screen nav -->
-      <div class="border border-round se-shadow position-absolute padding-y">
-        <ul class="list-undecorated margin-y-between-narrow">
-          <% data.site.main_nav.each do |item| %>
-          <li class="display-block">
-            <%= link_to item.label, item.url, class: "display-block padding-x t-accent t-link-undecorated t-scale-zeta t-leading-tight #{show_highlight?('t-highlight-left', item.url)}" %>
-          </li>
-          <% end %>
-        </ul>
-      </div>
+      <details class="hide@small">
+        <summary data-ui-button="incognito">Menu</summary>
+        <div class="border border-round se-shadow position-absolute padding-y">
+          <ul class="list-undecorated margin-y-between-narrow">
+            <% data.site.main_nav.each do |item| %>
+            <li class="display-block">
+              <%= link_to item.label, item.url, class: "display-block padding-x t-accent t-link-undecorated t-scale-zeta t-leading-tight #{show_highlight?('t-highlight-left', item.url)}" %>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+      </details>
     <% end %>
   </nav>
 
@@ -47,7 +50,7 @@
       <% if status %>
         <p class="t-display t-scale-delta c-text-tertiary margin-top-xxnarrow"><%= status %></p>
       <% end %>
-      <% partial 'partials/button_link', locals: {
+      <% partial 'components/button_link', locals: {
         url: '/about',
         classes: 'margin-top'
       } do %>
