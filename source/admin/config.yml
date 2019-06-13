@@ -24,6 +24,7 @@ collections:
       - {label: 'Intro note', name: 'intro_note', widget: 'text', required: false}
       - {label: 'Tags', name: 'tags', widget: 'list', required: false}
       - {label: 'Short post', name: 'show_full', widget: 'boolean', default: true, required: false}
+      - {label: 'Full path', name: 'full_path', widget: 'hidden', default: true, required: false}
       - {label: 'Body', name: 'body', widget: 'markdown'}
 
   - name: 'work' # Used in routes, e.g., /admin/collections/blog
