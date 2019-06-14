@@ -9,7 +9,6 @@
 [data-ui-dropdown] {
   display: block;
   position: relative;
-  transition: opacity 0.25s;
 }
 
 // --- Elements ---
@@ -43,15 +42,11 @@
 
 [data-ui-dropdown-menu] {
   display: block;
-  position: absolute;
-  right: 0;
-  visibility: hidden;
-  opacity: 0;
   min-width: 10rem;
   z-index: z('top');
 
   [data-ui-dropdown][open] & {
-    visibility: visible;
-    opacity: 1;
+    position: absolute;
+    right: 0;
   }
 }
