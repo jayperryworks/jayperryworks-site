@@ -1,0 +1,57 @@
+// Dropdown component
+// -> Create a dropdown menu
+// -> Based on details & summary elements
+
+@import '../config/animation';
+@import '../config/positioning';
+
+// --- Base ---
+[data-ui-dropdown] {
+  display: block;
+  position: relative;
+  transition: opacity 0.25s;
+}
+
+// --- Elements ---
+[data-ui-dropdown-toggle] {
+  cursor: pointer;
+  list-style: none;
+
+  // remove marker added by chrome
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  [data-ui-dropdown][open] & {
+    // add an invisible overlay to whole screen so you can click anywhere else to dismiss the dropdown
+    // -> cheers to https://github.com/muan/details-on-details
+    // -> https://github.com/github/details-menu-element
+    &::before {
+      cursor: default;
+      content: ' ';
+      display: block;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: z('high');
+      background: transparent;
+    }
+  }
+}
+
+[data-ui-dropdown-menu] {
+  display: block;
+  position: absolute;
+  right: 0;
+  visibility: hidden;
+  opacity: 0;
+  min-width: 10rem;
+  z-index: z('top');
+
+  [data-ui-dropdown][open] & {
+    visibility: visible;
+    opacity: 1;
+  }
+}
