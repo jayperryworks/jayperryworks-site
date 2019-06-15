@@ -1,48 +1,7 @@
-// ==========================================================================
 // Visibility
 // -> hide and show things in various ways
-// ==========================================================================
-
+@import '../config/visibility';
 @import '../config/breakpoints';
-
-@mixin visually-hidden($focusable: false) {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  // margin: -1px;
-  overflow: hidden;
-  // padding: 0;
-  position: absolute;
-  width: 1px;
-
-  /*
-   * Extends the .visuallyhidden class to allow the element
-   * to be focusable when navigated to via the keyboard:
-   * https://www.drupal.org/node/897638
-   */
-  @if ($focusable == true) {
-    &:active,
-    &:focus {
-      clip-path: auto;
-      height: auto;
-      // margin: 0;
-      overflow: visible;
-      position: static;
-      width: auto;
-    }
-  }
-}
-
-@mixin restore-visually-hidden($overflow: visible) {
-  clip-path: auto;
-  height: auto;
-  // margin: 0;
-  overflow: $overflow;
-  position: relative;
-  width: auto;
-}
-
-// visibility helper classes
 
 // hide but keep it accessible
 .is-visually-hidden {
@@ -59,6 +18,19 @@
 
 // completely hide
 .hide { display: none !important; }
+
+// hide or show if javascript is available
+.hide\@js {
+  .js & {
+    display: none;
+  }
+}
+
+.show\@js {
+  .no-js & {
+    display: none;
+  }
+}
 
 // screen-size helper classes
 // -> hide content until screen reaches specified breakpoint size

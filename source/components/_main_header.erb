@@ -28,7 +28,18 @@
       </ul>
       <!-- small-screen nav -->
       <details data-ui-dropdown class="hide@small">
-        <summary data-ui-dropdown-toggle class="t-accent t-scale-zeta padding-top-narrow" aria-has-popup="menu">Menu</summary>
+        <summary data-ui-dropdown-toggle class="t-accent t-scale-zeta padding-top-narrow" aria-has-popup="menu">
+          <%= component 'icon', locals: {
+            id: 'menu',
+            margin: 'right'
+          } %>
+          Menu
+          <%= component 'icon', locals: {
+            id: 'arrow-down',
+            margin: 'left',
+            size: 'small'
+          } %>
+        </summary>
         <div data-ui-dropdown-menu data-theme="default" class="border border-round se-shadow padding-y margin-top-narrow">
           <ul class="list-undecorated margin-y-between-narrow">
             <% data.site.main_nav.each do |item| %>

@@ -8,7 +8,7 @@
     <title><%= data.site.site_title %><% if current_page.data.title.present? && current_page.data.title != "home" %> | <%= current_page.data.title %><% end %></title>
 
     <meta name="description" content="">
-    <%= component "favicon" %>
+    <%= partial "layouts/partials/favicon" %>
 
     <%= stylesheet_link_tag :main %>
     <script>
@@ -19,7 +19,10 @@
   </head>
 
   <body>
-    <%# component "spritemap" %>
+    <!-- icon sprites -->
+    <div style="display: none; position: absolute; height: 0; width: 0;">
+      <%= partial "layouts/partials/spritemap" %>
+    </div>
 
     <%= yield %>
 
