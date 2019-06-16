@@ -64,7 +64,7 @@ th,
     display: block;
   }
 
-  thead, .table-header { @include visually_hidden; }
+  thead, .table-header { @include hide-visually(); }
 
   tr {
     @include border('top');

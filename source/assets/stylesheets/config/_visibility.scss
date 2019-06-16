@@ -1,26 +1,18 @@
 // Visibility config and mixins
 
-@mixin visually-hidden($focusable: false) {
+@mixin hide-visually() {
   border: 0;
-  clip: rect(0 0 0 0);
+  clip-path: rect(0 0 0 0);
   height: 1px;
-  // margin: -1px;
   overflow: hidden;
-  // padding: 0;
   position: absolute;
   width: 1px;
 
-  /*
-   * Extends the .visuallyhidden class to allow the element
-   * to be focusable when navigated to via the keyboard:
-   * https://www.drupal.org/node/897638
-   */
-  @if ($focusable == true) {
+  &.hide-visually--focusable {
     &:active,
     &:focus {
       clip-path: auto;
       height: auto;
-      // margin: 0;
       overflow: visible;
       position: static;
       width: auto;
@@ -28,11 +20,10 @@
   }
 }
 
-@mixin restore-visually-hidden($overflow: visible) {
+@mixin show-visually() {
   clip-path: auto;
   height: auto;
-  // margin: 0;
-  overflow: $overflow;
+  overflow: visible;
   position: relative;
   width: auto;
 }
