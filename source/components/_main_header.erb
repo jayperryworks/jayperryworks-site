@@ -63,7 +63,7 @@
                 <% item_classes = [
                   'display-block',
                   'no-margin-top',
-                  ('padding-bottom-xnarrow' unless index == data.site.main_nav.length - 1),
+                  ('padding-bottom' unless index == data.site.main_nav.length - 1),
                   ('hide-above@xsmall' if item.priority == 1)
                 ] %>
                 <li<%= class_list(item_classes) %>>
