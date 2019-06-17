@@ -29,7 +29,7 @@
 
 <div data-ui-card="<%= "multicolumn" if multicolumn %>" class="gutter-wrapper<%= " #{classes}" if classes %>">
   <% if figure %>
-    <<%= tag %> data-ui-card-figure="<%= "right" if figure_pos == "right" %><%= " large" if figure_size == "large" %>" class="gutter t-link-undecorated t-centered"<%= " href='#{link}'" if link %>>
+    <<%= tag %> data-ui-card-figure="<%= "right" if figure_pos == "right" %><%= " large" if figure_size == "large" %>" class="gutter t-link-undecorated t-align-center"<%= " href='#{link}'" if link %>>
       <%# image_tag figure, alt: alt || "Figure" %>
       <span<%= " style='display: inline-block; max-width: #{figure_size};'" if figure_size.include?("px") %>><img src="<%= figure %>" alt="<%= alt || "Figure" %>"></span>
     </<%= tag %>>

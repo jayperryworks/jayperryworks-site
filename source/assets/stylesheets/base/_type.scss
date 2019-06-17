@@ -353,12 +353,12 @@ h6,
 }
 
 // --- position text -----------------------------------------------------------
-@include breakpointify(".t-centered", true) {
+@include breakpointify(".t-align-center", true) {
   text-align: center;
 }
-@include breakpointify(".t-left", true) {
+@include breakpointify(".t-align-left", true) {
   text-align: left;
 }
-@include breakpointify(".t-right", true) {
+@include breakpointify(".t-align-right", true) {
   text-align: right;
 }

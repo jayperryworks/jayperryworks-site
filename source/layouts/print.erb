@@ -20,7 +20,7 @@
       } %>
 
       <!-- cover image, info, and title -->
-      <% component 'wrapper', locals: { classes: 'padding-top-wide t-centered' } do %>
+      <% component 'wrapper', locals: { classes: 'padding-top-wide t-align-center' } do %>
 
         <%
           # if the painting has dimension metadata, add it to the format listing
@@ -48,7 +48,7 @@
 
           <!-- 'editions available on etsy' button -->
           <% if current_page.data.edition_placeholder == true %>
-            <div class="t-centered margin-top-wide">
+            <div class="t-align-center margin-top-wide">
               <% component 'button_link', locals: {
                 url: data.site.etsy_link,
                 role: 'primary',
@@ -83,7 +83,7 @@
           <aside class="border-top margin-top-wide">
             <% component 'wrapper', locals: {
               width: 'narrow',
-              classes: 't-centered'
+              classes: 't-align-center'
             } do %>
               <h2 class="t-display t-scale-delta padding-top-wide padding-bottom-narrow">About Giclee prints</h2>
               <div class="t-body-italic t-scale-epsilon c-text-tertiary"><%= render_markdown(data.site.print_descriptions.giclee) %></div>
