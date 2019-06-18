@@ -34,6 +34,7 @@
 
   [data-ui-bookend-item] {
     display: inline-block;
+    vertical-align: middle;
   }
 
   [data-ui-bookend-item~='left'] {
@@ -63,6 +64,7 @@
   }
 }
 
+// switch to horizontal layout at a given breakpoint, or all the time
 [data-ui-bookend~='horizontal'] {
   @include bookend-horizontal;
 }
@@ -72,5 +74,16 @@
     [data-ui-bookend~='horizontal@#{$name}'] {
       @include bookend-horizontal;
     }
+  }
+}
+
+// align items to the top vs. middle (default)
+[data-ui-bookend~='align-top'] {
+  @supports (align-items: flex-start) {
+    align-items: flex-start;
+  }
+
+  [data-ui-bookend-item] {
+    vertical-align: top;
   }
 }

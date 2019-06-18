@@ -15,7 +15,7 @@
 %>
 
 <header<%= " data-theme='#{theme}'" unless theme == 'default' %> class="padding-x-outside" role="banner">
-  <nav data-ui-bookend="horizontal">
+  <nav data-ui-bookend="horizontal align-top">
     <div data-ui-bookend-item="left">
       <%= partial "components/logo-jp" %>
     </div>
@@ -32,6 +32,7 @@
               ]
               link_classes = [
                 'display-block',
+                'padding-top-narrow',
                 't-accent',
                 't-link-undecorated',
                 't-scale-zeta',
@@ -44,7 +45,7 @@
           <% end %>
         </ul>
         <!-- small-screen nav -->
-        <details data-ui-dropdown class="hide-above@small">
+        <details data-ui-dropdown class="hide-above@small padding-top-narrow">
           <summary data-ui-dropdown-toggle class="t-accent t-scale-zeta"  aria-has-popup="menu">
             <%= component 'icon', locals: {
               id: 'menu'
@@ -56,7 +57,7 @@
               size: 'small'
             } %>
           </summary>
-          <div data-ui-dropdown-menu data-theme="default" class="border border-round se-shadow padding-y margin-top-narrow t-align-left">
+          <div data-ui-dropdown-menu data-theme="default" class="padding-y margin-top t-align-left">
             <ul class="list-undecorated">
               <%# using 'padding-bottom-xnarrow' with indexed loop here because 'padding-y-xnarrow-between' doesn't work when we're hiding some of the list items - get weird gaps at the top %>
               <% data.site.main_nav.each_with_index do |item, index| %>
@@ -67,7 +68,7 @@
                   ('hide-above@xsmall' if item.priority == 1)
                 ] %>
                 <li<%= class_list(item_classes) %>>
-                  <%= link_to item.label, item.url, class: "display-block padding-x t-accent t-link-undecorated t-scale-zeta t-leading-tight #{show_highlight?('t-highlight-align-left', item.url)}" %>
+                  <%= link_to item.label, item.url, class: "display-block padding-x t-accent t-link-undecorated t-scale-zeta t-leading-tight #{show_highlight?('t-highlight-left', item.url)}" %>
                 </li>
               <% end %>
             </ul>

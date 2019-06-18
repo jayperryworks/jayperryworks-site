@@ -211,7 +211,7 @@ helpers do
   # is this url in the current directory?
   # -> return true if url is an exact match or a subdirectory (e.g. /prints/waterfall = /prints)
   def current_dir?(url)
-    return true if url.include?(current_page.url.chomp('/'))
+    return true if current_page.url.include?(url)
   end
 end
 
