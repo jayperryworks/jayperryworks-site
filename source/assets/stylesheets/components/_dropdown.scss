@@ -43,30 +43,41 @@
 }
 
 [data-ui-dropdown-menu] {
-  @include border();
-  @include border-radius();
-  @include se-shadow();
-  display: block;
+    display: block;
   min-width: 10rem;
   z-index: z('top');
 
-  &::before {
-    $w: 0.48rem;
-    content: ' ';
-    display: block;
-    position: absolute;
-    top: (($w - 0.0625rem) * -1);
-    right: space('narrow');
-    border-style: solid;
-    height: 0;
-    width: 0;
-    border-color: transparent transparent #{color('bg')};
-    border-color: transparent transparent #{color-property('bg')};
-    border-width: 0 #{$w} #{$w};
-  }
-
   [data-ui-dropdown][open] & {
+    $pointer-size: 0.48rem;
+
+    @include border();
+    @include border-radius();
+    @include se-shadow();
     position: absolute;
     right: 0;
+
+    &::before,
+    &::after {
+      border-width: 0 #{$pointer-size} #{$pointer-size};
+      content: ' ';
+      display: block;
+      position: absolute;
+      right: space('narrow');
+      border-style: solid;
+      height: 0;
+      width: 0;
+    }
+
+    &::before {
+      border-color: transparent transparent #{color('border')};
+      border-color: transparent transparent #{color-property('border')};
+      top: ($pointer-size * -1);
+    }
+
+    &::after {
+      border-color: transparent transparent #{color('bg')};
+      border-color: transparent transparent #{color-property('bg')};
+      top: (($pointer-size - 0.065rem) * -1); // 0.65rem = approx. 1px
+    }
   }
 }
