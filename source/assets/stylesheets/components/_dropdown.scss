@@ -1,9 +1,11 @@
 // Dropdown component
 // -> Create a dropdown menu
 // -> Based on details & summary elements
-
 @import '../config/animation';
+@import '../config/border';
 @import '../config/positioning';
+@import '../config/spacing';
+@import '../config/special_effects';
 
 // --- Base ---
 [data-ui-dropdown] {
@@ -41,9 +43,27 @@
 }
 
 [data-ui-dropdown-menu] {
+  @include border();
+  @include border-radius();
+  @include se-shadow();
   display: block;
   min-width: 10rem;
   z-index: z('top');
+
+  &::before {
+    $w: 0.48rem;
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: (($w - 0.0625rem) * -1);
+    right: space('narrow');
+    border-style: solid;
+    height: 0;
+    width: 0;
+    border-color: transparent transparent #{color('bg')};
+    border-color: transparent transparent #{color-property('bg')};
+    border-width: 0 #{$w} #{$w};
+  }
 
   [data-ui-dropdown][open] & {
     position: absolute;
