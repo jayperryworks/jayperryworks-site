@@ -34,10 +34,10 @@ config[:sass_assets_paths] = ['node_modules']
 ignore 'assets/javascripts/*'
 
 # disabled for now because there's not really any JS
-# activate :external_pipeline,
-#     name: :npm,
-#     command: build? ? 'npm run build' : 'npm start',
-#     source: ".tmp",
+activate :external_pipeline,
+  name: :npm,
+  command: build? ? 'npm run build' : 'npm start',
+  source: ".tmp"
 
 # Automatic image dimensions on image_tag helper
 # activate :automatic_image_sizes

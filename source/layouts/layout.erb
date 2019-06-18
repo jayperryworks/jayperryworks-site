@@ -29,5 +29,7 @@
     <%= component 'main_footer', locals: {
       show_bio: current_page.data.title == 'home' || current_page.data.hide_bio == true ? false : true
     } %>
+    <script type="module" src="<%= asset_url 'javascripts/main.mjs' %>"></script>
+    <script nomodule src="<%= asset_url 'javascripts/main.es5.js' %>"></script>
   </body>
 </html>
