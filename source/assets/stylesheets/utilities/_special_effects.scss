@@ -1,0 +1,6 @@
+// Special effects utility classes
+@import '../config/special_effects';
+
+.se-shadow {
+  @include se-shadow();
+}

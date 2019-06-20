@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,18 +8,28 @@
     <title><%= data.site.site_title %><% if current_page.data.title.present? && current_page.data.title != "home" %> | <%= current_page.data.title %><% end %></title>
 
     <meta name="description" content="">
-    <%= component "favicon" %>
+    <%= partial "layouts/partials/favicon" %>
 
     <%= stylesheet_link_tag :main %>
+    <script>
+      // Add a class to the html element to confirm JS is available
+      // -> used by the CSS for styling JS-dependent elements
+      document.documentElement.className = "js"
+    </script>
   </head>
 
   <body>
-    <%# component "spritemap" %>
+    <!-- icon sprites -->
+    <div style="display: none; position: absolute; height: 0; width: 0;">
+      <%= partial "layouts/partials/spritemap" %>
+    </div>
 
     <%= yield %>
 
     <%= component 'main_footer', locals: {
       show_bio: current_page.data.title == 'home' || current_page.data.hide_bio == true ? false : true
     } %>
+    <%= javascript_include_tag 'javascripts/main.js', type: 'module' %>
+    <%= javascript_include_tag 'javascripts/main.es5.js', nomodule: '', defer: true %>
   </body>
 </html>

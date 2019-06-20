@@ -38,6 +38,11 @@
 // --- sizes
 // -> default size is "medium." add these classes to go bigger or smaller.
 
+[data-ui-button~='xsmall'] {
+  padding: 0.2em 0.6em;
+  font-size: scale-type('eta');
+}
+
 [data-ui-button~='small'] {
   border-width: border-w('mid');
   font-size: scale-type('zeta');
@@ -73,13 +78,12 @@
 // --- special variations
 // -> buttons of a strange and amazing nature
 
-[data-ui-button~='text'] {
+[data-ui-button~='text'], // deprecated name
+[data-ui-button~='incognito'] {
   @include color-fg('text-primary');
   @include font-accent('bold');
-  border: none;
-  font-size: scale-type('eta');
-  padding: 0;
-  text-transform: uppercase;
+  border: none !important;
+  padding: 0 !important;
 
   &:hover, &:active {
     @include border('bottom', $style: 'secondary');

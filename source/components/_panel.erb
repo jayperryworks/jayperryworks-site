@@ -1,0 +1,36 @@
+<%#
+  Panel component
+  - For short content in scrolling sections. Meant to be full-width.
+
+  Locals:
+  - STRING heading (optional): a heading header for the top of the panel, e.g. "Recent work"
+  - STRING theme (optional): name of color theme, e.g. "reverse" or "wash"
+  - STRING classes (optional): additional modifier classes for the container
+  - STRING id (optional): assign an id to help with anchor links
+%>
+
+<%
+  theme ||= 'default'
+  classes ||= ''
+  id ||= false
+  heading ||= false
+  heading_level ||= 1
+  borders ||= [ 'top' ]
+  padding ||= {
+    x: 'outside',
+    y: 'xwide'
+  }
+
+  utils = [
+    (padding_classes(padding) if padding),
+    border_classes(borders),
+    classes
+  ]
+%>
+
+<section data-theme="<%= theme %>"<%= class_list(utils) %><%= " id=#{id}" if id %>>
+  <% if heading %>
+    <h<%= heading_level %> class="t-align-center padding-bottom-wide"><%= heading %></h<%= heading_level %>>
+  <% end %>
+  <%= yield %>
+</section>

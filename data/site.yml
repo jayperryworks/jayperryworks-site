@@ -2,6 +2,23 @@ site_title: Jay Perry
 
 etsy_link: https://jayperry.etsy.com/
 
+main_nav:
+  - label: Design work
+    url: /work/design/
+    priority: 1
+  - label: Prints &amp; paintings
+    url: /work/prints/
+    priority: 1
+  - label: Writing
+    url: /writing/
+    priority: 2
+  - label: Bookshelf
+    url: /reading/
+    priority: 2
+  - label: About
+    url: /about/
+    priority: 2
+
 # markdown allowed here
 intro: |-
   My name is Jay and I'm a designer, illustrator, and writer living near Baltimore.
@@ -19,7 +36,7 @@ print_descriptions:
 
 social:
   - name: Etsy
-    link: https://www.etsy.com/shop/jayperry
+    link: https://jayperry.etsy.com/
   - name: Twitter
     link: https://twitter.com/inkpixelswords
   - name: Pinterest

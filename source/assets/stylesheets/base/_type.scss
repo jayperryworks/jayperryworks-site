@@ -3,11 +3,12 @@
 // =============================================================================
 
 @import "../config/animation";
-@import "../config/color";
-@import "../config/scale";
-@import "../config/type";
 @import "../config/border";
+@import "../config/color";
+@import "../config/helpers";
+@import "../config/scale";
 @import "../config/spacing";
+@import "../config/type";
 
 // Defaults
 // -----------------------------------------------------------------------------
@@ -225,6 +226,36 @@ h6,
   }
 }
 
+[class*="t-highlight"] {
+  position: relative;
+
+  &:before {
+    @include color-bg('highlight');
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+  }
+}
+
+.t-highlight-top {
+  &:before {
+    height: border-w('thick');
+    left: 0;
+    right: 0;
+    top: 0;
+  }
+}
+
+.t-highlight-left {
+  &:before {
+    bottom: 0;
+    width: border-w('thick');
+    left: 0;
+    top: 0;
+  }
+}
+
 .t-tag {
   @include border;
   @include color-fg('text-tertiary');
@@ -322,12 +353,12 @@ h6,
 }
 
 // --- position text -----------------------------------------------------------
-@include breakpointify(".t-centered", true) {
+@include breakpointify(".t-align-center", true) {
   text-align: center;
 }
-@include breakpointify(".t-left", true) {
+@include breakpointify(".t-align-left", true) {
   text-align: left;
 }
-@include breakpointify(".t-right", true) {
+@include breakpointify(".t-align-right", true) {
   text-align: right;
 }

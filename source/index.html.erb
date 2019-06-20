@@ -3,6 +3,7 @@ title: home
 ---
 
 <%= component "main_header", locals: {
+  hide_nav: true,
   show_intro: true,
   intro: data.site.intro,
   status: data.site.status,
@@ -16,7 +17,7 @@ title: home
       prints: blog("work").articles
     } %>
 
-    <div class="t-centered margin-top-wide">
+    <div class="t-align-center margin-top-wide">
       <% component 'button_link', locals: {
         url: data.site.etsy_link,
         target: '_blank',
@@ -35,11 +36,10 @@ title: home
       <%= component "writing_feed", locals: { articles: blog("writing").articles[0...5] } %>
 
       <% if blog("writing").articles.length > 5 %>
-        <div class="margin-top-wide padding-top-wide border-top t-centered">
+        <div class="margin-top-wide padding-top-wide border-top t-align-center">
           <% component 'button_link', locals: {
             url: '/writing',
-            size: 'large',
-            role: 'primary'
+            size: 'large'
           } do %>
             More writing &rsaquo;
           <% end %>

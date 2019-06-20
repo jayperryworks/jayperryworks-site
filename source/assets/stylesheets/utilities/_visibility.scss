@@ -1,74 +1,88 @@
-// ==========================================================================
-// Visibility
-// -> hide and show things in various ways
+// =============================================================================
+// Visibility utilities
 // ==========================================================================
 
+// Allow 'important!' here because we want the styles to always apply in small utility classes
+// sass-lint:disable no-important
+// sass-lint:disable class-name-format
+// -> allow '@[state]' suffixes
+
+@import '../config/visibility';
 @import '../config/breakpoints';
 
-@mixin visually-hidden($focusable: false) {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  // margin: -1px;
-  overflow: hidden;
-  // padding: 0;
-  position: absolute;
-  width: 1px;
+.hide-visually {
+  @include hide-visually();
+}
 
-  /*
-   * Extends the .visuallyhidden class to allow the element
-   * to be focusable when navigated to via the keyboard:
-   * https://www.drupal.org/node/897638
-   */
-  @if ($focusable == true) {
-    &:active,
-    &:focus {
-      clip-path: auto;
-      height: auto;
-      // margin: 0;
-      overflow: visible;
-      position: static;
-      width: auto;
+// hide but keep it accessible
+@include breakpointify('.hide-visually-above') {
+  @include hide-visually();
+}
+
+@include breakpointify('.show-visually-above') {
+  @include show-visually();
+}
+
+// see hidden-[below|above]@[size] in _breakpoints for media-query versions
+.hide {
+  display: none !important;
+}
+
+// --- show/hide at screen sizes -----------------------------------------------
+// -> hide content until screen reaches specified breakpoint size
+
+// usage: <span class='hide-[below|above]@small'>
+@each $name, $size in $breakpoints {
+  .hide-below\@#{$name} {
+    @include media('<#{$size}') {
+      display: none !important;
+    }
+  }
+
+  .hide-above\@#{$name} {
+    @include media('>#{$size}') {
+      display: none !important;
     }
   }
 }
 
-@mixin restore-visually-hidden($overflow: visible) {
-  clip-path: auto;
-  height: auto;
-  // margin: 0;
-  overflow: $overflow;
-  position: relative;
-  width: auto;
-}
-
-// visibility helper classes
-
-// hide but keep it accessible
-.is-visually-hidden {
-  @include visually_hidden;
-
-  &.focusable {
-    @include visually_hidden(true);
+// --- show/hide for JS --------------------------------------------------------
+.hide\@js {
+  .js & {
+    display: none !important;
   }
 }
 
-.overflow-hidden {
-  overflow: hidden !important;
+.show\@js {
+  .no-js & {
+    display: none !important;
+  }
 }
 
-// completely hide
-.hide { display: none !important; }
-
-// screen-size helper classes
-// -> hide content until screen reaches specified breakpoint size
-// usage: <span class="show@small">
-@each $name, $size in $breakpoints {
-  .show\@#{$name} {
-    @include media("<#{$size}") { display: none !important; }
+.hide\@print {
+  @media print {
+    display: none !important;
   }
+}
 
-  .hide\@#{$name} {
-    @include media(">#{$size}") { display: none !important; }
+// --- show/hide for print -----------------------------------------------------
+
+.show\@print {
+  display: none !important;
+
+  @media print {
+    display: block !important;
   }
+}
+
+// --- show/hide for touch -----------------------------------------------------
+
+.touch .show\@touch,
+.no-touch .hide\@no-touch {
+  display: block !important;
+}
+
+.touch .hide\@no-touch,
+.no-touch .show\@touch {
+  display: none !important;
 }

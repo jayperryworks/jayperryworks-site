@@ -34,11 +34,10 @@ config[:sass_assets_paths] = ['node_modules']
 ignore 'assets/javascripts/*'
 
 # disabled for now because there's not really any JS
-# activate :external_pipeline,
-#     name: :npm,
-#     command: build? ? 'npm run build' : 'npm start',
-#     source: ".tmp",
-#     latency: 1
+activate :external_pipeline,
+  name: :npm,
+  command: build? ? 'npm run build' : 'npm start',
+  source: ".tmp"
 
 # Automatic image dimensions on image_tag helper
 # activate :automatic_image_sizes
@@ -111,7 +110,7 @@ helpers do
   # "Component" decorator for partial function
   # -> just used to point automatically to "components" dir so you don't have to type the full path
   def component(name, opts = {}, &block)
-    partial("partials/#{name}", opts, &block)
+    partial("components/#{name}", opts, &block)
   end
 
   def class_list(classes)
@@ -209,16 +208,14 @@ helpers do
     end
   end
 
-  def current_page?(url)
-    if current_page.url == url then
-      return true
-    else
-      return false
-    end
+  # is this url in the current directory?
+  # -> return true if url is an exact match or a subdirectory (e.g. /prints/waterfall = /prints)
+  def current_dir?(url)
+    return true if current_page.url.include?(url)
   end
 end
 
-set :url_root, 'http://jayperryworks.com'
+set :url_root, 'https://jayperryworks.com'
 # activate :search_engine_sitemap
 
 # Use relative links all the time - helps catch url bugs before deployment

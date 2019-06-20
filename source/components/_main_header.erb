@@ -1,0 +1,97 @@
+<%
+  # Main Header component
+  # - lives at the top of each page
+
+  # Locals:
+  show_intro ||= false # BOOLEAN (optional): show the intro?
+  hide_nav ||= false # BOOLEAN (optional): show the main nav?
+  intro ||= false # BOOLEAN (optional): add a custom intro message
+  status ||= false # STRING (optional): add a custom status message to the intro
+  theme ||= 'default' # STRING (optional): change the color theme
+
+  def show_highlight?(class_name, url)
+    return current_dir?(url) ? class_name : ''
+  end
+%>
+
+<header<%= " data-theme='#{theme}'" unless theme == 'default' %> class="padding-x-outside" role="banner">
+  <nav data-ui-bookend="horizontal align-top">
+    <div data-ui-bookend-item="left">
+      <%= partial "components/logo-jp" %>
+    </div>
+    <% unless hide_nav %>
+      <div data-ui-bookend-item="right" class="margin-x-between-narrow">
+        <!-- large-screen nav -->
+        <ul class="display-inline-block list-undecorated margin-x-between-narrow hide-below@xsmall">
+          <% data.site.main_nav.each do |item| %>
+            <%
+              item_classes = [
+                'display-inline-block',
+                'no-margin-top',
+                ('hide-visually show-visually-above@small' if item.priority > 1)
+              ]
+              link_classes = [
+                'display-block',
+                'padding-top-narrow',
+                't-accent',
+                't-link-undecorated',
+                't-scale-zeta',
+                (show_highlight?('t-highlight-top', item.url))
+              ]
+            %>
+            <li<%= class_list(item_classes) %>>
+              <%= link_to item.label, item.url, class: link_classes.join(' ').rstrip %>
+            </li>
+          <% end %>
+        </ul>
+        <!-- small-screen nav -->
+        <details data-ui-dropdown class="hide-above@small padding-top-narrow">
+          <summary data-ui-dropdown-toggle class="t-accent t-scale-zeta"  aria-has-popup="menu">
+            <%= component 'icon', locals: {
+              id: 'menu'
+            } %>
+            <span class="hide-visually-above@xsmall margin-left-xxnarrow">Menu</span>
+            <%= component 'icon', locals: {
+              id: 'arrow-down',
+              margin: 'left',
+              size: 'small'
+            } %>
+          </summary>
+          <div data-ui-dropdown-menu data-theme="default" class="padding-y margin-top t-align-left">
+            <ul class="list-undecorated">
+              <%# using 'padding-bottom-xnarrow' with indexed loop here because 'padding-y-xnarrow-between' doesn't work when we're hiding some of the list items - get weird gaps at the top %>
+              <% data.site.main_nav.each_with_index do |item, index| %>
+                <% item_classes = [
+                  'display-block',
+                  'no-margin-top',
+                  ('padding-bottom' unless index == data.site.main_nav.length - 1),
+                  ('hide-above@xsmall' if item.priority == 1)
+                ] %>
+                <li<%= class_list(item_classes) %>>
+                  <%= link_to item.label, item.url, class: "display-block padding-x t-accent t-link-undecorated t-scale-zeta t-leading-tight #{show_highlight?('t-highlight-left', item.url)}" %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </details>
+      </div>
+    <% end %>
+  </nav>
+
+  <% if show_intro == true %>
+    <div class="margin-top-wide padding-bottom-xwide t-align-center">
+      <% if intro %>
+        <div class="t-display t-scale-gamma"><%= render_markdown(intro) %></div>
+      <% end %>
+      <% if status %>
+        <p class="t-display t-scale-delta c-text-tertiary margin-top-xxnarrow"><%= status %></p>
+      <% end %>
+      <% partial 'components/button_link', locals: {
+        url: '/about',
+        classes: 'margin-top'
+      } do %>
+        A bit more about me &rsaquo;
+      <% end %>
+    </div>
+  <% end %>
+</header>

@@ -3,13 +3,23 @@
 // -> place an element relative to its parent
 // ==========================================================================
 
+@import "../config/positioning";
 @import "../config/breakpoints";
 
+// --- Z index ---
+// -> utils to set global stacking order
+@each $name, $index in $z-indexes {
+  .z-#{$name} {
+    z-index: $index !important;
+  }
+}
+
+// --- Display ---
 .display-inline {
   display: inline;
 }
 
-@include breakpointify(".display-inline_block", true, $sizes: "xsmall") {
+@include breakpointify(".display-inline-block", true, $sizes: "xsmall") {
   display: inline-block;
 }
 
@@ -23,9 +33,15 @@
   // }
 }
 
-.flex-fill {
+.display-flex-justify {
+  justify-content: space-between;
+}
+
+.display-flex-fill {
   flex: 1;
 }
+
+// --- Positioning utils ---
 
 // center a block element
 .centered-block {
@@ -41,8 +57,10 @@
   float: left;
 }
 
-// make a panel rise to the top of a layout
-// -> useful if it contains, for instance, stuff like a jump nav that needs to overlay elements below
-.z-top {
-  z-index: z('top') !important;
+.position-absolute {
+  position: absolute !important;
+}
+
+.position-relative {
+  position: relative !important;
 }

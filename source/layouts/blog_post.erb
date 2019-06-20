@@ -1,12 +1,12 @@
 <% wrap_layout :layout do %>
-  <%= component "main_header" %>
+  <%= component "main_header", locals: { show_nav: true } %>
 
   <article class="margin-top-wide padding-x-outside padding-bottom-xwide">
     <header class="margin-bottom">
       <!-- Titles -->
-      <h1 class="t-centered"><%= current_page.data.title %></h1>
+      <h1 class="t-align-center"><%= current_page.data.title %></h1>
       <% if current_page.data.subtitle.present? %>
-        <span class="t-heading t-accent-light t-scale-gamma t-centered c-text-tertiary"><%= current_page.data.subtitle %></span>
+        <span class="t-heading t-accent-light t-scale-gamma t-align-center c-text-tertiary"><%= current_page.data.subtitle %></span>
       <% end %>
 
       <!-- Cover image -->

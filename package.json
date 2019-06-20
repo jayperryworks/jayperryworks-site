@@ -4,17 +4,16 @@
   "description": "Jay Perry's website",
   "main": "index.html",
   "config": {
-    "icons_src": "./source/assets/images/icons/_sprites",
-    "icons_dest": "./source/layouts/partials",
-    "webpack": "./webpack_config"
+    "icons_src": "./source/assets/images/icons/**/*.svg",
+    "icons_dest": "./source/layouts/partials/_spritemap.erb"
   },
   "scripts": {
     "start": "npm run watch",
-    "watch": "webpack --config $npm_package_config_webpack/modern.config.js --watch -d",
-    "build:modern": "webpack -p --config $npm_package_config_webpack/modern.config.js",
-    "build:legacy": "webpack -p --config $npm_package_config_webpack/legacy.config.js",
-    "build": "npm run build:modern",
-    "icons": "svg-sprite --symbol --symbol-dest $npm_package_config_icons_dest --symbol-sprite 'spritemap.inc' --symbol-inline --symbol-prefix 'icon-%s' $npm_package_config_icons_src/**/*.svg"
+    "watch": "webpack --config ./webpack_config/modern.config.js --watch -d",
+    "build:modern": "webpack -p --config ./webpack_config/modern.config.js",
+    "build:legacy": "webpack -p --config ./webpack_config/legacy.config.js",
+    "build": "npm run build:modern && npm run build:legacy",
+    "icons": "svgstore -o $npm_package_config_icons_dest --inline $npm_package_config_icons_src"
   },
   "repository": {
     "type": "git",
@@ -27,20 +26,21 @@
   },
   "homepage": "https://jayperryworks.com",
   "devDependencies": {
-    "@babel/core": "^7.4.0",
+    "@babel/core": "^7.4.5",
     "@babel/polyfill": "^7.4.4",
-    "@babel/preset-env": "^7.4.1",
-    "babel-loader": "^8.0.5",
-    "clean-webpack-plugin": "^2.0.1",
-    "svg-sprite": "^1.3.1",
+    "@babel/preset-env": "^7.4.5",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^2.0.2",
     "svgo": "^1.2.2",
-    "terser-webpack-plugin": "^1.2.3",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0",
+    "svgstore-cli": "^1.3.1",
+    "terser-webpack-plugin": "^1.3.0",
+    "webpack": "^4.34.0",
+    "webpack-cli": "^3.3.4",
     "webpack-manifest-plugin": "^2.0.4"
   },
   "dependencies": {
     "bourbon": "^5.1.0",
+    "details-element-polyfill": "^2.3.1",
     "include-media": "*",
     "modularscale-sass": "^3.0.8",
     "normalize-css": "*"
