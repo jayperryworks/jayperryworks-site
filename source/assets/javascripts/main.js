@@ -1,3 +1,1 @@
-import * from 'details-element-polyfill'
-
-console.log('hello')
+import * as detailsPolyfill from 'details-element-polyfill'

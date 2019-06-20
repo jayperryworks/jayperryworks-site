@@ -5,14 +5,13 @@
   "main": "index.html",
   "config": {
     "icons_src": "./source/assets/images/icons/**/*.svg",
-    "icons_dest": "./source/layouts/partials/_spritemap.erb",
-    "webpack": "./webpack_config"
+    "icons_dest": "./source/layouts/partials/_spritemap.erb"
   },
   "scripts": {
     "start": "npm run watch",
-    "watch": "webpack --config $npm_package_config_webpack/modern.config.js --watch -d",
-    "build:modern": "webpack -p --config $npm_package_config_webpack/modern.config.js",
-    "build:legacy": "webpack -p --config $npm_package_config_webpack/legacy.config.js",
+    "watch": "webpack --config ./webpack_config/modern.config.js --watch -d",
+    "build:modern": "webpack -p --config ./webpack_config/modern.config.js",
+    "build:legacy": "webpack -p --config ./webpack_config/legacy.config.js",
     "build": "npm run build:modern && npm run build:legacy",
     "icons": "svgstore -o $npm_package_config_icons_dest --inline $npm_package_config_icons_src"
   },

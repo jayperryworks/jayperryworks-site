@@ -10,7 +10,7 @@ const ManifestPlugin = require('webpack-manifest-plugin')
 // config used in both modern and legacy configs
 const config = {
   entry: {
-    home: './source/assets/javascripts/main.js'
+    main: './source/assets/javascripts/main.js'
   },
   optimization: {
     minimizer: [
