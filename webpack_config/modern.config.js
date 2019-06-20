@@ -6,7 +6,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = Object.assign({}, base.config, {
   output: {
-    filename: '[name].mjs',
+    filename: '[name].js',
     path: base.outputPath
   },
   module: {
