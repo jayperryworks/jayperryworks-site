@@ -1,16 +1,10 @@
-<%#
-  Main Footer component
-  - lives at the bottom of each page
+<%
+  # Main Footer component
+  # - lives at the bottom of each page
 
-  Locals:
-  BOOLEAN show_bio (optional): show the bio card? (only shown on interior pages, usually)
-
-  Styles:
-  components/card
-  components/main_footer
+  # Locals:
+  show_bio ||= false # BOOLEAN (optional): show the bio card? (only shown on interior pages, usually)
 %>
-
-<% show_bio ||= false %>
 
 <footer data-ui-main-footer class="padding-x-outside overflow-hidden" role="contentinfo" id="footer">
   <% component 'wrapper' do %>
@@ -34,7 +28,7 @@
             <dt class="t-accent-bold t-caps t-scale-eta t-leading-tight margin-bottom-narrow">Say hi</dt>
             <div class="gutter-wrapper gutter-xxxnarrow">
               <% data.site.social.each do |site| %>
-                <dd class="display-inline_block no-margin gutter"><%= link_to site.name, site.link, class: "t-tag" %></dd>
+                <dd class="display-inline-block no-margin gutter"><%= link_to site.name, site.link, class: "t-tag" %></dd>
               <% end %>
             </div>
           </dl>
