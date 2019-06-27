@@ -6,38 +6,48 @@
   show_bio ||= false # BOOLEAN (optional): show the bio card? (only shown on interior pages, usually)
 %>
 
-<footer data-ui-main-footer class="padding-x-outside overflow-hidden" role="contentinfo" id="footer">
-  <% component 'wrapper' do %>
-    <% unless show_bio == false %>
-      <figure data-ui-card="multicolumn" class="gutter-wrapper margin-bottom-wide padding-bottom border-bottom">
-        <div data-ui-card-figure="small" class="gutter t-align-center">
-          <div style="display: inline-block; max-width: 200px;">
-            <%= image_tag "portrait.jpg", alt: data.site.title %>
-          </div>
+<footer class="c-well border-top padding-y-wide padding-x-outside overflow-hidden" role="contentinfo" id="footer">
+  <% if show_bio == 'whatever' %>
+    <figure data-ui-card="multicolumn" class="gutter-wrapper margin-bottom-wide padding-bottom border-bottom">
+      <div data-ui-card-figure="small" class="gutter t-align-center">
+        <div style="display: inline-block; max-width: 200px;">
+          <%= image_tag "portrait.jpg", alt: data.site.title %>
         </div>
-        <figcaption data-ui-card-content class="gutter">
-          <div class="t-body"><%= render_markdown(data.site.bio_blurb) %></div>
-          <% component 'button_link', locals: {
-            url: '/about',
-            role: 'text',
-            classes: 'margin-top-narrow'
-          } do %>
-            More about Jay &rsaquo;
-          <% end %>
-          <dl class="tag-group margin-top padding-top border-top border--secondary">
-            <dt class="t-accent-bold t-caps t-scale-eta t-leading-tight margin-bottom-narrow">Say hi</dt>
-            <div class="gutter-wrapper gutter-xxxnarrow">
-              <% data.site.social.each do |site| %>
-                <dd class="display-inline-block no-margin gutter"><%= link_to site.name, site.link, class: "t-tag" %></dd>
-              <% end %>
-            </div>
-          </dl>
-        </figcaption>
-      </figure>
-    <% end %>
-    <div data-ui-main-footer-lockup>
-      <%= component 'logo-jpw' %>
-    </div>
-    <small data-ui-main-footer-copyright>&copy; copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>
+      </div>
+      <figcaption data-ui-card-content class="gutter">
+        <div class="t-body"><%= render_markdown(data.site.bio_blurb) %></div>
+        <% component 'button_link', locals: {
+          url: '/about',
+          role: 'text',
+          classes: 'margin-top-narrow'
+        } do %>
+          More about Jay &rsaquo;
+        <% end %>
+        <dl class="tag-group margin-top padding-top border-top border--secondary">
+          <dt class="t-accent-bold t-caps t-scale-eta t-leading-tight margin-bottom-narrow">Say hi</dt>
+          <div class="gutter-wrapper gutter-xxxnarrow">
+            <% data.site.social.each do |site| %>
+              <dd class="display-inline-block no-margin gutter"><%= link_to site.name, site.link, class: "t-tag" %></dd>
+            <% end %>
+          </div>
+        </dl>
+      </figcaption>
+    </figure>
   <% end %>
+  <div class="border-bottom padding-bottom margin-bottom">
+    <p class="t-scale-gamma t-display c-text-tertiary">
+      Keep in touch. You can also find me on <% data.site.social.each_with_index do |channel, index| %><%= index != 0 ? ', ' : '' %><%= index == (data.site.social.length - 1) ? 'and ' : '' %><strong class="c-text-secondary t-display"><%= link_to channel.name, channel.link %></strong><% end %>.
+    </p>
+  </div>
+  <div data-ui-bookend="horizontal@small align-top" class="gutter-wrapper gutter-xnarrow">
+    <div data-ui-bookend-item="left">
+      <%= component 'logo-jpw', locals: {
+        classes: 'gutter vertical-align-top'
+      } %>
+      <small class="gutter display-inline-block vertical-align-top t-accent">&copy; Copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>
+    </div>
+    <%# <div data-ui-bookend-item="right">
+      <a href="#" class="gutter display-inline-block vertical-align-top t-accent-bold t-scale-zeta t-link-undecorated t-caps c-text-tertiary">Colophon</a>
+    </div> %>
+  </div>
 </footer>

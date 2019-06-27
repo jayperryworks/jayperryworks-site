@@ -36,8 +36,8 @@ $themes: (
     'text-body': shade($gray, 30),
     'bg': #fff,
     'island': #fff,
-    'well': tint($gray, 20),
-    'border': tint($gray, 20),
+    'well': tint($gray, 80),
+    'border': tint($gray, 40),
     'shadow': rgba($gray, 0.2),
     'highlight': $lavendar
   )
