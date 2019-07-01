@@ -36,7 +36,7 @@
   <% end %>
   <div class="border-bottom padding-bottom margin-bottom">
     <p class="t-scale-gamma t-display c-text-tertiary">
-      Keep in touch. You can also find me on <% data.site.social.each_with_index do |channel, index| %><%= index != 0 ? ', ' : '' %><%= index == (data.site.social.length - 1) ? 'and ' : '' %><strong class="c-text-secondary t-display"><%= link_to channel.name, channel.link %></strong><% end %>.
+      <%= data.site.social_callout %> <% data.site.social.each_with_index do |channel, index| %><%= index != 0 ? ', ' : '' %><%= index == (data.site.social.length - 1) ? 'and ' : '' %><strong class="c-text-secondary t-display"><%= link_to channel.name, channel.link %></strong><% end %>.
     </p>
   </div>
   <div data-ui-bookend="horizontal@small align-top" class="gutter-wrapper gutter-xnarrow">
