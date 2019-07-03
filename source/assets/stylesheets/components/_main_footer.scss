@@ -28,7 +28,7 @@
 }
 
 [data-ui-main-footer-copyright] {
-  @include color-fg('text-tertiary');
+  @include color-fg('tertiary');
   @include font-accent;
   display: block;
   font-size: scale-type('eta');

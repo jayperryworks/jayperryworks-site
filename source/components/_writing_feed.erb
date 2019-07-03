@@ -17,12 +17,12 @@
           <%= image_tag path, alt: article.title %>
         <% end %>
       <% end %>
-      <time class="t-heading t-accent-bold t-scale-eta c-text-tertiary"><%= article.date.strftime("%B %-d, %Y") %></time>
+      <time class="t-heading t-accent-bold t-scale-eta c-fg-tertiary"><%= article.date.strftime("%B %-d, %Y") %></time>
       <h<%= heading_level %> class="t-scale-beta">
         <%= link_to article.title, article.url %>
       </h<%= heading_level %>>
       <% if article.data.subtitle.present? %>
-        <span class="t-heading t-accent-light t-scale-gamma c-text-tertiary">
+        <span class="t-heading t-accent-light t-scale-gamma c-fg-tertiary">
           <%= link_to article.data.subtitle, article.url %>
         </span>
       <% end %>

@@ -16,7 +16,7 @@
 body {
   @include color('border-color', 'border');
   @include color-bg('bg');
-  @include color-fg('text-secondary');
+  @include color-fg('secondary');
 
   // highlight color when you select something
   &::selection {
@@ -36,34 +36,34 @@ body {
 // --- Utility classes ---
 // -> use on individual elements to apply special color treatment
 
-.c-text-primary {
-  @include color-fg('text-primary', $important: true);
+.c-fg-primary {
+  @include color-fg('primary', $important: true);
 }
-.c-text-secondary {
-  @include color-fg('text-secondary', $important: true);
+.c-fg-secondary {
+  @include color-fg('secondary', $important: true);
 }
-.c-text-tertiary {
-  @include color-fg('text-tertiary', $important: true);
+.c-fg-tertiary {
+  @include color-fg('tertiary', $important: true);
 }
 
-.c-highlight {
+.c-fg-bg {
+  @include color-fg('bg');
+}
+
+.c-fg-highlight {
   @include color-fg('highlight', $important: true);
 }
 
-.c-highlight-bg {
+.c-bg-highlight {
   @include color-bg('highlight', $important: true);
 }
 
-.c-well {
+.c-bg-well {
   @include color-bg('well');
 }
 
-.c-island {
+.c-bg-island {
   @include color-bg('island');
-}
-
-.c-bg {
-  @include color-fg('bg');
 }
 
 // kill background colors in print

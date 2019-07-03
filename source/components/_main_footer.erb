@@ -6,7 +6,7 @@
   show_bio ||= false # BOOLEAN (optional): show the bio card? (only shown on interior pages, usually)
 %>
 
-<footer class="c-well border-top padding-y-wide padding-x-outside overflow-hidden" role="contentinfo" id="footer">
+<footer class="c-bg-well border-top padding-y-wide padding-x-outside overflow-hidden" role="contentinfo" id="footer">
   <% if show_bio == 'whatever' %>
     <figure data-ui-card="multicolumn" class="gutter-wrapper margin-bottom-wide padding-bottom border-bottom">
       <div data-ui-card-figure="small" class="gutter t-align-center">
@@ -35,8 +35,8 @@
     </figure>
   <% end %>
   <div class="border-bottom padding-bottom margin-bottom">
-    <p class="t-scale-gamma t-display c-text-tertiary">
-      <%= data.site.social_callout %> <% data.site.social.each_with_index do |channel, index| %><%= index != 0 ? ', ' : '' %><%= index == (data.site.social.length - 1) ? 'and ' : '' %><strong class="c-text-secondary t-display"><%= link_to channel.name, channel.link %></strong><% end %>.
+    <p class="t-scale-gamma t-display c-fg-tertiary">
+      <%= data.site.social_callout %> <% data.site.social.each_with_index do |channel, index| %><%= index != 0 ? ', ' : '' %><%= index == (data.site.social.length - 1) ? 'and ' : '' %><strong class="c-fg-secondary t-display"><%= link_to channel.name, channel.link %></strong><% end %>.
     </p>
   </div>
   <div data-ui-bookend="horizontal@small align-top" class="gutter-wrapper gutter-xnarrow">
@@ -47,7 +47,7 @@
       <small class="gutter display-inline-block vertical-align-top t-accent">&copy; Copyright <%= Time.now.year %> Jay Perry Works, all rights reserved.</small>
     </div>
     <%# <div data-ui-bookend-item="right">
-      <a href="#" class="gutter display-inline-block vertical-align-top t-accent-bold t-scale-zeta t-link-undecorated t-caps c-text-tertiary">Colophon</a>
+      <a href="#" class="gutter display-inline-block vertical-align-top t-accent-bold t-scale-zeta t-link-undecorated t-caps c-fg-tertiary">Colophon</a>
     </div> %>
   </div>
 </footer>

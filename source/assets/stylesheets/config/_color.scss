@@ -22,9 +22,9 @@ $highlight: $lavendar;
 
 $themes: (
   'reverse': (
-    'text-primary': #fff,
-    'text-secondary': tint($gray, 20),
-    'text-tertiary': tint($black, 35),
+    'primary': #fff,
+    'secondary': tint($gray, 20),
+    'tertiary': tint($black, 35),
     'bg': $black,
     'island': tint($black, 8),
     'well': shade($black, 20),
@@ -32,9 +32,9 @@ $themes: (
     'shadow': rgba(shade($black, 60), 0.4)
   ),
   'default': (
-    'text-primary': #444,
-    'text-secondary': #555,
-    'text-tertiary': $gray,
+    'primary': #444,
+    'secondary': #555,
+    'tertiary': $gray,
     'bg': #fff,
     'island': #fff,
     'well': tint($gray, 80),
@@ -57,7 +57,7 @@ $color-shade-value: 10; // percentage to lighten or darken the color for '-light
 //      -> pass in a positive number to lighten the color
 // -> PUBLIC
 // -> USAGE:
-//    - color: color('text-primary');
+//    - color: color('primary');
 //    - color: color('highlight' 'primary', 'reverse');
 @function color($color, $theme-name: 'default', $grade: 0, $opacity: 1) {
   $value: null;

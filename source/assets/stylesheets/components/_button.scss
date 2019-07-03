@@ -6,7 +6,7 @@
 // --- Base ---
 
 [data-ui-button] {
-  $color: 'text-primary';
+  $color: 'primary';
   @include border('all', $color: $color);
   @include color-fg($color);
   @include font-accent;
@@ -58,20 +58,20 @@
 // -> how obnoxious shall your button be?
 
 [data-ui-button~='primary'] {
-  @include color('border-color', 'text-primary');
-  @include color-bg('text-primary');
+  @include color('border-color', 'primary');
+  @include color-bg('primary');
   @include color-fg('bg');
 
   &:hover {
-    @include color(border-color, 'text-primary', $shade: 'light');
+    @include color(border-color, 'primary', $shade: 'light');
     @include color-fg('bg');
-    @include color-bg('text-primary', $shade: 'light');
+    @include color-bg('primary', $shade: 'light');
   }
 
   &:active {
-    @include color(border-color, 'text-primary', $shade: 'dark');
+    @include color(border-color, 'primary', $shade: 'dark');
     @include color-fg('bg');
-    @include color-bg('text-primary', $shade: 'dark');
+    @include color-bg('primary', $shade: 'dark');
   }
 }
 
@@ -80,14 +80,14 @@
 
 [data-ui-button~='text'], // deprecated name
 [data-ui-button~='incognito'] {
-  @include color-fg('text-primary');
+  @include color-fg('primary');
   @include font-accent('bold');
   border: none !important;
   padding: 0 !important;
 
   &:hover, &:active {
     @include border('bottom', $style: 'secondary');
-    @include color-fg('text-primary');
+    @include color-fg('primary');
     background-color: transparent;
     border-color: inherit;
   }

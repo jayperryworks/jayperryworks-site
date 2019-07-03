@@ -38,7 +38,7 @@
 }
 
 [data-ui-stats-item] {
-  @include color-fg('text-secondary');
+  @include color-fg('secondary');
   @include font-accent;
   display: block;
   font-size: scale-type('zeta');
@@ -50,7 +50,7 @@
 // Traits
 // --------------------------------------------------------------------------
 [data-ui-stats-item~='label'] {
-  @include color-fg('text-tertiary');
+  @include color-fg('tertiary');
 
   &:after {
     content: ':';
