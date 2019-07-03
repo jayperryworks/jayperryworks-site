@@ -25,22 +25,12 @@ body,
   @include color-fg('text-tertiary', $important: true);
 }
 
-.c-highlight {
-  @include color-fg('highlight', $important: true);
-}
-.c-highlight-bg {
-  @include color-bg('highlight');
-}
-
-.c-accent {
-  @include color-fg('accent', $important: true);
-}
-.c-accent-bg {
-  @include color-bg('accent');
-}
-
 .c-well {
   @include color-bg('well');
+}
+
+.c-island {
+  @include color-bg('island');
 }
 
 .c-bg {
