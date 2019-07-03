@@ -39,12 +39,12 @@ layout: layout
     <ul class="padding-y-between-narrow list-undecorated">
       <% (1...6).each do |level| %>
         <li>
-          <p class="t-heading t-accent-bold t-scale-zeta t-case-upper c-text-tertiary">H<%= level %></p>
+          <p class="t-heading t-accent-bold t-scale-zeta t-caps c-text-tertiary">H<%= level %></p>
           <h<%= level %>>Lorem ipsum dolor sit</h<%= level %>>
         </li>
       <% end %>
       <li>
-        <p class="t-heading t-accent-bold t-scale-zeta t-case-upper c-text-tertiary">Body text</p>
+        <p class="t-heading t-accent-bold t-scale-zeta t-caps c-text-tertiary">Body text</p>
         <p>Lorem ipsum dolor sit amet, consectetur <strong>adipisicing elit</strong>. Illum molestias a aliquam accusamus, <em>dolorum id ut repudiandae natus</em>, explicabo vel similique velit amet deserunt aut quam tempore minima expedita adipisci?</p>
       </li>
     </ul>
@@ -141,6 +141,7 @@ layout: layout
     <ul class="margin-y-between list-undecorated">
       <% ['default', 'reverse'].each do |theme| %>
         <li data-theme="<%= theme %>" class="border padding-wide">
+          <p class="t-accent-bold t-scale-zeta t-caps c-text-tertiary padding-bottom-xnarrow"><%= theme.titleize %> theme</p>
           <h2 class="padding-bottom">Primary text lorem ipsum dolor sit</h2>
           <p>Secondary text lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis quam obcaecati voluptates, accusamus modi ratione harum quidem illo corporis dicta deserunt provident, iusto quaerat unde sed architecto explicabo quasi est.</p>
           <p class="t-accent c-text-tertiary">Tertiary text</p>

@@ -25,7 +25,6 @@ $themes: (
     'text-primary': #fff,
     'text-secondary': tint($gray, 20),
     'text-tertiary': tint($black, 35),
-    'text-body': $gray,
     'bg': $black,
     'island': tint($black, 8),
     'well': shade($black, 20),
@@ -36,7 +35,6 @@ $themes: (
     'text-primary': #444,
     'text-secondary': #555,
     'text-tertiary': $gray,
-    'text-body': shade($gray, 30),
     'bg': #fff,
     'island': #fff,
     'well': tint($gray, 80),
@@ -45,7 +43,7 @@ $themes: (
   )
 );
 
-$shade-value: 10; // percentage to lighten or darken the color for '-light' or '-dark' custom properties
+$color-shade-value: 10; // percentage to lighten or darken the color for '-light' or '-dark' custom properties
 
 // --- Helpers & mixins ---
 // -> PUBLIC
@@ -103,8 +101,8 @@ $shade-value: 10; // percentage to lighten or darken the color for '-light' or '
 //    - @include color(background-color, highlight, dark);
 @mixin color($prop, $color, $shade: 'none', $theme: 'default', $important: false) {
   $shades: (
-    'light': $shade-value,
-    'dark': ($shade-value * -1),
+    'light': $color-shade-value,
+    'dark': ($color-shade-value * -1),
     'none': 0
   );
 
@@ -133,23 +131,8 @@ $shade-value: 10; // percentage to lighten or darken the color for '-light' or '
   $theme-colors: map-get($themes, $theme);
 
   @each $name, $color in $theme-colors {
-    #{color-property($name, 'light')}: #{tint($color, $shade-value)};
+    #{color-property($name, 'light')}: #{tint($color, $color-shade-value)};
     #{color-property($name)}: #{$color};
-    #{color-property($name, 'dark')}: #{shade($color, $shade-value)};
-  }
-
-  // include some background, border, etc. props in the selector?
-  // -> use this only for setting defaults. Modifier classes can just redefine the custom properties (e.g. --color-text-primary).
-  @if $include-props {
-    @include color('border-color', 'border', $theme: $theme);
-    @include color-bg('bg', $theme: $theme);
-    @include color-fg('text-secondary', $theme: $theme);
-
-    // highlight color when you select something
-    &::selection {
-      @include color-bg('highlight', $theme: $theme);
-      @include color-fg('bg', $theme: $theme);
-      text-shadow: none;
-    }
+    #{color-property($name, 'dark')}: #{shade($color, $color-shade-value)};
   }
 }

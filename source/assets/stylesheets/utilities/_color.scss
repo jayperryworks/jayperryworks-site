@@ -1,11 +1,32 @@
 //  Global color utilities
 
-// --- Theme containers ---
-body,
-[data-theme] {
-  @include theme('default', $include-props: true);
+// global color custom properties - define defaults at root
+:root {
+  @include theme('default');
+
+  #{color-property('highlight', 'light')}: #{color('highlight', $grade: $color-shade-value)};
+  #{color-property('highlight')}: #{color('highlight')};
+  #{color-property('highlight', 'dark')}: #{color('highlight', $grade: $color-shade-value)};
 }
 
+// --- Theme containers ---
+
+// base colors for body and all themes
+[data-theme],
+body {
+  @include color('border-color', 'border');
+  @include color-bg('bg');
+  @include color-fg('text-secondary');
+
+  // highlight color when you select something
+  &::selection {
+    @include color-bg('highlight');
+    @include color-fg('bg');
+    text-shadow: none;
+  }
+}
+
+// theme variations
 @each $theme, $colors in $themes {
   [data-theme~='#{$theme}'] {
     @include theme($theme);
@@ -23,6 +44,14 @@ body,
 }
 .c-text-tertiary {
   @include color-fg('text-tertiary', $important: true);
+}
+
+.c-highlight {
+  @include color-fg('highlight', $important: true);
+}
+
+.c-highlight-bg {
+  @include color-bg('highlight', $important: true);
 }
 
 .c-well {
