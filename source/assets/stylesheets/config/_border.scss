@@ -24,15 +24,15 @@ $border-styles: (
   'secondary': 'dotted'
 ) !default;
 
-$border-widths: (
-  'thin': 1px,
-  'thick': 4px,
-) !default;
-
 // getter function for border style
 @function border-style($name) {
   @return map-get($border-styles, unquote($name));
 }
+
+$border-widths: (
+  'thin': 1px,
+  'thick': 4px,
+) !default;
 
 // getter function for border widths
 @function border-w($w: $border-w-default) {
@@ -41,6 +41,17 @@ $border-widths: (
   } @else {
     @return map-get($border-widths, $w);
   }
+}
+
+// properties for border seam effect
+$border-seam: (
+  'marker-h': 5,
+  'marker-w': 10,
+  'offset': 3
+);
+
+@function border-seam($attr) {
+  @return map-get($border-seam, $attr);
 }
 
 // make a standard border/hairline that works with the parent color theme

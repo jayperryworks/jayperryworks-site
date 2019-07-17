@@ -4,8 +4,7 @@
 
 @import "../config/border";
 
-// Base
-// -----------------------------------------------------------------------------
+// --- Base
 
 // .border, .border@[screen]
 @include breakpointify(".border", true) {
@@ -27,10 +26,55 @@
   }
 }
 
+
+// --- Variations
+
+// make a border thicker
+.border-thick { border-width: border-w('thick'); }
+
 .border-round { border-radius: $border-radius; }
 .border-circular { border-radius: 50%; }
 
-// --- Modifiers ---------------------------------------------------------------
 
-// make a border thicker
-.border--thick { border-width: border-w('thick'); }
+// --- 'Seam' effect
+[class*='border-seam'] {
+  position: relative;
+
+  @supports(border-image: url('/assets/images/seam.svg') 5 0 0 10 repeat) {
+    &::after {
+      border-image: url('/assets/images/seam.svg') border-seam('marker-h') 0 0 border-seam('marker-w') repeat;
+      border-width: #{border-seam('marker-h')}px 0 0 10px;
+      border-style: solid;
+      content: '';
+      display: block;
+      left: -#{border-seam('marker-w')}px;
+      position: absolute;
+      right: space(space-outside());
+      height: 0;
+
+      // set outside borders at each breakpoint
+      @each $screen, $width in $spacing-outside {
+        @if $screen != 'default' {
+          @include media('>#{$screen}') {
+            right: space($width);
+          }
+        }
+      }
+    }
+  }
+}
+
+// utils: .border-seam-top, .border-seam-bottom-offset
+@each $side in (top, bottom) {
+  .border-seam-#{$side} {
+    &::after {
+      #{$side}: -#{border-seam('marker-h') / 2}px;
+    }
+  }
+
+  .border-seam-#{$side}-offset {
+    &::after {
+      #{$side}: #{(border-seam('marker-h') / 2) + border-seam('offset')}px;
+    }
+  }
+}
