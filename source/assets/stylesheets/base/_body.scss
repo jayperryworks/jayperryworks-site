@@ -2,33 +2,34 @@
 // Global box model and scaling
 // =============================================================================
 
+@import "../config/border";
 @import "../config/breakpoints";
 
 // Defaults
 // -----------------------------------------------------------------------------
 
 html {
-    // set up the base font size at each breakpoint
-    // this will scale the whole layout proportionately as the screen size changes
-    // and we only have to change one thing
-    font-size: 100%;
+  // set up the base font size at each breakpoint
+  // this will scale the whole layout proportionately as the screen size changes
+  // and we only have to change one thing
+  font-size: 100%;
 
-    @include media(">small") {
-      font-size: 105%;
-    }
+  @include media(">small") {
+    font-size: 105%;
+  }
 
-    @include media(">medium") {
-      font-size: 110%;
-    }
+  @include media(">medium") {
+    font-size: 110%;
+  }
 
-    @include media(">large") {
-      font-size: 120%;
-    }
+  @include media(">large") {
+    font-size: 120%;
+  }
 
-    // set everything to roll with border-box sizing
-    // -> much easier than reg box model
-    // -> http://www.paulirish.com/2012/box-sizing-border-box-ftw/
-    box-sizing: border-box;
+  // set everything to roll with border-box sizing
+  // -> much easier than reg box model
+  // -> http://www.paulirish.com/2012/box-sizing-border-box-ftw/
+  box-sizing: border-box;
 }
 
 *,

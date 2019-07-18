@@ -23,7 +23,7 @@
     <div style="display: none; position: absolute; height: 0; width: 0;">
       <%= partial "layouts/partials/spritemap" %>
     </div>
-    <div style="border-left: 10px solid var(--color-highlight);">
+    <div class="border-frame">
       <%= yield %>
       <%= component 'main_footer', locals: {
         show_bio: current_page.data.title == 'home' || current_page.data.hide_bio == true ? false : true

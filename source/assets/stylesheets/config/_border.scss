@@ -1,12 +1,9 @@
-// =============================================================================
 // Border config
-// =============================================================================
+@import 'color';
+@import 'helpers';
+@import 'libs';
 
-@import "libs";
-@import "color";
-
-// Rounded corners
-// -----------------------------------------------------------------------------
+// --- Rounded corners
 
 $border-radius: 3px !default;
 
@@ -14,8 +11,7 @@ $border-radius: 3px !default;
   border-radius: $border-radius;
 }
 
-// Border width & style
-// -----------------------------------------------------------------------------
+// --- Border width & style
 
 $border-w-default: 'thin' !default;
 
@@ -52,21 +48,18 @@ $border-seam: (
 // make a standard border/hairline that works with the parent color theme
 @mixin border(
   $sides: all,
-  $w: $border-w-default,
+  $width: $border-w-default,
   $color: 'border',
   $style: dashed,
   $important: false
 ) {
   @if $sides == all {
-    border: #{border-w($w)} #{$style} #{color($color)}#{if($important == true, ' !important', '')};
+    border: important(#{border-w($width)} #{$style} #{color($color)}, $important);
+    border: important(#{border-w($width)} #{$style} var(#{color-property($color)}), $important);
   } @else {
     @each $side in $sides {
-      border-#{$side}: #{border-w($w)} #{$style} #{color($color)}#{if($important == true, ' !important', '')};
+      border-#{$side}: important(#{border-w($width)} #{$style} #{color($color)}, $important);
+      border-#{$side}: important(#{border-w($width)} #{$style} var(#{color-property($color)}), $important);
     }
-  }
-
-  // if no color is specified, set up border-color for each theme
-  @if type-of($color) != 'color' {
-    @include color(border-color, $color);
   }
 }
