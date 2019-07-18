@@ -1,0 +1,20 @@
+<%
+  # Styleguide section component
+  # -> one of the sections in the styleguide
+
+  # Locals
+  # heading - STRING: the heading at the top of the section
+  width ||= 'default' # STRING (optional): how wide the wrapper is
+  borders ||= ['top']
+%>
+
+<% component 'panel', locals: {
+  borders: borders
+} do %>
+    <% component 'wrapper', locals: {
+      width: width
+    } do %>
+      <h2 class="padding-bottom-wide t-align-center"><%= heading %></h2>
+      <%= yield %>
+    <% end %>
+  <% end %>

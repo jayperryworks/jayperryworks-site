@@ -21,8 +21,8 @@ table,
 
 thead,
 .table-header {
-  @include border(bottom, thick, $color: 'text-primary');
-  @include color-fg('text-primary');
+  @include border(bottom, thick, $color: 'primary');
+  @include color-fg('primary');
   @include font-accent('bold');
   font-size: scale-type('eta');
   text-align: left;

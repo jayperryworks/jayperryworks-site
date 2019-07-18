@@ -50,7 +50,7 @@
   [data-ui-dropdown][open] & {
     $pointer-size: 0.48rem;
 
-    @include border();
+    @include border($style: solid);
     @include border-radius();
     @include se-shadow();
     position: absolute;

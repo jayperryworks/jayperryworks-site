@@ -84,9 +84,9 @@
         <div class="t-display t-scale-gamma"><%= render_markdown(intro) %></div>
       <% end %>
       <% if status %>
-        <p class="t-display t-scale-delta c-text-tertiary margin-top-xxnarrow"><%= status %></p>
+        <p class="t-display t-scale-delta c-fg-tertiary margin-top-xxnarrow"><%= status %></p>
       <% end %>
-      <% partial 'components/button_link', locals: {
+      <% component 'button_link', locals: {
         url: '/about',
         classes: 'margin-top'
       } do %>

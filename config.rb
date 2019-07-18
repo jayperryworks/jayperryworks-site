@@ -163,12 +163,11 @@ helpers do
     if sides.is_a?(String)
       return '' if sides == 'none'
       return class_prefix if sides == 'all'
-      "#{class_prefix}-#{sides}"
-    else
-      sides.collect do |side|
-        "#{class_prefix}-#{side}"
-      end.join(' ').rstrip
+      return "#{class_prefix}-#{sides}"
     end
+    sides.collect do |side|
+      "#{class_prefix}-#{side}"
+    end.join(' ').rstrip
   end
 
   # build an array of the posts from a given blog

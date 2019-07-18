@@ -15,6 +15,7 @@
   id ||= false
   heading ||= false
   heading_level ||= 1
+  el ||= 'section'
   borders ||= [ 'top' ]
   padding ||= {
     x: 'outside',
@@ -23,14 +24,14 @@
 
   utils = [
     (padding_classes(padding) if padding),
-    border_classes(borders),
+    border_classes(borders, 'border-seam'),
     classes
   ]
 %>
 
-<section data-theme="<%= theme %>"<%= class_list(utils) %><%= " id=#{id}" if id %>>
+<<%= el %> data-theme="<%= theme %>"<%= class_list(utils) %><%= " id=#{id}" if id %>>
   <% if heading %>
     <h<%= heading_level %> class="t-align-center padding-bottom-wide"><%= heading %></h<%= heading_level %>>
   <% end %>
   <%= yield %>
-</section>
+</<%= el %>>

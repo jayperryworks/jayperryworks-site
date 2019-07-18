@@ -23,12 +23,12 @@
     <div style="display: none; position: absolute; height: 0; width: 0;">
       <%= partial "layouts/partials/spritemap" %>
     </div>
-
-    <%= yield %>
-
-    <%= component 'main_footer', locals: {
-      show_bio: current_page.data.title == 'home' || current_page.data.hide_bio == true ? false : true
-    } %>
+    <div class="border-frame">
+      <%= yield %>
+      <%= component 'main_footer', locals: {
+        show_bio: current_page.data.title == 'home' || current_page.data.hide_bio == true ? false : true
+      } %>
+    </div>
     <%= javascript_include_tag 'javascripts/main.js', type: 'module' %>
     <%= javascript_include_tag 'javascripts/main.es5.js', nomodule: '', defer: true %>
   </body>

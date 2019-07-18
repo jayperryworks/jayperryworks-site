@@ -11,7 +11,11 @@ title: home
 } %>
 
 <!-- Work section -->
-<% component "panel", locals: { heading: "Recent work", id: "work" } do %>
+<% component 'panel', locals: {
+  heading: 'Recent work',
+  id: 'work',
+  borders: 'none'
+} do %>
   <% component 'wrapper', locals: { width: 'wide' } do %>
     <%= component "work_gallery", locals: {
       prints: blog("work").articles
@@ -31,7 +35,11 @@ title: home
 
 <!-- Blog section -->
 <% if blog('writing').articles.length > 0 %>
-  <% component 'panel', locals: { heading: 'Writing', id: 'writing' } do %>
+  <% component 'panel', locals: {
+    heading: 'Writing',
+    borders: [ 'top', 'bottom-offset' ],
+    id: 'writing'
+  } do %>
     <% component 'wrapper' do %>
       <%= component "writing_feed", locals: { articles: blog("writing").articles[0...5] } %>
 
