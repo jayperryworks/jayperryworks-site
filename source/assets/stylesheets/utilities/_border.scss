@@ -37,11 +37,11 @@
 
 
 // --- 'Seam' effect
-[class*='border-seam'] {
+@mixin border-seam($side, $pseudo-element: 'after') {
   position: relative;
 
-  @supports(border-image: url('/assets/images/seam.svg') 5 0 0 10 repeat) {
-    &::after {
+  @supports(border-image: url('/assets/images/seam.svg') border-seam('marker-h') 0 0 border-seam('marker-w') repeat) {
+    &::#{$pseudo-element} {
       border-image: url('/assets/images/seam.svg') border-seam('marker-h') 0 0 border-seam('marker-w') repeat;
       border-width: #{border-seam('marker-h')}px 0 0 10px;
       border-style: solid;
@@ -51,6 +51,7 @@
       position: absolute;
       right: space(space-outside());
       height: 0;
+      #{$side}: -#{border-seam('marker-h') / 2}px;
 
       // set outside borders at each breakpoint
       @each $screen, $width in $spacing-outside {
@@ -65,11 +66,12 @@
 }
 
 // utils: .border-seam-top, .border-seam-bottom-offset
-@each $side in (top, bottom) {
-  .border-seam-#{$side} {
-    &::after {
-      #{$side}: -#{border-seam('marker-h') / 2}px;
-    }
+@each $side, $selector in (
+  'top': 'before',
+  'bottom': 'after'
+) {
+  [class*='border-seam-#{$side}'] {
+    @include border-seam($side, $selector)
   }
 
   .border-seam-#{$side}-offset {

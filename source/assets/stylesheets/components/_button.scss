@@ -7,7 +7,7 @@
 
 [data-ui-button] {
   $color: 'primary';
-  @include border('all', $color: $color);
+  @include border('all', $style: solid, $color: $color);
   @include color-fg($color);
   @include font-accent;
   @include transition-default;

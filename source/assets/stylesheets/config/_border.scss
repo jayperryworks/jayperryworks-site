@@ -19,11 +19,6 @@ $border-radius: 3px !default;
 
 $border-w-default: 'thin' !default;
 
-$border-styles: (
-  'default': 'solid',
-  'secondary': 'dotted'
-) !default;
-
 // getter function for border style
 @function border-style($name) {
   @return map-get($border-styles, unquote($name));
@@ -55,12 +50,18 @@ $border-seam: (
 }
 
 // make a standard border/hairline that works with the parent color theme
-@mixin border($sides: all, $w: $border-w-default, $color: 'border', $style: 'default', $important: false) {
+@mixin border(
+  $sides: all,
+  $w: $border-w-default,
+  $color: 'border',
+  $style: dashed,
+  $important: false
+) {
   @if $sides == all {
-    border: #{border-w($w)} #{border-style($style)} #{color($color)}#{if($important == true, ' !important', '')};
+    border: #{border-w($w)} #{$style} #{color($color)}#{if($important == true, ' !important', '')};
   } @else {
     @each $side in $sides {
-      border-#{$side}: #{border-w($w)} #{border-style($style)} #{color($color)}#{if($important == true, ' !important', '')};
+      border-#{$side}: #{border-w($w)} #{$style} #{color($color)}#{if($important == true, ' !important', '')};
     }
   }
 
