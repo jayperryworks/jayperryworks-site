@@ -27,6 +27,7 @@
 // --- Variations
 .border-thick { border-width: border-w('thick'); }
 .border-round { border-radius: $border-radius; }
+.border-solid { border-style: solid !important; }
 
 // Add a thick border on the left side of the screen
 .border-frame {

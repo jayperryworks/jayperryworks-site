@@ -13,7 +13,7 @@
       <li data-ui-gallery-item>
           <% link_to print, class: "t-link-undecorated" do %>
             <% source = print.data.thumb.present? ? print.data.thumb : print.data.cover %>
-            <%= image_tag (print.data.full_path ? source : "uploads/#{source}"), :alt => print.data.title, :class => "border" %>
+            <%= image_tag (print.data.full_path ? source : "uploads/#{source}"), :alt => print.data.title, :class => "border border-solid" %>
           <% end %>
       </li>
     <% end %>
