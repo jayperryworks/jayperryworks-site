@@ -1,0 +1,38 @@
+---
+title: Prints &amp; paintings
+---
+
+<%= component 'main_header' %>
+
+<% component 'panel', locals: {
+  el: 'main',
+  borders: 'none'
+} do %>
+
+  <h1 class="padding-bottom"><%= current_page.data.title %></h1>
+
+  <% component 'wrapper', locals: {
+    width: 'narrow',
+    classes: 't-content',
+    padding: { bottom: 'xwide' }
+  } do %>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum vitae tempore praesentium libero, quos, deserunt animi qui, quas ducimus dolores unde! Beatae cum ullam, facere id officia tempore quaerat illo?</p>
+  <% end %>
+
+  <% component 'wrapper', locals: { width: 'xwide' } do %>
+    <%= component 'work_gallery', locals: {
+      prints: blog('work').articles
+    } %>
+
+    <div class="margin-top-xwide">
+      <% component 'button_link', locals: {
+        url: data.site.etsy_link,
+        target: '_blank',
+        size: 'large'
+      } do %>
+        More prints available at <strong>Etsy</strong> &rsaquo;
+      <% end %>
+    </div>
+  <% end %>
+
+<% end %>

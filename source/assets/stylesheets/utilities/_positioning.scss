@@ -44,7 +44,7 @@
 // --- Positioning utils ---
 
 // center a block element
-.centered-block {
+@include breakpointify('centered-block', true) {
   display: block;
   margin-left: auto;
   margin-right: auto;

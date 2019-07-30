@@ -3,23 +3,23 @@
 // ==========================================================================
 
 @import "../config/layout_width";
+@import "../config/breakpoints";
 
 // Utilities
 // --------------------------------------------------------------------------
 
 // basic layout wrapper, for constraining at large screen sizes
 [data-ui-wrapper] {
-  @include clearfix;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
   max-width: layout-w();
   position: relative;
 }
 
 // wide version of the layout wrapper
-[data-ui-wrapper~='wide'] {
-  max-width: layout-w('wide');
+@each $name, $w in $layout-widths {
+  [data-ui-wrapper~='#{$name}'] {
+    max-width: layout-w($name);
+  }
 }
 
 // a child element of a layout wrapper which is actually wider than its parent

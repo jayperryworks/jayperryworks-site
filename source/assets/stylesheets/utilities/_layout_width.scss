@@ -1,0 +1,8 @@
+// Layout width utils
+// -> set children to a standard layout width
+
+.width {
+  display: block;
+  max-width: layout-w();
+  position: relative;
+}
