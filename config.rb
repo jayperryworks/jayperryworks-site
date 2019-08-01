@@ -44,12 +44,15 @@ activate :external_pipeline,
 
 # run the blog extension
 activate :blog do |blog|
-    blog.name = "work"
-    blog.prefix = "work"
+    blog.name = "pictures"
+    blog.prefix = "pictures"
     blog.sources = "{year}-{title}.html"
-    blog.permalink = "{category}/{year}/{title}.html"
-    blog.layout = "print"
+    blog.permalink = "{year}/{title}.html"
+    blog.layout = "picture"
 end
+
+# Redirect for old 'pictures' blog urls
+
 
 config[:blog_summary_separator] = /EXCERPT/
 

@@ -4,10 +4,10 @@ etsy_link: https://jayperry.etsy.com/
 
 main_nav:
   - label: Design work
-    url: /work/design/
+    url: /design/
     priority: 1
   - label: Prints &amp; paintings
-    url: /work/prints/
+    url: /pictures/
     priority: 1
   - label: Writing
     url: /writing/

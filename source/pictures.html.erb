@@ -20,8 +20,8 @@ title: Prints &amp; paintings
   <% end %>
 
   <% component 'wrapper', locals: { width: 'xwide' } do %>
-    <%= component 'work_gallery', locals: {
-      prints: blog('work').articles
+    <%= component 'pictures_gallery', locals: {
+      pictures: blog('pictures').articles
     } %>
 
     <div class="margin-top-xwide">
