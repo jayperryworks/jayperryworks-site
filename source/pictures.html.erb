@@ -1,7 +1,6 @@
 ---
 title: Prints &amp; paintings
 ---
-
 <%= component 'main_header' %>
 
 <% component 'panel', locals: {
@@ -9,30 +8,34 @@ title: Prints &amp; paintings
   borders: 'none'
 } do %>
 
-  <h1 class="padding-bottom"><%= current_page.data.title %></h1>
-
   <% component 'wrapper', locals: {
-    width: 'narrow',
-    classes: 't-content',
-    padding: { bottom: 'xwide' }
+    width: 'xxwide',
+    centered: true
   } do %>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum vitae tempore praesentium libero, quos, deserunt animi qui, quas ducimus dolores unde! Beatae cum ullam, facere id officia tempore quaerat illo?</p>
+    <h1 class="padding-bottom"><%= current_page.data.title %></h1>
+    <div data-columns>
+       <div data-columns-item='sidebar' class="padding-bottom-xwide">
+         <% component 'wrapper', locals: {
+           width: 'narrow',
+           classes: 't-content'
+         } do %>
+           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum vitae tempore praesentium libero, quos, deserunt animi qui, quas ducimus dolores unde! Beatae cum ullam, facere id officia tempore quaerat illo?</p>
+         <% end %>
+         <div class="padding-top-wide">
+           <% component 'button_link', locals: {
+             url: data.site.etsy_link,
+             target: '_blank'
+           } do %>
+             More prints available at <strong>Etsy</strong> &rsaquo;
+           <% end %>
+         </div>
+       </div>
+
+       <div data-columns-item="main">
+         <%= component 'pictures_gallery', locals: {
+           pictures: blog('pictures').articles
+         } %>
+       </div>
+     </div>
   <% end %>
-
-  <% component 'wrapper', locals: { width: 'xwide' } do %>
-    <%= component 'pictures_gallery', locals: {
-      pictures: blog('pictures').articles
-    } %>
-
-    <div class="margin-top-xwide">
-      <% component 'button_link', locals: {
-        url: data.site.etsy_link,
-        target: '_blank',
-        size: 'large'
-      } do %>
-        More prints available at <strong>Etsy</strong> &rsaquo;
-      <% end %>
-    </div>
-  <% end %>
-
 <% end %>

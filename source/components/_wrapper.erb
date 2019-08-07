@@ -9,13 +9,15 @@
   # Locals:
   width ||= 'default' # STRING (optional): make the wrapper wider or narrower
   padding ||= false # STRING/HASH: outside padding - see padding_classes helper in config.rb
+  centered ||= false # BOOLEAN: should the wrapper be centered when its width is smaller than its parent's?
   classes ||= '' # STRING: additional modifier classes for the container
   style ||= false # STRING (CSS): inline styles
   el ||= 'div'
 
   # Private:
   props = [
-    (width if width != 'default')
+    (width if width != 'default'),
+    ('centered' if centered)
   ]
 
   utils = [

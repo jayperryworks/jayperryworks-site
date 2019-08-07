@@ -22,6 +22,10 @@
   }
 }
 
+[data-ui-wrapper~='centered'] {
+  margin: 0 auto;
+}
+
 // a child element of a layout wrapper which is actually wider than its parent
 // -> use to expand a child of a default wrapper to the width of a 'wide' wrapper
 // -> great trick stolen from CSS-Tricks: https://css-tricks.com/full-width-containers-limited-width-parents/

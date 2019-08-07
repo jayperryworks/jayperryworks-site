@@ -1,0 +1,56 @@
+// Columns component
+// -> arrange child elements in a 2-column layout on large screens
+// -> one column is narrow ('sidebar') and the other wide ('main')
+@import '../config/breakpoints';
+
+$columns-breakpoint: 'xlarge';
+
+// --- Base
+[data-columns] {
+  --gutter: var(--space-medium);
+  --sidebar-width: 30rem;
+  font-size: 0;
+
+  @include media('>xlarge') {
+    @supports (display: grid) {
+      display: grid;
+      grid-column-gap: var(--gutter);
+      grid-row-gap: var(--gutter);
+      grid-template-columns: var(--sidebar-width) 1fr;
+    }
+  }
+}
+
+// --- Elements
+[data-columns-item] {
+  font-size: 1rem;
+  vertical-align: top;
+
+  @include media('>#{$columns-breakpoint}') {
+    display: inline-block;
+  }
+}
+
+[data-columns-item~='sidebar'] {
+  @include media('>#{$columns-breakpoint}') {
+    width: var(--sidebar-width);
+    padding-right: calc(var(--space-medium) / 2);
+
+    @supports (display: grid) {
+      width: auto;
+      padding-right: 0;
+    }
+  }
+}
+
+[data-columns-item~='main'] {
+  @include media('>#{$columns-breakpoint}') {
+    width: calc(100% - var(--sidebar-width));
+    padding-left: calc(var(--space-medium) / 2);
+
+    @supports (display: grid) {
+      width: auto;
+      padding-left: 0;
+    }
+  }
+}

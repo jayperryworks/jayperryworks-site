@@ -1,8 +1,7 @@
-// =============================================================================
 //  Gallery component
 // -> Arrange a list of elements in equal rows and columns using CSS Grid
 // -> Has a calc()-based fallback
-// =============================================================================
+@import '../config/spacing';
 
 // default values
 $gallery-gutter: space('xnarrow');

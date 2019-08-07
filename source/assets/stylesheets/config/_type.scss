@@ -26,7 +26,7 @@ $leading: (
 // -> a modified version of Indrek Paas' fluid type mixin: https://www.sassmeister.com/gist/7f22e44ace49b5124eec
 // -> which is based on Mike Riethmuller's formula: https://madebymike.com.au/writing/fluid-type-calc-examples/
 // -> also inspired by Eduardo Boucas' mixin: https://eduardoboucas.com/blog/2015/06/18/viewport-sized-typography-with-minimum-and-maximum-sizes.html
-@mixin type-fluid($properties: font-size, $size-min: 'eta', $size-max: 'alpha', $screen-min: 'xsmall', $screen-max: 'huge') {
+@mixin type-fluid($properties: font-size, $size-min: 'eta', $size-max: 'alpha', $screen-min: 'xsmall', $screen-max: 'xlarge') {
 
   // set base (min) size as default
   @each $property in $properties {
