@@ -34,19 +34,23 @@
 // --------------------------------------------------------------------------
 
 [data-ui-card~='multicolumn'] {
-  font-size: 0;
-
   $breakpoint: 55rem;
   $figure-w: 76%;
+
+  --breakpoint: $breakpoint;
+  --figure-width: $figure-w;
+  font-size: 0;
 
   [data-ui-card-figure] {
     @include type-size-default;
     display: inline-block;
     max-width: 100%;
     min-width: $figure-w;
+    min-width: var(--figure-width);
     vertical-align: top;
     width: 100%; // fallback value if calc() isn't supported
     width: calc((#{$breakpoint} - 100%) * 1000);
+    width: calc((var(--breakpoint) - 100%) * 1000);
   }
 
   [data-ui-card-content] {
@@ -54,23 +58,30 @@
     display: inline-block;
     max-width: 100%;
     min-width: (100% - $figure-w);
+    min-width: (100% - var(--figure-width));
+    min-width: calc(100% - var(--figure-width));
     vertical-align: top;
     width: 100%; // fallback value if calc() isn't supported
     width: calc((#{$breakpoint} - 100%) * 1000);
+    width: calc((var(--breakpoint) - 100%) * 1000);
   }
 
   [data-ui-card-figure~='small'] {
     $breakpoint: 30rem;
     $figure-w: 33.49%;
 
+    --figure-width: $figure-w;
     min-width: $figure-w;
+    min-width: var(--figure-width);
     width: 100%; // fallback value if calc() isn't supported
     width: calc((#{$breakpoint} - 100%) * 1000);
+    width: calc((var(--breakpoint) - 100%) * 1000);
 
     + [data-ui-card-content] {
       min-width: (100% - $figure-w);
       width: 100%; // fallback value if calc() isn't supported
       width: calc((#{$breakpoint} - 100%) * 1000);
+      width: calc((var(--breakpoint) - 100%) * 1000);
     }
   }
 }

@@ -66,5 +66,9 @@
 }
 
 .vertical-align-top {
-  vertical-align: top;
+  vertical-align: top !important;
+}
+
+.overflow-hidden {
+  overflow: hidden !important;
 }
