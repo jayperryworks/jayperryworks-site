@@ -1,0 +1,15 @@
+---
+title: 'Google Slides, under the hood'
+tags:
+  - code
+  - web
+show_full: true
+full_path: true
+---
+Interesting: I hit ‘view source’ on a [Google Slides](https://docs.google.com/presentation/) project this morning, to try to extract an image someone had uploaded and I noticed that the ‘slide’ code is all inline SVG (which is to say, XML). The image I was looking for turned out to be an `<image href="..."></image>` tag rather than the `<img src="..." />` I expected. You can even download your slide as an SVG file. 
+
+Makes a lot of sense to do it that way, now that I think about it; any given slide is type and graphics positioned in a fixed frame, which is precisely what SVG was built to do. In that sense, Google Slides is really just a big graphical SVG editor.
+
+That would also help explain why it’s so fast - I’m guessing that when you resize something, the JS is just changing the `x/y/w/h` coordinates on that particular XML tag, and then the browser does the rest as far as rendering goes. 
+
+I guess I’d just presumed that Google Slides’ power was only possible through some kind of black magic, involving unspeakable things with `canvas` elements and a million lines of Angular script talking to a thousand AI server farms. But (on the front-end, at least) it looks like pretty straightforward, standards-compliant, remarkably clean HTML5. I’m impressed to see that, and also really drives home to me just how capable modern browsers are. This is the kind of thing they’re capable of, more or less, out of the box.
