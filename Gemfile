@@ -12,7 +12,7 @@ gem "middleman-search_engine_sitemap"
 gem "middleman-blog"
 
 # For blog post summaries
-gem "nokogiri", ">= 1.8.2"
+gem "nokogiri", ">= 1.10.4"
 
 # Use LibSass instead of RubySass
 gem "sassc"
