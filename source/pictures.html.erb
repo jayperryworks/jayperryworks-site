@@ -14,8 +14,8 @@ title: Prints &amp; paintings
   } do %>
     <h1 class="padding-bottom"><%= current_page.data.title %></h1>
     <div class="overflow-hidden">
-      <div data-columns class="gutter-wrapper gutter-wide">
-       <div data-columns-item='sidebar' class="gutter">
+      <div data-ui-columns class="gutter-wrapper gutter-wide">
+       <div data-ui-columns-item='sidebar' class="gutter">
          <% component 'wrapper', locals: {
            width: 'narrow',
            classes: 't-content'
@@ -32,7 +32,7 @@ title: Prints &amp; paintings
          </div>
        </div>
 
-       <div data-columns-item="main" class="gutter">
+       <div data-ui-columns-item="main" class="gutter">
          <%= component 'pictures_gallery', locals: {
            pictures: blog('pictures').articles
          } %>

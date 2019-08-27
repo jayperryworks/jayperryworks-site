@@ -20,7 +20,10 @@
       } %>
 
       <!-- cover image, info, and title -->
-      <% component 'wrapper', locals: { classes: 'padding-top-wide t-align-center' } do %>
+      <% component 'wrapper', locals: {
+        classes: 'padding-top-wide t-align-center',
+        centered: true
+      } do %>
 
         <%
           # if the painting has dimension metadata, add it to the format listing
@@ -33,7 +36,7 @@
           cover_breakpoint = "xsmall"
         %>
 
-        <h1 class="t-accent-bold t-scale-epsilon display-inline_block@<%= cover_breakpoint %>"><%= current_page.data.title %></h1>
+        <h1 class="t-accent-bold t-scale-epsilon display-inline-block@<%= cover_breakpoint %>"><%= current_page.data.title %></h1>
         <time class="t-accent t-scale-epsilon c-fg-tertiary display-inline_block padding-left-narrow margin-left-narrow border-left@<%= cover_breakpoint %>"><%= current_page.date.strftime('%Y') %></time>
         <span class="t-accent t-scale-epsilon c-fg-tertiary display-inline_block padding-left-narrow margin-left-narrow border-left"><%= info %></span>
       <% end %>
@@ -65,14 +68,15 @@
 
     <!-- Editions -->
     <% component 'panel', locals: { heading: 'Available editions' } do %>
-      <print-edition>
-      </print-edition>
       <% if current_page.data.editions.present? %>
         <!-- edition cards -->
-        <% component 'wrapper', locals: { width: 'wide' } do %>
-          <ul class="list-undecorated">
+        <% component 'wrapper', locals: {
+          width: 'xxwide',
+          centered: true
+        } do %>
+          <ul data-ui-gallery="large" style="--gutter: var(--space-wide);">
             <% current_page.data.editions.each_with_index do |edition, index| %>
-              <li class="display-block padding-y-wide<%= ' border-top' unless index == 0 %>">
+              <li data-ui-gallery-item>
                 <% edition.image = "uploads/#{edition.image}" unless current_page.data.full_path %>
                 <%= component "print_edition", locals: {
                   edition: edition

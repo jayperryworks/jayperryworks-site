@@ -37,8 +37,8 @@
   $breakpoint: 55rem;
   $figure-w: 76%;
 
-  --breakpoint: $breakpoint;
-  --figure-width: $figure-w;
+  --breakpoint: #{$breakpoint};
+  --figure-width: #{$figure-w};
   font-size: 0;
 
   [data-ui-card-figure] {

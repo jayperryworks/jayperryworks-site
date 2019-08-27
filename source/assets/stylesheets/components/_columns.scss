@@ -7,7 +7,7 @@ $columns-breakpoint: screen('large');
 $columns-sidebar-w: 30rem;
 
 // --- Base
-[data-columns] {
+[data-ui-columns] {
   --gutter: var(--space-medium);
   --sidebar-width: #{$columns-sidebar-w};
   --breakpoint: #{$columns-breakpoint};
@@ -16,25 +16,21 @@ $columns-sidebar-w: 30rem;
 }
 
 // --- Elements
-[data-columns-item] {
+[data-ui-columns-item] {
   font-size: 1rem;
   vertical-align: top;
   max-width: 100%;
   display: inline-block;
 }
 
-[data-columns-item~='sidebar'] {
-  min-width: $columns-sidebar-w;
+[data-ui-columns-item~='sidebar'] {
   min-width: var(--sidebar-width);
   width: 100%;
-  width: calc((#{$columns-breakpoint} - 100%) * 1000);
   width: calc((var(--breakpoint) - 100%) * 1000);
 }
 
-[data-columns-item~='main'] {
-  min-width: calc(100% - #{$columns-sidebar-w});
+[data-ui-columns-item~='main'] {
   min-width: calc(100% - var(--sidebar-width));
   width: 100%;
-  width: calc((#{$columns-breakpoint} - 100%) * 1000);
   width: calc((var(--breakpoint) - 100%) * 1000);
 }

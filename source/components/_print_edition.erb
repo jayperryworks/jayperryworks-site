@@ -12,10 +12,23 @@
 %>
 
 <div class="overflow-hidden">
-  <figure data-ui-card="multicolumn" class="gutter-wrapper gutter-wide" id="edition_<%= edition.name %>">
-    <%= image_tag edition.image, data: { ui_card_figure: "large" }, class: "gutter", alt: edition.name + " edition" %>
+  <figure data-ui-card="multicolumn" class="gutter-wrapper gutter" id="edition_<%= edition.name %>">
+    <%= image_tag edition.image, data: { "ui-card-figure": "large" }, class: "gutter", alt: edition.name + " edition" %>
     <figcaption data-ui-card-content class="gutter">
-      <h2 class="t-scale-gamma c-fg-tertiary padding-bottom-narrow"><strong class="c-fg-primary t-display"><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print</h2>
+      <div data-ui-columns class="gutter-wrapper" style="--breakpoint: 15em; --sidebar-width: 10rem;">
+        <h2 data-ui-columns-item="main" class="t-scale-gamma c-fg-tertiary gutter">
+          <strong class="c-fg-primary t-display"><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print
+        </h2>
+        <div data-ui-columns-item="sidebar" class="gutter">
+          <% component 'button_link', locals: {
+            url: edition.url,
+            target: '_blank',
+            role: 'primary'
+          } do %>
+            Buy on Etsy
+          <% end %>
+        </div>
+      </div>
       <dl data-ui-stats>
         <div data-ui-stats-group>
           <dt data-ui-stats-item="label">Print Size</dt>
@@ -32,14 +45,6 @@
           <dd data-ui-stats-item><%= edition.limit.present? ? edition.limit : "Open" %></dd>
         </div>
       </dl>
-      <% component 'button_link', locals: {
-        url: edition.url,
-        target: '_blank',
-        role: 'primary',
-        classes: 'margin-top'
-      } do %>
-        Buy on Etsy
-      <% end %>
     </figcaption>
   </figure>
 </div>
