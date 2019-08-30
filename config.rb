@@ -135,15 +135,15 @@ helpers do
   # -> we need all this logic in this method, doesn't make sense to split it up
   def padding_classes(values = "medium", property = "padding")
     # return a single class if a string is passed in
-    return "l-no-#{property}" if values == "none"
-    return "l-#{property}" if values == "medium"
-    return "l-#{property}-#{values}" if values.is_a?(String)
+    return "no-#{property}" if values == "none"
+    return "#{property}" if values == "medium"
+    return "#{property}-#{values}" if values.is_a?(String)
 
     # return multiple classes if a hash is passed in
     values.collect do |side, width|
-      return "l-no-#{property}-#{side}" if width == "none"
-      return "l-#{property}-#{side}" if width == "medium"
-      "l-#{property}-#{side}-#{width}"
+      return "no-#{property}-#{side}" if width == "none"
+      return "#{property}-#{side}" if width == "medium"
+      "#{property}-#{side}-#{width}"
     end.join(" ").rstrip
   end
 
