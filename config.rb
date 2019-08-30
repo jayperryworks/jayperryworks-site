@@ -133,31 +133,19 @@ helpers do
   # -> Pass in a hash to apply padding to each side, e.g. { top: 'narrow' }.
   #    Any sides you leave out will have no padding.
   # -> we need all this logic in this method, doesn't make sense to split it up
-  # rubocop:disable Metrics/MethodLength
-  def padding_classes(values)
-    if values.is_a?(String)
-      case values
-      when 'none'
-        'no-padding'
-      when 'medium'
-        'padding'
-      else
-        "padding-#{values}"
-      end
-    else
-      values.collect do |side, width|
-        case width
-        when 'none'
-          "no-padding-#{side}"
-        when 'medium'
-          "padding-#{side}"
-        else
-          "padding-#{side}-#{width}"
-        end
-      end.join(' ').rstrip
-    end
+  def padding_classes(values = "medium", property = "padding")
+    # return a single class if a string is passed in
+    return "l-no-#{property}" if values == "none"
+    return "l-#{property}" if values == "medium"
+    return "l-#{property}-#{values}" if values.is_a?(String)
+
+    # return multiple classes if a hash is passed in
+    values.collect do |side, width|
+      return "l-no-#{property}-#{side}" if width == "none"
+      return "l-#{property}-#{side}" if width == "medium"
+      "l-#{property}-#{side}-#{width}"
+    end.join(" ").rstrip
   end
-  # rubocop:enable Metrics/MethodLength
 
   # figure out the utility border classes to use
   # arguments:
