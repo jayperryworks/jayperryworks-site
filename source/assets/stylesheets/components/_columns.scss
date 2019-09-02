@@ -24,13 +24,19 @@ $columns-sidebar-w: 30rem;
 }
 
 [data-ui-columns-item~='sidebar'] {
-  min-width: var(--sidebar-width);
   width: 100%;
-  width: calc((var(--breakpoint) - 100%) * 1000);
+
+  @include media('>xsmall') {
+    min-width: var(--sidebar-width);
+    width: calc((var(--breakpoint) - 100%) * 1000);
+  }
 }
 
 [data-ui-columns-item~='main'] {
-  min-width: calc(100% - var(--sidebar-width));
   width: 100%;
-  width: calc((var(--breakpoint) - 100%) * 1000);
+
+  @include media('>xsmall') {
+    min-width: calc(100% - var(--sidebar-width));
+    width: calc((var(--breakpoint) - 100%) * 1000);
+  }
 }
