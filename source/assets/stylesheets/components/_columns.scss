@@ -8,7 +8,6 @@ $columns-sidebar-w: 30rem;
 
 // --- Base
 [data-ui-columns] {
-  --gutter: var(--space-medium);
   --sidebar-width: #{$columns-sidebar-w};
   --breakpoint: #{$columns-breakpoint};
   display: block;
