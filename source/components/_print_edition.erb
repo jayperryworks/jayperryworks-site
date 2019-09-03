@@ -15,8 +15,8 @@
   <figure data-ui-card="multicolumn" class="gutter-wrapper gutter" id="edition_<%= edition.name %>">
     <%= image_tag edition.image, data: { "ui-card-figure": "large" }, class: "gutter", alt: edition.name + " edition" %>
     <figcaption data-ui-card-content class="gutter">
-      <div data-ui-columns class="gutter-wrapper" style="--breakpoint: 15em; --sidebar-width: 10rem;">
-        <div class="gutter">
+      <div data-ui-print-edition class="gutter-wrapper">
+        <div data-ui-print-edition-info class="gutter">
           <h2 class="t-scale-gamma c-fg-tertiary">
             <strong class="c-fg-primary t-display"><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print
           </h2>

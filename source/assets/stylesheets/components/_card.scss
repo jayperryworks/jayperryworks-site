@@ -4,10 +4,6 @@
 
 @import '../config/scale';
 @import '../config/color';
-// @import '../layout/grid';
-
-// $card-grid: ms(1) ms(7);
-// $card-grid--large: ms(7) ms(1);
 
 // Base
 // --------------------------------------------------------------------------
@@ -34,7 +30,7 @@
 // --------------------------------------------------------------------------
 
 [data-ui-card~='multicolumn'] {
-  $breakpoint: 55rem;
+  $breakpoint: 880px; // use px here because rem causes jank due to root type scaling
   $figure-w: 76%;
 
   --breakpoint: #{$breakpoint};
@@ -58,7 +54,6 @@
     display: inline-block;
     max-width: 100%;
     min-width: (100% - $figure-w);
-    min-width: (100% - var(--figure-width));
     min-width: calc(100% - var(--figure-width));
     vertical-align: top;
     width: 100%; // fallback value if calc() isn't supported

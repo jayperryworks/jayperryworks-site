@@ -1,0 +1,23 @@
+// Print edition component
+// -> a listing for a print with stats and CTA
+
+$print-edition-breakpoint: 23.75rem;
+
+// --- block
+[data-ui-print-edition] {
+  @supports (display: flex) {
+    --breakpoint: #{$print-edition-breakpoint};
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+// --- elements
+[data-ui-print-edition-info] {
+  @supports (flex: 1 0 #{$print-edition-breakpoint}) {
+    flex: 1 0 $print-edition-breakpoint;
+    flex: 1 0 var(--breakpoint);
+  }
+}
+
