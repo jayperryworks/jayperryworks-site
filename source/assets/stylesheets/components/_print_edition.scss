@@ -5,19 +5,24 @@ $print-edition-breakpoint: 23.75rem;
 
 // --- block
 [data-ui-print-edition] {
+  --breakpoint: #{$print-edition-breakpoint};
+
   @supports (display: flex) {
-    --breakpoint: #{$print-edition-breakpoint};
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    @include media('>xsmall') {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
   }
 }
 
 // --- elements
 [data-ui-print-edition-info] {
   @supports (flex: 1 0 #{$print-edition-breakpoint}) {
-    flex: 1 0 $print-edition-breakpoint;
-    flex: 1 0 var(--breakpoint);
+    @include media('>xsmall') {
+      flex: 1 0 $print-edition-breakpoint;
+      flex: 1 0 var(--breakpoint);
+    }
   }
 }
 

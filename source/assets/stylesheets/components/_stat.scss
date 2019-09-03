@@ -26,10 +26,15 @@ $stats-min-width: 6rem;
 [data-ui-stats-group] {
   display: inline-block;
   margin: 0;
-  max-width: 100%;
-  min-width: $stats-min-width;
-  min-width: var(--min-width);
-  width: calc((var(--breakpoint) - 100%) * 1000);
+  width: $stats-min-width;
+  width: var(--min-width);
+
+  @include media('>xsmall') {
+    max-width: 100%;
+    min-width: $stats-min-width;
+    min-width: var(--min-width);
+    width: calc((var(--breakpoint) - 100%) * 1000);
+  }
 }
 
 [data-ui-stats-item] {
