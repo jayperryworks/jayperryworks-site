@@ -17,7 +17,7 @@ $layout-widths: (
   'xxwide': 100rem
 );
 
-// Getter function for layout widths
+// Getter function for layout widths!!
 // -> PUBLIC
 @function layout-w($w: 'default') {
   @return map-get($layout-widths, $w);

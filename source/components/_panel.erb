@@ -30,8 +30,12 @@
 %>
 
 <<%= el %> data-theme="<%= theme %>"<%= class_list(utils) %><%= " id=#{id}" if id %>>
-  <% if heading %>
-    <h<%= heading_level %> class="padding-bottom-wide"><%= heading %></h<%= heading_level %>>
+  <% component 'wrapper', locals: {
+    width: 'xxwide'
+  } do %>
+    <% if heading %>
+      <h<%= heading_level %> class="padding-bottom-wide t-align-center"><%= heading %></h<%= heading_level %>>
+    <% end %>
+    <%= yield %>
   <% end %>
-  <%= yield %>
 </<%= el %>>

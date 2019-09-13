@@ -45,24 +45,38 @@
     <%# check if page has actual content before rendering the panel %>
     <% unless yield.blank? %>
       <% component "panel" do %>
-        <!-- writeup -->
-        <% component 'wrapper', locals: { classes: 't-content' } do %>
-          <%= yield %>
 
-          <!-- 'editions available on etsy' button -->
-          <% if current_page.data.edition_placeholder == true %>
-            <div class="t-align-center margin-top-wide">
-              <% component 'button_link', locals: {
-                url: data.site.etsy_link,
-                role: 'primary',
-                size: 'large',
-                target: '_blank'
-              } do %>
-                Print editions available at <strong>Etsy</strong>
-              <% end %>
-            </div>
-          <% end %>
-        <% end %>
+        <!-- writeup -->
+        <%
+          sidebar_w = 16
+          main_w = "--layout-w-default"
+        %>
+        <div data-ui-columns class="centered-block" style="
+          --sidebar-width: <%= sidebar_w %>rem;
+          --breakpoint: <%= "calc(#{sidebar_w}rem + (var(#{main_w}) / 2))" %>;
+          max-width: <%= "calc(var(#{main_w}) + #{sidebar_w}rem)" %>;
+        ">
+          <div data-ui-columns-item="sidebar" class="padding-bottom">
+            <h2 class="t-align-center t-align-left@small">Background</h2>
+          </div>
+          <div data-ui-columns-item="main" class="t-content">
+            <%= yield %>
+
+            <!-- 'editions available on etsy' button -->
+            <% if current_page.data.edition_placeholder == true %>
+              <div class="t-align-center margin-top-wide">
+                <% component 'button_link', locals: {
+                  url: data.site.etsy_link,
+                  role: 'primary',
+                  size: 'large',
+                  target: '_blank'
+                } do %>
+                  Print editions available at <strong>Etsy</strong>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
       <% end %>
     <% end %>
 
@@ -70,30 +84,25 @@
     <% component 'panel', locals: { heading: 'Available editions' } do %>
       <% if current_page.data.editions.present? %>
         <!-- edition cards -->
-        <% component 'wrapper', locals: {
-          width: 'xxwide',
-          centered: true
-        } do %>
-          <ul data-ui-gallery="large" style="--gutter: var(--space-wide);">
-            <% current_page.data.editions.each_with_index do |edition, index| %>
-              <li data-ui-gallery-item>
-                <% edition.image = "uploads/#{edition.image}" unless current_page.data.full_path %>
-                <%= component "print_edition", locals: {
-                  edition: edition
-                } %>
-              </li>
-            <% end %>
-          </ul>
-          <aside class="border-top margin-top-wide">
-            <% component 'wrapper', locals: {
-              width: 'narrow',
-              classes: 't-align-center'
-            } do %>
-              <h2 class="t-display t-scale-delta padding-top-wide padding-bottom-narrow">About Giclee prints</h2>
-              <div class="t-body-italic t-scale-epsilon c-fg-tertiary"><%= render_markdown(data.site.print_descriptions.giclee) %></div>
-            <% end %>
-          </aside>
-        <% end %>
+        <ul data-ui-gallery="large" style="--gutter: var(--space-wide);">
+          <% current_page.data.editions.each_with_index do |edition, index| %>
+            <li data-ui-gallery-item>
+              <% edition.image = "uploads/#{edition.image}" unless current_page.data.full_path %>
+              <%= component "print_edition", locals: {
+                edition: edition
+              } %>
+            </li>
+          <% end %>
+        </ul>
+        <aside class="border-top margin-top-wide">
+          <% component 'wrapper', locals: {
+            width: 'narrow',
+            classes: 't-align-center'
+          } do %>
+            <h2 class="t-display t-scale-delta padding-top-wide padding-bottom-narrow">About Giclee prints</h2>
+            <div class="t-body-italic t-scale-epsilon c-fg-tertiary"><%= render_markdown(data.site.print_descriptions.giclee) %></div>
+          <% end %>
+        </aside>
       <% end %>
     <% end %>
   </article>
