@@ -1,0 +1,39 @@
+<%
+  # Outdented blurb
+  # -> text content with a heading, where the heading hangs to the left of the text when the container reaches a certain width.
+  # -> used for short blurbs in scrolling sections, such as in portfolio pages.
+
+  # Locals:
+  # STRING heading: the heading/title
+  heading_level ||= 2 # NUMBER (optional): heading level (in markup)
+  heading_appearance ||= "alpha" # STRING (optional): the level in the type scale at which the heading should be styled.
+  heading_width ||= "18rem" # STRING (optional): width of the heading column
+  body_width ||= "default" # STRING (optional): width of the body text column (must be the name of a prop of layout_widths in config/layout_width)
+  body_classes ||= "" # STRING (optional): additional CSS classes for the body text container
+  wrapper_classes ||= "" # STRING (optional): additional CSS classes for the wrapper
+
+  wrapper_style = [
+    "--sidebar-width: #{heading_width}",
+    "--breakpoint: calc(#{heading_width} + ((var(--layout-w-#{body_width}) + #{heading_width}) / 2))",
+    "--max-width: calc(var(--layout-w-#{body_width}) + #{heading_width})"
+  ].join("; ").rstrip
+
+  wrapper_utils = [
+    "centered-block",
+    wrapper_classes
+  ]
+
+  body_utils = [
+    "t-content",
+    body_classes
+  ]
+%>
+
+<div data-ui-columns="centered"<%= class_list(wrapper_utils) %> style="<%= wrapper_style %>">
+  <div data-ui-columns-item="sidebar" class="padding-bottom">
+    <%= "<h#{heading_level} class='t-scale-#{heading_appearance}'>#{heading}</h#{heading_level}>" %>
+  </div>
+  <div data-ui-columns-item="main"<%= class_list(body_utils) %>>
+    <%= yield %>
+  </div>
+</div>

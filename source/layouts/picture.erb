@@ -47,36 +47,25 @@
       <% component "panel" do %>
 
         <!-- writeup -->
-        <%
-          sidebar_w = 16
-          main_w = "--layout-w-default"
-        %>
-        <div data-ui-columns class="centered-block" style="
-          --sidebar-width: <%= sidebar_w %>rem;
-          --breakpoint: <%= "calc(#{sidebar_w}rem + (var(#{main_w}) / 2))" %>;
-          max-width: <%= "calc(var(#{main_w}) + #{sidebar_w}rem)" %>;
-        ">
-          <div data-ui-columns-item="sidebar" class="padding-bottom">
-            <h2 class="t-align-center t-align-left@small">Background</h2>
-          </div>
-          <div data-ui-columns-item="main" class="t-content">
-            <%= yield %>
+        <% component "outdented_blurb", locals: {
+          heading: "Backstory"
+        } do %>
+          <%= yield %>
 
-            <!-- 'editions available on etsy' button -->
-            <% if current_page.data.edition_placeholder == true %>
-              <div class="t-align-center margin-top-wide">
-                <% component 'button_link', locals: {
-                  url: data.site.etsy_link,
-                  role: 'primary',
-                  size: 'large',
-                  target: '_blank'
-                } do %>
-                  Print editions available at <strong>Etsy</strong>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-        </div>
+          <!-- 'editions available on etsy' button -->
+          <% if current_page.data.edition_placeholder == true %>
+            <div class="t-align-center margin-top-wide">
+              <% component 'button_link', locals: {
+                url: data.site.etsy_link,
+                role: 'primary',
+                size: 'large',
+                target: '_blank'
+              } do %>
+                Print editions available at <strong>Etsy</strong>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
       <% end %>
     <% end %>
 
@@ -94,13 +83,13 @@
             </li>
           <% end %>
         </ul>
-        <aside class="border-top margin-top-wide">
-          <% component 'wrapper', locals: {
-            width: 'narrow',
-            classes: 't-align-center'
+        <aside class="border-top margin-top-xwide padding-top-xwide">
+          <% component "outdented_blurb", locals: {
+            heading: "About Giclee prints",
+            heading_appearance: "gamma",
+            body_classes: "t-body-italic"
           } do %>
-            <h2 class="t-display t-scale-delta padding-top-wide padding-bottom-narrow">About Giclee prints</h2>
-            <div class="t-body-italic t-scale-epsilon c-fg-tertiary"><%= render_markdown(data.site.print_descriptions.giclee) %></div>
+            <%= render_markdown(data.site.print_descriptions.giclee) %>
           <% end %>
         </aside>
       <% end %>
@@ -108,8 +97,11 @@
   </article>
 
   <!-- More work -->
-  <% component "panel", locals: { heading: "More work" } do %>
-    <% component 'wrapper', locals: { width: 'wide' } do %>
+  <% component "panel", locals: {
+    heading: "More work",
+    classes: "c-bg-well"
+  } do %>
+    <% component 'wrapper', locals: { width: 'xwide' } do %>
       <%= component 'pictures_gallery', locals: {
         pictures: blog('pictures').articles,
         current: false
