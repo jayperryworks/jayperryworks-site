@@ -2,7 +2,6 @@
 // Global box model and scaling
 // =============================================================================
 
-@import "../config/border";
 @import "../config/breakpoints";
 
 // Defaults
@@ -35,3 +34,7 @@ html {
 *,
 *:before,
 *:after { box-sizing: inherit; }
+
+body {
+  margin: 0;
+}

@@ -23,6 +23,7 @@ $border-w-default: 'thin' !default;
 $border-widths: (
   'thin': 1px,
   'thick': 4px,
+  'frame': 10px
 ) !default;
 
 // getter function for border widths
@@ -35,6 +36,7 @@ $border-widths: (
 }
 
 // properties for border seam effect
+// note 'marker-w' should match border-w('frame') above
 $border-seam: (
   'marker-h': 5,
   'marker-w': 10,
