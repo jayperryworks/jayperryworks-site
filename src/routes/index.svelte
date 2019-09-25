@@ -39,7 +39,7 @@
 <h1>Great success! test</h1>
 
 <figure>
-	<img alt='Borat' src='great-success.png'>
+	<img alt='Borat' src='images/portrait.jpg'>
 	<figcaption>HIGH FIVE!</figcaption>
 </figure>
 
