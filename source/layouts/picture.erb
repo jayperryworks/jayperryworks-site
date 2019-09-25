@@ -73,16 +73,28 @@
     <% component 'panel', locals: { heading: 'Available editions' } do %>
       <% if current_page.data.editions.present? %>
         <!-- edition cards -->
-        <ul data-ui-gallery="large" style="--gutter: var(--space-wide);">
-          <% current_page.data.editions.each_with_index do |edition, index| %>
-            <li data-ui-gallery-item>
-              <% edition.image = "uploads/#{edition.image}" unless current_page.data.full_path %>
+        <% if current_page.data.editions.length > 1 %>
+          <ul data-ui-gallery="large" style="--gutter: var(--space-wide);">
+            <% current_page.data.editions.each do |edition| %>
+              <li data-ui-gallery-item>
+                <% edition.image = "uploads/#{edition.image}" unless current_page.data.full_path %>
+                <%= component "print_edition", locals: {
+                  edition: edition
+                } %>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <% component "wrapper", locals: {
+            width: 'wide'
+          } do %>
+            <% current_page.data.editions.each do |edition| %>
               <%= component "print_edition", locals: {
                 edition: edition
               } %>
-            </li>
+            <% end %>
           <% end %>
-        </ul>
+        <% end %>
         <aside class="border-top margin-top-xwide padding-top-xwide">
           <% component "outdented_blurb", locals: {
             heading: "About Giclee prints",
