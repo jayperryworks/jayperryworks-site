@@ -1,0 +1,36 @@
+/*
+ * jayperryworks.com
+ *
+ * Designed & built by Jay Perry Works
+ * https://github.com/jayperryworks
+ */
+
+// install via npm
+@import 'normalize-css/normalize';
+
+////////////////////////////////////////////////////////////////////////////////
+// Base
+// -> global default element styles & utilities
+////////////////////////////////////////////////////////////////////////////////
+
+// @import 'base/icon'; // not using any icons yet
+// @import 'base/form';
+@import 'base/body';
+@import 'base/icon';
+@import 'base/list';
+@import 'base/media';
+@import 'base/table';
+@import 'base/type';
+
+////////////////////////////////////////////////////////////////////////////////
+// Utilities
+////////////////////////////////////////////////////////////////////////////////
+
+@import 'utilities/border';
+@import 'utilities/color';
+@import 'utilities/layout_width';
+@import 'utilities/positioning';
+@import 'utilities/spacing';
+@import 'utilities/special_effects';
+@import 'utilities/visibility';
+

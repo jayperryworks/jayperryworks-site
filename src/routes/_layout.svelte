@@ -4,19 +4,29 @@
 	export let segment;
 </script>
 
-<style>
-	main {
-		position: relative;
-		max-width: 56em;
-		background-color: white;
-		padding: 2em;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
+<style lang="scss">
+  @import 'normalize-css/normalize.css';
+
+  /* Base styles */
+  @import 'base/body';
+  @import 'base/icon';
+  @import 'base/list';
+  @import 'base/media';
+  @import 'base/table';
+  @import 'base/type';
+
+  /* Utilities */
+  @import 'utilities/border';
+  @import 'utilities/color';
+  @import 'utilities/layout_width';
+  @import 'utilities/positioning';
+  @import 'utilities/spacing';
+  @import 'utilities/special_effects';
+  @import 'utilities/visibility';
 </style>
 
 <Nav {segment}/>
 
-<main>
+<div class="border-frame">
 	<slot></slot>
-</main>
+</div>
