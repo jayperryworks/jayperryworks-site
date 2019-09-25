@@ -2,13 +2,13 @@
 // -> arrange child elements in a 2-column layout on large screens
 // -> one column is narrow ('sidebar') and the other wide ('main')
 @import '../config/breakpoints';
+@import '../config/layout_width';
 
 $columns-breakpoint: screen('large');
 $columns-sidebar-w: 30rem;
 
 // --- Base
 [data-ui-columns] {
-  --gutter: var(--space-medium);
   --sidebar-width: #{$columns-sidebar-w};
   --breakpoint: #{$columns-breakpoint};
   display: block;
@@ -24,13 +24,28 @@ $columns-sidebar-w: 30rem;
 }
 
 [data-ui-columns-item~='sidebar'] {
-  min-width: var(--sidebar-width);
   width: 100%;
-  width: calc((var(--breakpoint) - 100%) * 1000);
+
+  @include media('>xsmall') {
+    min-width: var(--sidebar-width);
+    width: calc((var(--breakpoint) - 100%) * 1000);
+  }
 }
 
 [data-ui-columns-item~='main'] {
-  min-width: calc(100% - var(--sidebar-width));
   width: 100%;
-  width: calc((var(--breakpoint) - 100%) * 1000);
+
+  @include media('>xsmall') {
+    min-width: calc(100% - var(--sidebar-width));
+    width: calc((var(--breakpoint) - 100%) * 1000);
+  }
+}
+
+// --- Modifiers
+[data-ui-columns~='centered'] {
+  --max-width: var(--layout-w-default);
+  margin-left: auto;
+  margin-right: auto;
+  max-width: layout_width('default'); // fallback width
+  max-width: var(--max-width);
 }

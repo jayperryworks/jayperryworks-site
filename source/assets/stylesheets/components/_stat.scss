@@ -6,20 +6,16 @@
 @import "../config/type";
 @import "../config/color";
 
+$stats-breakpoint: 24rem;
+$stats-min-width: 6rem;
+
 // Base
 // --------------------------------------------------------------------------
 
 [data-ui-stats] {
+  --breakpoint: #{$stats-breakpoint};
+  --min-width: #{$stats-min-width};
   list-style: none;
-  margin-left: 0;
-
-  @supports (display: flex) {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: -(space());
-    padding: space($split: true);
-  }
 }
 
 
@@ -28,12 +24,16 @@
 
 // a small group of stats, like a stat-label pair
 [data-ui-stats-group] {
+  display: inline-block;
   margin: 0;
+  width: $stats-min-width;
+  width: var(--min-width);
 
-  @supports (display: flex) {
-    @include type-size-default;
-    min-width: 8rem;
-    padding: space($split: true);
+  @include media('>xsmall') {
+    max-width: 100%;
+    min-width: $stats-min-width;
+    min-width: var(--min-width);
+    width: calc((var(--breakpoint) - 100%) * 1000);
   }
 }
 

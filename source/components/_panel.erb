@@ -14,7 +14,8 @@
   classes ||= ''
   id ||= false
   heading ||= false
-  heading_level ||= 1
+  heading_level ||= 2
+  heading_appearance ||= 'alpha'
   el ||= 'section'
   borders ||= [ 'top' ]
   padding ||= {
@@ -30,8 +31,12 @@
 %>
 
 <<%= el %> data-theme="<%= theme %>"<%= class_list(utils) %><%= " id=#{id}" if id %>>
-  <% if heading %>
-    <h<%= heading_level %> class="padding-bottom-wide"><%= heading %></h<%= heading_level %>>
+  <% component 'wrapper', locals: {
+    width: 'xxwide'
+  } do %>
+    <% if heading %>
+      <h<%= heading_level %> class="padding-bottom-wide t-align-center@medium t-scale-<%= heading_appearance %>"><%= heading %></h<%= heading_level %>>
+    <% end %>
+    <%= yield %>
   <% end %>
-  <%= yield %>
 </<%= el %>>

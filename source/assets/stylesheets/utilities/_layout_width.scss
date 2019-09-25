@@ -1,8 +1,9 @@
 // Layout width utils
 // -> set children to a standard layout width
+@import "../config/layout_width";
 
-.width {
-  display: block;
-  max-width: layout-w();
-  position: relative;
+:root {
+  @each $name, $width in $layout-widths {
+    --layout-w-#{$name}: #{$width};
+  }
 }

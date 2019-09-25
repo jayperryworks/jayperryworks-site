@@ -15,11 +15,31 @@
   <figure data-ui-card="multicolumn" class="gutter-wrapper gutter" id="edition_<%= edition.name %>">
     <%= image_tag edition.image, data: { "ui-card-figure": "large" }, class: "gutter", alt: edition.name + " edition" %>
     <figcaption data-ui-card-content class="gutter">
-      <div data-ui-columns class="gutter-wrapper" style="--breakpoint: 15em; --sidebar-width: 10rem;">
-        <h2 data-ui-columns-item="main" class="t-scale-gamma c-fg-tertiary gutter">
-          <strong class="c-fg-primary t-display"><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print
-        </h2>
-        <div data-ui-columns-item="sidebar" class="gutter">
+      <div data-ui-print-edition class="gutter-wrapper">
+        <div data-ui-print-edition-info class="gutter">
+          <h2 class="t-scale-gamma c-fg-tertiary">
+            <strong class="c-fg-primary t-display"><%= edition.name.titleize %></strong> <%= edition.type.titleize %> Print
+          </h2>
+          <div class="padding-top">
+            <dl data-ui-stats class="gutter-wrapper">
+              <div data-ui-stats-group class="gutter">
+                <dt data-ui-stats-item="label">Print Size</dt>
+                <dd data-ui-stats-item><%= edition.height %> &times; <%= edition.width %>"</dd>
+              </div>
+              <% if edition.border.present? %>
+                <div data-ui-stats-group class="gutter">
+                  <dt data-ui-stats-item="label">Paper Size</dt>
+                  <dd data-ui-stats-item><%= edition.height + (edition.border * 2) %> &times; <%= edition.width + (edition.border * 2) %>"</dd>
+                </div>
+              <% end %>
+              <div data-ui-stats-group class="gutter">
+                <dt data-ui-stats-item="label">Edition</dt>
+                <dd data-ui-stats-item><%= edition.limit.present? ? edition.limit : "Open" %></dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+        <div class="gutter">
           <% component 'button_link', locals: {
             url: edition.url,
             target: '_blank',
@@ -29,22 +49,6 @@
           <% end %>
         </div>
       </div>
-      <dl data-ui-stats>
-        <div data-ui-stats-group>
-          <dt data-ui-stats-item="label">Print Size</dt>
-          <dd data-ui-stats-item><%= edition.height %> &times; <%= edition.width %>"</dd>
-        </div>
-        <% if edition.border.present? %>
-        <div data-ui-stats-group>
-          <dt data-ui-stats-item="label">Paper Size</dt>
-          <dd data-ui-stats-item><%= edition.height + (edition.border * 2) %> &times; <%= edition.width + (edition.border * 2) %>"</dd>
-        </div>
-        <% end %>
-        <div data-ui-stats-group>
-          <dt data-ui-stats-item="label">Edition</dt>
-          <dd data-ui-stats-item><%= edition.limit.present? ? edition.limit : "Open" %></dd>
-        </div>
-      </dl>
     </figcaption>
   </figure>
 </div>

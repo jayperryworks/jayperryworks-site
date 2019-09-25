@@ -2,6 +2,7 @@
 // -> Arrange a list of elements in equal rows and columns using CSS Grid
 // -> Has a calc()-based fallback
 @import '../config/spacing';
+@import '../config/layout_width';
 
 // default values
 $gallery-gutter: space('xnarrow');
@@ -12,14 +13,14 @@ $gallery-max-percentage: 100%;
 [data-ui-gallery] {
   --gutter: var(--space-xnarrow, $gallery-gutter);
   --min-width: 240px;
-  --breakpoint: $gallery-breakpoint;
-  --min-percentage: $gallery-min-percentage;
-  --max-percentage: $gallery-max-percentage;
+  --breakpoint: #{$gallery-breakpoint};
+  --min-percentage: #{$gallery-min-percentage};
+  --max-percentage: #{$gallery-max-percentage};
 
   display: block;
   font-size: 0;
   list-style: none;
-  margin: (($gallery-gutter/2) * -1);
+  margin: (($gallery-gutter / 2) * -1);
   margin: calc((var(--gutter) / 2) * -1);
   padding-left: 0;
   position: relative;
@@ -29,8 +30,12 @@ $gallery-max-percentage: 100%;
     display: grid;
     grid-column-gap: var(--gutter);
     grid-row-gap: var(--gutter);
-    grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
+    grid-template-columns: 1fr;
     margin: 0;
+
+    @include media('>xsmall') {
+      grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
+    }
   }
 }
 
@@ -44,14 +49,22 @@ $gallery-max-percentage: 100%;
   --min-width: 600px;
   --breakpoint: 1200px;
   --min-percentage: 25%;
+
+  @include media('>xsmall') {
+    grid-template-columns: 1fr;
+  }
+
+  @include media('>small') {
+    grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
+  }
 }
 
 [data-ui-gallery-item] {
   display: inline-block;
   font-size: 1rem;
   margin: 0; // overrule default li spacing
-  padding: $gallery-gutter;
-  padding: var(--gutter);
+  padding: ($gallery-gutter / 2);
+  padding: calc(var(--gutter) / 2);
   position: relative;
   vertical-align: top;
 
@@ -69,9 +82,13 @@ $gallery-max-percentage: 100%;
   @supports (display: grid) and (display: flex) {
     align-items: flex-start;
     display: flex;
-    max-width: none;
+    max-width: layout-w();
     min-width: auto;
     padding: 0;
     width: auto;
+
+    [data-ui-gallery~='large'] & {
+      max-width: layout-w('wide');
+    }
   }
 }

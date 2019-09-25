@@ -86,7 +86,7 @@ p {
 }
 
 a {
-  @include border('bottom', $style: 'secondary');
+  @include border('bottom', $style: 'dashed');
   @include transition-default;
   border-color: inherit;
   color: inherit;

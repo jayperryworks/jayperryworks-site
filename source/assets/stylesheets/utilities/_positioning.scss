@@ -28,9 +28,9 @@
 }
 
 @include breakpointify(".display-flex", true) {
-  // @supports (display: flex) {
-    display: flex !important;
-  // }
+  @supports (display: flex) {
+    display: flex;
+  }
 }
 
 .display-flex-justify {
@@ -41,10 +41,14 @@
   flex: 1;
 }
 
+.display-flex-fill-breakpoint {
+
+}
+
 // --- Positioning utils ---
 
 // center a block element
-@include breakpointify('centered-block', true) {
+@include breakpointify('.centered-block', true) {
   display: block;
   margin-left: auto;
   margin-right: auto;
