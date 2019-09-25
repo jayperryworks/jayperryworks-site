@@ -1,20 +1,18 @@
 {
-	"background_color": "#ffffff",
-	"theme_color": "#333333",
-	"name": "TODO",
-	"short_name": "TODO",
-	"display": "minimal-ui",
-	"start_url": "/",
-	"icons": [
-		{
-			"src": "logo-192.png",
-			"sizes": "192x192",
-			"type": "image/png"
-		},
-		{
-			"src": "logo-512.png",
-			"sizes": "512x512",
-			"type": "image/png"
-		}
-	]
+    "name": "Jay Perry",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone"
 }
