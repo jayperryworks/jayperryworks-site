@@ -30,8 +30,7 @@
   }
 </style>
 
-<Nav {segment}/>
-
 <div class="border-frame">
+  <Nav {segment}/>
 	<slot></slot>
 </div>

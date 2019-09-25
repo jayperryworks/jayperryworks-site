@@ -1,7 +1,7 @@
 <style lang="scss">
   @import 'config/scale.scss';
 
-  $test: red;
+  $test: blue;
 
 	h1, figure, p {
 		text-align: center;
@@ -35,7 +35,7 @@
 	<title>Sapper project template</title>
 </svelte:head>
 
-<h1>Great success!</h1>
+<h1>Great success! test</h1>
 
 <figure>
 	<img alt='Borat' src='images/portrait.jpg'>
