@@ -7,6 +7,7 @@ import { terser } from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
 import sveltePreprocess from 'svelte-preprocess';
+import { mdsvex } from 'mdsvex';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -15,17 +16,24 @@ const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 const onwarn = (warning, onwarn) => (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
 const dedupe = importee => importee === 'svelte' || importee.startsWith('svelte/');
 
-const preprocess = sveltePreprocess({
-  scss: {
-    includePaths: [
-      'static/stylesheets',
-      'node_modules'
-    ],
-  },
-  postcss: {
-    plugins: [require('autoprefixer')],
-  },
-});
+const extensions = ['.svelte', '.svx'];
+
+const preprocess = [
+  sveltePreprocess({
+    scss: {
+      includePaths: [
+        'static/stylesheets',
+        'node_modules'
+      ]
+    },
+    postcss: {
+      plugins: [require('autoprefixer')]
+    }
+  }),
+  mdsvex({
+    extension: '.svx'
+  })
+];
 
 export default {
 	client: {
@@ -40,6 +48,7 @@ export default {
 				dev,
 				hydratable: true,
 				emitCss: true,
+        extensions,
         preprocess
 			}),
 			resolve({
@@ -84,6 +93,7 @@ export default {
 			svelte({
 				generate: 'ssr',
 				dev,
+        extensions,
         preprocess
 			}),
 			resolve({
