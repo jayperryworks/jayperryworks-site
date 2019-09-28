@@ -1,20 +1,29 @@
 <script context="module">
   export async function preload({ params, query }) {
+    const { year, month, day, slug } = params
     // the `slug` parameter is available because
     // this file is called [slug].svelte
-    const res = await this.fetch(`writing/${params.year}/${params.month}/${params.slug}.json`);
-    const data = await res.json();
+    const response = await this.fetch(`content/writing/${year}-${month}-${day}-${slug}.json`);
+    const data = await response.json();
 
-    if (res.status === 200) {
-      return { post: data };
+    if (response.status === 200) {
+      return {
+        post: data,
+        date: {
+          year,
+          month,
+          day
+        }
+      };
     } else {
-      this.error(res.status, data.message);
+      this.error(response.status, data.message);
     }
   }
 </script>
 
 <script>
   export let post;
+  export let date;
 </script>
 
 <style>
@@ -62,10 +71,10 @@
 <aside>
   <dl>
     <dt>Date:</dt>
-    <dd><time>{post.month} {post.year}</time></dd>
+    <dd><time>{date.day}.{date.month}.{date.year}</time></dd>
   </dl>
 </aside>
 
 <div class='content'>
-  {@html post.html}
+  {post.body.sections[0].markdown}
 </div>
