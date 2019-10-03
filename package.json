@@ -17,7 +17,6 @@
     "bourbon": "^6.0.0",
     "compression": "^1.7.1",
     "include-media": "^1.4.9",
-    "mdsvex": "^0.4.0",
     "modularscale-sass": "^3.0.10",
     "normalize-css": "^2.3.1",
     "polka": "next",
