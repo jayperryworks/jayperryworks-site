@@ -3,20 +3,21 @@
     const { year, month, day, slug } = params
     // the `slug` parameter is available because
     // this file is called [slug].svelte
-    const response = await this.fetch(`content/writing/${year}-${month}-${day}-${slug}.json`);
+    const response = await this.fetch(`writing/${year}/${month}/${day}/${slug}.json`);
     const data = await response.json();
 
-    if (response.status === 200) {
-      return {
-        post: data,
-        date: {
-          year,
-          month,
-          day
-        }
-      };
-    } else {
-      this.error(response.status, data.message);
+    if (response.status !== 200) {
+      this.error(response.status, data.message)
+      return
+    }
+
+    return {
+      post: data,
+      date: {
+        year,
+        month,
+        day
+      }
     }
   }
 </script>

@@ -1,26 +1,20 @@
-import path from 'path'
-import fs from 'fs'
+import generatePost from '../../../../../utils/generatePost.js'
 
 export function get(req, res, next) {
   const { year, month, day, slug } = req.params
+  const header = {
+    'Content-Type': 'application/json'
+  }
+  let json = generatePost(`content/writing/${year}-${month}-${day}-${slug}.json`)
 
-  const filePath = path.join(__dirname, `content/writing/${year}-${month}-${day}-${slug}.json`)
 
-  fs.readFile(filePath, {encoding: 'utf-8'}, (err, data) => {
-    if (!err) {
-      res.writeHead(200, {
-        'Content-Type': 'application/json'
-      });
+  if (!json) {
+    res.writeHead(404, header)
+    res.end(JSON.stringify({
+      message: 'Oh dear, this bicycle has gone rubber-side-up. Much appreciated if you could let <a href="https://twitter.com/inkpixelswords" target="_blank">@inkpixelswords</a> know.'
+    }))
+  }
 
-      res.end(JSON.stringify(data.json()));
-    } else {
-      res.writeHead(404, {
-        'Content-Type': 'application/json'
-      });
-
-      res.end(JSON.stringify({
-        message: `Not found: ${err}`
-      }));
-    }
-  })
+  res.writeHead(200, header)
+  res.end(json)
 }
