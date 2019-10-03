@@ -1,12 +1,17 @@
 <script context="module">
   export function preload({ params, query }) {
-    return this.fetch(`writing.json`).then(r => r.json()).then(posts => {
-      return { posts };
-    });
+    return this
+      .fetch(`writing.json`)
+      .then(r => r.json())
+      .then(posts => {
+        return { posts };
+      });
   }
 </script>
 
 <script>
+  import { format } from 'date-fns'
+
   export let posts;
 </script>
 
@@ -25,10 +30,18 @@
 
 <ul>
   {#each posts as post}
-    <!-- we're using the non-standard `rel=prefetch` attribute to
-        tell Sapper to load the data for the page as soon as
-        the user hovers over the link or taps it, instead of
-        waiting for the 'click' event -->
-    <li><a rel='prefetch' href='writing/{post.year}/{post.month}/{post.day}/{post.slug}'>{post.title}</a></li>
+    <li>
+      <a
+        rel='prefetch'
+        href='{`writing/${post.date.year}/${post.date.month}/${post.date.day}/${post.slug}`}'
+      >
+        <h2>{post.title}</h2>
+        <p>{post.subtitle}</p>
+        <time datetime='{format(new Date(post.date.year, post.date.month, post.date.day), 'yyyy-M-dd')}'>
+          {format(new Date(post.date.year, post.date.month, post.date.day), 'MMMM d, yyyy')}
+        </time>
+        <p>{post.excerpt[0].markdown}</p>
+      </a>
+    </li>
   {/each}
 </ul>

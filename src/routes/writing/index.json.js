@@ -1,18 +1,10 @@
-import posts from './_posts.js';
+import generatePostList from '../../utils/generatePostList.js';
 
-const contents = JSON.stringify(posts.map(post => {
-	return {
-		title: post.title,
-    year: post.year,
-    month: post.month,
-		slug: post.slug
-	};
-}));
+const list = JSON.stringify(generatePostList('content/writing'));
 
 export function get(req, res) {
 	res.writeHead(200, {
 		'Content-Type': 'application/json'
 	});
-
-	res.end(contents);
+	res.end(list);
 }

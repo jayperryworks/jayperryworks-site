@@ -1,5 +1,4 @@
 import fs from 'fs'
-import path from 'path'
 
 export default function generatePost (filePath) {
   return fs.readFileSync(
@@ -10,7 +9,7 @@ export default function generatePost (filePath) {
         return false
       }
 
-      return JSON.stringify(data.json())
+      return data.json()
     }
   )
 }
