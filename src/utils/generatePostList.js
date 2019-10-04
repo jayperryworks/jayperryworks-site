@@ -1,15 +1,11 @@
 import fs from 'fs'
 import path from 'path'
-import { format } from 'date-fns'
+import render from './renderMarkdown.js'
 
-export default function generatePostList (dir) {
+export default function (dir) {
   return fs.readdirSync(dir).map((file) => {
 
-    const metadata = path
-      .parse(file).name
-      .split('-')
-
-    const slug = metadata.slice(3, metadata.length).join('-')
+    const metadata = path.parse(file).name.split('-')
 
     const data = JSON.parse(
       fs.readFileSync(
@@ -29,10 +25,20 @@ export default function generatePostList (dir) {
         month: metadata[1],
         day: metadata[2]
       },
-      slug,
-      excerpt: data.body.sections.filter((section) => {
-        return section.useInExcerpt
-      })
+      slug: metadata.slice(3, metadata.length).join('-'),
+      excerpt: data.body.sections
+        .filter((section) => {
+          // keep only the sections flagged with useInExcerpt
+          return section.useInExcerpt
+        }).map((excerpt) => {
+          // render out any markdown content
+          // -> place render in 'html' prop and delete 'markdown' prop
+          if (excerpt.markdown) {
+            excerpt.html = render(excerpt.markdown)
+            delete excerpt.markdown
+            return excerpt
+          }
+        })
     }
   })
 }

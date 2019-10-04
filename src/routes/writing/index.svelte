@@ -23,7 +23,7 @@
 </style>
 
 <svelte:head>
-  <title>Blog</title>
+  <title>Writing</title>
 </svelte:head>
 
 <h1>Recent posts</h1>
@@ -40,7 +40,13 @@
         <time datetime='{format(new Date(post.date.year, post.date.month, post.date.day), 'yyyy-M-dd')}'>
           {format(new Date(post.date.year, post.date.month, post.date.day), 'MMMM d, yyyy')}
         </time>
-        <p>{post.excerpt[0].markdown}</p>
+        <div>
+          {#each post.excerpt as section}
+            {#if section.type == 'passage'}
+              {@html section.html}
+            {/if}
+          {/each}
+        </div>
       </a>
     </li>
   {/each}
