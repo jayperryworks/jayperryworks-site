@@ -11,6 +11,8 @@
       return
     }
 
+    console.log(data.body.sections)
+
     return {
       post: data,
       date: {
@@ -67,15 +69,22 @@
   <title>{post.title}</title>
 </svelte:head>
 
-<h1>{post.title}</h1>
+<article>
+  <header>
+    <h1>{post.title}</h1>
+    {#if post.subtitle}
+      <p>{post.subtitle}</p>
+    {/if}
+    <time>{date.day}.{date.month}.{date.year}</time>
+  </header>
 
-<aside>
-  <dl>
-    <dt>Date:</dt>
-    <dd><time>{date.day}.{date.month}.{date.year}</time></dd>
-  </dl>
-</aside>
-
-<div class='content'>
-  {post.body.sections[0].markdown}
-</div>
+  <main class='content'>
+    {#each post.body.sections as section}
+      <section>
+        {#if section.html}
+          {@html section.html}
+        {/if}
+      </section>
+    {/each}
+  </main>
+</article>

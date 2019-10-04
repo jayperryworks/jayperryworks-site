@@ -12,6 +12,7 @@ export default function (dir) {
         `${dir}/${file}`,
         {encoding: 'utf-8'},
         (err, data) => {
+          if (error) return false
           return data.json()
         }
       )
@@ -38,6 +39,7 @@ export default function (dir) {
             delete excerpt.markdown
             return excerpt
           }
+          return excerpt
         })
     }
   })
