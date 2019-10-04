@@ -6,8 +6,8 @@ export default function (filePath) {
     fs.readFileSync(
       filePath,
       {encoding: 'utf-8'},
-      (err, data) => {
-          return false
+      (error, data) => {
+        if (error) return false
         return data.json()
       }
     )

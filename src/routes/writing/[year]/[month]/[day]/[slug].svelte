@@ -11,8 +11,6 @@
       return
     }
 
-    console.log(data.body.sections)
-
     return {
       post: data,
       date: {
@@ -25,6 +23,8 @@
 </script>
 
 <script>
+  import { format } from 'date-fns'
+
   export let post;
   export let date;
 </script>
@@ -75,7 +75,9 @@
     {#if post.subtitle}
       <p>{post.subtitle}</p>
     {/if}
-    <time>{date.day}.{date.month}.{date.year}</time>
+    <time datetime='{format(new Date(date.year, date.month, date.day), 'yyyy-M-dd')}'>
+      {format(new Date(date.year, date.month, date.day), 'MMMM d, yyyy')}
+    </time>
   </header>
 
   <main class='content'>
