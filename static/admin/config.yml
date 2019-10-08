@@ -16,7 +16,7 @@ collections:
     folder: "/content/writing" # The path to the folder where the documents are stored
     create: true # Allow users to create new documents in this collection
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
-    format: json
+    format: yml
     fields: # The fields for each document, usually in front matter
       - label: Title
         name: title
@@ -45,6 +45,7 @@ collections:
           - label: Note
             name: note
             widget: object
+            hint: An introductory note that appears above the body of the post
             fields:
               - {label: "Type", name: "type", widget: "hidden", default: "note"}
               - {label: "Use in excerpt", name: "useInExcerpt", widget: "boolean", default: "false"}
@@ -52,17 +53,38 @@ collections:
           - label: Passage
             name: passage
             widget: object
+            hint: A basic chunk of text content
             fields:
             - {label: "Type", name: "type", widget: "hidden", default: "passage"}
             - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false}
             - {label: "Content", name: "markdown", widget: "markdown", required: false}
+
           - label: Figure
             name: figure
             widget: object
+            hint: A image that appears inline.
             fields:
             - {label: "Type", name: "type", widget: "hidden", default: "figure"}
             - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false}
-            - {label: "Source", name: "source", widget: "markdown", required: false}
+            - {label: "Source", name: "source", widget: "markdown"}
+            - {label: "Alt text", name: "alt", widget: "string", required: false}
+            - {label: "Width", name: "width", widget: "select", options: ["narrow", "medium", "wide"], default: "medium"}
+          - label: Table
+            name: table
+            widget: object
+            fields:
+            - {label: "Type", name: "type", widget: "hidden", default: "table"}
+            - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false}
+            - label: "Key Columns"
+              name: "keyColumns"
+              widget: "list"
+              required: false
+            - label: Rows
+              name: rows
+              type: list
+              fields:
+                - {label: "Type", name: "type", widget: "select", options: ["header", "row", "footer"], default: "row"}
+                - {label: "Cells", name: "cells", widget: "list"}
           - label: Postscript
             name: postscript
             widget: object
