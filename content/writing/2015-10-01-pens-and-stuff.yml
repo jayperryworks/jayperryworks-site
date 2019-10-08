@@ -12,9 +12,10 @@
       markdown: |-
         I found a [specialty pen shop](http://www.penboutique.com) nearby, where I picked up this great Pilot Namiki fountain pen. Super smooth, and allows just a bit of modulation in the line, nice heft to it.
     - type: figure
-      source: "/images/uploads/pen.jpg"
+      sources:
+        - path: "/images/uploads/pen.jpg"
       alt: "My shiny new pen"
-      width: narrow
+      prominence: small
     - type: passage
       markdown: |-
         My curiosity was inspired by cartoonist Dan Berry, who talks a bit about [his search for the perfect pen](http://www.thingsbydan.co.uk/2014/03/pens-pens-pens/) on his blog, ["Things by Dan."](http://www.thingsbydan.co.uk)

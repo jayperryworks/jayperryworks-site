@@ -35,6 +35,7 @@ collections:
         required: false
       - label: Short post
         name: shortPost
+        hint: "Display the whole post on the blog index? Or just an excerpt?"
         widget: boolean
         default: true
       - label: Body
@@ -56,7 +57,7 @@ collections:
             hint: A basic chunk of text content
             fields:
             - {label: "Type", name: "type", widget: "hidden", default: "passage"}
-            - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false}
+            - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false, hint: "Include this section in the post excerpt?"}
             - {label: "Content", name: "markdown", widget: "markdown", required: false}
 
           - label: Figure
@@ -65,16 +66,23 @@ collections:
             hint: A image that appears inline.
             fields:
             - {label: "Type", name: "type", widget: "hidden", default: "figure"}
-            - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false}
-            - {label: "Source", name: "source", widget: "image"}
+            - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false, hint: "Include this section in the post excerpt?"}
+            - label: "Sources"
+              name: "sources"
+              widget: "list"
+              fields:
+                - {label: "Image", name: "path", widget: "image"}
+                - {label: "Size", name: "size", widget: "number", required: false}
             - {label: "Alt text", name: "alt", widget: "string", required: false}
-            - {label: "Width", name: "width", widget: "select", options: ["narrow", "medium", "wide"], default: "medium"}
+            - {label: "Caption", name: "caption", widget: "mardown", required: false}
+            - {label: "Attribution", name: "attribution", widget: "string", required: false}
+            - {label: "Prominence", name: "prominence", widget: "select", options: ["small", "medium", "large"], default: "medium"}
           - label: Table
             name: table
             widget: object
             fields:
             - {label: "Type", name: "type", widget: "hidden", default: "table"}
-            - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false}
+            - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false, hint: "Include this section in the post excerpt?"}
             - label: "Key Columns"
               name: "keyColumns"
               widget: "list"
