@@ -1,31 +1,80 @@
 backend:
   name: github
-  repo: jayperryworks/jayperryworks-site
-  branch: master # Branch to update (optional; defaults to master)
+  repo: "jayperryworks/jayperryworks-site"
+  branch: sapper-setup # Branch to update (optional; defaults to master)
 
-media_folder: 'source/assets/images/uploads' # Folder where user uploaded files should go
-public_folder: '/assets/images/uploads'
-site_url: https:/www.jayperryworks.com
+media_folder: "static/images/uploads" # Folder where user uploaded files should go
+media_folder_relative: true
+public_folder: "/images/uploads"
+site_url: "https:/www.jayperryworks.com"
 
 publish_mode: editorial_workflow
 
 collections:
-  - name: 'writing' # Used in routes, e.g., /admin/collections/blog
-    label: 'Writing' # Used in the UI
-    folder: 'source/writing' # The path to the folder where the documents are stored
+  - name: writing # Used in routes, e.g., /admin/collections/blog
+    label: Writing # Used in the UI
+    folder: "content/writing" # The path to the folder where the documents are stored
     create: true # Allow users to create new documents in this collection
-    slug: '{{year}}-{{month}}-{{day}}-{{slug}}' # Filename template, e.g., YYYY-MM-DD-title.md
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
     extension: html.md.erb
-    format: frontmatter
+    format: json
     fields: # The fields for each document, usually in front matter
-      - {label: 'Title', name: 'title', widget: 'string'}
-      - {label: 'Subtitle', name: 'subtitle', widget: 'string', required: false}
-      - {label: 'Featured image', name: 'image', widget: 'image', required: false}
-      - {label: 'Intro note', name: 'intro_note', widget: 'text', required: false}
-      - {label: 'Tags', name: 'tags', widget: 'list', required: false}
-      - {label: 'Short post', name: 'show_full', widget: 'boolean', default: true, required: false}
-      - {label: 'Full path', name: 'full_path', widget: 'hidden', default: true, required: false}
-      - {label: 'Body', name: 'body', widget: 'markdown'}
+      - label: Title
+        name: title
+        widget: string
+      - label: Subtitle
+        name: subtitle
+        widget: string
+        required: false
+      - label: Featured image
+        name: image
+        widget: image
+        required: false
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+      - label: Short post
+        name: shortPost
+        widget: boolean
+        default: true
+        required: false
+      - label: Body
+        name: body
+        widget: object
+        fields:
+          - label: Sections
+            name: sections
+            widget: list
+            required: false
+            types:
+              - label: Note
+                name: note
+                widget: object
+                fields:
+                  - {label: "Type", name: "type", widget: "hidden", default: "note"}
+                  - {label: "Use in excerpt", name: "useInExcerpt", widget: "boolean", default: "false"}
+                  - {label: "Content", name: "markdown", widget: "markdown", required: false}
+              - label: Passage
+                name: passage
+                widget: object
+                fields:
+                - {label: "Type", name: "type", widget: "hidden", default: "passage"}
+                - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false}
+                - {label: "Content", name: "markdown", widget: "markdown", required: false}
+              - label: Figure
+                name: figure
+                widget: object
+                fields:
+                - {label: "Type", name: "type", widget: "hidden", default: "figure"}
+                - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false}
+                - {label: "Source", name: "source", widget: "markdown", required: false}
+              - label: Postscript
+                name: postscript
+                widget: object
+                fields:
+                  - {label: "Type", name: "type", widget: "hidden", default: "postscript"}
+                  - {label: "Content", name: "markdown", widget: "markdown", required: false}
 
   - name: 'work' # Used in routes, e.g., /admin/collections/blog
     label: 'Work' # Used in the UI
