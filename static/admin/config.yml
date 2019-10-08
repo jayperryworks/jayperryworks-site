@@ -6,14 +6,14 @@ backend:
 media_folder: "static/images/uploads" # Folder where user uploaded files should go
 media_folder_relative: true
 public_folder: "/images/uploads"
-site_url: "https:/www.jayperryworks.com"
+site_url: "https://www.jayperryworks.com"
 
 publish_mode: editorial_workflow
 
 collections:
   - name: writing # Used in routes, e.g., /admin/collections/blog
     label: Writing # Used in the UI
-    folder: "content/writing" # The path to the folder where the documents are stored
+    folder: "/content/writing" # The path to the folder where the documents are stored
     create: true # Allow users to create new documents in this collection
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
     extension: html.md.erb
@@ -38,7 +38,6 @@ collections:
         name: shortPost
         widget: boolean
         default: true
-        required: false
       - label: Body
         name: body
         widget: object
