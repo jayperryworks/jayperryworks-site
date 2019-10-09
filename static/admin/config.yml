@@ -25,10 +25,25 @@ collections:
         name: subtitle
         widget: string
         required: false
-      - label: Featured image
-        name: image
-        widget: image
+      - label: Cover image
+        name: cover
+        widget: object
         required: false
+        fields:
+          - label: Sources
+            name: sources
+            widget: list
+            fields:
+              - {label: "Image", name: "path", widget: image}
+              - {label: "Size", name: "size", widget: number}
+          - label: Alt
+            name: alt
+            widget: string
+            default: "Cover image"
+          - label: Caption
+            name: caption
+            widget: string
+            required: false
       - label: Tags
         name: tags
         widget: list
@@ -72,19 +87,45 @@ collections:
               widget: "list"
               fields:
                 - {label: "Image", name: "path", widget: "image"}
-                - {label: "Size", name: "size", widget: "number", required: false}
+                - {label: "Width", name: "width", widget: "number", required: false, hint: "The width of the image, to be used in the srcset list"}
             - {label: "Alt text", name: "alt", widget: "string", required: false}
             - {label: "Caption", name: "caption", widget: "mardown", required: false}
             - {label: "Attribution", name: "attribution", widget: "string", required: false}
             - {label: "Prominence", name: "prominence", widget: "select", options: ["small", "medium", "large"], default: "medium"}
+
+          - label: Gallery
+            name: gallery
+            widget: object
+            fields:
+            - {label: "Type", name: "type", widget: "hidden", default: "gallery"}
+            - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false, hint: "Include this section in the post excerpt?"}
+            - label: Size
+              name: size
+              widget: select
+              options:
+                - small
+                - medium
+                - large
+            - label: Images
+              name: images
+              type: list
+              fields:
+                - label: "Sources"
+                  name: "sources"
+                  widget: "list"
+                  fields:
+                    - {label: "Image", name: "path", widget: "image"}
+                    - {label: "Width", name: "width", widget: "number", required: false, hint: "The width of the image, to be used in the srcset list"}
+                - {label: "Alt", name: "alt", widget: "string"}
+
           - label: Table
             name: table
             widget: object
             fields:
             - {label: "Type", name: "type", widget: "hidden", default: "table"}
             - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false, hint: "Include this section in the post excerpt?"}
-            - label: "Key Columns"
-              name: "keyColumns"
+            - label: "Heading Columns"
+              name: "headingColumns"
               widget: "list"
               required: false
             - label: Rows
@@ -93,6 +134,7 @@ collections:
               fields:
                 - {label: "Type", name: "type", widget: "select", options: ["header", "row", "footer"], default: "row"}
                 - {label: "Cells", name: "cells", widget: "list"}
+
           - label: Postscript
             name: postscript
             widget: object

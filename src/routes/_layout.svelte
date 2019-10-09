@@ -1,5 +1,6 @@
 <script>
-	import Nav from '../components/Nav.svelte';
+	import Nav from '../components/Nav.svelte'
+  import MainFooter from '../components/MainFooter.svelte'
 
 	export let segment;
 </script>
@@ -32,5 +33,8 @@
 
 <div class="border-frame">
   <Nav {segment}/>
-	<slot></slot>
+	<main>
+    <slot></slot>
+  </main>
+  <MainFooter/>
 </div>
