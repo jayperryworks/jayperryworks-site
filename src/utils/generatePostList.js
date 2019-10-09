@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import yaml from 'js-yaml'
 import render from './renderMarkdown.js'
 
 export default function (dir) {
@@ -7,7 +8,7 @@ export default function (dir) {
 
     const metadata = path.parse(file).name.split('-')
 
-    const data = JSON.parse(
+    const data = yaml.safeLoad(
       fs.readFileSync(
         `${dir}/${file}`,
         {encoding: 'utf-8'},
@@ -27,7 +28,7 @@ export default function (dir) {
         day: metadata[2]
       },
       slug: metadata.slice(3, metadata.length).join('-'),
-      excerpt: data.body.sections
+      excerpt: data.body
         .filter((section) => {
           // keep only the sections flagged with useInExcerpt
           return section.useInExcerpt

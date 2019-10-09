@@ -80,13 +80,13 @@
     </time>
   </header>
 
-  <main class='content'>
-    {#each post.body.sections as section}
+  <div class='content'>
+    {#each post.body as section}
       <section>
         {#if section.html}
           {@html section.html}
         {/if}
       </section>
     {/each}
-  </main>
+  </div>
 </article>
