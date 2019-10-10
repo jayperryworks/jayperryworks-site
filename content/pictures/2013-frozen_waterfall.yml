@@ -9,10 +9,8 @@ tags:
   - india ink
 cover:
   - path: /images/uploads/work-2013-frozen_waterfall_r2.jpg
-    width: ''
 thumb:
   - path: /images/uploads/work-2013-frozen_waterfall-thumb.jpg
-    width: ''
 editions:
   - border: 1
     name: large
@@ -21,7 +19,6 @@ editions:
     height: 16
     photo:
       - path: /images/uploads/work-2013-frozen_waterfall-24x16.jpg
-        width: 1200
     price: 80
     url: 'https://www.etsy.com/listing/161673713/'
   - border: 1
@@ -31,7 +28,6 @@ editions:
     height: 12
     photo:
       - path: /images/uploads/work-2013-frozen_waterfall-18x12.jpg
-        width: 1200
     price: 50
     url: 'https://www.etsy.com/listing/161673713/'
   - border: 1
@@ -41,6 +37,5 @@ editions:
     height: 8
     photo:
       - path: /images/uploads/work-2013-frozen_waterfall-12x8.jpg
-        width: 1200
     price: 30
     url: 'https://www.etsy.com/listing/161673713/'
