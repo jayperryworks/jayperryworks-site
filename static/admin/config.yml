@@ -247,22 +247,33 @@ collections:
   - name: 'pages'
     label: 'Pages'
     files:
+
       - name: 'site'
         label: Site settings
         file: 'content/site.yml'
         fields:
-          - {label: Site title, name: site_title, widget: string}
-          - {label: Etsy shop, name: etsy_link, widget: string}
+          - {label: Site title, name: title, widget: string}
+          - {label: Etsy shop, name: shop, widget: string}
           - {label: Intro blurb, name: intro, widget: markdown}
           - {label: Status, name: status, widget: string}
-          - {label: Short bio, name: bio_blurb, widget: markdown}
+          - {label: Short bio, name: blurb, widget: markdown}
+
+          - label: Main navigation
+            name: nav
+            widget: list
+            fields:
+              - {label: Label, name: label, widget: string}
+              - {label: Link, name: url, widget: string, hint: "Relative to site root"}
+              - {label: Priority, name: priority, widget: number, valueType: int}
+
           - label: Print descriptions
-            name: print_descriptions
+            name: printDescriptions
             widget: object
             fields:
               - label: Giclee
                 name: giclee
                 widget: markdown
+
           - label: Social channels
             name: social
             widget: list
@@ -273,6 +284,7 @@ collections:
               - label: Link
                 name: link
                 widget: string
+
       - name: 'about'
         label: 'About'
         file: 'source/about.html.md.erb'
