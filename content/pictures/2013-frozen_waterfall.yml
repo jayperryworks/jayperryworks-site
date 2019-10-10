@@ -9,10 +9,10 @@ tags:
   - india ink
 cover:
   - path: /images/uploads/work-2013-frozen_waterfall_r2.jpg
-    width: 1200
+    width: ''
 thumb:
   - path: /images/uploads/work-2013-frozen_waterfall-thumb.jpg
-    width: 1200
+    width: ''
 editions:
   - border: 1
     name: large
