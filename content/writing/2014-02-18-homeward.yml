@@ -1,4 +1,4 @@
-title: Homeward
+title: "Homeward"
 date: 2014-02-18 22:35 UTC
 tags:
   - india ink
@@ -37,7 +37,7 @@ body:
     images:
       - sources:
           - path: "2014-blog-homeward-IMG_3804.JPG"
-        alt: "View of the mountains",
+        alt: "View of the mountains"
       - sources:
           - path: "2014-blog-homeward-IMG_3795.JPG"
         alt: "Sunrise"

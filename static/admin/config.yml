@@ -13,18 +13,21 @@ publish_mode: editorial_workflow
 collections:
   - name: writing # Used in routes, e.g., /admin/collections/blog
     label: Writing # Used in the UI
-    folder: "/content/writing" # The path to the folder where the documents are stored
+    folder: "content/writing" # The path to the folder where the documents are stored
     create: true # Allow users to create new documents in this collection
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
     format: yml
     fields: # The fields for each document, usually in front matter
+
       - label: Title
         name: title
         widget: string
+
       - label: Subtitle
         name: subtitle
         widget: string
         required: false
+
       - label: Cover image
         name: cover
         widget: object
@@ -35,7 +38,7 @@ collections:
             widget: list
             fields:
               - {label: "Image", name: "path", widget: image}
-              - {label: "Size", name: "size", widget: number}
+              - {label: "Width", name: "Width", widget: number, valueType: int}
           - label: Alt
             name: alt
             widget: string
@@ -44,20 +47,24 @@ collections:
             name: caption
             widget: string
             required: false
+
       - label: Tags
         name: tags
         widget: list
         required: false
+
       - label: Short post
         name: shortPost
         hint: "Display the whole post on the blog index? Or just an excerpt?"
         widget: boolean
         default: true
+
       - label: Body
         name: body
         widget: list
         required: false
         types:
+
           - label: Note
             name: note
             widget: object
@@ -66,6 +73,7 @@ collections:
               - {label: "Type", name: "type", widget: "hidden", default: "note"}
               - {label: "Use in excerpt", name: "useInExcerpt", widget: "boolean", default: "false"}
               - {label: "Content", name: "markdown", widget: "markdown", required: false}
+
           - label: Passage
             name: passage
             widget: object
@@ -87,7 +95,7 @@ collections:
               widget: "list"
               fields:
                 - {label: "Image", name: "path", widget: "image"}
-                - {label: "Width", name: "width", widget: "number", required: false, hint: "The width of the image, to be used in the srcset list"}
+                - {label: "Width", name: "width", widget: "number", valueType: int, required: false, hint: "The width of the image, to be used in the srcset list"}
             - {label: "Alt text", name: "alt", widget: "string", required: false}
             - {label: "Caption", name: "caption", widget: "mardown", required: false}
             - {label: "Attribution", name: "attribution", widget: "string", required: false}
@@ -115,7 +123,7 @@ collections:
                   widget: "list"
                   fields:
                     - {label: "Image", name: "path", widget: "image"}
-                    - {label: "Width", name: "width", widget: "number", required: false, hint: "The width of the image, to be used in the srcset list"}
+                    - {label: "Width", name: "width", widget: "number", valueType: int, required: false, hint: "The width of the image, to be used in the srcset list"}
                 - {label: "Alt", name: "alt", widget: "string"}
 
           - label: Table
@@ -142,20 +150,41 @@ collections:
               - {label: "Type", name: "type", widget: "hidden", default: "postscript"}
               - {label: "Content", name: "markdown", widget: "markdown", required: false}
 
-  - name: 'work' # Used in routes, e.g., /admin/collections/blog
-    label: 'Work' # Used in the UI
-    folder: 'source/work' # The path to the folder where the documents are stored
+  - name: "work" # Used in routes, e.g., /admin/collections/blog
+    label: "Work" # Used in the UI
+    folder: "content/pictures" # The path to the folder where the documents are stored
     create: true # Allow users to create new documents in this collection
-    slug: '{{year}}-{{slug}}' # Filename template, e.g., YYYY-MM-DD-title.md
-    extension: html.md
-    format: frontmatter
+    slug: "{{year}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    format: yml
     fields: # The fields for each document, usually in front matter
-      - {label: 'Title', name: 'title', widget: 'string'}
-      - {label: 'Date', name: 'date', widget: 'date'}
-      - {label: Format, name: format, widget: string, required: false}
-      - {label: 'Full path', name: full_path, widget: hidden, default: true}
-      - {label: Width, name: width, hint: inches, widget: number, valueType: int, required: false}
-      - {label: Height, name: height, hint: inches, widget: number, valueType: int, required: false}
+
+      - label: Title
+        name: title
+        widget: string
+
+      - label: Date
+        name: date
+        widget: date
+
+      - label: Format
+        name: format
+        widget: string
+        default: "Digital painting"
+
+      - label: Width
+        name: width
+        hint: inches
+        widget: number
+        valueType: int
+        required: false
+
+      - label: Height
+        name: height
+        hint: inches
+        widget: number
+        valueType: int
+        required: false
+
       - label: 'Category'
         name: 'category'
         widget: 'select'
@@ -163,10 +192,32 @@ collections:
           - prints
           - paintings
         default: prints
-      - {label: 'Tags', name: 'tags', widget: 'list', required: false}
-      - {label: 'Cover image', name: 'cover', widget: 'image'}
-      - {label: 'Thumbnail image', name: 'thumb', widget: 'image'}
-      - label: 'Editions'
+
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+
+      - label: Cover image
+        name: cover
+        widget: list
+        fields:
+          - {label: "Image", name: "path", widget: "image"}
+          - {label: "Width", name: "width", widget: "number", valueType: int}
+
+      - label: Thumbnail image
+        name: thumb
+        widget: list
+        fields:
+          - {label: "Image", name: "path", widget: "image"}
+          - {label: "Width", name: "width", widget: "number", valueType: int}
+
+      - label: 'Intro'
+        name: 'body'
+        widget: 'markdown'
+        required: false
+
+      - label: Editions
         name: editions
         widget: list
         required: false
@@ -186,10 +237,6 @@ collections:
           - {label: Limit, name: limit, hint: 'Size of the edition; leave blank if open', widget: number, valueType: int, required: false}
           - {label: Image, name: image, widget: image}
           - {label: Etsy listing, name: url, widget: string}
-      - label: 'Body'
-        name: 'body'
-        widget: 'markdown'
-        required: false
 
   - name: 'pages'
     label: 'Pages'
