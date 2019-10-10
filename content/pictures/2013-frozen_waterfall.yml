@@ -23,7 +23,8 @@ editions:
     width: 24
     border: 1
     price: 80
-    image: "work-2013-frozen_waterfall-24x16.jpg"
+    image:
+      - path: "/images/uploads/work-2013-frozen_waterfall-24x16.jpg"
     url: https://www.etsy.com/listing/161673713/
   - name: medium
     type: giclee
@@ -31,7 +32,8 @@ editions:
     width: 18
     border: 1
     price: 50
-    image: "work-2013-frozen_waterfall-18x12.jpg"
+    image:
+      - path: "/images/uploads/work-2013-frozen_waterfall-18x12.jpg"
     url: https://www.etsy.com/listing/161673713/
   - name: small
     type: giclee
@@ -39,5 +41,6 @@ editions:
     width: 12
     border: 1
     price: 30
-    image: "work-2013-frozen_waterfall-12x8.jpg"
+    image:
+      - path: "/images/uploads/work-2013-frozen_waterfall-12x8.jpg"
     url: https://www.etsy.com/listing/161673713/

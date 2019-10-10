@@ -150,8 +150,8 @@ collections:
               - {label: "Type", name: "type", widget: "hidden", default: "postscript"}
               - {label: "Content", name: "markdown", widget: "markdown", required: false}
 
-  - name: "work" # Used in routes, e.g., /admin/collections/blog
-    label: "Work" # Used in the UI
+  - name: "pictures" # Used in routes, e.g., /admin/collections/blog
+    label: "Pictures" # Used in the UI
     folder: "content/pictures" # The path to the folder where the documents are stored
     create: true # Allow users to create new documents in this collection
     slug: "{{year}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
@@ -234,9 +234,14 @@ collections:
           - {label: Height, name: height, hint: inches, widget: number, valueType: int}
           - {label: Border, name: border, hint: inches, widget: number, valueType: int, default: 1, required: false}
           - {label: Price, name: price, widget: number, valueType: int}
-          - {label: Limit, name: limit, hint: 'Size of the edition; leave blank if open', widget: number, valueType: int, required: false}
-          - {label: Image, name: image, widget: image}
+          - {label: Limit, name: limit, hint: "Size of the edition; leave blank if open", widget: number, valueType: int, required: false}
           - {label: Etsy listing, name: url, widget: string}
+          - label: Photo
+            name: photo
+            widget: list
+            fields:
+              - {label: "Image", name: "path", widget: "image"}
+              - {label: "Width", name: "width", widget: "number", valueType: "int", required: false}
 
   - name: 'pages'
     label: 'Pages'

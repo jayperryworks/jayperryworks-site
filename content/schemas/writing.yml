@@ -4,13 +4,13 @@ subtitle: >-
   !markdown
 cover:
   sources: !!omap
-    - path: !!string
-      size: !!number
-  alt: !!string
+    - path: !!str
+      size: !!int
+  alt: !!str
   caption: >-
     !markdown
 tags: !!pairs
-  - !!string
+  - !!str
 body: !!omap
   # These are the available 'section' components
 
@@ -27,19 +27,19 @@ body: !!omap
   - type: !section figure
     useInExcerpt: !!boolean
     sources: !!omap
-      - path: !!string
-        size: !!number
-    alt: !!string
-    prominence: !!string option (small, medium, large) default medium
+      - path: !!str
+        size: !!int
+    alt: !!str
+    prominence: !!str option (small, medium, large) default medium
 
   - type: !section gallery
     useInExcerpt: !!boolean
     size: !size optional (small, medium, large) default small
     images: !!omap
       - sources: !!omap
-          - path: !!string
-            size: !!number
-        alt: !!string
+          - path: !!str
+            size: !!int
+        alt: !!str
     caption: |-
       !markdown
 
@@ -48,17 +48,17 @@ body: !!omap
     # columns that represent keys instead of values in the data
     # -> will be emphasized/boldface in the UI
     headingColumns: !!pairs
-      - !!number !!string
+      - !!str
     rows:
       - type: header
         cells: !!pairs
-          - !!number !!string
+          - !!str
       - type: row
         cells: !!pairs
-          - !!number !!string
+          - !!str
       - type: footer
         cells: !!pairs
-          - !!number !!string
+          - !!str
 
   - type: !section postscript
     markdown: |-

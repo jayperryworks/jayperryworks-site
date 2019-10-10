@@ -1,30 +1,32 @@
-title: !!string
+title: !!str
 date: !!date
-category: !!string (prints, paintings) default prints
-color: !!string (color hsl)
+category: !!str (prints, paintings) default prints
+color: !!str (color hsl)
 tags: !!pairs
-  - !!string
+  - !!str
 cover: !!omap
-  - path: !!string
-    width: !!number (optional)
+  - path: !!str
+    width: !!int (optional)
 thumb: !!omap
-  - path: !!string
-    width: !!number (optional)
-format: !!string default "Digital painting"
+  - path: !!str
+    width: !!int (optional)
+format: !!str default "Digital painting"
 # width/height are only for paintings/physical work
-width: !!number (optional)
-height: !!number (optional)
+width: !!int (optional)
+height: !!int (optional)
 intro: |-
   !markdown (optional)
 editions: !!omap
-  - name: !!string small, medium, large, screen print, etc.
-    type: !!string (optional, default 'giclee')
+  - name: !!str small, medium, large, screen print, etc.
+    type: !!str (optional, default 'giclee')
     # height and width in inches, minus border
-    height: !!number
-    width: !!number
+    height: !!int
+    width: !!int
     # size in inches of border around print
-    border: !!number
+    border: !!int
     # price in dollars
-    price: !!number
-    image: !!string
-    url: !!string
+    price: !!int
+    photo:
+      - path: !!str
+        size: !!int
+    url: !!str
