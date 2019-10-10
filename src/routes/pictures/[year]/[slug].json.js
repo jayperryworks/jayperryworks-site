@@ -1,11 +1,11 @@
-import generatePost from '../../../../../utils/generatePost.js'
+import generatePost from '../../../utils/generatePost.js'
 
 export function get(req, res, next) {
-  const { year, month, day, slug } = req.params
+  const { year, slug } = req.params
   const header = {
     'Content-Type': 'application/json'
   }
-  let json = JSON.stringify(generatePost(`content/writing/${year}-${month}-${day}-${slug}.yml`))
+  let json = JSON.stringify(generatePost(`content/pictures/${year}-${slug}.yml`))
 
   if (!json) {
     res.writeHead(404, header)

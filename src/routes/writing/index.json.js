@@ -1,6 +1,6 @@
-import generatePostList from '../../utils/generatePostList.js';
+import generateWritingList from '../../utils/generateWritingList.js';
 
-const list = JSON.stringify(generatePostList('content/writing'));
+const list = JSON.stringify(generateWritingList('content/writing'));
 
 export function get(req, res) {
 	res.writeHead(200, {
