@@ -249,7 +249,7 @@ collections:
     files:
       - name: 'site'
         label: Site settings
-        file: 'data/site.yml'
+        file: 'content/site.yml'
         fields:
           - {label: Site title, name: site_title, widget: string}
           - {label: Etsy shop, name: etsy_link, widget: string}
