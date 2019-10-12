@@ -36,7 +36,9 @@
         href='{`writing/${post.date.year}/${post.date.month}/${post.date.day}/${post.slug}`}'
       >
         <h2>{post.title}</h2>
-        <p>{post.subtitle}</p>
+        {#if post.subtitle}
+          <p>{post.subtitle}</p>
+        {/if}
         <time datetime='{format(new Date(post.date.year, post.date.month, post.date.day), 'yyyy-M-dd')}'>
           {format(new Date(post.date.year, post.date.month, post.date.day), 'MMMM d, yyyy')}
         </time>

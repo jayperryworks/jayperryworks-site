@@ -9,15 +9,10 @@ export default function (dir) {
     const metadata = path.parse(file).name.split('-')
 
     const data = yaml.safeLoad(
-      fs.readFileSync(
-        `${dir}/${file}`,
-        {encoding: 'utf-8'},
-        (err, data) => {
-          if (error) return false
-          return data.json()
-        }
-      )
+      fs.readFileSync(`${dir}/${file}`, 'utf-8')
     )
+
+    console.log(data.title)
 
     return {
       title: data.title,

@@ -5,7 +5,7 @@ export function get(req, res, next) {
   const header = {
     'Content-Type': 'application/json'
   }
-  let json = JSON.stringify(generatePost(`content/[ictures]/${year}-${slug}.yml`))
+  let json = JSON.stringify(generatePost(`content/writing/${year}-${month}-${day}-${slug}.yml`))
 
   if (!json) {
     res.writeHead(404, header)
