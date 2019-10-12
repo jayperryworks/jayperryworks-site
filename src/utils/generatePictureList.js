@@ -13,9 +13,12 @@ export default function (dir) {
     )
 
     return {
-      title: render(data.title),
-      date: metadata[0],
+      title: data.title,
+      date: {
+        year: metadata[0]
+      },
       slug: metadata.slice(1, metadata.length).join('-'),
       thumbnail: data.thumb
+    }
   })
 }

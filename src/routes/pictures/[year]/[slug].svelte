@@ -3,7 +3,7 @@
     const { year, month, day, slug } = params
     // the `slug` parameter is available because
     // this file is called [slug].svelte
-    const response = await this.fetch(`pictures/${year}-${slug}.json`);
+    const response = await this.fetch(`pictures/${year}/${slug}.json`);
     const data = await response.json();
 
     if (response.status !== 200) {
@@ -72,21 +72,14 @@
 <article>
   <header>
     <h1>{post.title}</h1>
-    {#if post.subtitle}
-      <p>{post.subtitle}</p>
-    {/if}
-    <time datetime='{format(new Date(date.year, date.month, date.day), 'yyyy-M-dd')}'>
-      {format(new Date(date.year, date.month, date.day), 'MMMM d, yyyy')}
+    <time datetime='{format(new Date(date.year), 'yyyy')}'>
+      {format(new Date(date.year), 'yyyy')}
     </time>
   </header>
 
-  <div class='content'>
-    {#each post.body as section}
-      <section>
-        {#if section.html}
-          {@html section.html}
-        {/if}
-      </section>
-    {/each}
-  </div>
+  {#if post.intro}
+    <div class='content'>
+      {@html post.intro}
+    </div>
+  {/if}
 </article>

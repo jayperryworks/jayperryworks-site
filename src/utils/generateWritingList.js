@@ -12,8 +12,6 @@ export default function (dir) {
       fs.readFileSync(`${dir}/${file}`, 'utf-8')
     )
 
-    console.log(data.title)
-
     return {
       title: data.title,
       subtitle: data.subtitle,
