@@ -1,61 +1,66 @@
 <script>
 	export let segment;
+  export let items = [
+      {
+        label: 'Prints &amp; paintings',
+        url: 'pictures',
+        priority: 1,
+        prefetch: true
+      },
+      {
+        label: 'Writing',
+        url: 'writing',
+        priority: 2,
+        prefetch: true
+      },
+      {
+        label: 'Bookshelf',
+        url: 'reading',
+        priority: 2,
+        prefetch: true
+      },
+      {
+        label: 'About',
+        url: 'about',
+        priority: 2
+      }
+  ]
 </script>
 
-<style>
-	nav {
-		border-bottom: 1px solid rgba(255,62,0,0.1);
-		font-weight: 300;
-		padding: 0 1em;
-	}
+<style lang="scss">
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
 
-	ul {
-		margin: 0;
-		padding: 0;
-	}
+  .nav {
+    display: inline-block;
+    list-style: none;
+    padding-left: 0;
+  }
 
-	/* clearfix */
-	ul::after {
-		content: '';
-		display: block;
-		clear: both;
-	}
+  .nav-item {
+    display: inline-block;
 
-	li {
-		display: block;
-		float: left;
-	}
+    & + & {
+      margin-left: 1em;
+    }
+  }
 
-	.selected {
-		position: relative;
-		display: inline-block;
-	}
-
-	.selected::after {
-		position: absolute;
-		content: '';
-		width: calc(100% - 1em);
-		height: 2px;
-		background-color: rgb(255,62,0);
-		display: block;
-		bottom: -1px;
-	}
-
-	a {
-		text-decoration: none;
-		padding: 1em 0.5em;
-		display: block;
-	}
+  .nav-link {
+    &.active {
+      color: red;
+    }
+  }
 </style>
 
-<nav>
-	<ul>
-		<li><a class='{segment === undefined ? "selected" : ""}' href='.'>home</a></li>
-		<li><a class='{segment === "about" ? "selected" : ""}' href='about'>about</a></li>
-
-		<!-- for the blog link, we're using rel=prefetch so that Sapper prefetches
-		     the blog data when we hover over the link or tap it on a touchscreen -->
-		<li><a rel=prefetch class='{segment === "pictures" ? "selected" : ""}' href='pictures'>pictures</a></li>
-    <li><a rel=prefetch class='{segment === "writing" ? "selected" : ""}' href='writing'>writing</a></li>
+<nav class="wrapper">
+  <a class='logo' href='.'>JP</a>
+	<ul class="nav">
+    {#each items as item}
+  		<li class="nav-item">
+        <a rel={item.prefetch ? 'prefetch' : ''} class='nav-link{segment === item.url ? " active" : ""}' href='{item.url}'>{@html item.label}</a>
+      </li>
+    {/each}
 	</ul>
 </nav>

@@ -1,0 +1,11 @@
+# index page intro blurb
+intro: |-
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem totam, expedita rem reprehenderit labore nobis nostrum ad error tenetur, voluptate rerum, tempore itaque facilis illum veritatis dolorum. Molestiae, vitae doloribus.
+
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae minus, animi eligendi vel voluptatibus quos, placeat iure, cum, totam corporis voluptas! Similique perspiciatis voluptatibus, corporis laboriosam reprehenderit repellat, quod minus.
+
+# descriptions of the printing formats
+printDescriptions:
+  # markdown allowed here
+  giclee: |-
+    ['Giclee'](https://en.wikipedia.org/wiki/Giclée) is a term for high-quality digital prints. Mine are printed at [Archival Arts](http://archivalarts.com) in Baltimore on heavy, textured, acid-free cotton rag paper, using archival, pigment-based inks. All prints are individually signed and numbered.
