@@ -1,27 +1,48 @@
 # markdown allowed here
-intro: |-
-  My name is Jay and I'm a designer, illustrator, and writer living near Baltimore.
+intro: "My name is Jay and I'm a designer, illustrator, and writer living near Baltimore."
 
 favoriteThings:
-  - typography
-  - ink
-  - books
-  - bicycles
-  - old rusty cars
-  - forests
-  - running
-  - code
+  analog:
+    - ink
+    - fountain pens
+    - cotton paper
+    - rangefinders
+    - slide film
+    - watercolors
+    - bookbinding
+  digital:
+    - typography
+    - javascript
+    - modular scales
+    - CSS
+    - markup
+    - content modeling
+    - user experience
+    - colored pixels
+    - compositing
+    - design systems
+  inspiration:
+    - science fiction
+    - comics
+    - bicycles
+    - old rusty cars
+    - forests
+    - running
+    - mountains
+    - gardening
+    - geology
+    - history
 
 tableOfContents:
-  - heading: Design work
-    link: /design/
-    description: >-
-      Things I've made for other people, which I hope have been useful.
+  # - heading: Design work
+  #   link: design
+  #   description: >-
+  #     Things I've made for other people, which I hope have been useful.
   - heading: Prints & paintings
-    link: /pictures/
+    link: pictures
     description: >-
       Pictures I've painted and sketched and composited and imagined.
   - heading: Writing
-    link: /writing/
+    link: writing
     description: >-
       Thoughts on, well, anything that strikes me.

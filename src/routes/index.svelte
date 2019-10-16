@@ -1,45 +1,68 @@
+<script context="module">
+  export async function preload() {
+    const response = await this.fetch('index.json')
+    const data = await response.json()
+
+    if (response.status !== 200) {
+      this.error(response.status, data.message)
+      return
+    }
+
+    return { content: data }
+  }
+</script>
+
+<script>
+  export let content
+  let favoriteThings = []
+
+  function randomFavorites () {
+    favoriteThings = Object.keys(content.favoriteThings).map((type) => {
+      const list = content.favoriteThings[type]
+      return list[Math.floor(Math.random() * list.length)]
+    })
+  }
+
+  $: subhead = `I like ${
+    favoriteThings.map((thing, index) => {
+      if (index == (favoriteThings.length - 1)) {
+        return `and ${thing}`
+      }
+      return thing
+    }).join(', ')
+  }.`
+
+  randomFavorites()
+  setInterval(randomFavorites, 5000)
+</script>
+
 <style lang="scss">
   @import 'config/scale.scss';
 
   $test: blue;
-
-	h1, figure, p {
-		text-align: center;
-		margin: 0 auto;
-	}
-
-	h1 {
-    color: $test;
-		font-size: scale-type('alpha');
-		text-transform: uppercase;
-		font-weight: 700;
-		margin: 0 0 0.5em 0;
-	}
-
-	figure {
-		margin: 0 0 1em 0;
-	}
-
-	img {
-		width: 100%;
-		max-width: 400px;
-		margin: 0 0 1em 0;
-	}
-
-	p {
-		margin: 1em auto;
-	}
 </style>
 
 <svelte:head>
-	<title>Sapper project template</title>
+	<title>Jay Perry</title>
 </svelte:head>
 
-<h1>Great success! test</h1>
+<header>
+  <h1>{content.intro}</h1>
+  {#if favoriteThings.length > 0}
+    <p>{subhead}</p>
+  {/if}
+  <a rel=prefetch href="about">A bit more about me</a>
+</header>
 
-<figure>
-	<img alt='Borat' src='images/portrait.jpg'>
-	<figcaption>HIGH FIVE!</figcaption>
-</figure>
-
-<p><strong>Try editing this file (src/routes/index.svelte) to test live reloading.</strong></p>
+<nav>
+  <ul>
+    {#each content.tableOfContents as item}
+    <li>
+      <a href="{item.link}">
+        <h2>{item.heading}</h2>
+        <div>{@html item.description}</div>
+      </a>
+    </li>
+    {/each}
+  </ul>
+</nav>
