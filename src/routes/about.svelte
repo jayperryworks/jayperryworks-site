@@ -34,7 +34,7 @@
 
   {#each content.body as section}
     {#if section.type == 'passage'}
-      <Passage html="{section.html}" />
+      <Passage {...section} />
     {/if}
 
     {#if section.type == 'figure'}

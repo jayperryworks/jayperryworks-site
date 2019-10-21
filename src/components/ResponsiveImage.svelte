@@ -4,17 +4,19 @@
   sources = [
     {
       path: (STRING: path to file)
-      size: (NUMBER OR STRING: width of image)
+      size: (NUMBER or STRING: width of image)
     }
   ]
 -->
 <script>
-  export let sources
-  export let alt
+  export let sources, alt
 
   $: srcset = sources.length > 0 && sources.splice(1, 1).map((source) => {
-      return `${source.path}${source.size ? ` ${source.size}w` : ''}`
-    }).join(' ')
+      if (source.size) {
+        return `${source.path} ${source.size}w`
+      }
+      return source.path
+    }).join(', ')
 </script>
 
 <style lang="scss">
