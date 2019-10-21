@@ -30,6 +30,11 @@ export function get(req, res, next) {
       delete section.markdown
       return section
     }
+
+    if (section.caption) {
+      section.caption = render(section.caption)
+    }
+
     return section
   })
 

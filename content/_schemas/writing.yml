@@ -40,8 +40,10 @@ body: !!omap
           - path: !!str
             size: !!int
         alt: !!str
-    caption: |-
-      !markdown
+    prominence: !!str #option (small, medium, large) default medium
+    caption:
+      markdown: |-
+        !markdown
 
   - type: !section table
     useInExcerpt: !!boolean

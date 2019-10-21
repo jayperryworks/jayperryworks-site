@@ -59,7 +59,13 @@
 	<ul class="nav">
     {#each items as item}
   		<li class="nav-item">
-        <a rel={item.prefetch ? 'prefetch' : ''} class='nav-link{segment === item.url ? " active" : ""}' href='{item.url}'>{@html item.label}</a>
+        <a
+          rel={item.prefetch ? 'prefetch' : ''}
+          class='nav-link{segment === item.url ? " active" : ""}'
+          href='{item.url}'
+        >
+          {@html item.label}
+        </a>
       </li>
     {/each}
 	</ul>
