@@ -1,14 +1,14 @@
 <script context="module">
   export async function preload() {
     const response = await this.fetch('about.json')
-    const data = await response.json()
+    const content = await response.json()
 
     if (response.status !== 200) {
-      this.error(response.status, data.message)
+      this.error(response.status, content.message)
       return
     }
 
-    return { content: data }
+    return { content }
   }
 </script>
 
@@ -19,10 +19,6 @@
 
   export let content
 </script>
-
-<svelte:head>
-	<title>About</title>
-</svelte:head>
 
 <article>
   <header>

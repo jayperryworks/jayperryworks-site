@@ -22,10 +22,6 @@
   }
 </style>
 
-<svelte:head>
-  <title>Writing</title>
-</svelte:head>
-
 <h1>Recent posts</h1>
 
 <ul>

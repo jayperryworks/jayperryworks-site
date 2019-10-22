@@ -42,10 +42,6 @@
   $test: blue;
 </style>
 
-<svelte:head>
-	<title>Jay Perry</title>
-</svelte:head>
-
 <header>
   <h1>{content.intro}</h1>
   {#if favoriteThings.length > 0}

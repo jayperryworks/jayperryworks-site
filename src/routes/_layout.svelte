@@ -3,6 +3,11 @@
   import MainFooter from '../components/MainFooter.svelte'
 
 	export let segment;
+
+  // cheers to https://joshtronic.com/2016/02/14/how-to-capitalize-the-first-letter-in-a-string-in-javascript/
+  function titleize(string) {
+    return string.replace(/^\w/, c => c.toUpperCase())
+  }
 </script>
 
 <style lang="scss" global>
@@ -26,15 +31,38 @@
   /* Local styles */
   @import 'config/border.scss';
 
-  .border-frame {
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #sapper {
     @include border(left, $width: 'frame', $color: 'highlight', $style: solid);
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+  }
+
+  #main-wrapper {
+    flex: 1 0 auto;
   }
 </style>
 
-<div class="border-frame">
-  <Nav {segment}/>
-	<main>
-    <slot></slot>
-  </main>
-  <MainFooter/>
-</div>
+<svelte:head>
+  {#if segment}
+    <title>Jay Perry | {titleize(segment)}</title>
+  {:else}
+    <title>Jay Perry</title>
+  {/if}
+</svelte:head>
+
+<Nav {segment}/>
+<main id="main-wrapper">
+  <slot></slot>
+</main>
+<MainFooter/>

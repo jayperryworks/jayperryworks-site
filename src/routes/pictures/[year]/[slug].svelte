@@ -66,7 +66,7 @@
 </style>
 
 <svelte:head>
-  <title>{post.title}</title>
+  <title>Jay Perry | {post.title}</title>
 </svelte:head>
 
 <article>
