@@ -6,7 +6,7 @@ tags:
   - digital
 cover:
   sources:
-    - path: "2014-blog-homeward.jpg"
+    - path: "images/uploads/2014-blog-homeward.jpg"
 body:
   - type: note
     markdown: |-
@@ -21,7 +21,7 @@ body:
 
   - type: figure
     sources:
-      - path: "2014-blog-homeward-IMG_3799.JPG"
+      - path: "images/uploads/2014-blog-homeward-IMG_3799.JPG"
     alt: "Mountains"
 
   - type: passage
@@ -36,10 +36,10 @@ body:
     size: large
     images:
       - sources:
-          - path: "2014-blog-homeward-IMG_3804.JPG"
+          - path: "images/uploads/2014-blog-homeward-IMG_3804.JPG"
         alt: "View of the mountains"
       - sources:
-          - path: "2014-blog-homeward-IMG_3795.JPG"
+          - path: "images/uploads/2014-blog-homeward-IMG_3795.JPG"
         alt: "Sunrise"
 
   - type: passage
@@ -48,7 +48,7 @@ body:
 
   - type: image
     sources:
-      - path: "2014-blog-homeward-DSCF2142.JPG"
+      - path: "images/uploads/2014-blog-homeward-DSCF2142.JPG"
     alt: "Sketches"
 
   - type: passage

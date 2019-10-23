@@ -25,6 +25,7 @@
 <script>
   import { format } from 'date-fns'
   import PageTitle from '../../../../../components/PageTitle.svelte'
+  import PostBody from '../../../../../components/PostBody.svelte'
 
   export let post;
   export let date;
@@ -39,7 +40,7 @@
     so we have to use the :global(...) modifier to target
     all elements inside .content
   */
-  .content :global(h2) {
+  /*.content :global(h2) {
     font-size: 1.4em;
     font-weight: 500;
   }
@@ -63,7 +64,7 @@
 
   .content :global(li) {
     margin: 0 0 0.5em 0;
-  }
+  }*/
 </style>
 
 <PageTitle title="{post.title}" />
@@ -79,13 +80,5 @@
     </time>
   </header>
 
-  <div class='content'>
-    {#each post.body as section}
-      <section>
-        {#if section.html}
-          {@html section.html}
-        {/if}
-      </section>
-    {/each}
-  </div>
+  <PostBody sections={post.body} />
 </article>

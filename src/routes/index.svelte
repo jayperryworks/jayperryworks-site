@@ -47,7 +47,7 @@
   $test: blue;
 </style>
 
-<PageTitle title="Home" />
+<PageTitle />
 
 <header>
   <h1>{content.intro}</h1>

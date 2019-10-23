@@ -1,7 +1,7 @@
 title: "Up and Down and Through and Throughout"
 cover:
   source:
-    - path: "2013-blog-up_and_down.jpg"
+    - path: "images/uploads/2013-blog-up_and_down.jpg"
 tags:
   - process
   - india ink
@@ -28,7 +28,7 @@ body:
 
   - type: figure
     sources:
-      - path: "2013-blog-up_and_down-winter_fungus_s1.jpg"
+      - path: "images/uploads/2013-blog-up_and_down-winter_fungus_s1.jpg"
     alt: "Sketch"
 
   - type: passage
@@ -39,11 +39,11 @@ body:
 
   - type: figure
     sources:
-      - path: "2013-blog-up_and_down-IMG_8956.jpg"
+      - path: "images/uploads/2013-blog-up_and_down-IMG_8956.jpg"
     alt: "Inking"
   - type: figure
     sources:
-      - path: "2013-blog-up_and_down-IMG_8959.jpg"
+      - path: "images/uploads/2013-blog-up_and_down-IMG_8959.jpg"
     alt: "Inking"
 
   - type: passage
@@ -56,16 +56,16 @@ body:
     size: small
     images:
       - sources:
-          - path: "2013-blog-up_and_down-fungus.jpg"
+          - path: "images/uploads/2013-blog-up_and_down-fungus.jpg"
         alt: "Fungus lines"
       - sources:
-          -path: "2013-blog-up_and_down-fungus-color.jpg"
+          - path: "images/uploads/2013-blog-up_and_down-fungus-color.jpg"
         alt: "Fungus color"
       - sources:
-          -path: "2013-blog-up_and_down-haze.jpg"
+          - path: "images/uploads/2013-blog-up_and_down-haze.jpg"
         alt: "Haze"
       - sources:
-          -path: "2013-blog-up_and_down-wash.jpg"
+          - path: "images/uploads/2013-blog-up_and_down-wash.jpg"
         alt: "Background wash"
 
   - type: passage
