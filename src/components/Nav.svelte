@@ -14,15 +14,10 @@
         prefetch: true
       },
       {
-        label: 'Bookshelf',
-        url: 'reading',
-        priority: 2,
-        prefetch: true
-      },
-      {
         label: 'About',
         url: 'about',
-        priority: 2
+        priority: 2,
+        prefetch: true
       }
   ]
 </script>

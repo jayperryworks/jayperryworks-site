@@ -36,6 +36,7 @@
 <style lang="scss">
   footer {
     flex-shrink: 0;
+    overflow: hidden;
   }
 </style>
 

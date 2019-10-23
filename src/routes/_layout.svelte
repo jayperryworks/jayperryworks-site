@@ -31,6 +31,7 @@
   /* Local styles */
   @import 'config/border.scss';
 
+  /* Sticky footer setup */
   html,
   body {
     height: 100%;

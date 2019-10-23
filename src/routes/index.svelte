@@ -13,6 +13,8 @@
 </script>
 
 <script>
+  import { onDestroy } from 'svelte'
+
   export let content
   let favoriteThings = []
 
@@ -33,7 +35,9 @@
   }.`
 
   randomFavorites()
-  setInterval(randomFavorites, 5000)
+  const cycleFavorites = setInterval(randomFavorites, 5000)
+
+  onDestroy(() => clearInterval(cycleFavorites))
 </script>
 
 <style lang="scss">
