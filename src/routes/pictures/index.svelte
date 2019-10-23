@@ -4,15 +4,16 @@
       .fetch(`pictures.json`)
       .then(r => r.json())
       .then(pictures => {
-        return { pictures };
-      });
+        return { pictures }
+      })
   }
 </script>
 
 <script>
   import { format } from 'date-fns'
+  import PageTitle from '../../components/PageTitle.svelte'
 
-  export let pictures;
+  export let pictures
 </script>
 
 <style>
@@ -21,6 +22,8 @@
     line-height: 1.5;
   }
 </style>
+
+<PageTitle title="Pictures" />
 
 <h1>Recent work</h1>
 

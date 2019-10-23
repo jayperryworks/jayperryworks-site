@@ -11,7 +11,7 @@ body:
   - type: note
     markdown: |-
       This is a bit of the story behind a recent painting, [Up and down and through
-      and throughout](/work/prints/2013/up-and-down/).
+      and throughout](pictures/2013/up-and-down).
 
   - type: passage
     useInExcerpt: true

@@ -14,6 +14,7 @@
 
 <script>
   import { onDestroy } from 'svelte'
+  import PageTitle from '../components/PageTitle.svelte'
 
   export let content
   let favoriteThings = []
@@ -45,6 +46,8 @@
 
   $test: blue;
 </style>
+
+<PageTitle title="Home" />
 
 <header>
   <h1>{content.intro}</h1>

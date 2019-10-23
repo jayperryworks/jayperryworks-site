@@ -24,6 +24,7 @@
 
 <script>
   import { format } from 'date-fns'
+  import PageTitle from '../../../../../components/PageTitle.svelte'
 
   export let post;
   export let date;
@@ -65,9 +66,7 @@
   }
 </style>
 
-<svelte:head>
-  <title>Jay Perry | {post.title}</title>
-</svelte:head>
+<PageTitle title="{post.title}" />
 
 <article>
   <header>

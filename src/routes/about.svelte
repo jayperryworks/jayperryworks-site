@@ -13,11 +13,14 @@
 </script>
 
 <script>
+  import { currentPageTitle } from '../stores/navigation'
   import Passage from '../components/Passage.svelte'
   import Figure from '../components/Figure.svelte'
   import Gallery from '../components/Gallery.svelte'
 
   export let content
+
+  currentPageTitle.set('Profile')
 </script>
 
 <article>

@@ -4,15 +4,16 @@
       .fetch(`writing.json`)
       .then(r => r.json())
       .then(posts => {
-        return { posts };
-      });
+        return { posts }
+      })
   }
 </script>
 
 <script>
   import { format } from 'date-fns'
+  import PageTitle from '../../components/PageTitle.svelte'
 
-  export let posts;
+  export let posts
 </script>
 
 <style>
@@ -21,6 +22,8 @@
     line-height: 1.5;
   }
 </style>
+
+<PageTitle title="Writing" />
 
 <h1>Recent posts</h1>
 

@@ -10,7 +10,7 @@ cover:
 body:
   - type: note
     markdown: |-
-      This is a bit of the story behind a recent painting, [Homeward](/work/prints/2014/homeward/).
+      This is a bit of the story behind a recent painting, [Homeward](pictures/2014/homeward).
 
   - type: passage
     useInExcerpt: true
