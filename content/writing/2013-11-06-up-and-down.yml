@@ -41,6 +41,7 @@ body:
     sources:
       - path: "images/uploads/2013-blog-up_and_down-IMG_8956.jpg"
     alt: "Inking"
+
   - type: figure
     sources:
       - path: "images/uploads/2013-blog-up_and_down-IMG_8959.jpg"
