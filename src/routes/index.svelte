@@ -41,12 +41,6 @@
   onDestroy(() => clearInterval(cycleFavorites))
 </script>
 
-<style lang="scss">
-  @import 'config/scale.scss';
-
-  $test: blue;
-</style>
-
 <PageTitle />
 
 <header>

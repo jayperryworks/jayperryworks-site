@@ -20,15 +20,15 @@
 </script>
 
 <style lang="scss">
-  @import "config/spacing";
+  @use "config/spacing";
 
   .body > :global(* + *) {
-    padding-top: space('xwide');
+    padding-top: spacing.get('xwide');
   }
 
   /* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
   .section-type + .section-type {
-    padding-top: space();
+    padding-top: spacing.get();
   }
 </style>
 

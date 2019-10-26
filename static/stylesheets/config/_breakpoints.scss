@@ -11,11 +11,11 @@
 // Global breakpoints map
 // -> also used by include-media library
 $breakpoints: (
-    'xsmall': 30em,
-    'small': 42em,
-    'medium': 62em,
-    'large': 75em,
-    'xlarge': 100em
+  'xsmall': 30em,
+  'small': 42em,
+  'medium': 62em,
+  'large': 75em,
+  'xlarge': 100em
 );
 
 // getter/helper function to pull breakpoints from the map

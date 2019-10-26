@@ -6,10 +6,10 @@
 </script>
 
 <style type="text/scss">
-  @use "config/color";
   @use "config/border";
+  @use "config/color";
+  @use "config/scale";
   @import 'config/type';
-  @import "config/scale";
 
   /* Lead paragraph with drop cap */
   .lead > :global(p:first-of-type) {
@@ -66,7 +66,7 @@
   .footnotes {
     @include border.add('top');
     @include color.add-fg('tertiary');
-    font-size: scale-type('zeta');
+    font-size: scale.type('zeta');
     margin-bottom: space();
     margin-top: space();
     padding-top: space();
@@ -75,7 +75,7 @@
     p {
       @include color.add-fg('tertiary');
       @include font-accent;
-      font-size: scale-type('zeta');
+      font-size: scale.type('zeta');
       letter-spacing: 0.02em;
     }
   }

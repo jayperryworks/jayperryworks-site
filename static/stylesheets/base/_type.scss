@@ -5,9 +5,8 @@
 @use "../config/animation";
 @use "../config/border";
 @use "../config/color";
+@use "../config/scale";
 @import "../config/helpers";
-@import "../config/scale";
-@import "../config/spacing";
 @import "../config/type";
 
 // Defaults
@@ -105,14 +104,14 @@ em {
 small,
 .t-small {
   @include color.add-fg('tertiary');
-  font-size: scale-type('eta');
+  font-size: scale.type('eta');
 }
 
 figcaption,
 .t-caption {
   @include font-accent;
   @include color.add-fg('tertiary');
-  font-size: scale-type('zeta');
+  font-size: scale.type('zeta');
 
   strong {
     @include font-accent(bold);
@@ -122,7 +121,7 @@ figcaption,
 address,
 .t-address {
   @include color.add-fg('secondary');
-  font-size: scale-type('eta');
+  font-size: scale.type('eta');
 }
 
 // Utilities
@@ -151,20 +150,20 @@ h4,
 
 h5,
 .t-scale-epsilon {
-  font-size: scale-type('epsilon');
+  font-size: scale.type('epsilon');
 }
 
 h6,
 .t-scale-zeta {
-  font-size: scale-type('zeta');
+  font-size: scale.type('zeta');
 }
 
 .t-scale-eta {
-  font-size: scale-type('eta');
+  font-size: scale.type('eta');
 }
 
 .t-scale-theta {
-  font-size: scale-type('theta');
+  font-size: scale.type('theta');
 }
 
 // --- type styles -------------------------------------------------------------
@@ -251,7 +250,7 @@ h6,
   @include animation.transition-default();
   border-radius: 0.1em;
   display: inline-block;
-  font-size: scale-type('zeta');
+  font-size: scale.type('zeta');
   margin-left: 0;
   padding: 0.15em 0.4em 0.05em;
   vertical-align: middle;

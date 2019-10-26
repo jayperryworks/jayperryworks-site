@@ -3,12 +3,12 @@
 // -> place an element relative to its parent
 // ==========================================================================
 
-@import "../config/positioning";
+@use "../config/positioning";
 @import "../config/breakpoints";
 
 // --- Z index ---
 // -> utils to set global stacking order
-@each $name, $index in $z-indexes {
+@each $name, $index in positioning.$z-indexes {
   .z-#{$name} {
     z-index: $index !important;
   }
@@ -39,10 +39,6 @@
 
 .display-flex-fill {
   flex: 1;
-}
-
-.display-flex-fill-breakpoint {
-
 }
 
 // --- Positioning utils ---

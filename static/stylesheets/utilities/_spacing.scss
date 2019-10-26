@@ -1,11 +1,11 @@
 // Global spacing
 // -> used to keep whitespace in the layout consistent
-@import "../config/spacing";
+@use "../config/spacing";
 
 // --- global custom props ---
 
 :root {
-  @each $name, $length in $spacing {
+  @each $name, $length in spacing.$scale {
     --space-#{$name}: #{$length};
   }
 }
@@ -14,61 +14,61 @@
 
 @each $prop in (padding, margin) {
   .#{$prop} {
-    #{$prop}: space();
+    #{$prop}: spacing.get();
   }
   .no-#{$prop} {
     #{$prop}: 0 !important;
   }
 
   .#{$prop}-x {
-    #{$prop}-left: space() !important;
-    #{$prop}-right: space() !important;
+    #{$prop}-left: spacing.get() !important;
+    #{$prop}-right: spacing.get() !important;
   }
 
   .#{$prop}-y {
-    #{$prop}-top: space() !important;
-    #{$prop}-bottom: space() !important;
+    #{$prop}-top: spacing.get() !important;
+    #{$prop}-bottom: spacing.get() !important;
   }
 
   // add space between all children on a given axis
   .#{$prop}-x-between {
     > * + * {
-      #{$prop}-left: space();
+      #{$prop}-left: spacing.get();
     }
   }
 
   .#{$prop}-y-between {
     > * + * {
-      #{$prop}-top: space();
+      #{$prop}-top: spacing.get();
     }
   }
 
-  @each $name, $length in $spacing {
+  @each $name, $length in spacing.$scale {
     @if $name != 'default' {
       .#{$prop}-#{$name} {
-        #{$prop}: space($name) !important;
+        #{$prop}: spacing.get($name) !important;
       }
 
       .#{$prop}-x-#{$name} {
-        #{$prop}-left: space($name) !important;
-        #{$prop}-right: space($name) !important;
+        #{$prop}-left: spacing.get($name) !important;
+        #{$prop}-right: spacing.get($name) !important;
       }
 
       .#{$prop}-y-#{$name} {
-        #{$prop}-top: space($name) !important;
-        #{$prop}-bottom: space($name) !important;
+        #{$prop}-top: spacing.get($name) !important;
+        #{$prop}-bottom: spacing.get($name) !important;
       }
 
       // add space between all children on a given axis
       .#{$prop}-x-between-#{$name} {
         > * + * {
-          #{$prop}-left: space($name);
+          #{$prop}-left: spacing.get($name);
         }
       }
 
       .#{$prop}-y-between-#{$name} {
         > * + * {
-          #{$prop}-top: space($name);
+          #{$prop}-top: spacing.get($name);
         }
       }
     }
@@ -76,16 +76,16 @@
 
   @each $side in [left, right, top, bottom] {
     .#{$prop}-#{$side} {
-      #{$prop}-#{$side}: space() !important;
+      #{$prop}-#{$side}: spacing.get() !important;
     }
     .no-#{$prop}-#{$side} {
       #{$prop}-#{$side}: 0 !important;
     }
 
-    @each $name, $length in $spacing {
+    @each $name, $length in spacing.$scale {
       @if $name != 'default' {
         .#{$prop}-#{$side}-#{$name} {
-          #{$prop}-#{$side}: space($name) !important;
+          #{$prop}-#{$side}: spacing.get($name) !important;
         }
       }
     }
@@ -95,14 +95,14 @@
 // Outside gutters
 // -> opinionated class to set consistent, responsive outside padding on full-width containers
 .padding-x-outside {
-  padding-left: space(space-outside());
-  padding-right: space(space-outside());
+  padding-left: spacing.get(spacing.get-outside());
+  padding-right: spacing.get(spacing.get-outside());
 
-  @each $screen, $width in $spacing-outside {
+  @each $screen, $width in spacing.$outside {
     @if $screen != 'default' {
       @include media('>#{$screen}') {
-        padding-left: space($width);
-        padding-right: space($width);
+        padding-left: spacing.get($width);
+        padding-right: spacing.get($width);
       }
     }
   }
@@ -112,22 +112,22 @@
 
 // add uniform gutters to a group of elements
 .gutter-wrapper {
-  padding: space($split: true);
-  margin: -(space());
+  padding: spacing.get($split: true);
+  margin: -(spacing.get());
 
   .gutter {
-    padding: space($split: true);
+    padding: spacing.get($split: true);
   }
 }
 
-@each $name, $size in $spacing {
+@each $name, $size in spacing.$scale {
   @if $name != 'default' {
     .gutter-wrapper.gutter-#{$name} {
-      padding: space($name, $split: true);
-      margin: -(space($name));
+      padding: spacing.get($name, $split: true);
+      margin: -(spacing.get($name));
 
       .gutter {
-        padding: space($name, $split: true);
+        padding: spacing.get($name, $split: true);
       }
     }
   }

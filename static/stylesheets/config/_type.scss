@@ -1,6 +1,7 @@
 //  Type config
+@use "paths";
+@use "scale";
 @import "libs";
-@import "paths";
 
 // --- Config & mixins ---
 
@@ -30,7 +31,7 @@ $leading: (
 
   // set base (min) size as default
   @each $property in $properties {
-    #{$property}: scale-type($size-min);
+    #{$property}: scale.type($size-min);
   }
 
   // start to scale up at the minimum screen size
@@ -40,17 +41,17 @@ $leading: (
       // -> using redundant props as fallback here
 
       // use an in-between value as the fallback where vw units or calc aren't supported
-      #{$property}: ((scale-type($size-min) + scale-type($size-max)) / 2);
+      #{$property}: ((scale.type($size-min) + scale.type($size-max)) / 2);
 
       // use calc and vw units to make the type scale fluidly between two sizes
-      #{$property}: calc(#{scale-type($size-min)} + #{strip-unit(scale-type($size-max) - scale-type($size-min))} * (100vw - #{strip-unit(screen($screen-min))}rem) / #{strip-unit(screen($screen-max) - screen($screen-min))});
+      #{$property}: calc(#{scale.type($size-min)} + #{strip-unit(scale.type($size-max) - scale.type($size-min))} * (100vw - #{strip-unit(screen($screen-min))}rem) / #{strip-unit(screen($screen-max) - screen($screen-min))});
     }
   }
 
   // stop scaling at the maximum screen size
   @include media('>#{$screen-max}') {
     @each $property in $properties {
-      #{$property}: scale-type($size-max);
+      #{$property}: scale.type($size-max);
     }
   }
 }
@@ -61,7 +62,7 @@ $leading: (
 // headline
 @include font-face(
   "publico-headline-normal",
-  "#{$asset-path-fonts}/PublicoHeadline-Roman-Web",
+  "#{paths.$fonts}/PublicoHeadline-Roman-Web",
   ('ttf', 'woff')
 ) {
   font-display: swap;
@@ -72,7 +73,7 @@ $leading: (
 // body
 @include font-face(
   "publico-text-normal-normal",
-  "#{$asset-path-fonts}/PublicoText-Roman-Web",
+  "#{paths.$fonts}/PublicoText-Roman-Web",
   ('ttf', 'woff')
 ) {
   font-display: swap;
@@ -81,7 +82,7 @@ $leading: (
 }
 @include font-face(
   "publico-text-normal-italic",
-  "#{$asset-path-fonts}/PublicoText-Italic-Web",
+  "#{paths.$fonts}/PublicoText-Italic-Web",
   ('ttf', 'woff')
 ) {
   font-display: swap;
@@ -92,7 +93,7 @@ $leading: (
 // accent
 @include font-face(
   "guardian-sans-light",
-  "#{$asset-path-fonts}/GuardianSans-Light-Web",
+  "#{paths.$fonts}/GuardianSans-Light-Web",
   ('ttf', 'woff')
 ) {
   font-display: swap;
@@ -101,7 +102,7 @@ $leading: (
 }
 @include font-face(
   "guardian-sans-normal",
-  "#{$asset-path-fonts}/GuardianSans-Regular-Web",
+  "#{paths.$fonts}/GuardianSans-Regular-Web",
   ('ttf', 'woff')
 ) {
   font-display: swap;
@@ -110,7 +111,7 @@ $leading: (
 }
 @include font-face(
   "guardian-sans-bold",
-  "#{$asset-path-fonts}/GuardianSans-Semibold-Web",
+  "#{paths.$fonts}/GuardianSans-Semibold-Web",
   ('ttf', 'woff')
 ) {
   font-display: swap;

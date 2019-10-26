@@ -2,7 +2,7 @@
 @use 'color';
 
 // default box shadow
-@mixin se-shadow(
+@mixin shadow(
   $position: 0 0,
   $blur: 0.5rem,
   $spread: 0

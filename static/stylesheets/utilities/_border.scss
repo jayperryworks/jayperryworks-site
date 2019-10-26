@@ -1,7 +1,7 @@
 // Border utlities
-@use "../config/border";
-@import "../config/breakpoints";
-@import "../config/positioning";
+@use '../config/border';
+@use '../config/spacing';
+@import '../config/breakpoints';
 
 // --- Base
 
@@ -53,7 +53,7 @@
         #{$side}: -#{border-seam('marker-h') / 2}px;
 
         // set outside borders at each breakpoint
-        @each $screen, $width in $spacing-outside {
+        @each $screen, $width in spacing.$outside {
           @if $screen != 'default' {
             @include media('>#{$screen}') {
               right: space($width);
