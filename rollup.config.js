@@ -6,7 +6,10 @@ import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
+
+// packages I added
 import sveltePreprocess from 'svelte-preprocess';
+import alias from 'rollup-plugin-alias';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -29,6 +32,16 @@ const preprocess = [
   })
 ];
 
+const aliases = alias({
+  resolve: ['.js', '.svelte'],
+  entries: [
+    {
+      find: '@',
+      replacement: `${__dirname}/src`
+    }
+  ]
+})
+
 export default {
 	client: {
 		input: config.client.input(),
@@ -48,6 +61,7 @@ export default {
 				browser: true,
 				dedupe
 			}),
+      aliases,
 			commonjs(),
 
 			legacy && babel({
@@ -91,6 +105,7 @@ export default {
 			resolve({
 				dedupe
 			}),
+      aliases,
 			commonjs()
 		],
 		external: Object.keys(pkg.dependencies).concat(

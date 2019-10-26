@@ -1,7 +1,7 @@
 <script>
   import ResponsiveImage from './ResponsiveImage.svelte'
 
-  export let size, images, caption, prominence
+  export let size, images, caption
 </script>
 
 <style>

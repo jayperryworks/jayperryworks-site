@@ -37,18 +37,6 @@ h6,
     margin-top: 0.25em;
   }
 
-  .t-content > p + &,
-  .t-content > ul + &,
-  .t-content > ol + & {
-    margin-top: 1.5em;
-  }
-
-  .t-content > & + p,
-  .t-content > & + ul,
-  .t-content > & + ol {
-    margin-top: 0.5em;
-  }
-
   a, {
     border: none;
 
@@ -286,71 +274,6 @@ h6,
   }
 }
 
-// --- body text ---------------------------------------------------------------
-
-// the first paragraph, often set slightly bigger
-.t-lead,
-.t-content.t-content-dropcap > p:first-of-type {
-  &::first-letter {
-    @include color-fg('primary');
-    @include font-accent('bold');
-    float: left;
-    font-size: 3.5rem;
-    line-height: 1.7rem;
-    margin: 0.15em 0.1em 0 -0.03em;
-
-    @supports (initial-letter: 2) or (-webkit-initial-letter: 2) {
-      -webkit-initial-letter: 2;
-      initial-letter: 2;
-      float: none;
-      margin: 0;
-      margin-right: 0.1em;
-    }
-  }
-}
-
-.footnotes {
-  @include border('top');
-  @include color-fg('tertiary');
-  font-size: scale-type('zeta');
-  margin-bottom: space();
-  margin-top: space();
-  padding-top: space();
-
-  li,
-  p {
-    @include color-fg('tertiary');
-    @include font-accent;
-    font-size: scale-type('zeta');
-    letter-spacing: 0.02em;
-  }
-}
-
-.footnote {
-  @include border($style: 'secondary');
-  @include border-radius;
-  @include font-accent;
-  background-color: transparent;
-  border-color: inherit;
-  color: inherit;
-  display: inline-block;
-  line-height: 1;
-  margin-left: 0.25em;
-  padding: 0.25em 0.5em;
-}
-
-.t-content {
-  > * + * {
-    margin-top: 1em;
-  }
-
-  > hr {
-    margin: 1.2em 0;
-    border: 0;
-    height: 0;
-    @include border('top');
-  }
-}
 
 // --- position text -----------------------------------------------------------
 @include breakpointify(".t-align-center", true) {

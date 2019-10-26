@@ -1,4 +1,4 @@
-import generateWritingList from '../../utils/generateWritingList.js'
+import generateWritingList from '@/utils/generateWritingList.js'
 
 export function get(req, res) {
 	res.writeHead(200, {

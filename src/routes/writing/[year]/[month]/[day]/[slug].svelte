@@ -24,60 +24,66 @@
 
 <script>
   import { format } from 'date-fns'
-  import PageTitle from '../../../../../components/PageTitle.svelte'
-  import PostBody from '../../../../../components/PostBody.svelte'
+  import PageTitle from '@/components/PageTitle.svelte'
+  import PostBody from '@/components/PostBody.svelte'
+  import Figure from '@/components/Figure.svelte'
+  import Wrapper from '@/components/Wrapper.svelte'
 
   export let post;
   export let date;
+
+  function formatDate(formatString) {
+    return format(new Date(date.year, date.month, date.day), formatString)
+  }
 </script>
-
-<style>
-  /*
-    By default, CSS is locally scoped to the component,
-    and any unused styles are dead-code-eliminated.
-    In this page, Svelte can't know which elements are
-    going to appear inside the {{{post.html}}} block,
-    so we have to use the :global(...) modifier to target
-    all elements inside .content
-  */
-  /*.content :global(h2) {
-    font-size: 1.4em;
-    font-weight: 500;
-  }
-
-  .content :global(pre) {
-    background-color: #f9f9f9;
-    box-shadow: inset 1px 1px 5px rgba(0,0,0,0.05);
-    padding: 0.5em;
-    border-radius: 2px;
-    overflow-x: auto;
-  }
-
-  .content :global(pre) :global(code) {
-    background-color: transparent;
-    padding: 0;
-  }
-
-  .content :global(ul) {
-    line-height: 1.5;
-  }
-
-  .content :global(li) {
-    margin: 0 0 0.5em 0;
-  }*/
-</style>
 
 <PageTitle title="{post.title}" />
 
-<article>
+<article class="
+  padding-x-outside
+  padding-y-xwide
+">
   <header>
-    <h1>{post.title}</h1>
-    {#if post.subtitle}
-      <p>{post.subtitle}</p>
-    {/if}
-    <time datetime='{format(new Date(date.year, date.month, date.day), 'yyyy-M-dd')}'>
-      {format(new Date(date.year, date.month, date.day), 'MMMM d, yyyy')}
-    </time>
+    <Wrapper
+      width="wide"
+      class="t-align-center@small
+    ">
+      <h1>{post.title}</h1>
+      {#if post.subtitle}
+        <p class="
+          t-heading
+          t-scale-gamma
+          c-fg-tertiary
+          padding-top-xnarrow
+        ">{post.subtitle}</p>
+      {/if}
+
+      {#if post.cover}
+        <Figure
+          class="padding-top-wide"
+          sources={post.cover.sources}
+          alt={post.cover.alt}
+          caption={post.cover.caption}
+        />
+      {/if}
+    </Wrapper>
+    <Wrapper class="
+      padding-top-wide
+      padding-bottom-xnarrow
+      margin-bottom
+      border-bottom
+    ">
+      <time
+        class="
+          t-accent-bold
+          t-scale-zeta
+          c-fg-tertiary
+        "
+        datetime={formatDate('yyyy-M-dd')}
+      >
+        {formatDate('MMMM d, yyyy')}
+      </time>
+    </Wrapper>
   </header>
 
   <PostBody sections={post.body} />

@@ -24,7 +24,7 @@
 
 <script>
   import { format } from 'date-fns'
-  import PageTitle from '../../../components/PageTitle.svelte'
+  import PageTitle from '@/components/PageTitle.svelte'
 
   export let post;
   export let date;
