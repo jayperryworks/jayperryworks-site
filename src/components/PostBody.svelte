@@ -23,12 +23,12 @@
   @use "config/spacing";
 
   .body > :global(* + *) {
-    padding-top: spacing.get('xwide');
+    padding-top: #{spacing.get('wide')};
   }
 
   /* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
   .section-type + .section-type {
-    padding-top: spacing.get();
+    padding-top: #{spacing.get()};
   }
 </style>
 

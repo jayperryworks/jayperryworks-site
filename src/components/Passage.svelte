@@ -31,67 +31,67 @@
     }
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    .t-content > p + &,
-    .t-content > ul + &,
-    .t-content > ol + & {
-      margin-top: 1.5em;
-    }
+  // h1,
+  // h2,
+  // h3,
+  // h4,
+  // h5,
+  // h6 {
+  //   .t-content > p + &,
+  //   .t-content > ul + &,
+  //   .t-content > ol + & {
+  //     margin-top: 1.5em;
+  //   }
 
-    .t-content > & + p,
-    .t-content > & + ul,
-    .t-content > & + ol {
-      margin-top: 0.5em;
-    }
-  }
+  //   .t-content > & + p,
+  //   .t-content > & + ul,
+  //   .t-content > & + ol {
+  //     margin-top: 0.5em;
+  //   }
+  // }
 
   .t-content {
     > * + * {
       margin-top: 1em;
     }
 
-    > hr {
-      margin: 1.2em 0;
-      border: 0;
-      height: 0;
-      @include border.add('top');
-    }
+    // > hr {
+    //   margin: 1.2em 0;
+    //   border: 0;
+    //   height: 0;
+    //   @include border.add('top');
+    // }
   }
 
-  .footnotes {
-    @include border.add('top');
-    @include color.add-fg('tertiary');
-    font-size: scale.type('zeta');
-    margin-bottom: space();
-    margin-top: space();
-    padding-top: space();
+  // .footnotes {
+  //   @include border.add('top');
+  //   @include color.add-fg('tertiary');
+  //   font-size: scale.type('zeta');
+  //   margin-bottom: space();
+  //   margin-top: space();
+  //   padding-top: space();
 
-    li,
-    p {
-      @include color.add-fg('tertiary');
-      @include font-accent;
-      font-size: scale.type('zeta');
-      letter-spacing: 0.02em;
-    }
-  }
+  //   li,
+  //   p {
+  //     @include color.add-fg('tertiary');
+  //     @include font-accent;
+  //     font-size: scale.type('zeta');
+  //     letter-spacing: 0.02em;
+  //   }
+  // }
 
-  .footnote {
-    @include border.add($style: 'secondary');
-    @include border.radius;
-    @include font-accent;
-    background-color: transparent;
-    border-color: inherit;
-    color: inherit;
-    display: inline-block;
-    line-height: 1;
-    margin-left: 0.25em;
-    padding: 0.25em 1em;
-  }
+  // .footnote {
+  //   @include border.add($style: 'secondary');
+  //   @include border.radius;
+  //   @include font-accent;
+  //   background-color: transparent;
+  //   border-color: inherit;
+  //   color: inherit;
+  //   display: inline-block;
+  //   line-height: 1;
+  //   margin-left: 0.25em;
+  //   padding: 0.25em 1em;
+  // }
 </style>
 
 <div class="t-content {classes}" class:lead>

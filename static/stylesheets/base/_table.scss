@@ -5,8 +5,9 @@
 @use '../config/border';
 @use '../config/color';
 @use '../config/scale';
-@import '../config/type';
+@use '../config/type';
 @import '../config/visibility';
+@import "../config/libs";
 
 $table-padding: 0.5em 0.5em;
 
@@ -15,7 +16,7 @@ $table-padding: 0.5em 0.5em;
 
 table,
 .table {
-  @include font-accent;
+  @include type.font-accent;
   font-size: scale.type('zeta');
   width: 100%;
 }
@@ -24,7 +25,7 @@ thead,
 .table-header {
   @include border.add(bottom, thick, $color: 'primary');
   @include color.add-fg('primary');
-  @include font-accent('bold');
+  @include type.font-accent('bold');
   font-size: scale.type('eta');
   text-align: left;
   text-transform: uppercase;
@@ -67,7 +68,7 @@ th,
     display: block;
   }
 
-  thead, .table-header { @include hide-visually(); }
+  thead, .table-header { visibility: hidden; }
 
   tr {
     @include border.add('top');
@@ -83,7 +84,7 @@ th,
     padding-left: $label-w !important;
 
     &::before {
-      @include font-accent('bold');
+      @include type.font-accent('bold');
       content: attr(data-label);
       left: nth($table-padding, 2);
       padding-right: 1em;

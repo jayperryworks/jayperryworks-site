@@ -6,16 +6,16 @@
 @use "../config/border";
 @use "../config/color";
 @use "../config/scale";
+@use "../config/type";
 @import "../config/helpers";
-@import "../config/type";
 
 // Defaults
 // -----------------------------------------------------------------------------
 
 body {
-  @include font-body;
-  @include type-size-default;
-  line-height: leading('default');
+  @include type.font-body;
+  @include type.size-default;
+  line-height: type.leading('default');
 }
 
 // headings
@@ -26,10 +26,10 @@ h4,
 h5,
 h6,
 .t-heading {
-  @include font-display;
+  @include type.font-display;
   @include color.add-fg('primary');
   display: block;
-  line-height: leading('tight');
+  line-height: type.leading('tight');
   margin: 0;
 
   & + & {
@@ -65,10 +65,10 @@ p {
   }
 
   strong {
-    @include font-body(bold);
+    @include type.font-body(bold);
   }
   em {
-    @include font-body(normal, italic);
+    @include type.font-body(normal, italic);
   }
 }
 
@@ -94,11 +94,11 @@ a {
 }
 
 strong {
-  @include font-body(bold);
+  @include type.font-body(bold);
 }
 
 em {
-  @include font-body(normal, italic);
+  @include type.font-body(normal, italic);
 }
 
 small,
@@ -109,12 +109,12 @@ small,
 
 figcaption,
 .t-caption {
-  @include font-accent;
+  @include type.font-accent;
   @include color.add-fg('tertiary');
   font-size: scale.type('zeta');
 
   strong {
-    @include font-accent(bold);
+    @include type.font-accent(bold);
   }
 }
 
@@ -130,22 +130,22 @@ address,
 // --- type scale --------------------------------------------------------------
 h1,
 .t-scale-alpha {
-  @include type-fluid(font-size, 'beta', 'alpha');
+  @include type.fluid($size-min: 'beta', $size-max: 'alpha');
 }
 
 h2,
 .t-scale-beta {
-  @include type-fluid(font-size, 'gamma', 'beta');
+  @include type.fluid($size-min: 'gamma', $size-max: 'beta');
 }
 
 h3,
 .t-scale-gamma {
-  @include type-fluid(font-size, 'delta', 'gamma');
+  @include type.fluid($size-min: 'delta', $size-max: 'gamma');
 }
 
 h4,
 .t-scale-delta {
-  @include type-fluid(font-size, 'epsilon', 'delta');
+  @include type.fluid($size-min: 'epsilon', $size-max: 'delta');
 }
 
 h5,
@@ -168,7 +168,7 @@ h6,
 
 // --- type styles -------------------------------------------------------------
 .t-display {
-  @include font-display($important: true);
+  @include type.font-display($important: true);
 
   &.t-scale-alpha {
     letter-spacing: -0.01em;
@@ -176,23 +176,23 @@ h6,
 }
 
 .t-accent {
-  @include font-accent($important: true);
+  @include type.font-accent($important: true);
 }
 .t-accent-light {
-  @include font-accent('light', $important: true);
+  @include type.font-accent('light', $important: true);
 }
 .t-accent-bold {
-  @include font-accent('bold', $important: true);
+  @include type.font-accent('bold', $important: true);
 }
 
 .t-body {
-  @include font-body($important: true);
+  @include type.font-body($important: true);
 }
 .t-body-bold {
-  @include font-body('bold', $important: true);
+  @include type.font-body('bold', $important: true);
 }
 .t-body-italic {
-  @include font-body($style: 'italic', $important: true);
+  @include type.font-body($style: 'italic', $important: true);
 }
 
 .t-caps {
@@ -200,7 +200,7 @@ h6,
 }
 
 .t-leading-tight {
-  line-height: leading('tight') !important;
+  line-height: type.leading('tight') !important;
 }
 
 .t-link-undecorated {
@@ -227,7 +227,7 @@ h6,
 
 .t-highlight-top {
   &:before {
-    height: border-w('thick');
+    height: border.width('thick');
     left: 0;
     right: 0;
     top: 0;
@@ -237,7 +237,7 @@ h6,
 .t-highlight-left {
   &:before {
     bottom: 0;
-    width: border-w('thick');
+    width: border.width('thick');
     left: 0;
     top: 0;
   }
@@ -246,7 +246,7 @@ h6,
 .t-tag {
   @include border.add();
   @include color.add-fg('tertiary');
-  @include font-accent;
+  @include type.font-accent;
   @include animation.transition-default();
   border-radius: 0.1em;
   display: inline-block;
