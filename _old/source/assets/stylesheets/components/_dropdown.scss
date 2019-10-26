@@ -1,8 +1,8 @@
 // Dropdown component
 // -> Create a dropdown menu
 // -> Based on details & summary elements
+@use '../config/border';
 @import '../config/animation';
-@import '../config/border';
 @import '../config/positioning';
 @import '../config/spacing';
 @import '../config/special_effects';
@@ -50,7 +50,7 @@
   [data-ui-dropdown][open] & {
     $pointer-size: 0.48rem;
 
-    @include border($style: solid);
+    @include border.add($style: solid);
     @include border-radius();
     @include se-shadow();
     position: absolute;

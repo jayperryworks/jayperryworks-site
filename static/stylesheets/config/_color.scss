@@ -43,7 +43,7 @@ $themes: (
   )
 );
 
-$color-shade-value: 10; // percentage to lighten or darken the color for '-light' or '-dark' custom properties
+$shade-value: 10; // percentage to lighten or darken the color for '-light' or '-dark' custom properties
 
 // --- Helpers & mixins ---
 // -> PUBLIC
@@ -57,9 +57,9 @@ $color-shade-value: 10; // percentage to lighten or darken the color for '-light
 //      -> pass in a positive number to lighten the color
 // -> PUBLIC
 // -> USAGE:
-//    - color: color('primary');
-//    - color: color('highlight' 'primary', 'reverse');
-@function color($color, $theme-name: 'default', $grade: 0, $opacity: 1) {
+//    - color: color.get('primary');
+//    - color: color.get('highlight' 'primary', 'reverse');
+@function get($color, $theme-name: 'default', $grade: 0, $opacity: 1) {
   $value: null;
 
   @if $color == 'highlight' {
@@ -91,33 +91,33 @@ $color-shade-value: 10; // percentage to lighten or darken the color for '-light
 // create the string for color custom properties used in color() and theme() mixins below
 // --color-text-primary[-light]
 // -> PUBLIC
-@function color-property($color, $shade: 'none') {
+@function custom-prop($color, $shade: 'none') {
   @return --color-#{$color}#{if($shade != 'none', -#{$shade}, '')}
 }
 
 // create default and custom property versions of a color
 // -> PUBLIC
 // -> USAGE
-//    - @include color(background-color, highlight, dark);
-@mixin color($prop, $color, $shade: 'none', $theme: 'default', $important: false) {
+//    - @include color.add(background-color, highlight, dark);
+@mixin add($prop, $color, $shade: 'none', $theme: 'default', $important: false) {
   $shades: (
-    'light': $color-shade-value,
-    'dark': ($color-shade-value * -1),
+    'light': $shade-value,
+    'dark': ($shade-value * -1),
     'none': 0
   );
 
-  #{$prop}: important(color($color, $theme, $grade: map-get($shades, $shade)), $important);
-  #{$prop}: important(var(color-property($color, $shade)), $important);
+  #{$prop}: important(get($color, $theme, $grade: map-get($shades, $shade)), $important);
+  #{$prop}: important(var(custom-prop($color, $shade)), $important);
 }
 
 // decorator to set color ('foreground') property
-@mixin color-fg($color, $props...) {
-  @include color(color, $color, $props...);
+@mixin add-fg($color, $props...) {
+  @include add(color, $color, $props...);
 }
 
 // decorator to set background-color property
-@mixin color-bg($color, $props...) {
-  @include color(background-color, $color, $props...);
+@mixin add-bg($color, $props...) {
+  @include add(background-color, $color, $props...);
 }
 
 // set up custom properties with the right values for a theme container
@@ -131,8 +131,8 @@ $color-shade-value: 10; // percentage to lighten or darken the color for '-light
   $theme-colors: map-get($themes, $theme);
 
   @each $name, $color in $theme-colors {
-    #{color-property($name, 'light')}: #{tint($color, $color-shade-value)};
-    #{color-property($name)}: #{$color};
-    #{color-property($name, 'dark')}: #{shade($color, $color-shade-value)};
+    #{custom-prop($name, 'light')}: #{tint($color, $shade-value)};
+    #{custom-prop($name)}: #{$color};
+    #{custom-prop($name, 'dark')}: #{shade($color, $shade-value)};
   }
 }

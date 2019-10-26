@@ -6,6 +6,8 @@
 </script>
 
 <style lang="scss" global>
+  @use 'config/border.scss';
+
   /* Base styles */
   @import 'base/body.scss';
   @import 'base/icon.scss';
@@ -24,7 +26,6 @@
   @import 'utilities/visibility.scss';
 
   /* Local styles */
-  @import 'config/border.scss';
 
   /* Sticky footer setup */
   html,
@@ -38,7 +39,7 @@
   }
 
   #sapper {
-    @include border(left, $width: 'frame', $color: 'highlight', $style: solid);
+    @include border.add(left, $width: 'frame', $color: 'highlight', $style: solid);
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;

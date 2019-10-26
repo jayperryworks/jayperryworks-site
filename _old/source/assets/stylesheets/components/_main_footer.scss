@@ -2,7 +2,7 @@
 // Main footer component
 // ==========================================================================
 
-@import "../config/border";
+@use "../config/border";
 @import "../config/spacing";
 @import "../config/breakpoints";
 @import "../config/type";
@@ -11,7 +11,7 @@
 // --------------------------------------------------------------------------
 
 [data-ui-main-footer] {
-  @include border('top');
+  @include border.add('top');
   padding-top: space('wide');
   padding-bottom: space('wide');
 }

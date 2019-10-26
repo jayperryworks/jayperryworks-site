@@ -2,9 +2,9 @@
 //  Table globals and utilities
 // =============================================================================
 
-@import "../config/color";
+@use "../config/border";
+@use "../config/color";
 @import "../config/type";
-@import "../config/border";
 @import "../config/visibility";
 
 $table-padding: 0.5em 0.5em;
@@ -21,8 +21,8 @@ table,
 
 thead,
 .table-header {
-  @include border(bottom, thick, $color: 'primary');
-  @include color-fg('primary');
+  @include border.add(bottom, thick, $color: 'primary');
+  @include color.add-fg('primary');
   @include font-accent('bold');
   font-size: scale-type('eta');
   text-align: left;
@@ -43,7 +43,7 @@ tbody,
 tr,
 .table-row {
   &:nth-child(even) {
-    background-color: lighten(color('well'), 5);
+    background-color: lighten(color.get('well'), 5);
   }
 }
 
@@ -67,11 +67,11 @@ th,
   thead, .table-header { @include hide-visually(); }
 
   tr {
-    @include border('top');
+    @include border.add('top');
     padding-top: 1em;
     padding-bottom: 1em;
 
-    &:last-child { @include border('bottom'); }
+    &:last-child { @include border.add('bottom'); }
   }
 
   td {

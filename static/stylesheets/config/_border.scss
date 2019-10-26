@@ -1,67 +1,67 @@
 // Border config
-@import 'color';
+@use 'color';
 @import 'helpers';
 @import 'libs';
 
 // --- Rounded corners
 
-$border-radius: 3px !default;
+$radius: 3px !default;
 
-@mixin border-radius {
-  border-radius: $border-radius;
+@mixin radius {
+  radius: $radius;
 }
 
 // --- Border width & style
 
-$border-w-default: 'thin' !default;
+$w-default: 'thin' !default;
 
 // getter function for border style
-@function border-style($name) {
-  @return map-get($border-styles, unquote($name));
+@function style($name) {
+  @return map-get($styles, unquote($name));
 }
 
-$border-widths: (
+$widths: (
   'thin': 1px,
   'thick': 4px,
   'frame': 10px
 ) !default;
 
 // getter function for border widths
-@function border-w($w: $border-w-default) {
+@function width($w: $w-default) {
   @if type-of($w) == 'number' {
     @return #{$w};
   } @else {
-    @return map-get($border-widths, $w);
+    @return map-get($widths, $w);
   }
 }
 
 // properties for border seam effect
-// note 'marker-w' should match border-w('frame') above
-$border-seam: (
+// note 'marker-w' should match width('frame') above
+$seam: (
   'marker-h': 5,
   'marker-w': 10,
   'offset': 3
 );
 
-@function border-seam($attr) {
-  @return map-get($border-seam, $attr);
+@function seam($attr) {
+  @return map-get($seam, $attr);
 }
 
 // make a standard border/hairline that works with the parent color theme
-@mixin border(
+@mixin add(
   $sides: all,
-  $width: $border-w-default,
+  $width: $w-default,
   $color: 'border',
   $style: dashed,
   $important: false
 ) {
   @if $sides == all {
-    border: important(#{border-w($width)} #{$style} #{color($color)}, $important);
-    border: important(#{border-w($width)} #{$style} var(#{color-property($color)}), $important);
+    border: important(#{width($width)} #{$style} #{color.get($color)}, $important);
+    border: important(#{width($width)} #{$style} var(#{color.custom-prop($color)}), $important);
   } @else {
     @each $side in $sides {
-      border-#{$side}: important(#{border-w($width)} #{$style} #{color($color)}, $important);
-      border-#{$side}: important(#{border-w($width)} #{$style} var(#{color-property($color)}), $important);
+      border-#{$side}: important(#{width($width)} #{$style} #{color.get($color)}, $important);
+      border-#{$side}: important(#{width($width)} #{$style} var(#{color.custom-prop($color)}), $important);
     }
   }
 }

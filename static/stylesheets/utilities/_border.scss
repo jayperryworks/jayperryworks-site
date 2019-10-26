@@ -1,5 +1,5 @@
 // Border utlities
-@import "../config/border";
+@use "../config/border";
 @import "../config/breakpoints";
 @import "../config/positioning";
 
@@ -7,7 +7,7 @@
 
 // .border, .border@[screen]
 @include breakpointify(".border", true) {
-  @include border();
+  @include border.add();
 }
 
 // .no-border, .no-border@[screen]
@@ -21,13 +21,13 @@
 
   // .no-border-[side], .no-border-[side]@[screen]
   @include breakpointify(".border-#{$side}", true) {
-    @include border($side);
+    @include border.add($side);
   }
 }
 
 // --- Variations
-.border-thick { border-width: border-w('thick'); }
-.border-round { border-radius: $border-radius; }
+.border-thick { border-width: border.width('thick'); }
+.border-round { border-radius: border.$radius; }
 .border-solid { border-style: solid !important; }
 
 // --- 'Seam' effect

@@ -1,13 +1,13 @@
 //  Button component
+@use "../config/border";
 @import "../config/color";
 @import "../config/type";
-@import "../config/border";
 
 // --- Base ---
 
 [data-ui-button] {
   $color: 'primary';
-  @include border('all', $style: solid, $color: $color);
+  @include border.add('all', $style: solid, $color: $color);
   @include color-fg($color);
   @include font-accent;
   @include transition-default;
@@ -86,7 +86,7 @@
   padding: 0 !important;
 
   &:hover, &:active {
-    @include border('bottom', $style: 'secondary');
+    @include border.add('bottom', $style: 'secondary');
     @include color-fg('primary');
     background-color: transparent;
     border-color: inherit;

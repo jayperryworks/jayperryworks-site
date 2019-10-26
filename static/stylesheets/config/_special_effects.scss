@@ -1,5 +1,5 @@
 //  Mixins and such for special effects
-@import 'color';
+@use 'color';
 
 // default box shadow
 @mixin se-shadow(
@@ -7,6 +7,6 @@
   $blur: 0.5rem,
   $spread: 0
 ) {
-  box-shadow: $position $blur $spread color('shadow');
-  box-shadow: $position $blur $spread var(#{color-property('shadow')});
+  box-shadow: $position $blur $spread color.get('shadow');
+  box-shadow: $position $blur $spread var(#{color.custom-prop('shadow')});
 }

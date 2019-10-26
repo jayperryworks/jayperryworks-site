@@ -2,9 +2,9 @@
 //  Global type styles
 // =============================================================================
 
+@use "../config/border";
+@use "../config/color";
 @import "../config/animation";
-@import "../config/border";
-@import "../config/color";
 @import "../config/helpers";
 @import "../config/scale";
 @import "../config/spacing";
@@ -28,7 +28,7 @@ h5,
 h6,
 .t-heading {
   @include font-display;
-  @include color-fg('primary');
+  @include color.add-fg('primary');
   display: block;
   line-height: leading('tight');
   margin: 0;
@@ -42,7 +42,7 @@ h6,
 
     &:hover,
     &:active {
-      @include border('bottom', $style: 'secondary');
+      @include border.add('bottom', $style: 'secondary');
       border-color: inherit;
     }
   }
@@ -55,7 +55,7 @@ h6,
 
 // body/inline text
 p {
-  @include color-fg('secondary');
+  @include color.add-fg('secondary');
   -webkit-margin-after: 0;
   -webkit-margin-before: 0;
   margin-bottom: 0;
@@ -74,7 +74,7 @@ p {
 }
 
 a {
-  @include border('bottom', $style: 'dashed');
+  @include border.add('bottom', $style: 'dashed');
   @include transition-default;
   border-color: inherit;
   color: inherit;
@@ -104,14 +104,14 @@ em {
 
 small,
 .t-small {
-  @include color-fg('tertiary');
+  @include color.add-fg('tertiary');
   font-size: scale-type('eta');
 }
 
 figcaption,
 .t-caption {
   @include font-accent;
-  @include color-fg('tertiary');
+  @include color.add-fg('tertiary');
   font-size: scale-type('zeta');
 
   strong {
@@ -121,7 +121,7 @@ figcaption,
 
 address,
 .t-address {
-  @include color-fg('secondary');
+  @include color.add-fg('secondary');
   font-size: scale-type('eta');
 }
 
@@ -209,7 +209,7 @@ h6,
 
   &:hover,
   &:active {
-    @include border('bottom', $style: 'secondary');
+    @include border.add('bottom', $style: 'secondary');
     border-color: inherit;
   }
 }
@@ -218,7 +218,7 @@ h6,
   position: relative;
 
   &:before {
-    @include color-bg('highlight');
+    @include color.add-bg('highlight');
     content: '';
     display: block;
     position: absolute;
@@ -245,8 +245,8 @@ h6,
 }
 
 .t-tag {
-  @include border;
-  @include color-fg('tertiary');
+  @include border.add();
+  @include color.add-fg('tertiary');
   @include font-accent;
   @include transition-default;
   border-radius: 0.1em;
@@ -258,7 +258,7 @@ h6,
 
   &:hover,
   &:active {
-    @include color-fg('secondary');
+    @include color.add-fg('secondary');
     border-color: inherit;
   }
 
