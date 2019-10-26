@@ -2,7 +2,7 @@
 //  Base form styles
 // =============================================================================
 
-@import "../config/animation";
+@use "../config/animation";
 @import "../config/type";
 
 // Defaults
@@ -22,7 +22,7 @@ legend {}
 .form-field,
 input, textarea, select {
 	@include font-body;
-    @include transition-default;
+  @include animation.transition-default();
 	padding: 0.5em 1em;
 	border-radius: 3px;
 	box-sizing: border-box;
