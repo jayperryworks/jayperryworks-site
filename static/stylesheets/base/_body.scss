@@ -1,5 +1,6 @@
 // Global box model and scaling
-@import "../config/breakpoints";
+@use '../config/breakpoints';
+@use '../config/type';
 
 html {
   // set up the base font size at each breakpoint
@@ -7,15 +8,15 @@ html {
   // and we only have to change one thing
   font-size: 100%;
 
-  @include media(">small") {
+  @include breakpoints.query(">small") {
     font-size: 105%;
   }
 
-  @include media(">medium") {
+  @include breakpoints.query(">medium") {
     font-size: 110%;
   }
 
-  @include media(">large") {
+  @include breakpoints.query(">large") {
     font-size: 120%;
   }
 
@@ -30,5 +31,8 @@ html {
 *:after { box-sizing: inherit; }
 
 body {
+  @include type.font-body;
+  font-size: type.$size-default;
+  line-height: type.leading('default');
   margin: 0;
 }

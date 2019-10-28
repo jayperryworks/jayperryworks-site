@@ -1,6 +1,7 @@
 // Global spacing
 // -> used to keep whitespace in the layout consistent
-@use "../config/spacing";
+@use '../config/spacing';
+@use '../config/breakpoints';
 
 // --- global custom props ---
 
@@ -100,7 +101,7 @@
 
   @each $screen, $width in spacing.$outside {
     @if $screen != 'default' {
-      @include media('>#{$screen}') {
+      @include breakpoints.query('>#{$screen}') {
         padding-left: spacing.get($width);
         padding-right: spacing.get($width);
       }

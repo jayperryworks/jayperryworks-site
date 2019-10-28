@@ -3,10 +3,10 @@
 // =============================================================================
 
 @use '../config/border';
+@use '../config/breakpoints';
 @use '../config/color';
 @use '../config/scale';
 @use '../config/type';
-@import "../config/libs";
 
 $table-padding: 0.5em 0.5em;
 
@@ -16,7 +16,7 @@ $table-padding: 0.5em 0.5em;
 table,
 .table {
   @include type.font-accent;
-  font-size: scale.type('zeta');
+  font-size: type.scale('zeta');
   width: 100%;
 }
 
@@ -25,7 +25,7 @@ thead,
   @include border.add(bottom, thick, $color: 'primary');
   @include color.add-fg('primary');
   @include type.font-accent('bold');
-  font-size: scale.type('eta');
+  font-size: type.scale('eta');
   text-align: left;
   text-transform: uppercase;
   vertical-align: bottom;
@@ -56,14 +56,14 @@ th,
 }
 
 /* make tables act like a definition list on small screens */
-@include media('<small') {
+@include breakpoints.query('<small') {
   table, .table,
   thead, .table-header,
   tbody, .table-body,
   th,
   td,
   tr {
-    // font-size: scale.type('zeta');
+    // font-size: type.scale('zeta');
     display: block;
   }
 

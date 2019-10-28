@@ -23,7 +23,8 @@ const preprocess = [
     scss: {
       includePaths: [
         'static/stylesheets',
-        'node_modules'
+        'node_modules/bourbon/core',
+        'node_modules/include-media/dist'
       ]
     },
     postcss: {

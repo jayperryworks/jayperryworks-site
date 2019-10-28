@@ -1,24 +1,22 @@
-// =============================================================================
 // Visibility utilities
-// ==========================================================================
 
 // Allow 'important!' here because we want the styles to always apply in small utility classes
 // sass-lint:disable no-important
 // sass-lint:disable class-name-format
 // -> allow '@[state]' suffixes
 
-@import '../config/breakpoints';
+@use '../config/breakpoints';
 
 .hide-visually {
   visibility: hidden;
 }
 
 // hide but keep it accessible
-@include breakpointify('.hide-visually-above') {
+@include breakpoints.suffix('.hide-visually-above') {
   visibility: hidden;
 }
 
-@include breakpointify('.show-visually-above') {
+@include breakpoints.suffix('.show-visually-above') {
   visibility: visible;
 }
 
@@ -27,25 +25,25 @@
   display: none !important;
 }
 
-// --- show/hide at screen sizes -----------------------------------------------
+// --- show/hide at screen sizes
 // -> hide content until screen reaches specified breakpoint size
 
 // usage: <span class='hide-[below|above]@small'>
-@each $name, $size in $breakpoints {
+@each $name, $size in breakpoints.$list {
   .hide-below\@#{$name} {
-    @include media('<#{$size}') {
+    @include breakpoints.query('<#{$size}') {
       display: none !important;
     }
   }
 
   .hide-above\@#{$name} {
-    @include media('>#{$size}') {
+    @include breakpoints.query('>#{$size}') {
       display: none !important;
     }
   }
 }
 
-// --- show/hide for JS --------------------------------------------------------
+// --- show/hide for JS
 .hide\@js {
   .js & {
     display: none !important;
@@ -64,7 +62,7 @@
   }
 }
 
-// --- show/hide for print -----------------------------------------------------
+// --- show/hide for print
 
 .show\@print {
   display: none !important;
@@ -74,7 +72,7 @@
   }
 }
 
-// --- show/hide for touch -----------------------------------------------------
+// --- show/hide for touch
 
 .touch .show\@touch,
 .no-touch .hide\@no-touch {

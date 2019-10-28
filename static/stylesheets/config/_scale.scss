@@ -1,37 +1,14 @@
-/* =============================================================================
 //  Type & layout scale
-// ========================================================================== */
-
-@import "libs";
-
-// Config & mixins
-// -----------------------------------------------------------------------------
+@use 'bourbon';
 
 // -> minor third scale (1.2, 5:6)
 // -> 16px base (http://www.modularscale.com/?16&px&1.2&web&text)
-$global: 1.2;
+$ratio: 1.2;
 
-// global type scale
-// -> we could compute this via the modular scale mixins,
-// -> but doing it by hand allows us to tweak certain sizes to suit the fonts we're using
-$type: (
-  'alpha': 2.48rem,
-  'beta': 2.07rem,
-  'gamma': 1.44rem,
-  'delta': 1.2rem,
-  'epsilon': 1rem,
-  'zeta': 0.83rem,
-  'eta': 0.69rem,
-  'theta': 0.58rem
+bourbon.$bourbon: (
+  'modular-scale-ratio': $ratio
 );
 
-@function type($size) {
-  @return map-get($type, $size);
+@function get($size, $unit: 1rem) {
+  @return bourbon.modular-scale($size, $unit);
 }
-
-// --- modular scale config ----------------------------------------------------
-// -> for layout and spacing
-
-$bourbon: (
-  "modular-scale-ratio": $global
-);

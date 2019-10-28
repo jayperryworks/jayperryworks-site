@@ -8,14 +8,13 @@
 <style type="text/scss">
   @use "config/border";
   @use "config/color";
-  @use "config/scale";
-  @import 'config/type';
+  @use 'config/type';
 
   /* Lead paragraph with drop cap */
   .lead > :global(p:first-of-type) {
     &::first-letter {
       @include color.add-fg('primary');
-      @include font-accent('bold');
+      @include type.font-accent('bold');
       float: left;
       font-size: 3.5rem;
       line-height: 1.7rem;
@@ -66,7 +65,7 @@
   // .footnotes {
   //   @include border.add('top');
   //   @include color.add-fg('tertiary');
-  //   font-size: scale.type('zeta');
+  //   font-size: type.scale('zeta');
   //   margin-bottom: space();
   //   margin-top: space();
   //   padding-top: space();
@@ -75,7 +74,7 @@
   //   p {
   //     @include color.add-fg('tertiary');
   //     @include font-accent;
-  //     font-size: scale.type('zeta');
+  //     font-size: type.scale('zeta');
   //     letter-spacing: 0.02em;
   //   }
   // }

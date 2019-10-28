@@ -1,9 +1,9 @@
 // Layout width utils
 // -> set children to a standard layout width
-@import "../config/layout_width";
+@use "../config/layout_width";
 
 :root {
-  @each $name, $width in $layout-widths {
+  @each $name, $width in layout_width.$list {
     --layout-w-#{$name}: #{$width};
   }
 }

@@ -2,21 +2,15 @@
 //  Global type styles
 // =============================================================================
 
-@use "../config/animation";
-@use "../config/border";
-@use "../config/color";
-@use "../config/scale";
-@use "../config/type";
-@import "../config/helpers";
+@use '../config/animation';
+@use '../config/border';
+@use '../config/color';
+@use '../config/scale';
+@use '../config/type';
+@use '../config/breakpoints';
 
 // Defaults
 // -----------------------------------------------------------------------------
-
-body {
-  @include type.font-body;
-  @include type.size-default;
-  line-height: type.leading('default');
-}
 
 // headings
 h1,
@@ -74,7 +68,7 @@ p {
 
 a {
   @include border.add('bottom', $style: 'dashed');
-  @include animation.transition-default();
+  @include animation.transition();
   border-color: inherit;
   color: inherit;
   text-decoration: none;
@@ -104,14 +98,14 @@ em {
 small,
 .t-small {
   @include color.add-fg('tertiary');
-  font-size: scale.type('eta');
+  font-size: type.scale('eta');
 }
 
 figcaption,
 .t-caption {
   @include type.font-accent;
   @include color.add-fg('tertiary');
-  font-size: scale.type('zeta');
+  font-size: type.scale('zeta');
 
   strong {
     @include type.font-accent(bold);
@@ -121,7 +115,7 @@ figcaption,
 address,
 .t-address {
   @include color.add-fg('secondary');
-  font-size: scale.type('eta');
+  font-size: type.scale('eta');
 }
 
 // Utilities
@@ -150,20 +144,20 @@ h4,
 
 h5,
 .t-scale-epsilon {
-  font-size: scale.type('epsilon');
+  font-size: type.scale('epsilon');
 }
 
 h6,
 .t-scale-zeta {
-  font-size: scale.type('zeta');
+  font-size: type.scale('zeta');
 }
 
 .t-scale-eta {
-  font-size: scale.type('eta');
+  font-size: type.scale('eta');
 }
 
 .t-scale-theta {
-  font-size: scale.type('theta');
+  font-size: type.scale('theta');
 }
 
 // --- type styles -------------------------------------------------------------
@@ -247,10 +241,10 @@ h6,
   @include border.add();
   @include color.add-fg('tertiary');
   @include type.font-accent;
-  @include animation.transition-default();
+  @include animation.transition();
   border-radius: 0.1em;
   display: inline-block;
-  font-size: scale.type('zeta');
+  font-size: type.scale('zeta');
   margin-left: 0;
   padding: 0.15em 0.4em 0.05em;
   vertical-align: middle;
@@ -275,12 +269,12 @@ h6,
 
 
 // --- position text -----------------------------------------------------------
-@include breakpointify(".t-align-center", true) {
+@include breakpoints.suffix(".t-align-center", true) {
   text-align: center;
 }
-@include breakpointify(".t-align-left", true) {
+@include breakpoints.suffix(".t-align-left", true) {
   text-align: left;
 }
-@include breakpointify(".t-align-right", true) {
+@include breakpoints.suffix(".t-align-right", true) {
   text-align: right;
 }

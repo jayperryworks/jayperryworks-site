@@ -1,10 +1,8 @@
 // Border config
 @use 'color';
-@import 'helpers';
-@import 'libs';
+@use 'helpers';
 
 // --- Rounded corners
-
 $radius: 3px !default;
 
 @mixin radius {
@@ -12,7 +10,6 @@ $radius: 3px !default;
 }
 
 // --- Border width & style
-
 $w-default: 'thin' !default;
 
 // getter function for border style
@@ -56,12 +53,12 @@ $seam: (
   $important: false
 ) {
   @if $sides == all {
-    border: important(#{width($width)} #{$style} #{color.get($color)}, $important);
-    border: important(#{width($width)} #{$style} var(#{color.custom-prop($color)}), $important);
+    border: helpers.important(#{width($width)} #{$style} #{color.get($color)}, $important);
+    border: helpers.important(#{width($width)} #{$style} var(#{color.custom-prop($color)}), $important);
   } @else {
     @each $side in $sides {
-      border-#{$side}: important(#{width($width)} #{$style} #{color.get($color)}, $important);
-      border-#{$side}: important(#{width($width)} #{$style} var(#{color.custom-prop($color)}), $important);
+      border-#{$side}: helpers.important(#{width($width)} #{$style} #{color.get($color)}, $important);
+      border-#{$side}: helpers.important(#{width($width)} #{$style} var(#{color.custom-prop($color)}), $important);
     }
   }
 }

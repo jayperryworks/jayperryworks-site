@@ -1,16 +1,8 @@
-// =============================================================================
 // Global breakpoints
-// -> uses include-media library (http://include-media.com)
-// =============================================================================
-
-@import "libs";
-
-// Config & mixins
-// -----------------------------------------------------------------------------
+@use 'include-media' as im;
 
 // Global breakpoints map
-// -> also used by include-media library
-$breakpoints: (
+$list: (
   'xsmall': 30em,
   'small': 42em,
   'medium': 62em,
@@ -18,9 +10,20 @@ $breakpoints: (
   'xlarge': 100em
 );
 
+// pass the breakpoints list to include-media
+im.$breakpoints: $list;
+
 // getter/helper function to pull breakpoints from the map
-@function screen($size) {
-  @return map-get($breakpoints, $size);
+@function get($size) {
+  @return map-get($list, $size);
+}
+
+// decorator for include-media mixin
+// -> just wrapping this so it is exposed in this namespace using the above config map
+@mixin query($string) {
+  @include im.media($string) {
+    @content;
+  }
 }
 
 // Breakpointify mixin by Hugo Giraudel, lightly modified
@@ -28,20 +31,20 @@ $breakpoints: (
 // -> Helper mixin to create suffixed modifiers of a class
 // -> to make it effective starting certain breakpoints.
 // -> @param {String} $class - Class to “breakpointify”
-@mixin breakpointify($class, $default: false, $sizes: all, $direction: '>') {
+@mixin suffix($class, $default: false, $sizes: all, $direction: '>') {
   @if $default == true {
    #{$class} { @content; }
   }
 
   @if $sizes == 'all' {
-    @each $name, $size in $breakpoints {
-      @include media("#{$direction}#{$name}") {
+    @each $name, $size in $list {
+      @include im.media("#{$direction}#{$name}") {
         #{$class}\@#{$name} { @content; }
       }
     }
   } @else {
     @each $name in $sizes {
-      @include media("#{$direction}#{$name}") {
+      @include im.media("#{$direction}#{$name}") {
         #{$class}\@#{$name} { @content; }
       }
     }

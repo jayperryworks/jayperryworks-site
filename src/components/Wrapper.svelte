@@ -16,7 +16,7 @@
 </script>
 
 <style lang="scss">
-  @import "config/layout_width";
+  @use "config/layout_width";
 
   .wrapper {
     display: block;
@@ -28,9 +28,9 @@
     margin-right: auto;
   }
 
-  @each $name, $w in $layout-widths {
+  @each $name, $w in layout_width.$list {
     .#{$name} {
-      max-width: layout-w($name);
+      max-width: layout_width.get($name);
     }
   }
 </style>

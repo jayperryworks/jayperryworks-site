@@ -1,21 +1,17 @@
-// ==========================================================================
 // Global spacing
 // -> used to keep whitespace in the layout consistent
-// ==========================================================================
-
 @use "../config/scale";
-@import "../config/breakpoints";
-@import "../config/libs";
+@use '../config/breakpoints';
 
 // standard spacing for margins and padding, etc.
 $scale: (
-  'xxxnarrow': modular-scale(-12, 1rem),
-  'xxnarrow': modular-scale(-8, 1rem),
-  'xnarrow': modular-scale(-4, 1rem),
-  'narrow': modular-scale(-2, 1rem),
-  'medium': modular-scale(1, 1rem),
-  'wide': modular-scale(3, 1rem),
-  'xwide': modular-scale(6, 1rem)
+  'xxxnarrow': scale.get(-12),
+  'xxnarrow': scale.get(-8),
+  'xnarrow': scale.get(-4),
+  'narrow': scale.get(-2),
+  'medium': scale.get(1),
+  'wide': scale.get(3),
+  'xwide': scale.get(6)
 );
 
 // outside margins for full-width containers
