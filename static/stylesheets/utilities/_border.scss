@@ -11,7 +11,9 @@
 }
 
 // .no-border, .no-border@[screen]
-@include breakpoints.suffix(".no-border", true) { border: none !important; }
+@include breakpoints.suffix(".no-border", true) {
+  border: none !important;
+}
 
 @each $side in (top, right, bottom, left) {
   // .border-[side], .border-[side]@[screen]
@@ -26,9 +28,17 @@
 }
 
 // --- Variations
-.border-thick { border-width: border.width('thick'); }
-.border-round { border-radius: border.$radius; }
-.border-solid { border-style: solid !important; }
+.border-thick {
+  border-width: border.width('thick');
+}
+
+.border-round {
+  border-radius: border.$radius;
+}
+
+.border-solid {
+  border-style: solid !important;
+}
 
 // --- 'Seam' effect
 // utils: .border-seam-top, .border-seam-bottom-offset
