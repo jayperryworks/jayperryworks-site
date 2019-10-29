@@ -1,5 +1,5 @@
 <script>
-	import Nav from '@/components/Nav.svelte'
+	import MainNav from '@/components/MainNav.svelte'
   import MainFooter from '@/components/MainFooter.svelte'
 
 	export let segment;
@@ -8,6 +8,7 @@
 <style lang="scss" global>
   @use 'global';
   @use 'config/border';
+  @use 'config/positioning';
 
   /* Sticky footer setup */
   html,
@@ -25,6 +26,7 @@
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;
+    z-index: positioning.z('low');
   }
 
   #main-wrapper {
@@ -32,7 +34,7 @@
   }
 </style>
 
-<Nav {segment}/>
+<MainNav {segment}/>
 <main id="main-wrapper">
   <slot></slot>
 </main>
