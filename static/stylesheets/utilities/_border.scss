@@ -10,6 +10,10 @@
 // .border, .border@[screen]
 @include breakpoints.suffix(".border", true) {
   @include border.add();
+
+  &.border-solid {
+    border-style: solid !important;
+  }
 }
 
 // .no-border, .no-border@[screen]
@@ -26,6 +30,10 @@
   // .no-border-[side], .no-border-[side]@[screen]
   @include breakpoints.suffix(".border-#{$side}", true) {
     @include border.add($side);
+
+    &.border-solid {
+      border-#{$side}-style: solid !important;
+    }
   }
 }
 
@@ -36,10 +44,6 @@
 
 .border-round {
   border-radius: border.$radius;
-}
-
-.border-solid {
-  border-style: solid !important;
 }
 
 // --- 'Seam' effect
@@ -87,7 +91,7 @@
 
   .border-seam-#{$side}-offset {
     &::#{$selector} {
-      #{$side}: #{(border.seam('marker-h') / 2) + border.seam('offset')}px;
+      #{$side}: -#{(border.seam('marker-h') / 2) + border.seam('offset')}px;
     }
   }
 }

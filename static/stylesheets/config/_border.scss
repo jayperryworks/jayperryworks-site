@@ -36,7 +36,7 @@ $_widths: (
 $_seam: (
   'marker-h': 5,
   'marker-w': 10,
-  'offset': 3
+  'offset': 8
 );
 
 @function seam($attr) {
@@ -48,7 +48,7 @@ $_seam: (
   $sides: all,
   $width: 'thin',
   $color: 'border',
-  $style: dashed,
+  $style: 'dashed',
   $important: false
 ) {
   @if $sides == all {

@@ -1,6 +1,7 @@
 <script>
   import { format } from 'date-fns'
   import LogoJPW from './LogoJPW.svelte'
+  import Bookend from './Bookend.svelte'
 
   let socialChannels = [
     {
@@ -39,56 +40,78 @@
 <style lang="scss">
   footer {
     flex-shrink: 0;
-    overflow: hidden;
   }
 </style>
 
 <footer class="
   c-bg-well
-  border-seam-top
+  border-seam-top border-seam-top-offset
+  border-top border-solid
+  padding-x-outside
 ">
-  <div class="
-    border-bottom
-    padding-x-outside
-    padding-y
-  ">
-    <p class="
-      t-scale-gamma
-      t-font-display
-      c-fg-tertiary
+  <div class="overflow-hidden">
+    <div class="
+      border-bottom
+      padding-y
     ">
-      Keep in touch. You can also find me on {@html socialChannelList}.
-    </p>
-  </div>
-  <div class="
-    padding-x-outside
-    padding-y
-  ">
-    <div data-ui-bookend="horizontal@small align-top" class="gutter-wrapper gutter-xnarrow">
-      <div data-ui-bookend-item="left">
-        <a
-          class="
-            display-inline-block
-            no-border
-            gutter
-          "
-          style="height: 2.25rem; width: 10.9375rem;"
-          href="/"
-        >
-          <LogoJPW />
-        </a>
-        <small class="
-          gutter
-          display-inline-block
-          vertical-align-top
-          t-font-accent
-        ">
-          &copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
-        </small>
+      <p class="
+        t-scale-gamma
+        t-font-display
+        c-fg-tertiary
+      ">
+        Keep in touch. You can also find me on {@html socialChannelList}.
+      </p>
+    </div>
+    <div class="
+      padding-y
+    ">
+      <div class="
+        gutter-wrapper
+        gutter-xnarrow
+      ">
+        <Bookend align="top">
+          <div slot="left">
+            <a
+              class="
+                gutter
+                display-inline-block
+                t-link-undecorated
+              "
+              style="height: 2.25rem; width: 10.9375rem;"
+              href="/"
+            >
+              <LogoJPW />
+            </a>
+            <small class="
+              gutter
+              display-inline-block
+              vertical-align-top
+              t-font-accent
+            ">
+              &copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
+            </small>
+          </div>
+
+          <div slot="right">
+            <a
+              href="/colophon"
+              class="
+                gutter
+                display-inline-block
+                vertical-align-top
+                t-font-accent
+                t-weight-bold
+                t-scale-zeta
+                t-link-undecorated
+                t-case-upper
+                c-fg-tertiary
+              "
+            >
+              Colophon
+            </a>
+          </div>
+        </Bookend>
       </div>
-      <!-- <div data-ui-bookend-item="right">
-        <a href="#" class="gutter display-inline-block vertical-align-top t-font-accent t-weight-bold t-scale-zeta t-url-undecorated t-case-upper c-fg-tertiary">Colophon</a>
-      </div> -->
     </div>
   </div>
 </footer>
