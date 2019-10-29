@@ -73,7 +73,7 @@
   //   li,
   //   p {
   //     @include color.add-fg('tertiary');
-  //     @include font-accent;
+  //     @include font-font-accent;
   //     font-size: type.scale('zeta');
   //     letter-spacing: 0.02em;
   //   }
@@ -82,7 +82,7 @@
   // .footnote {
   //   @include border.add($style: 'secondary');
   //   @include border.radius;
-  //   @include font-accent;
+  //   @include font-font-accent;
   //   background-color: transparent;
   //   border-color: inherit;
   //   color: inherit;

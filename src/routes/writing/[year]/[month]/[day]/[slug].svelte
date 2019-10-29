@@ -46,15 +46,16 @@
   <header>
     <Wrapper
       width="wide"
-      class="t-align-center@small
-    ">
+      class="t-align-center@small"
+    >
       <h1>{post.title}</h1>
       {#if post.subtitle}
         <p class="
           t-heading
-          t-scale-gamma
+          t-font-accent
+          t-scale-beta
           c-fg-tertiary
-          padding-top-xnarrow
+          padding-top-xxnarrow
         ">{post.subtitle}</p>
       {/if}
 
@@ -68,14 +69,15 @@
       {/if}
     </Wrapper>
     <Wrapper class="
-      padding-top-wide
+      padding-top-xwide
       padding-bottom-xnarrow
       margin-bottom
       border-bottom
     ">
       <time
         class="
-          t-accent-bold
+          t-font-accent
+          t-weight-bold
           t-scale-zeta
           c-fg-tertiary
         "

@@ -3,6 +3,7 @@
 @use 'breakpoints';
 @use 'paths';
 @use 'scale';
+@use 'helpers';
 
 // --- Sizing & scale ---
 
@@ -147,28 +148,33 @@ $_leading: (
 }
 
 
-// Font mixins
-// -> PUBLIC, use these to style type globally & in modules
+// --- Font mixins ---
 
 $_font-stack-trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
 
 // Display
 @mixin font-display($important: false) {
-  font-family: "publico-headline-normal", bourbon.$font-stack-georgia;
+  font-family: helpers.important(
+    #{"publico-headline-normal", bourbon.$font-stack-georgia}
+  , $important);
   font-weight: normal;
   font-style: normal;
 }
 
 // Accent
 @mixin font-accent($weight: 'normal', $important: false) {
-  font-family: "guardian-sans-#{$weight}", $_font-stack-trebuchet#{if($important == true, " !important", "")};
-  font-weight: if($weight == 'light', normal, $weight);
+  font-family: helpers.important(#{
+    "guardian-sans-#{$weight}", $_font-stack-trebuchet
+  }, $important);
+  font-weight: if($weight == 'light', normal, unquote($weight));
   font-style: normal;
 }
 
 // Body
 @mixin font-body($weight: 'normal', $style: 'normal', $important: false) {
-  font-family: "publico-text-#{$weight}-#{$style}", bourbon.$font-stack-georgia#{if($important == true, " !important", "")};
+  font-family: helpers.important(#{
+    "publico-text-#{$weight}-#{$style}", bourbon.$font-stack-georgia
+  }, $important);
   font-weight: #{$weight};
   font-style: #{$style};
 }

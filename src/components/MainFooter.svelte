@@ -28,7 +28,10 @@
   $: socialChannelList = socialChannels.map((channel, index) => {
     return `
       ${index == socialChannels.length - 1 ? 'and' : ''}
-      <strong class="c-fg-secondary t-display"><a href="${channel.url}">${channel.name}</a></strong>
+      <strong class="
+        c-fg-secondary
+        t-font-display
+      "><a href="${channel.url}">${channel.name}</a></strong>
       `.trim()
   }).join(', ')
 </script>
@@ -40,25 +43,52 @@
   }
 </style>
 
-<footer>
-  <div class="border-bottom padding-bottom margin-bottom">
-    <p class="t-scale-gamma t-display c-fg-tertiary">
+<footer class="
+  c-bg-well
+  border-seam-top
+">
+  <div class="
+    border-bottom
+    padding-x-outside
+    padding-y
+  ">
+    <p class="
+      t-scale-gamma
+      t-font-display
+      c-fg-tertiary
+    ">
       Keep in touch. You can also find me on {@html socialChannelList}.
     </p>
   </div>
-  <div data-ui-bookend="horizontal@small align-top" class="gutter-wrapper gutter-xnarrow">
-    <div data-ui-bookend-item="left">
-      <a
-        class="display-inline-block no-border"
-        style="height: 2.25rem; width: 10.9375rem;"
-        href="/"
-      >
-        <LogoJPW />
-      </a>
-      <small class="gutter display-inline-block vertical-align-top t-accent">&copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.</small>
+  <div class="
+    padding-x-outside
+    padding-y
+  ">
+    <div data-ui-bookend="horizontal@small align-top" class="gutter-wrapper gutter-xnarrow">
+      <div data-ui-bookend-item="left">
+        <a
+          class="
+            display-inline-block
+            no-border
+            gutter
+          "
+          style="height: 2.25rem; width: 10.9375rem;"
+          href="/"
+        >
+          <LogoJPW />
+        </a>
+        <small class="
+          gutter
+          display-inline-block
+          vertical-align-top
+          t-font-accent
+        ">
+          &copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
+        </small>
+      </div>
+      <!-- <div data-ui-bookend-item="right">
+        <a href="#" class="gutter display-inline-block vertical-align-top t-font-accent t-weight-bold t-scale-zeta t-url-undecorated t-case-upper c-fg-tertiary">Colophon</a>
+      </div> -->
     </div>
-    <!-- <div data-ui-bookend-item="right">
-      <a href="#" class="gutter display-inline-block vertical-align-top t-accent-bold t-scale-zeta t-url-undecorated t-caps c-fg-tertiary">Colophon</a>
-    </div> -->
   </div>
 </footer>

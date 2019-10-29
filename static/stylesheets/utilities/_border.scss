@@ -2,6 +2,8 @@
 @use '../config/border';
 @use '../config/breakpoints';
 @use '../config/spacing';
+@use '../config/paths';
+@use '../config/positioning';
 
 // --- Base
 
@@ -49,24 +51,33 @@
   [class*='border-seam-#{$side}'] {
     position: relative;
 
-    @supports(border-image: url('/assets/images/seam.svg') border-seam('marker-h') 0 0 border-seam('marker-w') repeat) {
+    @supports(
+      border-image:
+        url('whatever.svg')
+        #{border.seam('marker-h')} 0 0 #{border.seam('marker-w')}
+        repeat
+    ) {
       &::#{$selector} {
-        border-image: url('/assets/images/seam.svg') border-seam('marker-h') 0 0 border-seam('marker-w') repeat;
-        border-width: #{border-seam('marker-h')}px 0 0 10px;
+        #{$side}: -#{border.seam('marker-h') / 2}px;
+        border-image:
+          url('#{paths.$images}/seam.svg')
+          #{border.seam('marker-h')} 0 0 #{border.seam('marker-w')}
+          repeat;
         border-style: solid;
+        border-width: #{border.seam('marker-h')}px 0 0 10px;
         content: '';
         display: block;
-        left: -#{border-seam('marker-w')}px;
-        position: absolute;
-        right: space(space-outside());
         height: 0;
-        #{$side}: -#{border-seam('marker-h') / 2}px;
+        left: -#{border.seam('marker-w')}px;
+        position: absolute;
+        right: spacing.get(spacing.get-outside());
+        z-index: positioning.z('top');
 
         // set outside borders at each breakpoint
         @each $screen, $width in spacing.$outside {
           @if $screen != 'default' {
             @include breakpoints.query('>#{$screen}') {
-              right: space($width);
+              right: spacing.get($width);
             }
           }
         }
@@ -76,7 +87,7 @@
 
   .border-seam-#{$side}-offset {
     &::#{$selector} {
-      #{$side}: #{(border-seam('marker-h') / 2) + border-seam('offset')}px;
+      #{$side}: #{(border.seam('marker-h') / 2) + border.seam('offset')}px;
     }
   }
 }
