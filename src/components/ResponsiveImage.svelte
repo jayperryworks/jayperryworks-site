@@ -17,6 +17,9 @@
       }
       return source.path
     }).join(', ')
+
+  let classes = ''
+  export { classes as class }
 </script>
 
 <style lang="scss">
@@ -26,4 +29,4 @@
   }
 </style>
 
-<img src="{sources[0].path}" {srcset} alt="{alt}">
+<img class={classes} src={sources[0].path} {srcset} alt={alt}>

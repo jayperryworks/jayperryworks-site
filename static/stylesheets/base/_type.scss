@@ -96,6 +96,7 @@ em {
 }
 
 small,
+cite,
 .t-small {
   @include color.add-fg('tertiary');
   font-size: type.scale('eta');
@@ -121,7 +122,8 @@ address,
 // Utilities
 // -----------------------------------------------------------------------------
 
-// --- type scale --------------------------------------------------------------
+// --- type scale ---
+
 h1,
 .t-scale-alpha {
   @include type.fluid($size-min: 'beta', $size-max: 'alpha');
@@ -177,7 +179,22 @@ h6,
   font-size: type.scale('theta');
 }
 
-// --- fonts -------------------------------------------------------------
+// --- weights ---
+
+.t-weight-normal {
+  @include type.font-body();
+}
+
+.t-weight-bold {
+  @include type.font-body('bold');
+}
+
+.t-style-italic {
+  @include type.font-body($style: 'italic');
+}
+
+// --- fonts ---
+
 .t-font-display {
   @include type.font-display();
 
@@ -208,35 +225,9 @@ h6,
 
 .t-font-body {
   @include type.font-body();
-
-  &.t-style-italic {
-    @include type.font-body($style: 'italic');
-  }
 }
 
-// --- weights -------------------------------------------------------------
-
-.t-weight-normal {
-  @include type.font-body();
-
-  &.t-font-accent {
-    @include type.font-accent();
-  }
-}
-
-.t-weight-bold {
-  @include type.font-body('bold');
-
-  &.t-font-accent {
-    @include type.font-accent('bold');
-  }
-}
-
-.t-weight-light {
-  &.t-font-accent {
-    @include type.font-accent('light');
-  }
-}
+// --- type styles ---
 
 .t-case-upper {
   text-transform: uppercase !important;

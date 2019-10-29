@@ -5,4 +5,4 @@
   export { classes as class }
 </script>
 
-<aside class="t-body-italic {classes}">{@html html}</aside>
+<aside class="t-style-italic {classes}">{@html html}</aside>

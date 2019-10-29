@@ -28,6 +28,7 @@
   import PostBody from '@/components/PostBody.svelte'
   import Figure from '@/components/Figure.svelte'
   import Wrapper from '@/components/Wrapper.svelte'
+  import Cover from '@/components/Cover.svelte'
 
   export let post;
   export let date;
@@ -60,7 +61,7 @@
       {/if}
 
       {#if post.cover}
-        <Figure
+        <Cover
           class="padding-top-wide"
           sources={post.cover.sources}
           alt={post.cover.alt}
