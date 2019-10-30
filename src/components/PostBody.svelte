@@ -1,6 +1,6 @@
 <script>
   import Figure from './Figure.svelte'
-  import Gallery from './Gallery.svelte'
+  import ImageGallery from './ImageGallery.svelte'
   import Note from './Note.svelte'
   import Passage from './Passage.svelte'
   import Wrapper from './Wrapper.svelte'
@@ -56,16 +56,19 @@
           sources={section.sources}
           alt={section.alt}
           caption={section.caption}
+          credit={section.credit}
+          border={section.border}
         />
       </Wrapper>
     {/if}
 
     {#if section.type == 'gallery'}
       <Wrapper width={getWidth(section.prominence)}>
-        <Gallery
+        <ImageGallery
           size={section.size}
           images={section.images}
           caption={section.caption}
+          credit={section.credit}
         />
       </Wrapper>
     {/if}

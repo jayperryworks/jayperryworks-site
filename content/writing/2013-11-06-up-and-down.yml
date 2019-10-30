@@ -3,6 +3,7 @@ cover:
   sources:
     - path: "images/uploads/2013-blog-up_and_down.jpg"
   alt: "Up and down and through and throughout"
+  credit: Josh Fischer
 tags:
   - process
   - india ink
@@ -28,6 +29,8 @@ body:
       I wanted to try and get at those contrasts (contradictions?) in this piece.
 
   - type: figure
+    prominence: small
+    border: true
     sources:
       - path: "images/uploads/2013-blog-up_and_down-winter_fungus_s1.jpg"
     alt: "Sketch"
@@ -39,11 +42,13 @@ body:
       Starting with a pencil sketch, I did the ink in layers, using transparent vellum paper. First the outlines of the trunk, then the bark texture.
 
   - type: figure
+    prominence: large
     sources:
       - path: "images/uploads/2013-blog-up_and_down-IMG_8956.jpg"
     alt: "Inking"
 
   - type: figure
+    prominence: large
     sources:
       - path: "images/uploads/2013-blog-up_and_down-IMG_8959.jpg"
     alt: "Inking"
@@ -56,13 +61,19 @@ body:
 
   - type: gallery
     size: small
+    caption: |-
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quid minus probandum quam esse aliquem beatum nec satis beatum? Levatio igitur vitiorum magna fit in iis, qui habent ad virtutem progressionis aliquantum. Quae si potest singula consolando levare, universa quo modo sustinebit? Nunc vides, quid faciat. Illa videamus, quae a te de amicitia dicta sunt. Duo Reges: constructio interrete. Nec vero pietas adversus deos nec quanta iis gratia debeatur sine explicatione naturae intellegi potest. Nihilo beatiorem esse Metellum quam Regulum.
+    credit: Test
+    prominence: large
     images:
       - sources:
           - path: "images/uploads/2013-blog-up_and_down-fungus.jpg"
         alt: "Fungus lines"
+        border: true
       - sources:
           - path: "images/uploads/2013-blog-up_and_down-fungus-color.jpg"
         alt: "Fungus color"
+        border: true
       - sources:
           - path: "images/uploads/2013-blog-up_and_down-haze.jpg"
         alt: "Haze"

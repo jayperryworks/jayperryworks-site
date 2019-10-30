@@ -1,0 +1,124 @@
+<script>
+  import ResponsiveImage from './ResponsiveImage.svelte'
+  import Caption from './Caption.svelte'
+
+  export let size, images, caption, credit
+</script>
+
+<style lang="scss">
+  @use 'config/spacing';
+  @use 'config/layout_width';
+  @use 'config/breakpoints';
+
+  /* default values */
+  $gutter: spacing.get('xnarrow');
+  $breakpoint: 600px;
+  $min-percentage: 33.33333%;
+  $max-percentage: 100%;
+
+  figure {
+    margin: 0;
+  }
+
+  ul {
+    --gutter: var(--space-xnarrow, $gutter);
+    --min-width: 240px;
+    --breakpoint: #{$breakpoint};
+    --min-percentage: #{$min-percentage};
+    --max-percentage: #{$max-percentage};
+
+    display: block;
+    font-size: 0;
+    list-style: none;
+    margin: (($gutter / 2) * -1);
+    margin: calc((var(--gutter) / 2) * -1);
+    padding-left: 0;
+    position: relative;
+    text-align: left;
+
+    @supports (display: grid) and (display: flex) {
+      display: grid;
+      grid-column-gap: var(--gutter);
+      grid-row-gap: var(--gutter);
+      grid-template-columns: 1fr;
+      margin: 0;
+
+      @include breakpoints.query('>xsmall') {
+        grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
+      }
+    }
+  }
+
+  .small {
+    --min-width: 180px;
+    --breakpoint: 480px;
+    --min-percentage: 25%;
+  }
+
+  .large {
+    --min-width: 600px;
+    --breakpoint: 1200px;
+    --min-percentage: 25%;
+
+    @include breakpoints.query('>xsmall') {
+      grid-template-columns: 1fr;
+    }
+
+    @include breakpoints.query('>small') {
+      grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
+    }
+  }
+
+  li {
+    display: inline-block;
+    font-size: 1rem;
+    margin: 0; // overrule default li spacing
+    padding: ($gutter / 2);
+    padding: calc(var(--gutter) / 2);
+    position: relative;
+    vertical-align: top;
+
+    /*
+      fallback fluid sizing method using a calc() hack
+      -> allows grid to be somewhat responsive without media queries
+      -> mainly for IE and old browsers
+      -> https://www.sitepoint.com/responsive-css-patterns-without-media-queries/
+    */
+    max-width: $max-percentage;
+    max-width: var(--max-percentage);
+    min-width: $min-percentage;
+    min-width: var(--min-percentage);
+    width: calc((#{$breakpoint} - 100%) * 1000);
+    width: calc((var(--breakpoint) - 100%) * 1000);
+
+    @supports (display: grid) and (display: flex) {
+      align-items: flex-start;
+      display: flex;
+      max-width: layout_width.get();
+      min-width: auto;
+      padding: 0;
+      width: auto;
+
+      .large & {
+        max-width: layout_width.get('wide');
+      }
+    }
+  }
+</style>
+
+<figure>
+  <ul class="{size}">
+    {#each images as image}
+      <li>
+        <ResponsiveImage
+          sources={image.sources}
+          alt={image.alt}
+          border={image.border}
+        />
+      </li>
+    {/each}
+  </ul>
+  {#if caption || credit}
+    <Caption {caption} {credit} />
+  {/if}
+</figure>

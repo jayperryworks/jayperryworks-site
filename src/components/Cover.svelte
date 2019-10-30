@@ -17,5 +17,5 @@
 </style>
 
 <div class="container {classes}">
-  <Figure {sources} {alt} {caption} {credit} hideBorder />
+  <Figure {sources} {alt} {caption} {credit} class="display-inline-block" />
 </div>

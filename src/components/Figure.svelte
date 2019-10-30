@@ -1,9 +1,8 @@
 <script>
   import ResponsiveImage from './ResponsiveImage.svelte'
+  import Caption from './Caption.svelte'
 
-  export let sources, alt, caption, credit
-
-  export let hideBorder = false
+  export let sources, alt, caption, credit, border = false
 
   let classes = ''
   export { classes as class }
@@ -17,16 +16,8 @@
 </style>
 
 <figure class={classes}>
-  <ResponsiveImage {sources} {alt} class={hideBorder ? '' : 'border border-solid'} />
+  <ResponsiveImage {sources} {alt} {border} />
   {#if caption || credit}
-    <figcaption class="
-      t-caption
-      t-align-left
-    ">
-      {@html caption}
-      {#if credit}
-        <cite class="t-small">{@html credit}</cite>
-      {/if}
-    </figcaption>
+    <Caption {caption} {credit} />
   {/if}
 </figure>

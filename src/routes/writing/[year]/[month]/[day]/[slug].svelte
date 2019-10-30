@@ -66,6 +66,7 @@
           sources={post.cover.sources}
           alt={post.cover.alt}
           caption={post.cover.caption}
+          credit={post.cover.credit}
         />
       {/if}
     </Wrapper>

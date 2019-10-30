@@ -1,6 +1,7 @@
 <script>
-  export let breakpoint = 'small'
-  export let align = 'middle'
+  export let breakpoint = 'small',
+    align = 'middle',
+    fillSide = 'left'
 
   $: horizontalClass = breakpoint == 'none' ? 'horizontal' : `horizontal@${breakpoint}`
 </script>
@@ -25,7 +26,7 @@
 
   .align-top {
     @supports (align-items: flex-start) {
-      align-items: flex-start;
+      align-items: flex-start !important;
     }
 
     .item {
@@ -36,7 +37,7 @@
   @include breakpoints.suffix(
     '.horizontal',
     $default: true,
-    $sizes: [small, medium, large]
+    $sizes: [xsmall, small, medium, large]
   ) {
     @supports (display: flex) {
       align-items: center;
@@ -57,14 +58,6 @@
         }
       }
 
-      &.center {
-        text-align: center;
-
-        @supports (display: flex) {
-          flex: 1;
-        }
-      }
-
       &.right {
         float: right;
         text-align: right;
@@ -74,20 +67,23 @@
           margin-left: auto;
         }
       }
+
+      &.fill {
+        @supports (flex: 1) {
+          flex: 1;
+        }
+      }
     }
   }
 
 
 </style>
 
-<div class="container {horizontalClass}">
-  <div class="item left">
+<div class="container {horizontalClass}" class:align-top="{align === 'top'}">
+  <div class="item left" class:fill="{fillSide === 'left'}">
     <slot name="left"></slot>
   </div>
-  <div class="item center">
-    <slot name="center"></slot>
-  </div>
-  <div class="item right">
+  <div class="item right" class:fill="{fillSide === 'right'}">
     <slot name="right"></slot>
   </div>
 </div>

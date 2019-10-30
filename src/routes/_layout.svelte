@@ -22,7 +22,12 @@
   }
 
   #sapper {
-    @include border.add(left, $width: 'frame', $color: 'highlight', $style: solid);
+    @include border.add(
+      left,
+      $width: 'frame',
+      $color: 'highlight',
+      $style: solid
+    );
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;
