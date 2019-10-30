@@ -3,7 +3,6 @@ cover:
   sources:
     - path: "images/uploads/2013-blog-up_and_down.jpg"
   alt: "Up and down and through and throughout"
-  credit: Josh Fischer
 tags:
   - process
   - india ink
@@ -61,9 +60,6 @@ body:
 
   - type: gallery
     size: small
-    caption: |-
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quid minus probandum quam esse aliquem beatum nec satis beatum? Levatio igitur vitiorum magna fit in iis, qui habent ad virtutem progressionis aliquantum. Quae si potest singula consolando levare, universa quo modo sustinebit? Nunc vides, quid faciat. Illa videamus, quae a te de amicitia dicta sunt. Duo Reges: constructio interrete. Nec vero pietas adversus deos nec quanta iis gratia debeatur sine explicatione naturae intellegi potest. Nihilo beatiorem esse Metellum quam Regulum.
-    credit: Test
     prominence: large
     images:
       - sources:
