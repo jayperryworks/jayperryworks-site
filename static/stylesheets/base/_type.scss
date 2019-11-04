@@ -316,11 +316,11 @@ h6,
 
 // --- position text -----------------------------------------------------------
 @include breakpoints.suffix(".t-align-center", true) {
-  text-align: center;
+  text-align: center !important;
 }
 @include breakpoints.suffix(".t-align-left", true) {
-  text-align: left;
+  text-align: left !important;
 }
 @include breakpoints.suffix(".t-align-right", true) {
-  text-align: right;
+  text-align: right !important;
 }

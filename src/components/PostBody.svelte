@@ -4,6 +4,7 @@
   import Note from './Note.svelte'
   import Passage from './Passage.svelte'
   import Wrapper from './Wrapper.svelte'
+  import Table from './Table.svelte'
 
   export let sections
 
@@ -69,6 +70,17 @@
           images={section.images}
           caption={section.caption}
           credit={section.credit}
+        />
+      </Wrapper>
+    {/if}
+
+    {#if section.type == 'table'}
+      <Wrapper width={getWidth(section.prominence)}>
+        <Table
+          headingColumns={section.keyColumns}
+          header={section.header}
+          body={section.body}
+          footer={section.footer}
         />
       </Wrapper>
     {/if}

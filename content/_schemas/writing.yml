@@ -51,16 +51,12 @@ body: !!omap
     # -> will be emphasized/boldface in the UI
     headingColumns: !!pairs
       - !!str
-    rows:
-      - type: header
-        cells: !!pairs
-          - !!str
-      - type: row
-        cells: !!pairs
-          - !!str
-      - type: footer
-        cells: !!pairs
-          - !!str
+    header: !!pairs
+      - [] !!str
+    body: !!pairs
+      - [] !!str
+    footer: !!pairs
+        - [] !!str
 
   - type: !section postscript
     markdown: |-

@@ -68,7 +68,7 @@ collections:
           - label: Note
             name: note
             widget: object
-            hint: An introductory note that appears above the body of the post
+            hint: An aside that speaks about the text, e.g. an intro note or acknowledgements at the end
             fields:
               - {label: "Type", name: "type", widget: "hidden", default: "note"}
               - {label: "Use in excerpt", name: "useInExcerpt", widget: "boolean", default: "false"}
@@ -136,19 +136,24 @@ collections:
               name: "headingColumns"
               widget: "list"
               required: false
-            - label: Rows
-              name: rows
+            - label: Header
+              name: header
               type: list
               fields:
-                - {label: "Type", name: "type", widget: "select", options: ["header", "row", "footer"], default: "row"}
+                - {label: "Label", name: "label", widget: "string"}
+                - {label: "Text alignment", name: "align", widget: "select", options: ["left", "center", "right"], default: "left"}
+            - label: Body
+              name: body
+              type: list
+              required: false
+              fields:
                 - {label: "Cells", name: "cells", widget: "list"}
-
-          - label: Postscript
-            name: postscript
-            widget: object
-            fields:
-              - {label: "Type", name: "type", widget: "hidden", default: "postscript"}
-              - {label: "Content", name: "markdown", widget: "markdown", required: false}
+            - label: Footer
+              name: footer
+              type: list
+              required: false
+              fields:
+                - {label: "Cells", name: "cells", widget: "list"}
 
   - name: "pictures" # Used in routes, e.g., /admin/collections/blog
     label: "Pictures" # Used in the UI
