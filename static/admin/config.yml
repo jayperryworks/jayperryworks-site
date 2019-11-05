@@ -90,6 +90,7 @@ collections:
             fields:
             - {label: "Type", name: "type", widget: "hidden", default: "figure"}
             - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false, hint: "Include this section in the post excerpt?"}
+            - {label: "Prominence", name: "prominence", widget: "select", options: ["small", "medium", "large"], default: "medium"}
             - label: "Sources"
               name: "sources"
               widget: "list"
@@ -99,7 +100,6 @@ collections:
             - {label: "Alt text", name: "alt", widget: "string", required: false}
             - {label: "Caption", name: "caption", widget: "mardown", required: false}
             - {label: "Attribution", name: "attribution", widget: "string", required: false}
-            - {label: "Prominence", name: "prominence", widget: "select", options: ["small", "medium", "large"], default: "medium"}
 
           - label: Gallery
             name: gallery
@@ -107,6 +107,7 @@ collections:
             fields:
             - {label: "Type", name: "type", widget: "hidden", default: "gallery"}
             - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false, hint: "Include this section in the post excerpt?"}
+            - {label: "Prominence", name: "prominence", widget: "select", options: ["small", "medium", "large"], default: "medium"}
             - label: Size
               name: size
               widget: select
@@ -132,6 +133,7 @@ collections:
             fields:
             - {label: "Type", name: "type", widget: "hidden", default: "table"}
             - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false, hint: "Include this section in the post excerpt?"}
+            - {label: "Prominence", name: "prominence", widget: "select", options: ["small", "medium", "large"], default: "medium"}
             - label: "Heading Columns"
               name: "headingColumns"
               widget: "list"
