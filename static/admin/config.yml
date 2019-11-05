@@ -138,21 +138,21 @@ collections:
               name: "headingColumns"
               widget: "list"
               required: false
-            - label: Header
-              name: header
-              type: list
+            - label: "Header"
+              name: "header"
+              widget: "list"
               fields:
-                - {label: "Label", name: "label", widget: "string"}
+                - {label: "Content", name: "label", widget: "string"}
                 - {label: "Text alignment", name: "align", widget: "select", options: ["left", "center", "right"], default: "left"}
-            - label: Body
-              name: body
-              type: list
+            - label: "Body"
+              name: "body"
+              type: "list"
               required: false
               fields:
                 - {label: "Cells", name: "cells", widget: "list"}
-            - label: Footer
-              name: footer
-              type: list
+            - label: "Footer"
+              name: "footer"
+              type: "list"
               required: false
               fields:
                 - {label: "Cells", name: "cells", widget: "list"}

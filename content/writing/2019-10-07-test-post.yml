@@ -16,9 +16,11 @@ body:
     keyColumns: [1]
     header:
       - label: "name"
+        align: left
       - label: "price"
         align: right
       - label: "weight"
+        align: left
     body:
       - ["WTB Nano", 40, 135]
       - ["WTB Expanse", 40, 80]
