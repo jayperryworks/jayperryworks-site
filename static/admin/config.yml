@@ -59,7 +59,7 @@ collections:
         widget: boolean
         default: true
 
-      - label: Body
+      - label: Body sections
         name: body
         widget: list
         required: false
@@ -138,24 +138,26 @@ collections:
               name: "headingColumns"
               widget: "list"
               required: false
-            - label: "Header"
+              hint: "Columns that appear bold and function as headings for their rows"
+            - label: "Header cells"
               name: "header"
               widget: "list"
+              hint: "The top row, which defines the values in the rest of the table"
               fields:
-                - {label: "Content", name: "label", widget: "string"}
+                - {label: "Label", name: "label", widget: "string"}
                 - {label: "Text alignment", name: "align", widget: "select", options: ["left", "center", "right"], default: "left"}
-            - label: "Body"
+            - label: "Body rows"
               name: "body"
-              type: "list"
+              widget: "list"
               required: false
               fields:
-                - {label: "Cells", name: "cells", widget: "list"}
-            - label: "Footer"
+                - {label: "Cells", name: "cell", widget: "list"}
+            - label: "Footer rows"
               name: "footer"
-              type: "list"
+              widget: "list"
               required: false
               fields:
-                - {label: "Cells", name: "cells", widget: "list"}
+                - {label: "Cells", name: "cell", widget: "list"}
 
   - name: "pictures" # Used in routes, e.g., /admin/collections/blog
     label: "Pictures" # Used in the UI
