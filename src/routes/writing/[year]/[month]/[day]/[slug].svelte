@@ -24,11 +24,13 @@
 
 <script>
   import { format } from 'date-fns'
+  import Card from '@/components/Card.svelte'
+  import Cover from '@/components/Cover.svelte'
+  import Figure from '@/components/Figure.svelte'
   import PageTitle from '@/components/PageTitle.svelte'
   import PostBody from '@/components/PostBody.svelte'
-  import Figure from '@/components/Figure.svelte'
+  import ResponsiveImage from '@/components/ResponsiveImage.svelte'
   import Wrapper from '@/components/Wrapper.svelte'
-  import Cover from '@/components/Cover.svelte'
 
   export let post;
   export let date;
@@ -52,11 +54,11 @@
       <h1>{post.title}</h1>
       {#if post.subtitle}
         <p class="
-          t-heading
-          t-font-accent
-          t-scale-beta
           c-fg-tertiary
           padding-top-xxnarrow
+          t-font-accent
+          t-heading
+          t-scale-beta
         ">{post.subtitle}</p>
       {/if}
 
@@ -71,17 +73,17 @@
       {/if}
     </Wrapper>
     <Wrapper class="
-      padding-top-xwide
-      padding-bottom-xnarrow
-      margin-bottom
       border-bottom
+      margin-bottom
+      padding-bottom-xnarrow
+      padding-top-xwide
     ">
       <time
         class="
-          t-font-accent
-          t-weight-bold
-          t-scale-zeta
           c-fg-tertiary
+          t-font-accent
+          t-scale-zeta
+          t-weight-bold
         "
         datetime={formatDate('yyyy-M-dd')}
       >
@@ -91,4 +93,38 @@
   </header>
 
   <PostBody sections={post.body} />
+
+  <footer>
+    <Wrapper class="
+      border-top
+      padding-top-wide
+      margin-top-wide
+    ">
+      <Card
+        el="aside"
+        figureSize="small"
+      >
+        <img
+          slot="figure"
+          src="images/portrait.jpg"
+          alt="Portrait"
+        >
+        <div slot="content">
+          <p>Jay Perry is a designer, illustrator, and writer living near Baltimore. He likes books, old rusty cars, and forests.</p>
+          <a
+            href="/about"
+            class="
+              display-block
+              padding-top-narrow
+              t-case-upper
+              t-font-accent
+              t-link-undecorated
+              t-scale-zeta
+              t-weight-bold
+            "
+          >More about Jay &rsaquo;</a>
+        </div>
+      </Card>
+    </Wrapper>
+  </footer>
 </article>

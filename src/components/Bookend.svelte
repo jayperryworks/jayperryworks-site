@@ -3,6 +3,9 @@
     align = 'middle',
     fillSide = 'left'
 
+  let classes = ''
+  export {classes as class}
+
   $: horizontalClass = breakpoint == 'none' ? 'horizontal' : `horizontal@${breakpoint}`
 </script>
 
@@ -79,7 +82,7 @@
 
 </style>
 
-<div class="container {horizontalClass}" class:align-top="{align === 'top'}">
+<div class="container {horizontalClass} {classes}" class:align-top="{align === 'top'}">
   <div class="item left" class:fill="{fillSide === 'left'}">
     <slot name="left"></slot>
   </div>
