@@ -20,6 +20,7 @@
 
     display: block;
     font-size: 0;
+    overflow: hidden;
   }
 
   .figure,
@@ -71,30 +72,34 @@
 {#if el == 'figure'}
 
   <figure
-    class="card gutter-wrapper {classes}"
+    class="card overflow-hidden {classes}"
     class:small={figureSize !== 'default'}
     style={breakpoint ? `--breakpoint: ${breakpoint}` : ''}
   >
-    <div class="figure gutter">
-      <slot name="figure"></slot>
+    <div class="gutter-wrapper">
+      <div class="figure gutter">
+        <slot name="figure"></slot>
+      </div>
+      <figcaption class="content gutter">
+        <slot name="content"></slot>
+      </figcaption>
     </div>
-    <figcaption class="content gutter">
-      <slot name="content"></slot>
-    </figcaption>
   </figure>
 
 {:else}
 
   <aside
-    class="card gutter-wrapper {classes}"
+    class="card overflow-hidden {classes}"
     class:small={figureSize !== 'default'}
     style={breakpoint ? `--breakpoint: ${breakpoint}` : ''}
   >
-    <div class="figure gutter">
-      <slot name="figure"></slot>
-    </div>
-    <div class="content gutter">
-      <slot name="content"></slot>
+    <div class="gutter-wrapper">
+      <div class="figure gutter">
+        <slot name="figure"></slot>
+      </div>
+      <div class="content gutter">
+        <slot name="content"></slot>
+      </div>
     </div>
   </aside>
 
