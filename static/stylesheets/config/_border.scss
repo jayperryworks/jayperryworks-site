@@ -3,10 +3,10 @@
 @use 'helpers';
 
 // --- Rounded corners
-$radius: 3px !default;
+$radius: 0.2rem;
 
 @mixin radius {
-  radius: $radius;
+  border-radius: $radius;
 }
 
 // --- Border width & style

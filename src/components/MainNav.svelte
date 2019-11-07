@@ -1,7 +1,7 @@
 <script>
   import Bookend from './Bookend.svelte'
   import Dropdown from './Dropdown.svelte'
-  import LogoJP from './LogoJP.svelte'
+  import LogoJP from './logos/LogoJP.svelte'
 
 	export let segment;
   let items = [

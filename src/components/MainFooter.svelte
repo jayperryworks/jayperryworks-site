@@ -1,6 +1,6 @@
 <script>
   import { format } from 'date-fns'
-  import LogoJPW from './LogoJPW.svelte'
+  import LogoJPW from './logos/LogoJPW.svelte'
   import Bookend from './Bookend.svelte'
 
   let socialChannels = [
