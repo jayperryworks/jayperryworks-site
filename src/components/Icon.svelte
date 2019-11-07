@@ -1,11 +1,7 @@
 <script>
-  import ArrowDown from './icons/ArrowDown.svelte'
-  import ArrowUp from './icons/ArrowUp.svelte'
-  import ArrowLeft from './icons/ArrowLeft.svelte'
-  import ArrowRight from './icons/ArrowRight.svelte'
-  import Menu from './icons/Menu.svelte'
+  import icons from '@/utils/icons.js'
 
-  export let id, size, margin, title,
+  export let id, size = '', margin = '', title = '',
     role = 'presentation'
 
   let classes = ''
@@ -17,7 +13,7 @@
     $size: 1em;
     --icon-size: #{$size};
 
-    color: inherit;
+    color: black;
     display: inline-block;
     fill: currentColor !important;
     height: $size;
@@ -39,22 +35,22 @@
     --icon-size: 1.2em;
   }
 
-  .margin-right {
+  .space-right {
     margin-right: 0.25em;
   }
 
-  .margin-left {
+  .space-left {
     margin-left: 0.25em;
   }
 </style>
 
 <svg
-  class="icon {classes} {size} {margin ? `margin-${margin}` : ''}"
+  class="icon {classes} {size} {margin ? `space-${margin}` : ''}"
   viewbox="0 0 16 16"
   xmlns="http://www.w3.org/2000/svg"
 >
   {#if role !== 'presentation' && title}
     <desc>{title}</desc>
   {/if}
-  <svelte:component this={id} />
+  {@html icons[id]}
 </svg>

@@ -94,10 +94,10 @@
     class="t-font-accent t-scale-zeta"
     aria-haspopup="menu"
   >
-    <span class="hide-visually-above@xsmall margin-left-xxnarrow">
+    <span>
       {label}
     </span>
-    <Icon id="ArrowDown" margin="left" size="small" />
+    <Icon id="arrowDown" margin="left" size="small" />
   </summary>
   <div
     class="
