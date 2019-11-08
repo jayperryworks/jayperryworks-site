@@ -1,10 +1,11 @@
-import resolve from 'rollup-plugin-node-resolve';
-import replace from 'rollup-plugin-replace';
-import commonjs from 'rollup-plugin-commonjs';
-import svelte from 'rollup-plugin-svelte';
 import babel from 'rollup-plugin-babel';
-import { terser } from 'rollup-plugin-terser';
+import commonjs from 'rollup-plugin-commonjs';
 import config from 'sapper/config/rollup.js';
+import replace from 'rollup-plugin-replace';
+import resolve from 'rollup-plugin-node-resolve';
+import svelte from 'rollup-plugin-svelte';
+import svg from 'rollup-plugin-svg';
+import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 
 // packages I added
@@ -34,11 +35,15 @@ const preprocess = [
 ];
 
 const aliases = alias({
-  resolve: ['.js', '.svelte'],
+  resolve: ['.js', '.svelte', '.svg'],
   entries: [
     {
       find: '@',
       replacement: `${__dirname}/src`
+    },
+    {
+      find: 'icons',
+      replacement: `${__dirname}/static/images/icons`
     }
   ]
 })
@@ -48,6 +53,7 @@ export default {
 		input: config.client.input(),
 		output: config.client.output(),
 		plugins: [
+      svg(),
 			replace({
 				'process.browser': true,
 				'process.env.NODE_ENV': JSON.stringify(mode)
@@ -60,6 +66,7 @@ export default {
 			}),
 			resolve({
 				browser: true,
+        extensions: [ '.mjs', '.js', '.jsx', '.json', '.svg' ],
 				dedupe
 			}),
       aliases,
@@ -94,6 +101,7 @@ export default {
 		input: config.server.input(),
 		output: config.server.output(),
 		plugins: [
+      svg(),
 			replace({
 				'process.browser': false,
 				'process.env.NODE_ENV': JSON.stringify(mode)
@@ -104,6 +112,7 @@ export default {
         preprocess
 			}),
 			resolve({
+        extensions: [ '.mjs', '.js', '.jsx', '.json', '.svg' ],
 				dedupe
 			}),
       aliases,

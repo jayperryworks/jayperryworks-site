@@ -1,6 +1,4 @@
 <script>
-  import Icon from './Icon.svelte'
-
   export let label
 
   let classes = ''
@@ -93,14 +91,10 @@
 
 <details {open} class="{classes}">
   <summary
-    class="t-font-accent t-scale-zeta"
+    class=""
     aria-haspopup="menu"
   >
-    <Icon id="menu" margin="right" />
-    <span class="hide-visually-above@xsmall">
-      {label}
-    </span>
-    <Icon id="arrowDown" margin="left" size="small" />
+    <slot name="label"></slot>
   </summary>
   <div
     class="
@@ -111,6 +105,6 @@
     "
     data-theme="default"
   >
-    <slot></slot>
+    <slot name="dropdown"></slot>
   </div>
 </details>

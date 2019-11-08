@@ -1,6 +1,9 @@
 <script>
+  import arrow from 'icons/arrow-down.svg'
+  import menu from 'icons/menu.svg'
   import Bookend from './Bookend.svelte'
   import Dropdown from './Dropdown.svelte'
+  import Icon from './Icon.svelte'
   import LogoJP from './logos/LogoJP.svelte'
 
 	export let segment;
@@ -89,7 +92,17 @@
           margin-left-narrow
         "
       >
-        <ul class="list-undecorated">
+        <span
+          slot="label"
+          class="display-block t-scale-zeta"
+        >
+          <Icon svg={menu} margin="right" />
+          <span class="hide-visually-above@xsmall t-font-accent">
+            Menu
+          </span>
+          <Icon svg={arrow} margin="left" size="small" />
+        </span>
+        <ul slot="dropdown" class="list-undecorated">
           {#each items as item, index}
             <li
               class="

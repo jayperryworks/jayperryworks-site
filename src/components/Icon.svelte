@@ -1,7 +1,5 @@
 <script>
-  import icons from '@/utils/icons.js'
-
-  export let id,
+  export let svg,
     size = '',
     margin = '',
     title = '',
@@ -9,19 +7,6 @@
 
   let classes = ''
   export { classes as class }
-
-  $: generateIcon = `
-    <svg
-      viewbox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      ${(role !== 'presentation' && title)
-        ? `<desc>${title}</desc>`
-        : ''
-      }
-      ${icons[id]}
-    </svg>
-  `
 </script>
 
 <style lang="scss">
@@ -77,5 +62,5 @@
     {margin ? `space-${margin}` : ''}
   "
 >
-  {@html generateIcon}
+  {@html svg}
 </span>
