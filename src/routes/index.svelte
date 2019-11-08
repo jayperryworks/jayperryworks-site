@@ -46,7 +46,6 @@
 
 <header>
   <h1>{content.intro}</h1>
-  <Icon id="menu" />
   {#if favoriteThings.length > 0}
     <p>{subhead}</p>
   {/if}

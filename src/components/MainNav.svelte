@@ -51,7 +51,7 @@
       <ul
         class="
           display-inline-block
-          hide-below@small
+          hide-below@xsmall
           list-undecorated
           margin-x-between
         "
@@ -83,7 +83,11 @@
       <!-- small-screen menu -->
       <Dropdown
         label="Menu"
-        class="hide-above@small padding-top-narrow"
+        class="
+          hide-above@small
+          padding-top-narrow
+          margin-left-narrow
+        "
       >
         <ul class="list-undecorated">
           {#each items as item, index}

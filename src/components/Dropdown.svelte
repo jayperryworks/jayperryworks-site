@@ -5,6 +5,8 @@
 
   let classes = ''
   export {classes as class}
+
+  let open = false
 </script>
 
 <style lang="scss">
@@ -52,49 +54,50 @@
     display: block;
     min-width: 10rem;
     z-index: positioning.z('top');
+  }
 
-    details[open] & {
-      $pointer-size: 0.48rem;
+  details[open] .dropdown {
+    $pointer-size: 0.48rem;
 
-      @include border.add($style: solid);
-      @include border.radius();
-      @include special_effects.shadow();
+    @include border.add($style: solid);
+    @include border.radius();
+    @include special_effects.shadow();
+    position: absolute;
+    right: 0;
+
+    &::before,
+    &::after {
+      border-width: 0 #{$pointer-size} #{$pointer-size};
+      content: ' ';
+      display: block;
       position: absolute;
-      right: 0;
+      right: spacing.get('narrow');
+      border-style: solid;
+      height: 0;
+      width: 0;
+    }
 
-      &::before,
-      &::after {
-        border-width: 0 #{$pointer-size} #{$pointer-size};
-        content: ' ';
-        display: block;
-        position: absolute;
-        right: spacing.get('narrow');
-        border-style: solid;
-        height: 0;
-        width: 0;
-      }
+    &::before {
+      border-color: transparent transparent #{color.get('border')};
+      border-color: transparent transparent #{color.custom-prop('border')};
+      top: ($pointer-size * -1);
+    }
 
-      &::before {
-        border-color: transparent transparent #{color.get('border')};
-        border-color: transparent transparent #{color.custom-prop('border')};
-        top: ($pointer-size * -1);
-      }
-
-      &::after {
-        border-color: transparent transparent #{color.get('bg')};
-        border-color: transparent transparent #{color.custom-prop('bg')};
-        top: (($pointer-size - 0.065rem) * -1); // 0.65rem = approx. 1px
-      }
+    &::after {
+      border-color: transparent transparent #{color.get('bg')};
+      border-color: transparent transparent #{color.custom-prop('bg')};
+      top: (($pointer-size - 0.065rem) * -1); // 0.65rem = approx. 1px
     }
   }
 </style>
 
-<details class="{classes}">
+<details {open} class="{classes}">
   <summary
     class="t-font-accent t-scale-zeta"
     aria-haspopup="menu"
   >
-    <span>
+    <Icon id="menu" margin="right" />
+    <span class="hide-visually-above@xsmall">
       {label}
     </span>
     <Icon id="arrowDown" margin="left" size="small" />

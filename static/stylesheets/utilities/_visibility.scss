@@ -5,19 +5,20 @@
 // sass-lint:disable class-name-format
 // -> allow '@[state]' suffixes
 
+@use 'bourbon';
 @use '../config/breakpoints';
 
 .hide-visually {
-  visibility: hidden;
+  @include bourbon.hide-visually();
 }
 
 // hide but keep it accessible
 @include breakpoints.suffix('.hide-visually-above') {
-  visibility: hidden;
+  @include bourbon.hide-visually();
 }
 
 @include breakpoints.suffix('.show-visually-above') {
-  visibility: visible;
+  @include bourbon.hide-visually('unhide');
 }
 
 // see hidden-[below|above]@[size] in _breakpoints for media-query versions
