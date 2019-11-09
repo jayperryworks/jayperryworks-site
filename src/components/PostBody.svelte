@@ -1,10 +1,12 @@
 <script>
+  import Caption from './Caption.svelte'
   import Figure from './Figure.svelte'
-  import ImageGallery from './ImageGallery.svelte'
+  import Gallery from './Gallery.svelte'
   import Note from './Note.svelte'
   import Passage from './Passage.svelte'
-  import Wrapper from './Wrapper.svelte'
   import Table from './Table.svelte'
+  import Wrapper from './Wrapper.svelte'
+  import ResponsiveImage from './ResponsiveImage.svelte'
 
   export let sections
 
@@ -65,12 +67,22 @@
 
     {#if section.type == 'gallery'}
       <Wrapper width={getWidth(section.prominence)}>
-        <ImageGallery
-          size={section.size}
-          images={section.images}
+        <Figure
           caption={section.caption}
           credit={section.credit}
-        />
+        >
+          <Gallery size={section.size}>
+            {#each section.images as image}
+              <li>
+                <ResponsiveImage
+                  sources={image.sources}
+                  alt={image.alt}
+                  border={image.border}
+                />
+              </li>
+            {/each}
+          </Gallery>
+        </Figure>
       </Wrapper>
     {/if}
 

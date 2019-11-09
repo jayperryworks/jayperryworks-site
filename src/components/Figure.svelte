@@ -16,7 +16,9 @@
 </style>
 
 <figure class={classes}>
-  <ResponsiveImage {sources} {alt} {border} />
+  <slot>
+    <ResponsiveImage {sources} {alt} {border} />
+  </slot>
   {#if caption || credit}
     <Caption {caption} {credit} />
   {/if}

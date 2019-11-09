@@ -20,6 +20,7 @@ body:
       But that's why I always look forward to driving home. Part of me loves the energy and complexity of cities but the rest of me prefers open space and quiet. If I stay away from the mountains too long, I start to feel lost.
 
   - type: figure
+    prominence: large
     sources:
       - path: "images/uploads/2014-blog-homeward-IMG_3799.JPG"
     alt: "Mountains"
@@ -34,6 +35,7 @@ body:
 
   - type: gallery
     size: large
+    prominence: large
     images:
       - sources:
           - path: "images/uploads/2014-blog-homeward-IMG_3804.JPG"
