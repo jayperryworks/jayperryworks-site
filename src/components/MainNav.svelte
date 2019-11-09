@@ -1,9 +1,10 @@
 <script>
   import arrow from 'icons/arrow-down.svg'
   import menu from 'icons/menu.svg'
+  import Icon from './Icon.svelte'
+
   import Bookend from './Bookend.svelte'
   import Dropdown from './Dropdown.svelte'
-  import Icon from './Icon.svelte'
   import LogoJP from './logos/LogoJP.svelte'
 
 	export let segment;
