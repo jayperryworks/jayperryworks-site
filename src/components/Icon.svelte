@@ -10,6 +10,8 @@
 </script>
 
 <style lang="scss">
+  @use 'config/scale';
+
   .icon {
     $size: 1em;
     --icon-size: #{$size};
@@ -38,11 +40,11 @@
   }
 
   .small {
-    --icon-size: 0.83em;
+    --icon-size: #{scale.get(-2, $unit: 1em)};
   }
 
   .large {
-    --icon-size: 1.2em;
+    --icon-size: #{scale.get(1, $unit: 1em)};
   }
 
   .space-right {

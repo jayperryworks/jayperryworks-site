@@ -72,15 +72,3 @@
     display: block !important;
   }
 }
-
-// --- show/hide for touch
-
-.touch .show\@touch,
-.no-touch .hide\@no-touch {
-  display: block !important;
-}
-
-.touch .hide\@no-touch,
-.no-touch .show\@touch {
-  display: none !important;
-}

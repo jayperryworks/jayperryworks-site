@@ -90,7 +90,7 @@
         class="
           hide-above@small
           padding-top-narrow
-          margin-left-narrow
+          margin-left
         "
       >
         <span

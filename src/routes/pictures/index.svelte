@@ -11,10 +11,12 @@
 
 <script>
   import { format } from 'date-fns'
+  import arrow from 'icons/arrow-right.svg'
   import PageTitle from '@/components/PageTitle.svelte'
   import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
   import Gallery from '@/components/Gallery.svelte'
   import ResponsiveImage from '@/components/ResponsiveImage.svelte'
+  import Button from '@/components/Button.svelte'
 
   export let pictures
 
@@ -40,7 +42,12 @@
 >
   <div slot="blurb" class="padding-bottom-wide">
     <h1 class="padding-bottom-narrow">Recent work</h1>
-    <a href="https://jayperry.etsy.com">More prints avaialble at <strong>Etsy</strong> &rsaquo;</a>
+    <Button
+      url="https://jayperry.etsy.com"
+      iconRight={arrow}
+    >
+      More prints avaialble at <strong>Etsy</strong>
+    </Button>
   </div>
 
   <div slot="body" class="overflow-hidden">
