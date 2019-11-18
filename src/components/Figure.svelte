@@ -2,7 +2,7 @@
   import ResponsiveImage from './ResponsiveImage.svelte'
   import Caption from './Caption.svelte'
 
-  export let sources, alt, caption, credit, border = false
+  export let sources = '', alt = '', caption, credit, border = false
 
   let classes = ''
   export { classes as class }

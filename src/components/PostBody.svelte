@@ -30,7 +30,7 @@
   }
 
   /* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
-  .section-type + .section-type {
+  .section-text + .section-text {
     padding-top: #{spacing.get()};
   }
 </style>
@@ -38,7 +38,7 @@
 <div class="body">
   {#each sections as section, index}
     {#if section.type == 'note'}
-      <div class="section-type">
+      <div class="section-text">
         <Wrapper>
           <Note html={section.html} />
         </Wrapper>
@@ -46,7 +46,7 @@
     {/if}
 
     {#if section.type == 'passage'}
-      <div class="section-type">
+      <div class="section-text">
         <Wrapper>
           <Passage html={section.html} lead={section == firstPassage} />
         </Wrapper>

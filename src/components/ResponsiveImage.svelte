@@ -9,7 +9,9 @@
   ]
 -->
 <script>
-  export let sources, alt, border
+  export let sources = '',
+    alt = '',
+    border = false
 
   $: srcset = sources.length > 0 && sources.splice(1, 1).map((source) => {
       if (source.size) {
@@ -31,7 +33,7 @@
 
 <img
   class="{classes} {border ? 'border border-solid' : ''}"
-  src={sources[0].path}
+  src={sources ? sources[0].path : ''}
   {srcset}
   alt={alt}
 >

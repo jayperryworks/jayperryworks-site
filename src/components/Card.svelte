@@ -2,10 +2,14 @@
   export let figureSize = 'default',
     el = 'figure',
     spacing = 'default',
-    breakpoint
+    breakpoint = false
 
   let classes = ''
   export {classes as class}
+
+  $: breakpointOverride = breakpoint
+    ? `style="--breakpoint: ${breakpoint}"`
+    : ''
 </script>
 
 <style lang="scss">
@@ -69,7 +73,7 @@
   }
 </style>
 
-<div class="overflow-hidden">
+<div class="overflow-hidden" {breakpointOverride}>
   {#if el == 'figure'}
     <figure
       class="card gutter-wrapper {classes}"
