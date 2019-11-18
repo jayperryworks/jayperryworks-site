@@ -46,7 +46,7 @@
     <div slot="blurb" class="padding-bottom-wide">
       <h1 class="padding-bottom-narrow">Recent work</h1>
       <Button
-        url="https://jayperry.etsy.com"
+        href="https://jayperry.etsy.com"
         iconRight={arrow}
       >
         More prints avaialble at <strong>Etsy</strong>

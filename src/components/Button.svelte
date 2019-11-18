@@ -1,7 +1,8 @@
 <script>
   import Icon from './Icon.svelte'
 
-  export let url,
+  export let href,
+    target = '',
     role = '',
     size = '',
     iconLeft = '',
@@ -120,11 +121,12 @@
 </style>
 
 <a
-  href={url}
+  {href}
+  {rel}
+  {target}
   class="button {role} {size} {classes}"
   class:has-icon-left={iconLeft}
   class:has-icon-right={iconRight}
-  {rel}
 >
   {#if iconLeft}
     <Icon

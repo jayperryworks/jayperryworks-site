@@ -24,14 +24,18 @@
 
 <script>
   import { format } from 'date-fns'
-  import PageTitle from '@/components/PageTitle.svelte'
+  import Cover from '@/components/Cover.svelte'
+  import Gallery from '@/components/Gallery.svelte'
   import MainNav from '@/components/MainNav.svelte'
   import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
-  import Gallery from '@/components/Gallery.svelte'
-  import Card from '@/components/Card.svelte'
+  import PageTitle from '@/components/PageTitle.svelte'
   import Passage from '@/components/Passage.svelte'
+  import PrintEdition from '@/components/PrintEdition.svelte'
+  import Wrapper from '@/components/Wrapper.svelte'
 
   export let post, date
+
+  let metadataBreakpoint = 'xsmall'
 </script>
 
 <style>
@@ -51,20 +55,64 @@
       class="padding-x-outside padding-y-xwide"
       data-theme="reverse"
     >
-      <img src="{post.cover[0].path}" alt="{post.title}">
+      <Cover
+        sources={post.cover}
+        alt={post.title}
+      />
 
       <!-- Title, media, size info -->
-      <h1>{post.title}</h1>
-      <time datetime='{format(new Date(date.year), 'yyyy')}'>
-        {format(new Date(date.year), 'yyyy')}
-      </time>
-      <p>{post.format}{#if post.width && post.height}&nbsp;&bull; {post.width}" x {post.height}"{/if}</p>
+      <Wrapper
+        width="narrow"
+        class="t-align-center padding-top"
+      >
+        <h1 class="
+          t-font-accent
+          t-weight-bold
+          t-scale-epsilon
+          display-inline-block@{metadataBreakpoint}
+          padding-bottom-xnarrow
+          no-padding-bottom@{metadataBreakpoint}
+        ">{post.title}</h1>
+        <time
+          class="
+            t-font-accent
+            t-scale-epsilon
+            c-fg-tertiary
+            display-inline-block
+            padding-left-narrow
+            margin-left-narrow
+            border-left@{metadataBreakpoint}
+          "
+          datetime="{format(new Date(date.year), 'yyyy')}"
+        >
+          {format(new Date(date.year), 'yyyy')}
+        </time>
+        <p class="
+            t-font-accent
+            t-scale-epsilon
+            c-fg-tertiary
+            display-inline-block
+            padding-left-narrow
+            margin-left-narrow
+            border-left
+          ">
+            {post.format}{#if post.width && post.height}&nbsp;&bull; {post.width}" x {post.height}"{/if}
+          </p>
+      </Wrapper>
     </header>
 
     {#if post.intro}
       <!-- Intro -->
-      <OutdentedBlurb blurbWidth={10} class="padding-x-outside padding-y-xwide">
-        <h2 slot="blurb" class="intro-heading">Backstory</h2>
+      <OutdentedBlurb
+        blurbWidth={12}
+        class="padding-x-outside padding-y-xwide"
+      >
+        <h2
+          slot="blurb"
+          class="intro-heading"
+        >
+          Backstory
+        </h2>
         <div slot="body">
           <Passage html={post.intro} />
         </div>
@@ -73,26 +121,19 @@
 
     {#if post.editions}
       <!-- Editions -->
-      <section class="padding-x-outside padding-y-xwide border-seam-top">
-        <h2 class="t-align-center@small">Available editions</h2>
-        {#each post.editions as edition}
-          <ul>
+      <section class="
+        padding-x-outside
+        padding-y-xwide
+        border-seam-top
+      ">
+        <h2 class="t-align-center@small padding-bottom-wide">Available editions</h2>
+          <Gallery size="large" gutter="wide">
+          {#each post.editions as edition}
             <li>
-              <img src="{edition.photo[0].path}" alt="{edition.name}">
-              <aside>
-                <h3>{edition.name}</h3>
-                <dl>
-                  <dt>Type</dt>
-                  <dd>{edition.type}</dd>
-                  <dt>Size</dt>
-                  <dd>{edition.width}" x {edition.height}"</dd>
-                  <dt>Paper size</dt>
-                  <dd>{edition.width + edition.border}" x {edition.height + edition.border}"</dd>
-                </dl>
-              </aside>
+              <PrintEdition {edition} />
             </li>
-          </ul>
-        {/each}
+          {/each}
+        </Gallery>
       </section>
     {/if}
   </article>

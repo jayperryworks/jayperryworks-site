@@ -33,7 +33,7 @@
         width="wide"
         class="t-align-center@small padding-bottom-wide"
       >
-        <h1>{content.title}</h1>
+        <h1 class="t-align-center@small">{content.title}</h1>
         {#if content.cover}
           <Cover
             class="padding-top-wide"

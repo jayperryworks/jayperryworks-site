@@ -100,5 +100,5 @@
 </style>
 
 <ul class="gallery {size}" style="--gutter: var(--space-{gutter})">
-  <slot {size}>Add GalleryItem components here</slot>
+  <slot {size}>Add list items here</slot>
 </ul>

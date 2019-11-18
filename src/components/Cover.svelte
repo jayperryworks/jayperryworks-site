@@ -8,11 +8,17 @@
 </script>
 
 <style>
+  .container {
+    text-align: center;
+    font-size: 0;
+  }
+
   .container :global(img) {
     display: block;
     margin: 0 auto;
     max-height: 600px;
     max-height: 80vh;
+    font-size: 1rem;
   }
 </style>
 
