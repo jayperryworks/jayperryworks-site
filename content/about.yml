@@ -32,6 +32,7 @@ body:
       I'm fascinated by complexity, patterns, and memory. I love reading about geology, palaeontology, and astronomy because I love the perspective of "deep time" you get from trying to imagine things that happen over millions of years. Many of my paintings begin simply with things I see on walks around my neighborhood, but as I stop to look at a rocky outcrop or a creekbed, I like to imagine how they might have formed and changed over the eons. In some sense, any innocuous pebble or leaf on the roadside can become alien and extraordinary if you can just see deep enough into its history.
 
   - type: figure
+    prominence: large
     sources:
       - path: "/images/about/DSCF7762.jpg"
     alt: "My Shelf of Random Interesting Things"

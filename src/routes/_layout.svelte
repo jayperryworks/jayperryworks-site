@@ -1,8 +1,7 @@
 <script>
-	import MainNav from '@/components/MainNav.svelte'
   import MainFooter from '@/components/MainFooter.svelte'
 
-	export let segment;
+	export let segment
 </script>
 
 <style lang="scss" global>
@@ -39,8 +38,7 @@
   }
 </style>
 
-<MainNav {segment}/>
-<main id="main-wrapper">
+<div id="main-wrapper">
   <slot></slot>
-</main>
+</div>
 <MainFooter/>

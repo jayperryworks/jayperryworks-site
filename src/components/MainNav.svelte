@@ -7,7 +7,8 @@
   import Dropdown from './Dropdown.svelte'
   import LogoJP from './logos/LogoJP.svelte'
 
-	export let segment;
+	export let segment, theme = false
+
   let items = [
     {
       label: 'Prints &amp; paintings',
@@ -37,7 +38,10 @@
   }
 </style>
 
-<nav class="padding-x-outside">
+<nav
+  class="padding-x-outside"
+  data-theme={theme || ''}
+>
   <Bookend
     breakpoint="none"
     align="top"

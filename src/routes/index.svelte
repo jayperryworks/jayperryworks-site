@@ -14,8 +14,11 @@
 
 <script>
   import { onDestroy } from 'svelte'
-  import PageTitle from '@/components/PageTitle.svelte'
+  import arrow from 'icons/arrow-right.svg'
+  import Button from '@/components/Button.svelte'
   import Icon from '@/components/Icon.svelte'
+  import MainNav from '@/components/MainNav.svelte'
+  import PageTitle from '@/components/PageTitle.svelte'
 
   export let content
   let favoriteThings = []
@@ -44,13 +47,21 @@
 
 <PageTitle />
 
-<header>
+<MainNav />
+
+<section>
   <h1>{content.intro}</h1>
   {#if favoriteThings.length > 0}
     <p>{subhead}</p>
   {/if}
-  <a rel=prefetch href="about">A bit more about me</a>
-</header>
+  <Button
+    prefetch={true}
+    href="about"
+    iconRight={arrow}
+  >
+    A bit more about me
+  </Button>
+</section>
 
 <nav>
   <ul>

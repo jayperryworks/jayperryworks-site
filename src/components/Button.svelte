@@ -5,10 +5,13 @@
     role = '',
     size = '',
     iconLeft = '',
-    iconRight = ''
+    iconRight = '',
+    prefetch = false
 
   let classes = ''
   export { classes as class }
+
+  $: rel = prefetch ? 'prefetch' : ''
 </script>
 
 <style lang="scss">
@@ -121,6 +124,7 @@
   class="button {role} {size} {classes}"
   class:has-icon-left={iconLeft}
   class:has-icon-right={iconRight}
+  {rel}
 >
   {#if iconLeft}
     <Icon
