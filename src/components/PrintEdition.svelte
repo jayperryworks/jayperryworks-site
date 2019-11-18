@@ -75,12 +75,16 @@
 </style>
 
 <Card>
+
+  <!-- edition photo -->
   <div slot="figure">
     <ResponsiveImage
       sources={edition.photo}
       alt={titleize(edition.name)}
     />
   </div>
+
+  <!-- edition info -->
   <div
     slot="content"
     class="
@@ -89,15 +93,19 @@
     "
   >
     <div class="info gutter">
+
+      <!-- name -->
       <h3 class="
-        padding-bottom-xnarrow
         c-fg-tertiary
+        padding-bottom-xnarrow
       ">
         <strong class="
-          t-font-display
           c-fg-primary
+          t-font-display
         ">{titleize(edition.name)}</strong> {titleize(edition.type)} Print
       </h3>
+
+      <!-- metadata -->
       <dl class="stats">
         <div class="stats-group">
           <dt class="
@@ -122,6 +130,8 @@
         </div>
       </dl>
     </div>
+
+    <!-- purchase button -->
     <div class="gutter">
       <Button
         href={edition.url}

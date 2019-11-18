@@ -27,6 +27,7 @@
   import Cover from '@/components/Cover.svelte'
   import Gallery from '@/components/Gallery.svelte'
   import MainNav from '@/components/MainNav.svelte'
+  import Note from '@/components/Note.svelte'
   import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
   import PageTitle from '@/components/PageTitle.svelte'
   import Passage from '@/components/Passage.svelte'
@@ -36,10 +37,12 @@
   export let post, date
 
   let metadataBreakpoint = 'xsmall'
+
+  let blurb = `<p>“Giclee” is a term for high-quality digital prints. Mine are printed at Archival Arts in Baltimore on heavy, textured, acid-free cotton rag paper, using archival, pigment-based inks. All prints are individually signed and numbered.</p>`
 </script>
 
 <style>
-  .intro-heading {
+  .outdent-heading {
     margin-top: -0.1em;
   }
 </style>
@@ -109,7 +112,7 @@
       >
         <h2
           slot="blurb"
-          class="intro-heading"
+          class="outdent-heading padding-bottom-narrow"
         >
           Backstory
         </h2>
@@ -136,5 +139,18 @@
         </Gallery>
       </section>
     {/if}
+
+    <!-- About the edition note -->
+    <div class="padding-x-outside padding-y-xwide border-seam-top">
+      <OutdentedBlurb blurbWidth={18}>
+        <h2
+          slot="blurb"
+          class="outdent-heading"
+        >About Giclee prints</h2>
+        <div slot="body">
+          <Note html={blurb} />
+        </div>
+      </OutdentedBlurb>
+    </div>
   </article>
 </main>
