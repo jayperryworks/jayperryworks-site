@@ -37,7 +37,7 @@
   }).join(', ')
 </script>
 
-<style lang="scss">
+<style>
   footer {
     flex-shrink: 0;
   }

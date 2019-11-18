@@ -8,7 +8,7 @@
   export { classes as class }
 </script>
 
-<style lang="scss">
+<style type="text/scss">
   figure {
     margin: 0;
     text-align: center;

@@ -4,7 +4,7 @@
 	export let segment
 </script>
 
-<style lang="scss" global>
+<style type="text/scss" global>
   @use 'global';
   @use 'config/border';
   @use 'config/positioning';

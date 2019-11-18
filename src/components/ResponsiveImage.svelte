@@ -24,7 +24,7 @@
   export { classes as class }
 </script>
 
-<style lang="scss">
+<style type="text/scss">
   img {
     display: inline-block;
     max-width: 100%;

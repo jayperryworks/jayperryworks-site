@@ -18,7 +18,7 @@
   export let posts
 </script>
 
-<style lang="scss">
+<style type="text/scss">
   @use 'config/border';
 
   ul {

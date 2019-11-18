@@ -6,7 +6,7 @@
   }
 </script>
 
-<style lang="scss">
+<style type="text/scss">
   @use 'config/border';
   @use 'config/breakpoints';
   @use 'config/color';

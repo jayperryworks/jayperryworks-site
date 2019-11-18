@@ -30,67 +30,71 @@
     }
   }
 
-  // h1,
-  // h2,
-  // h3,
-  // h4,
-  // h5,
-  // h6 {
-  //   .t-content > p + &,
-  //   .t-content > ul + &,
-  //   .t-content > ol + & {
-  //     margin-top: 1.5em;
-  //   }
-
-  //   .t-content > & + p,
-  //   .t-content > & + ul,
-  //   .t-content > & + ol {
-  //     margin-top: 0.5em;
-  //   }
-  // }
-
   .t-content {
     > * + * {
       margin-top: 1em;
     }
 
-    // > hr {
-    //   margin: 1.2em 0;
-    //   border: 0;
-    //   height: 0;
-    //   @include border.add('top');
-    // }
+    // --- headings
+    :global(h1),
+    :global(h2),
+    :global(h3),
+    :global(h4),
+    :global(h5),
+    :global(h6) {
+      :global(p) + &,
+      :global(ul) + &,
+      :global(ol) + & {
+        margin-top: 1.5em;
+      }
+
+      & + :global(p),
+      & + :global(ul),
+      & + :global(ol) {
+        margin-top: 0.5em;
+      }
+    }
+
+    // horizontal rules
+    // -> created for footnotes
+    > :global(hr) {
+      margin: 1.2em 0;
+      border: 0;
+      height: 0;
+      @include border.add('top');
+    }
   }
 
-  // .footnotes {
-  //   @include border.add('top');
-  //   @include color.add-fg('tertiary');
-  //   font-size: type.scale('zeta');
-  //   margin-bottom: space();
-  //   margin-top: space();
-  //   padding-top: space();
+  // footnotes
+  :global(.footnotes) {
+    @include border.add('top');
+    @include color.add-fg('tertiary');
+    font-size: type.scale('zeta');
+    margin-bottom: space();
+    margin-top: space();
+    padding-top: space();
 
-  //   li,
-  //   p {
-  //     @include color.add-fg('tertiary');
-  //     @include font-font-accent;
-  //     font-size: type.scale('zeta');
-  //     letter-spacing: 0.02em;
-  //   }
-  // }
+    :global(li),
+    :global(p) {
+      @include color.add-fg('tertiary');
+      @include type.font-accent;
+      font-size: type.scale('zeta');
+      letter-spacing: 0.02em;
+    }
+  }
 
-  // .footnote {
-  //   @include border.add($style: 'secondary');
-  //   @include border.radius;
-  //   @include font-font-accent;
-  //   background-color: transparent;
-  //   border-color: inherit;
-  //   color: inherit;
-  //   display: inline-block;
-  //   line-height: 1;
-  //   margin-left: 0.25em;
-  //   padding: 0.25em 1em;
-  // }
+  :global(.footnote) {
+    @include border.add($style: 'secondary');
+    @include border.radius;
+    @include type.font-accent;
+    background-color: transparent;
+    border-color: inherit;
+    color: inherit;
+    display: inline-block;
+    line-height: 1;
+    margin-left: 0.25em;
+    padding: 0.25em 1em;
+  }
 </style>
 
 <div class="t-content {classes}" class:lead>

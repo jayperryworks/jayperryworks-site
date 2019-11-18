@@ -9,7 +9,7 @@
   export { classes as class }
 </script>
 
-<style lang="scss">
+<style type="text/scss">
   @use 'config/scale';
 
   .icon {

@@ -2,7 +2,7 @@
   export let size, gutter = 'xnarrow'
 </script>
 
-<style lang="scss">
+<style type="text/scss">
   @use 'config/spacing';
   @use 'config/layout_width';
   @use 'config/breakpoints';

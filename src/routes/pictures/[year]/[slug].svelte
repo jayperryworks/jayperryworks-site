@@ -26,12 +26,18 @@
   import { format } from 'date-fns'
   import PageTitle from '@/components/PageTitle.svelte'
   import MainNav from '@/components/MainNav.svelte'
+  import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
+  import Gallery from '@/components/Gallery.svelte'
+  import Card from '@/components/Card.svelte'
+  import Passage from '@/components/Passage.svelte'
 
-  export let post;
-  export let date;
+  export let post, date
 </script>
 
 <style>
+  .intro-heading {
+    margin-top: -0.1em;
+  }
 </style>
 
 <PageTitle title="{post.title}" />
@@ -39,11 +45,15 @@
 <MainNav segment="pictures" theme="reverse" />
 <main>
   <article>
+
+    <!-- Cover image -->
     <header
       class="padding-x-outside padding-y-xwide"
       data-theme="reverse"
     >
       <img src="{post.cover[0].path}" alt="{post.title}">
+
+      <!-- Title, media, size info -->
       <h1>{post.title}</h1>
       <time datetime='{format(new Date(date.year), 'yyyy')}'>
         {format(new Date(date.year), 'yyyy')}
@@ -52,14 +62,19 @@
     </header>
 
     {#if post.intro}
-      <div class='content'>
-        {@html post.intro}
-      </div>
+      <!-- Intro -->
+      <OutdentedBlurb blurbWidth={10} class="padding-x-outside padding-y-xwide">
+        <h2 slot="blurb" class="intro-heading">Backstory</h2>
+        <div slot="body">
+          <Passage html={post.intro} />
+        </div>
+      </OutdentedBlurb>
     {/if}
 
     {#if post.editions}
-      <section>
-        <h2>Available editions</h2>
+      <!-- Editions -->
+      <section class="padding-x-outside padding-y-xwide border-seam-top">
+        <h2 class="t-align-center@small">Available editions</h2>
         {#each post.editions as edition}
           <ul>
             <li>

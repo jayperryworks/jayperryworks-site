@@ -22,14 +22,14 @@
   }
 </script>
 
-<style lang="scss">
+<style type="text/scss">
   @use "config/spacing";
 
   .body > :global(* + *) {
     padding-top: #{spacing.get('wide')};
   }
 
-  /* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
+  // when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text
   .section-text + .section-text {
     padding-top: #{spacing.get()};
   }

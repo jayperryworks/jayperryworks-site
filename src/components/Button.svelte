@@ -14,7 +14,7 @@
   $: rel = prefetch ? 'prefetch' : ''
 </script>
 
-<style lang="scss">
+<style type="text/scss">
   @use "config/border";
   @use "config/color";
   @use "config/type";

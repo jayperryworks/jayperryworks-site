@@ -31,7 +31,7 @@
   ]
 </script>
 
-<style lang="scss">
+<style>
   .logo {
     display: block;
     border: none;

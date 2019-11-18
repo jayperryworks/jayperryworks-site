@@ -12,7 +12,7 @@
     : ''
 </script>
 
-<style lang="scss">
+<style type="text/scss">
   @use 'config/type';
 
   $breakpoint: 880px; // use px here because rem causes jank due to root type scaling

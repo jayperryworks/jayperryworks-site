@@ -7,7 +7,7 @@
   export { classes as class }
 </script>
 
-<style lang="scss">
+<style>
   .container :global(img) {
     display: block;
     margin: 0 auto;

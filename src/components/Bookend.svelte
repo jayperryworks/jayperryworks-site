@@ -9,7 +9,7 @@
   $: horizontalClass = breakpoint == 'none' ? 'horizontal' : `horizontal@${breakpoint}`
 </script>
 
-<style lang="scss">
+<style type="text/scss">
   @use 'config/breakpoints';
   @use 'bourbon';
 

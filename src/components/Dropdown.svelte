@@ -7,7 +7,7 @@
   let open = false
 </script>
 
-<style lang="scss">
+<style type="text/scss">
   @use 'config/border';
   @use 'config/color';
   @use 'config/positioning';
@@ -23,16 +23,15 @@
     cursor: pointer;
     list-style: none;
 
-    /* remove marker added by chrome */
+    // remove marker added by chrome
     &::-webkit-details-marker {
       display: none;
     }
 
     details[open] & {
-      /* add an invisible overlay to whole screen so you can click anywhere else to dismiss the dropdown
-        -> cheers to https://github.com/muan/details-on-details
-        -> https://github.com/github/details-menu-element
-      */
+      // add an invisible overlay to whole screen so you can click anywhere else to dismiss the dropdown
+      // -> cheers to https://github.com/muan/details-on-details
+      // -> https://github.com/github/details-menu-element
       &::before {
         cursor: default;
         content: ' ';
