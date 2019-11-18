@@ -6,10 +6,6 @@
 
   let classes = ''
   export {classes as class}
-
-  $: breakpointOverride = breakpoint
-    ? `style="--breakpoint: ${breakpoint}"`
-    : ''
 </script>
 
 <style type="text/scss">
@@ -73,7 +69,10 @@
   }
 </style>
 
-<div class="overflow-hidden" {breakpointOverride}>
+<div
+  class="overflow-hidden"
+  style={breakpoint ? `--breakpoint: ${breakpoint};` : ''}
+>
   {#if el == 'figure'}
     <figure
       class="card gutter-wrapper {classes}"

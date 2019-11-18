@@ -11,7 +11,9 @@
 <script>
   export let sources = '',
     alt = '',
-    border = false
+    border = false,
+    contain = false,
+    cover = false
 
   $: srcset = sources.length > 0 && sources.splice(1, 1).map((source) => {
       if (source.size) {
@@ -28,12 +30,23 @@
   img {
     display: inline-block;
     max-width: 100%;
+    object-fit: scale-down;
+  }
+
+  .contain {
+    object-fit: contain;
+  }
+
+  .cover {
+    object-fit: cover;
   }
 </style>
 
 <img
-  class="{classes} {border ? 'border border-solid' : ''}"
+  class="{border ? 'border border-solid' : ''} {classes}"
+  class:contain
+  class:cover
   src={sources ? sources[0].path : ''}
   {srcset}
-  alt={alt}
+  {alt}
 >

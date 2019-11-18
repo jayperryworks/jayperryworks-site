@@ -142,7 +142,7 @@
 
     <!-- About the edition note -->
     <div class="padding-x-outside padding-y-xwide border-seam-top">
-      <OutdentedBlurb blurbWidth={18}>
+      <OutdentedBlurb blurbWidth={20}>
         <h2
           slot="blurb"
           class="outdent-heading"

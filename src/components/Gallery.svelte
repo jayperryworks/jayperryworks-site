@@ -71,12 +71,11 @@
     position: relative;
     vertical-align: top;
 
-    /*
-      fallback fluid sizing method using a calc() hack
-      -> allows grid to be somewhat responsive without media queries
-      -> mainly for IE and old browsers
-      -> https://www.sitepoint.com/responsive-css-patterns-without-media-queries/
-    */
+
+    // fallback fluid sizing method using a calc() hack
+    // -> allows grid to be somewhat responsive without media queries
+    // -> mainly for IE and old browsers
+    // -> https://www.sitepoint.com/responsive-css-patterns-without-media-queries/
     max-width: $max-percentage;
     max-width: var(--max-percentage);
     min-width: $min-percentage;
@@ -84,9 +83,7 @@
     width: calc((#{$breakpoint} - 100%) * 1000);
     width: calc((var(--breakpoint) - 100%) * 1000);
 
-    @supports (display: grid) and (display: flex) {
-      align-items: flex-start;
-      display: flex;
+    @supports (display: grid) {
       max-width: layout_width.get();
       min-width: auto;
       padding: 0;

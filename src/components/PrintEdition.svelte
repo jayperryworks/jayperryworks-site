@@ -3,7 +3,7 @@
   import arrow from 'icons/arrow-right.svg'
   import Button from '@/components/Button.svelte'
   import Card from '@/components/Card.svelte'
-  import ResponsiveImage from '@/components/ResponsiveImage.svelte'
+  import FluidAspectImage from '@/components/FluidAspectImage.svelte'
 
   export let edition
 </script>
@@ -78,9 +78,10 @@
 
   <!-- edition photo -->
   <div slot="figure">
-    <ResponsiveImage
+    <FluidAspectImage
       sources={edition.photo}
       alt={titleize(edition.name)}
+      cover
     />
   </div>
 
