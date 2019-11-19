@@ -1,5 +1,6 @@
 <script>
-  export let html, lead
+  export let html,
+    lead = false
 
   let classes = ''
   export { classes as class }

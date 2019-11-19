@@ -24,6 +24,27 @@ export function get(req, res, next) {
     data.intro = render(data.intro)
   }
 
+  // grab info about the print editions, if there are any
+  if (data.editions) {
+    let info = yaml.safeLoad(
+      fs.readFileSync('content/pictures.yml', 'utf-8')
+    )
+
+    // get unique edition types for this picture, e.g. 'giclee'
+    // -> https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates#14438954
+    const types = [...new Set(data.editions.map(edition => edition.type))]
+
+    // get the descriptions for each type of print and add to the data object
+    data.printDescriptions = types.map(type => {
+      const note = info.printDescriptions.find(item => item.type == type)
+
+      return {
+        type: note.type,
+        description: render(note.description) // render the markdown for each
+      }
+    })
+  }
+
   res.writeHead(200, header)
   res.end(JSON.stringify(data))
 }

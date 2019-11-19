@@ -1,7 +1,10 @@
 <script>
   import Figure from './Figure.svelte'
 
-  export let sources, alt, caption, credit
+  export let sources,
+    alt = '',
+    caption = false,
+    credit = false
 
   let classes = ''
   export { classes as class }

@@ -24,6 +24,7 @@
 
 <script>
   import { format } from 'date-fns'
+  import { titleize } from '@/utils/stringHelpers.js'
   import Cover from '@/components/Cover.svelte'
   import Gallery from '@/components/Gallery.svelte'
   import MainNav from '@/components/MainNav.svelte'
@@ -37,8 +38,6 @@
   export let post, date
 
   let metadataBreakpoint = 'xsmall'
-
-  let blurb = `<p>“Giclee” is a term for high-quality digital prints. Mine are printed at Archival Arts in Baltimore on heavy, textured, acid-free cotton rag paper, using archival, pigment-based inks. All prints are individually signed and numbered.</p>`
 </script>
 
 <style>
@@ -141,16 +140,18 @@
     {/if}
 
     <!-- About the edition note -->
-    <div class="padding-x-outside padding-y-xwide border-seam-top">
-      <OutdentedBlurb blurbWidth={20}>
-        <h2
-          slot="blurb"
-          class="outdent-heading"
-        >About Giclee prints</h2>
-        <div slot="body">
-          <Note html={blurb} />
-        </div>
-      </OutdentedBlurb>
-    </div>
+    {#each post.printDescriptions as note}
+      <aside class="padding-x-outside padding-y-xwide border-seam-top" id="about-{note.type}">
+        <OutdentedBlurb blurbWidth={20}>
+          <h2
+            slot="blurb"
+            class="outdent-heading"
+          >About {titleize(note.type)} prints</h2>
+          <div slot="body">
+            <Note html={note.description} />
+          </div>
+        </OutdentedBlurb>
+      </aside>
+    {/each}
   </article>
 </main>
