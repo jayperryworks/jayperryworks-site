@@ -6,14 +6,16 @@
   let classes = ''
   export {classes as class}
 
-  $: horizontalClass = breakpoint == 'none' ? 'horizontal' : `horizontal@${breakpoint}`
+  $: horizontalClass = breakpoint == 'none'
+    ? 'horizontal'
+    : `horizontal@${breakpoint}`
 </script>
 
 <style type="text/scss">
   @use 'config/breakpoints';
   @use 'bourbon';
 
-  .container {
+  .bookend {
     display: block;
     position: relative;
   }
@@ -82,11 +84,20 @@
 
 </style>
 
-<div class="container {horizontalClass} {classes}" class:align-top="{align === 'top'}">
-  <div class="item left" class:fill="{fillSide === 'left'}">
+<div
+  class="bookend {horizontalClass} {classes}"
+  class:align-top="{align === 'top'}"
+>
+  <div
+    class="item left"
+    class:fill="{fillSide === 'left' || fillSide === 'both'}"
+  >
     <slot name="left"></slot>
   </div>
-  <div class="item right" class:fill="{fillSide === 'right'}">
+  <div
+    class="item right"
+    class:fill="{fillSide === 'right' || fillSide === 'both'}"
+  >
     <slot name="right"></slot>
   </div>
 </div>

@@ -1,7 +1,7 @@
 <script>
-  export let figureSize = 'default',
+  export let figureSize = false,
     el = 'figure',
-    spacing = 'default',
+    spacing = false,
     breakpoint = false
 
   let classes = ''
@@ -41,7 +41,6 @@
   }
 
   .content {
-    max-width: 100%;
     min-width: (100% - $figure-w);
     min-width: calc(100% - var(--figure-width));
     width: 100%; // fallback value if calc() isn't supported
@@ -75,8 +74,13 @@
 >
   {#if el == 'figure'}
     <figure
-      class="card gutter-wrapper {classes}"
-      class:small={figureSize !== 'default'}
+      class="
+        card
+        gutter-wrapper
+        {spacing ? `gutter-${spacing}` : ''}
+        {figureSize || ''}
+        {classes}
+      "
       style={breakpoint ? `--breakpoint: ${breakpoint}` : ''}
     >
       <div class="figure gutter">
@@ -88,8 +92,13 @@
     </figure>
   {:else}
     <aside
-      class="card gutter-wrapper {classes}"
-      class:small={figureSize !== 'default'}
+      class="
+        card
+        gutter-wrapper
+        {spacing ? `gutter-${spacing}` : ''}
+        {figureSize || ''}
+        {classes}
+      "
       style={breakpoint ? `--breakpoint: ${breakpoint}` : ''}
     >
       <div class="figure gutter">

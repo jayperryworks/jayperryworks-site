@@ -1,6 +1,7 @@
 <script context="module">
   export async function preload({ params, query }) {
-    const { year, month, day, slug } = params
+    // get the post for this page using the date and slug params
+    const { year, slug } = params
     const response = await this.fetch(`pictures/${year}/${slug}.json`)
     const data = await response.json()
 
@@ -9,23 +10,19 @@
       return
     }
 
+    // grab the list of posts for the next/prev nav
     const list = await this.fetch('pictures.json')
     const listData = await list.json()
-
     const currentPost = listData.indexOf(
       listData.find(item => item.slug == slug)
     )
 
     return {
       post: data,
-      date: {
-        year,
-        month,
-        day
-      },
+      date: { year },
       nav: {
-        previous: listData[currentPost - 1] || false,
-        next: listData[currentPost + 1] || false
+        previous: listData[currentPost] || false,
+        next: listData[currentPost] || false
       }
     }
   }
@@ -34,14 +31,17 @@
 <script>
   import { format } from 'date-fns'
   import { titleize } from '@/utils/stringHelpers.js'
+  import Bookend from '@/components/Bookend.svelte'
   import Cover from '@/components/Cover.svelte'
   import Gallery from '@/components/Gallery.svelte'
   import MainNav from '@/components/MainNav.svelte'
+  import NextPrevThumbNav from '@/components/NextPrevThumbNav.svelte'
   import Note from '@/components/Note.svelte'
   import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
   import PageTitle from '@/components/PageTitle.svelte'
   import Passage from '@/components/Passage.svelte'
   import PrintEdition from '@/components/PrintEdition.svelte'
+  import ResponsiveImage from '@/components/ResponsiveImage.svelte'
   import Wrapper from '@/components/Wrapper.svelte'
 
   export let post, date, nav
@@ -154,7 +154,7 @@
         <OutdentedBlurb blurbWidth={20}>
           <h2
             slot="blurb"
-            class="outdent-heading"
+            class="outdent-heading padding-bottom-narrow"
           >About {titleize(note.type)} prints</h2>
           <div slot="body">
             <Note html={note.description} />
@@ -164,21 +164,6 @@
     {/each}
   </article>
   {#if nav.previous || nav.next}
-    <nav>
-      <ul>
-        {#each [nav.previous, nav.next] as item}
-          {#if item}
-            <li>
-              <a
-                rel="prefetch"
-                href={item.path}
-              >
-                {item.title}
-              </a>
-            </li>
-          {/if}
-        {/each}
-      </ul>
-    </nav>
+    <NextPrevThumbNav {nav} heading="More prints &amp; paintings" />
   {/if}
 </main>

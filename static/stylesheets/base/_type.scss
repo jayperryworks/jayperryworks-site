@@ -239,8 +239,10 @@ h6,
   text-transform: uppercase !important;
 }
 
-.t-leading-tight {
-  line-height: type.leading('tight') !important;
+@each $name, $size in type.$leading {
+  .t-leading-#{$name} {
+    line-height: type.leading($name) !important;
+  }
 }
 
 .t-link-undecorated {

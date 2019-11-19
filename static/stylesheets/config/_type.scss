@@ -75,13 +75,13 @@ $size-default: 1rem;
 
 // --- Leading ---
 
-$_leading: (
+$leading: (
   'tight': 1.2,
   'default': 1.7
 );
 
 @function leading($name) {
-  @return map-get($_leading, $name);
+  @return map-get($leading, $name);
 }
 
 // --- Fonts ---

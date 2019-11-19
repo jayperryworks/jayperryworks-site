@@ -45,8 +45,7 @@
 
 <footer class="
   c-bg-well
-  border-seam-top border-seam-top-offset
-  border-top border-solid
+  border-seam-top-offset
   padding-x-outside
 ">
   <div class="overflow-hidden">
