@@ -6,9 +6,10 @@
 </script>
 
 <style type="text/scss">
-  @use 'config/breakpoints' as bp;
   @use 'config/border';
+  @use 'config/breakpoints' as bp;
   @use 'config/scale';
+  @use 'config/spacing';
 
   $bp-layout: 'small';
   $bp-card: 'xsmall';
@@ -77,6 +78,20 @@
       }
     }
   }
+
+  .index-button {
+    display: inline-block;
+    padding-top: spacing.get('narrow');
+
+    @include bp.query('>xsmall') {
+      line-height: 1;
+      padding-top: 0;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-60%);
+    }
+  }
 </style>
 
 <nav class="c-bg-well
@@ -85,87 +100,109 @@
   border-top
   padding-x-outside
   padding-y-xwide
-  overflow-hidden
 ">
-  <h2 class="t-align-center@xsmall padding-bottom">
-    {heading}
-  </h2>
-  <Bookend
-    align="top"
-    breakpoint="small"
-    class="gutter-wrapper"
-    fillSide="both"
-  >
-    <div slot="left" class="gutter">
-      {#if nav.previous}
-        <a
-          class="
-            display-block
-            padding-narrow
-            wrapper left
-          "
-          rel="prefetch"
-          href={nav.previous.path}
-        >
-          <div class="
-            card
-            gutter-wrapper
-            gutter-narrow
-          ">
-            <div class="figure gutter">
-              <ResponsiveImage
-                sources={nav.previous.thumbnail}
-                alt={nav.previous.title}
-              />
-            </div>
-            <div class="content gutter">
-              <h3>Previous</h3>
-              <p class="
-                t-style-italic
-                t-leading-tight
-                padding-top-xnarrow
-                c-fg-tertiary
-              ">{nav.previous.title}</p>
-            </div>
-          </div>
-        </a>
-      {/if}
-    </div>
-    <div slot="right" class="gutter">
-      {#if nav.next}
-        <a
-          class="
-            display-block
-            padding-narrow
-            wrapper right
-          "
-          rel="prefetch"
-          href={nav.next.path}
-        >
-          <div class="
-            card
-            figure-right
-            gutter-wrapper
-            gutter-narrow
-          ">
-            <div class="figure gutter">
-              <ResponsiveImage
-                sources={nav.next.thumbnail}
-                alt={nav.next.title}
-              />
-            </div>
-            <div class="content gutter">
-              <h3>Next</h3>
-              <p class="
-                t-style-italic
-                t-leading-tight
-                padding-top-xnarrow
-                c-fg-tertiary
-              ">{nav.next.title}</p>
-            </div>
-          </div>
-        </a>
-      {/if}
-    </div>
-</Bookend>
+  <!-- heading and index link -->
+  <div class="margin-bottom position-relative">
+    <h2 class="t-align-center@small">
+      {heading}
+    </h2>
+    <a
+      href="pictures"
+      class="
+        index-button
+        t-case-upper
+        t-font-accent
+        t-link-undecorated
+        t-scale-zeta
+        t-weight-bold
+        c-fg-tertiary
+      "
+    >
+      See all
+    </a>
+  </div>
+
+  <!-- prev/next cards -->
+  <div class="overflow-hidden">
+    <Bookend
+      align="top"
+      breakpoint="small"
+      class="gutter-wrapper"
+      fillSide="both"
+    >
+      <div slot="left" class="gutter">
+        {#if nav.previous}
+          <a
+            class="
+              display-block
+              padding-narrow
+              wrapper left
+            "
+            rel="prefetch"
+            href={nav.previous.path}
+          >
+            <figure class="
+              card
+              gutter-wrapper
+              gutter-narrow
+            ">
+              <div class="figure gutter">
+                <ResponsiveImage
+                  sources={nav.previous.thumbnail}
+                  alt={nav.previous.title}
+                />
+              </div>
+              <figcaption class="content gutter">
+                <h3>Previous</h3>
+                <p class="
+                  t-style-italic
+                  t-leading-tight
+                  padding-top-xnarrow
+                  c-fg-tertiary
+                  t-scale-epsilon
+                ">{nav.previous.title}</p>
+              </figcaption>
+            </figure>
+          </a>
+        {/if}
+      </div>
+      <div slot="right" class="gutter">
+        {#if nav.next}
+          <a
+            class="
+              display-block
+              padding-narrow
+              wrapper right
+            "
+            rel="prefetch"
+            href={nav.next.path}
+          >
+            <figure class="
+              card
+              figure-right
+              gutter-wrapper
+              gutter-narrow
+            ">
+              <div class="figure gutter">
+                <ResponsiveImage
+                  sources={nav.next.thumbnail}
+                  alt={nav.next.title}
+                />
+              </div>
+              <figcaption class="content gutter">
+                <h3>Next</h3>
+                <p class="
+                  t-style-italic
+                  t-leading-tight
+                  padding-top-xnarrow
+                  c-fg-tertiary
+                  t-scale-epsilon
+                ">{nav.next.title}</p>
+              </figcaption>
+            </figure>
+          </a>
+        {/if}
+      </div>
+    </Bookend>
+  </div>
 </nav>
