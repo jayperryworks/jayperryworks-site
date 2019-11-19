@@ -1,4 +1,4 @@
-import generatePictureList from '../../utils/generatePictureList.js'
+import generatePictureList from '@/utils/generatePictureList.js'
 
 export function get(req, res) {
 	res.writeHead(200, {

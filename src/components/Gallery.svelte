@@ -1,5 +1,6 @@
 <script>
-  export let size, gutter = 'xnarrow'
+  export let size = false,
+    gutter = 'xnarrow'
 </script>
 
 <style type="text/scss">
@@ -96,6 +97,6 @@
   }
 </style>
 
-<ul class="gallery {size}" style="--gutter: var(--space-{gutter})">
+<ul class="gallery {size || ''}" style="--gutter: var(--space-{gutter})">
   <slot {size}>Add list items here</slot>
 </ul>

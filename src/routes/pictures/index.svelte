@@ -1,11 +1,16 @@
 <script context="module">
-  export function preload({ params, query }) {
-    return this
-      .fetch(`pictures.json`)
-      .then(r => r.json())
-      .then(pictures => {
-        return { pictures }
-      })
+  export async function preload({ params, query }) {
+    const response = await this.fetch('pictures.json')
+    const data = await response.json()
+
+    if (response.status !== 200) {
+      this.error(response.status, data.message)
+      return
+    }
+
+    return {
+      pictures: data
+    }
   }
 </script>
 
@@ -59,8 +64,8 @@
           <li>
             <a
               class="t-link-undecorated"
-              rel='prefetch'
-              href='{`pictures/${picture.date.year}/${picture.slug}`}'
+              rel="prefetch"
+              href={picture.path}
             >
               <ResponsiveImage
                 sources={picture.thumbnail}

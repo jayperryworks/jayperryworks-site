@@ -52,8 +52,8 @@
         {#each posts as post}
           <li>
             <a
-              rel='prefetch'
-              href='{`writing/${post.date.year}/${post.date.month}/${post.date.day}/${post.slug}`}'
+              rel="prefetch"
+              href={post.path}
             >
               <h2>{post.title}</h2>
               {#if post.subtitle}

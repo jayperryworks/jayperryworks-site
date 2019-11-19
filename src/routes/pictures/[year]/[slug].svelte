@@ -1,8 +1,6 @@
 <script context="module">
   export async function preload({ params, query }) {
     const { year, month, day, slug } = params
-    // the `slug` parameter is available because
-    // this file is called [slug].svelte
     const response = await this.fetch(`pictures/${year}/${slug}.json`)
     const data = await response.json()
 
@@ -11,12 +9,23 @@
       return
     }
 
+    const list = await this.fetch('pictures.json')
+    const listData = await list.json()
+
+    const currentPost = listData.indexOf(
+      listData.find(item => item.slug == slug)
+    )
+
     return {
       post: data,
       date: {
         year,
         month,
         day
+      },
+      nav: {
+        previous: listData[currentPost - 1] || false,
+        next: listData[currentPost + 1] || false
       }
     }
   }
@@ -35,7 +44,7 @@
   import PrintEdition from '@/components/PrintEdition.svelte'
   import Wrapper from '@/components/Wrapper.svelte'
 
-  export let post, date
+  export let post, date, nav
 
   let metadataBreakpoint = 'xsmall'
 </script>
@@ -154,4 +163,22 @@
       </aside>
     {/each}
   </article>
+  {#if nav.previous || nav.next}
+    <nav>
+      <ul>
+        {#each [nav.previous, nav.next] as item}
+          {#if item}
+            <li>
+              <a
+                rel="prefetch"
+                href={item.path}
+              >
+                {item.title}
+              </a>
+            </li>
+          {/if}
+        {/each}
+      </ul>
+    </nav>
+  {/if}
 </main>

@@ -7,6 +7,12 @@ export default function (dir) {
   return fs.readdirSync(dir).map((file) => {
 
     const metadata = path.parse(file).name.split('-')
+    const date = {
+      year: metadata[0],
+      month: metadata[1],
+      day: metadata[2]
+    }
+    const slug = metadata.slice(3, metadata.length).join('-')
 
     const data = yaml.safeLoad(
       fs.readFileSync(`${dir}/${file}`, 'utf-8')
@@ -15,12 +21,9 @@ export default function (dir) {
     return {
       title: data.title,
       subtitle: data.subtitle,
-      date: {
-        year: metadata[0],
-        month: metadata[1],
-        day: metadata[2]
-      },
-      slug: metadata.slice(3, metadata.length).join('-'),
+      date,
+      slug,
+      path: `writing/${date.year}/${date.month}/${date.day}/${slug}`,
       excerpt: data.body
         .filter((section) => {
           // keep only the sections flagged with useInExcerpt
