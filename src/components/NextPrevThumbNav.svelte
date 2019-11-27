@@ -1,6 +1,10 @@
 <script>
   import Bookend from '@/components/Bookend.svelte'
   import ResponsiveImage from '@/components/ResponsiveImage.svelte'
+  import Icon from '@/components/Icon.svelte'
+  import arrowLeft from 'icons/arrow-dotted-left.svg'
+  import arrowRight from 'icons/arrow-dotted-right.svg'
+  import index from 'icons/index.svg'
 
   export let heading, nav, breakpoint = 'small'
 </script>
@@ -10,6 +14,7 @@
   @use 'config/breakpoints' as bp;
   @use 'config/scale';
   @use 'config/spacing';
+  @use 'config/type';
 
   $bp-layout: 'small';
   $bp-card: 'xsmall';
@@ -64,6 +69,7 @@
   }
 
   .content {
+    @include type.size-default;
     display: block;
 
     @supports (flex: 1) {
@@ -118,7 +124,19 @@
         c-fg-tertiary
       "
     >
+      <Icon
+        svg={index}
+        margin="right"
+        size="xlarge"
+        class="no-margin-top hide-above@xsmall"
+      />
       See all
+      <Icon
+        svg={index}
+        margin="left"
+        size="xlarge"
+        class="no-margin-top hide-below@xsmall"
+      />
     </a>
   </div>
 
@@ -153,14 +171,24 @@
                 />
               </div>
               <figcaption class="content gutter">
-                <h3>Previous</h3>
-                <p class="
-                  t-style-italic
-                  t-leading-tight
-                  padding-top-xnarrow
+                <h3 class="
                   c-fg-tertiary
-                  t-scale-epsilon
+                  t-font-accent
+                  t-weight-bold
+                  t-scale-zeta
+                  t-case-upper
+                ">Previous</h3>
+                <p class="
+                  padding-bottom-narrow
+                  padding-top-xxnarrow
+                  t-heading
+                  t-scale-gamma
                 ">{nav.previous.title}</p>
+                <Icon
+                  svg={arrowLeft}
+                  size="xlarge"
+                  class="no-margin"
+                />
               </figcaption>
             </figure>
           </a>
@@ -190,14 +218,24 @@
                 />
               </div>
               <figcaption class="content gutter">
-                <h3>Next</h3>
-                <p class="
-                  t-style-italic
-                  t-leading-tight
-                  padding-top-xnarrow
+                <h3 class="
                   c-fg-tertiary
-                  t-scale-epsilon
-                ">{nav.next.title}</p>
+                  t-font-accent
+                  t-weight-bold
+                  t-scale-zeta
+                  t-case-upper
+                ">Next</h3>
+                <p class="
+                  padding-bottom-narrow
+                  padding-top-xxnarrow
+                  t-heading
+                  t-scale-gamma
+                ">{nav.previous.title}</p>
+                <Icon
+                  svg={arrowRight}
+                  size="xlarge"
+                  class="no-margin"
+                />
               </figcaption>
             </figure>
           </a>

@@ -44,7 +44,11 @@
   }
 
   .large {
-    --icon-size: #{scale.get(1, $unit: 1em)};
+    --icon-size: #{scale.get(2, $unit: 1em)};
+  }
+
+  .xlarge {
+    --icon-size: #{scale.get(4, $unit: 1em)};
   }
 
   .space-right {
