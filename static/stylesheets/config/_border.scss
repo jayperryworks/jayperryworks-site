@@ -1,9 +1,11 @@
 // Border config
 @use 'color';
 @use 'helpers';
+@use 'scale';
 
 // --- Rounded corners
 $radius: 0.2rem;
+$corner-radius: scale.get(2);
 
 @mixin radius {
   border-radius: $radius;

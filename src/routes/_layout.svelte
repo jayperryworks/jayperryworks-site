@@ -9,15 +9,17 @@
   @use 'config/border';
   @use 'config/positioning';
 
-  /* Sticky footer setup */
+  // Sticky footer setup
   html,
   body {
     height: 100%;
   }
 
   body {
-    display: flex;
-    flex-direction: column;
+    @supports (display: flex) {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   #sapper {
@@ -27,14 +29,22 @@
       $color: 'highlight',
       $style: solid
     );
-    display: flex;
-    flex-direction: column;
-    flex: 1 0 auto;
+
     z-index: positioning.z('low');
+
+    @supports (display: flex) {
+      display: flex;
+      flex-direction: column;
+      flex: 1 0 auto;
+    }
   }
 
   #main-wrapper {
-    flex: 1 0 auto;
+    @supports (flex: 1) {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
   }
 </style>
 

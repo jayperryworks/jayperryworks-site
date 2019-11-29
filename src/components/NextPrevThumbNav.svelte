@@ -20,8 +20,6 @@
   $bp-card: 'xsmall';
 
   .wrapper {
-    $radius: scale.get(2);
-
     @include border.add();
     display: block;
 
@@ -31,11 +29,11 @@
       max-width: scale.get(18);
 
       &.left {
-        border-bottom-right-radius: $radius;
+        border-bottom-right-radius: border.$corner-radius;
       }
 
       &.right {
-        border-bottom-left-radius: $radius;
+        border-bottom-left-radius: border.$corner-radius;
         margin: 0 0 0 auto;
       }
     }
@@ -46,6 +44,18 @@
 
     @supports (display: flex) {
       display: flex;
+    }
+
+    :global(.show-large-icon) {
+      @include bp.query('<50em') {
+        display: none;
+      }
+    }
+
+    :global(.hide-small-icon) {
+      @include bp.query('>50em') {
+        display: none;
+      }
     }
   }
 
@@ -95,12 +105,13 @@
       position: absolute;
       right: 0;
       top: 50%;
-      transform: translateY(-60%);
+      transform: translateY(-50%);
     }
   }
 </style>
 
-<nav class="c-bg-well
+<nav class="
+  c-bg-well
   border-seam-top-offset
   border-solid
   border-top
@@ -177,7 +188,14 @@
                   t-weight-bold
                   t-scale-zeta
                   t-case-upper
-                ">Previous</h3>
+                ">
+                  <Icon
+                    svg={arrowLeft}
+                    margin="right"
+                    class="no-margin-top hide-small-icon"
+                  />
+                  Previous
+                </h3>
                 <p class="
                   padding-bottom-narrow
                   padding-top-xxnarrow
@@ -187,7 +205,7 @@
                 <Icon
                   svg={arrowLeft}
                   size="xlarge"
-                  class="no-margin"
+                  class="no-margin show-large-icon"
                 />
               </figcaption>
             </figure>
@@ -224,7 +242,14 @@
                   t-weight-bold
                   t-scale-zeta
                   t-case-upper
-                ">Next</h3>
+                ">
+                  Next
+                  <Icon
+                    svg={arrowRight}
+                    margin="left"
+                    class="no-margin-top hide-small-icon"
+                  />
+                </h3>
                 <p class="
                   padding-bottom-narrow
                   padding-top-xxnarrow
@@ -234,7 +259,7 @@
                 <Icon
                   svg={arrowRight}
                   size="xlarge"
-                  class="no-margin"
+                  class="no-margin show-large-icon"
                 />
               </figcaption>
             </figure>

@@ -1,3 +1,9 @@
+cover:
+  sources:
+    - path: "https://placehold.it/1200x800?text=cover"
+      size: 1200
+  alt: Cover image
+
 # markdown allowed here
 intro: "My name is Jay and I'm a designer, illustrator, and writer living near Baltimore."
 

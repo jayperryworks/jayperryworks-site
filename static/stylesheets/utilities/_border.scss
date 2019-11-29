@@ -46,6 +46,10 @@
   border-radius: border.$radius;
 }
 
+.border-round-bottom-right {
+  border-bottom-right-radius: border.$corner-radius;
+}
+
 // --- 'Seam' effect
 // utils: .border-seam-top, .border-seam-bottom-offset
 @each $side, $selector in (
