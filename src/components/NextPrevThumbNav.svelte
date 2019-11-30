@@ -19,10 +19,6 @@
   $bp-layout: 'small';
   $bp-card: 'xsmall';
 
-  .card-width {
-    max-width: scale.get(18);
-  }
-
   .card {
     @include border.add();
     display: block;

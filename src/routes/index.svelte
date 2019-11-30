@@ -84,15 +84,19 @@
 
 <PageTitle />
 
-<MainNav overlay />
+<MainNav overlay hideMenu />
 
 <div class="home">
   <section class="top-section border-bottom border-solid">
+
+    <!-- cover image -->
     <ResponsiveImage
       sources={content.cover.sources}
       alt={content.cover.alt}
       cover
     />
+
+    <!-- intro -->
     <div class="padding-x-outside padding-y-xwide border-seam-top">
       <Wrapper width="xwide">
         <Wrapper centered={false}>
@@ -119,7 +123,13 @@
     </div>
   </section>
 
-  <nav class="padding-x-outside padding-y-wide c-bg-well border-seam-top-offset">
+  <!-- TOC -->
+  <nav class="
+    padding-x-outside
+    padding-y-wide
+    c-bg-well
+    border-seam-top-offset
+  ">
     <Wrapper width="xwide">
       <Gallery gutter="medium" flex>
         {#each content.tableOfContents as item}

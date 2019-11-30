@@ -15,12 +15,14 @@
     contain = false,
     cover = false
 
-  $: srcset = sources.length > 0 && sources.splice(1, 1).map((source) => {
+  $: srcset = sources.length > 0
+    && sources.slice(1).map((source) => {
       if (source.size) {
         return `${source.path} ${source.size}w`
       }
       return source.path
     }).join(', ')
+
 
   let classes = ''
   export { classes as class }
