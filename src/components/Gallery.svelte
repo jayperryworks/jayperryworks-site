@@ -1,6 +1,7 @@
 <script>
   export let size = false,
-    gutter = 'xnarrow'
+    gutter = 'xnarrow',
+    flex = false
 </script>
 
 <style type="text/scss">
@@ -95,8 +96,19 @@
   .large :global(li) {
     max-width: layout_width.get('wide');
   }
+
+  .flex :global(li) {
+    @supports (display: flex) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 </style>
 
-<ul class="gallery {size || ''}" style="--gutter: var(--space-{gutter})">
+<ul
+  class="gallery {size || ''}"
+  class:flex
+  style="--gutter: var(--space-{gutter})"
+>
   <slot {size}>Add list items here</slot>
 </ul>

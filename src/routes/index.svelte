@@ -15,7 +15,9 @@
 <script>
   import { onDestroy } from 'svelte'
   import arrow from 'icons/arrow-right.svg'
+  import arrowDotted from 'icons/arrow-dotted-right.svg'
   import Button from '@/components/Button.svelte'
+  import Card from '@/components/HomeTOCCard.svelte'
   import Gallery from '@/components/Gallery.svelte'
   import Icon from '@/components/Icon.svelte'
   import MainNav from '@/components/MainNav.svelte'
@@ -69,11 +71,20 @@
       height: 70vh;
     }
   }
+
+  .card-icon {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-20%);
+    vertical-align: middle;
+  }
 </style>
 
 <PageTitle />
 
-<MainNav />
+<MainNav overlay />
 
 <div class="home">
   <section class="top-section border-bottom border-solid">
@@ -82,7 +93,7 @@
       alt={content.cover.alt}
       cover
     />
-    <div class="padding-x-outside padding-y-xwide">
+    <div class="padding-x-outside padding-y-xwide border-seam-top">
       <Wrapper width="xwide">
         <Wrapper centered={false}>
           <h1 class="t-scale-beta">{content.intro}</h1>
@@ -110,32 +121,41 @@
 
   <nav class="padding-x-outside padding-y-wide c-bg-well border-seam-top-offset">
     <Wrapper width="xwide">
-      <Gallery gutter="medium">
+      <Gallery gutter="medium" flex>
         {#each content.tableOfContents as item}
           <li>
-            <a
-              class="
-                border border-round-bottom-right
-                display-block
-                padding-y
-              "
-              href="{item.link}"
-            >
-              <h2 class="t-highlight-left padding-left t-scale-gamma">{item.heading}</h2>
-              <div class="padding-x">
-                <div class="padding-top-xnarrow t-font-accent t-scale-zeta">{@html item.description}</div>
-                <div class="padding-top-narrow">
-                  <span class="
-                    display-inline-block
-                    t-scale-eta
-                    t-font-accent
-                    t-weight-bold
-                    c-fg-tertiary
-                    t-case-upper
-                  ">Read more</span>
-                </div>
+            <Card link={item.link} class="padding-y">
+              <div slot="content">
+                <h2 class="
+                  t-highlight-left
+                  padding-x
+                  t-scale-gamma
+                ">{item.heading}</h2>
+                <div class="
+                  padding-x
+                  padding-top-xnarrow
+                  t-font-accent
+                  t-scale-zeta
+                ">{@html item.description}</div>
               </div>
-            </a>
+              <div slot="footer" class="padding-top-narrow margin-x position-relative">
+                <span class="
+                  display-inline-block
+                  t-scale-eta
+                  t-font-accent
+                  t-weight-bold
+                  c-fg-tertiary
+                  t-case-upper
+                ">Read more</span>
+                <span class="card-icon">
+                  <Icon
+                    svg={arrowDotted}
+                    size="xlarge"
+                    class="no-margin-top"
+                  />
+                </span>
+              </div>
+            </Card>
           </li>
         {/each}
       </Gallery>

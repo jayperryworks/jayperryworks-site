@@ -1,7 +1,8 @@
 <script>
   export let breakpoint = 'small',
     align = 'middle',
-    fillSide = 'left'
+    fillSide = 'left',
+    itemWidth = false
 
   let classes = ''
   export {classes as class}
@@ -9,6 +10,10 @@
   $: horizontalClass = breakpoint == 'none'
     ? 'horizontal'
     : `horizontal@${breakpoint}`
+
+  $: itemWidthStyle = itemWidth
+    ? `--item-width: ${itemWidth};`
+    : ''
 </script>
 
 <style type="text/scss">
@@ -21,22 +26,14 @@
   }
 
   .item {
+    --item-width: auto;
+
     @include bourbon.clearfix;
     clear: both;
     display: block;
     float: none;
     position: relative;
     vertical-align: middle;
-  }
-
-  .align-top {
-    @supports (align-items: flex-start) {
-      align-items: flex-start !important;
-    }
-
-    .item {
-      vertical-align: top;
-    }
   }
 
   @include breakpoints.suffix(
@@ -79,24 +76,52 @@
         }
       }
     }
+
+    &.align-top {
+      @supports (align-items: flex-start) {
+        align-items: flex-start !important;
+      }
+
+      .item {
+        vertical-align: top;
+      }
+    }
+
+    &.align-stretch {
+      @supports (align-items: flex-start) {
+        align-items: stretch !important;
+      }
+
+      .item {
+        max-width: var(--item-width);
+        vertical-align: top;
+
+        @supports (display: flex) {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+        }
+      }
+    }
   }
-
-
 </style>
 
 <div
   class="bookend {horizontalClass} {classes}"
-  class:align-top="{align === 'top'}"
+  class:align-top={align === 'top'}
+  class:align-stretch={align === 'stretch'}
 >
   <div
     class="item left"
     class:fill="{fillSide === 'left' || fillSide === 'both'}"
+    style={itemWidthStyle}
   >
     <slot name="left"></slot>
   </div>
   <div
     class="item right"
     class:fill="{fillSide === 'right' || fillSide === 'both'}"
+    style={itemWidthStyle}
   >
     <slot name="right"></slot>
   </div>

@@ -1,10 +1,10 @@
 <script>
-  import Bookend from '@/components/Bookend.svelte'
-  import ResponsiveImage from '@/components/ResponsiveImage.svelte'
-  import Icon from '@/components/Icon.svelte'
   import arrowLeft from 'icons/arrow-dotted-left.svg'
   import arrowRight from 'icons/arrow-dotted-right.svg'
   import index from 'icons/index.svg'
+  import Bookend from '@/components/Bookend.svelte'
+  import Icon from '@/components/Icon.svelte'
+  import ResponsiveImage from '@/components/ResponsiveImage.svelte'
 
   export let heading, nav, breakpoint = 'small'
 </script>
@@ -19,27 +19,32 @@
   $bp-layout: 'small';
   $bp-card: 'xsmall';
 
-  .wrapper {
+  .card-width {
+    max-width: scale.get(18);
+  }
+
+  .card {
     @include border.add();
     display: block;
 
+    @supports (display: flex) {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
 
     @include bp.query('>#{$bp-layout}') {
-      margin: 0;
-      max-width: scale.get(18);
-
       &.left {
         border-bottom-right-radius: border.$corner-radius;
       }
 
       &.right {
         border-bottom-left-radius: border.$corner-radius;
-        margin: 0 0 0 auto;
       }
     }
   }
 
-  .card {
+  .card-wrapper {
     display: block;
 
     @supports (display: flex) {
@@ -59,7 +64,7 @@
     }
   }
 
-  .figure {
+  .card-figure {
     display: block;
     max-width: scale.get(10);
 
@@ -78,7 +83,7 @@
     }
   }
 
-  .content {
+  .card-content {
     @include type.size-default;
     display: block;
 
@@ -154,34 +159,42 @@
   <!-- prev/next cards -->
   <div class="overflow-hidden">
     <Bookend
-      align="top"
+      align="stretch"
       breakpoint="small"
       class="gutter-wrapper"
       fillSide="both"
+      itemWidth="27rem"
     >
-      <div slot="left" class="gutter">
+      <div
+        slot="left"
+        class="
+          gutter
+          display-flex
+          display-flex-column
+          display-flex-fill
+        "
+      >
         {#if nav.previous}
           <a
             class="
-              display-block
+              card left
               padding-narrow
-              wrapper left
             "
             rel="prefetch"
             href={nav.previous.path}
           >
             <figure class="
-              card
+              card-wrapper
               gutter-wrapper
               gutter-narrow
             ">
-              <div class="figure gutter">
+              <div class="card-figure gutter">
                 <ResponsiveImage
                   sources={nav.previous.thumbnail}
                   alt={nav.previous.title}
                 />
               </div>
-              <figcaption class="content gutter">
+              <figcaption class="card-content gutter">
                 <h3 class="
                   c-fg-tertiary
                   t-font-accent
@@ -201,7 +214,7 @@
                   padding-top-xxnarrow
                   t-heading
                   t-scale-gamma
-                ">{nav.previous.title}</p>
+                ">{nav.previous.title} lorem ipsum dolor sit amet adipiscig elit</p>
                 <Icon
                   svg={arrowLeft}
                   size="xlarge"
@@ -212,30 +225,37 @@
           </a>
         {/if}
       </div>
-      <div slot="right" class="gutter">
+      <div
+        slot="right"
+        class="
+          gutter
+          display-flex
+          display-flex-column
+          display-flex-fill
+        "
+      >
         {#if nav.next}
           <a
             class="
-              display-block
+              card right
               padding-narrow
-              wrapper right
             "
             rel="prefetch"
             href={nav.next.path}
           >
             <figure class="
-              card
+              card-wrapper
               figure-right
               gutter-wrapper
               gutter-narrow
             ">
-              <div class="figure gutter">
+              <div class="card-figure gutter">
                 <ResponsiveImage
                   sources={nav.next.thumbnail}
                   alt={nav.next.title}
                 />
               </div>
-              <figcaption class="content gutter">
+              <figcaption class="card-content gutter">
                 <h3 class="
                   c-fg-tertiary
                   t-font-accent

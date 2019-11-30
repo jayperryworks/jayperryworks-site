@@ -1,6 +1,4 @@
 <script>
-  import Bookend from './Bookend.svelte'
-
   export let caption, credit, spacing = 'xnarrow'
 
   let classes = ''

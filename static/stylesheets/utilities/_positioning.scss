@@ -25,9 +25,15 @@
   display: block;
 }
 
-@include breakpoints.suffix(".display-flex", true) {
+.display-flex {
   @supports (display: flex) {
     display: flex;
+  }
+}
+
+.display-flex-column {
+  @supports (display: flex) {
+    flex-direction: column;
   }
 }
 

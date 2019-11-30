@@ -7,7 +7,7 @@
   import Dropdown from './Dropdown.svelte'
   import LogoJP from './logos/LogoJP.svelte'
 
-	export let segment, theme = false
+	export let segment, theme = false, overlay = false
 
   let items = [
     {
@@ -36,10 +36,19 @@
     display: block;
     border: none;
   }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: transparent;
+  }
 </style>
 
 <nav
   class="padding-x-outside"
+  class:overlay
   data-theme={theme || ''}
 >
   <Bookend
