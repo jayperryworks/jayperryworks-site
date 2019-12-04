@@ -83,6 +83,7 @@
               <ResponsiveImage
                 sources={picture.thumbnail}
                 alt={picture.title}
+                border
               />
             </a>
           </li>

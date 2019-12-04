@@ -21,5 +21,5 @@ export default function (dir) {
       thumbnail: data.thumb,
       path: `pictures/${year}/${slug}`
     }
-  })
+  }).reverse() // order by most recent
 }
