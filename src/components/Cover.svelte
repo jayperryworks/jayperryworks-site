@@ -6,7 +6,7 @@
     caption = false,
     credit = false,
     height = 'default',
-    cover = true
+    cover = false
 
   let classes = ''
   export { classes as class }

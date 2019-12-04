@@ -13,7 +13,7 @@
   @use 'config/color';
   @use 'config/type';
 
-  $breakpoint: 20rem;
+  $breakpoint: 10rem;
   $stats-min-width: 6rem;
 
   .info-wrapper {
@@ -103,7 +103,7 @@
         <strong class="
           c-fg-primary
           t-font-display
-        ">{titleize(edition.name)}</strong> {titleize(edition.type)} Print
+        ">{titleize(edition.name)}</strong> {titleize(edition.type)}&nbsp;Print
       </h3>
 
       <!-- metadata -->

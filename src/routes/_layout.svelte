@@ -35,15 +35,17 @@
     @supports (display: flex) {
       display: flex;
       flex-direction: column;
-      flex: 1 0 auto;
+      flex: 1;
     }
   }
 
   #main-wrapper {
+    position: relative;
+
     @supports (flex: 1) {
-      flex: 1;
       display: flex;
       flex-direction: column;
+      flex: 1;
     }
   }
 </style>

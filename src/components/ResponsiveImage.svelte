@@ -15,14 +15,16 @@
     contain = false,
     cover = false
 
-  $: srcset = sources.length > 0
-    && sources.slice(1).map((source) => {
-      if (source.size) {
-        return `${source.path} ${source.size}w`
-      }
-      return source.path
-    }).join(', ')
+  $: src = sources.length > 0 ? sources[0].path : ''
 
+  $: srcset = sources.length > 0
+    ? sources.slice(1).map((source) => {
+        if (source.size) {
+          return `${source.path} ${source.size}w`
+        }
+        return source.path
+      }).join(', ')
+    : ''
 
   let classes = ''
   export { classes as class }
@@ -48,7 +50,7 @@
   class="{border ? 'border border-solid' : ''} {classes}"
   class:contain
   class:cover
-  src={sources ? sources[0].path : ''}
+  {src}
   {srcset}
   {alt}
->
+/>

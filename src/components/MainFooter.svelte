@@ -44,8 +44,8 @@
 </style>
 
 <footer class="
-  c-bg-well
   border-seam-top-offset
+  c-bg-well
   padding-x-outside
 ">
   <div class="overflow-hidden">
@@ -54,9 +54,9 @@
       padding-y
     ">
       <p class="
-        t-scale-gamma
-        t-font-display
         c-fg-tertiary
+        t-font-display
+        t-scale-gamma
       ">
         Keep in touch. You can also find me on {@html socialChannelList}.
       </p>
@@ -72,8 +72,8 @@
           <div slot="left">
             <a
               class="
-                gutter
                 display-inline-block
+                gutter
                 t-link-undecorated
               "
               style="height: 2.25rem; width: 10.9375rem;"
@@ -82,33 +82,33 @@
               <LogoJPW />
             </a>
             <small class="
-              gutter
               display-inline-block
-              vertical-align-top
+              gutter
               t-font-accent
+              vertical-align-top
             ">
               &copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
             </small>
           </div>
 
-          <div slot="right">
+          <!-- <div slot="right">
             <a
               href="/colophon"
               class="
-                gutter
-                display-inline-block
-                vertical-align-top
-                t-font-accent
-                t-weight-bold
-                t-scale-zeta
-                t-link-undecorated
-                t-case-upper
                 c-fg-tertiary
+                display-inline-block
+                gutter
+                t-case-upper
+                t-font-accent
+                t-link-undecorated
+                t-scale-eta
+                t-weight-bold
+                vertical-align-top
               "
             >
               Colophon
             </a>
-          </div>
+          </div> -->
         </Bookend>
       </div>
     </div>

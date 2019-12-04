@@ -21,8 +21,8 @@
       post: data,
       date: { year },
       nav: {
-        previous: listData[currentPost] || false,
-        next: listData[currentPost] || false
+        previous: listData[currentPost - 1] || false,
+        next: listData[currentPost + 1] || false
       }
     }
   }
@@ -77,35 +77,35 @@
         class="t-align-center padding-top"
       >
         <h1 class="
-          t-font-accent
-          t-weight-bold
-          t-scale-epsilon
           display-inline-block@{metadataBreakpoint}
-          padding-bottom-xnarrow
           no-padding-bottom@{metadataBreakpoint}
+          padding-bottom-xnarrow
+          t-font-accent
+          t-scale-epsilon
+          t-weight-bold
         ">{post.title}</h1>
         <time
           class="
-            t-font-accent
-            t-scale-epsilon
+            border-left@{metadataBreakpoint}
             c-fg-tertiary
             display-inline-block
-            padding-left-narrow
             margin-left-narrow
-            border-left@{metadataBreakpoint}
+            padding-left-narrow
+            t-font-accent
+            t-scale-epsilon
           "
           datetime="{format(new Date(date.year), 'yyyy')}"
         >
           {format(new Date(date.year), 'yyyy')}
         </time>
         <p class="
-            t-font-accent
-            t-scale-epsilon
+            border-left
             c-fg-tertiary
             display-inline-block
-            padding-left-narrow
             margin-left-narrow
-            border-left
+            padding-left-narrow
+            t-font-accent
+            t-scale-epsilon
           ">
             {post.format}{#if post.width && post.height}&nbsp;&bull; {post.width}" x {post.height}"{/if}
           </p>
@@ -133,11 +133,11 @@
     {#if post.editions}
       <!-- Editions -->
       <section class="
+        border-seam-top
         padding-x-outside
         padding-y-xwide
-        border-seam-top
       ">
-        <h2 class="t-align-center@small padding-bottom-wide">Available editions</h2>
+        <h2 class="padding-bottom-wide t-align-center@small">Available editions</h2>
           <Gallery size="large" gutter="wide">
           {#each post.editions as edition}
             <li>
@@ -150,7 +150,14 @@
 
     <!-- About the edition note -->
     {#each post.printDescriptions as note}
-      <aside class="padding-x-outside padding-y-xwide border-seam-top" id="about-{note.type}">
+      <aside
+        class="
+          border-seam-top
+          padding-x-outside
+          padding-y-xwide
+        "
+        id="about-{note.type}"
+      >
         <OutdentedBlurb blurbWidth={20}>
           <h2
             slot="blurb"

@@ -26,6 +26,8 @@
   import Wrapper from '@/components/Wrapper.svelte'
 
   export let content
+
+  // --- "Favorite things" (I like ... ) rotating subheading ---
   let favoriteThings = []
 
   function randomFavorites () {
@@ -35,7 +37,7 @@
     })
   }
 
-  $: subhead = `I like ${
+  $: favoriteThingsSubhead = `I like ${
     favoriteThings.map((thing, index) => {
       if (index == (favoriteThings.length - 1)) {
         return `and ${thing}`
@@ -46,8 +48,19 @@
 
   randomFavorites()
   const cycleFavorites = setInterval(randomFavorites, 5000)
-
   onDestroy(() => clearInterval(cycleFavorites))
+
+  // --- cover image ---
+  // use a CSS background image as a fallback for browsers that don't support object-fit styling on img tags
+  $: coverImageFallback = content.cover.sources.length > 1
+    // if content.cover.sources has multiple entries...
+    ? content.cover.sources.filter((source) => {
+        // find the sources that are medium-sized (prob a good fit for desktop IE11)
+        return source.size >= 800 && source.size <= 1200
+      // and use the largest of that size range (last item in filtered array)
+      }).slice(-1)[0].path
+    // otherwise, just use the first element
+    : content.cover.sources[0].path
 </script>
 
 <style type="text/scss">
@@ -65,10 +78,21 @@
     @supports (flex: 1) {
       flex: 1;
     }
+  }
+
+  .cover-image {
+    margin: 0;
+    width: 100%;
+    text-align: center;
 
     > :global(img) {
       width: 100%;
-      height: 70vh;
+    }
+
+    @supports (object-fit: cover) {
+      > :global(img) {
+        height: 70vh;
+      }
     }
   }
 
@@ -87,17 +111,42 @@
 <MainNav overlay hideMenu />
 
 <div class="home">
-  <section class="top-section border-bottom border-solid">
+  <section class="
+    border-bottom
+    border-solid
+    top-section
+  ">
 
     <!-- cover image -->
-    <ResponsiveImage
-      sources={content.cover.sources}
-      alt={content.cover.alt}
-      cover
-    />
+    <figure class="cover-image">
+      <ResponsiveImage
+        sources={content.cover.sources}
+        alt={content.cover.alt}
+        cover
+      />
+    </figure>
 
     <!-- intro -->
-    <div class="padding-x-outside padding-y-xwide border-seam-top">
+    <div class="
+      border-seam-top
+      padding-bottom-xwide
+      padding-top-narrow
+      padding-x-outside
+    ">
+      <aside class="
+        display-block
+        padding-bottom-wide
+        position-relative
+        t-align-right
+      ">
+        <small class="
+          t-case-upper
+          t-font-accent
+          t-scale-eta
+        ">
+          Edition <strong>3.1.0</strong>
+        </small>
+      </aside>
       <Wrapper width="xwide">
         <Wrapper centered={false}>
           <h1 class="t-scale-beta">{content.intro}</h1>
@@ -108,7 +157,7 @@
               t-font-accent
               t-heading
               t-scale-gamma
-            ">{subhead}</p>
+            ">{favoriteThingsSubhead}</p>
           {/if}
           <Button
             prefetch={true}
@@ -125,37 +174,50 @@
 
   <!-- TOC -->
   <nav class="
-    padding-x-outside
-    padding-y-wide
-    c-bg-well
     border-seam-top-offset
+    c-bg-well
+    padding-bottom-xwide
+    padding-x-outside
   ">
     <Wrapper width="xwide">
+      <h2 class="
+        padding-y-wide
+        t-case-upper
+        t-font-accent
+        t-scale-eta
+        t-weight-bold
+      ">
+        Table of contents
+      </h2>
       <Gallery gutter="medium" flex>
         {#each content.tableOfContents as item}
           <li>
             <Card link={item.link} class="padding-y">
               <div slot="content">
                 <h2 class="
-                  t-highlight-left
                   padding-x
+                  t-highlight-left
                   t-scale-gamma
                 ">{item.heading}</h2>
                 <div class="
-                  padding-x
                   padding-top-xnarrow
+                  padding-x
                   t-font-accent
                   t-scale-zeta
                 ">{@html item.description}</div>
               </div>
-              <div slot="footer" class="padding-top-narrow margin-x position-relative">
+              <div slot="footer" class="
+                margin-x
+                padding-top-narrow
+                position-relative
+              ">
                 <span class="
-                  display-inline-block
-                  t-scale-eta
-                  t-font-accent
-                  t-weight-bold
                   c-fg-tertiary
+                  display-inline-block
                   t-case-upper
+                  t-font-accent
+                  t-scale-eta
+                  t-weight-bold
                 ">Read more</span>
                 <span class="card-icon">
                   <Icon

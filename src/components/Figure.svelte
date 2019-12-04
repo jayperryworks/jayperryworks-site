@@ -6,7 +6,8 @@
     alt = '',
     caption = false,
     credit = false,
-    border = false
+    border = false,
+    cover = false
 
   let classes = ''
   export { classes as class }
@@ -21,7 +22,7 @@
 
 <figure class={classes}>
   <slot>
-    <ResponsiveImage {sources} {alt} {border} />
+    <ResponsiveImage {sources} {alt} {border} {cover} />
   </slot>
   {#if caption || credit}
     <Caption {caption} {credit} />
