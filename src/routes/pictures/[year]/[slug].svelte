@@ -11,18 +11,19 @@
     }
 
     // grab the list of posts for the next/prev nav
+    // -> TODO get this from the store after the index page populates it?
     const list = await this.fetch('pictures.json')
     const listData = await list.json()
-    const currentPost = listData.indexOf(
-      listData.find(item => item.slug == slug)
+    const currentPost = listData.pictures.indexOf(
+      listData.pictures.find(item => item.slug === slug)
     )
 
     return {
       post: data,
       date: { year },
       nav: {
-        previous: listData[currentPost - 1] || false,
-        next: listData[currentPost + 1] || false
+        previous: listData.pictures[currentPost - 1] || false,
+        next: listData.pictures[currentPost + 1] || false
       }
     }
   }
@@ -138,13 +139,21 @@
         padding-y-xwide
       ">
         <h2 class="padding-bottom-wide t-align-center@small">Available editions</h2>
-          <Gallery size="large" gutter="wide">
-          {#each post.editions as edition}
-            <li>
-              <PrintEdition {edition} />
-            </li>
-          {/each}
-        </Gallery>
+        {#if post.editions.length > 1}
+          <Wrapper width="xxwide">
+            <Gallery size="large" gutter="wide">
+              {#each post.editions as edition}
+                <li>
+                  <PrintEdition {edition} />
+                </li>
+              {/each}
+            </Gallery>
+          </Wrapper>
+        {:else}
+          <Wrapper width="wide">
+            <PrintEdition edition={post.editions[0]} />
+          </Wrapper>
+        {/if}
       </section>
     {/if}
 

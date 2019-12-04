@@ -8,8 +8,6 @@
       return
     }
 
-    console.log(data)
-
     return {
       content: data.content,
       pictures: data.pictures
@@ -65,7 +63,8 @@
       </Wrapper>
       {/if}
       <Button
-        href="https://jayperry.etsy.com"
+        href={content.shop}
+        target="_blank"
         iconRight={arrow}
       >
         Find more prints at <strong>Etsy</strong>

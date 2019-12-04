@@ -1,0 +1,24 @@
+title: Creekbed
+date: 2012-10-31T05:00:00.000Z
+format: Panel
+width: 24
+height: 24
+category: prints
+tags:
+  - acrylic
+  - india ink
+cover:
+  - path: /images/uploads/work-2012-creekbed.jpg
+thumb:
+  - path: /images/uploads/work-2012-creekbed-thumb.jpg
+editions:
+  - name: small
+    type: giclee
+    height: 8
+    width: 8
+    border: 1
+    price: 35
+    limit: 100
+    photo:
+      - path: /images/uploads/work-2012-creekbed-8x8.jpg
+    url: https://www.etsy.com/listing/114408547/
