@@ -8,8 +8,11 @@
       return
     }
 
+    console.log(data)
+
     return {
-      pictures: data
+      content: data.content,
+      pictures: data.pictures
     }
   }
 </script>
@@ -23,8 +26,9 @@
   import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
   import PageTitle from '@/components/PageTitle.svelte'
   import ResponsiveImage from '@/components/ResponsiveImage.svelte'
+  import Wrapper from '@/components/Wrapper.svelte'
 
-  export let pictures
+  export let content, pictures
 
   function getProp(picture, prop) {
     return picture.thumbnail.map((item) => {
@@ -49,12 +53,22 @@
     bodyWidth="wide"
   >
     <div slot="blurb" class="padding-bottom-wide">
-      <h1 class="padding-bottom-narrow">Recent work</h1>
+      <h1 class="padding-bottom-narrow">{content.title}</h1>
+      {#if content.intro}
+      <Wrapper
+        centered={false}
+        class="margin-right"
+      >
+        <div class="t-content padding-bottom">
+          {@html content.intro}
+        </div>
+      </Wrapper>
+      {/if}
       <Button
         href="https://jayperry.etsy.com"
         iconRight={arrow}
       >
-        More prints avaialble at <strong>Etsy</strong>
+        Find more prints at <strong>Etsy</strong>
       </Button>
     </div>
 

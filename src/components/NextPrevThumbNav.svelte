@@ -210,7 +210,7 @@
                   padding-top-xxnarrow
                   t-heading
                   t-scale-gamma
-                ">{nav.previous.title} lorem ipsum dolor sit amet adipiscig elit</p>
+                ">{nav.previous.title}</p>
                 <Icon
                   svg={arrowLeft}
                   size="xlarge"
@@ -271,7 +271,7 @@
                   padding-top-xxnarrow
                   t-heading
                   t-scale-gamma
-                ">{nav.previous.title}</p>
+                ">{nav.next.title}</p>
                 <Icon
                   svg={arrowRight}
                   size="xlarge"

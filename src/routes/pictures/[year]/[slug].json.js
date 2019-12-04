@@ -26,7 +26,7 @@ export function get(req, res, next) {
 
   // grab info about the print editions, if there are any
   if (data.editions) {
-    let info = yaml.safeLoad(
+    const info = yaml.safeLoad(
       fs.readFileSync('content/pictures.yml', 'utf-8')
     )
 
