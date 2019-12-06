@@ -1,7 +1,7 @@
 title: >-
-  !markdown
+  !markdownInline
 subtitle: >-
-  !markdown
+  !markdownInline
 cover:
   sources: !!omap
     - path: !!str
@@ -19,6 +19,13 @@ body: !!omap
     markdown: |-
       !markdown
 
+  - type: !section heading
+    useInExcerpt: !!boolean
+    level: !!int # e.g. 2
+    scale: !!str # e.g. "gamma"
+    inlineMarkdown: >-
+      !markdownInline
+
   - type: !section passage
     useInExcerpt: !!boolean
     markdown: |-
@@ -31,6 +38,8 @@ body: !!omap
         size: !!int
     alt: !!str
     prominence: !!str #option (small, medium, large) default medium
+    caption: |-
+      !markdown
 
   - type: !section gallery
     useInExcerpt: !!boolean
@@ -41,9 +50,8 @@ body: !!omap
             size: !!int
         alt: !!str
     prominence: !!str #option (small, medium, large) default medium
-    caption:
-      markdown: |-
-        !markdown
+    caption: |-
+      !markdown
 
   - type: !section table
     useInExcerpt: !!boolean
@@ -58,6 +66,6 @@ body: !!omap
     footer: !!pairs
         - [] !!str
 
-  - type: !section postscript
+  - type: !section update
     markdown: |-
       !markdown

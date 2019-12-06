@@ -19,6 +19,7 @@ export default function (dir) {
     )
 
     return {
+      cover: data.cover,
       title: data.title,
       subtitle: data.subtitle,
       date,
@@ -39,5 +40,5 @@ export default function (dir) {
           return excerpt
         })
     }
-  })
+  }).reverse() // display in order of most recent
 }

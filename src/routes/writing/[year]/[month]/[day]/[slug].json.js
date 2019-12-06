@@ -31,6 +31,12 @@ export function get(req, res, next) {
       return section
     }
 
+    if (section.inlineMarkdown) {
+      section.html = render(section.inlineMarkdown, { inline: true })
+      delete section.inlineMarkdown
+      return section
+    }
+
     if (section.caption) {
       section.caption = render(section.caption)
     }

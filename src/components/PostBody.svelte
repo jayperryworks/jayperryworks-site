@@ -25,32 +25,40 @@
 <style type="text/scss">
   @use "config/spacing";
 
-  .body > :global(* + *) {
-    padding-top: #{spacing.get('wide')};
-  }
+  .body {
+    > :global(* + *) {
+      padding-top: spacing.get('wide');
+    }
 
-  // when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text
-  .section-text + .section-text {
-    padding-top: #{spacing.get()};
+    :global(.section-heading + .section-text) {
+      padding-top: spacing.get('narrow');
+    }
+
+    // when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text
+    :global(.section-text + .section-text) {
+      padding-top: spacing.get();
+    }
   }
 </style>
 
 <div class="body">
   {#each sections as section, index}
     {#if section.type == 'note'}
-      <div class="section-text">
-        <Wrapper>
-          <Note html={section.html} />
-        </Wrapper>
-      </div>
+      <Wrapper class="section-text">
+        <Note html={section.html} />
+      </Wrapper>
+    {/if}
+
+    {#if section.type == 'heading'}
+      <Wrapper class="section-heading">
+        <h2>{@html section.html}</h2>
+      </Wrapper>
     {/if}
 
     {#if section.type == 'passage'}
-      <div class="section-text">
-        <Wrapper>
-          <Passage html={section.html} lead={section == firstPassage} />
-        </Wrapper>
-      </div>
+      <Wrapper class="section-text">
+        <Passage html={section.html} lead={section == firstPassage} />
+      </Wrapper>
     {/if}
 
     {#if section.type == 'figure'}
@@ -94,6 +102,20 @@
           body={section.body}
           footer={section.footer}
         />
+      </Wrapper>
+    {/if}
+
+    {#if section.type == 'update'}
+      <Wrapper class="border-top section-text">
+        <h3 class="
+          padding-bottom-narrow
+          padding-top
+          t-case-upper
+          t-font-accent
+          t-scale-zeta
+          t-weight-bold
+        ">Update</h3>
+        <Passage html={section.html} />
       </Wrapper>
     {/if}
   {/each}

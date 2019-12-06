@@ -14,6 +14,7 @@
   import PageTitle from '@/components/PageTitle.svelte'
   import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
   import Wrapper from '@/components/Wrapper.svelte'
+  import ResponsiveImage from '@/components/ResponsiveImage.svelte'
 
   export let posts
 </script>
@@ -55,6 +56,14 @@
               rel="prefetch"
               href={post.path}
             >
+              {#if post.cover}
+                <div class="padding-bottom">
+                  <ResponsiveImage
+                    sources={post.cover.sources}
+                    alt={post.cover.alt}
+                  />
+                </div>
+              {/if}
               <h2>{post.title}</h2>
               {#if post.subtitle}
                 <p class="

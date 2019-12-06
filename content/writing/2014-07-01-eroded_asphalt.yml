@@ -1,0 +1,107 @@
+title: Eroded Asphalt
+tags:
+  - process
+  - painting
+  - photos
+  - travel
+cover:
+  sources:
+    - path: /images/uploads/eroded_asphalt.jpg
+body:
+  - type: note
+    markdown: |-
+      This is a bit of the story behind a recent painting, [Eroded Asphalt](/work/prints/2014/eroded-asphalt/).
+
+  - type: passage
+    useInExcerpt: true
+    markdown: |-
+      My wife's family often goes on vacation in Ocean City, MD, a place where you can find excellent milk shakes, vinegar fries, shuffle bowl arcade games, and old-school, non-digital photo booths. Oh, and the Atlantic Ocean is there too, but everybody is usually more excited about the milkshakes.
+
+      My favorite part, though, is visiting Asateague Island. A small offshore island near the Virginia-Maryland border, it's about a half-hour drive away. The entire island is a national park with rare herds of wild ponies and spectacular sand dunes and marshes. If you can bear the mosquitoes it's a great place to hike.
+
+  - type: figure
+    prominence: large
+    sources:
+      - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0818.jpg
+    alt: Asateague Island
+
+  - type: passage
+    markdown: |-
+      There's a near-constant ocean breeze that bends old trees into the most wonderful shapes. It's a good place to reflect on time and change: the wind shifting the sand, wearing away the rocks, the water carving away at the driftwood, the trees and grasses growing up through it all, seeding and dying and sprouting again.
+
+  - type: gallery
+    prominence: large
+    images:
+      - sources:
+          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0771.jpg
+        alt: Asateague Island
+      - sources:
+          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0821.jpg
+        alt: Asateague Island
+      - sources:
+          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0766.jpg
+        alt: Asateague Island
+      - sources:
+          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0838.jpg
+        alt: Asateague Island
+      - sources:
+          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0897.jpg
+        alt: Asateague Island
+      - sources:
+          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0887.jpg
+        alt: Asateague Island
+
+  - type: passage
+    markdown: |-
+      At one point we came across what looked stone outcroppings in the sand. Strange and dark-colored, they were pitted and worn by the wind, cracked in some places and shattered in others. Little piles of rubble were strewn around the larger pieces. My wife's mom, Joann, pointed out that it was not stone at all, but actually a very old, abandoned road. It's mostly buried now, but where the asphalt is exposed it's been carved into little canyons and mesas, in more or less exactly the same way sand and wind created much bigger versions out west.
+
+  - type: figure
+    prominence: large
+    sources:
+      - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0856.jpg
+    alt: Abandoned road
+
+  - type: gallery
+    prominence: large
+    images:
+      - sources:
+          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0859.jpg
+        alt: Abandoned road
+      - sources:
+          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0854.jpg
+        alt: Abandoned road
+      - sources:
+          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0853.jpg
+        alt: Abandoned road
+
+  - type: passage
+    markdown: |-
+      Joann told me this would be an excellent thing to paint and I agreed, though it took me awhile to figure out how the composition should work. I finally settled on a low angle that leaves scale a bit ambiguous. I decided to keep colors subdued, and though I really like haze and low-key lighting I made myself stick with the bright, dry afternoon sun I remembered. A bit out of my comfort zone, and surprisingly hard to get right.
+
+  - type: gallery
+    prominence: large
+    size: large
+    images:
+      - sources:
+          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF1534.jpg
+        alt: Pencils
+      - sources:
+          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF1535.jpg
+        alt: Inking
+      - sources:
+          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF1571.jpg
+        alt: Inking
+      - sources:
+          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF1572.jpg
+        alt: Inking
+      - sources:
+          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF1574.jpg
+        alt: Assistant
+
+  - type: passage
+    markdown: |-
+      I don't like to make work that shouts at you, as a rule, and this is one of the quieter pictures I think I've done. Sometimes I wonder if I should have added more color. But then I'm proud of its depth and subtlety; it rewards you for spending time with it.
+
+  - type: note
+    markdown: |-
+      _Special thanks to Joann Wheeler for suggesting this subject._

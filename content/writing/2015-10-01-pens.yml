@@ -1,5 +1,5 @@
-title: "On fountain pens and brave new worlds"
-subtitle: "In which I find something else to nerd out about"
+title: On fountain pens and brave new worlds
+subtitle: In which I find something else to nerd out about
 tags:
   - gear
   - drawing
@@ -13,8 +13,8 @@ body:
       I found a [specialty pen shop](http://www.penboutique.com) nearby, where I picked up this great Pilot Namiki fountain pen. Super smooth, and allows just a bit of modulation in the line, nice heft to it.
   - type: figure
     sources:
-      - path: "/images/uploads/pen.jpg"
-    alt: "My shiny new pen"
+      - path: /images/uploads/pen.jpg
+    alt: My shiny new pen
     prominence: small
   - type: passage
     markdown: |-
@@ -25,6 +25,6 @@ body:
       So I was really interested to hear that fountain pens offered more sensitivity. After playing with mine for an hour or so, I can already feel a difference. So, cheers, Dan Berry.
 
       Dan Berry also has a wonderful podcast called ["Make It Then Tell Everybody"](http://makeitthentelleverybody.com) which you should listen to immediately.
-  - type: postscript
+  - type: update
     markdown: |-
-      **Update:** [Advice from Dan on choosing a fountain pen for drawing.](http://www.thingsbydan.co.uk/2016/08/an-awesome-inking-pen/)
+      [Advice from Dan on choosing a fountain pen for drawing](http://www.thingsbydan.co.uk/2016/08/an-awesome-inking-pen/)

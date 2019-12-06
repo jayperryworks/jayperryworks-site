@@ -64,37 +64,36 @@
       height: 0;
       @include border.add('top');
     }
-  }
 
-  // footnotes
-  :global(.footnotes) {
-    @include border.add('top');
-    @include color.add-fg('tertiary');
-    font-size: type.scale('zeta');
-    margin-bottom: space();
-    margin-top: space();
-    padding-top: space();
-
-    :global(li),
-    :global(p) {
+    // footnotes
+    :global(.footnotes) {
       @include color.add-fg('tertiary');
-      @include type.font-accent;
       font-size: type.scale('zeta');
-      letter-spacing: 0.02em;
-    }
-  }
+      margin-bottom: space();
+      margin-top: space();
+      padding-top: space();
 
-  :global(.footnote) {
-    @include border.add($style: 'secondary');
-    @include border.radius;
-    @include type.font-accent;
-    background-color: transparent;
-    border-color: inherit;
-    color: inherit;
-    display: inline-block;
-    line-height: 1;
-    margin-left: 0.25em;
-    padding: 0.25em 1em;
+      :global(li),
+      :global(p) {
+        @include color.add-fg('tertiary');
+        @include type.font-accent;
+        font-size: type.scale('zeta');
+        letter-spacing: 0.02em;
+      }
+    }
+
+    :global(.footnote) {
+      @include border.add($style: 'secondary');
+      @include border.radius;
+      @include type.font-accent;
+      background-color: transparent;
+      border-color: inherit;
+      color: inherit;
+      display: inline-block;
+      line-height: 1;
+      margin-left: 0.25em;
+      padding: 0.25em 1em;
+    }
   }
 </style>
 
