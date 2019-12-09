@@ -8,7 +8,7 @@
   import Wrapper from './Wrapper.svelte'
   import ResponsiveImage from './ResponsiveImage.svelte'
 
-  export let sections
+  export let sections, dropCap = true
 
   $: firstPassage = sections.find((section) => section.type == 'passage')
 
@@ -57,7 +57,7 @@
 
     {#if section.type == 'passage'}
       <Wrapper class="section-text">
-        <Passage html={section.html} lead={section == firstPassage} />
+        <Passage html={section.html} lead={dropCap && section == firstPassage} />
       </Wrapper>
     {/if}
 

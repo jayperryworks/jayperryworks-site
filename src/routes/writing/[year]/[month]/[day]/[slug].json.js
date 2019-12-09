@@ -1,6 +1,6 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
-import render from '@/utils/renderMarkdown.js'
+import renderPostBody from '@/utils/renderPostBody.js'
 
 export function get(req, res, next) {
   const { year, month, day, slug } = req.params
@@ -22,27 +22,7 @@ export function get(req, res, next) {
     }))
   }
 
-  data.body.forEach((section) => {
-    // render out any markdown content
-    // -> place render in 'html' prop and delete 'markdown' prop
-    if (section.markdown) {
-      section.html = render(section.markdown)
-      delete section.markdown
-      return section
-    }
-
-    if (section.inlineMarkdown) {
-      section.html = render(section.inlineMarkdown, { inline: true })
-      delete section.inlineMarkdown
-      return section
-    }
-
-    if (section.caption) {
-      section.caption = render(section.caption)
-    }
-
-    return section
-  })
+  data.body = renderPostBody(data.body)
 
   res.writeHead(200, header)
   res.end(JSON.stringify(data))

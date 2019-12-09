@@ -11,10 +11,11 @@
 
 <script>
   import { format } from 'date-fns'
-  import PageTitle from '@/components/PageTitle.svelte'
   import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
-  import Wrapper from '@/components/Wrapper.svelte'
+  import PageTitle from '@/components/PageTitle.svelte'
+  import PostBody from '@/components/PostBody.svelte'
   import ResponsiveImage from '@/components/ResponsiveImage.svelte'
+  import Wrapper from '@/components/Wrapper.svelte'
 
   export let posts
 </script>
@@ -85,13 +86,7 @@
               >
                 {format(new Date(post.date.year, post.date.month, post.date.day), 'MMMM d, yyyy')}
               </time>
-              <div>
-                {#each post.excerpt as section}
-                  {#if section.type == 'passage'}
-                    {@html section.html}
-                  {/if}
-                {/each}
-              </div>
+              <PostBody sections={post.excerpt} dropCap={false} />
             </a>
           </li>
         {/each}

@@ -80,7 +80,7 @@
 
 <div class="wrapper">
   <table>
-    {#if header.length > 0}
+    {#if header && header.length > 0}
       <thead>
           <tr>
             {#each header as cell}
@@ -95,30 +95,28 @@
       </thead>
     {/if}
 
-    {#if body.length > 0}
-      <tbody>
-        {#each body as row}
-          <tr>
-            {#each row as cell, index}
-              {#if headingColumns.indexOf(index + 1) !== -1}
-                <th
-                  class={alignClass(header[index].align)}
-                  scope="row"
-                >
-                  {cell}
-                </th>
-              {:else}
-                <td class={alignClass(header[index].align)}>
-                  {cell}
-                </td>
-              {/if}
-            {/each}
-          </tr>
-        {/each}
-      </tbody>
-    {/if}
+    <tbody>
+      {#each body as row}
+        <tr>
+          {#each row as cell, index}
+            {#if headingColumns.indexOf(index + 1) !== -1}
+              <th
+                class={alignClass(header[index].align)}
+                scope="row"
+              >
+                {cell}
+              </th>
+            {:else}
+              <td class={alignClass(header[index].align)}>
+                {cell}
+              </td>
+            {/if}
+          {/each}
+        </tr>
+      {/each}
+    </tbody>
 
-    {#if footer.length > 0}
+    {#if footer && footer.length > 0}
       <tfoot>
         {#each footer as row}
           <tr>

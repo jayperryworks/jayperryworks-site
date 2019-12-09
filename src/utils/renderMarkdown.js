@@ -2,9 +2,15 @@
 import markdown from 'markdown-it'
 import footnotes from 'markdown-it-footnote'
 
-export default function (content, { inline = false } = {}) {
+export default function (
+  content,
+  {
+    inline = false,
+    html = false
+  } = {}
+) {
   // markdown-it options
-  const options = { typographer: true }
+  const options = { typographer: true, html: html }
 
   // if the 'inline' option is true, strip out p tags
   // and leave out block-level plugins (e.g. footnotes)

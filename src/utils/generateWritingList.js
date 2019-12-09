@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import yaml from 'js-yaml'
-import render from './renderMarkdown.js'
+import renderPostBody from './renderPostBody.js'
 
 export default function (dir) {
   return fs.readdirSync(dir).map((file) => {
@@ -14,9 +14,16 @@ export default function (dir) {
     }
     const slug = metadata.slice(3, metadata.length).join('-')
 
-    const data = yaml.safeLoad(
+    let data = yaml.safeLoad(
       fs.readFileSync(`${dir}/${file}`, 'utf-8')
     )
+
+    // pull any sections marked to be used in the excerpt
+    let excerpt = data.body.filter((section) => {
+      return section.useInExcerpt
+    })
+
+    const hasExcerpt = excerpt.length > 0
 
     return {
       cover: data.cover,
@@ -25,20 +32,10 @@ export default function (dir) {
       date,
       slug,
       path: `writing/${date.year}/${date.month}/${date.day}/${slug}`,
-      excerpt: data.body
-        .filter((section) => {
-          // keep only the sections flagged with useInExcerpt
-          return section.useInExcerpt
-        }).map((excerpt) => {
-          // render out any markdown content
-          // -> place render in 'html' prop and delete 'markdown' prop
-          if (excerpt.markdown) {
-            excerpt.html = render(excerpt.markdown)
-            delete excerpt.markdown
-            return excerpt
-          }
-          return excerpt
-        })
+      readMore: hasExcerpt,
+      excerpt: hasExcerpt
+        ? renderPostBody(excerpt)
+        : renderPostBody(data.body)
     }
   }).reverse() // display in order of most recent
 }
