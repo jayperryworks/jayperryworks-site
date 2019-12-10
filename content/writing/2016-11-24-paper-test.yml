@@ -39,6 +39,7 @@ body:
     inlineMarkdown: Bristol Board
 
   - type: figure
+    border: true
     prominence: large
     sources:
       - path: /images/uploads/2016-blog-paper_test-screen-v1-bristol_board.jpg
@@ -59,6 +60,7 @@ body:
       Strathmore Mixed Media paper
 
   - type: figure
+    border: true
     prominence: large
     sources:
       - path: /images/uploads/2016-blog-paper_test-screen-v2-mixed_media.jpg
@@ -78,6 +80,7 @@ body:
     inlineMarkdown: Fabriano Hot Press watercolor paper
 
   - type: figure
+    border: true
     prominence: large
     sources:
       - path: /images/uploads/2016-blog-paper_test-screen-v3-hot_press.jpg
@@ -97,6 +100,7 @@ body:
     inlineMarkdown: Cold Press watercolor paper
 
   - type: figure
+    border: true
     prominence: large
     sources:
       - path: /images/uploads/2016-blog-paper_test-screen-v4-cold_press.jpg
@@ -122,15 +126,19 @@ body:
       - sources:
         - path: /images/uploads/2016-blog-paper_test-screen-v1-bristol_board.jpg
         alt: Bristol Board paper test scan
+        border: true
       - sources:
         - path: /images/uploads/2016-blog-paper_test-screen-v2-mixed_media.jpg
         alt: Mixed Media paper test scan
+        border: true
       - sources:
         - path: /images/uploads/2016-blog-paper_test-screen-v3-hot_press.jpg
         alt: Fabriano hot press paper test scan
+        border: true
       - sources:
         - path: /images/uploads/2016-blog-paper_test-screen-v4-cold_press.jpg
         alt: Strathmore 300-series cold press paper test scan
+        border: true
 
   - type: table
     prominence: large

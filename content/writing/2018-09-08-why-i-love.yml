@@ -1,0 +1,26 @@
+title: The New York Times' "Why I love..." series
+tags:
+  - design
+  - interactive
+  - editorial
+  - storytelling
+  - inspiration
+body:
+  - type: passage
+    markdown: |-
+      The other day I ran across [this lovely series of articles in the New York Times](https://www.nytimes.com/interactive/2018/08/20/arts/met-buddha-sculpture.html) called "Why I love...". [Here’s a great one breaking down a bit by Robin Williams.](https://www.nytimes.com/interactive/2018/08/20/arts/robin-williams-bit.html)
+
+      The articles are fascinating and super fun to read, but the "editorial UI" design here is brilliant (and subtle) as well. The way video clips, stills, and references are mixed with the text make it feel almost like cross-cutting B-roll in a documentary: you read a paragraph or two of the author’s comments, then see what they’re talking about. This sounds maybe simple or even obvious but getting it right on a webpage (that has to work on many devices, in many browsers, at many sizes) is an _awful_ lot harder than it looks. The Gray Lady’s designers have struck a perfect balance in their layouts between text and illustration that allows each to enrich the other instead of distracting.
+
+      This is genius too: when they quote a line from the bit, they make the text into a button for an actual audio clip:
+
+  - type: figure
+    prominence: small
+    sources:
+      - path: /images/uploads/inline-player.jpg
+    alt: Inline audio player on the New York Times
+    border: true
+
+  - type: passage
+    markdown: |-
+      The way the text background becomes a progress bar for playback is just... oof. I wish I’d thought of that.

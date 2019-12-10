@@ -28,10 +28,11 @@
 
 <style type="text/scss">
   @use 'config/border';
+  @use 'config/type';
 
   ul {
     margin: 0 0 1em 0;
-    line-height: 1.5;
+    line-height: type.leading();
   }
 
   li + li {
@@ -84,7 +85,8 @@
                 class="
                   c-fg-tertiary
                   display-block
-                  padding-y-xnarrow
+                  padding-top-xxnarrow
+                  padding-bottom
                   t-font-accent
                   t-scale-zeta
                   t-weight-bold

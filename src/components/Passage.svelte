@@ -56,6 +56,11 @@
       }
     }
 
+    :global(p),
+    :global(li) {
+      line-height: type.leading();
+    }
+
     // horizontal rules
     // -> created for footnotes
     > :global(hr) {

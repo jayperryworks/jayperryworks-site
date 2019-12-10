@@ -80,7 +80,7 @@ $leading: (
   'default': 1.7
 );
 
-@function leading($name) {
+@function leading($name: 'default') {
   @return map-get($leading, $name);
 }
 
