@@ -1,5 +1,7 @@
 title: A visit to the farm
-image: 2017-blog-farm-05.jpeg
+cover:
+  sources:
+    - path: /images/uploads/2017-blog-farm-05.jpeg
 tags:
   - photography
 body:
