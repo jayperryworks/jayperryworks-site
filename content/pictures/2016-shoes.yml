@@ -5,7 +5,7 @@ tags:
   - india ink
   - digital
 cover:
-  - path: /images/uploads/work-2016-shoes@1200.jpg
+  - path: /images/uploads/work-2016-shoes%401200.jpg
 thumb:
   - path: /images/uploads/work-2016-shoes-thumb.jpg
 format: Digital painting
@@ -17,5 +17,5 @@ editions:
     border: 1
     price: 30
     photo:
-      - path: /images/uploads/work-2016-shoes-print@1200.jpg
+      - path: /images/uploads/work-2016-shoes-print%401200.jpg
     url: https://www.etsy.com/listing/584345402/art-print-shoes

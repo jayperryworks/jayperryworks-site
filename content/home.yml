@@ -1,14 +1,14 @@
 cover:
   sources:
-    - path: "/images/uploads/home-cover-01@400w.jpg"
+    - path: "/images/uploads/home-cover-01%40400w.jpg"
       size: 400
-    - path: "/images/uploads/home-cover-01@800w.jpg"
+    - path: "/images/uploads/home-cover-01%40800w.jpg"
       size: 800
-    - path: "/images/uploads/home-cover-01@1200w.jpg"
+    - path: "/images/uploads/home-cover-01%401200w.jpg"
       size: 1200
-    - path: "/images/uploads/home-cover-01@1600w.jpg"
+    - path: "/images/uploads/home-cover-01%401600w.jpg"
       size: 1600
-    - path: "/images/uploads/home-cover-01@2000w.jpg"
+    - path: "/images/uploads/home-cover-01%402000w.jpg"
       size: 2000
   alt: Cover image
 

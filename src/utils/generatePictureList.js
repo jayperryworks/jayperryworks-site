@@ -4,6 +4,8 @@ import yaml from 'js-yaml'
 import render from './renderMarkdown.js'
 
 export default function (dir) {
+  // Use reduce to eliminate dotfiles from directory array
+  // https://stackoverflow.com/questions/24806772/how-to-skip-over-an-element-in-map#24806827
   return fs.readdirSync(dir).reduce((result, file) => {
     const filename = path.parse(file).name
 

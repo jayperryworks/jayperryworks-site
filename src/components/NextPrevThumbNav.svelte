@@ -250,6 +250,7 @@
                 <ResponsiveImage
                   sources={nav.next.thumbnail}
                   alt={nav.next.title}
+                  border
                 />
               </div>
               <figcaption class="card-content gutter">
