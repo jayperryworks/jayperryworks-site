@@ -78,7 +78,7 @@
             <a
               class="t-link-undecorated"
               rel="prefetch"
-              href={picture.path}
+              href="{picture.path}"
             >
               <ResponsiveImage
                 sources={picture.thumbnail}

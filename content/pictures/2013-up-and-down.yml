@@ -20,6 +20,7 @@ editions:
     photo:
       - path: /images/uploads/work-2013-up_and_down-12x18.jpg
     url: https://www.etsy.com/listing/169108743/
+
   - name: medium
     type: giclee
     height: 12
