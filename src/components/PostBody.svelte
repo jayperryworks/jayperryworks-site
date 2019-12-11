@@ -4,9 +4,9 @@
   import Gallery from './Gallery.svelte'
   import Note from './Note.svelte'
   import Passage from './Passage.svelte'
+  import ResponsiveImage from './ResponsiveImage.svelte'
   import Table from './Table.svelte'
   import Wrapper from './Wrapper.svelte'
-  import ResponsiveImage from './ResponsiveImage.svelte'
 
   export let sections, dropCap = true
 
@@ -106,8 +106,9 @@
     {/if}
 
     {#if section.type == 'update'}
-      <Wrapper class="border-top section-text">
+      <Wrapper class="section-text">
         <h3 class="
+          border-top
           padding-bottom-narrow
           padding-top
           t-case-upper

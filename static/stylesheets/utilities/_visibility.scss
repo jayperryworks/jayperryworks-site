@@ -1,10 +1,6 @@
 // Visibility utilities
 
 // Allow 'important!' here because we want the styles to always apply in small utility classes
-// sass-lint:disable no-important
-// sass-lint:disable class-name-format
-// -> allow '@[state]' suffixes
-
 @use 'bourbon';
 @use '../config/breakpoints';
 

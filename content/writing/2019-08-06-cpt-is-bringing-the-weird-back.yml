@@ -1,0 +1,24 @@
+title: CPT is bringing the weird back
+tags:
+  - design
+  - interactive
+  - inspiration
+body:
+  - type: passage
+    useInExcerpt: true
+    markdown: |-
+      The “[Center for Philosophical Technologies](https://www.centerforphilosophicaltechnologies.org)” has one of the weirdest websites I’ve seen in awhile. Somebody really went nuts with `RGBA` and `background-gradient`. The UI is almost defiantly irrational, with odd punctuation everywhere, navigational elements strewn around the layout like somebody upended a box of tracing paper, and even their ‘logo’ is pulled apart and scattered across the top of the homepage (literally) at random.
+
+      And yet… it’s really quite usable nonetheless.
+
+  - type: passage
+    markdown: |-
+      At first glance it just feels inscrutable, but after a few seconds of playing with stuff you can see there's a logic to it. It speaks its own alien language, but the grammar is consistent and easy to learn.
+
+      Looking at this site makes me feel kind of wistful, like when you hear an old song for the first time in 15 years. This brings back a rush of good memories of the odd and experimental websites that seemed more common in the early aughts, back when the rules for UX hadn’t really been written yet and, I dunno, people were maybe just more willing to try stuff.
+
+      It’s cool to see that this kind of experimentation &mdash; this kind of wonderful fun weirdness for the sake of being weird &mdash; seems to be coming back as new CSS features are more widely supported and (maybe more importantly) as I guess we all are getting bored with following formulas.
+
+  - type: note
+    markdown: |-
+      Hat tip to [Typewolf](https://www.typewolf.com/site-of-the-day/center-for-philosophical-technologies), where I found the link.

@@ -48,10 +48,6 @@ favoriteThings:
     - history
 
 tableOfContents:
-  # - heading: Design work
-  #   link: design
-  #   description: >-
-  #     Things I've made for other people, which I hope have been useful.
   - heading: Prints & paintings
     link: pictures
     description: >-

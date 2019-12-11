@@ -61,6 +61,14 @@
       line-height: type.leading();
     }
 
+    :global(p + p),
+    :global(p + ul),
+    :global(p + ol),
+    :global(ul + p),
+    :global(ol + p) {
+      margin-top: 1em;
+    }
+
     // horizontal rules
     // -> created for footnotes
     > :global(hr) {

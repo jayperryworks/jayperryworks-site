@@ -37,6 +37,7 @@ editions:
     url: https://www.etsy.com/listing/725274518/seasons-winter
     width: 24
     height: 16
+
   - border: 1
     photo:
       - path: /images/uploads/work-2019-seasons-winter-medium-DSCF0201@2000w.jpg
@@ -53,6 +54,7 @@ editions:
     url: https://www.etsy.com/listing/725274518/seasons-winter
     width: 18
     height: 12
+
   - border: 1
     photo:
       - path: /images/uploads/work-2019-seasons-winter-small-DSCF0205@2000w.jpg

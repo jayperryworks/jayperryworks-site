@@ -54,10 +54,6 @@ p {
   margin-bottom: 0;
   margin-top: 0;
 
-  & + & {
-    margin-top: 1em;
-  }
-
   strong {
     @include type.font-body(bold);
   }
@@ -132,7 +128,6 @@ address,
 h1,
 .t-scale-alpha {
   @include type.fluid($size-min: 'beta', $size-max: 'alpha');
-  letter-spacing: -0.01em;
 
   &.t-font-accent {
     @include type.font-accent('light');

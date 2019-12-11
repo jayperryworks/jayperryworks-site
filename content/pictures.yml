@@ -8,7 +8,6 @@ intro: |-
 
 # descriptions of the printing formats
 printDescriptions:
-  # markdown allowed here
   - type: giclee
     description: |-
       ['Giclee'](https://en.wikipedia.org/wiki/Giclée) is a term for high-quality digital prints. Mine are printed at [Archival Arts](http://archivalarts.com) in Baltimore on heavy, textured, acid-free cotton rag paper, using archival, pigment-based inks. All prints are individually signed and numbered.

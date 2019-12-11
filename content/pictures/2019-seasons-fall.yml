@@ -6,7 +6,6 @@ cover:
   - path: /images/uploads/work-2018-seasons-fall-1600w.jpg
 thumb:
   - path: /images/uploads/work-2018-seasons-thumb.jpg
-full_path: true
 editions:
   - border: 1
     photo:
@@ -17,6 +16,7 @@ editions:
     url: 'https://www.etsy.com/listing/651598962/seasons-fall'
     width: 24
     height: 16
+
   - border: 1
     photo:
       - path: /images/uploads/seasons-fall-medium-1200.jpg
@@ -26,6 +26,7 @@ editions:
     url: 'https://www.etsy.com/listing/651598962/seasons-fall'
     width: 18
     height: 12
+
   - border: 1
     photo:
       - path: /images/uploads/seasons-fall-small-1200.jpg
