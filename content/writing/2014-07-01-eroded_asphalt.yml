@@ -10,7 +10,7 @@ cover:
 body:
   - type: note
     markdown: |-
-      This is a bit of the story behind a recent painting, [Eroded Asphalt](/work/prints/2014/eroded-asphalt/).
+      This is a bit of the story behind a recent painting, [Eroded Asphalt](pictures/2014/eroded-asphalt).
 
   - type: passage
     useInExcerpt: true
