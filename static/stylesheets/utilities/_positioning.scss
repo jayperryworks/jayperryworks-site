@@ -1,0 +1,78 @@
+// Global positioning utilities
+// -> place an element relative to its parent
+
+@use "../config/positioning";
+@use "../config/breakpoints";
+
+// --- Z index ---
+// -> utils to set global stacking order
+@each $name, $index in positioning.$z-indexes {
+  .z-#{$name} {
+    z-index: $index !important;
+  }
+}
+
+// --- Display ---
+.display-inline {
+  display: inline;
+}
+
+@include breakpoints.suffix(".display-inline-block", true, $sizes: "xsmall") {
+  display: inline-block;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-flex {
+  @supports (display: flex) {
+    display: flex;
+  }
+}
+
+.display-flex-column {
+  @supports (display: flex) {
+    flex-direction: column;
+  }
+}
+
+.display-flex-justify {
+  justify-content: space-between;
+}
+
+.display-flex-fill {
+  flex: 1;
+}
+
+// --- Positioning utils ---
+
+// center a block element
+@include breakpoints.suffix('.centered-block', true) {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.float-right {
+  float: right;
+}
+.float-left {
+  float: left;
+}
+
+.position-absolute {
+  position: absolute !important;
+}
+
+.position-relative {
+  position: relative !important;
+}
+
+.vertical-align-top {
+  vertical-align: top !important;
+}
+
+.overflow-hidden {
+  overflow: hidden !important;
+}

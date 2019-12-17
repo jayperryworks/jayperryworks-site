@@ -1,0 +1,180 @@
+//  Type config
+@use 'bourbon';
+@use 'breakpoints';
+@use 'paths';
+@use 'scale';
+@use 'helpers';
+
+// --- Sizing & scale ---
+
+// global type scale
+// -> we could compute this via the modular scale mixins,
+// -> but doing it by hand allows us to tweak certain sizes to suit the fonts we're using
+$_scale: (
+  'alpha': scale.get(6),
+  'beta': scale.get(4),
+  'gamma': scale.get(2),
+  'delta': scale.get(1),
+  'epsilon': scale.get(0),
+  'zeta': scale.get(-1),
+  'eta': scale.get(-2),
+  'theta': scale.get(-3)
+);
+
+@function scale($size) {
+  @return map-get($_scale, $size);
+}
+
+// default type sizes
+$size-default: 1rem;
+
+// set type to default body size using REMs
+// -> useful for resetting type size on a container to override parents
+@mixin size-default {
+  font-size: $size-default;
+}
+
+// set up viewport-sized fluid type scaling, with minimum and maximum sizes
+// -> a modified version of Indrek Paas' fluid type mixin: https://www.sassmeister.com/gist/7f22e44ace49b5124eec
+// -> which is based on Mike Riethmuller's formula: https://madebymike.com.au/writing/fluid-type-calc-examples/
+// -> also inspired by Eduardo Boucas' mixin: https://eduardoboucas.com/blog/2015/06/18/viewport-sized-typography-with-minimum-and-maximum-sizes.html
+@mixin fluid(
+  $properties: 'font-size',
+  $size-min: 'eta',
+  $size-max: 'alpha',
+  $screen-min: 'xsmall',
+  $screen-max: 'xlarge'
+) {
+
+  // set base (min) size as default
+  @each $property in $properties {
+    #{$property}: scale($size-min);
+  }
+
+  // start to scale up at the minimum screen size
+  @include breakpoints.query('>#{$screen-min}') {
+    @each $property in $properties {
+      // sass-lint:disable no-duplicate-properties
+      // -> using redundant props as fallback here
+
+      // use an in-between value as the fallback where vw units or calc aren't supported
+      #{$property}: ((scale($size-min) + scale($size-max)) / 2);
+
+      // use calc and vw units to make the type scale fluidly between two sizes
+      #{$property}: calc(#{scale($size-min)} + #{bourbon.strip-unit(scale($size-max) - scale($size-min))} * (100vw - #{bourbon.strip-unit(breakpoints.get($screen-min))}rem) / #{bourbon.strip-unit(breakpoints.get($screen-max) - breakpoints.get($screen-min))});
+    }
+  }
+
+  // stop scaling at the maximum screen size
+  @include breakpoints.query('>#{$screen-max}') {
+    @each $property in $properties {
+      #{$property}: scale($size-max);
+    }
+  }
+}
+
+// --- Leading ---
+
+$leading: (
+  'tight': 1.2,
+  'default': 1.7
+);
+
+@function leading($name: 'default') {
+  @return map-get($leading, $name);
+}
+
+// --- Fonts ---
+// -> font-face mixins use Bourbon
+
+// headline
+@include bourbon.font-face(
+  "publico-headline-normal",
+  "#{paths.$fonts}/PublicoHeadline-Roman-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: normal;
+  font-weight: normal;
+}
+
+// body
+@include bourbon.font-face(
+  "publico-text-normal-normal",
+  "#{paths.$fonts}/PublicoText-Roman-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: normal;
+  font-weight: normal;
+}
+@include bourbon.font-face(
+  "publico-text-normal-italic",
+  "#{paths.$fonts}/PublicoText-Italic-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: italic;
+  font-weight: normal;
+}
+
+// accent
+@include bourbon.font-face(
+  "guardian-sans-light",
+  "#{paths.$fonts}/GuardianSans-Light-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: normal;
+  font-weight: normal;
+}
+@include bourbon.font-face(
+  "guardian-sans-normal",
+  "#{paths.$fonts}/GuardianSans-Regular-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: normal;
+  font-weight: normal;
+}
+@include bourbon.font-face(
+  "guardian-sans-bold",
+  "#{paths.$fonts}/GuardianSans-Semibold-Web",
+  ('ttf', 'woff')
+) {
+  font-display: swap;
+  font-style: normal;
+  font-weight: bold;
+}
+
+
+// --- Font mixins ---
+
+$_font-stack-trebuchet: 'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif;
+
+// Display
+@mixin font-display($important: false) {
+  font-family: helpers.important(
+    #{"publico-headline-normal", bourbon.$font-stack-georgia}
+  , $important);
+  font-weight: normal;
+  font-style: normal;
+}
+
+// Accent
+@mixin font-accent($weight: 'normal', $important: false) {
+  font-family: helpers.important(#{
+    "guardian-sans-#{$weight}", $_font-stack-trebuchet
+  }, $important);
+  font-weight: if($weight == 'light', normal, unquote($weight));
+  font-style: normal;
+}
+
+// Body
+@mixin font-body($weight: 'normal', $style: 'normal', $important: false) {
+  font-family: helpers.important(#{
+    "publico-text-#{$weight}-#{$style}", bourbon.$font-stack-georgia
+  }, $important);
+  font-weight: #{$weight};
+  font-style: #{$style};
+}

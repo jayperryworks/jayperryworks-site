@@ -1,0 +1,19 @@
+title: An aero bicycle frame... made from wood
+tags:
+  - bikes
+  - inspiration
+body:
+  - type: passage
+    useInExcerpt: true
+    markdown: |-
+      [HTech's new road bike](https://cyclingtips.com/2019/05/htechs-svelter-an-aero-disc-road-bike-made-of-wood/) is absolutely stunning. It's an exotic aero road bike that looks as state-of-the-art as any of the bikes you'd see on the line at the Tour de France. But it's made mostly from _trees_.
+
+      There’s something that always intrigues me about using traditional or natural materials to build something technologically “modern.” I love the kind of yin-yang of technology and hand-craftedness on a bike that’s been designed with computers, wind tunnels, and CNC machines… and then finished by hand, slowly, with sandpaper and lacquer. There's over 300 hours of labor in every frame.
+
+  - type: passage
+    markdown: |-
+      None of this is cheap. Each frame (just the frame, not a whole bike) is over $5K, which of course is money that would buy you a used car. But the fact that a small shop like this is able to offer such a frame at retail at all is pretty amazing. Considering that high-end road frames from [major manufacturers like Trek](https://www.trekbikes.com/us/en_US/bikes/road-bikes/performance-road-bikes/madone/madone-slr/madone-slr-disc-frameset/p/29527/) routinely go for $4k or more, I'm actually amazed that a small-batch, hand-built frame like this can be produced at such "low" prices.
+
+      I believe we're living in interesting times for hardware makers and light industry. Computer-aided-design (CAD), 3D printing, and CNC machining tools have gotten more affordable and accessible, allowing small shops to produce small-batch and customizable product lines at competitive prices. Economies of scale are less critical than they used to be. The internet allows these shops to market globally, and there's affordable, efficent international shipping to fulfill orders almost anywhere, quickly.
+
+      If you have a crazy idea and a garage, there's no better time than now to have a go.

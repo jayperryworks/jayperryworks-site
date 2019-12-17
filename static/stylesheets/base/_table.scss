@@ -1,0 +1,97 @@
+// =============================================================================
+//  Table globals and utilities
+// =============================================================================
+
+@use '../config/border';
+@use '../config/breakpoints';
+@use '../config/color';
+@use '../config/scale';
+@use '../config/type';
+
+$table-padding: 0.5em 0.5em;
+
+// Globals
+// -----------------------------------------------------------------------------
+
+table,
+.table {
+  @include type.font-accent;
+  font-size: type.scale('zeta');
+  width: 100%;
+}
+
+thead,
+.table-header {
+  @include border.add(bottom, thick, $color: 'primary');
+  @include color.add-fg('primary');
+  @include type.font-accent('bold');
+  font-size: type.scale('eta');
+  text-align: left;
+  text-transform: uppercase;
+  vertical-align: bottom;
+
+  td,
+  .table-cell {
+    padding-bottom: 0.5em;
+  }
+}
+
+tbody,
+.table-body {
+  // width: 100%;
+}
+
+tr,
+.table-row {
+  &:nth-child(even) {
+    background-color: lighten(color.get('well'), 5);
+  }
+}
+
+td,
+th,
+.table-cell {
+  position: relative;
+  padding: $table-padding;
+}
+
+/* make tables act like a definition list on small screens */
+@include breakpoints.query('<small') {
+  table, .table,
+  thead, .table-header,
+  tbody, .table-body,
+  th,
+  td,
+  tr {
+    // font-size: type.scale('zeta');
+    display: block;
+  }
+
+  thead, .table-header { visibility: hidden; }
+
+  tr {
+    @include border.add('top');
+    padding-top: 1em;
+    padding-bottom: 1em;
+
+    &:last-child { @include border.add('bottom'); }
+  }
+
+  td {
+    $label-w: 25%;
+
+    padding-left: $label-w !important;
+
+    &::before {
+      @include type.font-accent('bold');
+      content: attr(data-label);
+      left: nth($table-padding, 2);
+      padding-right: 1em;
+      position: absolute;
+      // should be same as padding for td's above
+      top: nth($table-padding, 1);
+      white-space: nowrap;
+      width: $label-w;
+    }
+  }
+}

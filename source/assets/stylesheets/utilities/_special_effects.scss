@@ -1,9 +1,0 @@
-// Special effects utility classes
-@import '../config/special_effects';
-@import '../config/spacing';
-@import '../config/breakpoints';
-@import '../config/positioning';
-
-.se-shadow {
-  @include se-shadow();
-}

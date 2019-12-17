@@ -1,0 +1,58 @@
+cover:
+  sources:
+    - path: "/images/uploads/home-cover-01%40400w.jpg"
+      size: 400
+    - path: "/images/uploads/home-cover-01%40800w.jpg"
+      size: 800
+    - path: "/images/uploads/home-cover-01%401200w.jpg"
+      size: 1200
+    - path: "/images/uploads/home-cover-01%401600w.jpg"
+      size: 1600
+    - path: "/images/uploads/home-cover-01%402000w.jpg"
+      size: 2000
+  alt: Cover image
+
+# markdown allowed here
+intro: My name is Jay and I'm a designer, illustrator, and writer living near Baltimore.
+
+favoriteThings:
+  analog:
+    - ink
+    - fountain pens
+    - cotton paper
+    - rangefinders
+    - slide film
+    - watercolors
+    - bookbinding
+  digital:
+    - typography
+    - javascript
+    - modular scales
+    - CSS
+    - markup
+    - content modeling
+    - user experience
+    - colored pixels
+    - compositing
+    - design systems
+  inspiration:
+    - science fiction
+    - comics
+    - bicycles
+    - old rusty cars
+    - forests
+    - running
+    - mountains
+    - gardening
+    - geology
+    - history
+
+tableOfContents:
+  - heading: Prints & paintings
+    link: pictures
+    description: >-
+      Pictures I've painted and sketched and composited and imagined.
+  - heading: Writing
+    link: writing
+    description: >-
+      Thoughts on, well, anything that strikes me.

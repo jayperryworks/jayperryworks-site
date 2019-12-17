@@ -1,0 +1,76 @@
+//  Global color utilities
+@use '../config/color';
+
+// global color custom properties - define defaults at root
+:root {
+  @include color.theme('default');
+
+  #{color.custom-prop('highlight', 'light')}: #{color.get('highlight', $grade: color.$shade-value)};
+  #{color.custom-prop('highlight')}: #{color.get('highlight')};
+  #{color.custom-prop('highlight', 'dark')}: #{color.get('highlight', $grade: color.$shade-value)};
+}
+
+// --- Theme containers ---
+
+// base colors for body and all themes
+[data-theme],
+body {
+  @include color.add('border-color', 'border');
+  @include color.add-bg('bg');
+  @include color.add-fg('secondary');
+
+  // highlight color when you select something
+  &::selection {
+    @include color.add-bg('highlight');
+    @include color.add-fg('bg');
+    text-shadow: none;
+  }
+}
+
+// theme variations
+@each $theme, $colors in color.$themes {
+  [data-theme~='#{$theme}'] {
+    @include color.theme($theme);
+  }
+}
+
+// --- Utility classes ---
+// -> use on individual elements to apply special color treatment
+
+.c-fg-primary {
+  @include color.add-fg('primary', $important: true);
+}
+.c-fg-secondary {
+  @include color.add-fg('secondary', $important: true);
+}
+.c-fg-tertiary {
+  @include color.add-fg('tertiary', $important: true);
+}
+
+.c-fg-bg {
+  @include color.add-fg('bg');
+}
+
+.c-fg-highlight {
+  @include color.add-fg('highlight', $important: true);
+}
+
+.c-bg-highlight {
+  @include color.add-bg('highlight', $important: true);
+}
+
+.c-bg-well {
+  @include color.add-bg('well');
+}
+
+.c-bg-island {
+  @include color.add-bg('island');
+}
+
+// kill background colors in print
+// -> note all elements are set to color: black in base/_print.scss
+@media print {
+  [class^="c-"] {
+    background-color: transparent !important;
+  }
+}
