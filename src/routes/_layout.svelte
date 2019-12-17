@@ -13,12 +13,19 @@
   @use 'config/positioning';
 
   // Sticky footer setup
-  html,
-  body {
-    min-height: 100%;
+  html {
+    height: 100%; // for older browsers
+
+    @supports (min-height: 100vh) {
+      height: auto;
+      min-height: 100vh;
+    }
   }
 
   body {
+    min-height: 100%;
+    min-height: 100vh;
+
     @supports (display: flex) {
       display: flex;
       flex-direction: column;
