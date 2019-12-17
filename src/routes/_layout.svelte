@@ -14,7 +14,7 @@
 
   // Sticky footer setup
   html {
-    height: 100%; // for older browsers
+    height: 100%; // for opera mini etc
 
     @supports (min-height: 100vh) {
       height: auto;
@@ -63,4 +63,4 @@
 <div id="main-wrapper">
   <slot></slot>
 </div>
-<MainFooter/>
+<MainFooter />
