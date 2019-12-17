@@ -5,14 +5,17 @@
 </script>
 
 <style type="text/scss" global>
+  // global/base styles
   @use 'global';
+
+  // config for this layout
   @use 'config/border';
   @use 'config/positioning';
 
   // Sticky footer setup
   html,
   body {
-    height: 100%;
+    min-height: 100%;
   }
 
   body {
