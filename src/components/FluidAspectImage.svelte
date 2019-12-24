@@ -49,16 +49,6 @@
     }
   }
 
-  // force an inline child image to conform to the aspect ratio of the aspect-content container
-  .content > :global(img) {
-    // display: inline-block;
-    // line-height: 100%;
-    // margin: 0;
-    // max-height: 100%;
-    // max-width: 100%;
-    // vertical-align: middle;
-  }
-
   // --- variations ---
   @include _aspect-variation();
 </style>

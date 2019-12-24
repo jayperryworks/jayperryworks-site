@@ -1,9 +1,7 @@
 <script>
   export let svg,
     size = '',
-    margin = '',
-    title = '',
-    role = 'presentation'
+    margin = ''
 
   let classes = ''
   export { classes as class }

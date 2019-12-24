@@ -19,6 +19,7 @@ export default function (dir) {
         fs.readFileSync(`${dir}/${filename}.yml`, 'utf-8')
       )
 
+      // place at front of array to order by most recent
       result.unshift({
         title: data.title,
         date: { year },
@@ -28,5 +29,5 @@ export default function (dir) {
       })
     }
     return result
-  }, []) // order by most recent
+  }, [])
 }

@@ -111,14 +111,7 @@
   }
 </style>
 
-<nav class="
-  c-bg-well
-  border-seam-top-offset
-  border-solid
-  border-top
-  padding-x-outside
-  padding-y-xwide
-">
+<nav class="c-bg-well border-seam-top-offset border-solid border-top padding-x-outside padding-y-xwide">
   <!-- heading and index link -->
   <div class="margin-bottom position-relative">
     <h2 class="t-align-center@small">
@@ -126,15 +119,7 @@
     </h2>
     <a
       href="pictures"
-      class="
-        index-button
-        t-case-upper
-        t-font-accent
-        t-link-undecorated
-        t-scale-zeta
-        t-weight-bold
-        c-fg-tertiary
-      "
+      class="index-button t-case-upper t-font-accent t-link-undecorated t-scale-zeta t-weight-bold c-fg-tertiary"
     >
       <Icon
         svg={index}
@@ -155,35 +140,23 @@
   <!-- prev/next cards -->
   <div class="overflow-hidden">
     <Bookend
+      breakpoint={breakpoint}
       align="stretch"
-      breakpoint="small"
       class="gutter-wrapper"
       fillSide="both"
       itemWidth="27rem"
     >
       <div
         slot="left"
-        class="
-          gutter
-          display-flex
-          display-flex-column
-          display-flex-fill
-        "
+        class="gutter display-flex display-flex-column display-flex-fill"
       >
         {#if nav.previous}
           <a
-            class="
-              card left
-              padding-narrow
-            "
+            class="card left padding-narrow"
             rel="prefetch"
             href={nav.previous.path}
           >
-            <figure class="
-              card-wrapper
-              gutter-wrapper
-              gutter-narrow
-            ">
+            <figure class="card-wrapper gutter-wrapper gutter-narrow">
               <div class="card-figure gutter">
                 <ResponsiveImage
                   sources={nav.previous.thumbnail}
@@ -192,13 +165,7 @@
                 />
               </div>
               <figcaption class="card-content gutter">
-                <h3 class="
-                  c-fg-tertiary
-                  t-font-accent
-                  t-weight-bold
-                  t-scale-zeta
-                  t-case-upper
-                ">
+                <h3 class="c-fg-tertiary t-font-accent t-weight-bold t-scale-zeta t-case-upper">
                   <Icon
                     svg={arrowLeft}
                     margin="right"
@@ -206,12 +173,9 @@
                   />
                   Previous
                 </h3>
-                <p class="
-                  padding-bottom-narrow
-                  padding-top-xxnarrow
-                  t-heading
-                  t-scale-gamma
-                ">{nav.previous.title}</p>
+                <p class="padding-bottom-narrow padding-top-xxnarrow t-heading t-scale-gamma">
+                  {nav.previous.title}
+                </p>
                 <Icon
                   svg={arrowLeft}
                   size="xlarge"
@@ -224,28 +188,15 @@
       </div>
       <div
         slot="right"
-        class="
-          gutter
-          display-flex
-          display-flex-column
-          display-flex-fill
-        "
+        class="gutter display-flex display-flex-column display-flex-fill"
       >
         {#if nav.next}
           <a
-            class="
-              card right
-              padding-narrow
-            "
+            class="card right padding-narrow"
             rel="prefetch"
             href={nav.next.path}
           >
-            <figure class="
-              card-wrapper
-              figure-right
-              gutter-wrapper
-              gutter-narrow
-            ">
+            <figure class="card-wrapper figure-right gutter-wrapper gutter-narrow">
               <div class="card-figure gutter">
                 <ResponsiveImage
                   sources={nav.next.thumbnail}
@@ -254,13 +205,7 @@
                 />
               </div>
               <figcaption class="card-content gutter">
-                <h3 class="
-                  c-fg-tertiary
-                  t-font-accent
-                  t-weight-bold
-                  t-scale-zeta
-                  t-case-upper
-                ">
+                <h3 class="c-fg-tertiary t-font-accent t-weight-bold t-scale-zeta t-case-upper">
                   Next
                   <Icon
                     svg={arrowRight}
@@ -268,12 +213,7 @@
                     class="no-margin-top hide-small-icon"
                   />
                 </h3>
-                <p class="
-                  padding-bottom-narrow
-                  padding-top-xxnarrow
-                  t-heading
-                  t-scale-gamma
-                ">{nav.next.title}</p>
+                <p class="padding-bottom-narrow padding-top-xxnarrow t-heading t-scale-gamma">{nav.next.title}</p>
                 <Icon
                   svg={arrowRight}
                   size="xlarge"
