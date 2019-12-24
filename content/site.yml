@@ -1,1 +1,18 @@
+# TODO: get site title, social media stuff in here and preload it before the server starts (session data? store?)
 url: https://jayperryworks.com
+
+# sitemap data for main pages (not posts)
+pages:
+  - data: content/home.yml
+    path: ''
+    priority: 1
+  - data: content/about.yml
+    path: about
+    priority: 0.4
+  - data: content/pictures.yml
+    path: pictures
+    priority: 0.8
+    change: monthly
+  - path: writing
+    priority: 0.8
+    change: weekly
