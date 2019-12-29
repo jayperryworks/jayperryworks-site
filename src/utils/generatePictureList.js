@@ -1,9 +1,9 @@
-import fs from 'fs'
-import path from 'path'
-import yaml from 'js-yaml'
-import render from './renderMarkdown.js'
+const fs = require('fs')
+const path = require('path')
+const yaml = require('js-yaml')
+const render = require('./renderMarkdown.js')
 
-export default function (dir) {
+module.exports = (dir) => {
   // Use reduce to eliminate dotfiles from directory array
   // https://stackoverflow.com/questions/24806772/how-to-skip-over-an-element-in-map#24806827
   return fs.readdirSync(dir).reduce((result, file) => {

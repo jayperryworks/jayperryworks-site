@@ -1,14 +1,14 @@
 // Global markdown renderer for the 'generate' utils
-import markdown from 'markdown-it'
-import footnotes from 'markdown-it-footnote'
+const markdown = require('markdown-it')
+const footnotes = require('markdown-it-footnote')
 
-export default function (
+module.exports = (
   content,
   {
     inline = false,
     html = false
   } = {}
-) {
+) => {
   // markdown-it options
   const options = { typographer: true, html: html }
 
