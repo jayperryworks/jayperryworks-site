@@ -16,3 +16,11 @@ pages:
   - path: writing
     priority: 0.8
     change: weekly
+
+permalinks:
+  - source: content/pictures
+    filename: ${year}-${slug}
+    path: ${year}/${slug}
+  - source: content/writing
+    filename: ${year}-${month}-${day}-${slug}
+    path: ${year}/${month}/${day}/${slug}

@@ -1,9 +1,9 @@
-import fs from 'fs'
-import path from 'path'
-import yaml from 'js-yaml'
-import renderPostBody from './renderPostBody.js'
+const fs = require('fs')
+const path = require('path')
+const yaml = require('js-yaml')
+const renderPostBody = require('./renderPostBody.js')
 
-export default function (dir) {
+module.exports = (dir) => {
   return fs.readdirSync(dir).reduce((result, file) => {
     const filename = path.parse(file).name
 

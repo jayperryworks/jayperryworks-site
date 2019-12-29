@@ -1,6 +1,6 @@
-import render from './renderMarkdown.js'
+const render = require('./renderMarkdown.js')
 
-export default function (body) {
+module.exports = (body) => {
   return body.map((section) => {
     // render out any markdown content
     // -> place render in 'html' prop and delete 'markdown' prop
