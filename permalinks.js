@@ -15,6 +15,12 @@ const filename = '2019-seasons-fall'
 
 const filenameArray = filename.split('-')
 
+function template(strings, ...keys) {
+  return keys
+}
+
+templateArray = template`${year}-${slug}`
+
 templateArray = template.split('-').map((value) => {
   return value.replace(':', '')
 })
