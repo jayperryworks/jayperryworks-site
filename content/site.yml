@@ -17,10 +17,17 @@ pages:
     priority: 0.8
     change: weekly
 
-permalinks:
+collections:
   - source: content/pictures
-    filename: ${year}-${slug}
-    path: ${year}/${slug}
+    filename: :year-:slug
+    path: pictures/:year/:slug
+    redirect:
+      before: 2019
+      oldPath: work/prints/:year/:slug
+
   - source: content/writing
-    filename: ${year}-${month}-${day}-${slug}
-    path: ${year}/${month}/${day}/${slug}
+    filename: :year-:month-:day-:slug
+    path: writing/:year/:month/:day/:slug
+    redirect:
+      before: 2019
+      oldPath: writing/:year/:month/:slug
