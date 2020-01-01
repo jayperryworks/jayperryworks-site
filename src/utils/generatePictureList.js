@@ -1,7 +1,11 @@
 const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
+const permalink = require('./permalink.js')
 const render = require('./renderMarkdown.js')
+const siteData = require('./siteData.js')
+
+const picturesConfig = siteData.collection('pictures')
 
 module.exports = (dir) => {
   // Use reduce to eliminate dotfiles from directory array
@@ -11,9 +15,7 @@ module.exports = (dir) => {
 
     // make sure we aren't accidentally reading a system dotfile
     if (filename[0] !== '.') {
-      const metadata = filename.split('-')
-      const year = metadata[0]
-      const slug = metadata.slice(1, metadata.length).join('-')
+      const metadata = permalink.fileMetadata(filename, picturesConfig.sourceTemplate)
 
       const data = yaml.safeLoad(
         fs.readFileSync(`${dir}/${filename}.yml`, 'utf-8')
@@ -22,10 +24,17 @@ module.exports = (dir) => {
       // place at front of array to order by most recent
       result.unshift({
         title: data.title,
-        date: { year },
-        slug,
+        date: {
+          year: metadata.year
+        },
+        slug: metadata.slug,
+        collection: picturesConfig.name,
         thumbnail: data.thumb,
-        path: `pictures/${year}/${slug}`
+        path: permalink.createPath(
+          filename,
+          picturesConfig.sourceTemplate,
+          picturesConfig.pathTemplate
+        )
       })
     }
     return result

@@ -18,16 +18,18 @@ pages:
     change: weekly
 
 collections:
-  - source: content/pictures
-    filename: :year-:slug
-    path: pictures/:year/:slug
+  - name: pictures
+    source: content/pictures
+    sourceTemplate: :year-:slug
+    pathTemplate: pictures/:year/:slug
     redirect:
       before: 2019
       oldPath: work/prints/:year/:slug
 
-  - source: content/writing
-    filename: :year-:month-:day-:slug
-    path: writing/:year/:month/:day/:slug
+  - name: writing
+    source: content/writing
+    sourceTemplate: :year-:month-:day-:slug
+    pathTemplate: writing/:year/:month/:day/:slug
     redirect:
       before: 2019
       oldPath: writing/:year/:month/:slug
