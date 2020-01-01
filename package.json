@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "sapper dev",
     "build": "sapper build --legacy",
-    "preexport": "node ./bin/sitemap",
+    "preexport": "node ./sitemap",
     "export": "sapper export --legacy",
     "start": "node __sapper__/build",
     "cy:run": "cypress run",
