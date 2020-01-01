@@ -1,10 +1,10 @@
 const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
-const generatePictureList = require('./src/utils/generatePictureList.js')
-const generateWritingList = require('./src/utils/generateWritingList.js')
-const siteData = require('./src/utils/siteData.js')
-const permalink = require('./src/utils/permalink.js')
+const generatePictureList = require('../src/utils/generatePictureList.js')
+const generateWritingList = require('../src/utils/generateWritingList.js')
+const siteData = require('../src/utils/siteData.js')
+const permalink = require('../src/utils/permalink.js')
 
 const status = 302
 
@@ -33,10 +33,10 @@ function render(list) {
 }
 
 fs.writeFileSync(
-  './static/_redirects',
+  path.join(__dirname, '../static/_redirects'),
   render([
     ...generateWritingList(
-      path.join(__dirname, './content/writing')
+      path.join(__dirname, '../content/writing')
     )
   ])
 )

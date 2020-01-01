@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "sapper dev",
     "build": "sapper build --legacy",
-    "preexport": "node ./sitemap && node ./redirects",
+    "preexport": "node ./scripts/sitemap && node ./scripts/redirects",
     "export": "sapper export --legacy",
     "start": "node __sapper__/build",
     "cy:run": "cypress run",
@@ -47,10 +47,10 @@
     "rollup-plugin-svelte": "^5.1.1",
     "rollup-plugin-svg": "^2.0.0",
     "rollup-plugin-svgo": "^1.1.0",
-    "rollup-plugin-terser": "^4.0.4",
+    "rollup-plugin-terser": "^5.1.3",
     "sapper": "^0.27.0",
     "sass": "^1.24.0",
-    "svelte": "^3.16.6",
+    "svelte": "^3.16.7",
     "svelte-preprocess": "^3.3.0"
   }
 }
