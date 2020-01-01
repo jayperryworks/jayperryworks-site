@@ -25,7 +25,7 @@ function render(list) {
       )
 
       if (post.date.year <= collection.redirect.before) {
-        result.push(`${(oldPath)}\t${post.path}\t${status}`)
+        result.push(`/${(oldPath)}\t${post.path}\t${status}`)
       }
     }
     return result
