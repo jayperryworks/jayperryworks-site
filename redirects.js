@@ -6,9 +6,11 @@ const generateWritingList = require('./src/utils/generateWritingList.js')
 const siteData = require('./src/utils/siteData.js')
 const permalink = require('./src/utils/permalink.js')
 
+const status = 302
+
 const picturesRedirect = {
   old: '/work/prints/*',
-  new: '/pictures/:splat\t302'
+  new: '/pictures/:splat'
 }
 
 function render(list) {
@@ -23,11 +25,11 @@ function render(list) {
       )
 
       if (post.date.year <= collection.redirect.before) {
-        result.push(`${(oldPath)}\t${post.path}\t302`)
+        result.push(`${(oldPath)}\t${post.path}\t${status}`)
       }
     }
     return result
-  }, [`${picturesRedirect.old}\t${picturesRedirect.new}`]).join('\n')
+  }, [`${picturesRedirect.old}\t${picturesRedirect.new}\t${status}`]).join('\n')
 }
 
 fs.writeFileSync(
