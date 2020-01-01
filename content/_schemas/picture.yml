@@ -1,0 +1,32 @@
+title: !!str
+date: !!date
+category: !!str #(prints, paintings) default prints
+color: !!str #(color hsl)
+tags: !!pairs
+  - !!str
+cover: !!omap
+  - path: !!str
+    width: !!int #(optional)
+thumb: !!omap
+  - path: !!str
+    width: !!int #(optional)
+format: !!str # default "Digital painting"
+# width/height are only for paintings/physical work
+width: !!int #(optional)
+height: !!int #(optional)
+intro: |- #(optional)
+  !markdown
+editions: !!omap
+  - name: !!str # small, medium, large, screen print, etc.
+    type: !!str #(optional, default 'giclee')
+    # height and width in inches, minus border
+    height: !!int
+    width: !!int
+    # size in inches of border around print
+    border: !!int
+    # price in dollars
+    price: !!int
+    photo:
+      - path: !!str
+        size: !!int
+    url: !!str

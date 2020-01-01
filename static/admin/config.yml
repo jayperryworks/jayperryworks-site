@@ -1,0 +1,436 @@
+backend:
+  name: github
+  repo: "jayperryworks/jayperryworks-site"
+  branch: master # Branch to update (optional; defaults to master)
+
+media_folder: "static/images/uploads" # Folder where user uploaded files should go
+media_folder_relative: true
+public_folder: "/images/uploads"
+site_url: "https://www.jayperryworks.com"
+
+publish_mode: editorial_workflow
+
+collections:
+  - name: writing # Used in routes, e.g., /admin/collections/blog
+    label: Writing # Used in the UI
+    folder: "content/writing" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    format: yml
+    fields: # The fields for each document, usually in front matter
+
+      - label: Title
+        name: title
+        widget: string
+
+      - label: Subtitle
+        name: subtitle
+        widget: string
+        required: false
+
+      - label: Cover image
+        name: cover
+        widget: object
+        required: false
+        fields:
+          - label: Sources
+            name: sources
+            widget: list
+            fields:
+              - {label: "Image", name: "path", widget: image}
+              - {label: "Width", name: "Width", widget: number, valueType: int}
+          - label: Alt
+            name: alt
+            widget: string
+            default: "Cover image"
+          - label: Caption
+            name: caption
+            widget: string
+            required: false
+
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+
+      - label: Short post
+        name: shortPost
+        hint: "Display the whole post on the blog index? Or just an excerpt?"
+        widget: boolean
+        default: true
+
+      - label: Body sections
+        name: body
+        widget: list
+        required: false
+        types:
+
+          - label: Note
+            name: note
+            widget: object
+            hint: An aside that speaks about the text, e.g. an intro note or acknowledgements at the end
+            fields:
+              - {label: "Type", name: "type", widget: "hidden", default: "note"}
+              - {label: "Use in excerpt", name: "useInExcerpt", widget: "boolean", default: "false"}
+              - {label: "Content", name: "markdown", widget: "markdown", required: false}
+
+          - label: Passage
+            name: passage
+            widget: object
+            hint: A basic chunk of text content
+            fields:
+            - {label: "Type", name: "type", widget: "hidden", default: "passage"}
+            - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false, hint: "Include this section in the post excerpt?"}
+            - {label: "Content", name: "markdown", widget: "markdown", required: false}
+
+          - label: Figure
+            name: figure
+            widget: object
+            hint: A image that appears inline.
+            fields:
+            - {label: "Type", name: "type", widget: "hidden", default: "figure"}
+            - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false, hint: "Include this section in the post excerpt?"}
+            - {label: "Prominence", name: "prominence", widget: "select", options: ["small", "medium", "large"], default: "medium"}
+            - label: "Sources"
+              name: "sources"
+              widget: "list"
+              fields:
+                - {label: "Image", name: "path", widget: "image"}
+                - {label: "Width", name: "width", widget: "number", valueType: int, required: false, hint: "The width of the image, to be used in the srcset list"}
+            - {label: "Alt text", name: "alt", widget: "string", required: false}
+            - {label: "Caption", name: "caption", widget: "markdown", required: false}
+            - {label: "Attribution", name: "attribution", widget: "string", required: false}
+
+          - label: Gallery
+            name: gallery
+            widget: object
+            fields:
+            - {label: "Type", name: "type", widget: "hidden", default: "gallery"}
+            - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false, hint: "Include this section in the post excerpt?"}
+            - {label: "Prominence", name: "prominence", widget: "select", options: ["small", "medium", "large"], default: "medium"}
+            - label: Size
+              name: size
+              widget: select
+              options:
+                - small
+                - medium
+                - large
+            - label: Images
+              name: images
+              widget: list
+              fields:
+                - label: "Sources"
+                  name: "sources"
+                  widget: "list"
+                  fields:
+                    - {label: "Image", name: "path", widget: "image"}
+                    - {label: "Width", name: "width", widget: "number", valueType: int, required: false, hint: "The width of the image, to be used in the srcset list"}
+                - {label: "Alt", name: "alt", widget: "string"}
+
+          - label: Table
+            name: table
+            widget: object
+            fields:
+            - {label: "Type", name: "type", widget: "hidden", default: "table"}
+            - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false, hint: "Include this section in the post excerpt?"}
+            - {label: "Prominence", name: "prominence", widget: "select", options: ["small", "medium", "large"], default: "medium"}
+            - label: "Heading Columns"
+              name: "headingColumns"
+              widget: "list"
+              required: false
+              hint: "Columns that appear bold and function as headings for their rows"
+            - label: "Header cells"
+              name: "header"
+              widget: "list"
+              hint: "The top row, which defines the values in the rest of the table"
+              fields:
+                - {label: "Label", name: "label", widget: "string"}
+                - {label: "Text alignment", name: "align", widget: "select", options: ["left", "center", "right"], default: "left"}
+            - label: "Body rows"
+              name: "body"
+              widget: "list"
+              required: false
+              fields:
+                - {label: "Cells", name: "cell", widget: "list"}
+            - label: "Footer rows"
+              name: "footer"
+              widget: "list"
+              required: false
+              fields:
+                - {label: "Cells", name: "cell", widget: "list"}
+
+  - name: "pictures" # Used in routes, e.g., /admin/collections/blog
+    label: "Pictures" # Used in the UI
+    folder: "content/pictures" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{year}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    format: yml
+    fields: # The fields for each document, usually in front matter
+
+      - label: Title
+        name: title
+        widget: string
+
+      - label: Date
+        name: date
+        widget: date
+        required: false
+
+      - label: Format
+        name: format
+        widget: string
+        default: "Digital painting"
+
+      - label: Width
+        name: width
+        hint: inches
+        widget: number
+        valueType: int
+        required: false
+
+      - label: Height
+        name: height
+        hint: inches
+        widget: number
+        valueType: int
+        required: false
+
+      - label: 'Category'
+        name: 'category'
+        widget: 'select'
+        options:
+          - prints
+          - paintings
+        default: prints
+
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+
+      - label: Cover image
+        name: cover
+        widget: list
+        fields:
+          - {label: "Image", name: "path", widget: "image"}
+          - {label: "Width", name: "width", widget: "number", valueType: int, required: false}
+
+      - label: Thumbnail image
+        name: thumb
+        widget: list
+        fields:
+          - {label: "Image", name: "path", widget: "image"}
+          - {label: "Width", name: "width", widget: "number", valueType: int, required: false}
+
+      - label: 'Intro'
+        name: 'body'
+        widget: 'markdown'
+        required: false
+
+      - label: Editions
+        name: editions
+        widget: list
+        required: false
+        fields:
+          - {label: 'Size', name: 'name', widget: 'string'}
+          - label: 'Type'
+            name: 'type'
+            widget: 'select'
+            default: 'giclee'
+            options:
+              - giclee
+              - screenprint
+          - {label: Width, name: width, hint: inches, widget: number, valueType: int}
+          - {label: Height, name: height, hint: inches, widget: number, valueType: int}
+          - {label: Border, name: border, hint: inches, widget: number, valueType: int, default: 1, required: false}
+          - {label: Price, name: price, widget: number, valueType: int}
+          - {label: Limit, name: limit, hint: "Size of the edition; leave blank if open", widget: number, valueType: int, required: false}
+          - {label: Etsy listing, name: url, widget: string}
+          - label: Photo
+            name: photo
+            widget: list
+            fields:
+              - {label: "Image", name: "path", widget: "image"}
+              - {label: "Width", name: "width", widget: "number", valueType: "int", required: false}
+
+  - name: 'pages'
+    label: 'Pages'
+    files:
+
+      - name: 'home'
+        label: Home page
+        file: 'content/home.yml'
+        format: yml
+        create: false
+        fields:
+          - label: Cover image
+            name: cover
+            widget: object
+            fields:
+              - label: Sources
+                name: sources
+                widget: list
+                hint: Order the sources from smallest (default) to largest
+                fields:
+                  - {label: "Image", name: "path", widget: "image"}
+                  - {label: "Width", name: "size", widget: "number", valueType: int, required: false}
+              - label: Alt
+                name: alt
+                widget: string
+                default: Cover image
+                required: false
+          - label: Intro blurb
+            name: intro
+            field: string
+          - label: A few of my favorite things
+            name: favoriteThings
+            widget: object
+            fields:
+              - label: Analog
+                name: analog
+                widget: list
+              - label: Digital
+                name: digital
+                widget: list
+              - label: Inspiration
+                name: inspiration
+                widget: list
+          - label: Table of contents
+            name: tableOfContents
+            widget: list
+            fields:
+              - label: Heading
+                name: heading
+                widget: string
+              - label: Link
+                name: link
+                widget: string
+              - label: Description
+                name: description
+                widget: markdown
+
+      - name: 'about'
+        label: 'About'
+        file: 'content/about.yml'
+        format: yml
+        create: false
+        fields:
+          - label: Title
+            name: title
+            widget: string
+
+          - label: Cover image
+            name: cover
+            widget: object
+            required: false
+            fields:
+              - label: Sources
+                name: sources
+                widget: list
+                hint: Order the sources from smallest (default) to largest
+                fields:
+                  - {label: "Image", name: "path", widget: image}
+                  - {label: "Width", name: "size", widget: number, valueType: int}
+              - label: Alt
+                name: alt
+                widget: string
+                default: "Cover image"
+              - label: Caption
+                name: caption
+                widget: string
+                required: false
+
+          - label: Body sections
+            name: body
+            widget: list
+            required: false
+            types:
+
+              - label: Note
+                name: note
+                widget: object
+                hint: An aside that speaks about the text, e.g. an intro note or acknowledgements at the end
+                fields:
+                  - {label: "Type", name: "type", widget: "hidden", default: "note"}
+                  - {label: "Content", name: "markdown", widget: "markdown", required: false}
+
+              - label: Passage
+                name: passage
+                widget: object
+                hint: A basic chunk of text content
+                fields:
+                - {label: "Type", name: "type", widget: "hidden", default: "passage"}
+                - {label: "Content", name: "markdown", widget: "markdown", required: false}
+
+              - label: Figure
+                name: figure
+                widget: object
+                hint: A image that appears inline.
+                fields:
+                - {label: "Type", name: "type", widget: "hidden", default: "figure"}
+                - {label: "Prominence", name: "prominence", widget: "select", options: ["small", "medium", "large"], default: "medium"}
+                - label: "Sources"
+                  name: "sources"
+                  widget: "list"
+                  fields:
+                    - {label: "Image", name: "path", widget: "image"}
+                    - {label: "Width", name: "width", widget: "number", valueType: int, required: false, hint: "The width of the image, to be used in the srcset list"}
+                - {label: "Alt text", name: "alt", widget: "string", required: false}
+                - {label: "Caption", name: "caption", widget: "markdown", required: false}
+                - {label: "Attribution", name: "attribution", widget: "string", required: false}
+
+              - label: Gallery
+                name: gallery
+                widget: object
+                fields:
+                - {label: "Type", name: "type", widget: "hidden", default: "gallery"}
+                - {label: "Prominence", name: "prominence", widget: "select", options: ["small", "medium", "large"], default: "medium"}
+                - label: Size
+                  name: size
+                  widget: select
+                  options:
+                    - small
+                    - medium
+                    - large
+                - label: Images
+                  name: images
+                  widget: list
+                  fields:
+                    - label: "Sources"
+                      name: "sources"
+                      widget: "list"
+                      fields:
+                        - {label: "Image", name: "path", widget: "image"}
+                        - {label: "Width", name: "width", widget: "number", valueType: int, required: false, hint: "The width of the image, to be used in the srcset list"}
+                    - {label: "Alt", name: "alt", widget: "string"}
+
+              - label: Table
+                name: table
+                widget: object
+                fields:
+                - {label: "Type", name: "type", widget: "hidden", default: "table"}
+                - {label: "Prominence", name: "prominence", widget: "select", options: ["small", "medium", "large"], default: "medium"}
+                - label: "Heading Columns"
+                  name: "headingColumns"
+                  widget: "list"
+                  required: false
+                  hint: "Columns that appear bold and function as headings for their rows"
+                - label: "Header cells"
+                  name: "header"
+                  widget: "list"
+                  hint: "The top row, which defines the values in the rest of the table"
+                  fields:
+                    - {label: "Label", name: "label", widget: "string"}
+                    - {label: "Text alignment", name: "align", widget: "select", options: ["left", "center", "right"], default: "left"}
+                - label: "Body rows"
+                  name: "body"
+                  widget: "list"
+                  required: false
+                  fields:
+                    - {label: "Cells", name: "cell", widget: "list"}
+                - label: "Footer rows"
+                  name: "footer"
+                  widget: "list"
+                  required: false
+                  fields:
+                    - {label: "Cells", name: "cell", widget: "list"}

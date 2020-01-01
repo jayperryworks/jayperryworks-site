@@ -1,0 +1,10 @@
+// General helper functions and mixins
+
+// add '!important' to the end of a property
+@function important($prop, $add: false) {
+  @if $add == true {
+    @return append($prop, unquote('!important'));
+  } @else {
+    @return $prop;
+  }
+}

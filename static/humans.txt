@@ -1,0 +1,13 @@
+/* TEAM */
+Your title: Jay Perry
+Site: https://jayperryworks.com/about
+Twitter: @inkpixelswords
+Location: Baltimore, Maryland
+
+/* THANKS */
+Name: Nicholas Kingston, Scott Schaffter, Jon Lebensold, Archival Arts
+
+/* SITE */
+Standards: HTML5, CSS3, Javascript ES2015
+Components: Svelte, Sapper, Sass, Rollup, JS-Yaml, Axios, Bourbon, include-media, Modular Scale, markdown-it
+Software: Sublime Text, Firefox, Sketch, Affinity Designer, Ulysses

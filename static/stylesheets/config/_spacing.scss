@@ -1,0 +1,39 @@
+// Global spacing
+// -> used to keep whitespace in the layout consistent
+@use "../config/scale";
+@use '../config/breakpoints';
+
+// standard spacing for margins and padding, etc.
+$scale: (
+  'xxxnarrow': scale.get(-12),
+  'xxnarrow': scale.get(-8),
+  'xnarrow': scale.get(-4),
+  'narrow': scale.get(-2),
+  'medium': scale.get(1),
+  'wide': scale.get(3),
+  'xwide': scale.get(6)
+);
+
+// outside margins for full-width containers
+// -> [screen size]: [margin width]
+// -> need to be responsive to keep content from getting too scrunched on small screens, and to add more air on larger screens
+// -> used for both spacing utils also decorated borders
+$outside: (
+  'default': 'narrow',
+  'small': 'medium',
+  'medium': 'wide'
+);
+
+// getter function for $spacing map
+@function get($name: 'medium', $split: false) {
+  @if $split == false {
+    @return map-get($scale, $name);
+  } @else {
+    @return (map-get($scale, $name) / 2);
+  }
+}
+
+// getter function for outside spacing
+@function get-outside($name: 'default') {
+  @return map-get($outside, $name);
+}

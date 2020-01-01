@@ -1,0 +1,72 @@
+title: >-
+  !markdownInline
+subtitle: >-
+  !markdownInline
+cover:
+  sources: !!omap
+    - path: !!str
+      size: !!int
+  alt: !!str
+  caption: >-
+    !markdown
+tags: !!pairs
+  - !!str
+body: !!omap
+  # These are the available 'section' components
+
+  - type: !section note
+    useInExcerpt: !!boolean
+    markdown: |-
+      !markdown
+
+  - type: !section heading
+    useInExcerpt: !!boolean
+    level: !!int # e.g. 2
+    scale: !!str # e.g. "gamma"
+    inlineMarkdown: >-
+      !markdownInline
+
+  - type: !section passage
+    useInExcerpt: !!boolean
+    markdown: |-
+      !markdown
+
+  - type: !section figure
+    useInExcerpt: !!boolean
+    sources: !!omap
+      - path: !!str
+        size: !!int
+    alt: !!str
+    prominence: !!str #option (small, medium, large) default medium
+    caption: |-
+      !markdown
+
+  - type: !section gallery
+    useInExcerpt: !!boolean
+    size: !size #optional (small, medium, large) default small
+    images: !!omap
+      - sources: !!omap
+          - path: !!str
+            size: !!int
+        alt: !!str
+    prominence: !!str #option (small, medium, large) default medium
+    caption: |-
+      !markdown
+
+  - type: !section table
+    useInExcerpt: !!boolean
+    # columns that represent keys instead of values in the data
+    # -> will be emphasized/boldface in the UI
+    keyColumns: !!pairs
+      - !!str
+    header: !!pairs
+      - label: !!str
+        align: !!str # left, center, or right
+    body: !!pairs
+      - [] !!str
+    footer: !!pairs
+        - [] !!str
+
+  - type: !section update
+    markdown: |-
+      !markdown
