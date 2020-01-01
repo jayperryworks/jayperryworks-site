@@ -22,9 +22,6 @@ collections:
     source: content/pictures
     sourceTemplate: :year-:slug
     pathTemplate: pictures/:year/:slug
-    redirect:
-      before: 2019
-      oldPath: work/prints/:year/:slug
 
   - name: writing
     source: content/writing

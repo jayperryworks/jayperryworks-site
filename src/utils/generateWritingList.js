@@ -29,6 +29,7 @@ module.exports = (dir) => {
       // add to beginning of the array, so the order is reversed
       // -> most recent to oldest
       result.unshift({
+        filename,
         cover: data.cover,
         title: data.title,
         subtitle: data.subtitle,

@@ -23,12 +23,13 @@ module.exports = (dir) => {
 
       // place at front of array to order by most recent
       result.unshift({
+        filename,
         title: data.title,
+        collection: picturesConfig.name,
         date: {
           year: metadata.year
         },
         slug: metadata.slug,
-        collection: picturesConfig.name,
         thumbnail: data.thumb,
         path: permalink.createPath(
           filename,

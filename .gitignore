@@ -8,3 +8,4 @@ npm-debug.log
 # ignore generated sitemap and rss feed
 /static/sitemap.xml
 /static/rss.xml
+/static/_redirects
