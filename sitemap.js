@@ -2,9 +2,9 @@ const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
 const prettify = require('prettify-xml')
-const generatePictureList = require('../src/utils/generatePictureList')
-const generateWritingList = require('../src/utils/generateWritingList')
-const siteData = require('../src/utils/siteData')
+const generatePictureList = require('./src/utils/generatePictureList')
+const generateWritingList = require('./src/utils/generateWritingList')
+const siteData = require('./src/utils/siteData')
 
 function render(pages, {
   change = 'yearly',
