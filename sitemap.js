@@ -31,10 +31,10 @@ fs.writeFileSync(
   render([
     ...siteData.get('pages'),
     ...generatePictureList(
-      path.join(__dirname, '../content/pictures')
+      path.join(__dirname, './content/pictures')
     ),
     ...generateWritingList(
-      path.join(__dirname, '../content/writing')
+      path.join(__dirname, './content/writing')
     )
   ])
 )
