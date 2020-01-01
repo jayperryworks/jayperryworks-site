@@ -1,9 +1,13 @@
-import fs from 'fs'
-import path from 'path'
-import yaml from 'js-yaml'
-import render from './renderMarkdown.js'
+const fs = require('fs')
+const path = require('path')
+const yaml = require('js-yaml')
+const permalink = require('./permalink.js')
+const render = require('./renderMarkdown.js')
+const siteData = require('./siteData.js')
 
-export default function (dir) {
+const picturesConfig = siteData.collection('pictures')
+
+module.exports = (dir) => {
   // Use reduce to eliminate dotfiles from directory array
   // https://stackoverflow.com/questions/24806772/how-to-skip-over-an-element-in-map#24806827
   return fs.readdirSync(dir).reduce((result, file) => {
@@ -11,22 +15,29 @@ export default function (dir) {
 
     // make sure we aren't accidentally reading a system dotfile
     if (filename[0] !== '.') {
-      const metadata = filename.split('-')
-      const year = metadata[0]
-      const slug = metadata.slice(1, metadata.length).join('-')
+      const metadata = permalink.fileMetadata(filename, picturesConfig.sourceTemplate)
 
       const data = yaml.safeLoad(
         fs.readFileSync(`${dir}/${filename}.yml`, 'utf-8')
       )
 
+      // place at front of array to order by most recent
       result.unshift({
+        filename,
         title: data.title,
-        date: { year },
-        slug,
+        collection: picturesConfig.name,
+        date: {
+          year: metadata.year
+        },
+        slug: metadata.slug,
         thumbnail: data.thumb,
-        path: `pictures/${year}/${slug}`
+        path: permalink.createPath(
+          filename,
+          picturesConfig.sourceTemplate,
+          picturesConfig.pathTemplate
+        )
       })
     }
     return result
-  }, []) // order by most recent
+  }, [])
 }

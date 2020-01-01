@@ -1,5 +1,5 @@
 <script>
-  export let size = false,
+  export let size = '',
     gutter = 'xnarrow',
     flex = false
 </script>
@@ -9,14 +9,14 @@
   @use 'config/layout_width';
   @use 'config/breakpoints';
 
-  /* default values */
+  // default values
   $gutter: spacing.get('xnarrow');
   $breakpoint: 600px;
   $min-percentage: 33.33333%;
   $max-percentage: 100%;
 
   .gallery {
-    --gutter: var(--space-xnarrow, $gutter);
+    --gutter: var(--space-xnarrow, #{$gutter});
     --min-width: 240px;
     --breakpoint: #{$breakpoint};
     --min-percentage: #{$min-percentage};
@@ -106,7 +106,7 @@
 </style>
 
 <ul
-  class="gallery {size || ''}"
+  class="gallery {size}"
   class:flex
   style="--gutter: var(--space-{gutter})"
 >

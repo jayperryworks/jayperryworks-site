@@ -8,7 +8,6 @@
 -->
 <script>
   export let width = 'default'
-  export let el = 'div'
   export let centered = true
 
   let classes = ''

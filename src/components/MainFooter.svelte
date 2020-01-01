@@ -22,7 +22,7 @@
     },
     {
       name: "Pocket",
-      url: "https://getpocket.com/@j%40jayperryworks.com"
+      url: "https://getpocket.com/%40j%40jayperryworks.com"
     }
   ]
 

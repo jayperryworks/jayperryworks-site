@@ -5,3 +5,7 @@ yarn-error.log
 npm-debug.log
 /cypress/screenshots/
 /__sapper__/
+# ignore generated sitemap and rss feed
+/static/sitemap.xml
+/static/rss.xml
+/static/_redirects
