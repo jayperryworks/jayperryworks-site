@@ -5,6 +5,8 @@
 
   let classes = ''
   export { classes as class }
+
+  let marginClass = margin ? `space-${margin}` : ''
 </script>
 
 <style type="text/scss">
@@ -58,13 +60,6 @@
   }
 </style>
 
-<span
-  class="
-    icon
-    {classes}
-    {size}
-    {margin ? `space-${margin}` : ''}
-  "
->
+<span class="icon {size} {marginClass} {classes}">
   {@html svg}
 </span>

@@ -34,6 +34,9 @@
   }
 </style>
 
-<div class="wrapper {width} {classes}" class:centered>
+<div
+  class="wrapper {width} {classes}"
+  class:centered
+>
   <slot />
 </div>

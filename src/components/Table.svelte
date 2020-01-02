@@ -121,11 +121,7 @@
         {#each footer as row}
           <tr>
             {#each row as cell, index}
-                <td class="
-                  t-font-accent
-                  t-weight-bold
-                  {alignClass(header[index].align)}
-                ">
+                <td class=" t-font-accent t-weight-bold {alignClass(header[index].align)}">
                   {cell}
                 </td>
             {/each}

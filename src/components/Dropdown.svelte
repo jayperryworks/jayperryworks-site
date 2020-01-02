@@ -96,12 +96,7 @@
     <slot name="label"></slot>
   </summary>
   <div
-    class="
-      dropdown
-      margin-top
-      padding-y
-      t-align-left
-    "
+    class="dropdown margin-top padding-y t-align-left"
     data-theme="default"
   >
     <slot name="dropdown"></slot>

@@ -32,6 +32,10 @@
       prefetch: true
     }
   ]
+
+  function priorityClass (item) {
+    return item.priority == 1 ? 'hide-above@xsmall' : ''
+  }
 </script>
 
 <style>
@@ -69,14 +73,7 @@
     <!-- large screen menu -->
   	<div slot="right">
       {#if !hideMenu}
-        <ul
-          class="
-            display-inline-block
-            hide-below@xsmall
-            list-undecorated
-            margin-x-between
-          "
-        >
+        <ul class="display-inline-block hide-below@xsmall list-undecorated margin-x-between">
           {#each items as item}
             <li class="
               display-inline-block
@@ -84,13 +81,7 @@
               {item.priority > 1 ? 'hide-visually show-visually-above@small' : ''}
             ">
               <a
-                class="
-                  display-block
-                  padding-top-narrow
-                  t-font-accent
-                  t-link-undecorated
-                  t-scale-zeta
-                "
+                class="display-block padding-top-narrow t-font-accent t-link-undecorated t-scale-zeta"
                 class:t-highlight-top={segment === item.url}
                 rel={item.prefetch ? 'prefetch' : ''}
                 href={item.url}
@@ -104,11 +95,7 @@
         <!-- small-screen menu -->
         <Dropdown
           label="Menu"
-          class="
-            hide-above@small
-            padding-top-narrow
-            margin-left
-          "
+          class="hide-above@small padding-top-narrow margin-left"
         >
           <span
             slot="label"
@@ -123,22 +110,11 @@
           <ul slot="dropdown" class="list-undecorated">
             {#each items as item, index}
               <li
-                class="
-                  display-block
-                  no-margin-top
-                  {item.priority == 1 ? 'hide-above@xsmall' : ''}
-                "
+                class="display-block no-margin-top {priorityClass(item)}"
                 class:padding-bottom={index != items.length - 1}
               >
                 <a
-                  class="
-                    display-block
-                    padding-x
-                    t-font-accent
-                    t-leading-tight
-                    t-link-undecorated
-                    t-scale-zeta
-                  "
+                  class="display-block padding-x t-font-accent t-leading-tight t-link-undecorated t-scale-zeta"
                   class:t-highlight-left={segment === item.url}
                   href={item.url}
                 >

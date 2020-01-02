@@ -6,6 +6,8 @@
 
   let classes = ''
   export {classes as class}
+
+  $: gutterClass = spacing ? `gutter-${spacing}` : ''
 </script>
 
 <style type="text/scss">
@@ -74,13 +76,7 @@
 >
   {#if el == 'figure'}
     <figure
-      class="
-        card
-        gutter-wrapper
-        {spacing ? `gutter-${spacing}` : ''}
-        {figureSize || ''}
-        {classes}
-      "
+      class="card gutter-wrapper {gutterClass} {figureSize} {classes}"
       style={breakpoint ? `--breakpoint: ${breakpoint}` : ''}
     >
       <div class="figure gutter">
@@ -92,13 +88,7 @@
     </figure>
   {:else}
     <aside
-      class="
-        card
-        gutter-wrapper
-        {spacing ? `gutter-${spacing}` : ''}
-        {figureSize || ''}
-        {classes}
-      "
+      class="card gutter-wrapper {gutterClass} {figureSize} {classes}"
       style={breakpoint ? `--breakpoint: ${breakpoint}` : ''}
     >
       <div class="figure gutter">

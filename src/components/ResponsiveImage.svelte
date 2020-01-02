@@ -26,6 +26,8 @@
       }).join(', ')
     : ''
 
+  $: borderClass = border ? 'border border-solid' : ''
+
   let classes = ''
   export { classes as class }
 </script>
@@ -47,7 +49,7 @@
 </style>
 
 <img
-  class="{border ? 'border border-solid' : ''} {classes}"
+  class="{borderClass} {classes}"
   class:contain
   class:cover
   {src}

@@ -88,18 +88,12 @@
   <!-- edition info -->
   <div
     slot="content"
-    class="
-      info-wrapper
-      gutter-wrapper
-    "
+    class="info-wrapper gutter-wrapper"
   >
     <div class="info gutter">
 
       <!-- name -->
-      <h3 class="
-        c-fg-tertiary
-        padding-bottom-xnarrow
-      ">
+      <h3 class="c-fg-tertiary padding-bottom-xnarrow">
         <strong class="
           c-fg-primary
           t-font-display
@@ -109,24 +103,15 @@
       <!-- metadata -->
       <dl class="stats">
         <div class="stats-group">
-          <dt class="
-            stats-item
-            stats-label
-          ">Type</dt>
+          <dt class="stats-item stats-label">Type</dt>
           <dd class="stats-item">{titleize(edition.type)}</dd>
         </div>
         <div class="stats-group">
-          <dt class="
-            stats-item
-            stats-label
-          ">Size</dt>
+          <dt class="stats-item stats-label">Size</dt>
           <dd class="stats-item">{edition.width}" x {edition.height}"</dd>
         </div>
         <div class="stats-group">
-          <dt class="
-            stats-item
-            stats-label
-          ">Paper size</dt>
+          <dt class="stats-item stats-label">Paper size</dt>
           <dd class="stats-item">{edition.width + edition.border}" x {edition.height + edition.border}"</dd>
         </div>
       </dl>

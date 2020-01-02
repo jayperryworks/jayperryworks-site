@@ -107,15 +107,7 @@
 
     {#if section.type == 'update'}
       <Wrapper class="section-text">
-        <h3 class="
-          border-top
-          padding-bottom-narrow
-          padding-top
-          t-case-upper
-          t-font-accent
-          t-scale-zeta
-          t-weight-bold
-        ">Update</h3>
+        <h3 class="border-top padding-bottom-narrow padding-top t-case-upper t-font-accent t-scale-zeta t-weight-bold">Update</h3>
         <Passage html={section.html} />
       </Wrapper>
     {/if}
