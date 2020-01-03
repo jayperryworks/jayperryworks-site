@@ -53,11 +53,7 @@
 
   <div slot="body">
     <Wrapper centered={false}>
-      <ul class="
-        list-undecorated
-        margin-y-between-wide
-        padding-y-between-wide
-      ">
+      <ul class="list-undecorated margin-y-between-wide padding-y-between-wide">
         {#each posts as post}
           <li>
             <a
@@ -75,36 +71,19 @@
               {/if}
               <h2>{post.title}</h2>
               {#if post.subtitle}
-                <p class="
-                  c-fg-tertiary
-                  t-font-accent
-                  t-scale-gamma
-                ">{post.subtitle}</p>
+                <p class="c-fg-tertiary t-font-accent t-scale-gamma">
+                  {post.subtitle}
+                </p>
               {/if}
               <time
-                class="
-                  c-fg-tertiary
-                  display-block
-                  padding-top-xxnarrow
-                  padding-bottom
-                  t-font-accent
-                  t-scale-zeta
-                  t-weight-bold
-                "
+                class="c-fg-tertiary display-block padding-top-xxnarrow padding-bottom t-font-accent t-scale-zeta t-weight-bold"
                 datetime={date(post.date, 'yyyy-M-dd')}
               >
                 {date(post.date)}
               </time>
               <PostBody sections={post.excerpt} dropCap={false} />
               {#if post.readMore}
-                <span class="
-                  display-inline-block
-                  padding-top
-                  t-case-upper
-                  t-font-accent
-                  t-scale-zeta
-                  t-weight-bold
-                ">
+                <span class="display-inline-block padding-top t-case-upper t-font-accent t-scale-zeta t-weight-bold">
                   Read more
                   <Icon
                     svg={arrow}

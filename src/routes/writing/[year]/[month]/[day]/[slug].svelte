@@ -42,10 +42,7 @@
 
 <PageTitle title="{post.title}" />
 
-<article class="
-  padding-x-outside
-  padding-y-xwide
-">
+<article class="padding-x-outside padding-y-xwide">
   <header>
     <Wrapper
       width="wide"
@@ -53,13 +50,9 @@
     >
       <h1>{post.title}</h1>
       {#if post.subtitle}
-        <p class="
-          c-fg-tertiary
-          padding-top-xxnarrow
-          t-font-accent
-          t-heading
-          t-scale-beta
-        ">{post.subtitle}</p>
+        <p class="c-fg-tertiary padding-top-xxnarrow t-font-accent t-heading t-scale-beta">
+          {post.subtitle}
+        </p>
       {/if}
 
       {#if post.cover}
@@ -72,19 +65,9 @@
         />
       {/if}
     </Wrapper>
-    <Wrapper class="
-      border-bottom
-      margin-bottom
-      padding-bottom-xnarrow
-      padding-top-xwide
-    ">
+    <Wrapper class="border-bottom margin-bottom padding-bottom-xnarrow padding-top-xwide">
       <time
-        class="
-          c-fg-tertiary
-          t-font-accent
-          t-scale-zeta
-          t-weight-bold
-        "
+        class="c-fg-tertiary t-font-accent t-scale-zeta t-weight-bold"
         datetime={formatDate('yyyy-M-dd')}
       >
         {formatDate('MMMM d, yyyy')}
@@ -95,11 +78,7 @@
   <PostBody sections={post.body} />
 
   <footer>
-    <Wrapper class="
-      border-top
-      padding-top-wide
-      margin-top-wide
-    ">
+    <Wrapper class="border-top padding-top-wide margin-top-wide">
       <Card
         el="aside"
         figureSize="small"
@@ -113,15 +92,7 @@
           <p>Jay Perry is a designer, illustrator, and writer living near Baltimore. He likes books, old rusty cars, and forests.</p>
           <a
             href="/about"
-            class="
-              display-block
-              padding-top-narrow
-              t-case-upper
-              t-font-accent
-              t-link-undecorated
-              t-scale-zeta
-              t-weight-bold
-            "
+            class="display-block padding-top-narrow t-case-upper t-font-accent t-link-undecorated t-scale-zeta t-weight-bold"
           >More about Jay &rsaquo;</a>
         </div>
       </Card>

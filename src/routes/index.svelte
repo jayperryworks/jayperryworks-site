@@ -127,23 +127,9 @@
     </figure>
 
     <!-- intro -->
-    <div class="
-      border-seam-top
-      padding-bottom-xwide
-      padding-top-narrow
-      padding-x-outside
-    ">
-      <aside class="
-        display-block
-        padding-bottom-wide
-        position-relative
-        t-align-right
-      ">
-        <small class="
-          t-case-upper
-          t-font-accent
-          t-scale-eta
-        ">
+    <div class="border-seam-top padding-bottom-xwide padding-top-narrow padding-x-outside">
+      <aside class="display-block padding-bottom-wide position-relative t-align-right">
+        <small class="t-case-upper t-font-accent t-scale-eta">
           Edition <strong>3.1.0</strong>
         </small>
       </aside>
@@ -151,13 +137,9 @@
         <Wrapper centered={false}>
           <h1 class="t-scale-beta">{content.intro}</h1>
           {#if favoriteThings.length > 0}
-            <p class="
-              c-fg-tertiary
-              margin-top-xnarrow
-              t-font-accent
-              t-heading
-              t-scale-gamma
-            ">{favoriteThingsSubhead}</p>
+            <p class="c-fg-tertiary margin-top-xnarrow t-font-accent t-heading t-scale-gamma">
+              {favoriteThingsSubhead}
+            </p>
           {/if}
           <Button
             prefetch={true}
@@ -173,20 +155,9 @@
   </section>
 
   <!-- TOC -->
-  <nav class="
-    border-seam-top-offset
-    c-bg-well
-    padding-bottom-xwide
-    padding-x-outside
-  ">
+  <nav class="border-seam-top-offset c-bg-well padding-bottom-xwide padding-x-outside">
     <Wrapper width="xwide">
-      <h2 class="
-        padding-y-wide
-        t-case-upper
-        t-font-accent
-        t-scale-eta
-        t-weight-bold
-      ">
+      <h2 class="padding-y-wide t-case-upper t-font-accent t-scale-eta t-weight-bold">
         Table of contents
       </h2>
       <Gallery gutter="medium" flex>
@@ -194,31 +165,17 @@
           <li>
             <Card link={item.link} class="padding-y">
               <div slot="content">
-                <h2 class="
-                  padding-x
-                  t-highlight-left
-                  t-scale-gamma
-                ">{item.heading}</h2>
-                <div class="
-                  padding-top-xnarrow
-                  padding-x
-                  t-font-accent
-                  t-scale-zeta
-                ">{@html item.description}</div>
+                <h2 class="padding-x t-highlight-left t-scale-gamma">
+                  {item.heading}
+                </h2>
+                <div class="padding-top-xnarrow padding-x t-font-accent t-scale-zeta">
+                  {@html item.description}
+                </div>
               </div>
-              <div slot="footer" class="
-                margin-x
-                padding-top-narrow
-                position-relative
-              ">
-                <span class="
-                  c-fg-tertiary
-                  display-inline-block
-                  t-case-upper
-                  t-font-accent
-                  t-scale-eta
-                  t-weight-bold
-                ">Read more</span>
+              <div slot="footer" class="margin-x padding-top-narrow position-relative">
+                <span class="c-fg-tertiary display-inline-block t-case-upper t-font-accent t-scale-eta t-weight-bold">
+                  Read more
+                </span>
                 <span class="card-icon">
                   <Icon
                     svg={arrowDotted}

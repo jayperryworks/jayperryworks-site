@@ -77,37 +77,16 @@
         width="narrow"
         class="t-align-center padding-top"
       >
-        <h1 class="
-          display-inline-block@{metadataBreakpoint}
-          no-padding-bottom@{metadataBreakpoint}
-          padding-bottom-xnarrow
-          t-font-accent
-          t-scale-epsilon
-          t-weight-bold
-        ">{post.title}</h1>
+        <h1 class="display-inline-block@{metadataBreakpoint} no-padding-bottom@{metadataBreakpoint} padding-bottom-xnarrow t-font-accent t-scale-epsilon t-weight-bold">
+          {post.title}
+        </h1>
         <time
-          class="
-            border-left@{metadataBreakpoint}
-            c-fg-tertiary
-            display-inline-block
-            margin-left-narrow
-            padding-left-narrow
-            t-font-accent
-            t-scale-epsilon
-          "
+          class="border-left@{metadataBreakpoint} c-fg-tertiary display-inline-block margin-left-narrow padding-left-narrow t-font-accent t-scale-epsilon"
           datetime="{format(new Date(date.year), 'yyyy')}"
         >
           {format(new Date(date.year), 'yyyy')}
         </time>
-        <p class="
-            border-left
-            c-fg-tertiary
-            display-inline-block
-            margin-left-narrow
-            padding-left-narrow
-            t-font-accent
-            t-scale-epsilon
-          ">
+        <p class="border-left c-fg-tertiary display-inline-block margin-left-narrow padding-left-narrow t-font-accent t-scale-epsilon">
             {post.format}{#if post.width && post.height}&nbsp;&bull; {post.width}" x {post.height}"{/if}
           </p>
       </Wrapper>
@@ -133,11 +112,7 @@
 
     {#if post.editions}
       <!-- Editions -->
-      <section class="
-        border-seam-top
-        padding-x-outside
-        padding-y-xwide
-      ">
+      <section class="border-seam-top padding-x-outside padding-y-xwide">
         <h2 class="padding-bottom-wide t-align-center@small">Available editions</h2>
         {#if post.editions.length > 1}
           <Wrapper width="xxwide">
@@ -160,11 +135,7 @@
     <!-- About the edition note -->
     {#each post.printDescriptions as note}
       <aside
-        class="
-          border-seam-top
-          padding-x-outside
-          padding-y-xwide
-        "
+        class="border-seam-top padding-x-outside padding-y-xwide"
         id="about-{note.type}"
       >
         <OutdentedBlurb blurbWidth={20}>
