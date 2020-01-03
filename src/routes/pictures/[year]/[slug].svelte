@@ -87,8 +87,8 @@
           {format(new Date(date.year), 'yyyy')}
         </time>
         <p class="border-left c-fg-tertiary display-inline-block margin-left-narrow padding-left-narrow t-font-accent t-scale-epsilon">
-            {post.format}{#if post.width && post.height}&nbsp;&bull; {post.width}" x {post.height}"{/if}
-          </p>
+          {post.format}{#if post.width && post.height}&nbsp;&bull; {post.width}" x {post.height}"{/if}
+        </p>
       </Wrapper>
     </header>
 
