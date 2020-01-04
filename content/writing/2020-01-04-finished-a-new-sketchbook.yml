@@ -1,0 +1,13 @@
+title: Finished a new sketchbook
+cover:
+  alt: Cover image
+tags:
+  - bookbinding
+shortPost: false
+body:
+  - markdown: >-
+      I finished a new sketchbook last night! I've been meaning to make a new
+      one for myself for awhile but kept get sidetracked on other things.
+      Finally done.
+    type: passage
+    useInExcerpt: false
