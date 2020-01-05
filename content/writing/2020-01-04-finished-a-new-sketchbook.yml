@@ -1,8 +1,8 @@
 title: Finished a new sketchbook
-subtitle: Change date to 2019-07-10
 cover:
   alt: Cover image
-  sources: []
+  sources:
+    - path: /images/uploads/blog-2019-sketchbook-IMG_4658.jpeg
 tags:
   - bookbinding
 shortPost: false
