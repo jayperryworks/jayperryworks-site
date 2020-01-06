@@ -4,7 +4,6 @@ backend:
   branch: master # Branch to update (optional; defaults to master)
 
 media_folder: "static/images/uploads" # Folder where user uploaded files should go
-media_folder_relative: true
 public_folder: "/images/uploads"
 site_url: "https://www.jayperryworks.com"
 
