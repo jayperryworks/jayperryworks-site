@@ -2,7 +2,8 @@ title: Finished a new sketchbook
 cover:
   alt: Cover image
   sources:
-    - path: /images/uploads/blog-2019-sketchbook-IMG_4658.jpeg
+    - Width: 1200
+      path: /images/uploads/2019-blog-sketchbook-img_4660.jpeg
 tags:
   - bookbinding
 shortPost: false
