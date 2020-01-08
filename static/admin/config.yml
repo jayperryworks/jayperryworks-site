@@ -1,7 +1,7 @@
 backend:
   name: github
   repo: "jayperryworks/jayperryworks-site"
-  branch: master # Branch to update (optional; defaults to master)
+  branch: cms-troubleshooting # Branch to update (optional; defaults to master)
 
 media_folder: "static/images/uploads" # Folder where user uploaded files should go
 media_folder_relative: true
