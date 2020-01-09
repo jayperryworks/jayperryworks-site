@@ -17,6 +17,8 @@ collections:
     create: true # Allow users to create new documents in this collection
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
     format: yml
+    editor:
+      preview: false
     fields: # The fields for each document, usually in front matter
 
       - label: Title
@@ -38,7 +40,7 @@ collections:
             widget: list
             fields:
               - {label: "Image", name: "path", widget: image}
-              - {label: "Width", name: "Width", widget: number, valueType: int}
+              - {label: "Width", name: "Width", widget: number, valueType: int, required: false}
           - label: Alt
             name: alt
             widget: string
@@ -165,6 +167,8 @@ collections:
     create: true # Allow users to create new documents in this collection
     slug: "{{year}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
     format: yml
+    editor:
+      preview: false
     fields: # The fields for each document, usually in front matter
 
       - label: Title
@@ -255,6 +259,8 @@ collections:
 
   - name: 'pages'
     label: 'Pages'
+    editor:
+      preview: false
     files:
 
       - name: 'home'
@@ -330,7 +336,7 @@ collections:
                 hint: Order the sources from smallest (default) to largest
                 fields:
                   - {label: "Image", name: "path", widget: image}
-                  - {label: "Width", name: "size", widget: number, valueType: int}
+                  - {label: "Width", name: "size", widget: number, valueType: int, required: false}
               - label: Alt
                 name: alt
                 widget: string
