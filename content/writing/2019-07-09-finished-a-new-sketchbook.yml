@@ -13,7 +13,7 @@ body:
       one for myself for awhile but kept get sidetracked on other things.
       Finally done.
     type: passage
-    useInExcerpt: false
+    useInExcerpt: true
   - alt: ''
     caption: 'I decided on black and beige cover fabric, with red bands and ribbon.'
     prominence: large
