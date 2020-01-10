@@ -1,15 +1,14 @@
 <script context="module">
-  export function preload({ params, query }) {
-    return this
-      .fetch(`writing.json`)
-      .then(r => r.json())
-      .then(posts => {
-        return { posts }
-      })
+  export async function preload({ params, query }) {
+    const response = await this.fetch('writing.json')
+    const posts = await response.json()
+
+    return { posts }
   }
 </script>
 
 <script>
+  import { onDestroy } from 'svelte'
   import { format } from 'date-fns'
   import arrow from 'icons/arrow-right.svg'
   import Icon from '@/components/Icon.svelte'
@@ -24,6 +23,8 @@
   function date(date, template = 'MMMM d, yyyy') {
     return format(new Date(date.year, date.month, date.day), template)
   }
+
+  onDestroy(() => console.log('writing done!'))
 </script>
 
 <style type="text/scss">

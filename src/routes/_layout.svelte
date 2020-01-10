@@ -1,7 +1,10 @@
 <script>
   import MainFooter from '@/components/MainFooter.svelte'
+  import { stores } from '@sapper/app'
 
-	export let segment
+  const { preloading, page } = stores()
+
+  $: console.log($page.path)
 </script>
 
 <style type="text/scss" global>
@@ -61,6 +64,9 @@
 </style>
 
 <div id="main-wrapper">
+  {#if $preloading}
+    <p>Loading!</p>
+  {/if}
   <slot></slot>
 </div>
 <MainFooter />
