@@ -1,0 +1,21 @@
+title: Javascript and the mysteries of Async/Await
+cover:
+  alt: Cover image
+tags:
+  - coding
+  - javascript
+  - web
+shortPost: true
+body:
+  - markdown: >-
+      "Promises" are a part of the Javascript language that I've always had a
+      hard time getting my head around, despite the fact I use them all the
+      time. There's just something oddly magical about them to me and I'm not
+      sure I've ever been completely clear on all the nuances of the Promise
+      object as it has evolved. [This article on
+      CSS-Tricks](https://css-tricks.com/understanding-async-await/) does a
+      really nice job breaking down how the syntax works and what it all means.
+      It's by [Sarah Drasner](https://sarahdrasnerdesign.com), who I'd say is
+      one of the best Javascript teachers out there.
+    type: passage
+    useInExcerpt: false
