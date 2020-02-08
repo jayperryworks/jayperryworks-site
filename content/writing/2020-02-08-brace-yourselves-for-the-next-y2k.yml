@@ -1,0 +1,23 @@
+title: Brace yourselves for the next Y2K
+cover:
+  alt: Cover image
+shortPost: true
+body:
+  - markdown: >-
+      While trying to fix a bug on my website, I went digging on the Mozilla
+      Developer Network to get my head around the Javascript `Date` object a bit
+      better. This bit cracked me up:
+    type: passage
+    useInExcerpt: false
+  - alt: MDN's explanation of the Date object
+    prominence: medium
+    sources:
+      - path: /images/uploads/2020-blog-mdn.png
+    type: figure
+    useInExcerpt: false
+  - markdown: >-
+      MDN is one of the most authoritive and comprehensive developer references
+      on the web, but it is also so dry that I'm honestly not sure if they were
+      kidding here or not.
+    type: passage
+    useInExcerpt: false
