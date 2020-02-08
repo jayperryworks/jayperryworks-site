@@ -42,7 +42,6 @@
   }
 </style>
 
-
 <OutdentedBlurb class="padding-x-outside padding-y-xwide">
   <h1
     slot="blurb"
