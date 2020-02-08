@@ -70,19 +70,22 @@
     }
 
     &.loading::before {
-      animation: barberpole 0.75s linear infinite;
-      background: repeating-linear-gradient(
-        -45deg,
-        color.get($bg-color),
-        color.get($bg-color) 25%,
-        color.get($bg-color, $grade: 30) 25%,
-        color.get($bg-color, $grade: 30) 50%,
-        color.get($bg-color) 50%
-      ) top left fixed;
-      background-size: $bg-size $bg-size;
+      @supports (background: repeating-linear-gradient(45deg, #fff, #000)) {
+        // cheers to https://css-tricks.com/uniqlo-stripe-hovers/
+        animation: stripes 0.75s linear infinite;
+        background: repeating-linear-gradient(
+          -45deg,
+          color.get($bg-color),
+          color.get($bg-color) 25%,
+          color.get($bg-color, $grade: 30) 25%,
+          color.get($bg-color, $grade: 30) 50%,
+          color.get($bg-color) 50%
+        ) top left fixed;
+        background-size: $bg-size $bg-size;
+      }
     }
 
-    @keyframes barberpole {
+    @keyframes stripes {
       from { background-position: 0 0; }
       to   { background-position: $bg-size $bg-size; }
     }
