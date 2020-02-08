@@ -1,0 +1,61 @@
+title: Finished a new sketchbook
+cover:
+  alt: Cover image
+  sources:
+    - Width: 1600
+      path: /images/uploads/IMG_1071.jpeg
+tags:
+  - bookbinding
+shortPost: false
+body:
+  - markdown: >-
+      I finished a new sketchbook last night! I've been meaning to make a new
+      one for myself for awhile but kept get sidetracked on other things.
+      Finally done.
+    type: passage
+    useInExcerpt: true
+  - alt: ''
+    caption: 'I decided on black and beige cover fabric, with red bands and ribbon.'
+    prominence: large
+    sources:
+      - path: /images/uploads/IMG_1068.jpeg
+        width: 1600
+    type: figure
+    useInExcerpt: false
+  - caption: >-
+      ...and I had this handmade swirly paper on the closet, which I've used
+      often for endpapers.
+    prominence: large
+    sources:
+      - path: /images/uploads/IMG_1069.jpeg
+        width: 1600
+    type: figure
+    useInExcerpt: false
+  - caption: Adding the bands and gluing the block.
+    prominence: large
+    sources:
+      - path: /images/uploads/IMG_1070.jpeg
+        width: 1600
+    type: figure
+    useInExcerpt: false
+  - caption: >-
+      The endpapers, glued in place. Unfortunately that paper is pretty thin so
+      it wrinkled when I brushed on the glue, even though I tried really hard to
+      use the glue really sparingly. Oh well.
+    prominence: large
+    sources:
+      - path: /images/uploads/IMG_1072.jpeg
+        width: 1600
+    type: figure
+    useInExcerpt: false
+  - caption: >-
+      Finished! I thought I'd try a midtone paper for this sketchbook, so I
+      could draw with black ink, as usual, but also use white ink or crayon for
+      highlights. I've always liked the look of midtone grounds and hope to
+      experiment more with it here. We'll see.
+    prominence: large
+    sources:
+      - path: /images/uploads/IMG_1073.jpeg
+        width: 1600
+    type: figure
+    useInExcerpt: false
