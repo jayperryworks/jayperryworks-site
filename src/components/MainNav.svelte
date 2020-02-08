@@ -39,10 +39,6 @@
 </script>
 
 <style>
-  .nav {
-    background: transparent;
-  }
-
   .logo {
     display: block;
     border: none;
@@ -58,7 +54,7 @@
 </style>
 
 <nav
-  class="nav padding-x-outside"
+  class="padding-x-outside"
   class:overlay
   data-theme={theme || ''}
 >
