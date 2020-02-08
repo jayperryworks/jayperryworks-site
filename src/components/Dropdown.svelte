@@ -1,6 +1,4 @@
 <script>
-  export let label
-
   let classes = ''
   export {classes as class}
 

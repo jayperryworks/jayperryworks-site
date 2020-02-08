@@ -34,9 +34,11 @@ module.exports = (dir) => {
         title: data.title,
         subtitle: data.subtitle,
         date: {
-          year: metadata.year,
-          month: metadata.month,
-          day: metadata.day
+          year: Number(metadata.year),
+          // subtract 1 from month b/c the 'monthIndex' value in JS Date objects is zero-based
+          // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date
+          month: Number(metadata.month - 1),
+          day: Number(metadata.day)
         },
         slug: metadata.slug,
         collection: writingConfig.name,

@@ -8,7 +8,6 @@
 </script>
 
 <script>
-  import { onDestroy } from 'svelte'
   import { format } from 'date-fns'
   import arrow from 'icons/arrow-right.svg'
   import Icon from '@/components/Icon.svelte'
@@ -23,8 +22,6 @@
   function date(date, template = 'MMMM d, yyyy') {
     return format(new Date(date.year, date.month, date.day), template)
   }
-
-  onDestroy(() => console.log('writing done!'))
 </script>
 
 <style type="text/scss">
