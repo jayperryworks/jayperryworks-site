@@ -1,7 +1,4 @@
 title: Brace yourselves for the next Y2K
-cover:
-  alt: Cover image
-shortPost: true
 body:
   - markdown: >-
       While trying to fix a bug on my website, I went digging on the Mozilla
