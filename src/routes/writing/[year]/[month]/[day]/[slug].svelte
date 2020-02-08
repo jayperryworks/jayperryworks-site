@@ -14,9 +14,9 @@
     return {
       post: data,
       date: {
-        year,
-        month,
-        day
+        year: Number(year),
+        month: (Number(month) - 1),
+        day: Number(day)
       }
     }
   }

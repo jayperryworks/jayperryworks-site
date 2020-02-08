@@ -1,11 +1,9 @@
 <script context="module">
-  export function preload({ params, query }) {
-    return this
-      .fetch(`writing.json`)
-      .then(r => r.json())
-      .then(posts => {
-        return { posts }
-      })
+  export async function preload({ params, query }) {
+    const response = await this.fetch('writing.json')
+    const posts = await response.json()
+
+    return { posts }
   }
 </script>
 
@@ -43,7 +41,6 @@
     margin-top: -0.3em;
   }
 </style>
-
 
 <OutdentedBlurb class="padding-x-outside padding-y-xwide">
   <h1

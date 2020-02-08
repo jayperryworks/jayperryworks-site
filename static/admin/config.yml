@@ -43,7 +43,7 @@ collections:
           - label: Alt
             name: alt
             widget: string
-            default: "Cover image"
+            required: false
           - label: Caption
             name: caption
             widget: string
@@ -339,7 +339,7 @@ collections:
               - label: Alt
                 name: alt
                 widget: string
-                default: "Cover image"
+                required: false
               - label: Caption
                 name: caption
                 widget: string
