@@ -2,7 +2,7 @@ title: Painting with data
 subtitle: Tabletop Whale's gorgeous visualization work
 cover:
   alt: ''
-  caption: '[_The Moon_, by Tabletop Whale.](http://tabletopwhale.com/)'
+  credit: '"The Moon", by [Tabletop Whale](http://tabletopwhale.com/).'
   sources:
     - path: /images/uploads/2020-blog-tabletop-whale.jpg
 shortPost: true
@@ -56,6 +56,6 @@ body:
 
 
       [^1]: Her code is open-source and, often, she even includes in-depth
-      tutorials for reconstructing her visualizations. 
+      tutorials for reconstructing her visualizations.
     type: passage
     useInExcerpt: false

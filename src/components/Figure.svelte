@@ -22,7 +22,7 @@
 
 <figure class={classes}>
   <slot>
-    <ResponsiveImage {sources} alt={caption || alt} {border} {cover} />
+    <ResponsiveImage {sources} alt={alt} {border} {cover} />
   </slot>
   {#if caption || credit}
     <Caption {caption} {credit} />

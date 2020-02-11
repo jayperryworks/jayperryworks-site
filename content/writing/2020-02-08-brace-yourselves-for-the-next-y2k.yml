@@ -12,6 +12,7 @@ body:
       - path: /images/uploads/2020-blog-mdn.png
     type: figure
     useInExcerpt: false
+    border: true
   - markdown: >-
       MDN is one of the most authoritive and comprehensive developer references
       on the web, but it is also so dry that I'm honestly not sure if they were

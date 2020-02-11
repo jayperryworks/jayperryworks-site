@@ -40,6 +40,10 @@ collections:
             fields:
               - {label: "Image", name: "path", widget: image}
               - {label: "Width", name: "Width", widget: number, valueType: int, required: false}
+          - label: Border
+            name: border
+            widget: boolean
+            default: false
           - label: Alt
             name: alt
             widget: string
@@ -48,17 +52,15 @@ collections:
             name: caption
             widget: string
             required: false
+          - label: Credit
+            name: credit
+            widget: string
+            required: false
 
       - label: Tags
         name: tags
         widget: list
         required: false
-
-      - label: Short post
-        name: shortPost
-        hint: "Display the whole post on the blog index? Or just an excerpt?"
-        widget: boolean
-        default: true
 
       - label: Body sections
         name: body
@@ -98,6 +100,7 @@ collections:
               fields:
                 - {label: "Image", name: "path", widget: "image"}
                 - {label: "Width", name: "width", widget: "number", valueType: int, required: false, hint: "The width of the image, to be used in the srcset list"}
+            - {label: "Border", name: "border", widget: "boolean", default: false}
             - {label: "Alt text", name: "alt", widget: "string", required: false}
             - {label: "Caption", name: "caption", widget: "markdown", required: false}
             - {label: "Attribution", name: "attribution", widget: "string", required: false}

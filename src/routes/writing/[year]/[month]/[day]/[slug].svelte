@@ -62,6 +62,7 @@
           alt={post.cover.alt}
           caption={post.cover.caption}
           credit={post.cover.credit}
+          border={post.cover.border}
         />
       {/if}
     </Wrapper>

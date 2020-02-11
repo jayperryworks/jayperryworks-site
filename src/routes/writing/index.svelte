@@ -14,7 +14,7 @@
   import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
   import PageTitle from '@/components/PageTitle.svelte'
   import PostBody from '@/components/PostBody.svelte'
-  import ResponsiveImage from '@/components/ResponsiveImage.svelte'
+  import Figure from '@/components/Figure.svelte'
   import Wrapper from '@/components/Wrapper.svelte'
 
   export let posts
@@ -60,9 +60,12 @@
             >
               {#if post.cover}
                 <div class="padding-bottom">
-                  <ResponsiveImage
+                  <Figure
                     sources={post.cover.sources}
                     alt={post.cover.alt}
+                    caption={post.cover.caption}
+                    credit={post.cover.credit}
+                    border={post.cover.border}
                   />
                 </div>
               {/if}

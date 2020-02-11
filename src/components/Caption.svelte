@@ -11,6 +11,6 @@
   {#if caption}{@html caption}{/if}
 
   {#if credit}
-    <cite class="t-case-upper">{credit}</cite>
+    <cite class="t-case-upper">{@html credit}</cite>
   {/if}
 </figcaption>

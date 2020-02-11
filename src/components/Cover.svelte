@@ -6,7 +6,8 @@
     caption = false,
     credit = false,
     height = 'default',
-    cover = false
+    cover = false,
+    border = false
 
   let classes = ''
   export { classes as class }
@@ -45,6 +46,7 @@
     {caption}
     {credit}
     {cover}
+    {border}
     class="display-inline-block"
   />
 </div>

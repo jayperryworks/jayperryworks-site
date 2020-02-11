@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
+const renderMarkdown = require('./renderMarkdown.js')
 const renderPostBody = require('./renderPostBody.js')
 const permalink = require('./permalink.js')
 const siteData = require('./siteData.js')
@@ -18,6 +19,24 @@ module.exports = (dir) => {
       const data = yaml.safeLoad(
         fs.readFileSync(`${dir}/${filename}.yml`, 'utf-8')
       )
+
+      if (data.cover) {
+        // render the cover image caption if present
+        if (data.cover.caption) {
+          data.cover.caption = renderMarkdown(data.cover.caption, {
+            inline: true,
+            html: true
+          })
+        }
+
+        // render the cover image attribution if present
+        if (data.cover.credit) {
+          data.cover.credit = renderMarkdown(data.cover.credit, {
+            inline: true,
+            html: true
+          })
+        }
+      }
 
       // pull any sections marked to be used in the excerpt
       const excerpt = data.body.filter((section) => {
