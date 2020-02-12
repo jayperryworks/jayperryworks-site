@@ -8,8 +8,21 @@ const siteData = require('./siteData.js')
 
 const writingConfig = siteData.collection('writing')
 
-module.exports = (dir) => {
-  return fs.readdirSync(dir).reduce((result, file) => {
+module.exports = (
+  dir,
+  {
+    start = 0,
+    end = false
+  } = {}
+) => {
+  let files = fs.readdirSync(dir).reverse()
+
+  // cut the array down to size for pagination
+  if (end) {
+    files = files.slice(start, end)
+  }
+
+  return files.reduce((result, file) => {
     const filename = path.parse(file).name
 
     // make sure we aren't accidentally reading a system dotfile
@@ -47,7 +60,7 @@ module.exports = (dir) => {
 
       // add to beginning of the array, so the order is reversed
       // -> most recent to oldest
-      result.unshift({
+      result.push({
         filename,
         cover: data.cover,
         title: data.title,

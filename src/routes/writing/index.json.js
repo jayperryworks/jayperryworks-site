@@ -6,6 +6,9 @@ export function get(req, res) {
 	})
 
 	res.end(JSON.stringify(
-    generateWritingList('content/writing')
+    generateWritingList('content/writing', {
+      start: 0,
+      end: 10
+    })
   ))
 }
