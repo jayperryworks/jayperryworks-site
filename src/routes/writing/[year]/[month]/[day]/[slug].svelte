@@ -4,7 +4,7 @@
     // the `slug` parameter is available because
     // this file is called [slug].svelte
     const response = await this.fetch(`writing/${year}/${month}/${day}/${slug}.json`);
-    const data = await response.json();
+    const data = await response.json()
 
     if (response.status !== 200) {
       this.error(response.status, data.message)
