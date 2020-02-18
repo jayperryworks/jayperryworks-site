@@ -2,9 +2,13 @@
   export async function preload({ params, query }) {
     const { number } = params
     const response = await this.fetch(`writing/page/${number}.json`)
-    const posts = await response.json()
+    const data = await response.json()
 
-    return { posts, number }
+    return {
+      number,
+      total: data.totalPages,
+      posts: data.posts
+    }
   }
 </script>
 
@@ -19,7 +23,9 @@
   import Wrapper from '@/components/Wrapper.svelte'
   import Bookend from '@/components/Bookend.svelte'
 
-  export let posts, number
+  export let posts, number, total
+
+  $: currentPage = parseInt(number)
 
   function date(date, template = 'MMMM d, yyyy') {
     return format(new Date(date.year, date.month, date.day), template)
@@ -104,12 +110,14 @@
 <footer class="border-seam-top-offset padding-x-outside padding-y-wide">
   <Bookend>
     <div slot="left">
-      {#if parseInt(number) > 1}
-        <a href={`writing/page/${parseInt(number) - 1}`}>Newer posts</a>
+      {#if currentPage > 1}
+        <a href={`writing/page/${currentPage - 1}`}>Newer posts</a>
       {/if}
     </div>
     <div slot="right">
-      <a href={`writing/page/${parseInt(number) + 1}`}>Older posts</a>
+      {#if currentPage < total}
+        <a href={`writing/page/${currentPage + 1}`}>Older posts</a>
+      {/if}
     </div>
   </Bookend>
 </footer>

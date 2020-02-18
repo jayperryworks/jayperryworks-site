@@ -17,6 +17,10 @@ module.exports = (
 ) => {
   let files = fs.readdirSync(dir).reverse()
 
+  // store a reference to the total number of posts before we split
+  // -> so we know where to end pagination
+  const totalPosts = files.length
+
   // cut the array down to size for pagination
   if (end) {
     files = files.slice(start, end)
