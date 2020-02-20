@@ -114,7 +114,7 @@
                 <PostBody sections={post.excerpt} dropCap={false} />
                 {#if post.readMore}
                   <a
-                    class="display-inline-block padding-top t-case-upper t-font-accent t-scale-zeta t-weight-bold"
+                    class="display-inline-block padding-top t-case-upper t-font-accent t-scale-zeta t-weight-bold t-link-undecorated"
                     rel="prefetch"
                     href={post.path}
                   >
