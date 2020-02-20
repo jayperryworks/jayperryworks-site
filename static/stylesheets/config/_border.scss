@@ -13,11 +13,6 @@ $corner-radius: scale.get(2);
 
 // --- Border width & style
 
-// getter function for border style
-@function style($name) {
-  @return map-get($styles, unquote($name));
-}
-
 $_widths: (
   'thin': 1px,
   'thick': 4px,

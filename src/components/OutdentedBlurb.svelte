@@ -1,7 +1,6 @@
 <script>
   export let blurbWidth = 20,
-    bodyWidth = 'default',
-    stickyBlurb = false
+    bodyWidth = 'default'
 
   let classes = '',
     blurbClasses = '',

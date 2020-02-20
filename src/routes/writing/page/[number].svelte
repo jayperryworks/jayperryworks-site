@@ -55,7 +55,7 @@
   }
 
   li + li {
-    @include border.add(top);
+    @include border.add(top, $style: 'solid');
   }
 
   h1 {
@@ -79,7 +79,7 @@
 
       <div slot="body">
         <Wrapper centered={false}>
-          <ul class="list-undecorated margin-y-between-wide padding-y-between-wide">
+          <ul class="list-undecorated margin-y-between-xwide padding-y-between-xwide">
             {#each postsByYear[year] as post}
               <li>
                 <a
@@ -104,24 +104,28 @@
                       {post.subtitle}
                     </p>
                   {/if}
-                  <time
-                    class="c-fg-tertiary display-block padding-top-xxnarrow padding-bottom t-font-accent t-scale-zeta t-weight-bold"
-                    datetime={date(post.date, 'yyyy-M-dd')}
-                  >
-                    {date(post.date)}
-                  </time>
-                  <PostBody sections={post.excerpt} dropCap={false} />
-                  {#if post.readMore}
-                    <span class="display-inline-block padding-top t-case-upper t-font-accent t-scale-zeta t-weight-bold">
-                      Read more
-                      <Icon
-                        svg={arrowSmallRight}
-                        margin="left"
-                        size="small"
-                      />
-                    </span>
-                  {/if}
                 </a>
+                <time
+                  class="c-fg-tertiary display-block padding-top-xxnarrow padding-bottom t-font-accent t-scale-zeta t-weight-bold"
+                  datetime={date(post.date, 'yyyy-M-dd')}
+                >
+                  {date(post.date)}
+                </time>
+                <PostBody sections={post.excerpt} dropCap={false} />
+                {#if post.readMore}
+                  <a
+                    class="display-inline-block padding-top t-case-upper t-font-accent t-scale-zeta t-weight-bold"
+                    rel="prefetch"
+                    href={post.path}
+                  >
+                    Read more
+                    <Icon
+                      svg={arrowSmallRight}
+                      margin="left"
+                      size="small"
+                    />
+                  </a>
+                {/if}
               </li>
             {/each}
           </ul>
