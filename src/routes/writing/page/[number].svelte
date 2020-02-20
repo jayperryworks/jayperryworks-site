@@ -47,6 +47,7 @@
 <style type="text/scss">
   @use 'config/border';
   @use 'config/type';
+  @use 'config/breakpoints' as bp;
 
   ul {
     margin: 0 0 1em 0;
@@ -69,7 +70,7 @@
 </style>
 
 {#each Object.keys(postsByYear).reverse() as year, index}
-  <div class={index > 0 && 'border-seam-top'}>
+  <div class:border-seam-top={index > 0}>
     <OutdentedBlurb class="padding-x-outside padding-y-xwide">
       <h1
         slot="blurb"

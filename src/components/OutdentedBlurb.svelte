@@ -1,6 +1,7 @@
 <script>
   export let blurbWidth = 20,
-    bodyWidth = 'default'
+    bodyWidth = 'default',
+    stickyBlurb = false
 
   let classes = '',
     blurbClasses = '',
@@ -24,9 +25,9 @@
 
 <style type="text/scss">
   @use 'config/layout_width';
-  @use 'config/breakpoints';
+  @use 'config/breakpoints' as bp;
 
-  $breakpoint: breakpoints.get('large');
+  $breakpoint: bp.get('large');
   $blurb-width: 30rem;
   $max-width: 'wide';
 
@@ -54,7 +55,7 @@
   .blurb {
     width: 100%;
 
-    @include breakpoints.query('>xsmall') {
+    @include bp.query('>xsmall') {
       min-width: var(--blurb-width);
       width: calc((var(--breakpoint) - 100%) * 1000);
     }
@@ -63,7 +64,7 @@
   .body {
     width: 100%;
 
-    @include breakpoints.query('>xsmall') {
+    @include bp.query('>xsmall') {
       min-width: calc(100% - var(--blurb-width));
       width: calc((var(--breakpoint) - 100%) * 1000);
     }
@@ -75,10 +76,10 @@
   style={`
     --blurb-width: ${blurbWidthValue};
     --breakpoint: calc(
-          ${blurbWidthValue} + (
-            (${bodyWidthValue} + ${blurbWidthValue}) / 2
-          )
-        );
+        ${blurbWidthValue} + (
+          (${bodyWidthValue} + ${blurbWidthValue}) / 2
+        )
+      );
     --max-width: calc(${bodyWidthValue} + ${blurbWidthValue})
   `}
 >
