@@ -14,7 +14,9 @@
 
 <script>
   import { format } from 'date-fns'
-  import arrow from 'icons/arrow-right.svg'
+  import arrowSmallRight from 'icons/arrow-right.svg'
+  import arrowDottedLeft from 'icons/arrow-dotted-left.svg'
+  import arrowDottedRight from 'icons/arrow-dotted-right.svg'
   import Icon from '@/components/Icon.svelte'
   import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
   import PageTitle from '@/components/PageTitle.svelte'
@@ -25,7 +27,17 @@
 
   export let posts, number, total
 
-  $: currentPage = parseInt(number)
+  const currentDate = format(new Date(), 'yyyy')
+
+  $: nextPage = parseInt(number) + 1
+  $: prevPage = parseInt(number) - 1
+
+  $: postsByYear = posts.reduce((result, post) => {
+    if (!Object.keys(result).includes(post.date.year)) {
+      result[post.date.year] = posts.filter(p => p.date.year === post.date.year)
+    }
+    return result
+  }, {})
 
   function date(date, template = 'MMMM d, yyyy') {
     return format(new Date(date.year, date.month, date.day), template)
@@ -48,75 +60,105 @@
   h1 {
     margin-top: -0.3em;
   }
+
+  .pagination-label {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -0.7em;
+  }
 </style>
 
-<OutdentedBlurb class="padding-x-outside padding-y-xwide">
-  <h1
-    slot="blurb"
-    class="padding-bottom-wide"
-  >Recent posts</h1>
+{#each Object.keys(postsByYear).reverse() as year, index}
+  <div class={index > 0 && 'border-seam-top'}>
+    <OutdentedBlurb class="padding-x-outside padding-y-xwide">
+      <h1
+        slot="blurb"
+        class="padding-bottom-wide"
+      >{year === currentDate ? 'Recent posts' : year}</h1>
 
-  <div slot="body">
-    <Wrapper centered={false}>
-      <ul class="list-undecorated margin-y-between-wide padding-y-between-wide">
-        {#each posts as post}
-          <li>
-            <a
-              rel="prefetch"
-              href={post.path}
-              class="t-link-undecorated"
-            >
-              {#if post.cover}
-                <div class="padding-bottom">
-                  <Figure
-                    sources={post.cover.sources}
-                    alt={post.cover.alt}
-                    caption={post.cover.caption}
-                    credit={post.cover.credit}
-                    border={post.cover.border}
-                  />
-                </div>
-              {/if}
-              <h2>{post.title}</h2>
-              {#if post.subtitle}
-                <p class="c-fg-tertiary t-font-accent t-scale-gamma">
-                  {post.subtitle}
-                </p>
-              {/if}
-              <time
-                class="c-fg-tertiary display-block padding-top-xxnarrow padding-bottom t-font-accent t-scale-zeta t-weight-bold"
-                datetime={date(post.date, 'yyyy-M-dd')}
-              >
-                {date(post.date)}
-              </time>
-              <PostBody sections={post.excerpt} dropCap={false} />
-              {#if post.readMore}
-                <span class="display-inline-block padding-top t-case-upper t-font-accent t-scale-zeta t-weight-bold">
-                  Read more
-                  <Icon
-                    svg={arrow}
-                    margin="left"
-                    size="small"
-                  />
-                </span>
-              {/if}
-            </a>
-          </li>
-        {/each}
-      </ul>
-    </Wrapper>
+      <div slot="body">
+        <Wrapper centered={false}>
+          <ul class="list-undecorated margin-y-between-wide padding-y-between-wide">
+            {#each postsByYear[year] as post}
+              <li>
+                <a
+                  rel="prefetch"
+                  href={post.path}
+                  class="t-link-undecorated"
+                >
+                  {#if post.cover}
+                    <div class="padding-bottom">
+                      <Figure
+                        sources={post.cover.sources}
+                        alt={post.cover.alt}
+                        caption={post.cover.caption}
+                        credit={post.cover.credit}
+                        border={post.cover.border}
+                      />
+                    </div>
+                  {/if}
+                  <h2>{post.title}</h2>
+                  {#if post.subtitle}
+                    <p class="c-fg-tertiary t-font-accent t-scale-gamma">
+                      {post.subtitle}
+                    </p>
+                  {/if}
+                  <time
+                    class="c-fg-tertiary display-block padding-top-xxnarrow padding-bottom t-font-accent t-scale-zeta t-weight-bold"
+                    datetime={date(post.date, 'yyyy-M-dd')}
+                  >
+                    {date(post.date)}
+                  </time>
+                  <PostBody sections={post.excerpt} dropCap={false} />
+                  {#if post.readMore}
+                    <span class="display-inline-block padding-top t-case-upper t-font-accent t-scale-zeta t-weight-bold">
+                      Read more
+                      <Icon
+                        svg={arrowSmallRight}
+                        margin="left"
+                        size="small"
+                      />
+                    </span>
+                  {/if}
+                </a>
+              </li>
+            {/each}
+          </ul>
+        </Wrapper>
+      </div>
+    </OutdentedBlurb>
   </div>
-</OutdentedBlurb>
+{/each}
 <footer class="border-seam-top-offset padding-x-outside padding-y-wide">
-  <Bookend>
+  <Bookend breakpoint="none" fillSide="none">
     <div slot="left">
-      {#if currentPage > 1}
-        <a href={`writing/page/${currentPage - 1}`}>Newer posts</a>
+      {#if prevPage > 0}
+        <a
+          class="t-link-undecorated t-scale-gamma t-heading"
+          href={`writing/page/${prevPage}`}
+        >
+          <Icon
+            svg={arrowDottedLeft}
+            size="xlarge"
+            class="margin-right-narrow"
+          />
+          <span class="pagination-label hide-below@small">Newer posts</span>
+        </a>
       {/if}
     </div>
     <div slot="right">
-      {#if currentPage < total}
-        <a href={`writing/page/${currentPage + 1}`}>Older posts</a>
+      {#if nextPage <= total}
+        <a
+          class="t-link-undecorated t-scale-gamma t-heading"
+          href={`writing/page/${nextPage}`}
+        >
+          <span class="pagination-label hide-below@small">Older posts</span>
+          <Icon
+            svg={arrowDottedRight}
+            size="xlarge"
+            class="margin-left-narrow"
+          />
+        </a>
       {/if}
     </div>
   </Bookend>
