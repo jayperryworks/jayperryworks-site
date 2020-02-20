@@ -17,7 +17,7 @@ body:
     markdown: |-
       "Easy" and "intuitive" are words you hear an awful lot if you make websites, apps, or any kind of interface. Over the last 20 to 30 years, they’ve become watchwords of user interface (UI) design; our metric for a design’s success is often based on how self-evident it seems to unfamiliar users. Can anyone, anywhere, pick it up and start using it without needing outside help? Does it "just work" for most people?
 
-      User experience (UX) designers often describe their approach as a process of reducing "friction." We spend a lot of time trying to figure out what our users’ goals are, and then do our very best to to eliminate any "friction points" that slow them down. Along the way, a certain minimalism (and sometimes even asceticism) has overtaken UI design, as we strip away anything that feels even potentially complicated or unpredictable.
+      User experience (UX) designers often describe their approach as a process of reducing "friction." We spend a lot of time trying to figure out what our users’ goals are, and then do our very best to eliminate any "friction points" that slow them down. Along the way, a certain minimalism (and sometimes even asceticism) has overtaken UI design, as we strip away anything that feels even potentially complicated or unpredictable.
 
   - type: passage
     markdown: |-
