@@ -4,7 +4,7 @@
     // the `slug` parameter is available because
     // this file is called [slug].svelte
     const response = await this.fetch(`writing/${year}/${month}/${day}/${slug}.json`);
-    const data = await response.json();
+    const data = await response.json()
 
     if (response.status !== 200) {
       this.error(response.status, data.message)
@@ -77,26 +77,4 @@
   </header>
 
   <PostBody sections={post.body} />
-
-  <footer>
-    <Wrapper class="border-top padding-top-wide margin-top-wide">
-      <Card
-        el="aside"
-        figureSize="small"
-      >
-        <img
-          slot="figure"
-          src="images/portrait.jpg"
-          alt="Portrait"
-        >
-        <div slot="content">
-          <p>Jay Perry is a designer, illustrator, and writer living near Baltimore. He likes books, old rusty cars, and forests.</p>
-          <a
-            href="/about"
-            class="display-block padding-top-narrow t-case-upper t-font-accent t-link-undecorated t-scale-zeta t-weight-bold"
-          >More about Jay &rsaquo;</a>
-        </div>
-      </Card>
-    </Wrapper>
-  </footer>
 </article>
