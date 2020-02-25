@@ -1,0 +1,80 @@
+title: 'The return of Serotta, but not their lovely logo'
+subtitle: Thoughts on bicycles and branding and broken hearts
+cover:
+  border: false
+body:
+  - markdown: >-
+      A classic racing bicycle brand, Serotta, [is
+      returning](https://cyclingtips.com/2020/02/after-years-in-the-wilderness-serotta-is-back/)!
+      Known for their innovations in the use of titanium and their unique
+      approach to bike fit, Serottas were a common sight at the front of major
+      races around the world.
+
+
+      One of my favorite things about them, however, was their beautiful
+      logotype:
+    type: passage
+    useInExcerpt: false
+  - alt: Serotta logo
+    border: true
+    prominence: small
+    sources:
+      - path: /images/uploads/2020-blog-serotta-logo.png
+    type: figure
+    useInExcerpt: false
+  - markdown: >-
+      Those angular letters look absolutely amazing on a down tube[^1].
+
+
+      Sadly, it looks like they’ve [thrown this away](https://serotta.com).
+      Their new logo is a bold, oblique, square sans-serif. Just like&hellip;
+      every other sports company that exists today.
+
+
+      I’m said about this not only because the original was such a lovely
+      treatment but also because the modern bike industry is full of truly awful
+      typography. Both mass-market and small-batch/custom companies sin in equal
+      measure. This mystifies me a little because a bicycle is such an
+      inherently graceful, elegant machine. The armchair-designer side of me
+      thinks branding one might be easy: it’s already a handsome product. Just
+      put some graceful, elegant lettering on there to match. But so many
+      companies go instead for shouty billboard logos sprayed all over the
+      frame.
+
+
+      I know, of course, that A) making a bike is a huge engineering challenge
+      and there are so many factors that go into making one that rides well and
+      B) I no doubt sound like an old person grousing about something so
+      superficial. But the designer in me gets a little heartbroken every time I
+      see an otherwise fantastic bicycle with terrible frame decals. The poor
+      thing deserves better.
+
+
+      A few notable exceptions I’d like to shout out are
+      [Mason](https://masoncycles.cc),
+      [Ritchey](https://us.ritcheylogic.com/us_en/),
+      [Allied](https://alliedcycleworks.com/pages/allied-alfa-allroad), and
+      [All-City](https://allcitycycles.com/)[^2], which all have thoughtful,
+      classic logos and frame graphics&mdash; a perfect finishing touch for the
+      thoughtful, classic bikes they sell. Tip of the hat to
+      [Trek](https://www.trekbikes.com/us/en_US/) and
+      [Cérvelo](https://us.ritcheylogic.com/us_en/), who both do the bold
+      oblique thing but their lettering, at least, is nicely cut and
+      applied.[^3]
+
+
+      [^1]: Which, by the way, is the tube that runs diagonally from the ‘head
+      tube’ (just above the front wheel) to the ‘bottom bracket’ (at the pedal
+      axle). This is traditionally where bike manufacturer apply their logo
+      decals.
+
+
+      [^2]: I especially like that All-City give their bikes fantastic names
+      like “Cosmic Stallion” and “Gorilla Monsoon.”
+
+
+      [^3]: In Cérvelo’s case, their brand was recently facelifted by Canadian
+      design agency Concrete. There’s a nice case study
+      [here](https://www.concrete.ca/case-study/cervelo/)
+    type: passage
+    useInExcerpt: false
