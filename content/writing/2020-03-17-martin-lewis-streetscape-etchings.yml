@@ -1,6 +1,4 @@
 title: Martin Lewis’s streetscape etchings
-cover:
-  border: false
 body:
   - type: passage
     useInExcerpt: false
