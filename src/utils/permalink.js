@@ -62,13 +62,3 @@ function createPath (filename, sourceTemplate, destTemplate) {
 }
 
 module.exports = { fileMetadata, createPath }
-
-// console.log(fileMetadata('2019-seasons-test-more-stuff', ':year-:slug'))
-// console.log(_templateData('pictures/:year/:slug').strings)
-// console.log(
-//   createPath(
-//     '2019-seasons-test-more-stuff',
-//     ':year-:slug',
-//     'pictures/:year/:slug'
-//   )
-// )

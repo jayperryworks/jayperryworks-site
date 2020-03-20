@@ -1,12 +1,13 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
 import generatePictureList from '@/utils/generatePictureList.js'
+import resizeImage from '@/utils/resizeImage.js'
 import render from '@/utils/renderMarkdown.js'
 
 export function get(req, res) {
   let content = yaml.safeLoad(
-      fs.readFileSync('content/pictures.yml', 'utf-8')
-    )
+    fs.readFileSync('content/pictures.yml', 'utf-8')
+  )
   const pictures = generatePictureList('content/pictures')
 
   if (content.intro) {

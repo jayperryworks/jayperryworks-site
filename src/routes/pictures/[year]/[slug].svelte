@@ -47,6 +47,8 @@
 
   export let post, date, nav
 
+    console.log(post.cover)
+
   let metadataBreakpoint = 'xsmall'
 </script>
 
