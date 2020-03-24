@@ -2,35 +2,11 @@ title: Seasons (winter)
 date: 2019-09-24T02:30:00.263Z
 format: Digital print
 category: prints
-cover:
-  - path: /images/uploads/work-2019-seasons-winter%402000w.jpg
-    size: 2000
-  - path: /images/uploads/work-2019-seasons-winter%401600w.jpg
-    size: 1600
-  - path: /images/uploads/work-2019-seasons-winter%401200w.jpg
-    size: 1200
-  - path: /images/uploads/work-2019-seasons-winter%40800w.jpg
-    size: 800
-  - path: /images/uploads/work-2019-seasons-winter%40480w.jpg
-    size: 480
-thumb:
-  - path: /images/uploads/work-2019-seasons-winter-thumb%401000w.jpg
-    size: 1000
-  - path: /images/uploads/work-2019-seasons-winter-thumb%40600w.jpg
-    size: 600
-  - path: /images/uploads/work-2019-seasons-winter-thumb%40300w.jpg
-    size: 300
+cover: /images/uploads/work-2019-seasons-winter@2000w.jpg
+thumb: /images/uploads/work-2019-seasons-winter-thumb%401000w.jpg
 editions:
   - border: 2
-    photo:
-      - path: /images/uploads/work-2019-seasons-winter-large-DSCF0203%402000w.jpg
-        size: 2000
-      - path: /images/uploads/work-2019-seasons-winter-large-DSCF0203%401200w.jpg
-        size: 1200
-      - path: /images/uploads/work-2019-seasons-winter-large-DSCF0203%40800w.jpg
-        size: 800
-      - path: /images/uploads/work-2019-seasons-winter-large-DSCF0203%40400w.jpg
-        size: 400
+    photo: /images/uploads/work-2019-seasons-winter-large-DSCF0203@2000w.jpg
     name: large
     price: 85
     type: giclee
@@ -39,15 +15,7 @@ editions:
     height: 16
 
   - border: 1
-    photo:
-      - path: /images/uploads/work-2019-seasons-winter-medium-DSCF0201%402000w.jpg
-        size: 2000
-      - path: /images/uploads/work-2019-seasons-winter-medium-DSCF0201%401200w.jpg
-        size: 1200
-      - path: /images/uploads/work-2019-seasons-winter-medium-DSCF0201%40800w.jpg
-        size: 800
-      - path: /images/uploads/work-2019-seasons-winter-medium-DSCF0201%40400w.jpg
-        size: 400
+    photo: /images/uploads/work-2019-seasons-winter-medium-DSCF0201@2000w.jpg
     name: medium
     price: 65
     type: giclee
@@ -56,15 +24,7 @@ editions:
     height: 12
 
   - border: 1
-    photo:
-      - path: /images/uploads/work-2019-seasons-winter-small-DSCF0205%402000w.jpg
-        size: 2000
-      - path: /images/uploads/work-2019-seasons-winter-small-DSCF0205%401200w.jpg
-        size: 1200
-      - path: /images/uploads/work-2019-seasons-winter-small-DSCF0205%40800w.jpg
-        size: 800
-      - path: /images/uploads/work-2019-seasons-winter-small-DSCF0205%40400w.jpg
-        size: 400
+    photo: /images/uploads/work-2019-seasons-winter-small-DSCF0205@2000w.jpg
     name: small
     price: 35
     type: giclee

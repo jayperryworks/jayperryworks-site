@@ -4,10 +4,8 @@ category: prints
 tags:
   - india ink
   - digital
-cover:
-  - path: /images/uploads/work-2017-sidewalk-print%401200.jpg
-thumb:
-  - path: /images/uploads/work-2017-sidewalk-thumb.jpg
+cover: /images/uploads/work-2017-sidewalk-print%401200.jpg
+thumb: /images/uploads/work-2017-sidewalk-thumb.jpg
 format: Digital painting
 editions:
   - name: small
@@ -16,6 +14,5 @@ editions:
     width: 8
     border: 1
     price: 30
-    photo:
-      - path: /images/uploads/work-2017-sidewalk%401200.jpg
+    photo: /images/uploads/work-2017-sidewalk%401200.jpg
     url: https://www.etsy.com/listing/598149219/art-print-sidewalk-versus-tree
