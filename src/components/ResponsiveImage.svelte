@@ -15,9 +15,9 @@
     contain = false,
     cover = false
 
-  $: src = sources.length > 0 ? sources[0].path : ''
+  $: src = Array.isArray(sources) ? sources[0].path : sources
 
-  $: srcset = sources.length > 0
+  $: srcset = Array.isArray(sources)
     ? sources.slice(1).map((source) => {
         if (source.size) {
           return `${source.path} ${source.size}w`

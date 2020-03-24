@@ -1,7 +1,6 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
 import generatePictureList from '@/utils/generatePictureList.js'
-import resizeImage from '@/utils/resizeImage.js'
 import render from '@/utils/renderMarkdown.js'
 
 export function get(req, res) {
