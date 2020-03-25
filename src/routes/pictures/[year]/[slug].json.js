@@ -3,7 +3,7 @@ import yaml from 'js-yaml'
 import render from '@/utils/renderMarkdown.js'
 import imageHelpers from '@/utils/imageHelpers.js'
 
-export function get(req, res, next) {
+export async function get(req, res, next) {
 	const { year, slug } = req.params
 	const header = {
 		'Content-Type': 'application/json'
@@ -27,7 +27,7 @@ export function get(req, res, next) {
 	}
 
 	if (content.cover) {
-		content.cover = imageHelpers.versions(content.cover)
+		content.cover = await imageHelpers.versions(content.cover)
 	}
 
 	// grab info about the print editions, if there are any
