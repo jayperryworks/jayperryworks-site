@@ -47,9 +47,7 @@
 
 	export let post, date, nav
 
-	// console.log(post.cover)
-
-	// $: coverSources = post.cover.versions.find(version => version.default).sizes
+	$: coverSources = post.cover.versions.find(version => version.default).sizes
 
 	let metadataBreakpoint = 'xsmall'
 </script>
@@ -71,10 +69,10 @@
 			class="padding-x-outside padding-y-xwide"
 			data-theme="reverse"
 		>
-			<!-- <Cover
+			<Cover
 				sources={coverSources}
 				alt={post.title}
-			/> -->
+			/>
 
 			<!-- Title, media, size info -->
 			<Wrapper

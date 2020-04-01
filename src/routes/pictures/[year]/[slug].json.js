@@ -1,9 +1,9 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
 import render from '@/utils/renderMarkdown.js'
-import imageHelpers from '@/utils/imageHelpers.js'
+import resizeImage from '@/utils/resizeImage.js'
 
-export async function get(req, res, next) {
+export function get(req, res, next) {
 	const { year, slug } = req.params
 	const header = {
 		'Content-Type': 'application/json'
@@ -24,10 +24,6 @@ export async function get(req, res, next) {
 	// render the markdown bits
 	if (content.intro) {
 		content.intro = render(content.intro)
-	}
-
-	if (content.cover) {
-		content.cover = await imageHelpers.versions(content.cover)
 	}
 
 	// grab info about the print editions, if there are any
@@ -51,6 +47,14 @@ export async function get(req, res, next) {
 		})
 	}
 
-	res.writeHead(200, header)
-	res.end(JSON.stringify(content))
+	if (content.cover) {
+		resizeImage(content.cover).then((versions) => {
+			content.cover = versions
+			res.writeHead(200, header)
+			res.end(JSON.stringify(content))
+		})
+	} else {
+		res.writeHead(200, header)
+		res.end(JSON.stringify(content))
+	}
 }
