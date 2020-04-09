@@ -28,10 +28,15 @@ module.exports = async (sourcePath, {
 	// the uncompiled/server path prepended to outputPath
 	outputPrefix = 'static'
 } = {}) => {
+	// grab the filename form the sourcePath param
+	const sourceFileName = path.parse(sourcePath).name
+	// create server paths for files (pre-export)
 	const sourceFileOnServer = `${outputPrefix}${sourcePath}`
 	const outputFileOnServer = `${outputPrefix}${outputPath}`
+	// get source image metadata (width)
 	const metadata = await sharp(sourceFileOnServer).metadata()
 
+	// if the output folder doesn't exist, write it
 	if (!fs.existsSync(outputFileOnServer)) {
 		fs.mkdirSync(outputFileOnServer)
 	}
@@ -49,8 +54,7 @@ module.exports = async (sourcePath, {
 				// - the file does not already exist
 				// - the version is smaller than the original
 				sizes: widths.reduce((result, width) => {
-					const filename = sourcePath.split('/').pop().split('.')[0]
-					const path = `${outputPath}/${filename}@${width}w.${format}`
+					const path = `${outputPath}/${sourceFileName}@${width}w.${format}`
 
 					if (metadata.width >= width) {
 						// add an object with path and size info to the array
