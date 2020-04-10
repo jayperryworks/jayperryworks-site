@@ -1,13 +1,6 @@
 <!--
 	An image tag with an (optional) srcset attribute
 
-	sources = [
-		{
-			path: (STRING: path to file)
-			size: (NUMBER or STRING: width of image)
-		}
-	]
-
 	sources = (STRING: path to single image)
 	- or -
 	sources = [
@@ -34,16 +27,21 @@
 		contain = false,
 		cover = false
 
-	$: src = Array.isArray(sources) ? sources[0].path : sources
+	// find the default image path
+	$: defaultFormat = sources.find(source => source.default)
+	$: defaultSrc = defaultFormat.sizes[0].path
+	// find the 'enhanced' sources, e.g. webp format
+	$: enhancedFormat = sources.filter(source => !source.default)
 
-	$: srcset = Array.isArray(sources)
-		? sources.slice(1).map((source) => {
-				if (source.size) {
-					return `${source.path} ${source.size}w`
-				}
-				return source.path
-			}).join(', ')
-		: ''
+	// generate a srcset string
+	function srcset (sizes) {
+		return sizes.slice(1).map((source) => {
+			if (source.size) {
+				return `${source.path} ${source.size}w`
+			}
+			return source.path
+		})
+	}
 
 	$: borderClass = border ? 'border border-solid' : ''
 
@@ -52,7 +50,8 @@
 </script>
 
 <style type="text/scss">
-	img {
+	img,
+	picture {
 		display: inline-block;
 		max-width: 100%;
 		object-fit: scale-down;
@@ -67,18 +66,30 @@
 	}
 </style>
 
-<img
-	class="{borderClass} {classes}"
-	class:contain
-	class:cover
-	{src}
-	{srcset}
-	{alt}
-/>
-
-<!-- <picture class="{borderClass} {classes}">
-	{#each format as formats}
-		<source {srcset} type="image/{format}">
-	{/each}
-	<img {src} {alt}>
-</picture> -->
+{#if typeof sources === String}
+	<img
+		class="{borderClass} {classes}"
+		class:contain
+		class:cover
+		{sources}
+		{alt}
+	/>
+{:else}
+	{#if sources.length === 1}
+		<img
+			class="{borderClass} {classes}"
+			class:contain
+			class:cover
+			{defaultSrc}
+			{srcset(sources[0].sizes)}
+			{alt}
+		/>
+	{:else}
+		<picture class="{borderClass} {classes}">
+			{#each source as enhancedFormat}
+				<source {srcset(source.sizes)} type="image/{source.format}">
+			{/each}
+			<img {defaultSrc} {srcset(defaultFormat)} {alt}>
+		</picture>
+	{/if}
+{/if}
