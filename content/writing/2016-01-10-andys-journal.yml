@@ -81,14 +81,11 @@ body:
   - type: gallery
     prominence: large
     images:
-      - sources:
-          - path: /images/uploads/2016-blog-andys-journal-sewing.jpg
+      - image: /images/uploads/2016-blog-andys-journal-sewing.jpg
         alt: Sewing
-      - sources:
-          - path: /images/uploads/2016-blog-andys-journal-straps1.jpg
+      - image: /images/uploads/2016-blog-andys-journal-straps1.jpg
         alt: Sewing in the ribbons
-      - sources:
-          - path: /images/uploads/2016-blog-andys-journal-straps2.jpg
+      - image: /images/uploads/2016-blog-andys-journal-straps2.jpg
         alt: The finished block with ribbons
     caption: |-
       Sewing the block and adding ribbons
@@ -105,11 +102,9 @@ body:
     prominence: large
     size: large
     images:
-      - sources:
-          - path: /images/uploads/2016-blog-andys-journal-spine.jpg
+      - image: /images/uploads/2016-blog-andys-journal-spine.jpg
         alt: Endpapers
-      - sources:
-          - path: /images/uploads/2016-blog-andys-journal-endpaper.jpg
+      - image: /images/uploads/2016-blog-andys-journal-endpaper.jpg
         alt: Endpapers
     caption: |-
       Tipping on the endpapers. I had this marbled, handmade paper in my closet with these lovely red streaks.
@@ -121,14 +116,11 @@ body:
   - type: gallery
     prominence: large
     images:
-      - sources:
-          - path: /images/uploads/2016-blog-andys-journal-cover-board.jpg
+      - image: /images/uploads/2016-blog-andys-journal-cover-board.jpg
         alt: Sizing the cover boards
-      - sources:
-          - path: /images/uploads/2016-blog-andys-journal-cover-cutting.jpg
+      - image: /images/uploads/2016-blog-andys-journal-cover-cutting.jpg
         alt: Cutting fabric for the cover
-      - sources:
-          - path: /images/uploads/2016-blog-andys-journal-cover-gluing.jpg
+      - image: /images/uploads/2016-blog-andys-journal-cover-gluing.jpg
         alt: Ready to glue the cover
     caption: |-
       Sizing up the cover boards, cutting fabric, and preparing to glue it all up.

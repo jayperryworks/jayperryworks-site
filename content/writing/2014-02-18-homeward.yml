@@ -35,18 +35,16 @@ body:
     size: large
     prominence: large
     images:
-      - sources:
-          - path: "images/uploads/2014-blog-homeward-IMG_3804.JPG"
+      - image: "images/uploads/2014-blog-homeward-IMG_3804.JPG"
         alt: "View of the mountains"
-      - sources:
-          - path: "images/uploads/2014-blog-homeward-IMG_3795.JPG"
+      - image: "images/uploads/2014-blog-homeward-IMG_3795.JPG"
         alt: "Sunrise"
 
   - type: passage
     markdown: |-
       I decided to do this picture as a digital composite, using the workflow I worked out over the last year or so. For this one, though, I needed dense, black tones and textures but wanted to keep the clean lines that digital is so great for. I strugged for a long time with how to approach the mountains; I needed the wash to be _just so_ and the horizon needed to feel really wide. The perspective was really hard to get right.
 
-  - type: image
+  - type: figure
     image: "images/uploads/2014-blog-homeward-DSCF2142.JPG"
     alt: "Sketches"
 

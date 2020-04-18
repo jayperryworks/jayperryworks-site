@@ -30,23 +30,17 @@ body:
   - type: gallery
     prominence: large
     images:
-      - sources:
-          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0771.jpg
+      - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0771.jpg
         alt: Asateague Island
-      - sources:
-          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0821.jpg
+      - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0821.jpg
         alt: Asateague Island
-      - sources:
-          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0766.jpg
+      - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0766.jpg
         alt: Asateague Island
-      - sources:
-          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0838.jpg
+      - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0838.jpg
         alt: Asateague Island
-      - sources:
-          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0897.jpg
+      - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0897.jpg
         alt: Asateague Island
-      - sources:
-          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0887.jpg
+      - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0887.jpg
         alt: Asateague Island
 
   - type: passage
@@ -61,14 +55,11 @@ body:
   - type: gallery
     prominence: large
     images:
-      - sources:
-          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0859.jpg
+      - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0859.jpg
         alt: Abandoned road
-      - sources:
-          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0854.jpg
+      - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0854.jpg
         alt: Abandoned road
-      - sources:
-          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0853.jpg
+      - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0853.jpg
         alt: Abandoned road
 
   - type: passage
@@ -79,20 +70,15 @@ body:
     prominence: large
     size: large
     images:
-      - sources:
-          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF1534.jpg
+      - image: /images/uploads/2014-blog-eroded-asphalt-DSCF1534.jpg
         alt: Pencils
-      - sources:
-          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF1535.jpg
+      - image: /images/uploads/2014-blog-eroded-asphalt-DSCF1535.jpg
         alt: Inking
-      - sources:
-          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF1571.jpg
+      - image: /images/uploads/2014-blog-eroded-asphalt-DSCF1571.jpg
         alt: Inking
-      - sources:
-          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF1572.jpg
+      - image: /images/uploads/2014-blog-eroded-asphalt-DSCF1572.jpg
         alt: Inking
-      - sources:
-          - path: /images/uploads/2014-blog-eroded-asphalt-DSCF1574.jpg
+      - image: /images/uploads/2014-blog-eroded-asphalt-DSCF1574.jpg
         alt: Assistant
 
   - type: passage
