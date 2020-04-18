@@ -42,12 +42,9 @@
 	import PageTitle from '@/components/PageTitle.svelte'
 	import Passage from '@/components/Passage.svelte'
 	import PrintEdition from '@/components/PrintEdition.svelte'
-	import ResponsiveImage from '@/components/ResponsiveImage.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
 	export let post, date, nav
-
-	$: coverSources = post.cover.versions.find(version => version.default).sizes
 
 	let metadataBreakpoint = 'xsmall'
 </script>
@@ -70,7 +67,7 @@
 			data-theme="reverse"
 		>
 			<Cover
-				sources={coverSources}
+				sources={post.cover}
 				alt={post.title}
 			/>
 

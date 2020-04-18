@@ -25,7 +25,8 @@
 	let classes = ''
 	export { classes as class }
 
-	$: defaultSrc = sources.find(source => source.default).sizes[0].path
+	$: defaultFormat = sources.find(source => source.default)
+	$: defaultSrc = defaultFormat.sizes[0].path
 
 	function enhancedFormat (sources) {
 		return sources.filter(source => !source.default)
@@ -53,7 +54,8 @@
 		>
 	{/each}
 	<img
-		src="{defaultFormat(sources)}"
+		src="{defaultSrc}"
+		srcset="{srcset(defaultFormat.sizes.slice(1))}"
 		{alt}
 	>
 </picture>
