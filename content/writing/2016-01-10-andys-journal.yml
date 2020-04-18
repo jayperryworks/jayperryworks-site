@@ -6,8 +6,7 @@ tags:
   - layout
   - side project
 cover:
-  sources:
-    - path: /images/uploads/2016-blog-andys-journal-cover.jpg
+  image: /images/uploads/2016-blog-andys-journal-cover.jpg
 body:
   - type: note
     markdown: |-
@@ -36,8 +35,7 @@ body:
 
   - type: figure
     prominence: large
-    sources:
-      - path: "/images/uploads/2016-blog-andys-journal-title_page.jpg"
+    image: "/images/uploads/2016-blog-andys-journal-title_page.jpg"
     caption: |-
       The title page
 
@@ -51,8 +49,7 @@ body:
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/2016-blog-andys-journal-early_spread.jpg
+    image: /images/uploads/2016-blog-andys-journal-early_spread.jpg
     caption: |-
       A photo spread
 
@@ -73,8 +70,7 @@ body:
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/2016-blog-andys-journal-signatures.jpg
+    image: /images/uploads/2016-blog-andys-journal-signatures.jpg
     caption: |-
       Folded signatures
 
@@ -145,8 +141,7 @@ body:
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/2016-blog-andys-journal-interior.jpg
+    image: /images/uploads/2016-blog-andys-journal-interior.jpg
     caption: |-
       Finished!
 

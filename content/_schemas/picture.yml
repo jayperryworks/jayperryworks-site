@@ -4,9 +4,7 @@ category: !!str #(prints, paintings) default prints
 color: !!str #(color hsl)
 tags: !!pairs
   - !!str
-cover: !!omap
-  - path: !!str
-    width: !!int #(optional)
+cover: !!str # path to cover image
 thumb: !!omap
   - path: !!str
     width: !!int #(optional)
@@ -26,7 +24,5 @@ editions: !!omap
     border: !!int
     # price in dollars
     price: !!int
-    photo:
-      - path: !!str
-        size: !!int
+    photo: !!str # path to edition photo
     url: !!str

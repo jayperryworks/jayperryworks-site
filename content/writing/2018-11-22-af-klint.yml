@@ -3,8 +3,7 @@ tags:
   - inspiration
   - painting
 cover:
-  sources:
-    - path: /images/uploads/klint-painting.jpg
+  image: /images/uploads/klint-painting.jpg
 body:
   - type: passage
     markdown: |-

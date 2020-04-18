@@ -5,8 +5,7 @@ tags:
   - photos
   - travel
 cover:
-  sources:
-    - path: /images/uploads/eroded_asphalt.jpg
+  image: /images/uploads/eroded_asphalt.jpg
 body:
   - type: note
     markdown: |-
@@ -21,8 +20,7 @@ body:
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0818.jpg
+    image: /images/uploads/2014-blog-eroded-asphalt-DSCF0818.jpg
     alt: Asateague Island
 
   - type: passage
@@ -57,8 +55,7 @@ body:
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/2014-blog-eroded-asphalt-DSCF0856.jpg
+    image: /images/uploads/2014-blog-eroded-asphalt-DSCF0856.jpg
     alt: Abandoned road
 
   - type: gallery

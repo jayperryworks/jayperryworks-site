@@ -3,8 +3,7 @@ tags:
   - type
   - inspiration
 cover:
-  sources:
-    - path: /images/uploads/schnyder.png
+  image: /images/uploads/schnyder.png
 body:
   - type: passage
     markdown: |-

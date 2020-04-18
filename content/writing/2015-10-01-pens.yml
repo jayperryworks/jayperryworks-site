@@ -12,8 +12,7 @@ body:
     markdown: |-
       I found a [specialty pen shop](http://www.penboutique.com) nearby, where I picked up this great Pilot Namiki fountain pen. Super smooth, and allows just a bit of modulation in the line, nice heft to it.
   - type: figure
-    sources:
-      - path: /images/uploads/pen.jpg
+    image: /images/uploads/pen.jpg
     alt: My shiny new pen
     prominence: small
   - type: passage

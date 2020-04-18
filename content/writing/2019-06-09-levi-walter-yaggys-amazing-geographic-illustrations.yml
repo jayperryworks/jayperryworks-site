@@ -1,7 +1,6 @@
 title: Levi Walter Yaggy’s amazing geographic illustrations
 cover:
-  sources:
-    - path: /images/uploads/blog-2019-yaggy03.jpg
+  image: /images/uploads/blog-2019-yaggy03.jpg
 tags:
   - inspiration
   - maps
@@ -24,18 +23,15 @@ body:
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/blog-2019-yaggy01.jpg
+    image: /images/uploads/blog-2019-yaggy01.jpg
     alt: Map by David Walter Yaggy
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/blog-2019-yaggy02.jpg
+    image: /images/uploads/blog-2019-yaggy02.jpg
     alt: Map by David Walter Yaggy
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/blog-2019-yaggy04.jpg
+    image: /images/uploads/blog-2019-yaggy04.jpg
     alt: Map by David Walter Yaggy

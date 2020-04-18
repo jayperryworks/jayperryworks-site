@@ -1,7 +1,6 @@
 title: A visit to the farm
 cover:
-  sources:
-    - path: /images/uploads/2017-blog-farm-05.jpeg
+  image: /images/uploads/2017-blog-farm-05.jpeg
 tags:
   - photography
 body:
@@ -12,21 +11,18 @@ body:
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/2017-blog-farm-04.jpeg
+    image: /images/uploads/2017-blog-farm-04.jpeg
     alt: Goats
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/2017-blog-farm-07.jpeg
+    image: /images/uploads/2017-blog-farm-07.jpeg
     caption: |-
       Human-sized hamster wheels!
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/2017-blog-farm-03.jpeg
+    image: /images/uploads/2017-blog-farm-03.jpeg
     caption: My wife, Jackie, chilling on a pile of old tires.
 
   - type: gallery
@@ -42,6 +38,5 @@ body:
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/2017-blog-farm-02.jpeg
+    image: /images/uploads/2017-blog-farm-02.jpeg
     alt: Sign on the hill

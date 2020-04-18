@@ -12,6 +12,5 @@ body:
 
   - type: figure
     prominence: medium
-    sources:
-      - path: /images/uploads/2019-blog-colored-flowers-img_0949.jpg
+    image: /images/uploads/2019-blog-colored-flowers-img_0949.jpg
     alt: Flowers in food coloring

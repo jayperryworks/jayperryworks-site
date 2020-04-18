@@ -41,8 +41,7 @@ body:
   - type: figure
     border: true
     prominence: large
-    sources:
-      - path: /images/uploads/2016-blog-paper_test-screen-v1-bristol_board.jpg
+    image: /images/uploads/2016-blog-paper_test-screen-v1-bristol_board.jpg
     alt: Bristol Board paper test scan
     caption: |-
       [Download the full-resolution version (2.8<small>MB</small>)](/images/uploads/2016-blog-paper_test-v1-bristol_board.jpg)
@@ -62,8 +61,7 @@ body:
   - type: figure
     border: true
     prominence: large
-    sources:
-      - path: /images/uploads/2016-blog-paper_test-screen-v2-mixed_media.jpg
+    image: /images/uploads/2016-blog-paper_test-screen-v2-mixed_media.jpg
     alt: Mixed Media paper test scan
     caption: |-
       [Download the full-resolution version (2.6<small>MB</small>) here.](/images/uploads/2016-blog-paper_test-v2-mixed_media.jpg)
@@ -82,8 +80,7 @@ body:
   - type: figure
     border: true
     prominence: large
-    sources:
-      - path: /images/uploads/2016-blog-paper_test-screen-v3-hot_press.jpg
+    image: /images/uploads/2016-blog-paper_test-screen-v3-hot_press.jpg
     alt: Fabriano hot press paper test scan
     caption: |-
       [Download the full-resolution version (2.7<small>MB</small>) here.](/images/uploads/2016-blog-paper_test-v3-hot_press.jpg)
@@ -102,8 +99,7 @@ body:
   - type: figure
     border: true
     prominence: large
-    sources:
-      - path: /images/uploads/2016-blog-paper_test-screen-v4-cold_press.jpg
+    image: /images/uploads/2016-blog-paper_test-screen-v4-cold_press.jpg
     alt: Strathmore 300-series cold press paper test scan
     caption: |-
       [Download the full-resolution version (2.5<small>MB</small>) here.](/images/uploads/2016-blog-paper_test-v4-cold_press.jpg)

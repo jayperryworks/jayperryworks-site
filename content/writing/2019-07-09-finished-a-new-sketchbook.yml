@@ -17,8 +17,7 @@ body:
   - alt: ''
     caption: 'I decided on black and beige cover fabric, with red bands and ribbon.'
     prominence: large
-    sources:
-      - path: /images/uploads/IMG_1068.jpeg
+    image: /images/uploads/IMG_1068.jpeg
         width: 1600
     type: figure
     useInExcerpt: false
@@ -26,15 +25,13 @@ body:
       ...and I had this handmade swirly paper on the closet, which I've used
       often for endpapers.
     prominence: large
-    sources:
-      - path: /images/uploads/IMG_1069.jpeg
+    image: /images/uploads/IMG_1069.jpeg
         width: 1600
     type: figure
     useInExcerpt: false
   - caption: Adding the bands and gluing the block.
     prominence: large
-    sources:
-      - path: /images/uploads/IMG_1070.jpeg
+    image: /images/uploads/IMG_1070.jpeg
         width: 1600
     type: figure
     useInExcerpt: false
@@ -43,8 +40,7 @@ body:
       it wrinkled when I brushed on the glue, even though I tried really hard to
       use the glue really sparingly. Oh well.
     prominence: large
-    sources:
-      - path: /images/uploads/IMG_1072.jpeg
+    image: /images/uploads/IMG_1072.jpeg
         width: 1600
     type: figure
     useInExcerpt: false
@@ -54,8 +50,7 @@ body:
       highlights. I've always liked the look of midtone grounds and hope to
       experiment more with it here. We'll see.
     prominence: large
-    sources:
-      - path: /images/uploads/IMG_1073.jpeg
+    image: /images/uploads/IMG_1073.jpeg
         width: 1600
     type: figure
     useInExcerpt: false

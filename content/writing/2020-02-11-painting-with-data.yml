@@ -3,8 +3,7 @@ subtitle: Tabletop Whale's gorgeous visualization work
 cover:
   alt: ''
   credit: '"The Moon", by [Tabletop Whale](http://tabletopwhale.com/).'
-  sources:
-    - path: /images/uploads/2020-blog-tabletop-whale.jpg
+  image: /images/uploads/2020-blog-tabletop-whale.jpg
 shortPost: true
 body:
   - markdown: >-
