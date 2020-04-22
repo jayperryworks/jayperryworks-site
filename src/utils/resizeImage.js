@@ -72,11 +72,11 @@ module.exports = async (sourcePath, {
 
 	// resize all the images and save out files
 	// use Promise.all to do these all at once
-	await Promise.all(versionData.versions.map((version) => {
-		version.sizes.map((width) => {
+	await Promise.all(versionData.versions.map(async (version) => {
+		version.sizes.map(async (width) => {
 			// if the file does not exist...
 			if (!fs.existsSync(path.join(__dirname, sourceFileOnServer))) {
-				sharp(sourceFileOnServer)
+				await sharp(sourceFileOnServer)
 					.resize({ width: width.size })
 					.toFormat(version.format)
 					.toFile(`${outputPrefix}${width.path}`)

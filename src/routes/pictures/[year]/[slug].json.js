@@ -3,7 +3,7 @@ import yaml from 'js-yaml'
 import render from '@/utils/renderMarkdown.js'
 import resizeImage from '@/utils/resizeImage.js'
 
-export function get(req, res, next) {
+export async function get(req, res, next) {
 	const { year, slug } = req.params
 	const header = {
 		'Content-Type': 'application/json'
@@ -21,6 +21,11 @@ export function get(req, res, next) {
 		return
 	}
 
+	if (content.cover) {
+		const versions = await resizeImage(content.cover)
+		content.cover = versions
+	}
+
 	// render the markdown bits
 	if (content.intro) {
 		content.intro = render(content.intro)
@@ -31,6 +36,10 @@ export function get(req, res, next) {
 		const info = yaml.safeLoad(
 			fs.readFileSync('content/pictures.yml', 'utf-8')
 		)
+
+		await Promise.all(content.editions.map(async (edition) => {
+			edition.photo = await resizeImage(edition.photo)
+		}))
 
 		// get unique edition types for this picture, e.g. 'giclee'
 		// -> https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates#14438954
@@ -47,14 +56,6 @@ export function get(req, res, next) {
 		})
 	}
 
-	if (content.cover) {
-		resizeImage(content.cover).then((versions) => {
-			content.cover = versions
-			res.writeHead(200, header)
-			res.end(JSON.stringify(content))
-		})
-	} else {
-		res.writeHead(200, header)
-		res.end(JSON.stringify(content))
-	}
+	res.writeHead(200, header)
+	res.end(JSON.stringify(content))
 }

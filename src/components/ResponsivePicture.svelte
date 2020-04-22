@@ -42,10 +42,30 @@
 	}
 </script>
 
+<style type="text/scss">
+	picture {
+		display: inline-block;
+		max-width: 100%;
+		overflow: hidden;
+	}
+
+	img {
+		object-fit: scale-down;
+		width: 100%;
+		height: 100%;
+	}
+
+	.contain {
+		object-fit: contain;
+	}
+
+	.cover {
+		object-fit: cover;
+	}
+</style>
+
 <picture
 	class="{borderClass} {classes}"
-	class:contain
-	class:cover
 >
 	{#each enhancedFormat(sources) as source}
 		<source
@@ -57,5 +77,7 @@
 		src="{defaultSrc}"
 		srcset="{srcset(defaultFormat.sizes.slice(1))}"
 		{alt}
+		class:contain
+		class:cover
 	>
 </picture>

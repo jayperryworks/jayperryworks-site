@@ -1,5 +1,6 @@
 <script>
   import ResponsiveImage from '@/components/ResponsiveImage.svelte'
+  import ResponsivePicture from '@/components/ResponsivePicture.svelte'
 
   export let sources,
     alt,
@@ -9,6 +10,8 @@
 
   let classes = ''
   export { classes as class }
+
+  $: versions = sources.versions && sources.versions.length > 1
 </script>
 
 <style type="text/scss">
@@ -55,6 +58,20 @@
 
 <div class="aspect ratio-{ratio} {classes}">
   <div class="content">
-    <ResponsiveImage {sources} {alt} {cover} {contain} />
+    {#if versions}
+    	<ResponsivePicture
+    		sources="{sources.versions}"
+    		{alt}
+    		{cover}
+    		{contain}
+    	/>
+    {:else}
+    	<ResponsiveImage
+    		sources="{sources.versions[0].sizes || sources}"
+    		{alt}
+    		{cover}
+    		{contain}
+    	/>
+    {/if}
   </div>
 </div>
