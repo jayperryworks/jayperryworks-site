@@ -18,7 +18,6 @@ body:
     caption: 'I decided on black and beige cover fabric, with red bands and ribbon.'
     prominence: large
     image: /images/uploads/IMG_1068.jpeg
-        width: 1600
     type: figure
     useInExcerpt: false
   - caption: >-
@@ -26,13 +25,11 @@ body:
       often for endpapers.
     prominence: large
     image: /images/uploads/IMG_1069.jpeg
-        width: 1600
     type: figure
     useInExcerpt: false
   - caption: Adding the bands and gluing the block.
     prominence: large
     image: /images/uploads/IMG_1070.jpeg
-        width: 1600
     type: figure
     useInExcerpt: false
   - caption: >-
@@ -41,7 +38,6 @@ body:
       use the glue really sparingly. Oh well.
     prominence: large
     image: /images/uploads/IMG_1072.jpeg
-        width: 1600
     type: figure
     useInExcerpt: false
   - caption: >-
@@ -51,6 +47,5 @@ body:
       experiment more with it here. We'll see.
     prominence: large
     image: /images/uploads/IMG_1073.jpeg
-        width: 1600
     type: figure
     useInExcerpt: false
