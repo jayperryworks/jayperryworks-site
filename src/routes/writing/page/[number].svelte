@@ -93,7 +93,7 @@
 										{#if post.cover}
 											<div class="padding-bottom">
 												<Figure
-													sources={post.cover.sources}
+													sources={post.cover.image}
 													alt={post.cover.alt}
 													caption={post.cover.caption}
 													credit={post.cover.credit}

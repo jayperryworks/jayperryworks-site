@@ -1,7 +1,7 @@
 import fs from 'fs'
 import generateWritingList from '@/utils/generateWritingList.js'
 
-export function get(req, res) {
+export async function get(req, res) {
   const { number } = req.params
   const postsPerPage = 10
   const totalPosts = fs.readdirSync('content/writing').length
@@ -14,7 +14,7 @@ export function get(req, res) {
   res.end(JSON.stringify(
     {
       totalPages,
-      posts: generateWritingList('content/writing', {
+      posts: await generateWritingList('content/writing', {
         start: ((number - 1) * postsPerPage),
         end: (number * (postsPerPage - 1))
       })

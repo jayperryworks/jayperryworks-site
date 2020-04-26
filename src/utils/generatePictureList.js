@@ -3,8 +3,8 @@ const path = require('path')
 const yaml = require('js-yaml')
 const permalink = require('./permalink.js')
 const render = require('./renderMarkdown.js')
-const siteData = require('./siteData.js')
 const resizeImage = require('./resizeImage.js')
+const siteData = require('./siteData.js')
 
 const picturesConfig = siteData.collection('pictures')
 

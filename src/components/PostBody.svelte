@@ -57,14 +57,17 @@
 
     {#if section.type == 'passage'}
       <Wrapper class="section-text">
-        <Passage html={section.html} lead={dropCap && section == firstPassage} />
+        <Passage
+        	html={section.html}
+        	lead={dropCap && section == firstPassage}
+      	/>
       </Wrapper>
     {/if}
 
     {#if section.type == 'figure'}
       <Wrapper width={getWidth(section.prominence)} class="t-align-center">
         <Figure
-          sources={section.sources}
+          sources={section.image}
           alt={section.alt}
           caption={section.caption}
           credit={section.credit}
@@ -80,12 +83,12 @@
           credit={section.credit}
         >
           <Gallery size={section.size}>
-            {#each section.images as image}
+            {#each section.images as item}
               <li>
                 <ResponsiveImage
-                  sources={image.sources}
-                  alt={image.alt}
-                  border={image.border}
+                  sources={item.image}
+                  alt={item.alt}
+                  border={item.border}
                 />
               </li>
             {/each}
