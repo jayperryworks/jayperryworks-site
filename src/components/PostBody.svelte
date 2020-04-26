@@ -5,6 +5,7 @@
   import Note from './Note.svelte'
   import Passage from './Passage.svelte'
   import ResponsiveImage from './ResponsiveImage.svelte'
+  import ResponsivePicture from './ResponsivePicture.svelte'
   import Table from './Table.svelte'
   import Wrapper from './Wrapper.svelte'
 
@@ -85,11 +86,19 @@
           <Gallery size={section.size}>
             {#each section.images as item}
               <li>
-                <ResponsiveImage
-                  sources={item.image}
-                  alt={item.alt}
-                  border={item.border}
-                />
+              	{#if item.image.versions && item.image.versions.length > 1}
+              		<ResponsivePicture
+              		  sources={item.image.versions}
+              		  alt={item.alt}
+              		  border={item.border}
+              		/>
+              	{:else}
+	                <ResponsiveImage
+	                  sources={item.image.versions && item.image.versions[0].sizes || item.image}
+	                  alt={item.alt}
+	                  border={item.border}
+	                />
+                {/if}
               </li>
             {/each}
           </Gallery>

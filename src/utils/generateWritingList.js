@@ -94,7 +94,7 @@ module.exports = async (
   await Promise.all(fileData.map(async (file) => {
   	// resize the cover
   	if (file.cover && file.cover.resize) {
-	  	file.cover = await resizeImage(file.cover)
+	  	file.cover.image = await resizeImage(file.cover.image)
 	  }
 
 	  // excerpt

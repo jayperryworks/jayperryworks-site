@@ -34,7 +34,7 @@
 			/>
 		{:else}
 			<ResponsiveImage
-				sources="{sources.versions[0].sizes || sources}"
+				sources="{sources.versions && sources.versions[0].sizes || sources}"
 				{alt}
 				{border}
 				{cover}
