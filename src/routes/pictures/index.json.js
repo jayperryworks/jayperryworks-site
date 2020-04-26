@@ -3,11 +3,11 @@ import yaml from 'js-yaml'
 import generatePictureList from '@/utils/generatePictureList.js'
 import render from '@/utils/renderMarkdown.js'
 
-export function get(req, res) {
+export async function get(req, res) {
   let content = yaml.safeLoad(
     fs.readFileSync('content/pictures.yml', 'utf-8')
   )
-  const pictures = generatePictureList('content/pictures')
+  const pictures = await generatePictureList('content/pictures')
 
   if (content.intro) {
     content.intro = render(content.intro)
