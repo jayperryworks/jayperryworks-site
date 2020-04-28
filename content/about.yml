@@ -1,8 +1,7 @@
 title: Profile
 date: 2019-12-16
 cover:
-  sources:
-    - path: "/images/about/DSCF7743.jpg"
+  image: "/images/about/DSCF7743.jpg"
   alt: Working at the drafting table
 body:
   - type: passage
@@ -15,17 +14,13 @@ body:
     size: large
     prominence: large
     images:
-      - sources:
-        - path: "/images/about/DSCF7761.jpg"
+      - image: "/images/about/DSCF7761.jpg"
         alt: "A few of my favorite cameras"
-      - sources:
-        - path: "/images/about/DSCF7773.jpg"
+      - image: "/images/about/DSCF7773.jpg"
         alt: "A palette I've never cleaned"
-      - sources:
-        - path: "/images/about/DSCF7766.jpg"
+      - image: "/images/about/DSCF7766.jpg"
         alt: "Nibs for my dip pens"
-      - sources:
-        - path: "/images/about/DSCF7765.jpg"
+      - image: "/images/about/DSCF7765.jpg"
         alt: "Favorite brushes"
 
   - type: passage
@@ -34,8 +29,7 @@ body:
 
   - type: figure
     prominence: large
-    sources:
-      - path: "/images/about/DSCF7762.jpg"
+    image: "/images/about/DSCF7762.jpg"
     alt: "My Shelf of Random Interesting Things"
     caption: |-
         My Shelf of Random Interesting Things, including a preserved juvenile Northern Snakehead and some interesting seeds.

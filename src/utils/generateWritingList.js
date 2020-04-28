@@ -9,7 +9,7 @@ const siteData = require('./siteData.js')
 
 const writingConfig = siteData.collection('writing')
 
-module.exports = async (
+module.exports = (
   dir,
   {
     start = 0,
@@ -27,7 +27,7 @@ module.exports = async (
     files = files.slice(start, end)
   }
 
-  const fileData = files.reduce((result, file) => {
+  return files.reduce((result, file) => {
     const filename = path.parse(file).name
 
     // skip system dotfiles
@@ -88,43 +88,4 @@ module.exports = async (
     })
     return result
   }, [])
-
-  // create responsive resizes of images as needed
-  // -> cannot do this inside the reducer above because Promises get super complicated there
-  await Promise.all(fileData.map(async (file) => {
-  	// resize the cover
-  	if (file.cover && file.cover.resize) {
-	  	file.cover.image = await resizeImage(file.cover.image)
-	  }
-
-	  // excerpt
-	  // check for figures & resize as needed
-	  const figures = file.excerpt.filter((section) => {
-	  	return section.type === 'figure' && section.resize
-	  })
-
-  	if (figures.length > 0) {
-  		figures.map(async (figure) => {
-  			figure.image = await resizeImage(figure.image)
-  		})
-  	}
-
-  	// check for galleries & resize as needed
-  	const galleries = file.excerpt.filter((section) => {
-  		return section.type === 'gallery'
-  			&& section.images.find(image => image.resize)
-  	})
-
-  	if (galleries.length > 0) {
-  		galleries.map(async (gallery) => {
-  			gallery.images.map(async (item) => {
-  				if (item.resize) {
-  					item.image = await resizeImage(item.image)
-  				}
-  			})
-  		})
-  	}
-  }))
-
-  return fileData
 }

@@ -37,7 +37,7 @@
         {#if content.cover}
           <Cover
             class="padding-top-wide"
-            sources={content.cover.sources}
+            sources={content.cover.image}
             alt={content.cover.alt}
             caption={content.cover.caption}
             credit={content.cover.credit}

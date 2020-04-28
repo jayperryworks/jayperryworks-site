@@ -6,7 +6,7 @@ const generatePictureList = require('../src/utils/generatePictureList')
 const generateWritingList = require('../src/utils/generateWritingList')
 const siteData = require('../src/utils/siteData')
 
-function render(pages, {
+async function render(pages, {
   change = 'yearly',
   priority = 0.6
 } = {}) {
