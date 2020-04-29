@@ -10,7 +10,7 @@ export async function get(req, res) {
 
 	const posts = generateWritingList('content/writing', {
 			start: ((number - 1) * postsPerPage),
-			end: (number * (postsPerPage - 1))
+			end: (number * postsPerPage)
 		})
 
 	// create responsive resizes of images as needed

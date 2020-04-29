@@ -51,6 +51,7 @@ export async function get(req, res, next) {
 	// render markdown as needed
 	data.body = renderPostBody(data.body)
 
+	// resize images as needed
 	await Promise.all(data.body.map(async (block) => {
 		// if it has an 'image' field (e.g. figure), resize it
 		if (block.image && block.resize) {

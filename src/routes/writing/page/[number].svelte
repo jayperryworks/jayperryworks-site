@@ -76,7 +76,10 @@
 				slot="blurb"
 				class="padding-bottom-wide"
 			>
-				{year === currentDate ? 'Recent posts' : year}
+				{year === currentDate && number === '1'
+					? 'Recent posts'
+					: year
+				}
 			</h1>
 
 			<div slot="body">
@@ -90,7 +93,7 @@
 										href={post.path}
 										class="t-link-undecorated"
 									>
-										{#if post.cover && post.cover.sources}
+										{#if post.cover && post.cover.image}
 											<div class="padding-bottom">
 												<Figure
 													sources={post.cover.image}
