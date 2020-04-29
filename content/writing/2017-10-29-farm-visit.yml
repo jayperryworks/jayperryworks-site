@@ -29,11 +29,9 @@ body:
     prominence: large
     size: large
     images:
-      - sources:
-        - path: /images/uploads/2017-blog-farm-01.jpeg
+      - image: /images/uploads/2017-blog-farm-01.jpeg
         alt: Hill
-      - sources:
-        - path: /images/uploads/2017-blog-farm-06.jpeg
+      - image: /images/uploads/2017-blog-farm-06.jpeg
         alt: Evie’s favorite stop was an old shed filled with toy musical instruments.
 
   - type: figure

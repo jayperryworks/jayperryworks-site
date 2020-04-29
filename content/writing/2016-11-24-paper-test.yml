@@ -119,20 +119,16 @@ body:
     prominence: large
     size: large
     images:
-      - sources:
-        - path: /images/uploads/2016-blog-paper_test-screen-v1-bristol_board.jpg
+      - image: /images/uploads/2016-blog-paper_test-screen-v1-bristol_board.jpg
         alt: Bristol Board paper test scan
         border: true
-      - sources:
-        - path: /images/uploads/2016-blog-paper_test-screen-v2-mixed_media.jpg
+      - image: /images/uploads/2016-blog-paper_test-screen-v2-mixed_media.jpg
         alt: Mixed Media paper test scan
         border: true
-      - sources:
-        - path: /images/uploads/2016-blog-paper_test-screen-v3-hot_press.jpg
+      - image: /images/uploads/2016-blog-paper_test-screen-v3-hot_press.jpg
         alt: Fabriano hot press paper test scan
         border: true
-      - sources:
-        - path: /images/uploads/2016-blog-paper_test-screen-v4-cold_press.jpg
+      - image: /images/uploads/2016-blog-paper_test-screen-v4-cold_press.jpg
         alt: Strathmore 300-series cold press paper test scan
         border: true
 

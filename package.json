@@ -7,7 +7,7 @@
     "dev": "sapper dev",
     "build": "sapper build --legacy",
     "preexport": "node ./scripts/sitemap && node ./scripts/redirects",
-    "export": "sapper export --legacy",
+    "export": "sapper export --legacy --timeout 20000",
     "start": "node __sapper__/build",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
