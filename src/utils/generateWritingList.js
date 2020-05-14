@@ -31,7 +31,7 @@ module.exports = (
     const filename = path.parse(file).name
 
     // skip system dotfiles
-    if (filename[0] === '.') return
+    if (filename[0] === '.') return result
 
     const metadata = permalink.fileMetadata(filename, writingConfig.sourceTemplate)
 

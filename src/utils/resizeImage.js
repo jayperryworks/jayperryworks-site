@@ -20,6 +20,11 @@ const sharp = require('sharp')
 // 		 ...
 //   ]
 // }
+//
+// Note this usually slows down builds,
+// so timeout should be adjusted on export script
+// https://github.com/sveltejs/sapper/issues/714
+
 module.exports = async (sourcePath, {
 	widths = [600, 1200, 1600, 2000],
 	formats = ['jpg', 'webp'],

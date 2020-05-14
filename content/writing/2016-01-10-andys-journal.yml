@@ -84,15 +84,13 @@ body:
 
   - type: gallery
     prominence: large
+    resize: true
     images:
       - image: /images/uploads/2016-blog-andys-journal-sewing.jpg
-        resize: true
         alt: Sewing
       - image: /images/uploads/2016-blog-andys-journal-straps1.jpg
-        resize: true
         alt: Sewing in the ribbons
       - image: /images/uploads/2016-blog-andys-journal-straps2.jpg
-        resize: true
         alt: The finished block with ribbons
     caption: |-
       Sewing the block and adding ribbons
@@ -108,12 +106,11 @@ body:
   - type: gallery
     prominence: large
     size: large
+    resize: true
     images:
       - image: /images/uploads/2016-blog-andys-journal-spine.jpg
-        resize: true
         alt: Endpapers
       - image: /images/uploads/2016-blog-andys-journal-endpaper.jpg
-        resize: true
         alt: Endpapers
     caption: |-
       Tipping on the endpapers. I had this marbled, handmade paper in my closet with these lovely red streaks.
@@ -124,15 +121,13 @@ body:
 
   - type: gallery
     prominence: large
+    resize: true
     images:
       - image: /images/uploads/2016-blog-andys-journal-cover-board.jpg
-        resize: true
         alt: Sizing the cover boards
       - image: /images/uploads/2016-blog-andys-journal-cover-cutting.jpg
-        resize: true
         alt: Cutting fabric for the cover
       - image: /images/uploads/2016-blog-andys-journal-cover-gluing.jpg
-        resize: true
         alt: Ready to glue the cover
     caption: |-
       Sizing up the cover boards, cutting fabric, and preparing to glue it all up.
