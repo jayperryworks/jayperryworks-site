@@ -23,19 +23,33 @@ const resizeImage = require('../src/utils/resizeImage.js')
 // 	...
 // ]
 
-function getFiles(dir) {
-	const dirPath = path.join(__dirname, dir)
+function getFiles (dir) {
+	try {
+		const dirPath = path.join(__dirname, dir)
 
-	return fs.readdirSync(dirPath).reduce((result, file) => {
-		// skip system dotfiles
-	  if (file[0] === '.') return result
+		return fs.readdirSync(dirPath).reduce((result, file) => {
+			// skip system dotfiles
+		  if (file[0] === '.') return result
 
-		result.unshift(yaml.safeLoad(
-		  fs.readFileSync(`${dirPath}/${file}`, 'utf-8')
-		))
+			result.unshift(yaml.safeLoad(
+			  fs.readFileSync(`${dirPath}/${file}`, 'utf-8')
+			))
 
-		return result
-	}, [])
+			return result
+		}, [])
+	} catch(error) {
+		console.log(`Sorry, I can't find this directory: ${error}`)
+	}
+}
+
+function getFile (file) {
+	try {
+		return yaml.safeLoad(
+		  fs.readFileSync(path.join(__dirname, file), 'utf-8')
+		)
+	} catch(error) {
+		console.log(`Sorry, I can't find this file: ${error}`)
+	}
 }
 
 function getPictureImages (dir) {
@@ -74,9 +88,7 @@ function getWritingImages (dir) {
 }
 
 function getAboutImages (file) {
-	const data = yaml.safeLoad(
-	  fs.readFileSync(`${path.join(__dirname, file)}.yml`, 'utf-8')
-	)
+	const data = getFile(file)
 	// same as writing images, but optimize all of them
 	return [
 		(data.cover && data.cover.image),
@@ -92,6 +104,14 @@ function getAboutImages (file) {
 	})
 }
 
+function getHomeImages (file) {
+	const data = getFile(file)
+
+	return [
+		{ original: data.cover.image }
+	]
+}
+
 async function resizeAndGenerateManifest (images) {
 	const data = await Promise.all(images.map(async (image) => {
 		return await resizeImage(image.original, image.options)
@@ -104,7 +124,8 @@ async function resizeAndGenerateManifest (images) {
 }
 
 resizeAndGenerateManifest([
+	...getWritingImages('../content/writing'),
 	...getPictureImages('../content/pictures'),
-	...getAboutImages('../content/about'),
-	...getWritingImages('../content/writing')
+	...getAboutImages('../content/about.yml'),
+	...getHomeImages('../content/home.yml')
 ])
