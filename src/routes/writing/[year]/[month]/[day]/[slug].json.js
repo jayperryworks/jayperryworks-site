@@ -2,9 +2,9 @@ import fs from 'fs'
 import yaml from 'js-yaml'
 import renderMarkdown from '@/utils/renderMarkdown.js'
 import renderPostBody from '@/utils/renderPostBody.js'
-import resizeImage from '@/utils/resizeImage.js'
+import { findInManifest } from '@/utils/imageHelpers.js'
 
-export async function get(req, res, next) {
+export function get(req, res, next) {
 	const { year, month, day, slug } = req.params
 	const header = {
 		'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ export async function get(req, res, next) {
 
 		// resize the cover image if needed
 		if (data.cover.resize) {
-			data.cover.image = await resizeImage(data.cover.image)
+			data.cover.image = findInManifest(data.cover.image)
 		}
 
 		// render the cover image caption if present
@@ -52,21 +52,21 @@ export async function get(req, res, next) {
 	data.body = renderPostBody(data.body)
 
 	// resize images as needed
-	await Promise.all(data.body.map(async (block) => {
+	data.body.forEach((block) => {
 		// if it has an 'image' field (e.g. figure), resize it
 		if (block.image && block.resize) {
-			block.image = await resizeImage(block.image)
+			block.image = findInManifest(block.image)
 		}
 
 		if (block.images) {
 			// if it has an 'images' field (e.g. gallery), resize each
-			block.images.map(async (item) => {
+			block.images.forEach(async (item) => {
 				if (item.resize) {
-					item.image = await resizeImage(item.image)
+					item.image = findInManifest(item.image)
 				}
 			})
 		}
-	}))
+	})
 
 	// create responsive resizes of images as needed
 

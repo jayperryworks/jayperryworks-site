@@ -1,9 +1,9 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
 import render from '@/utils/renderMarkdown.js'
-import resizeImage from '@/utils/resizeImage.js'
+import { findInManifest } from '@/utils/imageHelpers.js'
 
-export async function get(req, res, next) {
+export function get(req, res, next) {
 	const { year, slug } = req.params
 	const header = {
 		'Content-Type': 'application/json'
@@ -21,9 +21,9 @@ export async function get(req, res, next) {
 		return
 	}
 
+	// get the resized versions of the cover
 	if (content.cover) {
-		const versions = await resizeImage(content.cover)
-		content.cover = versions
+		content.cover = findInManifest(content.cover)
 	}
 
 	// render the markdown bits
@@ -37,9 +37,10 @@ export async function get(req, res, next) {
 			fs.readFileSync('content/pictures.yml', 'utf-8')
 		)
 
-		await Promise.all(content.editions.map(async (edition) => {
-			edition.photo = await resizeImage(edition.photo)
-		}))
+		// get the resized versions of the edition images
+		content.editions.map((edition) => {
+			edition.photo = findInManifest(edition.photo)
+		})
 
 		// get unique edition types for this picture, e.g. 'giclee'
 		// -> https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates#14438954

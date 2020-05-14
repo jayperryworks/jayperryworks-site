@@ -45,7 +45,6 @@ function getPictureImages (dir) {
 			data.thumb,
 			...(data.editions && data.editions.map(edition => edition.photo))
 		]
-
 		images.forEach((original) => {
 			result.push({ original })
 		})
@@ -78,7 +77,8 @@ function getAboutImages (file) {
 	const data = yaml.safeLoad(
 	  fs.readFileSync(`${path.join(__dirname, file)}.yml`, 'utf-8')
 	)
-	return images = [
+	// same as writing images, but optimize all of them
+	return [
 		(data.cover && data.cover.image),
 		...data.body.reduce((result, block) => {
 			block.image && result.push(block.image)
@@ -106,5 +106,5 @@ async function resizeAndGenerateManifest (images) {
 resizeAndGenerateManifest([
 	...getPictureImages('../content/pictures'),
 	...getAboutImages('../content/about'),
-// ...getWritingImages('../content/writing')
+	...getWritingImages('../content/writing')
 ])
