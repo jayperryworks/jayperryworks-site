@@ -1,8 +1,8 @@
 import fs from 'fs'
 import generateWritingList from '@/utils/generateWritingList.js'
-import resizeImage from '@/utils/resizeImage.js'
+import { findInManifest } from '@/utils/imageHelpers.js'
 
-export async function get(req, res) {
+export function get(req, res) {
 	const { number } = req.params
 	const postsPerPage = 10
 	const totalPosts = fs.readdirSync('content/writing').length
@@ -14,10 +14,10 @@ export async function get(req, res) {
 		})
 
 	// create responsive resizes of images as needed
-	await Promise.all(posts.map(async (post) => {
+	posts.forEach((post) => {
 		// resize the cover
 		if (post.cover && post.cover.resize) {
-	  	post.cover.image = await resizeImage(post.cover.image)
+	  	post.cover.image = findInManifest(post.cover.image)
 	  }
 
 	  // excerpt
@@ -27,8 +27,8 @@ export async function get(req, res) {
 	  })
 
 		if (figures.length > 0) {
-			figures.map(async (figure) => {
-				figure.image = await resizeImage(figure.image)
+			figures.forEach((figure) => {
+				figure.image = findInManifest(figure.image)
 			})
 		}
 
@@ -39,15 +39,15 @@ export async function get(req, res) {
 		})
 
 		if (galleries.length > 0) {
-			galleries.map(async (gallery) => {
-				gallery.images.map(async (item) => {
+			galleries.forEach((gallery) => {
+				gallery.images.forEach((item) => {
 					if (item.resize) {
-						item.image = await resizeImage(item.image)
+						item.image = findInManifest(item.image)
 					}
 				})
 			})
 		}
-	}))
+	})
 
 	res.writeHead(200, {
 		'Content-Type': 'application/json'

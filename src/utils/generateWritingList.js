@@ -4,7 +4,6 @@ const yaml = require('js-yaml')
 const permalink = require('./permalink.js')
 const renderMarkdown = require('./renderMarkdown.js')
 const renderPostBody = require('./renderPostBody.js')
-const resizeImage = require('./resizeImage.js')
 const siteData = require('./siteData.js')
 
 const writingConfig = siteData.collection('writing')
@@ -86,6 +85,7 @@ module.exports = (
         ? renderPostBody(excerpt)
         : renderPostBody(data.body)
     })
+
     return result
   }, [])
 }

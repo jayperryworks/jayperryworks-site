@@ -11,7 +11,7 @@
 	"dev": "sapper dev",
 	"build": "sapper build --legacy",
 	"preexport": "run-s prep:*",
-	"export": "sapper export --legacy --timeout 20000",
+	"export": "sapper export --legacy",
 	"start": "node __sapper__/build",
 	"cy:run": "cypress run",
 	"cy:open": "cypress open",

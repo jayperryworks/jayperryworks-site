@@ -18,6 +18,11 @@
 			listData.pictures.find(item => item.slug === slug)
 		)
 
+		if (list.status !== 200) {
+			this.error(list.status, listData.message)
+			return
+		}
+
 		return {
 			post: data,
 			date: { year },

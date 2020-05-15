@@ -1,6 +1,6 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
-import resizeImage from '@/utils/resizeImage.js'
+import { findInManifest } from '@/utils/imageHelpers.js'
 import generatePictureList from '@/utils/generatePictureList.js'
 import render from '@/utils/renderMarkdown.js'
 
@@ -19,11 +19,9 @@ export async function get(req, res) {
   }
 
   // create responsive resizes of the thumbnail images
-  await Promise.all(pictures.map(async (pictures) => {
-  	pictures.thumbnail = await resizeImage(pictures.thumbnail, {
-    	widths: [400, 800, 1000]
-    })
-  }))
+  pictures.forEach((picture) => {
+  	picture.thumbnail = findInManifest(picture.thumbnail)
+  })
 
 	res.writeHead(200, {
 		'Content-Type': 'application/json'

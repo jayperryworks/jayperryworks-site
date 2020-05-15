@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
-const resizeImage = require('../src/utils/resizeImage.js')
+const imageHelpers = require('../src/utils/imageHelpers.js')
 
 // [
 // 	{
@@ -23,7 +23,17 @@ const resizeImage = require('../src/utils/resizeImage.js')
 // 	...
 // ]
 
-function getFiles (dir) {
+function getFile (file) {
+	try {
+		return yaml.safeLoad(
+		  fs.readFileSync(path.join(__dirname, file), 'utf-8')
+		)
+	} catch(error) {
+		console.log(`Sorry, I can't find this file: ${error}`)
+	}
+}
+
+function getDir (dir) {
 	try {
 		const dirPath = path.join(__dirname, dir)
 
@@ -42,18 +52,9 @@ function getFiles (dir) {
 	}
 }
 
-function getFile (file) {
-	try {
-		return yaml.safeLoad(
-		  fs.readFileSync(path.join(__dirname, file), 'utf-8')
-		)
-	} catch(error) {
-		console.log(`Sorry, I can't find this file: ${error}`)
-	}
-}
-
+// thumb width: [400, 800, 1000]
 function getPictureImages (dir) {
-	return getFiles(dir).reduce((result, data) => {
+	return getDir(dir).reduce((result, data) => {
 		const images = [
 			data.cover,
 			data.thumb,
@@ -67,7 +68,7 @@ function getPictureImages (dir) {
 }
 
 function getWritingImages (dir) {
-	return getFiles(dir).reduce((result, data) => {
+	return getDir(dir).reduce((result, data) => {
 		let images = []
 		// cover image
 		data.cover && data.cover.resize && images.push(data.cover.image)
@@ -114,7 +115,7 @@ function getHomeImages (file) {
 
 async function resizeAndGenerateManifest (images) {
 	const data = await Promise.all(images.map(async (image) => {
-		return await resizeImage(image.original, image.options)
+		return await imageHelpers.resizeImage(image.original, image.options)
 	}))
 
 	fs.writeFileSync(
