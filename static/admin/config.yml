@@ -121,6 +121,10 @@ collections:
                 - small
                 - medium
                 - large
+            - label: Resize
+              name: resize
+              widget: boolean
+              default: false
             - label: Images
               name: images
               widget: list
@@ -129,10 +133,6 @@ collections:
                   name: image
                   widget: image
                 - {label: "Alt", name: "alt", widget: "string"}
-                - label: Resize
-                  name: resize
-                  widget: boolean
-                  default: false
 
           - label: Table
             name: table
