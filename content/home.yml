@@ -2,7 +2,7 @@ title: Home
 date: 2019-12-16
 
 cover:
-  image: "/images/uploads/home-cover-01.jpg"
+  image: /images/uploads/home-cover-01.jpg
   alt: Cover image
 
 # markdown allowed here
