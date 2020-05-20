@@ -52,17 +52,21 @@ function getDir (dir) {
 	}
 }
 
-// thumb width: [400, 800, 1000]
 function getPictureImages (dir) {
 	return getDir(dir).reduce((result, data) => {
 		const images = [
-			data.cover,
-			data.thumb,
-			...(data.editions && data.editions.map(edition => edition.photo))
+			{ original: data.cover },
+			{
+				original: data.thumb,
+				options: {
+					widths: [400, 800, 1000]
+				}
+			},
+			...(data.editions && data.editions.map((edition) => {
+				return { original: edition.photo }
+			}))
 		]
-		images.forEach((original) => {
-			result.push({ original })
-		})
+		result.push(...images)
 		return result
 	}, [])
 }
@@ -71,19 +75,19 @@ function getWritingImages (dir) {
 	return getDir(dir).reduce((result, data) => {
 		let images = []
 		// cover image
-		data.cover && data.cover.resize && images.push(data.cover.image)
+		if (data.cover) {
+			data.cover.resize && images.push({ original: data.cover.image })
+		}
 		// body block images
 		data.body.forEach((block) => {
 			if (block.resize) {
-				block.image && images.push(block.image)
+				block.image && images.push({ original: block.image })
 				block.images && block.images.map((item) => {
-					images.push(item.image)
+					images.push({ original: item.image })
 				})
 			}
 		})
-		images.forEach((original) => {
-			result.push({ original })
-		})
+		result.push(...images)
 		return result
 	}, [])
 }
@@ -109,7 +113,7 @@ function getHomeImages (file) {
 	const data = getFile(file)
 
 	return [
-		{ original: data.cover.image }
+		(data.cover && { original: data.cover.image })
 	]
 }
 
