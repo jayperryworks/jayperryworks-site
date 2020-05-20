@@ -8,8 +8,7 @@ body:
     useInExcerpt: false
   - alt: MDN's explanation of the Date object
     prominence: medium
-    sources:
-      - path: /images/uploads/2020-blog-mdn.png
+    image: /images/uploads/2020-blog-mdn.png
     type: figure
     useInExcerpt: false
     border: true

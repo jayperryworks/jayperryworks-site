@@ -7,18 +7,15 @@ tags:
   - drawing
   - flowers
   - rainbow
-cover:
-  - path: /images/uploads/flowers-1600w.jpg
-thumb:
-  - path: /images/uploads/work-ink-thumbnail.jpg
+cover: /images/uploads/flowers.jpg
+thumb: /images/uploads/work-ink-thumbnail.jpg
 intro: |-
   A little while ago, my wife did a science experiment for our daughter: she put white carnations in water with a few drops of food-coloring in each, and left them to sit a few days. Slowly, the petals began to change color to match the water the stem was sitting in.
 
   I liked the scene on our kitchen counter and drew it, but in my version I used the colors of printing ink: cyan, magenta, yellow, and black.
 editions:
   - border: 1
-    photo:
-      - path: /images/uploads/ink-small-10x8-1600w.jpg
+    photo: /images/uploads/ink-small-10x8.jpg
     name: Small
     price: 30
     type: giclee

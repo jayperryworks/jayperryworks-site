@@ -23,7 +23,7 @@
   import MainNav from '@/components/MainNav.svelte'
   import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
   import PageTitle from '@/components/PageTitle.svelte'
-  import ResponsiveImage from '@/components/ResponsiveImage.svelte'
+  import ResponsivePicture from '@/components/ResponsivePicture.svelte'
   import Wrapper from '@/components/Wrapper.svelte'
 
   export let content, pictures
@@ -80,8 +80,8 @@
               rel="prefetch"
               href="{picture.path}"
             >
-              <ResponsiveImage
-                sources={picture.thumbnail}
+              <ResponsivePicture
+                sources={picture.thumbnail.versions}
                 alt={picture.title}
                 border
               />

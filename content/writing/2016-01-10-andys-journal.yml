@@ -6,8 +6,8 @@ tags:
   - layout
   - side project
 cover:
-  sources:
-    - path: /images/uploads/2016-blog-andys-journal-cover.jpg
+  image: /images/uploads/2016-blog-andys-journal-cover.jpg
+  resize: true
 body:
   - type: note
     markdown: |-
@@ -36,8 +36,8 @@ body:
 
   - type: figure
     prominence: large
-    sources:
-      - path: "/images/uploads/2016-blog-andys-journal-title_page.jpg"
+    image: "/images/uploads/2016-blog-andys-journal-title_page.jpg"
+    resize: true
     caption: |-
       The title page
 
@@ -51,8 +51,8 @@ body:
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/2016-blog-andys-journal-early_spread.jpg
+    image: /images/uploads/2016-blog-andys-journal-early_spread.jpg
+    resize: true
     caption: |-
       A photo spread
 
@@ -73,8 +73,8 @@ body:
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/2016-blog-andys-journal-signatures.jpg
+    image: /images/uploads/2016-blog-andys-journal-signatures.jpg
+    resize: true
     caption: |-
       Folded signatures
 
@@ -84,15 +84,13 @@ body:
 
   - type: gallery
     prominence: large
+    resize: true
     images:
-      - sources:
-          - path: /images/uploads/2016-blog-andys-journal-sewing.jpg
+      - image: /images/uploads/2016-blog-andys-journal-sewing.jpg
         alt: Sewing
-      - sources:
-          - path: /images/uploads/2016-blog-andys-journal-straps1.jpg
+      - image: /images/uploads/2016-blog-andys-journal-straps1.jpg
         alt: Sewing in the ribbons
-      - sources:
-          - path: /images/uploads/2016-blog-andys-journal-straps2.jpg
+      - image: /images/uploads/2016-blog-andys-journal-straps2.jpg
         alt: The finished block with ribbons
     caption: |-
       Sewing the block and adding ribbons
@@ -108,12 +106,11 @@ body:
   - type: gallery
     prominence: large
     size: large
+    resize: true
     images:
-      - sources:
-          - path: /images/uploads/2016-blog-andys-journal-spine.jpg
+      - image: /images/uploads/2016-blog-andys-journal-spine.jpg
         alt: Endpapers
-      - sources:
-          - path: /images/uploads/2016-blog-andys-journal-endpaper.jpg
+      - image: /images/uploads/2016-blog-andys-journal-endpaper.jpg
         alt: Endpapers
     caption: |-
       Tipping on the endpapers. I had this marbled, handmade paper in my closet with these lovely red streaks.
@@ -124,15 +121,13 @@ body:
 
   - type: gallery
     prominence: large
+    resize: true
     images:
-      - sources:
-          - path: /images/uploads/2016-blog-andys-journal-cover-board.jpg
+      - image: /images/uploads/2016-blog-andys-journal-cover-board.jpg
         alt: Sizing the cover boards
-      - sources:
-          - path: /images/uploads/2016-blog-andys-journal-cover-cutting.jpg
+      - image: /images/uploads/2016-blog-andys-journal-cover-cutting.jpg
         alt: Cutting fabric for the cover
-      - sources:
-          - path: /images/uploads/2016-blog-andys-journal-cover-gluing.jpg
+      - image: /images/uploads/2016-blog-andys-journal-cover-gluing.jpg
         alt: Ready to glue the cover
     caption: |-
       Sizing up the cover boards, cutting fabric, and preparing to glue it all up.
@@ -145,8 +140,8 @@ body:
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/2016-blog-andys-journal-interior.jpg
+    image: /images/uploads/2016-blog-andys-journal-interior.jpg
+    resize: true
     caption: |-
       Finished!
 

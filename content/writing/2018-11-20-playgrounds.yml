@@ -1,7 +1,6 @@
 title: Playgrounds with sharks and sinking ships
 cover:
-  sources:
-    - path: /images/uploads/playground.jpeg
+  image: /images/uploads/playground.jpeg
 body:
   - type: passage
     markdown: |-

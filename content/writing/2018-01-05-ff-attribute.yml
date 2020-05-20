@@ -4,8 +4,7 @@ tags:
   - reference
   - inspiration
 cover:
-  sources:
-    - path: /images/uploads/ff-attribute.png
+  image: /images/uploads/ff-attribute.png
 body:
   - type: passage
     markdown: |-

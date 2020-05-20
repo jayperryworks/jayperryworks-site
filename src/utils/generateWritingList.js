@@ -1,9 +1,9 @@
 const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
+const permalink = require('./permalink.js')
 const renderMarkdown = require('./renderMarkdown.js')
 const renderPostBody = require('./renderPostBody.js')
-const permalink = require('./permalink.js')
 const siteData = require('./siteData.js')
 
 const writingConfig = siteData.collection('writing')
@@ -30,7 +30,7 @@ module.exports = (
     const filename = path.parse(file).name
 
     // skip system dotfiles
-    if (filename[0] === '.') return
+    if (filename[0] === '.') return result
 
     const metadata = permalink.fileMetadata(filename, writingConfig.sourceTemplate)
 
@@ -85,6 +85,7 @@ module.exports = (
         ? renderPostBody(excerpt)
         : renderPostBody(data.body)
     })
+
     return result
   }, [])
 }

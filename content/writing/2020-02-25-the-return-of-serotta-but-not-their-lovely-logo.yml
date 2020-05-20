@@ -16,8 +16,7 @@ body:
   - alt: Serotta logo
     border: true
     prominence: small
-    sources:
-      - path: /images/uploads/2020-blog-serotta-logo.png
+    image: /images/uploads/2020-blog-serotta-logo.png
     type: figure
     useInExcerpt: false
   - markdown: >-

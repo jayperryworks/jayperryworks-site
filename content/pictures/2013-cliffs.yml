@@ -6,16 +6,13 @@ tags:
   - india ink
   - watercolor
   - digital
-cover:
-  - path: /images/uploads/work-2013-cliffs.jpg
-thumb:
-  - path: /images/uploads/work-2013-cliffs-thumb.jpg
+cover: /images/uploads/work-2013-cliffs.jpg
+thumb: /images/uploads/work-2013-cliffs-thumb.jpg
 editions:
   - border: 1
     width: 8
     height: 12
-    photo:
-      - path: /images/uploads/work-2013-cliffs-8x12.jpg
+    photo: /images/uploads/work-2013-cliffs-8x12.jpg
     limit: 100
     name: small
     price: 30

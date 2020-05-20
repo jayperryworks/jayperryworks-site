@@ -5,6 +5,7 @@
   import Note from './Note.svelte'
   import Passage from './Passage.svelte'
   import ResponsiveImage from './ResponsiveImage.svelte'
+  import ResponsivePicture from './ResponsivePicture.svelte'
   import Table from './Table.svelte'
   import Wrapper from './Wrapper.svelte'
 
@@ -57,14 +58,17 @@
 
     {#if section.type == 'passage'}
       <Wrapper class="section-text">
-        <Passage html={section.html} lead={dropCap && section == firstPassage} />
+        <Passage
+        	html={section.html}
+        	lead={dropCap && section == firstPassage}
+      	/>
       </Wrapper>
     {/if}
 
     {#if section.type == 'figure'}
       <Wrapper width={getWidth(section.prominence)} class="t-align-center">
         <Figure
-          sources={section.sources}
+          sources={section.image}
           alt={section.alt}
           caption={section.caption}
           credit={section.credit}
@@ -80,13 +84,21 @@
           credit={section.credit}
         >
           <Gallery size={section.size}>
-            {#each section.images as image}
-              <li>
-                <ResponsiveImage
-                  sources={image.sources}
-                  alt={image.alt}
-                  border={image.border}
-                />
+            {#each section.images as item}
+              <li class="t-align-center">
+              	{#if item.image.versions && item.image.versions.length > 1}
+              		<ResponsivePicture
+              		  sources={item.image.versions}
+              		  alt={item.alt}
+              		  border={item.border}
+              		/>
+              	{:else}
+	                <ResponsiveImage
+	                  sources={item.image.versions && item.image.versions[0].sizes || item.image}
+	                  alt={item.alt}
+	                  border={item.border}
+	                />
+                {/if}
               </li>
             {/each}
           </Gallery>

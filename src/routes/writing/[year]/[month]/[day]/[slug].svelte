@@ -55,10 +55,10 @@
 				</p>
 			{/if}
 
-			{#if post.cover && post.cover.sources}
+			{#if post.cover && post.cover.image}
 				<Cover
 					class="padding-top-wide"
-					sources={post.cover.sources}
+					sources={post.cover.image}
 					alt={post.cover.alt}
 					caption={post.cover.caption}
 					credit={post.cover.credit}

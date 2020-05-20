@@ -1,12 +1,13 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
+import { findInManifest } from '@/utils/imageHelpers.js'
 import generatePictureList from '@/utils/generatePictureList.js'
 import render from '@/utils/renderMarkdown.js'
 
-export function get(req, res) {
+export async function get(req, res) {
   let content = yaml.safeLoad(
-      fs.readFileSync('content/pictures.yml', 'utf-8')
-    )
+    fs.readFileSync('content/pictures.yml', 'utf-8')
+  )
   const pictures = generatePictureList('content/pictures')
 
   if (content.intro) {
@@ -16,6 +17,11 @@ export function get(req, res) {
   if (content.printDescriptions) {
     delete content.printDescriptions
   }
+
+  // create responsive resizes of the thumbnail images
+  pictures.forEach((picture) => {
+  	picture.thumbnail = findInManifest(picture.thumbnail)
+  })
 
 	res.writeHead(200, {
 		'Content-Type': 'application/json'

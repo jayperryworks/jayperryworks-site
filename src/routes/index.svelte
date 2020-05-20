@@ -22,7 +22,7 @@
   import Icon from '@/components/Icon.svelte'
   import MainNav from '@/components/MainNav.svelte'
   import PageTitle from '@/components/PageTitle.svelte'
-  import ResponsiveImage from '@/components/ResponsiveImage.svelte'
+  import ResponsivePicture from '@/components/ResponsivePicture.svelte'
   import Wrapper from '@/components/Wrapper.svelte'
 
   export let content
@@ -49,18 +49,6 @@
   randomFavorites()
   const cycleFavorites = setInterval(randomFavorites, 5000)
   onDestroy(() => clearInterval(cycleFavorites))
-
-  // --- cover image ---
-  // use a CSS background image as a fallback for browsers that don't support object-fit styling on img tags
-  $: coverImageFallback = content.cover.sources.length > 1
-    // if content.cover.sources has multiple entries...
-    ? content.cover.sources.filter((source) => {
-        // find the sources that are medium-sized (prob a good fit for desktop IE11)
-        return source.size >= 800 && source.size <= 1200
-      // and use the largest of that size range (last item in filtered array)
-      }).slice(-1)[0].path
-    // otherwise, just use the first element
-    : content.cover.sources[0].path
 </script>
 
 <style type="text/scss">
@@ -85,11 +73,13 @@
     width: 100%;
     text-align: center;
 
+    > :global(picture),
     > :global(img) {
       width: 100%;
     }
 
     @supports (object-fit: cover) {
+      > :global(picture),
       > :global(img) {
         height: 70vh;
       }
@@ -119,8 +109,8 @@
 
     <!-- cover image -->
     <figure class="cover-image">
-      <ResponsiveImage
-        sources={content.cover.sources}
+      <ResponsivePicture
+        sources={content.cover.image.versions}
         alt={content.cover.alt}
         cover
       />

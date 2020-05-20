@@ -1,8 +1,7 @@
 title: Techna Sans
 subtitle: A nice open-source sans-serif
 cover:
-  sources:
-    - path: /images/uploads/2019.06.26-blog-techna-sans.png
+  image: /images/uploads/2019.06.26-blog-techna-sans.png
 tags:
   - typography
   - inspiration

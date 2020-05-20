@@ -1,26 +1,33 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
-import render from '@/utils/renderMarkdown.js'
+import renderPostBody from '@/utils/renderPostBody.js'
+import { findInManifest } from '@/utils/imageHelpers.js'
 
 export function get(req, res) {
   let data = yaml.safeLoad(
     fs.readFileSync('content/about.yml', 'utf-8')
   )
 
-  data.body.forEach((section) => {
-    // render out any markdown content
-    // -> place render in 'html' prop and delete 'markdown' prop
-    if (section.markdown) {
-      section.html = render(section.markdown)
-      delete section.markdown
-      return section
-    }
+  // resize the cover image
+  if (data.cover && data.cover.image) {
+  	data.cover.image = findInManifest(data.cover.image)
+  }
 
-    if (section.caption) {
-      section.caption = render(section.caption)
-    }
+  data.body = renderPostBody(data.body)
 
-    return section
+  // resize body images
+  data.body.forEach((block) => {
+  	// if it has an 'image' field (e.g. figure), resize it
+  	if (block.image) {
+  		block.image = findInManifest(block.image)
+  	}
+
+  	if (block.images) {
+  		// if it has an 'images' field (e.g. gallery), resize each
+  		block.images.forEach((item) => {
+				item.image = findInManifest(item.image)
+  		})
+  	}
   })
 
   res.writeHead(200, {

@@ -3,10 +3,9 @@ title: >-
 subtitle: >-
   !markdownInline
 cover:
-  sources: !!omap
-    - path: !!str
-      size: !!int
+  image: !!str # path to the source image
   alt: !!str
+  resize: !!boolean # create responsive resizes of the image?
   border: !!boolean
   caption: >-
     !markdown
@@ -34,10 +33,9 @@ body: !!omap
 
   - type: !section figure
     useInExcerpt: !!boolean
-    sources: !!omap
-      - path: !!str
-        size: !!int
+    image: !!str # path to the source image
     alt: !!str
+    resize: !!boolean # create responsive resizes of the image?
     border: !!boolean
     prominence: !!str #option (small, medium, large) default medium
     caption: |-
@@ -47,9 +45,8 @@ body: !!omap
     useInExcerpt: !!boolean
     size: !size #optional (small, medium, large) default small
     images: !!omap
-      - sources: !!omap
-          - path: !!str
-            size: !!int
+      - image: !!str
+        resize: !!boolean # create responsive resizes of the image?
         alt: !!str
     prominence: !!str #option (small, medium, large) default medium
     caption: |-

@@ -4,7 +4,7 @@
   import index from 'icons/index.svg'
   import Bookend from '@/components/Bookend.svelte'
   import Icon from '@/components/Icon.svelte'
-  import ResponsiveImage from '@/components/ResponsiveImage.svelte'
+  import ResponsivePicture from '@/components/ResponsivePicture.svelte'
 
   export let heading, nav, breakpoint = 'small'
 </script>
@@ -158,8 +158,8 @@
           >
             <figure class="card-wrapper gutter-wrapper gutter-narrow">
               <div class="card-figure gutter">
-                <ResponsiveImage
-                  sources={nav.previous.thumbnail}
+                <ResponsivePicture
+                  sources={nav.previous.thumbnail.versions}
                   alt={nav.previous.title}
                   border
                 />
@@ -198,8 +198,8 @@
           >
             <figure class="card-wrapper figure-right gutter-wrapper gutter-narrow">
               <div class="card-figure gutter">
-                <ResponsiveImage
-                  sources={nav.next.thumbnail}
+                <ResponsivePicture
+                  sources={nav.next.thumbnail.versions}
                   alt={nav.next.title}
                   border
                 />

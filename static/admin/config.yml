@@ -34,12 +34,9 @@ collections:
         widget: object
         required: false
         fields:
-          - label: Sources
-            name: sources
-            widget: list
-            fields:
-              - {label: "Image", name: "path", widget: image}
-              - {label: "Width", name: "Width", widget: number, valueType: int, required: false}
+          - label: Image
+            name: image
+            widget: image
           - label: Border
             name: border
             widget: boolean
@@ -48,6 +45,10 @@ collections:
             name: alt
             widget: string
             required: false
+          - label: Resize
+            name: resize
+            widget: boolean
+            default: false
           - label: Caption
             name: caption
             widget: string
@@ -94,12 +95,13 @@ collections:
             - {label: "Type", name: "type", widget: "hidden", default: "figure"}
             - {label: "Use in Excerpt", name: "useInExcerpt", widget: "boolean", default: false, hint: "Include this section in the post excerpt?"}
             - {label: "Prominence", name: "prominence", widget: "select", options: ["small", "medium", "large"], default: "medium"}
-            - label: "Sources"
-              name: "sources"
-              widget: "list"
-              fields:
-                - {label: "Image", name: "path", widget: "image"}
-                - {label: "Width", name: "width", widget: "number", valueType: int, required: false, hint: "The width of the image, to be used in the srcset list"}
+            - label: Image
+              name: image
+              widget: image
+            - label: Resize
+              name: resize
+              widget: boolean
+              default: false
             - {label: "Border", name: "border", widget: "boolean", default: false}
             - {label: "Alt text", name: "alt", widget: "string", required: false}
             - {label: "Caption", name: "caption", widget: "markdown", required: false}
@@ -119,16 +121,17 @@ collections:
                 - small
                 - medium
                 - large
+            - label: Resize
+              name: resize
+              widget: boolean
+              default: false
             - label: Images
               name: images
               widget: list
               fields:
-                - label: "Sources"
-                  name: "sources"
-                  widget: "list"
-                  fields:
-                    - {label: "Image", name: "path", widget: "image"}
-                    - {label: "Width", name: "width", widget: "number", valueType: int, required: false, hint: "The width of the image, to be used in the srcset list"}
+                - label: Image
+                  name: image
+                  widget: image
                 - {label: "Alt", name: "alt", widget: "string"}
 
           - label: Table
@@ -275,13 +278,10 @@ collections:
             name: cover
             widget: object
             fields:
-              - label: Sources
-                name: sources
-                widget: list
-                hint: Order the sources from smallest (default) to largest
-                fields:
-                  - {label: "Image", name: "path", widget: "image"}
-                  - {label: "Width", name: "size", widget: "number", valueType: int, required: false}
+              - label: Image
+                name: image
+                widget: image
+                required: false
               - label: Alt
                 name: alt
                 widget: string
@@ -289,7 +289,7 @@ collections:
                 required: false
           - label: Intro blurb
             name: intro
-            field: string
+            widget: string
           - label: A few of my favorite things
             name: favoriteThings
             widget: object
@@ -332,13 +332,9 @@ collections:
             widget: object
             required: false
             fields:
-              - label: Sources
-                name: sources
-                widget: list
-                hint: Order the sources from smallest (default) to largest
-                fields:
-                  - {label: "Image", name: "path", widget: image}
-                  - {label: "Width", name: "size", widget: number, valueType: int, required: false}
+              - label: Image
+                name: image
+                widget: image
               - label: Alt
                 name: alt
                 widget: string
@@ -377,12 +373,9 @@ collections:
                 fields:
                 - {label: "Type", name: "type", widget: "hidden", default: "figure"}
                 - {label: "Prominence", name: "prominence", widget: "select", options: ["small", "medium", "large"], default: "medium"}
-                - label: "Sources"
-                  name: "sources"
-                  widget: "list"
-                  fields:
-                    - {label: "Image", name: "path", widget: "image"}
-                    - {label: "Width", name: "width", widget: "number", valueType: int, required: false, hint: "The width of the image, to be used in the srcset list"}
+                - label: Image
+                  name: image
+                  widget: image
                 - {label: "Alt text", name: "alt", widget: "string", required: false}
                 - {label: "Caption", name: "caption", widget: "markdown", required: false}
                 - {label: "Attribution", name: "attribution", widget: "string", required: false}
@@ -404,12 +397,9 @@ collections:
                   name: images
                   widget: list
                   fields:
-                    - label: "Sources"
-                      name: "sources"
-                      widget: "list"
-                      fields:
-                        - {label: "Image", name: "path", widget: "image"}
-                        - {label: "Width", name: "width", widget: "number", valueType: int, required: false, hint: "The width of the image, to be used in the srcset list"}
+                    - label: Image
+                      name: image
+                      widget: image
                     - {label: "Alt", name: "alt", widget: "string"}
 
               - label: Table

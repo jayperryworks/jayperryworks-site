@@ -2,9 +2,7 @@
   import MainFooter from '@/components/MainFooter.svelte'
   import { stores } from '@sapper/app'
 
-  const { preloading, page } = stores()
-
-  $: console.log($page.path)
+  const { preloading } = stores()
 </script>
 
 <style type="text/scss" global>
@@ -99,8 +97,6 @@
       flex-direction: column;
       flex: 1;
     }
-
-
   }
 </style>
 

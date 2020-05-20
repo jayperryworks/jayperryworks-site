@@ -1,7 +1,6 @@
 title: A visit to the farm
 cover:
-  sources:
-    - path: /images/uploads/2017-blog-farm-05.jpeg
+  image: /images/uploads/2017-blog-farm-05.jpeg
 tags:
   - photography
 body:
@@ -12,36 +11,35 @@ body:
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/2017-blog-farm-04.jpeg
+    image: /images/uploads/2017-blog-farm-04.jpeg
     alt: Goats
+    resize: true
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/2017-blog-farm-07.jpeg
+    image: /images/uploads/2017-blog-farm-07.jpeg
+    resize: true
     caption: |-
       Human-sized hamster wheels!
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/2017-blog-farm-03.jpeg
+    image: /images/uploads/2017-blog-farm-03.jpeg
+    resize: true
     caption: My wife, Jackie, chilling on a pile of old tires.
 
   - type: gallery
     prominence: large
+    resize: true
     size: large
     images:
-      - sources:
-        - path: /images/uploads/2017-blog-farm-01.jpeg
+      - image: /images/uploads/2017-blog-farm-01.jpeg
         alt: Hill
-      - sources:
-        - path: /images/uploads/2017-blog-farm-06.jpeg
-        alt: Evie’s favorite stop was an old shed filled with toy musical instruments.
+      - image: /images/uploads/2017-blog-farm-06.jpeg
+        alt: Evie's favorite stop was an old shed filled with toy musical instruments.
 
   - type: figure
     prominence: large
-    sources:
-      - path: /images/uploads/2017-blog-farm-02.jpeg
+    image: /images/uploads/2017-blog-farm-02.jpeg
     alt: Sign on the hill
+    resize: true
