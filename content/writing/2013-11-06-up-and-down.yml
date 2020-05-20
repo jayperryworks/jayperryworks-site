@@ -61,21 +61,18 @@ body:
   - type: gallery
     size: small
     prominence: large
+    resize: true
     images:
       - image: "/images/uploads/2013-blog-up_and_down-fungus.jpg"
         alt: "Fungus lines"
         border: true
-        resize: true
       - image: "/images/uploads/2013-blog-up_and_down-fungus-color.jpg"
         alt: "Fungus color"
         border: true
-        resize: true
       - image: "/images/uploads/2013-blog-up_and_down-haze.jpg"
         alt: "Haze"
-        resize: true
       - image: "/images/uploads/2013-blog-up_and_down-wash.jpg"
         alt: "Background wash"
-        resize: true
 
   - type: passage
     markdown: |-

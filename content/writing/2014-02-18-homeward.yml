@@ -36,13 +36,12 @@ body:
   - type: gallery
     size: large
     prominence: large
+    resize: true
     images:
       - image: "/images/uploads/2014-blog-homeward-IMG_3804.JPG"
         alt: "View of the mountains"
-        resize: true
       - image: "/images/uploads/2014-blog-homeward-IMG_3795.JPG"
         alt: "Sunrise"
-        resize: true
 
   - type: passage
     markdown: |-
