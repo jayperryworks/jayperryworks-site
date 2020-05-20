@@ -9,7 +9,7 @@ export function get(req, res) {
   )
 
   if (data.cover) {
-  	data.cover = findInManifest(data.cover.image)
+  	data.cover.image = findInManifest(data.cover.image)
   }
 
   data.tableOfContents.forEach((item) => {

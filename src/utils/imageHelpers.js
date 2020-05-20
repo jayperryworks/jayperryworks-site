@@ -37,6 +37,9 @@ async function resizeImage (sourcePath, {
 	// get source image metadata (width)
 	const metadata = await sharp(sourceFileOnServer).metadata()
 
+	// if the original image is smaller than the smallest width option, just quit
+	if (metadata.width < Math.min(...widths)) return
+
 	// if the output folder doesn't exist, write it
 	if (!fs.existsSync(outputFileOnServer)) {
 		fs.mkdirSync(outputFileOnServer)
@@ -98,7 +101,9 @@ function findInManifest(image, {
 		)
 		return data.find(resizeData => resizeData.original === image)
 	} catch(error) {
-		console.log(`Sorry, the manifest can't be found. Try running the optimizeImages script again. | ${error}`)
+		console.log(`Cannot find image: ${image} | ${error}`)
+		// if the image can't be found in the manifest, just return the original so we can render the page anyway
+		return image
 	}
 }
 

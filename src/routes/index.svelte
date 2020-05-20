@@ -110,7 +110,7 @@
     <!-- cover image -->
     <figure class="cover-image">
       <ResponsivePicture
-        sources={content.cover.versions}
+        sources={content.cover.image.versions}
         alt={content.cover.alt}
         cover
       />

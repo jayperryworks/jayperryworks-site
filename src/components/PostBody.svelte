@@ -85,7 +85,7 @@
         >
           <Gallery size={section.size}>
             {#each section.images as item}
-              <li>
+              <li class="t-align-center">
               	{#if item.image.versions && item.image.versions.length > 1}
               		<ResponsivePicture
               		  sources={item.image.versions}

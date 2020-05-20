@@ -31,7 +31,6 @@ body:
 
   - type: gallery
     prominence: large
-    resize: true
     images:
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0771.jpg
         alt: Asateague Island
@@ -57,7 +56,6 @@ body:
 
   - type: gallery
     prominence: large
-    resize: true
     images:
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0859.jpg
         alt: Abandoned road
@@ -73,7 +71,6 @@ body:
   - type: gallery
     prominence: large
     size: large
-    resize: true
     images:
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF1534.jpg
         alt: Pencils
