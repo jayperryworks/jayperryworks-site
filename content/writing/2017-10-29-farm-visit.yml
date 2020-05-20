@@ -13,16 +13,19 @@ body:
     prominence: large
     image: /images/uploads/2017-blog-farm-04.jpeg
     alt: Goats
+    resize: true
 
   - type: figure
     prominence: large
     image: /images/uploads/2017-blog-farm-07.jpeg
+    resize: true
     caption: |-
       Human-sized hamster wheels!
 
   - type: figure
     prominence: large
     image: /images/uploads/2017-blog-farm-03.jpeg
+    resize: true
     caption: My wife, Jackie, chilling on a pile of old tires.
 
   - type: gallery
@@ -31,10 +34,13 @@ body:
     images:
       - image: /images/uploads/2017-blog-farm-01.jpeg
         alt: Hill
+        resize: true
       - image: /images/uploads/2017-blog-farm-06.jpeg
-        alt: Evie’s favorite stop was an old shed filled with toy musical instruments.
+        alt: Evie's favorite stop was an old shed filled with toy musical instruments.
+        resize: true
 
   - type: figure
     prominence: large
     image: /images/uploads/2017-blog-farm-02.jpeg
     alt: Sign on the hill
+    resize: true

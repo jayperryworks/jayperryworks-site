@@ -2,6 +2,7 @@ title: "Up and down and through and throughout"
 cover:
   image: "images/uploads/2013-blog-up_and_down.jpg"
   alt: "Up and down and through and throughout"
+  resize: true
 tags:
   - process
   - india ink
@@ -31,6 +32,7 @@ body:
     border: true
     image: "images/uploads/2013-blog-up_and_down-winter_fungus_s1.jpg"
     alt: "Sketch"
+    resize: true
 
   - type: passage
     markdown: |-
@@ -42,11 +44,13 @@ body:
     prominence: large
     image: "images/uploads/2013-blog-up_and_down-IMG_8956.jpg"
     alt: "Inking"
+    resize: true
 
   - type: figure
     prominence: large
     image: "images/uploads/2013-blog-up_and_down-IMG_8959.jpg"
     alt: "Inking"
+    resize: true
 
   - type: passage
     markdown: |-
@@ -61,13 +65,17 @@ body:
       - image: "images/uploads/2013-blog-up_and_down-fungus.jpg"
         alt: "Fungus lines"
         border: true
+        resize: true
       - image: "images/uploads/2013-blog-up_and_down-fungus-color.jpg"
         alt: "Fungus color"
         border: true
+        resize: true
       - image: "images/uploads/2013-blog-up_and_down-haze.jpg"
         alt: "Haze"
+        resize: true
       - image: "images/uploads/2013-blog-up_and_down-wash.jpg"
         alt: "Background wash"
+        resize: true
 
   - type: passage
     markdown: |-

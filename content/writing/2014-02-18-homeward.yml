@@ -6,6 +6,7 @@ tags:
   - digital
 cover:
   image: "images/uploads/2014-blog-homeward.jpg"
+  resize: true
 body:
   - type: note
     markdown: |-
@@ -22,6 +23,7 @@ body:
     prominence: large
     image: "images/uploads/2014-blog-homeward-IMG_3799.JPG"
     alt: "Mountains"
+    resize: true
 
   - type: passage
     markdown: |-
@@ -37,8 +39,10 @@ body:
     images:
       - image: "images/uploads/2014-blog-homeward-IMG_3804.JPG"
         alt: "View of the mountains"
+        resize: true
       - image: "images/uploads/2014-blog-homeward-IMG_3795.JPG"
         alt: "Sunrise"
+        resize: true
 
   - type: passage
     markdown: |-
@@ -47,6 +51,7 @@ body:
   - type: figure
     image: "images/uploads/2014-blog-homeward-DSCF2142.JPG"
     alt: "Sketches"
+    resize: true
 
   - type: passage
     markdown: |-

@@ -6,6 +6,7 @@ tags:
   - travel
 cover:
   image: /images/uploads/eroded_asphalt.jpg
+  resize: true
 body:
   - type: note
     markdown: |-
@@ -22,6 +23,7 @@ body:
     prominence: large
     image: /images/uploads/2014-blog-eroded-asphalt-DSCF0818.jpg
     alt: Asateague Island
+    resize: true
 
   - type: passage
     markdown: |-
@@ -32,16 +34,22 @@ body:
     images:
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0771.jpg
         alt: Asateague Island
+        resize: true
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0821.jpg
         alt: Asateague Island
+        resize: true
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0766.jpg
         alt: Asateague Island
+        resize: true
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0838.jpg
         alt: Asateague Island
+        resize: true
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0897.jpg
         alt: Asateague Island
+        resize: true
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0887.jpg
         alt: Asateague Island
+        resize: true
 
   - type: passage
     markdown: |-
@@ -57,10 +65,13 @@ body:
     images:
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0859.jpg
         alt: Abandoned road
+        resize: true
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0854.jpg
         alt: Abandoned road
+        resize: true
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF0853.jpg
         alt: Abandoned road
+        resize: true
 
   - type: passage
     markdown: |-
@@ -72,14 +83,19 @@ body:
     images:
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF1534.jpg
         alt: Pencils
+        resize: true
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF1535.jpg
         alt: Inking
+        resize: true
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF1571.jpg
         alt: Inking
+        resize: true
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF1572.jpg
         alt: Inking
+        resize: true
       - image: /images/uploads/2014-blog-eroded-asphalt-DSCF1574.jpg
         alt: Assistant
+        resize: true
 
   - type: passage
     markdown: |-
