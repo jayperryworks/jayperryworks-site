@@ -1,6 +1,6 @@
 title: "Up and down and through and throughout"
 cover:
-  image: "images/uploads/2013-blog-up_and_down.jpg"
+  image: "/images/uploads/2013-blog-up_and_down.jpg"
   alt: "Up and down and through and throughout"
   resize: true
 tags:
@@ -30,7 +30,7 @@ body:
   - type: figure
     prominence: small
     border: true
-    image: "images/uploads/2013-blog-up_and_down-winter_fungus_s1.jpg"
+    image: "/images/uploads/2013-blog-up_and_down-winter_fungus_s1.jpg"
     alt: "Sketch"
     resize: true
 
@@ -42,13 +42,13 @@ body:
 
   - type: figure
     prominence: large
-    image: "images/uploads/2013-blog-up_and_down-IMG_8956.jpg"
+    image: "/images/uploads/2013-blog-up_and_down-IMG_8956.jpg"
     alt: "Inking"
     resize: true
 
   - type: figure
     prominence: large
-    image: "images/uploads/2013-blog-up_and_down-IMG_8959.jpg"
+    image: "/images/uploads/2013-blog-up_and_down-IMG_8959.jpg"
     alt: "Inking"
     resize: true
 
@@ -62,18 +62,18 @@ body:
     size: small
     prominence: large
     images:
-      - image: "images/uploads/2013-blog-up_and_down-fungus.jpg"
+      - image: "/images/uploads/2013-blog-up_and_down-fungus.jpg"
         alt: "Fungus lines"
         border: true
         resize: true
-      - image: "images/uploads/2013-blog-up_and_down-fungus-color.jpg"
+      - image: "/images/uploads/2013-blog-up_and_down-fungus-color.jpg"
         alt: "Fungus color"
         border: true
         resize: true
-      - image: "images/uploads/2013-blog-up_and_down-haze.jpg"
+      - image: "/images/uploads/2013-blog-up_and_down-haze.jpg"
         alt: "Haze"
         resize: true
-      - image: "images/uploads/2013-blog-up_and_down-wash.jpg"
+      - image: "/images/uploads/2013-blog-up_and_down-wash.jpg"
         alt: "Background wash"
         resize: true
 

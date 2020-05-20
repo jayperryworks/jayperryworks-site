@@ -119,7 +119,11 @@ function getHomeImages (file) {
 
 async function resizeAndGenerateManifest (images) {
 	const data = await Promise.all(images.map(async (image) => {
-		return await imageHelpers.resizeImage(image.original, image.options)
+		try {
+			return await imageHelpers.resizeImage(image.original, image.options)
+		} catch (error) {
+			console.log(`Error: ${image.original} | ${error}`)
+		}
 	}))
 
 	fs.writeFileSync(
