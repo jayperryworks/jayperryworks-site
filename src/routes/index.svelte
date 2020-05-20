@@ -73,11 +73,13 @@
     width: 100%;
     text-align: center;
 
+    > :global(picture),
     > :global(img) {
       width: 100%;
     }
 
     @supports (object-fit: cover) {
+      > :global(picture),
       > :global(img) {
         height: 70vh;
       }
