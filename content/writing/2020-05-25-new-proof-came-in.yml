@@ -1,0 +1,11 @@
+title: New proof came in!
+cover:
+  border: false
+  resize: false
+  image: /images/uploads/blog-2020-bridges-proof.jpg
+body:
+  - type: passage
+    useInExcerpt: false
+    markdown: This is a new ink drawing of an interstate overpass, from a trail on
+      the Patuxent. That day the sunlight caught the tree branches just so, and
+      I managed to take a picture.
