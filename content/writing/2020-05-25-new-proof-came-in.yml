@@ -3,6 +3,7 @@ cover:
   border: false
   resize: false
   image: /images/uploads/blog-2020-bridges-proof.jpg
+  alt: "'Bridges' proof"
 body:
   - type: passage
     useInExcerpt: false
