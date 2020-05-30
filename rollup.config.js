@@ -125,19 +125,20 @@ export default {
 		onwarn,
 	},
 
-	serviceworker: {
-		input: config.serviceworker.input(),
-		output: config.serviceworker.output(),
-		plugins: [
-			resolve(),
-			replace({
-				'process.browser': true,
-				'process.env.NODE_ENV': JSON.stringify(mode)
-			}),
-			commonjs(),
-			!dev && terser()
-		],
+	// temporarily disabling the service worker until I can clean up the static folder to reduce unnecessary requests
+	// serviceworker: {
+	// 	input: config.serviceworker.input(),
+	// 	output: config.serviceworker.output(),
+	// 	plugins: [
+	// 		resolve(),
+	// 		replace({
+	// 			'process.browser': true,
+	// 			'process.env.NODE_ENV': JSON.stringify(mode)
+	// 		}),
+	// 		commonjs(),
+	// 		!dev && terser()
+	// 	],
 
-		onwarn,
-	}
+	// 	onwarn,
+	// }
 };
