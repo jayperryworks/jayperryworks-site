@@ -2,3 +2,44 @@ title: Better neighbors
 cover:
   border: false
   resize: false
+body:
+  - type: passage
+    useInExcerpt: true
+    markdown: For the last week, grief and fury have flooded the streets of our
+      country, as though a dozen volcanos erupted simultaneously. George Floyd’s
+      senseless murder is horrifying – but all the more so because he was also
+      only one of thousands of people of color who have wrongfully lost their
+      lives over the last few years. It wasn't long ago that my own city,
+      Baltimore, [was burning, following the death of Freddie Gray in police
+      custody](https://en.wikipedia.org/wiki/2015_Baltimore_protests). That is a
+      night I hoped never to see again, but instead it's a scene that has
+      replayed again and again across the country.
+  - type: passage
+    useInExcerpt: false
+    markdown: >-
+      As a white person I believe I have a duty to recognize that my black and
+      brown neighbors face a reality that is very different from my own, and I
+      believe I have a duty to speak out against discrimination,
+      disenfranchisement, police brutality, and white supremacy whenever I can.
+      There is
+      [significant](https://www.vanityfair.com/news/2016/07/data-police-racial-bias),
+      [compelling](https://www.ssc.wisc.edu/soc/racepoliticsjustice/2017/08/24/the-harmful-effects-of-implicit-racial-bias-in-the-police/)
+      [evidence](https://www.nytimes.com/2016/07/12/upshot/surprising-new-evidence-shows-bias-in-police-use-of-force-but-not-in-shootings.html)
+      that the police treat black people differently, nationwide. Until our
+      police and legal system can operate without bias, and until we can provide
+      true equality of opportunity for people of color, I fear we will never
+      break this pattern. It’s on all of us to speak out, and [it’s on all of us
+      to build a fairer
+      system](https://medium.com/@BarackObama/how-to-make-this-moment-the-turning-point-for-real-change-9fa209806067).
+
+
+      To my white readers: please consider advocating, in your own way, against systemic racism. An organization I like and support is [Southern Poverty Law Center](https://www.splcenter.org/), a legal group that aims to stamp out white supremacy and protect marginalized communities nationwide. Another is [No Kid Hungry](https://www.nokidhungry.org/)[^1], a group that feeds children as a way of providing equality of opportunity. But I’m learning that there are [many ways to contribute and advocate](http://bit.ly/ANTIRACISMRESOURCES)[^2] and I hope you’ll join me in working to be a better neighbor and citizen.
+
+
+      I can’t imagine the pain that George Floyd’s family is feeling right now. I pray that they will be able to find justice and closure. But most of all I pray that no one else has to suffer this fate.
+
+
+      [^1]:	I discovered this organization thanks to a cyclist named Phil Gaimon, who has been fundraising for them through his [Youtube show](https://www.youtube.com/channel/UCqI9HyfLvodz7bXFCI3PU2g). His show is fantastic and hilarious. I’m a huge fan and you should watch it if you like bikes. You can donate through his fundraising program [here](https://p2p.onecause.com/chefscycle2020/phil-gaimon).
+
+
+      [^2]:	Hat tip to [kottke.org](https://kottke.org) for the link to this list.
