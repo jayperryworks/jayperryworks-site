@@ -6,13 +6,13 @@ body:
   - type: passage
     useInExcerpt: true
     markdown: >-
-      Getting straight to the point, here's a few things I've been reading that
-      I find helpful and insightful:
+      Getting straight to the point, here's a few things I've been reading this
+      week that I find helpful and insightful:
 
 
       - I love this piece that [**Stacey Abrams** wrote for the New York Times](https://www.nytimes.com/2020/06/04/opinion/stacey-abrams-voting-floyd-protests.html) about how much voting matters right now. Sometimes the most basic things - the things easiest to overlook or take for granted - are what matter the most in dark times.
 
-      - [**President Obama**’s piece](https://medium.com/@BarackObama/how-to-make-this-moment-the-turning-point-for-real-change-9fa209806067) about local politics and police reform is great - not only because it's insightful but also because his calm, clear, eloquent voice is so comforting to hear right now.
+      - [**President Obama**’s piece](https://medium.com/@BarackObama/how-to-make-this-moment-the-turning-point-for-real-change-9fa209806067) about local politics and police reform is great &mdash; not only because it's insightful but also because his calm, clear, eloquent voice is so comforting to hear right now.
 
       -  **Neil DeGrasse Tyson** wrote a [powerful blog post](https://www.haydenplanetarium.org/tyson/commentary/2020-06-03-reflections-on-color-of-my-skin.php) about his experiences with discrimination and police bias.
 
@@ -22,6 +22,9 @@ body:
 
 
       I'll update this list as I find more articles and resources.
+
+
+      [^1]: Hat tip to [kottke.org](https://kottke.org) for the link to this list.
   - type: heading
     level: 2
     inlineMarkdown: Some (brief) thoughts of my own
@@ -50,6 +53,3 @@ body:
 
 
       Black lives matter. 
-
-
-      [^1]:	Hat tip to [kottke.org](https://kottke.org) for the link to this list.
