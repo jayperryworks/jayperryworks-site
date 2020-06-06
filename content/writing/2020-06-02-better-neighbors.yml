@@ -1,19 +1,24 @@
-title: Better neighbors
+title: Regarding George Floyd and the protests
 cover:
   border: false
   resize: false
 body:
   - type: passage
     useInExcerpt: true
-    markdown: For the last week, grief and fury have flooded the streets of our
-      country, as though a dozen volcanos erupted simultaneously. George Floyd’s
-      senseless murder is horrifying – but all the more so because he was also
-      only one of thousands of people of color who have wrongfully lost their
-      lives over the last few years. It wasn't long ago that my own city,
-      Baltimore, [was burning, following the death of Freddie Gray in police
-      custody](https://en.wikipedia.org/wiki/2015_Baltimore_protests). That is a
-      night I hoped never to see again, but instead it's a scene that has
-      replayed again and again across the country.
+    markdown: >-
+      Getting straight to the point, here's a few things I've been reading that
+      I find helpful and insightful:
+
+
+      - I love this piece that [**Stacey Abrams** wrote for the New York Times](https://www.nytimes.com/2020/06/04/opinion/stacey-abrams-voting-floyd-protests.html) about how much voting matters right now. Sometimes the most basic things - the things easiest to overlook or take for granted - are what matter the most in dark times.
+
+      - [**President Obama**’s piece](https://medium.com/@BarackObama/how-to-make-this-moment-the-turning-point-for-real-change-9fa209806067) about local politics and police reform is great - not only because it's insightful but also because his calm, clear, eloquent voice is so comforting to hear right now.
+
+      -  **Neil DeGrasse Tyson** wrote a [powerful blog post](https://www.haydenplanetarium.org/tyson/commentary/2020-06-03-reflections-on-color-of-my-skin.php) about his experiences with discrimination and police bias.
+
+      - **Marques Brownlee**, a tech journalist and Youtuber I’ve followed for a long time, was inspired by Dr. Tyson’s article to [reflect on his own life experience](https://www.youtube.com/watch?v=o-_WXXVye3Y&feature=youtu.be).
+
+      - I found this [great list of resources and guidance for antiracist advocacy](http://bit.ly/ANTIRACISMRESOURCES).[^1]
   - type: passage
     useInExcerpt: false
     markdown: >-
