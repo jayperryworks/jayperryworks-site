@@ -79,6 +79,14 @@ collections:
               - {label: "Use in excerpt", name: "useInExcerpt", widget: "boolean", default: "false"}
               - {label: "Content", name: "markdown", widget: "markdown", required: false}
 
+          - label: Heading
+            name: heading
+            widget: object
+            fields:
+              - {label: "Type", name: "type", widget: "hidden", default: "heading"}
+              - {label: "Level", name: "level", widget: "number", valueType: int, default: 2}
+              - {label: "Content", name: "inlineMarkdown", widget: "markdown", required: false}
+
           - label: Passage
             name: passage
             widget: object
@@ -358,6 +366,14 @@ collections:
                 fields:
                   - {label: "Type", name: "type", widget: "hidden", default: "note"}
                   - {label: "Content", name: "markdown", widget: "markdown", required: false}
+
+              - label: Heading
+                name: heading
+                widget: object
+                fields:
+                  - {label: "Type", name: "type", widget: "hidden", default: "heading"}
+                  - {label: "Level", name: "level", widget: "number", valueType: int, default: 2}
+                  - {label: "Content", name: "inlineMarkdown", widget: "markdown", required: false}
 
               - label: Passage
                 name: passage
