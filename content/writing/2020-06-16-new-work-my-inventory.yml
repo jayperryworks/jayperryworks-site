@@ -23,10 +23,11 @@ body:
     useInExcerpt: false
     markdown: Time to concentrate has been in short supply in lockdown, and I've had
       to put some of my bigger projects on hold while I've been treading water.
-      One day I stumbled across a collection of James Audubon's bird drawings
-      and I remembered how much I loved his work - I love its simple
-      sophistication, its clarity, and how it so adeptly served as both
-      scientific documentation and personal journal.
+      One day I stumbled across a collection of [John James Audubon's bird
+      drawings](https://www.audubon.org/birds-of-america) and I remembered how
+      much I loved his work - I love its simple sophistication, its clarity, and
+      how it so adeptly served as both scientific documentation and personal
+      journal.
   - type: figure
     useInExcerpt: false
     prominence: medium
