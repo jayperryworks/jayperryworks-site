@@ -16,7 +16,7 @@ body:
       ritual. We'd take the dog out for a walk each afternoon, and we'd talk
       about the things we saw changing around us: the flowers blooming and
       falling, the leaves growing, the colors changing, the bugs and birds and
-      chipmunks re-emerging as the weather turned warmer. Evelyn would come home
+      animals re-emerging as the weather turned warmer. Evelyn would come home
       with her pockets stuffed with whirligigs and buttercups and cicada shells,
       which she'd arrange in little taxonomic collections around the house."
   - type: passage
@@ -25,8 +25,8 @@ body:
       to put some of my bigger projects on hold while I've been treading water.
       One day I stumbled across a collection of [John James Audubon's bird
       drawings](https://www.audubon.org/birds-of-america) and I remembered how
-      much I loved his work - I love its simple sophistication, its clarity, and
-      how it so adeptly served as both scientific documentation and personal
+      much I love his work &mdash; I love its simple sophistication, its clarity, and
+      how it so adeptly serves as both scientific documentation and personal
       journal.
   - type: figure
     useInExcerpt: false
@@ -41,8 +41,8 @@ body:
     markdown: >-
       On that inspiration I started sketching the bits of "neighborhood
       ephemera" Evie compiled. I settled on a simple pattern: one subject, in
-      black-and-white ink wash over an empty background; a square frame; and a
-      small, handwritten caption nearby. These drawings are simple enough that I
+      black-and-white ink wash over an empty background; a square frame; a
+      small, handwritten caption. These drawings are simple enough that I
       can usually finish one in a single day. That momentum is really
       satisfying, especially right now when I find it so easy to feel
       overwhelmed by everything else.
@@ -61,6 +61,6 @@ body:
   - type: passage
     useInExcerpt: false
     markdown: Likewise, I plan to edition these drawings as small, relatively cheap
-      prints (probably 6 x 6"), so they can be collected and displayed in a grid
+      prints (probably 6 &times; 6"), so they can be collected and displayed in a grid
       or row or whatever arrangement you like. Stay tuned; I’ll update this post
       once the first few are available.
