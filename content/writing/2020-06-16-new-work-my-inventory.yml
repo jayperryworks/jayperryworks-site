@@ -1,0 +1,65 @@
+title: 'New work: my "inventory"'
+cover:
+  border: false
+  resize: true
+  image: /images/uploads/blog-2020-inventory-prints.jpg
+  caption: Some test prints and proofs
+tags:
+  - process
+  - drawing
+body:
+  - type: passage
+    useInExcerpt: true
+    markdown: "I've been working on a new series of small drawings of things my
+      daughter and I have found around our neighborhood this spring. With
+      everybody stuck at home, Evelyn and I gradually stumbled into a daily
+      ritual. We'd take the dog out for a walk each afternoon, and we'd talk
+      about the things we saw changing around us: the flowers blooming and
+      falling, the leaves growing, the colors changing, the bugs and birds and
+      chipmunks re-emerging as the weather turned warmer. Evelyn would come home
+      with her pockets stuffed with whirligigs and buttercups and cicada shells,
+      which she'd arrange in little taxonomic collections around the house."
+  - type: passage
+    useInExcerpt: false
+    markdown: Time to concentrate has been in short supply in lockdown, and I've had
+      to put some of my bigger projects on hold while I've been treading water.
+      One day I stumbled across a collection of James Audubon's bird drawings
+      and I remembered how much I loved his work - I love its simple
+      sophistication, its clarity, and how it so adeptly served as both
+      scientific documentation and personal journal.
+  - type: figure
+    useInExcerpt: false
+    prominence: medium
+    resize: true
+    border: false
+    caption: Japanese maple leaves
+    alt: Japanese maple leaves
+    image: /images/uploads/blog-2020-inventory-leaves.jpg
+  - type: passage
+    useInExcerpt: false
+    markdown: >-
+      On that inspiration I started sketching the bits of "neighborhood
+      ephemera" Evie compiled. I settled on a simple pattern: one subject, in
+      black-and-white ink wash over an empty background; a square frame; and a
+      small, handwritten caption nearby. These drawings are simple enough that I
+      can usually finish one in a single day. That momentum is really
+      satisfying, especially right now when I find it so easy to feel
+      overwhelmed by everything else.
+
+
+      As I finish more of these drawings, I think I'll start arranging them on our bedroom wall as a kind of inventory of memories. These drawings are a lot of fun and I hope to keep doing them, off and on, for a long time to come. I hope they accumulate into the hundreds.
+  - type: figure
+    useInExcerpt: false
+    prominence: medium
+    resize: true
+    border: false
+    image: /images/uploads/blog-2020-inventory-whirligigs.jpg
+    caption: Inking some whirligigs. Evelyn contributed some of her own sketches, in
+      red.
+    alt: Whirligigs
+  - type: passage
+    useInExcerpt: false
+    markdown: Likewise, I plan to edition these drawings as small, relatively cheap
+      prints (probably 6 x 6"), so they can be collected and displayed in a grid
+      or row or whatever arrangement you like. Stay tuned; I’ll update this post
+      once the first few are available.
