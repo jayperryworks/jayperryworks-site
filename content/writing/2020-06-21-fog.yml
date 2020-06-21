@@ -16,3 +16,10 @@ body:
     border: false
     alt: Streetlight
     image: /images/uploads/blog-2020-fog-run-2.jpg
+  - type: figure
+    useInExcerpt: false
+    prominence: large
+    resize: true
+    border: false
+    image: /images/uploads/blog-2020-fog-run-1.jpg
+    alt: Sunset
