@@ -9,3 +9,10 @@ body:
     useInExcerpt: true
     markdown: I went for a run last night and there was this amazing fog settling in
       the hollows.
+  - type: figure
+    useInExcerpt: false
+    prominence: large
+    resize: false
+    border: false
+    alt: Streetlight
+    image: /images/uploads/blog-2020-fog-run-2.jpg
