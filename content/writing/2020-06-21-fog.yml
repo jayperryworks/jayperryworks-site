@@ -4,3 +4,8 @@ cover:
   resize: true
   image: /images/uploads/blog-2020-fog-run-3.jpg
   alt: Fog on the hill
+body:
+  - type: passage
+    useInExcerpt: true
+    markdown: I went for a run last night and there was this amazing fog settling in
+      the hollows.
