@@ -1,4 +1,6 @@
 title: Fog
 cover:
   border: false
-  resize: false
+  resize: true
+  image: /images/uploads/blog-2020-fog-run-3.jpg
+  alt: Fog on the hill
