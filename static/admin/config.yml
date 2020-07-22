@@ -228,21 +228,15 @@ collections:
 
       - label: Cover image
         name: cover
-        widget: list
-        fields:
-          - {label: "Image", name: "path", widget: "image"}
-          - {label: "Width", name: "width", widget: "number", valueType: int, required: false}
+        widget: image
 
       - label: Thumbnail image
         name: thumb
-        widget: list
-        fields:
-          - {label: "Image", name: "path", widget: "image"}
-          - {label: "Width", name: "width", widget: "number", valueType: int, required: false}
+        widget: image
 
-      - label: 'Intro'
-        name: 'body'
-        widget: 'markdown'
+      - label: Intro
+        name: body
+        widget: markdown
         required: false
 
       - label: Editions
@@ -266,10 +260,7 @@ collections:
           - {label: Etsy listing, name: url, widget: string}
           - label: Photo
             name: photo
-            widget: list
-            fields:
-              - {label: "Image", name: "path", widget: "image"}
-              - {label: "Width", name: "width", widget: "number", valueType: "int", required: false}
+            widget: image
 
   - name: 'pages'
     label: 'Pages'
