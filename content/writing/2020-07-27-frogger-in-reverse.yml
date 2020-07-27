@@ -1,6 +1,6 @@
 title: Frogger in reverse
 cover:
-  border: false
+  border: true
   resize: true
   image: /images/uploads/toad.jpg
   alt: A toad by the side of the trail
