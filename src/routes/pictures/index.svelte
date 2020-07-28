@@ -17,6 +17,7 @@
 
 <script>
   import { format } from 'date-fns'
+  import { titleize } from '@/utils/stringHelpers.js'
   import arrow from 'icons/arrow-right.svg'
   import Button from '@/components/Button.svelte'
   import Gallery from '@/components/Gallery.svelte'
@@ -28,10 +29,34 @@
 
   export let content, pictures
 
-  function getProp(picture, prop) {
-    return picture.thumbnail.map((item) => {
-      return item[prop]
-    })
+  // get unique series values from pictures array
+  // and remove empty/undefined values
+  // -> https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates#14438954
+  $: series = [...new Set(pictures.map(picture => picture.series))].filter(p => p)
+  $: unsortedPictures = pictures.filter(picture => !picture.series)
+  // $: picturesBySeries = {
+  // 	...series.reduce((result, name) => {
+  // 			result[name] = pictures.filter(picture => picture.series === name)
+  // 			return result
+  // 	}, {}),
+  // 	unsorted: pictures.filter(picture => !picture.series)
+  // }
+
+  $: picturesBySeries = [
+  	...series.map((name) => {
+  		return {
+  			name: name,
+  			pictures: pictures.filter(picture => picture.series === name)
+  		}
+  	}),
+  	{
+  		name: false,
+  		pictures: pictures.filter(picture => !picture.series)
+  	}
+  ]
+
+  function getPicturesBySeries (name) {
+  	return pictures.filter(picture => picture.series === name)
   }
 </script>
 
@@ -72,23 +97,28 @@
     </div>
 
     <div slot="body" class="overflow-hidden">
-      <Gallery>
-        {#each pictures as picture}
-          <li>
-            <a
-              class="t-link-undecorated"
-              rel="prefetch"
-              href="{picture.path}"
-            >
-              <ResponsivePicture
-                sources={picture.thumbnail.versions}
-                alt={picture.title}
-                border
-              />
-            </a>
-          </li>
-        {/each}
-      </Gallery>
+    	{#each picturesBySeries as series}
+    		{#if series.name}
+	    		<h2 class="">{titleize(series.name)} series</h2>
+    		{/if}
+	      <Gallery>
+	        {#each series.pictures as picture}
+	          <li>
+	            <a
+	              class="t-link-undecorated"
+	              rel="prefetch"
+	              href="{picture.path}"
+	            >
+	              <ResponsivePicture
+	                sources={picture.thumbnail.versions}
+	                alt={picture.title}
+	                border
+	              />
+	            </a>
+	          </li>
+	        {/each}
+	      </Gallery>
+    	{/each}
     </div>
   </OutdentedBlurb>
 </main>
