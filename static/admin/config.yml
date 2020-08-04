@@ -194,6 +194,14 @@ collections:
         widget: date
         required: false
 
+      - label: Series
+        name: series
+        widget: select
+        options:
+          - Inventory
+          - Seasons
+        required: false
+
       - label: Format
         name: format
         widget: string
