@@ -31,6 +31,7 @@ module.exports = (dir) => {
         },
         slug: metadata.slug,
         thumbnail: data.thumb,
+        series: data.series,
         path: permalink.createPath(
           filename,
           picturesConfig.sourceTemplate,

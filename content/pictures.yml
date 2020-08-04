@@ -1,7 +1,11 @@
 title: Recent work
 
 # index page intro blurb
-intro: 
+intro:
+
+series:
+  - Inventory
+  - Seasons
 
 # descriptions of the printing formats
 printDescriptions:
