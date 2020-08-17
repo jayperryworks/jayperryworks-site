@@ -1,0 +1,11 @@
+title: Scientific tattoos
+cover:
+  border: false
+  resize: false
+body:
+  - type: passage
+    useInExcerpt: false
+    markdown: I really love these [science-inspired
+      tattoos](https://www.thisiscolossal.com/2020/07/michele-volpi-anatomy-tatttoos/)
+      by Michele Volpi. My favorites are the "planetary thermometer" and "beer
+      recipe."
