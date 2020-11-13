@@ -62,28 +62,12 @@
     }
   }
 
-  .top-section {
-    @supports (flex: 1) {
-      flex: 1;
-    }
+  .intro {
+  	min-height: 70vh;
   }
 
-  .cover-image {
-    margin: 0;
-    width: 100%;
-    text-align: center;
-
-    > :global(picture),
-    > :global(img) {
-      width: 100%;
-    }
-
-    @supports (object-fit: cover) {
-      > :global(picture),
-      > :global(img) {
-        height: 70vh;
-      }
-    }
+  .toc-item {
+  	min-height: 100vh;
   }
 
   .card-icon {
@@ -98,36 +82,18 @@
 
 <PageTitle />
 
-<MainNav overlay hideMenu />
+<MainNav overlay />
 
 <div class="home">
-  <section class="
-    border-bottom
-    border-solid
-    top-section
-  ">
-
-    <!-- cover image -->
-    <figure class="cover-image">
-      <ResponsivePicture
-        sources={content.cover.image.versions}
-        alt={content.cover.alt}
-        cover
-      />
-    </figure>
+  <section class="intro | display-flex display-flex-column display-flex-justify-center | padding-top-xwide">
 
     <!-- intro -->
-    <div class="border-seam-top padding-bottom-xwide padding-top-narrow padding-x-outside">
-      <aside class="display-block padding-bottom-wide position-relative t-align-right">
-        <small class="t-case-upper t-font-accent t-scale-eta">
-          Edition <strong>3.1.0</strong>
-        </small>
-      </aside>
-      <Wrapper width="xwide">
+    <div class="padding-x-outside">
+    	<Wrapper width="xwide">
         <Wrapper centered={false}>
           <h1 class="t-scale-beta">{content.intro}</h1>
           {#if favoriteThings.length > 0}
-            <p class="c-fg-tertiary margin-top-xnarrow t-font-accent t-heading t-scale-gamma">
+            <p class="c-fg-tertiary | margin-top-xnarrow | t-font-accent t-heading t-scale-gamma">
               {favoriteThingsSubhead}
             </p>
           {/if}
@@ -145,39 +111,34 @@
   </section>
 
   <!-- TOC -->
-  <nav class="border-seam-top-offset c-bg-well padding-bottom-xwide padding-x-outside">
-    <Wrapper width="xwide">
-      <h2 class="padding-y-wide t-case-upper t-font-accent t-scale-eta t-weight-bold">
-        Table of contents
-      </h2>
-      <Gallery gutter="medium" flex>
-        {#each content.tableOfContents as item}
-          <li>
-            <Card link={item.link} class="padding-y">
-              <div slot="content">
-                <h2 class="padding-x t-highlight-left t-scale-gamma">
-                  {item.heading}
-                </h2>
-                <div class="padding-top-xnarrow padding-x t-font-accent t-scale-zeta">
-                  {@html item.description}
-                </div>
-              </div>
-              <div slot="footer" class="margin-x padding-top-narrow position-relative">
-                <span class="c-fg-tertiary display-inline-block t-case-upper t-font-accent t-scale-eta t-weight-bold">
-                  Read more
-                </span>
-                <span class="card-icon">
-                  <Icon
-                    svg={arrowDotted}
-                    size="xlarge"
-                    class="no-margin-top"
-                  />
-                </span>
-              </div>
-            </Card>
-          </li>
-        {/each}
-      </Gallery>
-    </Wrapper>
-  </nav>
+  <section>
+    <header class="padding-bottom padding-x-outside">
+    	<Wrapper width="xwide">
+        <h2 class="t-case-upper t-font-accent t-scale-eta t-weight-bold">
+          Table of contents
+        </h2>
+      </Wrapper>
+    </header>
+    {#each content.tableOfContents as item}
+      <article class="toc-item | border-seam-top | padding-y-xwide padding-x-outside">
+      	<Wrapper width="xwide">
+          <h2 class="padding-bottom t-scale-alpha">
+            <a href={item.link}>{item.heading}</a>
+          </h2>
+          <div class="margin-x padding-top-narrow position-relative">
+            <span class="c-fg-tertiary display-inline-block t-case-upper t-font-accent t-scale-eta t-weight-bold">
+              Read more
+            </span>
+            <span class="card-icon">
+              <Icon
+                svg={arrowDotted}
+                size="xlarge"
+                class="no-margin-top"
+              />
+            </span>
+          </div>
+		    </Wrapper>
+      </article>
+    {/each}
+  </section>
 </div>
