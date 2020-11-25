@@ -12,8 +12,8 @@ export function get(req, res) {
   data.tableOfContents.forEach((item) => {
     if (item.content) {
       if (item.content.type == 'image') {
-      	item.content.images.forEach((image) => {
-      		image = findInManifest(image)
+      	item.content.images = item.content.images.map((image) => {
+      		return findInManifest(image)
       	})
       }
 

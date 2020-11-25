@@ -37,6 +37,12 @@
   }
 }
 
+// .display-flex-align-center {
+// 	@supports (display: flex) {
+// 		align-items: center;
+// 	}
+// }
+
 .display-flex-justify {
 	@supports (display: flex) {
 	  justify-content: space-between;
@@ -53,6 +59,10 @@
 	@supports (display: flex) {
 	  flex: 1;
 	}
+}
+
+.display-flex-bottom {
+	margin-top: auto;
 }
 
 // --- Positioning utils ---

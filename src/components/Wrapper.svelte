@@ -18,7 +18,6 @@
   @use "config/layout_width";
 
   .wrapper {
-    display: block;
     position: relative;
   }
 

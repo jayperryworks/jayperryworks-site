@@ -38,7 +38,7 @@ export function get(req, res, next) {
 		)
 
 		// get the resized versions of the edition images
-		content.editions.map((edition) => {
+		content.editions.forEach((edition) => {
 			edition.photo = findInManifest(edition.photo)
 		})
 

@@ -18,11 +18,11 @@
 	import arrow from 'icons/arrow-right.svg'
 	import Button from '@/components/Button.svelte'
 	import Card from '@/components/HomeTOCCard.svelte'
+	import Cover from '@/components/Cover.svelte'
 	import Gallery from '@/components/Gallery.svelte'
 	import Icon from '@/components/Icon.svelte'
 	import MainNav from '@/components/MainNav.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
-	import ResponsivePicture from '@/components/ResponsivePicture.svelte'
 	import TocPanel from '@/components/TocPanel.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
@@ -115,25 +115,33 @@
 			<TocPanel number="0{i + 1}" link={item.link} heading={item.heading}>
 				{#if item.content.type == 'image'}
 					{#each item.content.images as image}
-						{image}
+						<Wrapper width="xwide" class="display-flex display-flex-column display-flex-fill">
+							<Cover
+								height="fill"
+								sources={image}
+								alt="Prints &amp; paintings"
+							/>
+						</Wrapper>
 					{/each}
 				{/if}
 				{#if item.content.type == 'list'}
-					<Gallery gutter="wide">
-						{#each item.content.posts as post}
-							<li>
-								<time
-									class="c-fg-tertiary | display-block | padding-bottom-xnarrow | t-font-accent t-scale-eta"
-									datetime={date(post.date, 'yyyy-M-dd')}
-								>
-									{date(post.date)}
-								</time>
-								<h4 class="t-scale-gamma">
-									<a href="{post.path}">{post.title}</a>
-								</h4>
-							</li>
-						{/each}
-					</Gallery>
+					<div class="display-flex-fill display-flex display-flex-column display-flex-justify-center">
+						<Gallery gutter="wide">
+							{#each item.content.posts as post}
+								<li>
+									<time
+										class="c-fg-tertiary | display-block | padding-bottom-xnarrow | t-font-accent t-scale-eta"
+										datetime={date(post.date, 'yyyy-M-dd')}
+									>
+										{date(post.date)}
+									</time>
+									<h4 class="t-scale-gamma">
+										<a href="{post.path}">{post.title}</a>
+									</h4>
+								</li>
+							{/each}
+						</Gallery>
+					</div>
 				{/if}
 			</TocPanel>
 		{/each}

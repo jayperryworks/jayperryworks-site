@@ -33,12 +33,20 @@
         max-height: 50vh;
       }
     }
+
+    &.fill {
+    	:global(img) {
+    		max-height: auto;
+    		flex: 1;
+    	}
+    }
   }
 </style>
 
 <div
   class="container {classes}"
   class:small={height === 'small'}
+  class:fill={height === 'fill'}
 >
   <Figure
     {sources}

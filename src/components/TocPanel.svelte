@@ -14,35 +14,45 @@
 
 <style type="text/scss">
 	article {
-		min-height: 70vh;
+		min-height: 80vh;
+	}
+
+	.action-label,
+	.action-icon {
+		vertical-align: middle;
+		display: inline-block;
+	}
+
+	.action-label {
+		margin-top: -1em;
 	}
 </style>
 
-<article class="border-seam-top | padding-y-xwide padding-x-outside | {classes}">
-	<Wrapper width="xwide">
-    <header class="padding-bottom-xwide">
-    	<p class="t-scale-gamma t-font-accent | c-fg-tertiary | padding-bottom-narrow">
-    		{number}
-    	</p>
-    	<h2 class="padding-bottom t-scale-alpha">
-        <a href={link}>{heading}</a>
-      </h2>
-      <a
-      	class="t-link-undecorated margin-x padding-top-narrow position-relative"
-      	href={link}
-    	>
-        <span class="c-fg-tertiary display-inline-block t-case-upper t-font-accent t-scale-eta t-weight-bold">
-          See more
-        </span>
-        <span class="card-icon">
-          <Icon
-            svg={arrowDotted}
-            size="xlarge"
-            class="no-margin-top"
-          />
-        </span>
-      </a>
-    </header>
-    <slot></slot>
-  </Wrapper>
+<article class="border-seam-top | padding-y-xwide padding-x-outside | display-flex display-flex-column | {classes}">
+	<header class="padding-bottom-wide">
+		<Wrapper width="xwide">
+			<p class="t-scale-gamma t-font-accent | c-fg-tertiary | padding-bottom-narrow">
+				{number}
+			</p>
+			<h2 class="padding-bottom-wide | t-scale-alpha">
+				<a href={link}>{heading}</a>
+			</h2>
+			<a
+				class="t-link-undecorated | display-inline-block"
+				href={link}
+			>
+				<span class="action-label | t-case-upper t-font-accent t-scale-eta t-weight-bold">
+					See more
+				</span>
+				<span class="action-icon | margin-left-xnarrow">
+					<Icon
+						svg={arrowDotted}
+						size="xlarge"
+						class="no-margin-top"
+					/>
+				</span>
+			</a>
+		</Wrapper>
+	</header>
+	<slot></slot>
 </article>

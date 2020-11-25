@@ -3,6 +3,7 @@ const path = require('path')
 const yaml = require('js-yaml')
 const imageHelpers = require('../src/utils/imageHelpers.js')
 
+// Output format
 // [
 // 	{
 // 	  "original": "/path/to/big/original/image.jpg",
@@ -112,9 +113,14 @@ function getAboutImages (file) {
 function getHomeImages (file) {
 	const data = getFile(file)
 
-	return [
-		(data.cover && { original: data.cover.image })
-	]
+	return (data.tableOfContents.reduce((result, section) => {
+		if (section.content.images) {
+			result = [...result, ...section.content.images.map((image) => {
+				return { original: image }
+			})]
+		}
+		return result
+	}, []))
 }
 
 async function resizeAndGenerateManifest (images) {
