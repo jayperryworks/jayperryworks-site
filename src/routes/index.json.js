@@ -5,32 +5,30 @@ import generateWritingList from '@/utils/generateWritingList.js'
 import { findInManifest } from '@/utils/imageHelpers.js'
 
 export function get(req, res) {
-  let data = yaml.safeLoad(
-    fs.readFileSync('content/home.yml', 'utf-8')
-  )
+	let data = yaml.safeLoad(
+		fs.readFileSync('content/home.yml', 'utf-8')
+	)
 
-  data.tableOfContents.forEach((item) => {
-    if (item.content) {
-      if (item.content.type == 'image') {
-      	item.content.images = item.content.images.map((image) => {
-      		return findInManifest(image)
-      	})
-      }
+	data.tableOfContents.forEach((item) => {
+		if (item.content) {
+			if (item.content.type == 'image') {
+				item.content.image = findInManifest(item.content.image)
+			}
 
-      if (item.content.type == 'list') {
-      	item.content.posts = generateWritingList('content/writing', {
-						start: 0,
-						end: item.content.length
-					})
-      }
-    }
+			if (item.content.type == 'list') {
+				item.content.posts = generateWritingList('content/writing', {
+					start: 0,
+					end: item.content.length
+				})
+			}
+		}
 
-    return item
-  })
+		return item
+	})
 
-  res.writeHead(200, {
-    'Content-type': 'application/json'
-  })
+	res.writeHead(200, {
+		'Content-type': 'application/json'
+	})
 
-  res.end(JSON.stringify(data))
+	res.end(JSON.stringify(data))
 }

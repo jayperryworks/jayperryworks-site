@@ -51,7 +51,7 @@
 	const cycleFavorites = setInterval(randomFavorites, 5000)
 	onDestroy(() => clearInterval(cycleFavorites))
 
-	function date(date, template = 'MM/dd') {
+	function date(date, template = 'MM.dd') {
 		return format(new Date(date.year, date.month, date.day), template)
 	}
 </script>
@@ -114,23 +114,31 @@
 		{#each content.tableOfContents as item, i}
 			<TocPanel number="0{i + 1}" link={item.link} heading={item.heading}>
 				{#if item.content.type == 'image'}
-					{#each item.content.images as image}
-						<Wrapper width="xwide" centered flex class="display-flex display-flex-column display-flex-fill">
-							<a
-								class="display-flex-fill | t-link-undecorated"
-								href={item.link}
-							>
-								<ResponsivePicture
-									sources={image.versions}
-									alt={item.heading}
-									fill
-								/>
-							</a>
-						</Wrapper>
-					{/each}
+					<Wrapper
+						class="display-flex display-flex-column display-flex-fill"
+						width="xwide"
+						centered
+						flex
+					>
+						<a
+							class="display-flex-fill | t-link-undecorated"
+							href={item.link}
+						>
+							<ResponsivePicture
+								sources={item.content.image.versions}
+								alt={item.heading}
+								fill
+							/>
+						</a>
+					</Wrapper>
 				{/if}
 				{#if item.content.type == 'list'}
-					<Wrapper width="xwide" centered flex class="display-flex-fill display-flex display-flex-column display-flex-justify-center">
+					<Wrapper
+						class="display-flex-fill display-flex display-flex-column display-flex-justify-center"
+						width="xwide"
+						centered
+						flex
+					>
 						<Wrapper width="wide" centered={false}>
 							<Gallery gutter="xwide" style="--min-width: 300px;">
 								{#each item.content.posts as post}

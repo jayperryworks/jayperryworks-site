@@ -41,8 +41,7 @@ tableOfContents:
     link: pictures
     content:
       type: image
-      images:
-        - /images/uploads/work-2016-shoes.jpg
+      image: /images/uploads/work-2016-shoes.jpg
   - heading: Blog
     link: writing/page/1
     content:
