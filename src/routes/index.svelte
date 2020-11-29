@@ -68,7 +68,7 @@
 	}
 
 	.intro {
-		min-height: 70vh;
+		min-height: 80vh;
 	}
 </style>
 
@@ -149,6 +149,11 @@
 										<h4 class="t-scale-gamma">
 											<a href="{post.path}">{post.title}</a>
 										</h4>
+										{#if post.subtitle}
+											<p class="t-heading t-scale-delta t-font-accent | c-fg-tertiary | padding-top-xxnarrow">
+												<a href={post.path}>{post.subtitle}</a>
+											</p>
+										{/if}
 									</li>
 								{/each}
 							</Gallery>
