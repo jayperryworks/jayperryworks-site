@@ -18,7 +18,7 @@
 	import arrow from 'icons/arrow-right.svg'
 	import Button from '@/components/Button.svelte'
 	import Card from '@/components/HomeTOCCard.svelte'
-	import Cover from '@/components/Cover.svelte'
+	import ResponsivePicture from '@/components/ResponsivePicture.svelte'
 	import Gallery from '@/components/Gallery.svelte'
 	import Icon from '@/components/Icon.svelte'
 	import MainNav from '@/components/MainNav.svelte'
@@ -80,7 +80,7 @@
 	<section class="intro | display-flex display-flex-column display-flex-justify-center | padding-top-xwide">
 
 		<!-- intro -->
-		<div class="padding-x-outside">
+		<div class="padding-x-outside padding-y-wide">
 			<Wrapper width="xwide">
 				<Wrapper centered={false}>
 					<h1 class="t-scale-beta">{content.intro}</h1>
@@ -115,33 +115,35 @@
 			<TocPanel number="0{i + 1}" link={item.link} heading={item.heading}>
 				{#if item.content.type == 'image'}
 					{#each item.content.images as image}
-						<Wrapper width="xwide" class="display-flex display-flex-column display-flex-fill">
-							<Cover
-								height="fill"
-								sources={image}
-								alt="Prints &amp; paintings"
+						<Wrapper width="xwide" centered flex class="display-flex-fill">
+							<ResponsivePicture
+								sources={image.versions}
+								alt={item.heading}
+								fill
 							/>
 						</Wrapper>
 					{/each}
 				{/if}
 				{#if item.content.type == 'list'}
-					<div class="display-flex-fill display-flex display-flex-column display-flex-justify-center">
-						<Gallery gutter="wide">
-							{#each item.content.posts as post}
-								<li>
-									<time
-										class="c-fg-tertiary | display-block | padding-bottom-xnarrow | t-font-accent t-scale-eta"
-										datetime={date(post.date, 'yyyy-M-dd')}
-									>
-										{date(post.date)}
-									</time>
-									<h4 class="t-scale-gamma">
-										<a href="{post.path}">{post.title}</a>
-									</h4>
-								</li>
-							{/each}
-						</Gallery>
-					</div>
+					<Wrapper width="xwide" centered flex class="display-flex-fill display-flex display-flex-column display-flex-justify-center">
+						<Wrapper width="wide" centered={false}>
+							<Gallery gutter="wide">
+								{#each item.content.posts as post}
+									<li>
+										<time
+											class="c-fg-tertiary | display-block | padding-bottom-xnarrow | t-font-accent t-scale-eta"
+											datetime={date(post.date, 'yyyy-M-dd')}
+										>
+											{date(post.date)}
+										</time>
+										<h4 class="t-scale-gamma">
+											<a href="{post.path}">{post.title}</a>
+										</h4>
+									</li>
+								{/each}
+							</Gallery>
+						</Wrapper>
+					</Wrapper>
 				{/if}
 			</TocPanel>
 		{/each}

@@ -18,19 +18,20 @@
 		alt = '',
 		border = false,
 		contain = false,
-		cover = false
+		cover = false,
+		fill = false
 
 	$: borderClass = border ? 'border border-solid' : ''
 
 	let classes = ''
 	export { classes as class }
 
+	// Get the default (smallest) version
 	$: defaultFormat = sources.find(source => source.default)
 	$: defaultSrc = defaultFormat.sizes[0].path
 
-	function enhancedFormat (sources) {
-		return sources.filter(source => !source.default)
-	}
+	// Get the enhanced (larger) versions
+	$:enhancedFormat = sources.filter(source => !source.default)
 
 	// generate a srcset string
 	function srcset (sizes) {
@@ -46,6 +47,7 @@
 	picture {
 		display: inline-block;
 		max-width: 100%;
+		max-height: 100%;
 		overflow: hidden;
 	}
 
@@ -62,12 +64,24 @@
 	.cover {
 		object-fit: cover;
 	}
+
+	.fill {
+		@supports (object-fit: scale-down) {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+		}
+	}
 </style>
 
 <picture
 	class="{borderClass} {classes}"
 >
-	{#each enhancedFormat(sources) as source}
+	{#each enhancedFormat as source}
 		<source
 			srcset="{srcset(source.sizes)}"
 			type="image/{source.format}"
@@ -79,5 +93,6 @@
 		{alt}
 		class:contain
 		class:cover
+		class:fill
 	>
 </picture>

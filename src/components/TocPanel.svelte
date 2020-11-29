@@ -14,7 +14,7 @@
 
 <style type="text/scss">
 	article {
-		min-height: 80vh;
+		min-height: 100vh;
 	}
 
 	.action-label,
