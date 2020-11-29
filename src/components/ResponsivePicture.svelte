@@ -66,6 +66,8 @@
 	}
 
 	.fill {
+		// only do this if object-fit is supported,
+		// so image doesn't get oddly cropped
 		@supports (object-fit: scale-down) {
 			position: absolute;
 			top: 0;

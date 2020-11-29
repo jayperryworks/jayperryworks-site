@@ -2,6 +2,8 @@
   export let size = '',
     gutter = 'xnarrow',
     flex = false
+
+  export let style = ''
 </script>
 
 <style type="text/scss">
@@ -108,7 +110,7 @@
 <ul
   class="gallery {size}"
   class:flex
-  style="--gutter: var(--space-{gutter})"
+  style="--gutter: var(--space-{gutter}); {style}"
 >
   <slot {size}>Add list items here</slot>
 </ul>

@@ -31,9 +31,12 @@
 <article class="border-seam-top | padding-y-xwide padding-x-outside | display-flex display-flex-column | {classes}">
 	<header class="padding-bottom-wide">
 		<Wrapper width="xwide">
-			<p class="t-scale-gamma t-font-accent | c-fg-tertiary | padding-bottom-narrow">
+			<a
+				class="display-block | t-scale-gamma t-font-accent t-link-undecorated | c-fg-tertiary | padding-bottom-narrow"
+				href={link}
+			>
 				{number}
-			</p>
+			</a>
 			<h2 class="padding-bottom-wide | t-scale-alpha">
 				<a href={link}>{heading}</a>
 			</h2>

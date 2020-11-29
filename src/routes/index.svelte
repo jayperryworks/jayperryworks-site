@@ -115,26 +115,36 @@
 			<TocPanel number="0{i + 1}" link={item.link} heading={item.heading}>
 				{#if item.content.type == 'image'}
 					{#each item.content.images as image}
-						<Wrapper width="xwide" centered flex class="display-flex-fill">
-							<ResponsivePicture
-								sources={image.versions}
-								alt={item.heading}
-								fill
-							/>
+						<Wrapper width="xwide" centered flex class="display-flex display-flex-column display-flex-fill">
+							<a
+								class="display-flex-fill | t-link-undecorated"
+								href={item.link}
+							>
+								<ResponsivePicture
+									sources={image.versions}
+									alt={item.heading}
+									fill
+								/>
+							</a>
 						</Wrapper>
 					{/each}
 				{/if}
 				{#if item.content.type == 'list'}
 					<Wrapper width="xwide" centered flex class="display-flex-fill display-flex display-flex-column display-flex-justify-center">
 						<Wrapper width="wide" centered={false}>
-							<Gallery gutter="wide">
+							<Gallery gutter="xwide" style="--min-width: 300px;">
 								{#each item.content.posts as post}
 									<li>
 										<time
 											class="c-fg-tertiary | display-block | padding-bottom-xnarrow | t-font-accent t-scale-eta"
 											datetime={date(post.date, 'yyyy-M-dd')}
 										>
-											{date(post.date)}
+											<a
+												class="t-link-undecorated"
+												href={post.path}
+											>
+												{date(post.date)}
+											</a>
 										</time>
 										<h4 class="t-scale-gamma">
 											<a href="{post.path}">{post.title}</a>
