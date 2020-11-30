@@ -28,5 +28,8 @@ collections:
     sourceTemplate: :year-:month-:day-:slug
     pathTemplate: blog/:year/:month/:day/:slug
     redirect:
-      before: 2019
-      oldPath: writing/:year/:month/:slug
+      - before: 2019
+        oldPath: writing/:year/:month/:slug
+      - before: 2020
+        after: 2019
+        oldPath: writing/:year/:month/:day/:slug
