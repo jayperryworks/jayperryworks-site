@@ -1,7 +1,7 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
 import render from '../utils/renderMarkdown.js'
-import generateWritingList from '@/utils/generateWritingList.js'
+import generateBlogList from '@/utils/generateBlogList.js'
 import { findInManifest } from '@/utils/imageHelpers.js'
 
 export function get(req, res) {
@@ -16,7 +16,7 @@ export function get(req, res) {
 			}
 
 			if (item.content.type == 'list') {
-				item.content.posts = generateWritingList('content/writing', {
+				item.content.posts = generateBlogList('content/blog', {
 					start: 0,
 					end: item.content.length
 				})

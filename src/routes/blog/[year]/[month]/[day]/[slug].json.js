@@ -12,7 +12,7 @@ export function get(req, res, next) {
 
 	let data = yaml.safeLoad(
 		fs.readFileSync(
-			`content/writing/${year}-${month}-${day}-${slug}.yml`,
+			`content/blog/${year}-${month}-${day}-${slug}.yml`,
 			'utf-8'
 		)
 	)

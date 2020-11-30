@@ -6,7 +6,7 @@ const renderMarkdown = require('./renderMarkdown.js')
 const renderPostBody = require('./renderPostBody.js')
 const siteData = require('./siteData.js')
 
-const writingConfig = siteData.collection('writing')
+const blogConfig = siteData.collection('blog')
 
 module.exports = (
   dir,
@@ -32,7 +32,7 @@ module.exports = (
     // skip system dotfiles
     if (filename[0] === '.') return result
 
-    const metadata = permalink.fileMetadata(filename, writingConfig.sourceTemplate)
+    const metadata = permalink.fileMetadata(filename, blogConfig.sourceTemplate)
 
     const data = yaml.safeLoad(
       fs.readFileSync(`${dir}/${filename}.yml`, 'utf-8')
@@ -78,8 +78,8 @@ module.exports = (
         day: Number(metadata.day)
       },
       slug: metadata.slug,
-      collection: writingConfig.name,
-      path: permalink.createPath(filename, writingConfig.sourceTemplate, writingConfig.pathTemplate),
+      collection: blogConfig.name,
+      path: permalink.createPath(filename, blogConfig.sourceTemplate, blogConfig.pathTemplate),
       readMore: hasExcerpt,
       excerpt: hasExcerpt
         ? renderPostBody(excerpt)

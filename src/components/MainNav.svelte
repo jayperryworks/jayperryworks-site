@@ -20,8 +20,8 @@
       prefetch: true
     },
     {
-      label: 'Writing',
-      url: 'writing',
+      label: 'Blog',
+      url: 'blog',
       priority: 2,
       prefetch: true
     },

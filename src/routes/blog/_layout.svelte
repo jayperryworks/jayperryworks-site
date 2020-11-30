@@ -2,7 +2,7 @@
   import MainNav from '@/components/MainNav.svelte'
 </script>
 
-<MainNav segment="writing" />
+<MainNav segment="blog" />
 <main>
   <slot></slot>
 </main>

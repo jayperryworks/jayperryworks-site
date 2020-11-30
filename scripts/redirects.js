@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
 const generatePictureList = require('../src/utils/generatePictureList.js')
-const generateWritingList = require('../src/utils/generateWritingList.js')
+const generateBlogList = require('../src/utils/generateBlogList.js')
 const siteData = require('../src/utils/siteData.js')
 const permalink = require('../src/utils/permalink.js')
 
@@ -35,8 +35,8 @@ function render(list) {
 fs.writeFileSync(
   path.join(__dirname, '../static/_redirects'),
   render([
-    ...generateWritingList(
-      path.join(__dirname, '../content/writing')
+    ...generateBlogList(
+      path.join(__dirname, '../content/blog')
     )
   ])
 )
