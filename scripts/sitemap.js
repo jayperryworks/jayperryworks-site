@@ -2,9 +2,9 @@ const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
 const prettify = require('prettify-xml')
-const generatePictureList = require('../src/utils/generatePictureList')
-const generateWritingList = require('../src/utils/generateWritingList')
-const siteData = require('../src/utils/siteData')
+const generatePictureList = require('../src/utils/generatePictureList.js')
+const generateBlogList = require('../src/utils/generateBlogList.js')
+const siteData = require('../src/utils/siteData.js')
 
 async function render(pages, {
   change = 'yearly',
@@ -33,8 +33,8 @@ fs.writeFileSync(
     ...generatePictureList(
       path.join(__dirname, '../content/pictures')
     ),
-    ...generateWritingList(
-      path.join(__dirname, '../content/writing')
+    ...generateBlogList(
+      path.join(__dirname, '../content/blog')
     )
   ])
 )

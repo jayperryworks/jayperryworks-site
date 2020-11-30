@@ -1,7 +1,7 @@
 <script context="module">
 	export async function preload({ params, query }) {
 		const { number } = params
-		const response = await this.fetch(`writing/page/${number}.json`)
+		const response = await this.fetch(`blog/page/${number}.json`)
 		const data = await response.json()
 
 		return {
@@ -147,7 +147,7 @@
 			{#if prevPage > 0}
 				<a
 					class="t-link-undecorated t-scale-gamma t-heading"
-					href={`writing/page/${prevPage}`}
+					href={`blog/page/${prevPage}`}
 				>
 					<Icon
 						svg={arrowDottedLeft}
@@ -162,7 +162,7 @@
 			{#if nextPage <= total}
 				<a
 					class="t-link-undecorated t-scale-gamma t-heading"
-					href={`writing/page/${nextPage}`}
+					href={`blog/page/${nextPage}`}
 				>
 					<span class="pagination-label hide-below@small">Older posts</span>
 					<Icon

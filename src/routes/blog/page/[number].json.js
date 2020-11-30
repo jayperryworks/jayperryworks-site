@@ -1,14 +1,14 @@
 import fs from 'fs'
-import generateWritingList from '@/utils/generateWritingList.js'
+import generateBlogList from '@/utils/generateBlogList.js'
 import { findInManifest } from '@/utils/imageHelpers.js'
 
 export function get(req, res) {
 	const { number } = req.params
 	const postsPerPage = 10
-	const totalPosts = fs.readdirSync('content/writing').length
+	const totalPosts = fs.readdirSync('content/blog').length
 	const totalPages = Math.ceil(totalPosts / postsPerPage)
 
-	const posts = generateWritingList('content/writing', {
+	const posts = generateBlogList('content/blog', {
 			start: ((number - 1) * postsPerPage),
 			end: (number * postsPerPage)
 		})

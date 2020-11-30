@@ -40,7 +40,7 @@
   }
 </style>
 
-<footer class="border-seam-top-offset c-bg-well padding-x-outside">
+<footer class="border-seam-top padding-x-outside">
   <div class="overflow-hidden">
     <div class="border-bottom padding-y">
       <p class="c-fg-tertiary t-font-display t-scale-gamma">

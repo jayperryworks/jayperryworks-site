@@ -3,6 +3,7 @@ const path = require('path')
 const yaml = require('js-yaml')
 const imageHelpers = require('../src/utils/imageHelpers.js')
 
+// Output format
 // [
 // 	{
 // 	  "original": "/path/to/big/original/image.jpg",
@@ -71,7 +72,7 @@ function getPictureImages (dir) {
 	}, [])
 }
 
-function getWritingImages (dir) {
+function getBlogImages (dir) {
 	return getDir(dir).reduce((result, data) => {
 		let images = []
 		// cover image
@@ -94,7 +95,7 @@ function getWritingImages (dir) {
 
 function getAboutImages (file) {
 	const data = getFile(file)
-	// same as writing images, but optimize all of them
+	// same as blog images, but optimize all of them
 	return [
 		(data.cover && data.cover.image),
 		...data.body.reduce((result, block) => {
@@ -112,9 +113,14 @@ function getAboutImages (file) {
 function getHomeImages (file) {
 	const data = getFile(file)
 
-	return [
-		(data.cover && { original: data.cover.image })
-	]
+	return (data.tableOfContents.reduce((result, section) => {
+		if (section.content.images) {
+			result = [...result, ...section.content.images.map((image) => {
+				return { original: image }
+			})]
+		}
+		return result
+	}, []))
 }
 
 async function resizeAndGenerateManifest (images) {
@@ -133,7 +139,7 @@ async function resizeAndGenerateManifest (images) {
 }
 
 resizeAndGenerateManifest([
-	...getWritingImages('../content/writing'),
+	...getBlogImages('../content/blog'),
 	...getPictureImages('../content/pictures'),
 	...getAboutImages('../content/about.yml'),
 	...getHomeImages('../content/home.yml')

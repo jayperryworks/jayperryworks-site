@@ -37,12 +37,32 @@
   }
 }
 
+// .display-flex-align-center {
+// 	@supports (display: flex) {
+// 		align-items: center;
+// 	}
+// }
+
 .display-flex-justify {
-  justify-content: space-between;
+	@supports (display: flex) {
+	  justify-content: space-between;
+	}
+}
+
+.display-flex-justify-center {
+	@supports (display: flex) {
+		justify-content: center;
+	}
 }
 
 .display-flex-fill {
-  flex: 1;
+	@supports (display: flex) {
+	  flex: 1;
+	}
+}
+
+.display-flex-bottom {
+	margin-top: auto;
 }
 
 // --- Positioning utils ---

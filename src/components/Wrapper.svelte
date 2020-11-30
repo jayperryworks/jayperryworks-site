@@ -9,6 +9,7 @@
 <script>
   export let width = 'default'
   export let centered = true
+  export let flex = false
 
   let classes = ''
   export { classes as class }
@@ -18,13 +19,24 @@
   @use "config/layout_width";
 
   .wrapper {
-    display: block;
     position: relative;
+  }
+
+  .flex {
+  	width: 100%;
   }
 
   .centered {
     margin-left: auto;
     margin-right: auto;
+
+    .flex {
+    	@supports (display: flex) and (align-self: center) {
+    		align-self: center;
+    		margin-left: 0;
+    		margin-right: 0;
+    	}
+    }
   }
 
   @each $name, $w in layout_width.$list {
@@ -37,6 +49,7 @@
 <div
   class="wrapper {width} {classes}"
   class:centered
+  class:flex
 >
   <slot />
 </div>

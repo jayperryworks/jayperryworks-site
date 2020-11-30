@@ -1,10 +1,6 @@
 title: Home
 date: 2019-12-16
 
-cover:
-  image: /images/uploads/home-cover-01.jpg
-  alt: Cover image
-
 # markdown allowed here
 intro: My name is Jay and I'm a designer, illustrator, and writer living near Baltimore.
 
@@ -43,9 +39,11 @@ favoriteThings:
 tableOfContents:
   - heading: Prints & paintings
     link: pictures
-    description: >-
-      Pictures I've painted and sketched and composited and imagined.
-  - heading: Writing
+    content:
+      type: image
+      image: /images/uploads/work-2016-shoes.jpg
+  - heading: Blog
     link: writing/page/1
-    description: >-
-      Thoughts on, well, anything that strikes me.
+    content:
+      type: list
+      length: 6
