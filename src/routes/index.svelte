@@ -18,38 +18,49 @@
 	import arrow from 'icons/arrow-right.svg'
 	import Button from '@/components/Button.svelte'
 	import Card from '@/components/HomeTOCCard.svelte'
-	import ResponsivePicture from '@/components/ResponsivePicture.svelte'
+	import FavoriteThings from '@/components/FavoriteThings.svelte'
 	import Gallery from '@/components/Gallery.svelte'
 	import Icon from '@/components/Icon.svelte'
 	import MainNav from '@/components/MainNav.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
+	import ResponsivePicture from '@/components/ResponsivePicture.svelte'
 	import TocPanel from '@/components/TocPanel.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
 	export let content
 
 	// --- "Favorite things" (I like ... ) rotating subheading ---
-	let favoriteThings = []
+	let currentFavoriteThings = 0
 
-	function randomFavorites () {
-		favoriteThings = Object.keys(content.favoriteThings).map((type) => {
-			const list = content.favoriteThings[type]
-			return list[Math.floor(Math.random() * list.length)]
-		})
+	function getFavoriteThings() {
+		currentFavoriteThings = currentFavoriteThings !== (content.favoriteThings.length - 1)
+			? currentFavoriteThings + 1
+			: 0
 	}
 
-	$: favoriteThingsSubhead = `I like ${
-		favoriteThings.map((thing, index) => {
-			if (index == (favoriteThings.length - 1)) {
-				return `and ${thing}`
-			}
-			return thing
-		}).join(', ')
-	}.`
+	$: favoriteWords = content.favoriteThings[currentFavoriteThings]
 
-	randomFavorites()
-	const cycleFavorites = setInterval(randomFavorites, 5000)
+	const cycleFavorites = setInterval(getFavoriteThings, 5000)
 	onDestroy(() => clearInterval(cycleFavorites))
+
+	// function randomFavorites () {
+	// 	favoriteThings = Object.keys(content.favoriteThings).map((type) => {
+	// 		const list = content.favoriteThings[type]
+	// 		return list[Math.floor(Math.random() * list.length)]
+	// 	})
+	// }
+
+	// $: favoriteThingsSubhead = `I like ${
+	// 	favoriteThings.map((thing, index) => {
+	// 		if (index == (favoriteThings.length - 1)) {
+	// 			return `and ${thing}`
+	// 		}
+	// 		return thing
+	// 	}).join(', ')
+	// }.`
+
+	// randomFavorites()
+	// const cycleFavorites = setInterval(randomFavorites, 5000)
 
 	function date(date, template = 'MM.dd') {
 		return format(new Date(date.year, date.month, date.day), template)
@@ -84,10 +95,8 @@
 			<Wrapper width="xwide">
 				<Wrapper centered={false}>
 					<h1 class="t-scale-beta">{content.intro}</h1>
-					{#if favoriteThings.length > 0}
-						<p class="c-fg-tertiary | margin-top-xnarrow | t-font-accent t-heading t-scale-gamma">
-							{favoriteThingsSubhead}
-						</p>
+					{#if content.favoriteThings.length > 0}
+						<FavoriteThings words={favoriteWords} />
 					{/if}
 					<Button
 						prefetch={true}

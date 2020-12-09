@@ -5,36 +5,39 @@ date: 2019-12-16
 intro: My name is Jay and I'm a designer, illustrator, and writer living near Baltimore.
 
 favoriteThings:
-  analog:
-    - ink
-    - fountain pens
-    - cotton paper
-    - rangefinders
-    - slide film
-    - watercolors
-    - bookbinding
-  digital:
-    - typography
-    - javascript
-    - modular scales
-    - CSS
-    - markup
-    - content modeling
-    - user experience
-    - colored pixels
-    - compositing
-    - design systems
-  inspiration:
-    - science fiction
-    - comics
-    - bicycles
-    - old rusty cars
-    - forests
-    - running
-    - mountains
-    - gardening
-    - geology
-    - history
+  - [ink, compositing, forests]
+  - [bookbinding, typography, comics]
+  - [fountain pens, javascript, geology]
+  # analog:
+  #   - ink
+  #   - fountain pens
+  #   - cotton paper
+  #   - rangefinders
+  #   - slide film
+  #   - watercolors
+  #   - bookbinding
+  # digital:
+  #   - typography
+  #   - javascript
+  #   - modular scales
+  #   - CSS
+  #   - markup
+  #   - content modeling
+  #   - user experience
+  #   - colored pixels
+  #   - compositing
+  #   - design systems
+  # inspiration:
+  #   - science fiction
+  #   - comics
+  #   - bicycles
+  #   - old rusty cars
+  #   - forests
+  #   - running
+  #   - mountains
+  #   - gardening
+  #   - geology
+  #   - history
 
 tableOfContents:
   - heading: Prints & paintings
