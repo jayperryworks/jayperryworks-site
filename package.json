@@ -19,7 +19,7 @@
 		},
 		"dependencies": {
 				"autoprefixer": "^9.7.6",
-				"axios": "^0.19.2",
+				"axios": "^0.21.1",
 				"bourbon": "^6.0.0",
 				"compression": "^1.7.1",
 				"date-fns": "^2.12.0",
