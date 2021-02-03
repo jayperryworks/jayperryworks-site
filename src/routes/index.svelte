@@ -29,39 +29,6 @@
 
 	export let content
 
-	// --- "Favorite things" (I like ... ) rotating subheading ---
-	let currentFavoriteThings = 0
-
-	function getFavoriteThings() {
-		currentFavoriteThings = currentFavoriteThings !== (content.favoriteThings.length - 1)
-			? currentFavoriteThings + 1
-			: 0
-	}
-
-	$: favoriteWords = content.favoriteThings[currentFavoriteThings]
-
-	const cycleFavorites = setInterval(getFavoriteThings, 5000)
-	onDestroy(() => clearInterval(cycleFavorites))
-
-	// function randomFavorites () {
-	// 	favoriteThings = Object.keys(content.favoriteThings).map((type) => {
-	// 		const list = content.favoriteThings[type]
-	// 		return list[Math.floor(Math.random() * list.length)]
-	// 	})
-	// }
-
-	// $: favoriteThingsSubhead = `I like ${
-	// 	favoriteThings.map((thing, index) => {
-	// 		if (index == (favoriteThings.length - 1)) {
-	// 			return `and ${thing}`
-	// 		}
-	// 		return thing
-	// 	}).join(', ')
-	// }.`
-
-	// randomFavorites()
-	// const cycleFavorites = setInterval(randomFavorites, 5000)
-
 	function date(date, template = 'MM.dd') {
 		return format(new Date(date.year, date.month, date.day), template)
 	}
@@ -96,7 +63,7 @@
 				<Wrapper centered={false}>
 					<h1 class="t-scale-beta">{content.intro}</h1>
 					{#if content.favoriteThings.length > 0}
-						<FavoriteThings words={favoriteWords} />
+						<FavoriteThings list={content.favoriteThings} />
 					{/if}
 					<Button
 						prefetch={true}

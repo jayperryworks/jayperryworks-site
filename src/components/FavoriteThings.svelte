@@ -1,63 +1,64 @@
 <script>
-	export let words = []
+	import { onDestroy } from 'svelte'
 
-	function addPunctuation(list) {
-		return list.reduce((result, word, index) => {
-			result.push(word)
-			if (index <= (list.length - 2)) {
-				result.push(',')
-			}
-			if (index === (list.length - 2)) {
-				result.push('and')
-			}
-			return result
-		}, [])
+	export let list = []
+	export let speed = 2000
+
+	let currentListIndex = 0
+
+	function updateFavoriteThings() {
+		if (currentListIndex === list.length - 1) {
+			currentListIndex = 0
+			return
+		}
+		currentListIndex++
 	}
 
-	// when currentWords does not match words, add them to .carousel
-	let currentWords = addPunctuation(words)
-	$: newWords = addPunctuation(words)
-	// when these two don't match, trigger a swap, and then set currentWords = newWords
-
-	$: swap = words !== currentWords
+	const cycleFavorites = setInterval(updateFavoriteThings, speed)
+	onDestroy(() => clearInterval(cycleFavorites))
 </script>
 
 <style>
-	p > * {
+	dt,
+	dd {
+		margin-left: 0;
 		display: inline-block;
-		position: relative;
-		line-height: 1;
-		vertical-align: baseline;
 	}
 
-	.carousel {
-		overflow: hidden;
+	dt + dd,
+	dd + dd {
+		margin-left: 0.2em;
 	}
 
-	.carousel + .carousel {
-		margin-left: 0.25em;
+	dd::after {
+		content: ', ';
+	}
+
+	dd:last-child::after {
+		content: '.';
+	}
+
+	dd:last-child::before {
+		content: ' and ';
+	}
+
+	.set {
+		display: none;
+		transition: all 0.25s ease-in-out;
 	}
 
 	.current {
-		top: 0;
-	}
-
-	.new {
-		display: none;
-	}
-
-	.swap > * {
-
+		display: block;
 	}
 </style>
 
-<p class="c-fg-tertiary | margin-top-xnarrow | t-font-accent t-heading t-scale-gamma">
-	<span>I like</span>
-	{#each currentWords as word, index}
-	<span class="carousel" class:swap>
-		<span class="current">{word}</span>
-		<span class="new">{newWords[index]}</span>
-	</span>
+<dl class="c-fg-tertiary | margin-top-xnarrow | t-font-accent t-heading t-scale-gamma | list-undecorated">
+	{#each list as set, index}
+		<div class="set" class:current={index === currentListIndex}>
+			<dt>I like</dt>
+			{#each set as word}
+				<dd>{word}</dd>
+			{/each}
+		</div>
 	{/each}
-	<span>.</span>
-</p>
+</dl>
