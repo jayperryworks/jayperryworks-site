@@ -50,8 +50,9 @@
 	import Wrapper from '@/components/Wrapper.svelte'
 
 	export let post, date, nav
-
 	let metadataBreakpoint = 'xsmall'
+
+	$: formattedDate = format(new Date(date.year, 0), 'yyyy')
 </script>
 
 <style>
@@ -86,9 +87,9 @@
 				</h1>
 				<time
 					class="border-left@{metadataBreakpoint} c-fg-tertiary display-inline-block margin-left-narrow padding-left-narrow t-font-accent t-scale-epsilon"
-					datetime="{format(new Date(date.year), 'yyyy')}"
+					datetime="{formattedDate}"
 				>
-					{format(new Date(date.year), 'yyyy')}
+					{formattedDate}
 				</time>
 				<p class="border-left c-fg-tertiary display-inline-block margin-left-narrow padding-left-narrow t-font-accent t-scale-epsilon">
 					{post.format}{#if post.width && post.height}&nbsp;&bull; {post.width}" x {post.height}"{/if}
