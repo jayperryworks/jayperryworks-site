@@ -7,40 +7,10 @@ intro: My name is Jay and I'm a designer, illustrator, and writer living near Ba
 favoriteThings:
   - [fountain pens, india ink, watercolors]
   - [bookbinding, typography, printmaking]
-  - [user experience, content modeling, design systems]
+  - [user experience, content modeling, design systems, test]
   - [forests, geology, history]
-  - [markup, CSS, javascript]
+  - [markup, CSS, javascript, test2]
   - [old rangefinders, slide film, silver prints]
-  # analog:
-  #   - ink
-  #   - fountain pens
-  #   - cotton paper
-  #   - rangefinders
-  #   - slide film
-  #   - watercolors
-  #   - bookbinding
-  # digital:
-  #   - typography
-  #   - javascript
-  #   - modular scales
-  #   - CSS
-  #   - markup
-  #   - content modeling
-  #   - user experience
-  #   - colored pixels
-  #   - compositing
-  #   - design systems
-  # inspiration:
-  #   - science fiction
-  #   - comics
-  #   - bicycles
-  #   - old rusty cars
-  #   - forests
-  #   - running
-  #   - mountains
-  #   - gardening
-  #   - geology
-  #   - history
 
 tableOfContents:
   - heading: Prints & paintings

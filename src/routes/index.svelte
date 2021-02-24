@@ -60,8 +60,8 @@
 		<!-- intro -->
 		<div class="padding-x-outside padding-y-wide">
 			<Wrapper width="xwide">
+				<h1 class="t-scale-alpha">{content.intro}</h1>
 				<Wrapper centered={false}>
-					<h1 class="t-scale-beta">{content.intro}</h1>
 					{#if content.favoriteThings.length > 0}
 						<FavoriteThings list={content.favoriteThings} />
 					{/if}
