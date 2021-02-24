@@ -2,7 +2,7 @@
 	import { onDestroy } from 'svelte'
 
 	export let list = []
-	export let speed = 2000
+	export let speed = 4000
 
 	let currentListIndex = 0
 	$ : previousListIndex = currentListIndex > 0 
@@ -24,12 +24,15 @@
 <style>
 	dl {
 		font-size: 0;
+		position: relative;
+		height: 2.5rem;
 	}
 
 	dt,
 	dd {
 		margin-left: 0;
 		display: inline-block;
+		position: relative;
 	}
 
 	dt + dd,
@@ -38,7 +41,6 @@
 	}
 
 	dd {
-		position: relative;
 		opacity: 0;
 	}
 
@@ -57,22 +59,23 @@
 	.set {
 		--delay: 0.25s;
 		--duration: 0.25s;
-		transition: visibility 0 ease-in-out 2s;
-		position: relative;
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 2.5rem;
 		overflow: hidden;
+	}
+
+	.set:not(:first-child) > dt {
 		visibility: hidden;
 	}
 
 	.set > dd {
 		transition: 
-			opacity var(--duration) ease-in-out var(--delay, 0), 
-			top var(--duration) ease-in-out var(--delay, 0);
-		top: 2em;
+			opacity var(--duration) ease var(--delay, 0), 
+			top var(--duration) ease var(--delay, 0);
+		top: 2.5rem;
 		opacity: 0;
-	}
-
-	.current {
-		visibility: visible;
 	}
 
 	.current > dd {
@@ -81,7 +84,7 @@
 	}
 
 	.previous > dd {
-		top: -2em;
+		top: -2.5rem;
 	}
 </style>
 
