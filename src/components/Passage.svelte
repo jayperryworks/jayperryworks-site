@@ -6,6 +6,10 @@
   export { classes as class }
 </script>
 
+<div class="t-content {classes}" class:lead>
+  {@html html}
+</div>
+
 <style type="text/scss">
   @use "config/border";
   @use "config/color";
@@ -109,7 +113,3 @@
     }
   }
 </style>
-
-<div class="t-content {classes}" class:lead>
-  {@html html}
-</div>

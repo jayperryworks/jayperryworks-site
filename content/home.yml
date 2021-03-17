@@ -2,24 +2,30 @@ title: Home
 date: 2019-12-16
 
 # markdown allowed here
-intro: My name is Jay and I'm a designer, illustrator, and writer living near Baltimore.
-
-favoriteThings:
-  - [fountain pens, india ink, watercolors]
-  - [bookbinding, typography, printmaking]
-  - [user experience, content modeling, design systems, test]
-  - [forests, geology, history]
-  - [markup, CSS, javascript, test2]
-  - [old rangefinders, slide film, silver prints]
+intro: 
+  headline: I'm an independent designer, illustrator, and&nbsp;writer living near Baltimore.
+  blurb: |-
+    I do a bunch of different things and probably have too many preoccupations. But all my work boils down to roughly the same thing: putting bits and pieces together to tell a story &mdash; that is, a structure that takes you from one place to another. With, ideally, some good views along the way.
+  cta:
+    label: A bit more about me, with pictures
+    link: about
 
 tableOfContents:
-  - heading: Prints & paintings
-    link: pictures
-    content:
-      type: image
-      image: /images/uploads/work-2016-shoes.jpg
-  - heading: Blog
-    link: writing/page/1
-    content:
-      type: list
+  pictures:
+    heading: Prints & paintings
+    blurb: |-
+      I make pictures. Often more slowly than I'd like. Putting pencil to paper — dragging it around and leaving a mark behind — is a simple act that, in theory, precludes thought. But instead it stirs up endless anxieties and joys and fixations in me and this is probably why I can’t work faster. Nonetheless, leaving one mark always makes me want to leave another.
+
+      And so: on to the next one.
+    coverImage: /images/uploads/work-2016-shoes.jpg
+    cta:
+      label: Behold my gallery of pixels
+      link: pictures
+  blog:
+    heading: Blog
+    list:
+      source: content/blog
       length: 6
+    cta:
+      label: Read more posts
+      link: writing/page/1

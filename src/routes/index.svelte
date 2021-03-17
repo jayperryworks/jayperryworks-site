@@ -34,22 +34,6 @@
 	}
 </script>
 
-<style type="text/scss">
-	.home {
-		display: block;
-
-		@supports (display: flex) {
-			display: flex;
-			flex-direction: column;
-			flex: 1;
-		}
-	}
-
-	.intro {
-		min-height: 80vh;
-	}
-</style>
-
 <PageTitle />
 
 <MainNav overlay />
@@ -60,20 +44,23 @@
 		<!-- intro -->
 		<div class="padding-x-outside padding-y-wide">
 			<Wrapper width="xwide">
-				<h1 class="t-scale-alpha">{content.intro}</h1>
-				<Wrapper centered={false}>
-					{#if content.favoriteThings.length > 0}
-						<FavoriteThings list={content.favoriteThings} />
-					{/if}
-					<Button
-						prefetch={true}
-						href="about"
-						iconRight={arrow}
-						class="margin-top"
-					>
-						A bit more about me
-					</Button>
+				<Wrapper width="wide" centered={false}>
+					<h1 class="t-scale-alpha">{@html content.intro.headline}</h1>
 				</Wrapper>
+				<Wrapper 
+					class="t-scale-delta t-heading t-leading-default | padding-top"
+					centered={false}
+				>
+					{@html content.intro.blurb}
+				</Wrapper>
+				<Button
+					prefetch={true}
+					href={content.intro.cta.link}
+					iconRight={arrow}
+					class="margin-top-wide"
+				>
+					{content.intro.cta.label}
+				</Button>
 			</Wrapper>
 		</div>
 	</section>
@@ -87,64 +74,93 @@
 				</h2>
 			</Wrapper>
 		</header>
-		{#each content.tableOfContents as item, i}
-			<TocPanel number="0{i + 1}" link={item.link} heading={item.heading}>
-				{#if item.content.type == 'image'}
-					<Wrapper
-						class="display-flex display-flex-column display-flex-fill"
-						width="xwide"
-						centered
-						flex
-					>
-						<a
-							class="display-flex-fill | t-link-undecorated"
-							href={item.link}
-						>
-							<ResponsivePicture
-								sources={item.content.image.versions}
-								alt={item.heading}
-								fill
-							/>
-						</a>
-					</Wrapper>
-				{/if}
-				{#if item.content.type == 'list'}
-					<Wrapper
-						class="display-flex-fill display-flex display-flex-column display-flex-justify-center"
-						width="xwide"
-						centered
-						flex
-					>
-						<Wrapper width="wide" centered={false}>
-							<Gallery gutter="xwide" style="--min-width: 300px;">
-								{#each item.content.posts as post}
-									<li>
-										<time
-											class="c-fg-tertiary | display-block | padding-bottom-xnarrow | t-font-accent t-scale-eta"
-											datetime={date(post.date, 'yyyy-M-dd')}
-										>
-											<a
-												class="t-link-undecorated"
-												href={post.path}
-											>
-												{date(post.date)}
-											</a>
-										</time>
-										<h4 class="t-scale-gamma">
-											<a href="{post.path}">{post.title}</a>
-										</h4>
-										{#if post.subtitle}
-											<p class="t-heading t-scale-delta t-font-accent | c-fg-tertiary | padding-top-xxnarrow">
-												<a href={post.path}>{post.subtitle}</a>
-											</p>
-										{/if}
-									</li>
-								{/each}
-							</Gallery>
-						</Wrapper>
-					</Wrapper>
-				{/if}
-			</TocPanel>
-		{/each}
+
+		<!-- pictures -->
+		<TocPanel
+			number={1}
+			link={content.tableOfContents.pictures.cta.link}
+			heading={content.tableOfContents.pictures.heading}
+			cta={content.tableOfContents.pictures.cta}
+			intro={content.tableOfContents.pictures.blurb}
+		>
+			<Wrapper
+				class="display-flex display-flex-column display-flex-fill"
+				width="xwide"
+				centered
+				flex
+			>
+				<a
+					class="display-flex-fill | t-link-undecorated"
+					href={content.tableOfContents.pictures.cta.link}
+				>
+					<ResponsivePicture
+						sources={content.tableOfContents.pictures.coverImage.versions}
+						alt={content.tableOfContents.pictures.heading}
+						fill
+					/>
+				</a>
+			</Wrapper>
+		</TocPanel>
+
+		<!-- blog -->
+		<TocPanel
+			number={2}
+			link={content.tableOfContents.blog.cta.link}
+			heading={content.tableOfContents.blog.heading}
+			cta={content.tableOfContents.blog.cta}
+		>
+			<Wrapper
+				class="display-flex-fill display-flex display-flex-column display-flex-justify-center"
+				width="xwide"
+				centered
+				flex
+			>
+				<Wrapper width="wide" centered={false}>
+					<Gallery gutter="xwide" style="--min-width: 300px;">
+						{#each content.tableOfContents.blog.list.posts as post}
+							<li>
+								<time
+									class="c-fg-tertiary | display-block | padding-bottom-xnarrow | t-font-accent t-scale-eta"
+									datetime={date(post.date, 'yyyy-M-dd')}
+								>
+									<a
+										class="t-link-undecorated"
+										href={post.path}
+									>
+										{date(post.date)}
+									</a>
+								</time>
+								<h4 class="t-scale-gamma">
+									<a href="{post.path}">{post.title}</a>
+								</h4>
+								{#if post.subtitle}
+									<p class="t-heading t-scale-delta t-font-accent | c-fg-tertiary | padding-top-xxnarrow">
+										<a href={post.path}>{post.subtitle}</a>
+									</p>
+								{/if}
+							</li>
+						{/each}
+					</Gallery>
+				</Wrapper>
+			</Wrapper>
+		</TocPanel>
 	</section>
 </div>
+
+<style>
+	.home {
+		display: block;
+	}
+
+	@supports (display: flex) {
+		.home {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+		}
+	}
+
+	.intro {
+		min-height: 80vh;
+	}
+</style>
