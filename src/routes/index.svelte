@@ -95,11 +95,11 @@
 		number={1}
 	>
 		<Wrapper
-			class="display-flex-fill"
+			class="display-flex-fill display-flex display-flex-column"
 			width="xwide"
 			flex
 		>
-			<div class="flag">
+			<div class="flag display-flex-fill">
 				<div class="flag-item blurb">
 					<Wrapper centered={false} class="margin-y-between-wide">
 						
@@ -196,10 +196,6 @@
 		height: 50vh;
 	}
 
-	.flag {
-		display: block;
-	}
-
 	@supports (display: flex) {
 		.intro {
 			min-height: 100vh;
@@ -216,15 +212,18 @@
 			overflow: hidden;
 		}
 
-		.flag-item.blurb {
+		.flag-item {
 			display: flex;
 			flex-direction: column;
+		}
+
+		.flag-item.blurb {
 			flex: 0 1 50ch;
 		}
 
 		.flag-item.image {
-			justify-content: center;
 			flex: 1 1 600px;
+			justify-content: center;
 		}
 	}
 </style>
