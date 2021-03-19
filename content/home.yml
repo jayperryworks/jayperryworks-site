@@ -13,6 +13,7 @@ intro:
 tableOfContents:
   pictures:
     heading: Prints & paintings
+    slug: pictures
     blurb: |-
       I make pictures. Often more slowly than I'd like. Putting pencil to paper — dragging it around and leaving a mark behind — is a simple act that, in theory, precludes thought. But instead it stirs up endless anxieties and joys and fixations in me and this is probably why I can’t work faster. Nonetheless, leaving one mark always makes me want to leave another.
 
@@ -23,9 +24,10 @@ tableOfContents:
       link: pictures
   blog:
     heading: Blog
+    slug: blog
     list:
       source: content/blog
       length: 6
     cta:
       label: Read more posts
-      link: writing/page/1
+      link: blog/page/1

@@ -15,7 +15,9 @@
 <script>
 	import { onDestroy } from 'svelte'
 	import { format } from 'date-fns'
-	import arrow from 'icons/arrow-right.svg'
+	import arrowDown from 'icons/arrow-down.svg'
+	import arrowRight from 'icons/arrow-right.svg'
+	import Bookend from '@/components/Bookend.svelte'
 	import Button from '@/components/Button.svelte'
 	import Card from '@/components/HomeTOCCard.svelte'
 	import FavoriteThings from '@/components/FavoriteThings.svelte'
@@ -23,11 +25,15 @@
 	import Icon from '@/components/Icon.svelte'
 	import MainNav from '@/components/MainNav.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
+	import Passage from '@/components/Passage.svelte'
 	import ResponsivePicture from '@/components/ResponsivePicture.svelte'
 	import TocPanel from '@/components/TocPanel.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
 	export let content
+
+	let { intro } = content
+	let { pictures, blog } = content.tableOfContents
 
 	function date(date, template = 'MM.dd') {
 		return format(new Date(date.year, date.month, date.day), template)
@@ -38,129 +44,167 @@
 
 <MainNav overlay />
 
-<div class="home">
-	<section class="intro | display-flex display-flex-column display-flex-justify-center | padding-top-xwide">
+<main class="display-flex display-flex-column display-flex-fill">
 
-		<!-- intro -->
-		<div class="padding-x-outside padding-y-wide">
-			<Wrapper width="xwide">
+	<!-- intro -->
+	<section class="intro | display-flex display-flex-column display-flex-fill | padding-top-xwide padding-x-outside">
+		<Wrapper
+			class="display-flex display-flex-column display-flex-fill | padding-top-wide"
+			width="xwide"
+			flex
+		>
+			<div class="display-flex display-flex-column display-flex-fill display-flex-justify-center display-flex-align-start | padding-bottom-xwide">
 				<Wrapper width="wide" centered={false}>
-					<h1 class="t-scale-alpha">{@html content.intro.headline}</h1>
+					<h1 class="t-scale-alpha">{@html intro.headline}</h1>
 				</Wrapper>
 				<Wrapper 
 					class="t-scale-delta t-heading t-leading-default | padding-top"
 					centered={false}
 				>
-					{@html content.intro.blurb}
+					{@html intro.blurb}
 				</Wrapper>
 				<Button
 					prefetch={true}
-					href={content.intro.cta.link}
-					iconRight={arrow}
+					href={intro.cta.link}
+					iconRight={arrowRight}
 					class="margin-top-wide"
 				>
-					{content.intro.cta.label}
+					{intro.cta.label}
 				</Button>
-			</Wrapper>
-		</div>
+			</div>
+			<nav class="toc-link | padding-bottom-narrow">
+				<a
+					class="t-link-undecorated t-case-upper t-font-accent t-scale-eta t-weight-bold"
+					href={`#${pictures.slug}`}
+				>
+					<Icon
+					  margin="right"
+					  svg={arrowDown}
+					/>
+					Table of contents
+				</a>
+			</nav>
+		</Wrapper>
 	</section>
 
 	<!-- TOC -->
-	<section>
-		<header class="padding-bottom padding-x-outside">
-			<Wrapper width="xwide">
-				<h2 class="t-case-upper t-font-accent t-scale-eta t-weight-bold">
-					Table of contents
-				</h2>
-			</Wrapper>
-		</header>
-
-		<!-- pictures -->
-		<TocPanel
-			number={1}
-			link={content.tableOfContents.pictures.cta.link}
-			heading={content.tableOfContents.pictures.heading}
-			cta={content.tableOfContents.pictures.cta}
-			intro={content.tableOfContents.pictures.blurb}
+	<!-- pictures -->
+	<TocPanel 
+		heading={pictures.heading}
+		id={pictures.slug}
+		link={pictures.cta.link}
+		number={1}
+	>
+		<Wrapper
+			class="display-flex-column display-flex-fill"
+			width="xwide"
+			flex
 		>
-			<Wrapper
-				class="display-flex display-flex-column display-flex-fill"
-				width="xwide"
-				centered
-				flex
+			<Wrapper centered={false} class="margin-y-between-wide">
+				
+				{#if pictures.blurb}
+					<Passage html={pictures.blurb}/>
+				{/if}
+				{#if pictures.cta}
+					<Button
+						prefetch={true}
+						href={pictures.cta.link}
+						iconRight={arrowRight}
+					>
+						{pictures.cta.label}
+					</Button>
+				{/if}
+			</Wrapper>
+			<a
+				class="cover-image | t-link-undecorated"
+				href={pictures.cta.link}
 			>
-				<a
-					class="display-flex-fill | t-link-undecorated"
-					href={content.tableOfContents.pictures.cta.link}
+				<ResponsivePicture
+					sources={pictures.coverImage.versions}
+					alt={pictures.heading}
+					fill
+				/>
+			</a>
+		</Wrapper>
+	</TocPanel>
+
+	<!-- blog -->
+	<TocPanel
+		number={2}
+		link={blog.cta.link}
+		heading={blog.heading}
+		id={blog.slug}
+	>
+		<Wrapper
+			class="display-flex-fill display-flex display-flex-column display-flex-justify-center"
+			width="wide"
+			flex
+		>
+			<Gallery gutter="xwide" style="--min-width: 300px;">
+				{#each blog.list.posts as post}
+					<li>
+						<time
+							class="c-fg-tertiary | display-block | padding-bottom-xnarrowRight | t-font-accent t-scale-eta"
+							datetime={date(post.date, 'yyyy-M-dd')}
+						>
+							<a
+								class="t-link-undecorated"
+								href={post.path}
+							>
+								{date(post.date)}
+							</a>
+						</time>
+						<h4 class="t-scale-gamma">
+							<a href="{post.path}">{post.title}</a>
+						</h4>
+						{#if post.subtitle}
+							<p class="t-heading t-scale-delta t-font-accent | c-fg-tertiary | padding-top-xxnarrowRight">
+								<a href={post.path}>{post.subtitle}</a>
+							</p>
+						{/if}
+					</li>
+				{/each}
+			</Gallery>
+		</Wrapper>
+		<div>
+			{#if blog.cta}
+				<Button
+					prefetch={true}
+					href={blog.cta.link}
+					iconRight={arrowRight}
 				>
-					<ResponsivePicture
-						sources={content.tableOfContents.pictures.coverImage.versions}
-						alt={content.tableOfContents.pictures.heading}
-						fill
-					/>
-				</a>
-			</Wrapper>
-		</TocPanel>
-
-		<!-- blog -->
-		<TocPanel
-			number={2}
-			link={content.tableOfContents.blog.cta.link}
-			heading={content.tableOfContents.blog.heading}
-			cta={content.tableOfContents.blog.cta}
-		>
-			<Wrapper
-				class="display-flex-fill display-flex display-flex-column display-flex-justify-center"
-				width="xwide"
-				centered
-				flex
-			>
-				<Wrapper width="wide" centered={false}>
-					<Gallery gutter="xwide" style="--min-width: 300px;">
-						{#each content.tableOfContents.blog.list.posts as post}
-							<li>
-								<time
-									class="c-fg-tertiary | display-block | padding-bottom-xnarrow | t-font-accent t-scale-eta"
-									datetime={date(post.date, 'yyyy-M-dd')}
-								>
-									<a
-										class="t-link-undecorated"
-										href={post.path}
-									>
-										{date(post.date)}
-									</a>
-								</time>
-								<h4 class="t-scale-gamma">
-									<a href="{post.path}">{post.title}</a>
-								</h4>
-								{#if post.subtitle}
-									<p class="t-heading t-scale-delta t-font-accent | c-fg-tertiary | padding-top-xxnarrow">
-										<a href={post.path}>{post.subtitle}</a>
-									</p>
-								{/if}
-							</li>
-						{/each}
-					</Gallery>
-				</Wrapper>
-			</Wrapper>
-		</TocPanel>
-	</section>
-</div>
+					{blog.cta.label}
+				</Button>
+			{/if}
+		</div>
+	</TocPanel>
+</main>
 
 <style>
-	.home {
-		display: block;
+	.toc-link {
+		display: none;
 	}
 
-	@supports (display: flex) {
-		.home {
-			display: flex;
-			flex-direction: column;
-			flex: 1;
+	.cover-image {
+		display: block;
+		position: relative;
+		height: 50vh;
+	}
+	
+	@media screen and (min-width: 100em) {
+		.cover-image {
+
 		}
 	}
 
-	.intro {
-		min-height: 80vh;
+	@supports (display: flex) {
+		.intro {
+			min-height: 100vh;
+		}
+
+		.toc-link {
+			display: block;
+			margin-top: auto;
+		}
 	}
 </style>
