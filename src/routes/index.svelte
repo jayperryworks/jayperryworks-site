@@ -95,37 +95,41 @@
 		number={1}
 	>
 		<Wrapper
-			class="display-flex-column display-flex-fill"
+			class="display-flex-fill"
 			width="xwide"
 			flex
 		>
-			<OutdentedBlurb>
-				<Wrapper centered={false} class="margin-y-between-wide">
-					
-					{#if pictures.blurb}
-						<Passage html={pictures.blurb}/>
-					{/if}
-					{#if pictures.cta}
-						<Button
-							prefetch={true}
-							href={pictures.cta.link}
-							iconRight={arrowRight}
-						>
-							{pictures.cta.label}
-						</Button>
-					{/if}
-				</Wrapper>
-				<a
-					class="cover-image | t-link-undecorated"
-					href={pictures.cta.link}
-				>
-					<ResponsivePicture
-						sources={pictures.coverImage.versions}
-						alt={pictures.heading}
-						fill
-					/>
-				</a>
-			</OutdentedBlurb>
+			<div class="flag">
+				<div class="flag-item blurb">
+					<Wrapper centered={false} class="margin-y-between-wide">
+						
+						{#if pictures.blurb}
+							<Passage html={pictures.blurb}/>
+						{/if}
+						{#if pictures.cta}
+							<Button
+								prefetch={true}
+								href={pictures.cta.link}
+								iconRight={arrowRight}
+							>
+								{pictures.cta.label}
+							</Button>
+						{/if}
+					</Wrapper>
+				</div>
+				<div class="flag-item image">
+					<a
+						class="cover-image | t-link-undecorated"
+						href={pictures.cta.link}
+					>
+						<ResponsivePicture
+							sources={pictures.coverImage.versions}
+							alt={pictures.heading}
+							fill
+						/>
+					</a>
+				</div>
+			</div>
 		</Wrapper>
 	</TocPanel>
 
@@ -191,11 +195,9 @@
 		position: relative;
 		height: 50vh;
 	}
-	
-	@media screen and (min-width: 100em) {
-		.cover-image {
 
-		}
+	.flag {
+		display: block;
 	}
 
 	@supports (display: flex) {
@@ -206,6 +208,23 @@
 		.toc-link {
 			display: block;
 			margin-top: auto;
+		}
+
+		.flag {
+			display: flex;
+			flex-wrap: wrap;
+			overflow: hidden;
+		}
+
+		.flag-item.blurb {
+			display: flex;
+			flex-direction: column;
+			flex: 0 1 50ch;
+		}
+
+		.flag-item.image {
+			justify-content: center;
+			flex: 1 1 600px;
 		}
 	}
 </style>
