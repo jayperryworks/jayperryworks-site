@@ -17,13 +17,11 @@
 	import { format } from 'date-fns'
 	import arrowDown from 'icons/arrow-down.svg'
 	import arrowRight from 'icons/arrow-right.svg'
-	import Bookend from '@/components/Bookend.svelte'
 	import Button from '@/components/Button.svelte'
-	import Card from '@/components/HomeTOCCard.svelte'
-	import FavoriteThings from '@/components/FavoriteThings.svelte'
 	import Gallery from '@/components/Gallery.svelte'
 	import Icon from '@/components/Icon.svelte'
 	import MainNav from '@/components/MainNav.svelte'
+	import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
 	import Passage from '@/components/Passage.svelte'
 	import ResponsivePicture from '@/components/ResponsivePicture.svelte'
@@ -72,6 +70,8 @@
 					{intro.cta.label}
 				</Button>
 			</div>
+
+			<!-- TOC -->
 			<nav class="toc-link | padding-bottom-narrow">
 				<a
 					class="t-link-undecorated t-case-upper t-font-accent t-scale-eta t-weight-bold"
@@ -87,7 +87,6 @@
 		</Wrapper>
 	</section>
 
-	<!-- TOC -->
 	<!-- pictures -->
 	<TocPanel 
 		heading={pictures.heading}
@@ -100,31 +99,33 @@
 			width="xwide"
 			flex
 		>
-			<Wrapper centered={false} class="margin-y-between-wide">
-				
-				{#if pictures.blurb}
-					<Passage html={pictures.blurb}/>
-				{/if}
-				{#if pictures.cta}
-					<Button
-						prefetch={true}
-						href={pictures.cta.link}
-						iconRight={arrowRight}
-					>
-						{pictures.cta.label}
-					</Button>
-				{/if}
-			</Wrapper>
-			<a
-				class="cover-image | t-link-undecorated"
-				href={pictures.cta.link}
-			>
-				<ResponsivePicture
-					sources={pictures.coverImage.versions}
-					alt={pictures.heading}
-					fill
-				/>
-			</a>
+			<OutdentedBlurb>
+				<Wrapper centered={false} class="margin-y-between-wide">
+					
+					{#if pictures.blurb}
+						<Passage html={pictures.blurb}/>
+					{/if}
+					{#if pictures.cta}
+						<Button
+							prefetch={true}
+							href={pictures.cta.link}
+							iconRight={arrowRight}
+						>
+							{pictures.cta.label}
+						</Button>
+					{/if}
+				</Wrapper>
+				<a
+					class="cover-image | t-link-undecorated"
+					href={pictures.cta.link}
+				>
+					<ResponsivePicture
+						sources={pictures.coverImage.versions}
+						alt={pictures.heading}
+						fill
+					/>
+				</a>
+			</OutdentedBlurb>
 		</Wrapper>
 	</TocPanel>
 

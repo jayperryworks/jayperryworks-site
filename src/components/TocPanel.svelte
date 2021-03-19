@@ -17,8 +17,10 @@
 </script>
 
 <style>
-	article {
-		min-height: 100vh;
+	@supports (display: flex) {
+		article {
+			min-height: 100vh;
+		}
 	}
 </style>
 

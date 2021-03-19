@@ -36,7 +36,7 @@
   }
 
   .t-content {
-    > * + * {
+    > :global(* + *) {
       margin-top: 1em;
     }
 
