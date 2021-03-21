@@ -8,6 +8,63 @@
   export let edition
 </script>
 
+<Card>
+
+  <!-- edition photo -->
+  <div slot="figure">
+    <FluidAspectImage
+      sources={edition.photo}
+      alt={titleize(edition.name)}
+      cover
+    />
+  </div>
+
+  <!-- edition info -->
+  <div
+    slot="content"
+    class="info-wrapper gutter-wrapper"
+  >
+    <div class="info gutter">
+
+      <!-- name -->
+      <h3 class="c-fg-tertiary padding-bottom-xnarrow">
+        <strong class="
+          c-fg-primary
+          t-font-display
+        ">{titleize(edition.name)}</strong> {titleize(edition.type)}&nbsp;Print
+      </h3>
+
+      <!-- metadata -->
+      <dl class="stats">
+        <div class="stats-group">
+          <dt class="stats-item stats-label">Type</dt>
+          <dd class="stats-item">{titleize(edition.type)}</dd>
+        </div>
+        <div class="stats-group">
+          <dt class="stats-item stats-label">Size</dt>
+          <dd class="stats-item">{edition.width}" x {edition.height}"</dd>
+        </div>
+        <div class="stats-group">
+          <dt class="stats-item stats-label">Paper size</dt>
+          <dd class="stats-item">{edition.width + (edition.border * 2)}" x {edition.height + (edition.border * 2)}"</dd>
+        </div>
+      </dl>
+    </div>
+
+    <!-- purchase button -->
+    <div class="gutter">
+      <Button
+        href={edition.url}
+        target="_blank"
+        size="small"
+        iconRight={arrow}
+      >
+        Buy on <strong>Etsy</strong>
+      </Button>
+    </div>
+  </div>
+</Card>
+
 <style type="text/scss">
   @use 'config/breakpoints';
   @use 'config/color';
@@ -73,60 +130,3 @@
     }
   }
 </style>
-
-<Card>
-
-  <!-- edition photo -->
-  <div slot="figure">
-    <FluidAspectImage
-      sources={edition.photo}
-      alt={titleize(edition.name)}
-      cover
-    />
-  </div>
-
-  <!-- edition info -->
-  <div
-    slot="content"
-    class="info-wrapper gutter-wrapper"
-  >
-    <div class="info gutter">
-
-      <!-- name -->
-      <h3 class="c-fg-tertiary padding-bottom-xnarrow">
-        <strong class="
-          c-fg-primary
-          t-font-display
-        ">{titleize(edition.name)}</strong> {titleize(edition.type)}&nbsp;Print
-      </h3>
-
-      <!-- metadata -->
-      <dl class="stats">
-        <div class="stats-group">
-          <dt class="stats-item stats-label">Type</dt>
-          <dd class="stats-item">{titleize(edition.type)}</dd>
-        </div>
-        <div class="stats-group">
-          <dt class="stats-item stats-label">Size</dt>
-          <dd class="stats-item">{edition.width}" x {edition.height}"</dd>
-        </div>
-        <div class="stats-group">
-          <dt class="stats-item stats-label">Paper size</dt>
-          <dd class="stats-item">{edition.width + edition.border}" x {edition.height + edition.border}"</dd>
-        </div>
-      </dl>
-    </div>
-
-    <!-- purchase button -->
-    <div class="gutter">
-      <Button
-        href={edition.url}
-        target="_blank"
-        size="small"
-        iconRight={arrow}
-      >
-        Buy on <strong>Etsy</strong>
-      </Button>
-    </div>
-  </div>
-</Card>
