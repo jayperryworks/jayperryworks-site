@@ -9,21 +9,17 @@ export function get(req, res) {
 		fs.readFileSync('content/home.yml', 'utf-8')
 	)
 
-	data.tableOfContents.forEach((item) => {
-		if (item.content) {
-			if (item.content.type == 'image') {
-				item.content.image = findInManifest(item.content.image)
-			}
+	// table of contents
+	const { pictures, blog } = data.tableOfContents
 
-			if (item.content.type == 'list') {
-				item.content.posts = generateBlogList('content/blog', {
-					start: 0,
-					end: item.content.length
-				})
-			}
-		}
+	// pictures
+	pictures.blurb = render(pictures.blurb)
+	pictures.coverImage = findInManifest(pictures.coverImage)
 
-		return item
+	// blog
+	blog.list.posts = generateBlogList(blog.list.source, {
+		start: 0,
+		end: blog.list.length
 	})
 
 	res.writeHead(200, {

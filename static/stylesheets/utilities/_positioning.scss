@@ -37,11 +37,17 @@
   }
 }
 
-// .display-flex-align-center {
-// 	@supports (display: flex) {
-// 		align-items: center;
-// 	}
-// }
+.display-flex-align-center {
+	@supports (display: flex) {
+		align-items: center;
+	}
+}
+
+.display-flex-align-start {
+  @supports (display: flex) {
+    align-items: flex-start;
+  }
+}
 
 .display-flex-justify {
 	@supports (display: flex) {
