@@ -102,12 +102,12 @@
 			<div class="flag display-flex-fill">
 				<div class="flag-item blurb">
 					<Wrapper
-						class="t-scale-delta t-heading t-leading-default | margin-y-between-wide"
+						class="margin-y-between-wide"
 						centered={false}
 					>
 						
 						{#if pictures.blurb}
-							<Passage html={pictures.blurb}/>
+							<Passage html={pictures.blurb} class="t-scale-delta t-heading t-leading-default"/>
 						{/if}
 						{#if pictures.cta}
 							<Button
