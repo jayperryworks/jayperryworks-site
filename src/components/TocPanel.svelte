@@ -1,60 +1,44 @@
 <script>
-	import arrowDotted from 'icons/arrow-dotted-right.svg'
-	import Icon from '@/components/Icon.svelte'
+	import arrow from 'icons/arrow-right.svg'
+	import Button from '@/components/Button.svelte'
+	import Passage from '@/components/Passage.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
 	export let link, // url the panel should point to
 		heading, // the title, e.g. "Blog"
+		id, // the id attribute for the container, e.g. "blog"
 		number // sequence number, e.g. 01
 
 	// append additional classes as needed
 	let classes = ''
 	export { classes as class }
+
+	$: formattedNumber = number.toString().padStart(2, 0)
 </script>
 
-<style type="text/scss">
-	article {
-		min-height: 100vh;
-	}
-
-	.action-label,
-	.action-icon {
-		vertical-align: middle;
-		display: inline-block;
-	}
-
-	.action-label {
-		margin-top: -1em;
+<style>
+	@supports (display: flex) {
+		article {
+			min-height: 100vh;
+		}
 	}
 </style>
 
-<article class="border-seam-top | padding-y-xwide padding-x-outside | display-flex display-flex-column | {classes}">
+<article 
+	class="border-seam-top | padding-y-xwide padding-x-outside | display-flex display-flex-column | {classes}"
+	id={id}
+>
 	<header class="padding-bottom-wide">
 		<Wrapper width="xwide">
 			<a
 				class="display-block | t-scale-gamma t-font-accent t-link-undecorated | c-fg-tertiary | padding-bottom-narrow"
 				href={link}
 			>
-				{number}
+				{formattedNumber}
 			</a>
-			<h2 class="padding-bottom-wide | t-scale-alpha">
+			<h2 class="t-scale-alpha">
 				<a href={link}>{heading}</a>
 			</h2>
-			<a
-				class="t-link-undecorated | display-inline-block"
-				href={link}
-			>
-				<span class="action-label | t-case-upper t-font-accent t-scale-eta t-weight-bold">
-					See more
-				</span>
-				<span class="action-icon | margin-left-xnarrow">
-					<Icon
-						svg={arrowDotted}
-						size="xlarge"
-						class="no-margin-top"
-					/>
-				</span>
-			</a>
 		</Wrapper>
 	</header>
 	<slot></slot>

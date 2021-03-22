@@ -16,6 +16,27 @@
     : ''
 </script>
 
+<div
+  class="bookend {horizontalClass} {classes}"
+  class:align-top={align === 'top'}
+  class:align-stretch={align === 'stretch'}
+>
+  <div
+    class="item left"
+    class:fill="{fillSide === 'left' || fillSide === 'both'}"
+    style={itemWidthStyle}
+  >
+    <slot name="left"></slot>
+  </div>
+  <div
+    class="item right"
+    class:fill="{fillSide === 'right' || fillSide === 'both'}"
+    style={itemWidthStyle}
+  >
+    <slot name="right"></slot>
+  </div>
+</div>
+
 <style type="text/scss">
   @use 'config/breakpoints';
   @use 'bourbon';
@@ -105,24 +126,3 @@
     }
   }
 </style>
-
-<div
-  class="bookend {horizontalClass} {classes}"
-  class:align-top={align === 'top'}
-  class:align-stretch={align === 'stretch'}
->
-  <div
-    class="item left"
-    class:fill="{fillSide === 'left' || fillSide === 'both'}"
-    style={itemWidthStyle}
-  >
-    <slot name="left"></slot>
-  </div>
-  <div
-    class="item right"
-    class:fill="{fillSide === 'right' || fillSide === 'both'}"
-    style={itemWidthStyle}
-  >
-    <slot name="right"></slot>
-  </div>
-</div>

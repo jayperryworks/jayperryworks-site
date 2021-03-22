@@ -112,15 +112,9 @@ function getAboutImages (file) {
 
 function getHomeImages (file) {
 	const data = getFile(file)
-
-	return (data.tableOfContents.reduce((result, section) => {
-		if (section.content.images) {
-			result = [...result, ...section.content.images.map((image) => {
-				return { original: image }
-			})]
-		}
-		return result
-	}, []))
+	return [{
+		original: data.tableOfContents.pictures.coverImage
+	}]
 }
 
 async function resizeAndGenerateManifest (images) {

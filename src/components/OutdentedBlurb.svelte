@@ -22,6 +22,26 @@
   }
 </script>
 
+<section
+  class="outdent {classes}"
+  style={`
+    --blurb-width: ${blurbWidthValue};
+    --breakpoint: calc(
+        ${blurbWidthValue} + (
+          (${bodyWidthValue} + ${blurbWidthValue}) / 2
+        )
+      );
+    --max-width: calc(${bodyWidthValue} + ${blurbWidthValue})
+  `}
+>
+  <header class="blurb {blurbClasses}">
+    <slot name="blurb"></slot>
+  </header>
+  <div class="body {bodyClasses}">
+    <slot name="body"></slot>
+  </div>
+</section>
+
 <style type="text/scss">
   @use 'config/layout_width';
   @use 'config/breakpoints' as bp;
@@ -69,23 +89,3 @@
     }
   }
 </style>
-
-<section
-  class="outdent {classes}"
-  style={`
-    --blurb-width: ${blurbWidthValue};
-    --breakpoint: calc(
-        ${blurbWidthValue} + (
-          (${bodyWidthValue} + ${blurbWidthValue}) / 2
-        )
-      );
-    --max-width: calc(${bodyWidthValue} + ${blurbWidthValue})
-  `}
->
-  <header class="blurb {blurbClasses}">
-    <slot name="blurb"></slot>
-  </header>
-  <div class="body {bodyClasses}">
-    <slot name="body"></slot>
-  </div>
-</section>
