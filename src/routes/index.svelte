@@ -71,7 +71,7 @@
 				</Button>
 			</div>
 
-			<!-- TOC -->
+			<!-- TOC link -->
 			<nav class="toc-link | padding-bottom-narrow">
 				<a
 					class="t-link-undecorated t-case-upper t-font-accent t-scale-eta t-weight-bold"
@@ -142,12 +142,15 @@
 	>
 		<Wrapper
 			class="display-flex-fill display-flex display-flex-column display-flex-justify-center"
-			width="wide"
+			width="xwide"
 			flex
 		>
 			<Gallery gutter="xwide" style="--min-width: 300px;">
-				{#each blog.list.posts as post}
-					<li>
+				{#each blog.list.posts as post, index}
+					<li
+						class:hide-below@xlarge={index >= 6}
+						class:hide-below@medium={index >= 4}
+					>
 						<time
 							class="c-fg-tertiary | display-block | padding-bottom-xnarrowRight | t-font-accent t-scale-eta"
 							datetime={date(post.date, 'yyyy-M-dd')}
@@ -171,7 +174,7 @@
 				{/each}
 			</Gallery>
 		</Wrapper>
-		<div>
+		<Wrapper width="xwide" flex>
 			{#if blog.cta}
 				<Button
 					prefetch={true}
@@ -181,7 +184,7 @@
 					{blog.cta.label}
 				</Button>
 			{/if}
-		</div>
+		</Wrapper>
 	</TocPanel>
 </main>
 

@@ -27,7 +27,7 @@ tableOfContents:
     slug: blog
     list:
       source: content/blog
-      length: 6
+      length: 8
     cta:
       label: Read more posts
       link: blog/page/1
