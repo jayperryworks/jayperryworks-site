@@ -59,7 +59,7 @@
 					class="t-scale-delta t-heading t-leading-default | padding-top"
 					centered={false}
 				>
-					{@html intro.blurb}
+					<Passage html={intro.blurb}/>
 				</Wrapper>
 				<Button
 					prefetch={true}
@@ -101,7 +101,10 @@
 		>
 			<div class="flag display-flex-fill">
 				<div class="flag-item blurb">
-					<Wrapper centered={false} class="margin-y-between-wide">
+					<Wrapper
+						class="t-scale-delta t-heading t-leading-default | margin-y-between-wide"
+						centered={false}
+					>
 						
 						{#if pictures.blurb}
 							<Passage html={pictures.blurb}/>
