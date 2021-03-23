@@ -2,12 +2,12 @@ const modularscale = require('modularscale-js')
 
 // base scale
 // -> config object for modularscale library
-const scale: {
+const scale = {
   config: {
     base: [1],
     ratio: 1.2
   },
-  get: (value) => modularscale.get(value, scale.config)
+  get: (value) => modularscale(value, scale.config)
 };
 
 // helper to tweak props of a palette color
@@ -18,13 +18,13 @@ function modifyColor(color, {
 } = {}) {
   // saturation
   color.s += s
-  color.s < 0 && color.s = 0
-  color.s > 100 && color.s = 100
+  if (color.s < 0) color.s = 0
+  if (color.s > 100) color.s = 100
   
   // luminosity
   color.l += l
-  color.l < 0 && color.l = 0
-  color.l > 100 && color.l = 100
+  if (color.l < 0) color.l = 0
+  if (color.l > 100) color.l = 100
   
   // alpha
   color.a = a
@@ -48,18 +48,20 @@ const themes = {
     primary: palette.white,
     secondary: modifyColor(palette.gray, { l: 20 }),
     tertiary: modifyColor(palette.black, { l: 35 }),
+    highlight: palette.lavendar,
     bg: palette.black,
     island: modifyColor(palette.black, { l: 8 }),
     well: modifyColor(palette.black, { l: -20 }),
     border: modifyColor(palette.black, { l: 20}),
     shadow: modifyColor(palette.black, {l: -60, a: 0.4 })
   },
-  light: {
+  default: {
     primary: palette.black,
     secondary: modifyColor(palette.black, { l: 20 }),
     tertiary: palette.gray,
+    highlight: palette.lavendar,
     bg: palette.white,
-    island: palette.white
+    island: palette.white,
     well: modifyColor(palette.gray, { l: 85 }),
     border: modifyColor(palette.gray, { l: 20 }),
     shadow: modifyColor(palette.gray, { a: 0.2 })
@@ -114,14 +116,6 @@ const spacing = {
   xwide: scale.get(6)
 }
 
-const layoutWidths = {
-  narrow: '30rem',
-  default: '40rem',
-  wide: '64rem',
-  xwide: '75rem',
-  xxwide: '112rem'
-}
-
 const breakpoints = {
   xsmall: '30em',
   small: '42em',
@@ -133,8 +127,7 @@ const breakpoints = {
 module.exports = {
   color: {
     palette,
-    themes,
-    highlight: palette.lavendar
+    themes
   },
   type,
   spacing,
