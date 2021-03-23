@@ -107,13 +107,20 @@ const type = {
 }
 
 const spacing = {
-  xxxnarrow: scale.get(-12),
-  xxnarrow: scale.get(-8),
-  xnarrow: scale.get(-4),
-  narrow: scale.get(-2),
-  medium: scale.get(1),
-  wide: scale.get(3),
-  xwide: scale.get(6)
+  scale: {
+    xxxnarrow: scale.get(-12),
+    xxnarrow: scale.get(-8),
+    xnarrow: scale.get(-4),
+    narrow: scale.get(-2),
+    medium: scale.get(1),
+    wide: scale.get(3),
+    xwide: scale.get(6)
+  },
+  outside: {
+    default: 'narrow',
+    small: 'medium',
+    medium: 'wide'
+  }
 }
 
 const breakpoints = {
