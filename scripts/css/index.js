@@ -13,7 +13,7 @@ function render (type, modules) {
 	`).join('\n')
 }
 
-const customProps = `
+const customProperties = `
 	/* --- Global custom properties --- */
 	:root {
 		${[color, breakpoints, spacing].map(styles => `
@@ -33,5 +33,5 @@ const utilities = `
 
 fs.writeFileSync(
 	path.join(__dirname, '../../static/stylesheets/utilities.css'),
-	[customProps, base, utilities].join('\n')
+	[customProperties, base, utilities].join('\n')
 )
