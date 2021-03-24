@@ -1,9 +1,10 @@
 const { color } = require('../../content/design-tokens.js')
 
 function hsl (color) {
-  return !color.a
-    ? `hsl(${color.h}, ${color.s}, ${color.l})`
-    : `hsla(${color.h}, ${color.s}, ${color.l}, ${color.a})`
+  if (color.a && color.a !== 1) {
+  	return `hsla(${color.h}, ${color.s}, ${color.l}, ${color.a})`
+  }
+  return `hsl(${color.h}, ${color.s}, ${color.l})`
 }
 
 function declaration (prop, role) {
@@ -13,43 +14,34 @@ function declaration (prop, role) {
 	`
 }
 
-function customProps (theme) {
-	return Object.keys(color.themes[theme])
-		.map(role => `
-			--color-${role}: ${hsl(color.themes[theme][role])};
-		`)
-		.join('')
+function customProperties (theme) {
+	return Object.keys(color.themes[theme]).map(role => `
+		--color-${role}: ${hsl(color.themes[theme][role])};
+	`)
 }
 
-function theme (name) {
-	return `
-		.color-theme-${name} {
-			${customProps(name)}
-		}
-	`
-}
-
-module.exports = `
-	/* --- color ---*/
-	:root {
-		${customProps('default')}
-	}
-
-	/* themes */
-	${Object.keys(color.themes).map(themeName => theme(themeName)).join('\n')}
-
-	/* utilities */
-	${Object.keys(color.themes.default)
+const utilities = Object.keys(color.themes.default)
 		.filter(roleName => roleName !== 'shadow')
-		.map(roleName => `
-			.color-fg-${roleName} {
-				${declaration('color', roleName)}
-			}
+	.map(roleName => `
+		.color-fg-${roleName} {
+			${declaration('color', roleName)}
+		}
 
-			.color-bg-${roleName} {
-				${declaration('background-color', roleName)}
+		.color-bg-${roleName} {
+			${declaration('background-color', roleName)}
+		}
+	`)
+	.join('\n')
+
+module.exports = {
+	name: 'Color',
+	customProperties: customProperties('default'),
+	base: `
+		@media screen and (prefers-color-scheme: dark) {
+			body {
+				${customProperties('dark').join('\n')}
 			}
-		`)
-		.join('\n')
-	}
-`
+		}
+	`,
+	utilities
+}

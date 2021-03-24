@@ -7,29 +7,16 @@ const scale = {
     base: [1],
     ratio: 1.2
   },
-  get: (value) => modularscale(value, scale.config)
+  get: (value) => modularscale(value, scale.config).toFixed(2)
 };
 
 // helper to tweak props of a palette color
 function modifyColor(color, {
   s = 0,
   l = 0,
-  a = 0
+  a = 1
 } = {}) {
-  // saturation
-  color.s += s
-  if (color.s < 0) color.s = 0
-  if (color.s > 100) color.s = 100
-  
-  // luminosity
-  color.l += l
-  if (color.l < 0) color.l = 0
-  if (color.l > 100) color.l = 100
-  
-  // alpha
-  color.a = a
-
-  return color
+  return { h: color.h, s, l, a }
 }
 
 // base color palette
@@ -46,24 +33,24 @@ const palette = {
 const themes = {
   dark: {
     primary: palette.white,
-    secondary: modifyColor(palette.gray, { l: 20 }),
-    tertiary: modifyColor(palette.black, { l: 35 }),
+    secondary: modifyColor(palette.gray, { l: 40 }),
+    tertiary: modifyColor(palette.black, { l: 50 }),
     highlight: palette.lavendar,
     bg: palette.black,
-    island: modifyColor(palette.black, { l: 8 }),
-    well: modifyColor(palette.black, { l: -20 }),
+    island: modifyColor(palette.black, { l: 35 }),
+    well: modifyColor(palette.black, { l: 17 }),
     border: modifyColor(palette.black, { l: 20}),
-    shadow: modifyColor(palette.black, {l: -60, a: 0.4 })
+    shadow: modifyColor(palette.black, {l: 0, a: 0.4 })
   },
   default: {
     primary: palette.black,
-    secondary: modifyColor(palette.black, { l: 20 }),
+    secondary: modifyColor(palette.black, { l: 40 }),
     tertiary: palette.gray,
     highlight: palette.lavendar,
     bg: palette.white,
     island: palette.white,
-    well: modifyColor(palette.gray, { l: 85 }),
-    border: modifyColor(palette.gray, { l: 20 }),
+    well: modifyColor(palette.gray, { l: 90 }),
+    border: modifyColor(palette.gray, { l: 85 }),
     shadow: modifyColor(palette.gray, { a: 0.2 })
   }
 }
@@ -124,11 +111,14 @@ const spacing = {
 }
 
 const breakpoints = {
-  xsmall: '30em',
-  small: '42em',
-  medium: '62em',
-  large: '75em',
-  xlarge: '100em'
+  sizes: {
+    xsmall: 30,
+    small: 42,
+    medium: 62,
+    large: 75,
+    xlarge: 100
+  },
+  unit: 'em'
 }
 
 module.exports = {
