@@ -1,0 +1,14 @@
+//  Type & layout scale
+@use 'bourbon';
+
+// -> minor third scale (1.2, 5:6)
+// -> 16px base (http://www.modularscale.com/?16&px&1.2&web&text)
+$ratio: 1.2;
+
+bourbon.$bourbon: (
+  'modular-scale-ratio': $ratio
+);
+
+@function get($size, $unit: 1rem) {
+  @return bourbon.modular-scale($size, $unit);
+}

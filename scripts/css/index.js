@@ -15,6 +15,8 @@ function render (type, modules) {
 	`).join('\n')
 }
 
+const outputPath = '../../static/stylesheets'
+
 const customProperties = `
 	/* --- Global custom properties --- */
 	:root {
@@ -33,7 +35,11 @@ const utilities = `
 	${render('utilities', [color, spacing, type, borders, visibility])}
 `
 
+if (!fs.existsSync(path.join(__dirname, outputPath))) {
+	fs.mkdirSync(path.join(__dirname, outputPath))
+}
+
 fs.writeFileSync(
-	path.join(__dirname, '../../static/stylesheets/main.css'),
+	path.join(__dirname, `${outputPath}/main.css`),
 	[customProperties, base, utilities].join('\n')
 )

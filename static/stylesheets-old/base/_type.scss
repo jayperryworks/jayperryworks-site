@@ -1,0 +1,323 @@
+// =============================================================================
+//  Global type styles
+// =============================================================================
+
+@use '../config/animation';
+@use '../config/border';
+@use '../config/color';
+@use '../config/scale';
+@use '../config/type';
+@use '../config/breakpoints';
+
+// Defaults
+// -----------------------------------------------------------------------------
+
+// headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.t-heading {
+  @include type.font-display;
+  @include color.add-fg('primary');
+  display: block;
+  line-height: type.leading('tight');
+  margin: 0;
+
+  & + & {
+    margin-top: 0.25em;
+  }
+
+  a, {
+    border: none;
+
+    &:hover,
+    &:active {
+      @include border.add('bottom', $style: 'secondary');
+      border-color: inherit;
+    }
+  }
+
+  strong {
+    font-family: inherit;
+    font-style: normal;
+  }
+}
+
+// body/inline text
+p {
+  color: inherit;
+  -webkit-margin-after: 0;
+  -webkit-margin-before: 0;
+  margin-bottom: 0;
+  margin-top: 0;
+
+  strong {
+    @include type.font-body(bold);
+  }
+  em {
+    @include type.font-body(normal, italic);
+  }
+}
+
+a {
+  @include border.add('bottom', $style: 'dashed');
+  @include animation.transition();
+  border-color: inherit;
+  color: inherit;
+  text-decoration: none;
+
+  &.t-link-undecorated {
+    border-bottom: none;
+
+    &:hover,
+    &:active {
+      border-bottom: none;
+    }
+  }
+
+  small {
+    color: inherit;
+  }
+}
+
+strong {
+  @include type.font-body(bold);
+}
+
+em {
+  @include type.font-body(normal, italic);
+}
+
+small,
+cite,
+.t-small {
+  @include type.font-accent;
+  @include color.add-fg('tertiary');
+  font-size: type.scale('eta');
+
+  strong {
+    @include type.font-accent(bold);
+  }
+}
+
+figcaption,
+.t-caption {
+  @include type.font-accent;
+  @include color.add-fg('tertiary');
+  font-size: type.scale('zeta');
+
+  strong {
+    @include type.font-accent(bold);
+  }
+}
+
+address,
+.t-address {
+  @include color.add-fg('secondary');
+  font-size: type.scale('eta');
+}
+
+// Utilities
+// -----------------------------------------------------------------------------
+
+// --- type scale ---
+
+h1,
+.t-scale-alpha {
+  @include type.fluid($size-min: 'beta', $size-max: 'alpha');
+
+  &.t-font-accent {
+    @include type.font-accent('light');
+  }
+}
+
+h2,
+.t-scale-beta {
+  @include type.fluid($size-min: 'gamma', $size-max: 'beta');
+
+  &.t-font-accent {
+    @include type.font-accent('light');
+  }
+}
+
+h3,
+.t-scale-gamma {
+  @include type.fluid($size-min: 'delta', $size-max: 'gamma');
+
+  &.t-font-accent {
+    @include type.font-accent('light');
+  }
+}
+
+h4,
+.t-scale-delta {
+  @include type.fluid($size-min: 'epsilon', $size-max: 'delta');
+
+  &.t-font-accent {
+    @include type.font-accent('light');
+  }
+}
+
+h5,
+.t-scale-epsilon {
+  font-size: type.scale('epsilon');
+}
+
+h6,
+.t-scale-zeta {
+  font-size: type.scale('zeta');
+}
+
+.t-scale-eta {
+  font-size: type.scale('eta');
+}
+
+.t-scale-theta {
+  font-size: type.scale('theta');
+}
+
+// --- weights ---
+
+.t-weight-normal {
+  @include type.font-body();
+}
+
+.t-weight-bold {
+  @include type.font-body('bold');
+}
+
+.t-style-italic {
+  @include type.font-body($style: 'italic');
+}
+
+// --- fonts ---
+
+.t-font-display {
+  @include type.font-display();
+
+  &.t-scale-alpha {
+    letter-spacing: -0.01em;
+  }
+
+  strong {
+    @include type.font-display();
+  }
+}
+
+.t-font-accent {
+  @include type.font-accent();
+
+  &.t-weight-normal {
+    @include type.font-accent();
+  }
+
+  &.t-weight-light {
+    @include type.font-accent('light');
+  }
+
+  &.t-weight-bold,
+  strong {
+    @include type.font-accent('bold');
+  }
+}
+
+.t-font-body {
+  @include type.font-body();
+}
+
+// --- type styles ---
+
+.t-case-upper {
+  text-transform: uppercase !important;
+}
+
+@each $name, $size in type.$leading {
+  .t-leading-#{$name} {
+    line-height: type.leading($name) !important;
+  }
+}
+
+.t-link-undecorated {
+  border: none;
+
+  &:hover,
+  &:active {
+    @include border.add('bottom', $style: 'secondary');
+    border-color: inherit;
+  }
+}
+
+[class*="t-highlight"] {
+  position: relative;
+
+  &:before {
+    @include color.add-bg('highlight');
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+  }
+}
+
+.t-highlight-top {
+  &:before {
+    height: border.width('thick');
+    left: 0;
+    right: 0;
+    top: 0;
+  }
+}
+
+.t-highlight-left {
+  &:before {
+    bottom: 0;
+    width: border.width('thick');
+    left: 0;
+    top: 0;
+  }
+}
+
+.t-tag {
+  @include border.add();
+  @include color.add-fg('tertiary');
+  @include type.font-accent;
+  @include animation.transition();
+  border-radius: 0.1em;
+  display: inline-block;
+  font-size: type.scale('zeta');
+  margin-left: 0;
+  padding: 0.15em 0.4em 0.05em;
+  vertical-align: middle;
+
+  &:hover,
+  &:active {
+    @include color.add-fg('secondary');
+    border-color: inherit;
+  }
+
+  a {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+
+    &:hover,
+    &:active {
+      color: inherit;
+    }
+  }
+}
+
+
+// --- position text -----------------------------------------------------------
+@include breakpoints.suffix(".t-align-center", true) {
+  text-align: center !important;
+}
+@include breakpoints.suffix(".t-align-left", true) {
+  text-align: left !important;
+}
+@include breakpoints.suffix(".t-align-right", true) {
+  text-align: right !important;
+}
