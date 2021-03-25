@@ -56,29 +56,62 @@ const themes = {
 }
 
 const type = {
-  fonts: {
-    display: {
-      weights: {
-        normal: 'Publico Headline'
-      },
-      stack: 'Publico, Georgia, Times, Times New Roman, serif'
+  fonts: [
+    {
+      name: 'Publico Headline',
+      stack: 'Publico, Georgia, Times, Times New Roman, serif',
+      file: '/fonts/PublicoHeadline-Roman-Web',
+      formats: ['woff', 'ttf'],
+      weight: 'regular',
+      style: 'normal',
+      role: 'display'
     },
-    body: {
-      weights: {
-        normal: 'Publico Text',
-        italic: 'Publico Text Italic'
-      },
-      stack: 'Publico, Georgia, Times, Times New Roman, serif'
+    {
+      name: 'Publico Text',
+      stack: 'Publico, Georgia, Times, Times New Roman, serif',
+      file: '/fonts/PublicoText-Roman-Web',
+      formats: ['woff', 'ttf'],
+      weight: 'regular',
+      style: 'normal',
+      role: 'body'
     },
-    accent: {
-      weights: {
-        light: 'Guardian Sans Light',
-        normal: 'Guardian Sans',
-        bold: 'Guardian Sans Bold'
-      },
-      stack: 'Trebuchet, Lucida Grande, Verdana, sans-serif'
+    {
+      name: 'Publico Text Italic',
+      stack: 'Publico, Georgia, Times, Times New Roman, serif',
+      file: '/fonts/PublicoText-Italic-Web',
+      formats: ['woff', 'ttf'],
+      weight: 'regular',
+      style: 'italic',
+      role: 'body'
     },
-  },
+    {
+      name: 'Guardian Sans Light',
+      stack: 'Trebuchet, Lucida Grande, Verdana, sans-serif',
+      file: '/fonts/GuardianSans-Light-Web',
+      formats: ['woff', 'ttf'],
+      weight: 'light',
+      style: 'normal',
+      role: 'accent'
+    },
+    {
+      name: 'Guardian Sans',
+      stack: 'Trebuchet, Lucida Grande, Verdana, sans-serif',
+      file: '/fonts/GuardianSans-Regular-Web',
+      formats: ['woff', 'ttf'],
+      weight: 'regular',
+      style: 'normal',
+      role: 'accent'
+    },
+    {
+      name: 'Guardian Sans Bold',
+      stack: 'Trebuchet, Lucida Grande, Verdana, sans-serif',
+      file: '/fonts/GuardianSans-Semibold-Web',
+      formats: ['woff', 'ttf'],
+      weight: 'bold',
+      style: 'normal',
+      role: 'accent'
+    }
+  ],
   scale: {
     alpha: scale.get(6),
     beta: scale.get(4),

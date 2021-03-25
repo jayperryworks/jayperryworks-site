@@ -1,13 +1,14 @@
 const { spacing, breakpoints } = require('../../content/design-tokens.js')
 
-function value (name = 'medium') {
-	return `${spacing.scale[name]}rem`
+function get (name = 'medium', unit = 'rem') {
+	return `${spacing.scale[name]}${unit}`
 }
 
 module.exports = {
 	name: 'Spacing',
+	helpers: { get },
 	customProperties: Object.keys(spacing.scale).map(name => `
-		--space-${name}: ${value(name)};
+		--space-${name}: ${get(name)};
 	`),
 	utilities: `		
 		${['padding', 'margin'].map(prop => `
@@ -15,7 +16,7 @@ module.exports = {
 
 			/* all sides */
 			.${prop} {
-				${prop}: ${value()};
+				${prop}: ${get()};
 			}
 
 			.no-${prop} {
@@ -24,52 +25,52 @@ module.exports = {
 
 			/* vertical and horizontal spacing */
 			.${prop}-x {
-				${prop}-left: ${value()};
-				${prop}-right: ${value()};
+				${prop}-left: ${get()};
+				${prop}-right: ${get()};
 			}
 
 			.${prop}-y {
-				${prop}-top: ${value()};
-				${prop}-bottom: ${value()};
+				${prop}-top: ${get()};
+				${prop}-bottom: ${get()};
 			}
 
 			.${prop}-x-flow > * + * {
-				${prop}-left: ${value()};
+				${prop}-left: ${get()};
 			}
 
 			.${prop}-y-flow > * + * {
-				${prop}-top: ${value()};
+				${prop}-top: ${get()};
 			}
 
 			/* size variations */
 			${Object.keys(spacing.scale).map(size => `
 				.${prop}-${size} {
-					${prop}: ${value(size)};
+					${prop}: ${get(size)};
 				}
 
 				.${prop}-x-${size} {
-					${prop}-left: ${value(size)};
-					${prop}-right: ${value(size)};
+					${prop}-left: ${get(size)};
+					${prop}-right: ${get(size)};
 				}
 
 				.${prop}-y-${size} {
-					${prop}-top: ${value(size)};
-					${prop}-bottom: ${value(size)};
+					${prop}-top: ${get(size)};
+					${prop}-bottom: ${get(size)};
 				}
 
 				.${prop}-x-flow-${size} > * + * {
-					${prop}-left: ${value(size)};
+					${prop}-left: ${get(size)};
 				}
 
 				.${prop}-y-flow-${size} > * + * {
-					${prop}-top: ${value(size)};
+					${prop}-top: ${get(size)};
 				}
 			`)}
 
 			/* sides */
 			${['left', 'right', 'top', 'bottom'].map(side => `
 				.${prop}-${side} {
-					${prop}-${side}: ${value()};
+					${prop}-${side}: ${get()};
 				}
 
 				.no-${prop}-${side} {
@@ -78,7 +79,7 @@ module.exports = {
 
 				${Object.keys(spacing.scale).map(size => `
 					.${prop}-${side}-${size} {
-						${prop}-${side}: ${value(size)};
+						${prop}-${side}: ${get(size)};
 					}
 				`).join('')}
 			`).join('')}
@@ -86,8 +87,8 @@ module.exports = {
 
 		/* outside spacing */
 		.padding-x-outside {
-			padding-left: ${value(spacing.outside.default)};
-			padding-right: ${value(spacing.outside.default)};
+			padding-left: ${get(spacing.outside.default)};
+			padding-right: ${get(spacing.outside.default)};
 		}
 
 		${Object.keys(spacing.outside)
@@ -95,8 +96,8 @@ module.exports = {
 			.map(breakpoint => `
 				@media screen and (min-size: ${breakpoints.sizes[breakpoint]}${breakpoints.unit}) {
 					.padding-x-outside {
-						padding-left: ${value(spacing.outside[breakpoint])};
-						padding-right: ${value(spacing.outside[breakpoint])};
+						padding-left: ${get(spacing.outside[breakpoint])};
+						padding-right: ${get(spacing.outside[breakpoint])};
 					}
 				}
 			`)

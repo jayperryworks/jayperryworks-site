@@ -7,41 +7,50 @@ function hsl (color) {
   return `hsl(${color.h}, ${color.s}, ${color.l})`
 }
 
-function declaration (prop, role) {
+function getValue (role, theme = 'default') {
+	return hsl(color.themes[theme][role])
+}
+
+function getCustomProperty (role, theme = 'default') {
+	return `--color-${role}: ${hsl(color.themes[theme][role])};`
+}
+
+function add (prop, role) {
 	return `
 		${prop}: ${hsl(color.themes.default[role])};
 		${prop}: var(--color-${role});
 	`
 }
 
-function customProperties (theme) {
-	return Object.keys(color.themes[theme]).map(role => `
-		--color-${role}: ${hsl(color.themes[theme][role])};
-	`)
+function listCustomProperties (theme) {
+	return Object.keys(color.themes[theme]).map(role => getCustomProperty(role, theme))
 }
-
-const utilities = Object.keys(color.themes.default)
-		.filter(roleName => roleName !== 'shadow')
-	.map(roleName => `
-		.color-fg-${roleName} {
-			${declaration('color', roleName)}
-		}
-
-		.color-bg-${roleName} {
-			${declaration('background-color', roleName)}
-		}
-	`)
-	.join('\n')
 
 module.exports = {
 	name: 'Color',
-	customProperties: customProperties('default'),
+	helpers: {
+		getValue,
+		getCustomProperty,
+		add
+	},
+	customProperties: listCustomProperties('default'),
 	base: `
 		@media screen and (prefers-color-scheme: dark) {
 			body {
-				${customProperties('dark').join('\n')}
+				${listCustomProperties('dark').join('\n')}
 			}
 		}
 	`,
-	utilities
+	utilities: Object.keys(color.themes.default)
+		.filter(roleName => roleName !== 'shadow')
+		.map(roleName => `
+			.color-fg-${roleName} {
+				${add('color', roleName)}
+			}
+
+			.color-bg-${roleName} {
+				${add('background-color', roleName)}
+			}
+		`)
+		.join('\n')
 }
