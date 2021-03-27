@@ -1,4 +1,4 @@
-const { type } = require('../../content/design-tokens.js')
+const { type, breakpoints } = require('../../content/design-tokens.js')
 const { helpers: color } = require('./color.js')
 const { helpers: border } = require('./borders.js')
 
@@ -32,6 +32,23 @@ function font (role, {
 		font-family: ${font.name}, ${font.stack};
 		${font.weight !== 'regular' ? `font-weight: ${font.weight};` : ''}
 		${font.style !== 'normal' ? `font-style: ${font.style};` : ''}
+	`
+}
+
+function fluidScale (selector, minSize, maxSize, {
+	unit = 'rem'
+} = {}) {
+	minSize = parseFloat(minSize)
+	maxSize = parseFloat(maxSize)
+
+	return `
+		${selector} {
+			font-size: ${((minSize + maxSize) / 2).toFixed(2)}${unit};
+		}
+
+		@supports (font-size: clamp(${minSize}${unit}, 100vw, ${minSize}${unit})) {
+			font-size: clamp(${minSize}${unit}, 100vw, ${maxSize}${unit});
+		}
 	`
 }
 
@@ -94,5 +111,28 @@ module.exports = {
 		.type-link-undecorated::active {
 			border-bottom: none;
 		}
+
+		/* scale */
+		${Object.keys(type.scale).map((size, index) => {
+			if (Array.isArray(type.scale[size])) {
+				return fluidScale(`
+					h${index + 1},
+					.type-scale-${size}
+				`, type.scale[size][0], type.scale[size][1])
+			}
+			return `
+				h${index + 1},
+				.type-scale-${size} {
+					font-size: ${Number.parseFloat(type.scale[size]).toFixed(2)}rem;
+				}
+			`
+		}).join('')}
+
+		/* leading */
+		${Object.keys(type.leading).map(size => `
+			.type-leading-${size} {
+				line-height: ${type.leading[size]};
+			}
+		`).join('')}
 	`
 }

@@ -48,5 +48,21 @@ module.exports = {
 				border-${side}-style: solid;
 			}
 		`)}
+
+		.border-y-flow > * + * {
+			${add({ side: 'top' })}
+		}
+
+		.border-y-flow.solid > * + * {
+			border-top-style: solid;
+		}
+
+		.border-x-flow > * + * {
+			${add({ side: 'left' })}
+		}
+
+		.border-x-flow.solid > * + * {
+			border-left-style: solid;
+		}
 	`
 }

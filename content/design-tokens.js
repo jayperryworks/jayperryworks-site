@@ -113,10 +113,10 @@ const type = {
     }
   ],
   scale: {
-    alpha: scale.get(6),
-    beta: scale.get(4),
-    gamma: scale.get(3),
-    delta: scale.get(1),
+    alpha: [scale.get(4), scale.get(7)],
+    beta: [scale.get(3), scale.get(5)],
+    gamma: [scale.get(2), scale.get(3)],
+    delta: [scale.get(1), scale.get(2)],
     epsilon: scale.get(0),
     zeta: scale.get(-1),
   },

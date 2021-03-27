@@ -15,15 +15,15 @@ function getCustomProperty (role, theme = 'default') {
 	return `--color-${role}: ${hsl(color.themes[theme][role])};`
 }
 
+function listCustomProperties (theme) {
+	return Object.keys(color.themes[theme]).map(role => getCustomProperty(role, theme))
+}
+
 function add (prop, role) {
 	return `
 		${prop}: ${hsl(color.themes.default[role])};
 		${prop}: var(--color-${role});
 	`
-}
-
-function listCustomProperties (theme) {
-	return Object.keys(color.themes[theme]).map(role => getCustomProperty(role, theme))
 }
 
 module.exports = {

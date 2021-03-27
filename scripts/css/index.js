@@ -40,6 +40,6 @@ if (!fs.existsSync(path.join(__dirname, outputPath))) {
 }
 
 fs.writeFileSync(
-	path.join(__dirname, `${outputPath}/main.css`),
+	path.join(__dirname, `${outputPath}/global.css`),
 	[customProperties, base, utilities].join('\n')
 )

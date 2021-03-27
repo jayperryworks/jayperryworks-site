@@ -73,7 +73,7 @@
     <!-- large screen menu -->
   	<div slot="right">
       {#if !hideMenu}
-        <ul class="display-inline-block hide-below@xsmall list-undecorated margin-x-between">
+        <ul class="display-inline-block hide-below@xsmall list-undecorated margin-x-flow">
           {#each items as item}
             <li class="
               display-inline-block

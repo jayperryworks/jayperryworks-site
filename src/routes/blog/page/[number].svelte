@@ -44,31 +44,6 @@
 	}
 </script>
 
-<style type="text/scss">
-	@use 'config/border';
-	@use 'config/type';
-	@use 'config/breakpoints' as bp;
-
-	ul {
-		margin: 0 0 1em 0;
-		line-height: type.leading();
-	}
-
-	li + li {
-		@include border.add(top, $style: 'solid');
-	}
-
-	h1 {
-		margin-top: -0.3em;
-	}
-
-	.pagination-label {
-		display: inline-block;
-		vertical-align: middle;
-		margin-top: -0.7em;
-	}
-</style>
-
 {#each Object.keys(postsByYear).reverse() as year, index}
 	<div class:border-seam-top={index > 0}>
 		<OutdentedBlurb class="padding-x-outside padding-y-xwide">
@@ -84,7 +59,7 @@
 
 			<div slot="body">
 				<Wrapper centered={false}>
-					<ul class="list-undecorated margin-y-between-xwide padding-y-between-xwide">
+					<ul class="list-undecorated margin-y-flow-xwide padding-y-flow-xwide | border-y-flow | type-leading">
 						{#each postsByYear[year] as post}
 							<li>
 								<article>
@@ -175,3 +150,24 @@
 		</div>
 	</Bookend>
 </footer>
+
+<style type="text/scss">
+	@use 'config/border';
+	@use 'config/type';
+	@use 'config/breakpoints' as bp;
+
+	ul {
+		margin: 0 0 1em 0;
+		line-height: type.leading();
+	}
+
+	h1 {
+		margin-top: -0.3em;
+	}
+
+	.pagination-label {
+		display: inline-block;
+		vertical-align: middle;
+		margin-top: -0.7em;
+	}
+</style>

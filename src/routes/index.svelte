@@ -102,7 +102,7 @@
 			<div class="flag display-flex-fill">
 				<div class="flag-item blurb">
 					<Wrapper
-						class="margin-y-between-wide"
+						class="margin-y-flow-wide"
 						centered={false}
 					>
 						

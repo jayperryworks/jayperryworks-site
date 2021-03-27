@@ -946,6 +946,64 @@ a {
 	border-bottom: none;
 }
 
+/* scale */
+
+h1,
+.type-scale-alpha {
+	font-size: 2.83rem;
+}
+
+@supports (font-size: clamp(2.07rem, 100vw, 2.07rem)) {
+	font-size: clamp(2.07rem, 100vw, 3.58rem);
+}
+
+h2,
+.type-scale-beta {
+	font-size: 2.11rem;
+}
+
+@supports (font-size: clamp(1.73rem, 100vw, 1.73rem)) {
+	font-size: clamp(1.73rem, 100vw, 2.49rem);
+}
+
+h3,
+.type-scale-gamma {
+	font-size: 1.58rem;
+}
+
+@supports (font-size: clamp(1.44rem, 100vw, 1.44rem)) {
+	font-size: clamp(1.44rem, 100vw, 1.73rem);
+}
+
+h4,
+.type-scale-delta {
+	font-size: 1.32rem;
+}
+
+@supports (font-size: clamp(1.2rem, 100vw, 1.2rem)) {
+	font-size: clamp(1.2rem, 100vw, 1.44rem);
+}
+
+h5,
+.type-scale-epsilon {
+	font-size: 1rem;
+}
+
+h6,
+.type-scale-zeta {
+	font-size: 0.83rem;
+}
+
+/* leading */
+
+.type-leading-tight {
+	line-height: 1.2;
+}
+
+.type-leading-default {
+	line-height: 1.7;
+}
+
 /* --- undefined --- */
 
 .border {
@@ -1015,6 +1073,24 @@ a {
 }
 
 .border-left.solid {
+	border-left-style: solid;
+}
+
+.border-y-flow > * + * {
+	border-top: 1px dashed hsl(223, 0, 85);
+	border-top: 1px dashed var(--color-border);
+}
+
+.border-y-flow.solid > * + * {
+	border-top-style: solid;
+}
+
+.border-x-flow > * + * {
+	border-left: 1px dashed hsl(223, 0, 85);
+	border-left: 1px dashed var(--color-border);
+}
+
+.border-x-flow.solid > * + * {
 	border-left-style: solid;
 }
 

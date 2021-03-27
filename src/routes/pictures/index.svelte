@@ -79,7 +79,7 @@
 
     <div
     	slot="body"
-    	class="margin-y-between-wide padding-y-between-wide overflow-hidden"
+    	class="margin-y-flow-wide padding-y-flow-wide overflow-hidden"
   	>
     	{#each picturesBySeries as series, index}
     		<section class:border-top="{index > 0}">
