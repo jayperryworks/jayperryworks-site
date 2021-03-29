@@ -113,17 +113,19 @@ const type = {
     }
   ],
   scale: {
-    alpha: [scale.get(4), scale.get(7)],
-    beta: [scale.get(3), scale.get(5)],
-    gamma: [scale.get(2), scale.get(3)],
-    delta: [scale.get(1), scale.get(2)],
-    epsilon: scale.get(0),
-    zeta: scale.get(-1),
+    alpha: { base: scale.get(4), fluid: 5, max: scale.get(8) },
+    beta: { base: scale.get(3), fluid: 3, max: scale.get(6) },
+    gamma: { base: scale.get(2), fluid: 2, max: scale.get(4) },
+    delta: { base: scale.get(1), fluid: 1, max: scale.get(2) },
+    epsilon: { base: scale.get(0) },
+    zeta: { base: scale.get(-1) },
   },
   leading: {
     tight: 1.2,
     default: 1.7
-  }
+  },
+  // width of a line of body text, in characters (ch units)
+  lineMeasure: 60
 }
 
 const spacing = {

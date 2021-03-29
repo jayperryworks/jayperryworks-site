@@ -137,6 +137,7 @@ p {
 	color: inherit;
 	margin-bottom: 0;
 	margin-top: 0;
+	max-width: 60;
 }
 
 a {
@@ -950,38 +951,26 @@ a {
 
 h1,
 .type-scale-alpha {
-	font-size: 2.83rem;
-}
-
-@supports (font-size: clamp(2.07rem, 100vw, 2.07rem)) {
-	font-size: clamp(2.07rem, 100vw, 3.58rem);
+	font-size: 3.18rem;
+	font-size: clamp(2.07rem, calc(1rem + 5vw), 4.3rem);
 }
 
 h2,
 .type-scale-beta {
-	font-size: 2.11rem;
-}
-
-@supports (font-size: clamp(1.73rem, 100vw, 1.73rem)) {
-	font-size: clamp(1.73rem, 100vw, 2.49rem);
+	font-size: 2.36rem;
+	font-size: clamp(1.73rem, calc(1rem + 3vw), 2.99rem);
 }
 
 h3,
 .type-scale-gamma {
-	font-size: 1.58rem;
-}
-
-@supports (font-size: clamp(1.44rem, 100vw, 1.44rem)) {
-	font-size: clamp(1.44rem, 100vw, 1.73rem);
+	font-size: 1.75rem;
+	font-size: clamp(1.44rem, calc(1rem + 2vw), 2.07rem);
 }
 
 h4,
 .type-scale-delta {
 	font-size: 1.32rem;
-}
-
-@supports (font-size: clamp(1.2rem, 100vw, 1.2rem)) {
-	font-size: clamp(1.2rem, 100vw, 1.44rem);
+	font-size: clamp(1.2rem, calc(1rem + 1vw), 1.44rem);
 }
 
 h5,

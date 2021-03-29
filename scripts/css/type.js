@@ -35,20 +35,21 @@ function font (role, {
 	`
 }
 
-function fluidScale (selector, minSize, maxSize, {
+function fluidScale (minSize, maxSize, {
+	fluidTarget = 2,
 	unit = 'rem'
 } = {}) {
 	minSize = parseFloat(minSize)
 	maxSize = parseFloat(maxSize)
+	middleSize = ((minSize + maxSize) / 2).toFixed(2)
 
 	return `
-		${selector} {
-			font-size: ${((minSize + maxSize) / 2).toFixed(2)}${unit};
-		}
-
-		@supports (font-size: clamp(${minSize}${unit}, 100vw, ${minSize}${unit})) {
-			font-size: clamp(${minSize}${unit}, 100vw, ${maxSize}${unit});
-		}
+		font-size: ${middleSize}${unit};
+		font-size: clamp(
+			${minSize.toFixed(2)}${unit},
+			calc(1rem + ${fluidTarget}vw),
+			${maxSize.toFixed(2)}${unit}
+		);
 	`
 }
 
@@ -83,6 +84,8 @@ module.exports = {
 			color: inherit;
 			margin-bottom: 0;
 			margin-top: 0;
+			max-width: ${type.lineMeasure};
+
 		}
 
 		a {
@@ -114,16 +117,15 @@ module.exports = {
 
 		/* scale */
 		${Object.keys(type.scale).map((size, index) => {
-			if (Array.isArray(type.scale[size])) {
-				return fluidScale(`
-					h${index + 1},
-					.type-scale-${size}
-				`, type.scale[size][0], type.scale[size][1])
-			}
+			const { base, fluid, max } = type.scale[size]
+
 			return `
 				h${index + 1},
 				.type-scale-${size} {
-					font-size: ${Number.parseFloat(type.scale[size]).toFixed(2)}rem;
+					${max
+						? fluidScale(base, max, { fluidTarget: fluid })
+						: `font-size: ${Number.parseFloat(base).toFixed(2)}rem;`
+					}
 				}
 			`
 		}).join('')}
