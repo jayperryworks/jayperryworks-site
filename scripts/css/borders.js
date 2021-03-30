@@ -14,6 +14,7 @@ function add ({
 }
 
 module.exports = {
+	name: 'Borders',
 	helpers: {
 		add
 	},

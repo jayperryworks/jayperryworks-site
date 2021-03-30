@@ -7,10 +7,10 @@
 
 <!-- svelte-ignore a11y-structure -->
 <!-- Ignore this because this component is always used inside a figure parent -->
-<figcaption class="t-caption t-align-left padding-top-{spacing} padding-y-flow-xxnarrow {classes}">
+<figcaption class="type-scale-zeta type-font-accent color-fg-secondary type-align-left padding-top-{spacing} padding-y-flow-xxnarrow {classes}">
   {#if caption}{@html caption}{/if}
 
   {#if credit}
-    <cite class="t-case-upper">{@html credit}</cite>
+    <cite class="type-case-upper">{@html credit}</cite>
   {/if}
 </figcaption>

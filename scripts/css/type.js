@@ -1,6 +1,7 @@
-const { type, breakpoints } = require('../../content/design-tokens.js')
+const { type } = require('../../content/design-tokens.js')
 const { helpers: color } = require('./color.js')
 const { helpers: border } = require('./borders.js')
+const { helpers: breakpoints } = require('./breakpoints.js')
 
 function webfont (name, filename, {
 	formats = ['woff', 'ttf'],
@@ -46,7 +47,7 @@ const heading = `
 	${color.add('color', 'primary')}
 	font-family: ${font('display')};
 	display: block;
-	line-height: ${type.leading.default};
+	line-height: ${type.leading.tight};
 	margin: 0;
 `
 
@@ -99,15 +100,44 @@ module.exports = {
 			color: inherit;
 			text-decoration: none;
 		}
+
+		strong {
+			font-weight: bold;
+		}
+
+		em {
+			font-style: italic;
+		}
 	`,
 	utilities: `
 		.type-heading {
 			${heading}
 		}
 
-		.type-heading strong {
-			font-family: inherit;
+		.type-heading strong,
+		.type-heading .type-weight-bold,
+		.type-heading.type-weight-bold {
+			font-weight: normal;
+		}
+
+		.type-heading em,
+		.type-heading .type-style-italic,
+		.type-heading.type-style-italic {
 			font-style: normal;
+		}
+
+		${type.fonts.map(({ role }) => `
+			.type-font-${role} {
+				font: ${font(role)}
+			}
+		`)}
+
+		.type-weight-bold {
+			font-weight: bold;
+		}
+
+		.type-style-italic {
+			font-style: italic;
 		}
 
 		.type-link-undecorated {
@@ -143,5 +173,18 @@ module.exports = {
 				line-height: ${type.leading[size]};
 			}
 		`).join('')}
+
+		/* case */
+		.type-case-upper {
+			text-transform: uppercase;
+		}
+
+		/* alignment */
+		${['left', 'middle', 'right'].map((side) => {
+			return breakpoints.responsiveClasses(
+				`type-align-${side}`,
+				`text-align: ${side};`
+			)
+		}).join('')}
 	`
 }
