@@ -20,42 +20,31 @@ function webfont (name, filename, {
 	`
 }
 
-function font (role, {
-	style = 'normal',
-	weight = 'regular'
-} = {}) {
-	const font = type.fonts.find((font) => {
-		return font.role === role && font.weight === weight && font.style === style
-	})
+function font (role) {
+	const font = type.fonts.find((font) => font.role === role)
 
-	return `
-		font-family: ${font.name}, ${font.stack};
-		${font.weight !== 'regular' ? `font-weight: ${font.weight};` : ''}
-		${font.style !== 'normal' ? `font-style: ${font.style};` : ''}
-	`
+	return `${font.name}, ${font.stack};`
 }
 
-function fluidScale (minSize, maxSize, {
-	fluidTarget = 2,
-	unit = 'rem'
-} = {}) {
-	minSize = parseFloat(minSize)
-	maxSize = parseFloat(maxSize)
-	middleSize = ((minSize + maxSize) / 2).toFixed(2)
+function middleSize (minSize, maxSize) {
+	minSize = Number.parseFloat(minSize)
+	maxSize = Number.parseFloat(maxSize)
+	return ((minSize + maxSize) / 2).toFixed(2)
+}
 
+function fluidScale (minSize, maxSize, fluidTarget = 2) {
 	return `
-		font-size: ${middleSize}${unit};
-		font-size: clamp(
-			${minSize.toFixed(2)}${unit},
+		clamp(
+			${Number.parseFloat(minSize).toFixed(2)}rem,
 			calc(1rem + ${fluidTarget}vw),
-			${maxSize.toFixed(2)}${unit}
+			${Number.parseFloat(maxSize).toFixed(2)}rem
 		);
 	`
 }
 
 const heading = `
 	${color.add('color', 'primary')}
-	${font('display')}
+	font-family: ${font('display')};
 	display: block;
 	line-height: ${type.leading.default};
 	margin: 0;
@@ -63,12 +52,27 @@ const heading = `
 
 module.exports = {
 	name: 'Type',
+	customProperties: [
+		...Object.keys(type.scale).map((size) => {
+			const { base, max, fluid } = type.scale[size]
+			return `
+				--type-scale-${size}: ${max 
+					? fluidScale(base, max, fluid)
+					: `${base}rem`
+				};
+			`
+		}),
+		...type.fonts.map(f => `--type-font-${f.role}: ${font(f.role)};`)
+	],
 	helpers: {
 		font
 	},
 	base: `
 		/* webfonts */
-		${type.fonts.map(font => webfont(font.name, font.file, { ...font })).join('')}
+		${type.fonts.map((font) => {
+			const { name, file, formats } = font
+			return font.variants.map(variant => webfont(name, file, { formats, ...variant })).join('')
+		}, []).join('')}
 
 		/* global type */
 		h1,
@@ -123,7 +127,10 @@ module.exports = {
 				h${index + 1},
 				.type-scale-${size} {
 					${max
-						? fluidScale(base, max, { fluidTarget: fluid })
+						? `
+								font-size: ${middleSize(base, max)}rem;
+								font-size: ${fluidScale(base, max, fluid)};
+							`
 						: `font-size: ${Number.parseFloat(base).toFixed(2)}rem;`
 					}
 				}

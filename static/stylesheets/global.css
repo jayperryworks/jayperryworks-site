@@ -38,6 +38,22 @@
 	--space-wide: 1.73rem;
 
 	--space-xwide: 2.99rem;
+
+	/* --- Type --- */
+
+	--type-scale-alpha: clamp(2.07rem, calc(1rem + 5vw), 4.3rem);
+	--type-scale-beta: clamp(1.73rem, calc(1rem + 3vw), 2.99rem);
+	--type-scale-gamma: clamp(1.44rem, calc(1rem + 2vw), 2.07rem);
+	--type-scale-delta: clamp(1.2rem, calc(1rem + 1vw), 1.44rem);
+	--type-scale-epsilon: 1rem;
+
+	--type-scale-zeta: 0.83rem;
+	--type-font-display: Publico Headline, Publico, Georgia, Times,
+		Times New Roman, serif;
+	--type-font-body: Publico Text, Publico, Georgia, Times, Times New Roman,
+		serif;
+	--type-font-accent: Guardian Sans, Trebuchet, Lucida Grande, Verdana,
+		sans-serif;
 }
 
 /* --- Base styles --- */
@@ -66,7 +82,7 @@
 	font-display: swap;
 	font-family: "Publico Headline";
 	font-style: normal;
-	font-weight: regular;
+	font-weight: normal;
 	src: url("/fonts/PublicoHeadline-Roman-Web.woff") format("woff"),
 		url("/fonts/PublicoHeadline-Roman-Web.ttf") format("ttf");
 }
@@ -75,23 +91,23 @@
 	font-display: swap;
 	font-family: "Publico Text";
 	font-style: normal;
-	font-weight: regular;
+	font-weight: normal;
 	src: url("/fonts/PublicoText-Roman-Web.woff") format("woff"),
 		url("/fonts/PublicoText-Roman-Web.ttf") format("ttf");
 }
 
 @font-face {
 	font-display: swap;
-	font-family: "Publico Text Italic";
+	font-family: "Publico Text";
 	font-style: italic;
-	font-weight: regular;
-	src: url("/fonts/PublicoText-Italic-Web.woff") format("woff"),
-		url("/fonts/PublicoText-Italic-Web.ttf") format("ttf");
+	font-weight: normal;
+	src: url("/fonts/PublicoText-Roman-Web.woff") format("woff"),
+		url("/fonts/PublicoText-Roman-Web.ttf") format("ttf");
 }
 
 @font-face {
 	font-display: swap;
-	font-family: "Guardian Sans Light";
+	font-family: "Guardian Sans";
 	font-style: normal;
 	font-weight: light;
 	src: url("/fonts/GuardianSans-Light-Web.woff") format("woff"),
@@ -102,18 +118,18 @@
 	font-display: swap;
 	font-family: "Guardian Sans";
 	font-style: normal;
-	font-weight: regular;
-	src: url("/fonts/GuardianSans-Regular-Web.woff") format("woff"),
-		url("/fonts/GuardianSans-Regular-Web.ttf") format("ttf");
+	font-weight: normal;
+	src: url("/fonts/GuardianSans-Light-Web.woff") format("woff"),
+		url("/fonts/GuardianSans-Light-Web.ttf") format("ttf");
 }
 
 @font-face {
 	font-display: swap;
-	font-family: "Guardian Sans Bold";
+	font-family: "Guardian Sans";
 	font-style: normal;
 	font-weight: bold;
-	src: url("/fonts/GuardianSans-Semibold-Web.woff") format("woff"),
-		url("/fonts/GuardianSans-Semibold-Web.ttf") format("ttf");
+	src: url("/fonts/GuardianSans-Light-Web.woff") format("woff"),
+		url("/fonts/GuardianSans-Light-Web.ttf") format("ttf");
 }
 
 /* global type */
@@ -127,7 +143,6 @@ h6 {
 	color: var(--color-primary);
 
 	font-family: Publico Headline, Publico, Georgia, Times, Times New Roman, serif;
-
 	display: block;
 	line-height: 1.7;
 	margin: 0;
@@ -927,7 +942,6 @@ a {
 	color: var(--color-primary);
 
 	font-family: Publico Headline, Publico, Georgia, Times, Times New Roman, serif;
-
 	display: block;
 	line-height: 1.7;
 	margin: 0;

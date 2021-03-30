@@ -60,56 +60,36 @@ const type = {
     {
       name: 'Publico Headline',
       stack: 'Publico, Georgia, Times, Times New Roman, serif',
+      role: 'display',
       file: '/fonts/PublicoHeadline-Roman-Web',
       formats: ['woff', 'ttf'],
-      weight: 'regular',
-      style: 'normal',
-      role: 'display'
+      variants: [{ weight: 'normal' }]
     },
     {
       name: 'Publico Text',
       stack: 'Publico, Georgia, Times, Times New Roman, serif',
+      role: 'body',
       file: '/fonts/PublicoText-Roman-Web',
       formats: ['woff', 'ttf'],
-      weight: 'regular',
-      style: 'normal',
-      role: 'body'
-    },
-    {
-      name: 'Publico Text Italic',
-      stack: 'Publico, Georgia, Times, Times New Roman, serif',
-      file: '/fonts/PublicoText-Italic-Web',
-      formats: ['woff', 'ttf'],
-      weight: 'regular',
-      style: 'italic',
-      role: 'body'
-    },
-    {
-      name: 'Guardian Sans Light',
-      stack: 'Trebuchet, Lucida Grande, Verdana, sans-serif',
-      file: '/fonts/GuardianSans-Light-Web',
-      formats: ['woff', 'ttf'],
-      weight: 'light',
-      style: 'normal',
-      role: 'accent'
+      variants: [
+        { weight: 'normal' },
+        {
+          weight: 'normal',
+          style: 'italic'
+        }
+      ]
     },
     {
       name: 'Guardian Sans',
       stack: 'Trebuchet, Lucida Grande, Verdana, sans-serif',
-      file: '/fonts/GuardianSans-Regular-Web',
+      role: 'accent',
+      file: '/fonts/GuardianSans-Light-Web',
       formats: ['woff', 'ttf'],
-      weight: 'regular',
-      style: 'normal',
-      role: 'accent'
-    },
-    {
-      name: 'Guardian Sans Bold',
-      stack: 'Trebuchet, Lucida Grande, Verdana, sans-serif',
-      file: '/fonts/GuardianSans-Semibold-Web',
-      formats: ['woff', 'ttf'],
-      weight: 'bold',
-      style: 'normal',
-      role: 'accent'
+      variants: [
+        { weight: 'light' }, 
+        { weight: 'normal' },
+        { weight: 'bold' }
+      ]
     }
   ],
   scale: {

@@ -9,7 +9,7 @@
 
   $: horizontalClass = breakpoint == 'none'
     ? 'horizontal'
-    : `horizontal@${breakpoint}`
+    : `${breakpoint}:horizontal`
 
   $: itemWidthStyle = itemWidth
     ? `--item-width: ${itemWidth};`

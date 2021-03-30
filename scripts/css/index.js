@@ -20,7 +20,7 @@ const outputPath = '../../static/stylesheets'
 const customProperties = `
 	/* --- Global custom properties --- */
 	:root {
-		${[color, breakpoints, spacing].map(styles => `
+		${[color, breakpoints, spacing, type].map(styles => `
 			/* --- ${styles.name} --- */
 			${styles.customProperties.join('')}
 		`).join('\n')}
