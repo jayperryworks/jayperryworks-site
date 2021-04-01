@@ -1,6 +1,8 @@
 const { type } = require('../../content/design-tokens.js')
 const { helpers: theme } = require('./color.js')
 
+const radius = 0.2
+
 function add ({
 	side = 'all',
 	width = 'thin',
@@ -15,6 +17,9 @@ function add ({
 
 module.exports = {
 	name: 'Borders',
+	customProperties: [
+		`--border-radius: ${radius}em;`
+	],
 	helpers: {
 		add
 	},
@@ -33,7 +38,7 @@ module.exports = {
 		}
 
 		.border-round {
-			border-radius: 0.2rem;
+			border-radius: ${radius}em;
 		}
 
 		${['top', 'right', 'bottom', 'left'].map(side => `

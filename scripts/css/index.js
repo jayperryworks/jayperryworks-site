@@ -7,6 +7,7 @@ const color = require('./color.js')
 const spacing = require('./spacing.js')
 const type = require('./type.js')
 const visibility = require('./visibility.js')
+const specialEffects = require('./specialEffects.js')
 
 function render (type, modules) {
 	return modules.map(styles => `
@@ -32,7 +33,7 @@ const base = `
 `
 const utilities = `
 	/* --- Utility classes --- */
-	${render('utilities', [color, spacing, type, borders, visibility])}
+	${render('utilities', [color, spacing, type, borders, specialEffects, visibility])}
 `
 
 if (!fs.existsSync(path.join(__dirname, outputPath))) {
