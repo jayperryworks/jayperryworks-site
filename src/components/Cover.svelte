@@ -13,33 +13,7 @@
 	export { classes as class }
 </script>
 
-<style>
-	.container {
-		text-align: center;
-		font-size: 0;
-	}
-
-	.container {
-		:global(img) {
-			display: block;
-			margin: 0 auto;
-			max-height: 600px;
-			max-height: 80vh;
-			font-size: 1rem;
-		}
-
-		&.small {
-			:global(img) {
-				max-height: 50vh;
-			}
-		}
-	}
-</style>
-
-<div
-	class="container {classes}"
-	class:small={height === 'small'}
->
+<div class="container {classes}">
 	<Figure
 		{sources}
 		{alt}
@@ -50,3 +24,18 @@
 		class="display-inline-block"
 	/>
 </div>
+
+<style>
+	.container {
+		text-align: center;
+		font-size: 0;
+	}
+
+	.container :global(img) {
+		display: block;
+		margin: 0 auto;
+		max-height: 600px;
+		max-height: 80vh;
+		font-size: 1rem;
+	}
+</style>
