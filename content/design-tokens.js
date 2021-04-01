@@ -1,14 +1,5 @@
-const modularscale = require('modularscale-js')
-
 // base scale
-// -> config object for modularscale library
-const scale = {
-  config: {
-    base: [1],
-    ratio: 1.2
-  },
-  get: (value) => modularscale(value, scale.config).toFixed(2)
-};
+const scale = 1.2
 
 // helper to tweak props of a palette color
 function modifyColor(color, {
@@ -59,7 +50,7 @@ const type = {
   fonts: [
     {
       name: 'Publico Headline',
-      stack: 'Publico, Georgia, Times, Times New Roman, serif',
+      stack: "'Publico', 'Georgia', 'Times', 'Times New Roman', serif",
       role: 'display',
       file: '/fonts/PublicoHeadline-Roman-Web',
       formats: ['woff', 'ttf'],
@@ -67,7 +58,7 @@ const type = {
     },
     {
       name: 'Publico Text',
-      stack: 'Publico, Georgia, Times, Times New Roman, serif',
+      stack: "'Publico', 'Georgia', 'Times', 'Times New Roman', serif",
       role: 'body',
       file: '/fonts/PublicoText-Roman-Web',
       formats: ['woff', 'ttf'],
@@ -81,7 +72,7 @@ const type = {
     },
     {
       name: 'Guardian Sans',
-      stack: 'Trebuchet, Lucida Grande, Verdana, sans-serif',
+      stack: "'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif",
       role: 'accent',
       file: '/fonts/GuardianSans-Light-Web',
       formats: ['woff', 'ttf'],
@@ -93,12 +84,12 @@ const type = {
     }
   ],
   scale: {
-    alpha: { base: scale.get(4), fluid: 5, max: scale.get(8) },
-    beta: { base: scale.get(3), fluid: 3, max: scale.get(6) },
-    gamma: { base: scale.get(2), fluid: 2, max: scale.get(4) },
-    delta: { base: scale.get(1), fluid: 1, max: scale.get(2) },
-    epsilon: { base: scale.get(0) },
-    zeta: { base: scale.get(-1) },
+    alpha: { base: 4, fluid: 5, max: 8 },
+    beta: { base: 3, fluid: 3, max: 6 },
+    gamma: { base: 2, fluid: 2, max: 4 },
+    delta: { base: 1, fluid: 1, max: 2 },
+    epsilon: { base: 0 },
+    zeta: { base: -1 },
   },
   leading: {
     tight: 1.2,
@@ -110,13 +101,13 @@ const type = {
 
 const spacing = {
   scale: {
-    xxxnarrow: scale.get(-12),
-    xxnarrow: scale.get(-8),
-    xnarrow: scale.get(-4),
-    narrow: scale.get(-2),
-    medium: scale.get(1),
-    wide: scale.get(3),
-    xwide: scale.get(6)
+    xxxnarrow: -12,
+    xxnarrow: -8,
+    xnarrow: -4,
+    narrow: -2,
+    medium: 1,
+    wide: 3,
+    xwide: 6
   },
   outside: {
     default: 'narrow',
@@ -141,6 +132,7 @@ module.exports = {
     palette,
     themes
   },
+  scale,
   type,
   spacing,
   breakpoints

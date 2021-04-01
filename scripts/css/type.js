@@ -2,6 +2,7 @@ const { type } = require('../../content/design-tokens.js')
 const { helpers: color } = require('./color.js')
 const { helpers: border } = require('./borders.js')
 const { helpers: breakpoints } = require('./breakpoints.js')
+const { helpers: scale } = require('./scale.js')
 
 function webfont (name, filename, {
 	formats = ['woff', 'ttf'],
@@ -24,23 +25,35 @@ function webfont (name, filename, {
 function font (role) {
 	const font = type.fonts.find((font) => font.role === role)
 
-	return `${font.name}, ${font.stack};`
+	return `'${font.name}', ${font.stack};`
 }
 
 function middleSize (minSize, maxSize) {
-	minSize = Number.parseFloat(minSize)
-	maxSize = Number.parseFloat(maxSize)
+	minSize = scale.get(minSize, { unit: false })
+	maxSize = scale.get(maxSize, { unit: false })
 	return ((minSize + maxSize) / 2).toFixed(2)
 }
 
 function fluidScale (minSize, maxSize, fluidTarget = 2) {
 	return `
 		clamp(
-			${Number.parseFloat(minSize).toFixed(2)}rem,
+			${scale.get(minSize)},
 			calc(1rem + ${fluidTarget}vw),
-			${Number.parseFloat(maxSize).toFixed(2)}rem
+			${scale.get(maxSize)}
 		);
 	`
+}
+
+function fontSize (size) {
+	const { base, fluid, max } = type.scale[size]
+
+	if (max) {
+		return `
+			font-size: ${middleSize(base, max)}rem;
+			font-size: ${fluidScale(base, max, fluid)};
+		`
+	}
+	return `font-size: ${scale.get(base)};`
 }
 
 const heading = `
@@ -59,14 +72,15 @@ module.exports = {
 			return `
 				--type-scale-${size}: ${max 
 					? fluidScale(base, max, fluid)
-					: `${base}rem`
+					: scale.get(base)
 				};
 			`
 		}),
 		...type.fonts.map(f => `--type-font-${f.role}: ${font(f.role)};`)
 	],
 	helpers: {
-		font
+		font,
+		fontSize
 	},
 	base: `
 		/* webfonts */
@@ -84,6 +98,12 @@ module.exports = {
 		h6 {
 			${heading}
 		}
+
+		${Object.keys(type.scale).map((size, index) => `
+			h${index + 1} {
+				${fontSize(size)}
+			}
+		`).join('')}
 
 		p {
 			color: inherit;
@@ -150,22 +170,11 @@ module.exports = {
 		}
 
 		/* scale */
-		${Object.keys(type.scale).map((size, index) => {
-			const { base, fluid, max } = type.scale[size]
-
-			return `
-				h${index + 1},
-				.type-scale-${size} {
-					${max
-						? `
-								font-size: ${middleSize(base, max)}rem;
-								font-size: ${fluidScale(base, max, fluid)};
-							`
-						: `font-size: ${Number.parseFloat(base).toFixed(2)}rem;`
-					}
-				}
-			`
-		}).join('')}
+		${Object.keys(type.scale).map((size) => `
+			.type-scale-${size} {
+				${fontSize(size)}
+			}
+		`).join('')}
 
 		/* leading */
 		${Object.keys(type.leading).map(size => `

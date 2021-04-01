@@ -1,62 +1,29 @@
 <script>
   import ResponsiveImage from '@/components/ResponsiveImage.svelte'
   import ResponsivePicture from '@/components/ResponsivePicture.svelte'
+  import scale from 'css/scale.js'
 
   export let sources,
     alt,
-    ratio = '3x1',
+    ratioX = 3,
+    ratioY = 1,
+    useScale = true,
     cover = false,
     contain = false
 
   let classes = ''
   export { classes as class }
 
+  $: scaleX = useScale ? scale.helpers.get(ratioX) : ratioX
+  $: scaleY = useScale ? scale.helpers.get(ratioY) : ratioY
+
   $: versions = sources.versions && sources.versions.length > 1
 </script>
 
-<style type="text/scss">
-  @use 'config/scale';
-
-  @mixin _aspect-variation($w: 3, $h: 1, $use-scale: true) {
-    .ratio-#{$w}x#{$h} {
-      &::before {
-        @if $use-scale {
-          padding-top: (scale.get($h) / scale.get($w) * 100%);
-        } @else {
-          padding-top: ($h / $w * 100%);
-        }
-      }
-    }
-  }
-
-  .aspect {
-    position: relative;
-    width: 100%;
-
-    &::before {
-      content: '';
-      display: block;
-    }
-  }
-
-  // --- elements ---
-  .content {
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-
-    @supports (display: flex) {
-      display: flex;
-    }
-  }
-
-  // --- variations ---
-  @include _aspect-variation();
-</style>
-
-<div class="aspect ratio-{ratio} {classes}">
+<div 
+  class="aspect {classes}"
+  style="--ratio-x: {scaleX}; --ratio-y: {scaleY};"
+>
   <div class="content">
     {#if versions}
     	<ResponsivePicture
@@ -75,3 +42,44 @@
     {/if}
   </div>
 </div>
+
+<style>
+  .aspect {
+    /* default at 1:1 - use JS above to calculate scale as needed */
+    --ratio-x: 1;
+    --ratio-y: 1;
+
+    position: relative;
+    width: 100%;
+    padding-top: calc((var(--ratio-x) / var(--ratio-y)) * 100%);
+  }
+
+  .aspect::before {
+    content: '';
+    display: block;
+  }
+
+  .content {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    @supports (display: flex) {
+      display: flex;
+    }
+  }
+
+  @supports (aspect-ratio: var(--ratio-x) / var(--ratio-y)) {
+    .aspect {
+      aspect-ratio: var(--ratio-x) / var(--ratio-y);
+      padding-top: 0;
+    }
+
+    .aspect::before {
+      content: none;
+      display: none;
+    }
+  }
+</style>

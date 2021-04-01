@@ -26,6 +26,10 @@ const aliases = alias({
       replacement: `${__dirname}/src`
     },
     {
+    	find: 'css',
+    	replacement: `${__dirname}/css`
+    },
+    {
       find: 'icons',
       replacement: `${__dirname}/static/images/icons`
     }

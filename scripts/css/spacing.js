@@ -1,7 +1,9 @@
 const { spacing, breakpoints } = require('../../content/design-tokens.js')
+const { helpers: scale } = require('./scale.js')
+
 
 function get (name = 'medium', unit = 'rem') {
-	return `${spacing.scale[name]}${unit}`
+	return scale.get(spacing.scale[name], unit)
 }
 
 module.exports = {
