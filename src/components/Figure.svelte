@@ -16,13 +16,6 @@
 	$: versions = sources.versions && sources.versions.length > 1
 </script>
 
-<style type="text/scss">
-	figure {
-		margin: 0;
-		text-align: center;
-	}
-</style>
-
 <figure class={classes}>
 	<slot>
 		{#if versions}
@@ -45,3 +38,10 @@
 		<Caption {caption} {credit} />
 	{/if}
 </figure>
+
+<style>
+	figure {
+		margin: 0;
+		text-align: center;
+	}
+</style>
