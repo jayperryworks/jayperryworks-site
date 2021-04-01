@@ -24,7 +24,6 @@
 
 <script>
 	import { format } from 'date-fns'
-	import Card from '@/components/Card.svelte'
 	import Cover from '@/components/Cover.svelte'
 	import Figure from '@/components/Figure.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'

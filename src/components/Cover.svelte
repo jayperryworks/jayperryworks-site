@@ -13,7 +13,7 @@
 	export { classes as class }
 </script>
 
-<style type="text/scss">
+<style>
 	.container {
 		text-align: center;
 		font-size: 0;
