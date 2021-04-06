@@ -14,15 +14,17 @@
   let classes = ''
   export { classes as class }
 
-  $: scaleX = useScale ? scale.helpers.get(ratioX) : ratioX
-  $: scaleY = useScale ? scale.helpers.get(ratioY) : ratioY
+  $: scale = {
+    x: useScale ? scale.helpers.get(ratioX) : ratioX,
+    y: useScale ? scale.helpers.get(ratioY) : ratioY
+  }
 
   $: versions = sources.versions && sources.versions.length > 1
 </script>
 
 <div 
   class="aspect {classes}"
-  style="--ratio-x: {scaleX}; --ratio-y: {scaleY};"
+  style="--ratio-x: {scale.x}; --ratio-y: {scale.y};"
 >
   <div class="content">
     {#if versions}
