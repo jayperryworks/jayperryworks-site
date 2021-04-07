@@ -1,0 +1,19 @@
+label: Passage
+name: passage
+widget: object
+fields:
+  - label: Type
+    name: type
+    widget: hidden
+    default: passage
+
+  - label: Use in excerpt
+    name: useInExcerpt
+    widget: boolean
+    default: false
+    hint: Include this section in the post excerpt?
+
+  - label: Content
+    name: markdown
+    widget: markdown
+    required: false

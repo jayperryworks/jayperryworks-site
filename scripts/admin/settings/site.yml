@@ -1,0 +1,60 @@
+label: Site
+name: site
+file: source/content/site.yml
+format: yml
+editor:
+  preview: false
+fields:
+  - label: Organization
+    name: organization
+    widget: object
+    fields:
+      - label: Full name
+        name: fullName
+        widget: string
+        required: true
+      - label: Short name
+        name: shortName
+        widget: string
+        required: true
+  - label: Site title
+    name: title
+    widget: string
+    required: false
+    default: Styleguide
+  - label: Logo
+    name: logo
+    widget: object
+    fields:
+      - label: Cover
+        name: cover
+        widget: object
+        fields:
+          - label: Default
+            name: default
+            widget: image
+            required: true
+          - label: Reverse
+            name: reverse
+            widget: image
+            required: false
+          - label: Wash
+            name: wash
+            widget: image
+            required: false
+      - label: Header
+        name: header
+        widget: object
+        fields:
+          - label: Default
+            name: default
+            widget: image
+            required: true
+          - label: Reverse
+            name: reverse
+            widget: image
+            required: false
+          - label: Wash
+            name: wash
+            widget: image
+            required: false

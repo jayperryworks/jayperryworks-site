@@ -28,7 +28,7 @@ async function render(pages, {
 
 fs.writeFileSync(
   path.join(__dirname, '../static/sitemap.xml'),
-  render([
+  await render([
     ...siteData.get('pages'),
     ...generatePictureList(
       path.join(__dirname, '../content/pictures')
