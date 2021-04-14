@@ -7,6 +7,7 @@
 				"prep:sitemap": "node ./scripts/sitemap",
 				"prep:redirects": "node ./scripts/redirects",
 				"prep:images": "node ./scripts/optimizeImages.js",
+				"prep:cms": "node ./scripts/cms/config.js",
 				"prep": "run-s prep:*",
 				"dev": "sapper dev",
 				"build": "sapper build --legacy",
