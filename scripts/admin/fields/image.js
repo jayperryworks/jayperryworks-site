@@ -1,8 +1,8 @@
 module.exports = ({ required = true } = {}) => {
 	return {
-		label: 'Title',
-		name: 'title',
-		widget: 'string',
+		label: 'Image',
+		name: 'image',
+		widget: 'image',
 		required
 	}
 }

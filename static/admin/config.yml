@@ -1,7 +1,10 @@
 backend:
   name: github
+  repo: jayperryworks/jayperryworks-site
+  branch: master
 media_folder: source/assets/uploads
 public_folder: /uploads
+site_url: 'https://jayperryworks.com'
 publish_mode: editorial_workflow
 collections:
   - label: Blog
@@ -13,10 +16,10 @@ collections:
     editor:
       preview: false
     fields:
-      - &ref_2
-        label: Title
+      - label: Title
         name: title
         widget: string
+        required: true
       - label: Subtitle
         name: subtitle
         widget: string
@@ -34,21 +37,21 @@ collections:
             name: border
             widget: boolean
             default: false
-          - &ref_0
-            label: Alt
+          - label: Alt
             name: alt
             widget: string
             required: false
             hint: >-
               Add an alt attribute to describe the image for screen readers,
               etc.
-          - label: Resize
+          - label: Optimize the image(s)
             name: resize
             widget: boolean
             default: false
           - label: Caption
             name: caption
-            widget: string
+            widget: markdown
+            minimal: true
             required: false
           - label: Credit
             name: credit
@@ -62,27 +65,7 @@ collections:
         name: body
         widget: list
         required: false
-        types:
-          - label: Heading
-            name: heading
-            widget: object
-            fields:
-              - label: Type
-                name: type
-                widget: hidden
-                default: heading
-              - label: Level
-                name: level
-                widget: number
-                value_type: int
-                min: 1
-                max: 6
-                required: false
-                default: 2
-              - label: Content
-                name: inlineMarkdown
-                widget: markdown
-                required: false
+        types: &ref_0
           - label: Figure
             name: figure
             widget: object
@@ -91,8 +74,7 @@ collections:
                 name: type
                 widget: hidden
                 default: figure
-              - &ref_1
-                label: Use in excerpt
+              - label: Use in excerpt
                 name: useInExcerpt
                 widget: boolean
                 default: false
@@ -121,7 +103,13 @@ collections:
                 name: border
                 widget: boolean
                 default: false
-              - *ref_0
+              - label: Alt
+                name: alt
+                widget: string
+                required: false
+                hint: >-
+                  Add an alt attribute to describe the image for screen readers,
+                  etc.
               - label: Caption
                 name: caption
                 widget: markdown
@@ -140,7 +128,11 @@ collections:
                 name: type
                 widget: hidden
                 default: gallery
-              - *ref_1
+              - label: Use in excerpt
+                name: useInExcerpt
+                widget: boolean
+                default: false
+                hint: Include this section in the post excerpt?
               - label: Prominence
                 name: prominence
                 widget: select
@@ -172,12 +164,155 @@ collections:
                   - label: Image
                     name: image
                     widget: image
-                  - *ref_0
+                    required: true
+                  - label: Alt
+                    name: alt
+                    widget: string
+                    required: false
+                    hint: >-
+                      Add an alt attribute to describe the image for screen
+                      readers, etc.
               - label: Caption
                 name: inlineMarkdown
                 widget: markdown
                 minimal: true
                 required: false
+          - label: Heading
+            name: heading
+            widget: object
+            fields:
+              - label: Type
+                name: type
+                widget: hidden
+                default: heading
+              - label: Level
+                name: level
+                widget: number
+                value_type: int
+                min: 1
+                max: 6
+                required: false
+                default: 2
+              - label: Content
+                name: markdown
+                widget: markdown
+                required: false
+          - label: Note
+            name: note
+            widget: object
+            hint: >-
+              An aside that speaks about the text, e.g. an intro note or
+              acknowledgements at the end
+            fields:
+              - label: Type
+                name: type
+                widget: hidden
+                default: note
+              - label: Use in excerpt
+                name: useInExcerpt
+                widget: boolean
+                default: false
+                hint: Include this section in the post excerpt?
+              - label: Content
+                name: markdown
+                widget: markdown
+                required: false
+          - label: Passage
+            name: passage
+            widget: object
+            fields:
+              - label: Type
+                name: type
+                widget: hidden
+                default: passage
+              - label: Use in excerpt
+                name: useInExcerpt
+                widget: boolean
+                default: false
+                hint: Include this section in the post excerpt?
+              - label: Content
+                name: markdown
+                widget: markdown
+                required: false
+          - label: Section
+            name: sectionStart
+            hint: Used to mark off the start of a new section of content.
+            widget: object
+            fields:
+              - label: Unique ID
+                name: uid
+                widget: string
+              - label: Short title
+                name: shortTitle
+                widget: string
+              - label: Type
+                name: type
+                widget: hidden
+                default: sectionStart
+          - label: Table
+            name: table
+            widget: object
+            fields:
+              - label: Type
+                name: type
+                widget: hidden
+                default: table
+              - label: Use in excerpt
+                name: useInExcerpt
+                widget: boolean
+                default: false
+                hint: Include this section in the post excerpt?
+              - label: Prominence
+                name: prominence
+                widget: select
+                required: false
+                default: medium
+                hint: >-
+                  Specify how wide this block should be, relative to the page
+                  layout.
+                options:
+                  - small
+                  - medium
+                  - large
+              - label: Heading Columns
+                name: headingColumns
+                widget: list
+                required: false
+                hint: >-
+                  Columns that appear bold and function as headings for their
+                  rows
+              - label: Header cells
+                name: header
+                widget: list
+                hint: 'The top row, which defines the values in the rest of the table'
+                fields:
+                  - label: Label
+                    name: label
+                    widget: string
+                  - label: Text alignment
+                    name: align
+                    widget: select
+                    options:
+                      - left
+                      - center
+                      - right
+                    default: left
+              - label: Body rows
+                name: body
+                widget: list
+                required: false
+                fields:
+                  label: Cells
+                  name: cell
+                  widget: list
+              - label: Footer rows
+                name: footer
+                widget: list
+                required: false
+                fields:
+                  - label: Cells
+                    name: cell
+                    widget: list
   - label: Pictures
     name: pictures
     folder: content/pictures
@@ -187,7 +322,10 @@ collections:
     editor:
       preview: false
     fields:
-      - *ref_2
+      - label: Title
+        name: title
+        widget: string
+        required: true
       - label: Date
         name: date
         widget: date
@@ -259,12 +397,6 @@ collections:
             widget: number
             valueType: int
             required: false
-          - label: Border
-            name: border
-            hint: 'Physical border, in inches'
-            widget: number
-            valueType: int
-            required: false
           - label: Price
             name: price
             widget: number
@@ -281,3 +413,129 @@ collections:
           - label: Photo
             name: photo
             widget: image
+  - label: Pages
+    name: pages
+    editor:
+      preview: false
+    files:
+      - name: home
+        label: Home page
+        file: content/home.yml
+        format: yml
+        create: false
+        fields:
+          - label: Intro
+            name: intro
+            widget: object
+            fields:
+              - label: Headline
+                name: headline
+                widget: string
+              - label: blurb
+                name: Blurb
+                widget: markdown
+                required: false
+              - label: cta
+                widget: object
+                required: false
+                fields:
+                  - label: Label
+                    name: label
+                    widget: string
+                  - label: Link
+                    name: link
+                    widget: string
+          - label: Table of contents
+            name: tableOfContents
+            widget: object
+            fields:
+              - label: Pictures
+                name: pictures
+                widget: object
+                fields:
+                  - label: Heading
+                    name: heading
+                    widget: string
+                  - label: Slug
+                    name: slug
+                    widget: string
+                  - label: blurb
+                    name: Blurb
+                    widget: markdown
+                    required: false
+                  - label: Cover image
+                    name: coverImage
+                    widget: image
+                  - label: cta
+                    widget: object
+                    required: false
+                    fields:
+                      - label: Label
+                        name: label
+                        widget: string
+                      - label: Link
+                        name: link
+                        widget: string
+              - label: Blog
+                name: blog
+                widget: object
+                fields:
+                  - label: Heading
+                    name: heading
+                    widget: string
+                  - label: Slug
+                    name: slug
+                    widget: string
+                  - label: List
+                    name: list
+                    widget: object
+                    fields:
+                      - label: Source
+                        name: source
+                        widget: string
+                      - label: Length
+                        name: length
+                        widget: number
+                        default: 8
+                        value_type: int
+                        min: 0
+                  - label: cta
+                    widget: object
+                    required: false
+                    fields:
+                      - label: Label
+                        name: label
+                        widget: string
+                      - label: Link
+                        name: link
+                        widget: string
+      - name: about
+        label: About
+        file: content/about.yml
+        format: yml
+        create: false
+        fields:
+          - label: Title
+            name: title
+            widget: string
+          - label: Cover image
+            name: cover
+            widget: object
+            required: false
+            fields:
+              - label: Image
+                name: image
+                widget: image
+              - label: Alt
+                name: alt
+                widget: string
+                required: false
+              - label: Caption
+                name: caption
+                widget: string
+                required: false
+          - label: Body blocks
+            name: body
+            widget: list
+            required: false
+            types: *ref_0

@@ -1,20 +1,18 @@
 const alt = require('../fields/alt.js')
+const blockType = require('../fields/blockType.js')
 const prominence = require('../fields/prominence.js')
 const resize = require('../fields/resize.js')
 const useInExcerpt = require('../fields/useInExcerpt.js')
+const image = require('../fields/image.js')
+const caption = require('../fields/caption.js')
 
 module.exports = {
   label: 'Figure',
   name: 'figure',
   widget: 'object',
   fields: [
-    {
-      label: 'Type',
-      name: 'type',
-      widget: 'hidden',
-      default: 'figure'
-    },
-    useInExcerpt,
+    blockType('figure'),
+    useInExcerpt(),
     prominence(),
     {
       label: 'Image',
@@ -28,14 +26,8 @@ module.exports = {
       widget: 'boolean',
       default: false
     },
-    alt,
-    {
-      label: 'Caption',
-      name: 'caption',
-      widget: 'markdown',
-      minimal: true,
-      required: false
-    },
+    alt(),
+    caption(),
     {
       label: 'Attribution',
       name: 'attribution',

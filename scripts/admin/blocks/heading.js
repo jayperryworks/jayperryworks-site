@@ -1,14 +1,12 @@
+const blockType = require('../fields/blockType.js')
+const content = require('../fields/content.js')
+
 module.exports = {
 	label: 'Heading',
 	name: 'heading',
 	widget: 'object',
 	fields: [
-		{
-			label: 'Type',
-			name: 'type',
-			widget: 'hidden',
-			default: 'heading'
-		},
+		blockType('heading'),
 		{
 			label: 'Level',
 			name: 'level',
@@ -19,11 +17,6 @@ module.exports = {
 			required: false,
 			default: 2
 		},
-		{
-			label: 'Content',
-			name: 'inlineMarkdown',
-			widget: 'markdown',
-			required: false
-		}
+		content('inlineMarkdown')
 	]
 }

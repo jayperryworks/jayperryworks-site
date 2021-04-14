@@ -1,4 +1,6 @@
 const alt = require('../fields/alt.js')
+const caption = require('../fields/caption.js')
+const image = require('../fields/image.js')
 const prominence = require('../fields/prominence.js')
 const resize = require('../fields/resize.js')
 const useInExcerpt = require('../fields/useInExcerpt.js')
@@ -14,7 +16,7 @@ module.exports = {
       widget: 'hidden',
       default: 'gallery'
     },
-    useInExcerpt,
+    useInExcerpt(),
     prominence(),
     {
       label: 'Size',
@@ -32,20 +34,10 @@ module.exports = {
       name: 'images',
       widget: 'list',
       fields: [
-        {
-          label: 'Image',
-          name: 'image',
-          widget: 'image'
-        },
-        alt
+        image(),
+        alt()
       ]
     },
-    {
-      label: 'Caption',
-      name: 'inlineMarkdown',
-      widget: 'markdown',
-      minimal: true,
-      required: false
-    }
+    caption({ name: 'inlineMarkdown' })
   ]
 }

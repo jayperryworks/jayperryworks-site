@@ -1,1 +1,0 @@
-{"label":"Section","name":"section-start","hint":"Used to mark off the start of a new section of content.","widget":"object","fields":[{"label":"Unique ID","name":"uid","widget":"string"},{"label":"Short title","name":"short-title","widget":"string"},{"label":"Type","name":"type","widget":"hidden","default":"section-start"}]}

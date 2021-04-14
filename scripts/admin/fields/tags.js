@@ -1,6 +1,8 @@
-module.exports = {
-	label: 'Tags',
-	name: 'tags',
-	widget: 'list',
-	required: false
+module.exports = ({ required = false } = {}) => {
+	return {
+		label: 'Tags',
+		name: 'tags',
+		widget: 'list',
+		required
+	}
 }
