@@ -56,6 +56,7 @@ module.exports = {
 			label: 'Intro',
 			name: 'intro',
 			widget: 'markdown',
+			modes: [ 'raw' ],
 			required: false
 		},
 		{

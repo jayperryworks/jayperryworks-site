@@ -45,11 +45,13 @@ module.exports = {
 			name: 'body',
 			widget: 'list',
 			required: false,
-			fields: {
-				label: 'Cells',
-				name: 'cell',
-				widget: 'list'
-			}
+			fields: [
+				{
+					label: 'Cells',
+					name: 'cell',
+					widget: 'list'
+				}
+			]
 		},
 		{
 			label: 'Footer rows',

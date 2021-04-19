@@ -19,8 +19,8 @@ module.exports = {
 					widget: 'string'
 				},
 				content({
-					name: 'Blurb',
-					label: 'blurb'
+					label: 'Blurb',
+					name: 'blurb'
 				}),
 				callToAction()
 			]
@@ -46,8 +46,8 @@ module.exports = {
 							widget: 'string'
 						},
 						content({
-							name: 'Blurb',
-							label: 'blurb'
+							label: 'Blurb',
+							name: 'blurb'
 						}),
 						{
 							label: 'Cover image',

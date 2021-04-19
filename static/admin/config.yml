@@ -1,7 +1,7 @@
 backend:
   name: github
   repo: jayperryworks/jayperryworks-site
-  branch: master
+  branch: cms-config
 media_folder: source/assets/uploads
 public_folder: /uploads
 site_url: 'https://jayperryworks.com'
@@ -51,6 +51,8 @@ collections:
           - label: Caption
             name: caption
             widget: markdown
+            modes:
+              - raw
             minimal: true
             required: false
           - label: Credit
@@ -113,6 +115,8 @@ collections:
               - label: Caption
                 name: caption
                 widget: markdown
+                modes:
+                  - raw
                 minimal: true
                 required: false
               - label: Attribution
@@ -175,6 +179,8 @@ collections:
               - label: Caption
                 name: inlineMarkdown
                 widget: markdown
+                modes:
+                  - raw
                 minimal: true
                 required: false
           - label: Heading
@@ -196,6 +202,9 @@ collections:
               - label: Content
                 name: markdown
                 widget: markdown
+                modes:
+                  - raw
+                buttons: []
                 required: false
           - label: Note
             name: note
@@ -216,6 +225,9 @@ collections:
               - label: Content
                 name: markdown
                 widget: markdown
+                modes:
+                  - raw
+                buttons: []
                 required: false
           - label: Passage
             name: passage
@@ -233,6 +245,9 @@ collections:
               - label: Content
                 name: markdown
                 widget: markdown
+                modes:
+                  - raw
+                buttons: []
                 required: false
           - label: Section
             name: sectionStart
@@ -302,9 +317,9 @@ collections:
                 widget: list
                 required: false
                 fields:
-                  label: Cells
-                  name: cell
-                  widget: list
+                  - label: Cells
+                    name: cell
+                    widget: list
               - label: Footer rows
                 name: footer
                 widget: list
@@ -369,6 +384,8 @@ collections:
       - label: Intro
         name: intro
         widget: markdown
+        modes:
+          - raw
         required: false
       - label: Editions
         name: editions
@@ -431,11 +448,15 @@ collections:
               - label: Headline
                 name: headline
                 widget: string
-              - label: blurb
-                name: Blurb
+              - label: Blurb
+                name: blurb
                 widget: markdown
+                modes:
+                  - raw
+                buttons: []
                 required: false
-              - label: cta
+              - label: Call to action
+                name: cta
                 widget: object
                 required: false
                 fields:
@@ -459,14 +480,18 @@ collections:
                   - label: Slug
                     name: slug
                     widget: string
-                  - label: blurb
-                    name: Blurb
+                  - label: Blurb
+                    name: blurb
                     widget: markdown
+                    modes:
+                      - raw
+                    buttons: []
                     required: false
                   - label: Cover image
                     name: coverImage
                     widget: image
-                  - label: cta
+                  - label: Call to action
+                    name: cta
                     widget: object
                     required: false
                     fields:
@@ -499,7 +524,8 @@ collections:
                         default: 8
                         value_type: int
                         min: 0
-                  - label: cta
+                  - label: Call to action
+                    name: cta
                     widget: object
                     required: false
                     fields:

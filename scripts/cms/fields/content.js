@@ -7,6 +7,8 @@ module.exports = ({
 		label,
 		name,
 		widget: 'markdown',
+		modes: ['raw' ],
+		buttons: [],
 		required
 	}
 }

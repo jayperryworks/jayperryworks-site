@@ -6,6 +6,7 @@ module.exports = ({
 		label: 'Caption',
 		name,
 		widget: 'markdown',
+		modes: [ 'raw' ],
 		minimal: true,
 		required
 	}

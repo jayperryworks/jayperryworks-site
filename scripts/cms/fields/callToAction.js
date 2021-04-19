@@ -1,7 +1,7 @@
 module.exports = ({ required = false } = {}) => {
 	return {
 		label: 'Call to action',
-		label: 'cta',
+		name: 'cta',
 		widget: 'object',
 		required,
 		fields: [
