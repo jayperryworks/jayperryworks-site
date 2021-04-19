@@ -14,6 +14,6 @@ module.exports = {
     }
 	},
 	customProperties: [
-		`--scale-ratio: ${scale};`
+		`--scale-ratio: ${ratio};`
 	]
 }
