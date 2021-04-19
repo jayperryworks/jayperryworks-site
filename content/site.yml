@@ -37,4 +37,4 @@ collections:
 git:
   host: github
   repository: jayperryworks/jayperryworks-site
-  deployBranch: cms-config
+  deployBranch: master
