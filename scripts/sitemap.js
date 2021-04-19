@@ -6,7 +6,7 @@ const generatePictureList = require('../src/utils/generatePictureList.js')
 const generateBlogList = require('../src/utils/generateBlogList.js')
 const siteData = require('../src/utils/siteData.js')
 
-async function render(pages, {
+function render(pages, {
   change = 'yearly',
   priority = 0.6
 } = {}) {
@@ -28,7 +28,7 @@ async function render(pages, {
 
 fs.writeFileSync(
   path.join(__dirname, '../static/sitemap.xml'),
-  await render([
+  render([
     ...siteData.get('pages'),
     ...generatePictureList(
       path.join(__dirname, '../content/pictures')
