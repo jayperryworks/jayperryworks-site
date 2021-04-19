@@ -5,9 +5,11 @@ yarn-error.log
 npm-debug.log
 /cypress/screenshots/
 /__sapper__/
-# ignore generated sitemap and rss feed
+
+# ignore generated static files
 /static/sitemap.xml
 /static/rss.xml
 /static/_redirects
 /static/images/resizes
 /static/stylesheets
+/static/admin/config.yml

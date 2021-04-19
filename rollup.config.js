@@ -6,13 +6,13 @@ import pkg from './package.json';
 import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 import svelte from 'rollup-plugin-svelte';
-import svg from 'rollup-plugin-svg';
 import url from '@rollup/plugin-url';
 import { terser } from 'rollup-plugin-terser';
 
 // packages I added
+import svg from 'rollup-plugin-svg';
 import sveltePreprocess from 'svelte-preprocess';
-import alias from 'rollup-plugin-alias';
+import alias from '@rollup/plugin-alias';
 
 const preprocess = sveltePreprocess({
   postcss: true
