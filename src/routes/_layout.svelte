@@ -5,6 +5,16 @@
   const { preloading } = stores()
 </script>
 
+<div
+  id="spine-wrapper"
+  class:loading={$preloading}
+>
+  <div id="main-wrapper">
+    <slot></slot>
+  </div>
+  <MainFooter />
+</div>
+
 <style global>
   /* Sticky footer setup */
   html {
@@ -96,13 +106,3 @@
     }
   }
 </style>
-
-<div
-  id="spine-wrapper"
-  class:loading={$preloading}
->
-  <div id="main-wrapper">
-    <slot></slot>
-  </div>
-  <MainFooter />
-</div>
