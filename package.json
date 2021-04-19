@@ -57,7 +57,7 @@
     "prettier": "2.2.1",
     "prettify-xml": "^1.2.0",
     "rollup": "^2.42.0",
-    "rollup-plugin-svelte": "^5.2.3",
+    "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-svg": "^2.0.0",
     "rollup-plugin-svgo": "^1.1.0",
     "rollup-plugin-terser": "^7.0.2",
