@@ -55,12 +55,6 @@
 	$: formattedDate = format(new Date(date.year, 0), 'yyyy')
 </script>
 
-<style>
-	.outdent-heading {
-		margin-top: -0.1em;
-	}
-</style>
-
 <PageTitle title="{post.title}" />
 
 <MainNav segment="pictures" theme="reverse" />
@@ -159,3 +153,9 @@
 		<NextPrevThumbNav {nav} heading="More prints &amp; paintings" />
 	{/if}
 </main>
+
+<style>
+	.outdent-heading {
+		margin-top: -0.1em;
+	}
+</style>

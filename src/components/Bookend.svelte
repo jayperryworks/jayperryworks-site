@@ -37,10 +37,7 @@
   </div>
 </div>
 
-<style type="text/scss">
-  @use 'config/breakpoints';
-  @use 'bourbon';
-
+<style>
   .bookend {
     display: block;
     position: relative;
@@ -55,6 +52,34 @@
     float: none;
     position: relative;
     vertical-align: middle;
+  }
+
+  .horizontal {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .horizontal .item {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  @supports (display: flex) {
+    @media screen and (min-width: 30em) {
+      .horizontal {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .horizontal .item {
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
   }
 
   @include breakpoints.suffix(

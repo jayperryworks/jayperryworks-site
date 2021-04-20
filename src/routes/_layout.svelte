@@ -19,8 +19,10 @@
   /* Sticky footer setup */
   html {
     height: 100%; /* for opera mini etc */
-
-    @supports (min-height: 100vh) {
+  }
+  
+  @supports (min-height: 100vh) {
+    html {
       height: auto;
       min-height: 100vh;
     }
@@ -29,53 +31,34 @@
   body {
     min-height: 100%;
     min-height: 100vh;
-
-    @supports (display: flex) {
-      display: flex;
-      flex-direction: column;
-    }
-  }
-
-  #sapper {
-    @supports (display: flex) {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
   }
 
   /* Animated 'spine' border */
   #spine-wrapper {
-    --bg-color: 'highlight';
+    --bg-color: hsl(223, 75, 70);
+    --bg-color-shade: hsl(223, 75, 80);
     --bg-size: 30px;
     --border-width: 0.5rem;
 
     padding-left: var(--border-width);
     position: relative;
-
-    @supports (display: flex) {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
   }
 
   #spine-wrapper::before {
-      background-color: var(--bg-color);
-      bottom: 0;
-      content: '';
-      display: block;
-      left: 0;
-      position: fixed;
-      top: 0;
-      width: var(--border-width);
-      z-index: 0;
-    }
+    background-color: var(--bg-color);
+    bottom: 0;
+    content: '';
+    display: block;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: var(--border-width);
+    z-index: 0;
   }
 
   @keyframes stripes {
     from { background-position: 0 0; }
-    to   { background-position: $bg-size $bg-size; }
+    to   { background-position: var(--bg-size) var(--bg-size); }
   }
 
   @supports (background: repeating-linear-gradient(45deg, #fff, #000)) {
@@ -86,11 +69,11 @@
         -45deg,
         var(--bg-color),
         var(--bg-color) 25%,
-        color.get($bg-color, $grade: 30) 25%,
-        color.get($bg-color, $grade: 30) 50%,
+        var(--bg-color-shade) 25%,
+        var(--bg-color-shade) 50%,
         var(--bg-color) 50%
       ) top left fixed;
-      background-size: $bg-size $bg-size;
+      background-size: var(--bg-size) var(--bg-size);
     }
   }
 
@@ -98,7 +81,24 @@
     position: relative;
   }
   
-  @supports (flex: 1) {
+  @supports (display: flex) {
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    #sapper {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    
+    #spine-wrapper {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
     #main-wrapper {
       display: flex;
       flex-direction: column;

@@ -151,14 +151,9 @@
 	</Bookend>
 </footer>
 
-<style type="text/scss">
-	@use 'config/border';
-	@use 'config/type';
-	@use 'config/breakpoints' as bp;
-
+<style>
 	ul {
 		margin: 0 0 1em 0;
-		line-height: type.leading();
 	}
 
 	h1 {
