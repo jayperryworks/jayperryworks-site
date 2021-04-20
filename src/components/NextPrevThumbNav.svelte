@@ -9,108 +9,6 @@
   export let heading, nav, breakpoint = 'small'
 </script>
 
-<style type="text/scss">
-  @use 'config/border';
-  @use 'config/breakpoints' as bp;
-  @use 'config/scale';
-  @use 'config/spacing';
-  @use 'config/type';
-
-  $bp-layout: 'small';
-  $bp-card: 'xsmall';
-
-  .card {
-    @include border.add();
-    display: block;
-
-    @supports (display: flex) {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    @include bp.query('>#{$bp-layout}') {
-      &.left {
-        border-bottom-right-radius: border.$corner-radius;
-      }
-
-      &.right {
-        border-bottom-left-radius: border.$corner-radius;
-      }
-    }
-  }
-
-  .card-wrapper {
-    display: block;
-
-    @supports (display: flex) {
-      display: flex;
-    }
-
-    :global(.show-large-icon) {
-      @include bp.query('<50em') {
-        display: none;
-      }
-    }
-
-    :global(.hide-small-icon) {
-      @include bp.query('>50em') {
-        display: none;
-      }
-    }
-  }
-
-  .card-figure {
-    display: block;
-    max-width: scale.get(10);
-
-    @include bp.query('>#{$bp-layout}') {
-      .figure-right & {
-        order: 2;
-      }
-    }
-
-    @include bp.query('>50em') {
-      max-width: scale.get(11);
-    }
-
-    @include bp.query('>medium') {
-      max-width: scale.get(12);
-    }
-  }
-
-  .card-content {
-    @include type.size-default;
-    display: block;
-
-    @supports (flex: 1) {
-      @include bp.query('>#{$bp-card}') {
-        flex: 1;
-      }
-
-      @include bp.query('>#{$bp-layout}') {
-        .figure-right & {
-          order: 1;
-        }
-      }
-    }
-  }
-
-  .index-button {
-    display: inline-block;
-    padding-top: spacing.get('narrow');
-
-    @include bp.query('>xsmall') {
-      line-height: 1;
-      padding-top: 0;
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-  }
-</style>
-
 <nav class="c-bg-well border-seam-top-offset border-solid border-top padding-x-outside padding-y-xwide">
   <!-- heading and index link -->
   <div class="margin-bottom position-relative">
@@ -152,7 +50,7 @@
       >
         {#if nav.previous}
           <a
-            class="card left padding-narrow"
+            class="card left border padding-narrow"
             rel="prefetch"
             href={nav.previous.path}
           >
@@ -227,3 +125,108 @@
     </Bookend>
   </div>
 </nav>
+
+<style>
+  .card {
+    display: block;
+  }
+  
+  @supports (display: flex) {
+    .card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  @media screen and (min-width: 42em) {
+    .card.left {
+      border-bottom-right-radius: 0.2em;
+    }
+
+    .card.right {
+      border-bottom-left-radius: 0.2em;
+    }
+  }
+
+  .card-wrapper {
+    display: block;
+
+  }
+  
+  @supports (display: flex) {
+    .card-wrapper {
+      display: flex;
+    }
+  }
+
+  @media screen and (max-width: 49.99em) {
+    :global(.show-large-icon) {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 50em) {
+    :global(.hide-small-icon) {
+      display: none;
+    }
+  }
+
+  .card-figure {
+    display: block;
+    max-width: 6.19rem;
+  }
+  
+  @media screen and (min-width: 42em) {
+    .figure-right .card-figure {
+      order: 2;
+    }
+  }
+
+  @media screen and (min-width: 50em) {
+    .card-figure {
+      max-width: 7.43rem;
+    }
+  }
+
+  @media screen and (min-width: 62em) {
+    .card-figure {
+      max-width: 8.92rem;
+    }
+  }
+
+  .card-content {
+    font-size: 1rem;
+    display: block;
+  }
+  
+  @supports (flex: 1) {
+    @media screen and (min-width: 30em) {
+      .card-content {
+        flex: 1;
+      }
+    }
+
+    @media screen and (min-width: 42em) {
+      .figure-right & {
+        order: 1;
+      }
+    }
+  }
+
+  .index-button {
+    display: inline-block;
+    padding-top: var(--space-narrow);
+  }
+  
+  @media screen and (min-width: 30em) {
+    .index-button {
+      line-height: 1;
+      padding-top: 0;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+</style>

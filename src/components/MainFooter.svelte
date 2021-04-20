@@ -34,12 +34,6 @@
   }).join(', ')
 </script>
 
-<style>
-  footer {
-    flex-shrink: 0;
-  }
-</style>
-
 <footer class="border-seam-top padding-x-outside">
   <div class="overflow-hidden">
     <div class="border-bottom padding-y">
@@ -76,3 +70,9 @@
     </div>
   </div>
 </footer>
+
+<style>
+  footer {
+    flex-shrink: 0;
+  }
+</style>
