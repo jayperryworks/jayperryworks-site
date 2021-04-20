@@ -42,24 +42,16 @@
   </div>
 </section>
 
-<style type="text/scss">
-  @use 'config/layout_width';
-  @use 'config/breakpoints' as bp;
-
-  $breakpoint: bp.get('large');
-  $blurb-width: 30rem;
-  $max-width: 'wide';
-
+<style>
   .outdent {
-    --blurb-width: #{$blurb-width};
-    --breakpoint: #{$breakpoint};
-    --max-width: var(--layout-w-#{$max-width});
+    --blurb-width: 30rem;
+    --breakpoint: var(--breakpoint-large);
 
     display: block;
     font-size: 0;
     margin-left: auto;
     margin-right: auto;
-    max-width: layout_width.get($max-width); /* fallback width */
+    max-width: 64rem; /* fallback width */
     max-width: var(--max-width);
   }
 
@@ -68,22 +60,17 @@
     display: inline-block;
     font-size: 1rem;
     max-width: 100%;
+    width: 100%;
     vertical-align: top;
   }
 
-  .blurb {
-    width: 100%;
-
-    @include bp.query('>xsmall') {
+  @media screen and (min-width: 30em) {
+    .blurb {
       min-width: var(--blurb-width);
       width: calc((var(--breakpoint) - 100%) * 1000);
     }
-  }
 
-  .body {
-    width: 100%;
-
-    @include bp.query('>xsmall') {
+    .body {
       min-width: calc(100% - var(--blurb-width));
       width: calc((var(--breakpoint) - 100%) * 1000);
     }

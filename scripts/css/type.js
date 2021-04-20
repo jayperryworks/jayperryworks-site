@@ -110,7 +110,6 @@ module.exports = {
 			margin-bottom: 0;
 			margin-top: 0;
 			max-width: ${type.lineMeasure};
-
 		}
 
 		a {

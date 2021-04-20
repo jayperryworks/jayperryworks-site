@@ -43,7 +43,26 @@
 	}
 </script>
 
-<style type="text/scss">
+<picture
+	class="{borderClass} {classes}"
+>
+	{#each enhancedFormat as source}
+		<source
+			srcset="{srcset(source.sizes)}"
+			type="image/{source.format}"
+		>
+	{/each}
+	<img
+		src="{defaultSrc}"
+		srcset="{srcset(defaultFormat.sizes.slice(1))}"
+		{alt}
+		class:contain
+		class:cover
+		class:fill
+	>
+</picture>
+
+<style>
 	picture {
 		display: inline-block;
 		max-width: 100%;
@@ -65,10 +84,9 @@
 		object-fit: cover;
 	}
 
-	.fill {
-		// only do this if object-fit is supported,
-		// so image doesn't get oddly cropped
-		@supports (object-fit: scale-down) {
+	/* only do this if object-fit is supported, so image doesn't get oddly cropped */
+	@supports (object-fit: scale-down) {
+		.fill {
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -79,22 +97,3 @@
 		}
 	}
 </style>
-
-<picture
-	class="{borderClass} {classes}"
->
-	{#each enhancedFormat as source}
-		<source
-			srcset="{srcset(source.sizes)}"
-			type="image/{source.format}"
-		>
-	{/each}
-	<img
-		src="{defaultSrc}"
-		srcset="{srcset(defaultFormat.sizes.slice(1))}"
-		{alt}
-		class:contain
-		class:cover
-		class:fill
-	>
-</picture>

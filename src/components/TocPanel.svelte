@@ -16,14 +16,6 @@
 	$: formattedNumber = number.toString().padStart(2, 0)
 </script>
 
-<style>
-	@supports (display: flex) {
-		article {
-			min-height: 100vh;
-		}
-	}
-</style>
-
 <article 
 	class="border-seam-top | padding-y-xwide padding-x-outside | display-flex display-flex-column | {classes}"
 	id={id}
@@ -43,3 +35,11 @@
 	</header>
 	<slot></slot>
 </article>
+
+<style>
+	@supports (display: flex) {
+		article {
+			min-height: 100vh;
+		}
+	}
+</style>

@@ -6,78 +6,6 @@
   }
 </script>
 
-<style type="text/scss">
-  @use 'config/border';
-  @use 'config/breakpoints';
-  @use 'config/color';
-  @use 'config/scale';
-  @use 'config/spacing';
-  @use 'config/type';
-
-  $min-width: 600px;
-  $padding: 0.5em 0.5em;
-
-  .wrapper {
-    @include border.add($sides: top bottom);
-    overflow-x: scroll;
-    padding-bottom: spacing.get('narrow');
-
-    @include breakpoints.query('>#{$min-width}') {
-      border: 0;
-      padding: 0;
-    }
-  }
-
-  table {
-    @include type.font-accent;
-    border-collapse: collapse;
-    border-spacing: 0;
-    font-size: type.scale('zeta');
-    width: 100%;
-    min-width: $min-width;
-  }
-
-  thead {
-    @include border.add(
-      $sides: "bottom",
-      $width: 'thick',
-      $style: 'solid',
-      $color: 'primary'
-    );
-    @include color.add-fg('primary');
-    @include type.font-accent('bold');
-    font-size: type.scale('eta');
-    text-align: left;
-    text-transform: uppercase;
-    vertical-align: bottom;
-
-    th {
-      padding-bottom: 0.5em;
-    }
-  }
-
-  tr {
-    &:nth-child(even) {
-      background-color: color.get('well');
-    }
-  }
-
-  td,
-  th {
-    padding: $padding;
-    position: relative;
-    text-align: left;
-
-    &:last-child {
-      text-align: right;
-    }
-  }
-
-  th {
-    @include type.font-accent('bold');
-  }
-</style>
-
 <div class="wrapper">
   <table>
     {#if header && header.length > 0}
@@ -131,3 +59,66 @@
     {/if}
   </table>
 </div>
+
+<style>
+  .wrapper {
+    --min-width: 600px;
+
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    overflow-x: scroll;
+    padding-bottom: var(--space-narrow);
+
+    @media screen and (min-width: 37.5em) {
+      border: 0;
+      padding: 0;
+    }
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-family: var(--type-font-accent);
+    font-size: var(--type-scale-zeta);
+    min-width: var(--min-width);
+    width: 100%;
+  }
+
+  thead {
+    border-bottom: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    font-family: var(--type-font-accent);
+    font-size: var(--type-scale-eta);
+    font-weight: bold;
+    text-align: left;
+    text-transform: uppercase;
+    vertical-align: bottom;
+  }
+  
+  thead > th {
+    padding-bottom: 0.5em;
+  }
+
+  /* alternating row colors */
+  tr:nth-child(even) {
+    background-color: var(--color-well);
+  }
+
+  td,
+  th {
+    padding: 0.5em 0.5em;
+    position: relative;
+    text-align: left;
+
+  }
+  
+  td:last-child,
+  th:last-child, {
+    text-align: right;
+  }
+
+  th {
+    font-family: var(--type-font-accent);
+    font-weight: bold;
+  }
+</style>

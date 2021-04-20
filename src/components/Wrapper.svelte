@@ -15,6 +15,14 @@
   export { classes as class }
 </script>
 
+<div
+  class="wrapper {width} {classes}"
+  class:centered
+  class:flex
+>
+  <slot />
+</div>
+
 <style>
   .wrapper {
     position: relative;
@@ -54,11 +62,3 @@
     }
   }
 </style>
-
-<div
-  class="wrapper {width} {classes}"
-  class:centered
-  class:flex
->
-  <slot />
-</div>

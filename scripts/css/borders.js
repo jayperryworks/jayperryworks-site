@@ -5,7 +5,6 @@ const radius = 0.2
 
 function add ({
 	side = 'all',
-	width = 'thin',
 	color = 'border',
 	style = 'dashed'
 } = {}) {

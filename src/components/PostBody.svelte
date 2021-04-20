@@ -23,25 +23,6 @@
   }
 </script>
 
-<style type="text/scss">
-  @use "config/spacing";
-
-  .body {
-    > :global(* + *) {
-      padding-top: spacing.get('wide');
-    }
-
-    :global(.section-heading + .section-text) {
-      padding-top: spacing.get('narrow');
-    }
-
-    // when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text
-    :global(.section-text + .section-text) {
-      padding-top: spacing.get();
-    }
-  }
-</style>
-
 <div class="body">
   {#each sections as section, index}
     {#if section.type == 'note'}
@@ -125,3 +106,18 @@
     {/if}
   {/each}
 </div>
+
+<style type="text/scss">
+  .body > :global(* + *) {
+    padding-top: var(--space-wide);
+  }
+
+  .body :global(.section-heading + .section-text) {
+    padding-top: var(--space-narrow);
+  }
+
+  // when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text
+  .body :global(.section-text + .section-text) {
+    padding-top: var(--space-medium);
+  }
+</style>
