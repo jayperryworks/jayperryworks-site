@@ -46,6 +46,6 @@
 			</Wrapper>
 		</header>
 
-		<PostBody sections={content.body} />
+		<PostBody blocks={content.body} />
 	</article>
 </main>

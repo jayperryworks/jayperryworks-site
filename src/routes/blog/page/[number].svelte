@@ -117,7 +117,7 @@
 									>
 										{date(post.date)}
 									</time>
-									<PostBody sections={post.excerpt} dropCap={false} />
+									<PostBody blocks={post.excerpt} dropCap={false} />
 									{#if post.readMore}
 										<a
 											class="display-inline-block padding-top t-case-upper t-font-accent t-scale-zeta t-weight-bold t-link-undecorated"

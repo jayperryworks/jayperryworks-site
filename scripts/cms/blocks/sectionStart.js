@@ -14,7 +14,8 @@ module.exports = {
 		{
 			label: 'Short title',
 			name: 'shortTitle',
-			widget: 'string'
+			widget: 'string',
+			required: false
 		},
 		blockType('sectionStart')
 	]
