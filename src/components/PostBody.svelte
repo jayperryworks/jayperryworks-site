@@ -38,7 +38,7 @@
 <div class="body">
   {#each sections as section}
     {#if section.uid}
-      <section>
+      <section id={section.uid}>
         <BlockList blocks={section.blocks} />
       </section>
     {:else}
