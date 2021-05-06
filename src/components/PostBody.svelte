@@ -41,9 +41,9 @@
       <section>
         <BlockList blocks={section.blocks} />
       </section>
+    {:else}
+      <BlockList blocks={section.blocks} />
     {/if}
-
-    <BlockList blocks={section.blocks} />
   {/each}
 </div>
 

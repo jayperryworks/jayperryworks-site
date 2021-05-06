@@ -46,20 +46,17 @@
 		  {#if block.type == 'figure'}
 		  	<div class="t-align-center">
 		      <Figure
-		        sources={block.image}
-		        alt={block.alt}
-		        caption={block.caption}
-		        credit={block.credit}
-		        border={block.border}
+		      	sources={block.image}
+		      	alt={block.alt}
+		      	caption={block.caption}
+		      	credit={block.credit}
+		      	border={block.border}
 		      />
 		    </div>
 		  {/if}
 
 		  {#if block.type == 'gallery'}
-	      <Figure
-	        caption={block.caption}
-	        credit={block.credit}
-	      >
+	      <Figure ...block>
 	        <Gallery size={block.size}>
 	          {#each block.images as item}
 	            <li class="t-align-center">
