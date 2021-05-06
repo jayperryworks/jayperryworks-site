@@ -73,7 +73,7 @@
   }
 
   .button :global(strong) {
-    @include type.font-accent('bold');
+    font-weight: bold;
   }
 
   /* --- sizes --- */

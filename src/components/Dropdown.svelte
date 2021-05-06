@@ -31,7 +31,7 @@
     list-style: none;
   }
   
-  // remove marker added by webkit
+  /* remove marker added by webkit */
   summary::details-marker {
     display: none;
   }
@@ -50,7 +50,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 3
+    z-index: 3;
     background: transparent;
   }
 

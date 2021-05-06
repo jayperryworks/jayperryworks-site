@@ -46,19 +46,18 @@
   .item {
     --item-width: auto;
 
-    @include bourbon.clearfix;
-    clear: both;
     display: block;
-    float: none;
     position: relative;
     vertical-align: middle;
   }
 
-  .horizontal {
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  @supports (display: flex) {
+    .horizontal {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
   }
 
   .horizontal .item {
@@ -68,21 +67,21 @@
 
   @supports (display: flex) {
     @media screen and (min-width: 30em) {
-      .horizontal {
+      .xsmall\:horizontal {
         align-items: center;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
       }
 
-      .horizontal .item {
+      .xsmall\:horizontal .item {
         display: inline-block;
         vertical-align: middle;
       }
     }
   }
 
-  @include breakpoints.suffix(
+  /*@include breakpoints.suffix(
     '.horizontal',
     $default: true,
     $sizes: [xsmall, small, medium, large]
@@ -149,5 +148,5 @@
         }
       }
     }
-  }
+  }*/
 </style>

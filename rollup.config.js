@@ -10,7 +10,7 @@ import url from '@rollup/plugin-url';
 import { terser } from 'rollup-plugin-terser';
 
 // packages I added
-import svg from 'rollup-plugin-svg';
+import inlineSvg from 'rollup-plugin-inline-svg';
 import sveltePreprocess from 'svelte-preprocess';
 import alias from '@rollup/plugin-alias';
 
@@ -27,7 +27,7 @@ const aliases = alias({
     },
     {
     	find: 'css',
-    	replacement: `${__dirname}/css`
+    	replacement: `${__dirname}/scripts/css`
     },
     {
       find: 'icons',
@@ -51,7 +51,6 @@ export default {
 		input: config.client.input(),
 		output: config.client.output(),
 		plugins: [
-			svg(),
 			replace({
 				preventAssignment: true,
 				values:{
@@ -68,12 +67,16 @@ export default {
 			}),
 			url({
 				sourceDir: path.resolve(__dirname, 'src/node_modules/images'),
-				publicPath: '/client/'
+				publicPath: '/client/',
+				exclude: ['**/*.svg']
 			}),
 			resolve({
 				browser: true,
-				extensions: [ '.mjs', '.js', '.jsx', '.json', '.svg' ],
+				extensions: [ '.mjs', '.js', '.jsx', '.json' ],
 				dedupe: ['svelte']
+			}),
+			inlineSvg({
+				removeSVGTagAttrs: true
 			}),
 			aliases,
 			commonjs(),
@@ -108,7 +111,6 @@ export default {
 		input: config.server.input(),
 		output: config.server.output(),
 		plugins: [
-			svg(),
 			replace({
 				preventAssignment: true,
 				values:{
@@ -128,11 +130,15 @@ export default {
 			url({
 				sourceDir: path.resolve(__dirname, 'src/node_modules/images'),
 				publicPath: '/client/',
-				emitFiles: false // already emitted by client build
+				emitFiles: false, // already emitted by client build
+				exclude: ['**/*.svg']
 			}),
 			resolve({
-				extensions: [ '.mjs', '.js', '.jsx', '.json', '.svg' ],
+				extensions: [ '.mjs', '.js', '.jsx', '.json' ],
 				dedupe: ['svelte']
+			}),
+			inlineSvg({
+				removeSVGTagAttrs: true
 			}),
 			aliases,
 			commonjs()

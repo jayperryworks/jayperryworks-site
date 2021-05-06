@@ -90,9 +90,11 @@
     max-width: var(--max-percentage);
     min-width: var(--min-percentage);
     width: calc((var(--breakpoint) - 100%) * 1000);
-
-    @supports (display: grid) {
-      max-width: layout_width.get();
+  }
+  
+  @supports (display: grid) {
+    .gallery :global(li) {
+      max-width: var(--content-width-default);
       min-width: auto;
       padding: 0;
       width: auto;
@@ -100,11 +102,11 @@
   }
 
   .large :global(li) {
-    max-width: 64rem;
+    max-width: var(--content-width-wide);
   }
 
-  .flex :global(li) {
-    @supports (display: flex) {
+  @supports (display: flex) {
+    .flex :global(li) {
       display: flex;
       flex-direction: column;
     }

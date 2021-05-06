@@ -69,7 +69,10 @@
     overflow-x: scroll;
     padding-bottom: var(--space-narrow);
 
-    @media screen and (min-width: 37.5em) {
+  }
+  
+  @media screen and (min-width: 37.5em) {
+    .wrapper {
       border: 0;
       padding: 0;
     }
@@ -113,7 +116,7 @@
   }
   
   td:last-child,
-  th:last-child, {
+  th:last-child {
     text-align: right;
   }
 

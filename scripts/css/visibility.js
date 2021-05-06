@@ -52,11 +52,11 @@ module.exports = {
 		${helpers.responsiveClasses('show', hide, '<')}
 
 		/* hide and show if JS is supported */
-		.js js\\:hide {
+		.js .js\\:hide {
 			${hide}
 		}
 
-		.no-js js\\:show {
+		.no-js .js\\:show {
 			${hide}
 		}
 

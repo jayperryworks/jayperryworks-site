@@ -22,7 +22,7 @@
 		}
 </script>
 
-<div class="blocks">
+<div class="blocks padding-y-flow-wide">
 	{#each blocks as block}
 		<Wrapper
 		  width={getWidth(block.prominence)}
@@ -56,7 +56,13 @@
 		  {/if}
 
 		  {#if block.type == 'gallery'}
-	      <Figure ...block>
+	      <Figure
+	      	sources={block.image}
+	      	alt={block.alt}
+	      	caption={block.caption}
+	      	credit={block.credit}
+	      	border={block.border}
+	      >
 	        <Gallery size={block.size}>
 	          {#each block.images as item}
 	            <li class="t-align-center">
@@ -96,21 +102,13 @@
 	{/each}
 </div>
 
-<style type="text/scss">
-  @use "config/spacing";
+<style>
+  .blocks :global(.block-heading + .block-text) {
+    padding-top: var(--space-narrow);
+  }
 
-  .blocks {
-    > :global(* + *) {
-      padding-top: spacing.get('wide');
-    }
-
-    :global(.block-heading + .block-text) {
-      padding-top: spacing.get('narrow');
-    }
-
-    // when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text
-    :global(.block-text + .block-text) {
-      padding-top: spacing.get();
-    }
+  /* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
+  .blocks :global(.block-text + .block-text) {
+    padding-top: var(--space-medium);
   }
 </style>

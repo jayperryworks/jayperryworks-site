@@ -208,7 +208,7 @@
     }
 
     @media screen and (min-width: 42em) {
-      .figure-right & {
+      .figure-right .card-content {
         order: 1;
       }
     }

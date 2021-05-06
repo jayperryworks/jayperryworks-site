@@ -37,7 +37,6 @@
 <script>
 	import { format } from 'date-fns'
 	import { titleize } from '@/utils/stringHelpers.js'
-	import Bookend from '@/components/Bookend.svelte'
 	import Cover from '@/components/Cover.svelte'
 	import Gallery from '@/components/Gallery.svelte'
 	import MainNav from '@/components/MainNav.svelte'

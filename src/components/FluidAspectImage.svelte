@@ -14,7 +14,7 @@
   let classes = ''
   export { classes as class }
 
-  $: scale = {
+  $: ratio = {
     x: useScale ? scale.helpers.get(ratioX) : ratioX,
     y: useScale ? scale.helpers.get(ratioY) : ratioY
   }
@@ -24,7 +24,7 @@
 
 <div 
   class="aspect {classes}"
-  style="--ratio-x: {scale.x}; --ratio-y: {scale.y};"
+  style="--ratio-x: {ratio.x}; --ratio-y: {ratio.y};"
 >
   <div class="content">
     {#if versions}
@@ -68,7 +68,10 @@
     top: 0;
     width: 100%;
 
-    @supports (display: flex) {
+  }
+  
+  @supports (display: flex) {
+    .content {
       display: flex;
     }
   }
