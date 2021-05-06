@@ -20,7 +20,7 @@
 	import Icon from '@/components/Icon.svelte'
 	import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
-	import PostBody from '@/components/PostBody.svelte'
+	import BlockList from '@/components/BlockList.svelte'
 	import Figure from '@/components/Figure.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 	import Bookend from '@/components/Bookend.svelte'
@@ -117,7 +117,7 @@
 									>
 										{date(post.date)}
 									</time>
-									<PostBody sections={post.excerpt} dropCap={false} />
+									<BlockList blocks={post.excerpt} dropCap={false} />
 									{#if post.readMore}
 										<a
 											class="display-inline-block padding-top t-case-upper t-font-accent t-scale-zeta t-weight-bold t-link-undecorated"
