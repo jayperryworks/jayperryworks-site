@@ -1,6 +1,6 @@
 <script>
-  import MainFooter from '@/components/MainFooter.svelte'
   import { stores } from '@sapper/app'
+  import MainFooter from '@/components/MainFooter.svelte'
 
   const { preloading } = stores()
 </script>
@@ -60,30 +60,30 @@
 
   /* Animated 'spine' border */
   #spine-wrapper {
-    --bg-color: hsl(223, 75%, 70%);
-    --bg-color-shade: hsl(223, 75%, 80%);
-    --bg-size: 30px;
-    --border-width: 0.6rem;
+    --spine-color: hsl(223, 75%, 70%);
+    --spine-color-shade: hsl(223, 75%, 80%);
+    --spine-stripe-size: 30px;
+    --spine-width: 0.6rem;
 
-    padding-left: var(--border-width);
+    padding-left: var(--spine-width);
     position: relative;
   }
 
   #spine-wrapper::before {
-    background-color: var(--bg-color);
+    background-color: var(--spine-color);
     bottom: 0;
     content: '';
     display: block;
     left: 0;
     position: fixed;
     top: 0;
-    width: var(--border-width);
+    width: var(--spine-width);
     z-index: 0;
   }
 
   @keyframes stripes {
     from { background-position: 0 0; }
-    to   { background-position: var(--bg-size) var(--bg-size); }
+    to   { background-position: var(--spine-stripe-size) var(--spine-stripe-size); }
   }
 
   @supports (background: repeating-linear-gradient(45deg, #fff, #000)) {
@@ -92,13 +92,13 @@
       animation: stripes 0.75s linear infinite;
       background: repeating-linear-gradient(
         -45deg,
-        var(--bg-color),
-        var(--bg-color) 25%,
-        var(--bg-color-shade) 25%,
-        var(--bg-color-shade) 50%,
-        var(--bg-color) 50%
+        var(--spine-color),
+        var(--spine-color) 25%,
+        var(--spine-color-shade) 25%,
+        var(--spine-color-shade) 50%,
+        var(--spine-color) 50%
       ) top left fixed;
-      background-size: var(--bg-size) var(--bg-size);
+      background-size: var(--spine-stripe-size) var(--spine-stripe-size);
     }
   }
 
