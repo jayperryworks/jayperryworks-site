@@ -50,11 +50,24 @@
 <style type="text/scss">
   @use "config/spacing";
   @use "config/border";
+  @use "config/layout_width";
 
   .body {
     > section:not(:first-child) {
-      @include border.add('top');
       padding-top: spacing.get('xwide');
+      position: relative;
+    }
+
+    > section:not(:first-child)::before {
+      @include border.add('top');
+      content: '';
+      display: block;
+      height: 0;
+      left: 50%;
+      position: absolute;
+      top: 0;
+      transform: translateX(-50%);
+      width: layout_width.get('default');
     }
 
     > :global(* + section) {
