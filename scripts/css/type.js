@@ -59,6 +59,7 @@ function fontSize (size) {
 const heading = `
 	${color.add('color', 'primary')}
 	font-family: ${font('display')};
+	font-weight: normal;
 	display: block;
 	line-height: ${type.leading.tight};
 	margin: 0;
@@ -90,6 +91,12 @@ module.exports = {
 		}, []).join('')}
 
 		/* global type */
+		body {
+		  font-family: ${font('body')};
+		  font-size: 1rem;
+		  line-height: ${type.leading.default};
+		}
+
 		h1,
 		h2,
 		h3,

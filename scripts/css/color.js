@@ -2,9 +2,9 @@ const { color } = require('../../content/design-tokens.js')
 
 function hsl (color) {
   if (color.a && color.a !== 1) {
-  	return `hsla(${color.h}, ${color.s}, ${color.l}, ${color.a})`
+  	return `hsl(${color.h}, ${color.s}%, ${color.l}%, ${color.a})`
   }
-  return `hsl(${color.h}, ${color.s}, ${color.l})`
+  return `hsl(${color.h}, ${color.s}%, ${color.l}%)`
 }
 
 function getValue (role, theme = 'default') {

@@ -53,10 +53,10 @@
 		>
 			<div class="display-flex display-flex-column display-flex-fill display-flex-justify-center display-flex-align-start | padding-bottom-xwide">
 				<Wrapper width="wide" centered={false}>
-					<h1 class="t-scale-alpha">{@html intro.headline}</h1>
+					<h1 class="type-scale-alpha">{@html intro.headline}</h1>
 				</Wrapper>
 				<Wrapper 
-					class="t-scale-delta t-heading t-leading-default | padding-top"
+					class="type-scale-delta type-heading type-leading-default | padding-top"
 					centered={false}
 				>
 					<Passage html={intro.blurb}/>
@@ -74,7 +74,7 @@
 			<!-- TOC link -->
 			<nav class="toc-link | padding-bottom-narrow">
 				<a
-					class="t-link-undecorated t-case-upper t-font-accent t-scale-eta t-weight-bold"
+					class="type-link-undecorated type-case-upper type-fontype-accent type-scale-eta type-weightype-bold"
 					href={`#${pictures.slug}`}
 				>
 					<Icon
@@ -107,7 +107,7 @@
 					>
 						
 						{#if pictures.blurb}
-							<Passage html={pictures.blurb} class="t-scale-delta t-heading t-leading-default"/>
+							<Passage html={pictures.blurb} class="type-scale-delta type-heading type-leading-default"/>
 						{/if}
 						{#if pictures.cta}
 							<Button
@@ -122,7 +122,7 @@
 				</div>
 				<div class="flag-item image">
 					<a
-						class="cover-image | t-link-undecorated"
+						class="cover-image | type-link-undecorated"
 						href={pictures.cta.link}
 					>
 						<ResponsivePicture
@@ -155,21 +155,21 @@
 						class:hide-below@medium={index >= 4}
 					>
 						<time
-							class="c-fg-tertiary | display-block | padding-bottom-xnarrowRight | t-font-accent t-scale-eta"
+							class="c-fg-tertiary | display-block | padding-bottom-xnarrowRight | type-fontype-accent type-scale-eta"
 							datetime={date(post.date, 'yyyy-M-dd')}
 						>
 							<a
-								class="t-link-undecorated"
+								class="type-link-undecorated"
 								href={post.path}
 							>
 								{date(post.date)}
 							</a>
 						</time>
-						<h4 class="t-scale-gamma">
+						<h4 class="type-scale-gamma">
 							<a href="{post.path}">{post.title}</a>
 						</h4>
 						{#if post.subtitle}
-							<p class="t-heading t-scale-delta t-font-accent | c-fg-tertiary | padding-top-xxnarrowRight">
+							<p class="type-heading type-scale-delta type-fontype-accent | c-fg-tertiary | padding-top-xxnarrowRight">
 								<a href={post.path}>{post.subtitle}</a>
 							</p>
 						{/if}

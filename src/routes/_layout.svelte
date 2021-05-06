@@ -16,29 +16,54 @@
 </div>
 
 <style global>
-  /* Sticky footer setup */
-  html {
-    height: 100%; /* for opera mini etc */
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
   }
-  
-  @supports (min-height: 100vh) {
+
+  html {
+    font-size: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+
+  @media screen and (max-width: 30em) {
     html {
-      height: auto;
-      min-height: 100vh;
+      font-size: 105%;
+    }
+  }
+
+  @media screen and (max-width: 40em) {
+    html {
+      font-size: 110%;
+    }
+  }
+
+  @media screen and (max-width: 40em) {
+    html {
+      font-size: 110%;
+    }
+  }
+
+  @media screen and (max-width: 64em) {
+    html {
+      font-size: 120%;
     }
   }
 
   body {
+    margin: 0;
     min-height: 100%;
     min-height: 100vh;
   }
 
   /* Animated 'spine' border */
   #spine-wrapper {
-    --bg-color: hsl(223, 75, 70);
-    --bg-color-shade: hsl(223, 75, 80);
+    --bg-color: hsl(223, 75%, 70%);
+    --bg-color-shade: hsl(223, 75%, 80%);
     --bg-size: 30px;
-    --border-width: 0.5rem;
+    --border-width: 0.6rem;
 
     padding-left: var(--border-width);
     position: relative;
@@ -104,5 +129,13 @@
       flex-direction: column;
       flex: 1;
     }
+  }
+
+  audio,
+  canvas,
+  img,
+  video {
+    vertical-align: middle;
+    max-width: 100%;
   }
 </style>
