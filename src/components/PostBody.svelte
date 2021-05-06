@@ -35,7 +35,7 @@
   }
 </script>
 
-<div class="body">
+<div class="body padding-y-flow-xwide margin-y-flow-xwide">
   {#each sections as section}
     {#if section.uid}
       <section id={section.uid}>
@@ -47,31 +47,16 @@
   {/each}
 </div>
 
-<style type="text/scss">
-  @use "config/spacing";
-  @use "config/border";
-  @use "config/layout_width";
-
-  .body {
-    > section:not(:first-child) {
-      padding-top: spacing.get('xwide');
-      position: relative;
-    }
-
-    > section:not(:first-child)::before {
-      @include border.add('top');
-      content: '';
-      display: block;
-      height: 0;
-      left: 50%;
-      position: absolute;
-      top: 0;
-      transform: translateX(-50%);
-      width: layout_width.get('default');
-    }
-
-    > :global(* + section) {
-      margin-top: spacing.get('xwide');
-    }
+<style>
+  section:not(:first-child)::before {
+    border-top: 1px dashed var(--color-border);
+    content: '';
+    display: block;
+    height: 0;
+    left: 50%;
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    width: var(--content-width-default);
   }
 </style>
