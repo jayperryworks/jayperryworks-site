@@ -9,6 +9,7 @@ const scale = require('./scale.js')
 const type = require('./type.js')
 const visibility = require('./visibility.js')
 const specialEffects = require('./specialEffects.js')
+const contentWidth = require('./contentWidth.js')
 
 function render (type, modules) {
 	return modules.map(styles => `
@@ -22,7 +23,7 @@ const outputPath = '../../static/stylesheets'
 const customProperties = `
 	/* --- Global custom properties --- */
 	:root {
-		${[color, breakpoints, scale, spacing, type].map(styles => `
+		${[color, breakpoints, scale, spacing, contentWidth, type].map(styles => `
 			/* --- ${styles.name} --- */
 			${styles.customProperties.join('')}
 		`).join('\n')}
@@ -34,7 +35,7 @@ const base = `
 `
 const utilities = `
 	/* --- Utility classes --- */
-	${render('utilities', [color, spacing, type, borders, specialEffects, visibility])}
+	${render('utilities', [color, spacing, type, borders, contentWidth, specialEffects, visibility])}
 `
 
 if (!fs.existsSync(path.join(__dirname, outputPath))) {

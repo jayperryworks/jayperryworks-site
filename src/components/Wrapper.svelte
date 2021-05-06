@@ -13,10 +13,12 @@
 
   let classes = ''
   export { classes as class }
+
+  $: widthClass = width === 'default' ? 'content-width' : `content-width-${width}`
 </script>
 
 <div
-  class="wrapper {width} {classes}"
+  class="wrapper {widthClass} {classes}"
   class:centered
   class:flex
 >
@@ -26,26 +28,6 @@
 <style>
   .wrapper {
     position: relative;
-  }
-
-  .narrow {
-    max-width: 30rem;
-  }
-
-  .default {
-    max-width: 30rem;
-  }
-
-  .wide {
-    max-width: 64rem;
-  }
-
-  .xwide {
-    max-width: 75rem;
-  }
-
-  .xxwide {
-    max-width: 112rem;
   }
 
   .centered {
