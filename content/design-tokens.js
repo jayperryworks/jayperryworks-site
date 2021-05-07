@@ -1,14 +1,6 @@
 // base scale
 const scale = 1.2
 
-// helper to tweak props of a palette color
-function modifyColor(color, {
-  s = 0,
-  l = 0,
-  a = 1
-} = {}) {
-  return { h: color.h, s, l, a }
-}
 
 // base color palette
 const palette = {
@@ -24,25 +16,23 @@ const palette = {
 const themes = {
   dark: {
     primary: palette.white,
-    secondary: modifyColor(palette.gray, { l: 40 }),
-    tertiary: modifyColor(palette.black, { l: 50 }),
+    secondary: {...palette.gray, l: 40 },
     highlight: palette.lavendar,
     bg: palette.black,
-    island: modifyColor(palette.black, { l: 35 }),
-    well: modifyColor(palette.black, { l: 17 }),
-    border: modifyColor(palette.black, { l: 20}),
-    shadow: modifyColor(palette.black, {l: 0, a: 0.4 })
+    island: { ...palette.black, l: 35 },
+    well: { ...palette.black, l: 17 },
+    border: { ...palette.black, l: 20 },
+    shadow: { ...palette.black, l: 0, a: 0.4 }
   },
   default: {
     primary: palette.black,
-    secondary: modifyColor(palette.black, { l: 40 }),
-    tertiary: palette.gray,
+    secondary: { ...palette.black, l: 40 },
     highlight: palette.lavendar,
     bg: palette.white,
     island: palette.white,
-    well: modifyColor(palette.gray, { l: 90 }),
-    border: modifyColor(palette.gray, { l: 85 }),
-    shadow: modifyColor(palette.gray, { a: 0.2 })
+    well: { ...palette.gray, l: 90 },
+    border: { ...palette.gray, l: 85 },
+    shadow: { ...palette.gray, a: 0.2 }
   }
 }
 
@@ -84,7 +74,7 @@ const type = {
     }
   ],
   scale: {
-    alpha: { base: 4, fluid: 5, max: 8 },
+    alpha: { base: 4, fluid: 5, max: 7 },
     beta: { base: 3, fluid: 3, max: 6 },
     gamma: { base: 2, fluid: 2, max: 4 },
     delta: { base: 1, fluid: 1, max: 2 },

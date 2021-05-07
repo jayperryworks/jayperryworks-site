@@ -34,19 +34,19 @@
     }
   }
 
-  @media screen and (max-width: 40em) {
+  @media screen and (max-width: 42em) {
     html {
       font-size: 110%;
     }
   }
 
-  @media screen and (max-width: 40em) {
+  @media screen and (max-width: 62em) {
     html {
       font-size: 110%;
     }
   }
 
-  @media screen and (max-width: 64em) {
+  @media screen and (max-width: 75em) {
     html {
       font-size: 120%;
     }
@@ -112,30 +112,12 @@
       flex-direction: column;
     }
     
-    #sapper {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-    
-    #spine-wrapper {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-
+    #sapper,
+    #spine-wrapper,
     #main-wrapper {
       display: flex;
       flex-direction: column;
       flex: 1;
     }
-  }
-
-  audio,
-  canvas,
-  img,
-  video {
-    vertical-align: middle;
-    max-width: 100%;
   }
 </style>

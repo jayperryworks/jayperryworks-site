@@ -12,7 +12,13 @@ function getValue (role, theme = 'default') {
 }
 
 function getCustomProperty (role, theme = 'default') {
-	return `--color-${role}: ${hsl(color.themes[theme][role])};`
+	const colorData = color.themes[theme][role]
+	return `
+		--color-${role}: ${hsl(colorData)};
+		--color-${role}-h: ${colorData.h};
+		--color-${role}-s: ${colorData.s}%;
+		--color-${role}-l: ${colorData.l}%;
+	`
 }
 
 function listCustomProperties (theme) {
