@@ -12,23 +12,31 @@ function getValue (role, theme = 'default') {
 }
 
 function getCustomProperty (role, theme = 'default') {
-	const colorData = color.themes[theme][role]
+	const variables = Object.keys(color.themes[theme][role]).map(channel => `
+		var(--color-${role}-${channel})
+	`).join(', ')
+
+	return `hsl(${variables});`
+}
+
+function setCustomProperty (role, { h, s, l }) {
 	return `
-		--color-${role}: ${hsl(colorData)};
-		--color-${role}-h: ${colorData.h};
-		--color-${role}-s: ${colorData.s}%;
-		--color-${role}-l: ${colorData.l}%;
+		--color-${role}-h: ${h};
+		--color-${role}-s: ${s}%;
+		--color-${role}-l: ${l}%;
 	`
 }
 
 function listCustomProperties (theme) {
-	return Object.keys(color.themes[theme]).map(role => getCustomProperty(role, theme))
+	return Object.keys(color.themes[theme]).map((role) => {
+		return setCustomProperty(role, color.themes[theme][role])
+	})
 }
 
 function add (prop, role) {
 	return `
 		${prop}: ${hsl(color.themes.default[role])};
-		${prop}: var(--color-${role});
+		${prop}: ${getCustomProperty(role)};
 	`
 }
 
@@ -37,6 +45,7 @@ module.exports = {
 	helpers: {
 		getValue,
 		getCustomProperty,
+		setCustomProperty,
 		add
 	},
 	customProperties: listCustomProperties('default'),
@@ -45,6 +54,10 @@ module.exports = {
 			body {
 				${listCustomProperties('dark').join('\n')}
 			}
+		}
+
+		body {
+			${add('color', 'primary')}
 		}
 	`,
 	utilities: Object.keys(color.themes.default)

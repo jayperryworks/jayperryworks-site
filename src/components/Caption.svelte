@@ -14,3 +14,9 @@
     <cite class="type-case-upper">{@html credit}</cite>
   {/if}
 </figcaption>
+
+<style>
+	figcaption :global(p) {
+		max-width: none;
+	}
+</style>

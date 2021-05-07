@@ -1,13 +1,16 @@
 <script>
   import { stores } from '@sapper/app'
+  import color from 'css/color.js'
   import MainFooter from '@/components/MainFooter.svelte'
 
   const { preloading } = stores()
+  const setColor = color.helpers.setCustomProperty
 </script>
 
 <div
   id="spine-wrapper"
   class:loading={$preloading}
+  style={setColor('highlight', { h: 300, s: 100, l: 40 })}
 >
   <div id="main-wrapper">
     <slot></slot>
@@ -23,33 +26,8 @@
   }
 
   html {
-    font-size: 100%;
     min-height: 100vh;
     box-sizing: border-box;
-  }
-
-  @media screen and (max-width: 30em) {
-    html {
-      font-size: 105%;
-    }
-  }
-
-  @media screen and (max-width: 42em) {
-    html {
-      font-size: 110%;
-    }
-  }
-
-  @media screen and (max-width: 62em) {
-    html {
-      font-size: 110%;
-    }
-  }
-
-  @media screen and (max-width: 75em) {
-    html {
-      font-size: 120%;
-    }
   }
 
   body {
@@ -60,8 +38,16 @@
 
   /* Animated 'spine' border */
   #spine-wrapper {
-    --spine-color: hsl(223, 75%, 70%);
-    --spine-color-shade: hsl(223, 75%, 80%);
+    --spine-color: hsl(
+        var(--color-highlight-h),
+        var(--color-highlight-s),
+        var(--color-highlight-l)
+    );
+    --spine-color-tint: hsl(
+      var(--color-highlight-h),
+      var(--color-highlight-s), 
+      calc(var(--color-highlight-l) + 10%)
+    );
     --spine-stripe-size: 30px;
     --spine-width: 0.6rem;
 
@@ -94,8 +80,8 @@
         -45deg,
         var(--spine-color),
         var(--spine-color) 25%,
-        var(--spine-color-shade) 25%,
-        var(--spine-color-shade) 50%,
+        var(--spine-color-tint) 25%,
+        var(--spine-color-tint) 50%,
         var(--spine-color) 50%
       ) top left fixed;
       background-size: var(--spine-stripe-size) var(--spine-stripe-size);

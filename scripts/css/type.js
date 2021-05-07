@@ -1,7 +1,7 @@
-const { type } = require('../../content/design-tokens.js')
+const { type, breakpoints } = require('../../content/design-tokens.js')
 const { helpers: color } = require('./color.js')
 const { helpers: border } = require('./borders.js')
-const { helpers: breakpoints } = require('./breakpoints.js')
+const { helpers: bp } = require('./breakpoints.js')
 const { helpers: scale } = require('./scale.js')
 
 function webfont (name, filename, {
@@ -91,6 +91,34 @@ module.exports = {
 		}, []).join('')}
 
 		/* global type */
+		html {
+		  font-size: 100%;
+		}
+
+		@media screen and (max-width: ${breakpoints.sizes.small}) {
+		  html {
+		    font-size: 105%;
+		  }
+		}
+
+		@media screen and (max-width: ${breakpoints.sizes.medium}) {
+		  html {
+		    font-size: 110%;
+		  }
+		}
+
+		@media screen and (max-width: ${breakpoints.sizes.large}) {
+		  html {
+		    font-size: 110%;
+		  }
+		}
+
+		@media screen and (max-width: ${breakpoints.sizes.xlarge}) {
+		  html {
+		    font-size: 120%;
+		  }
+		}
+
 		body {
 		  font-family: ${font('body')};
 		  font-size: 1rem;
@@ -113,10 +141,9 @@ module.exports = {
 		`).join('')}
 
 		p {
-			color: inherit;
 			margin-bottom: 0;
 			margin-top: 0;
-			max-width: ${type.lineMeasure};
+			max-width: ${type.lineMeasure}ch;
 		}
 
 		a {
@@ -196,7 +223,7 @@ module.exports = {
 
 		/* alignment */
 		${['left', 'middle', 'right'].map((side) => {
-			return breakpoints.responsiveClasses(
+			return bp.responsiveClasses(
 				`type-align-${side}`,
 				`text-align: ${side};`
 			)
