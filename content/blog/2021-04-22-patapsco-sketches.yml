@@ -35,7 +35,7 @@ body:
     prominence: wide
     resize: false
     border: false
-    image: https://placehold.it/1000x600
+    image: https://via.placeholder.com/1000x600
     alt: Trailhead blazes among dense trees
     caption: FPO Drawing of trailhead blazes among dense trees
   - type: passage
@@ -87,8 +87,8 @@ body:
     prominence: default
     resize: false
     border: false
-    image: https://placehold.it/1000x600
-    caption: Drawing of shoes in a shady closet
+    image: https://via.placeholder.com/1000x600
+    caption: FPO Drawing of shoes in a shady closet
     alt: Shoes in a shady closet
   - type: passage
     useInExcerpt: false
@@ -122,7 +122,7 @@ body:
     caption: "FPO: low wide view of the road with silhouetted trees in distance,
       running shoe about to land in the FG snow"
     alt: Running in the snow
-    image: https://placehold.it/1000x600
+    image: https://via.placeholder.com/1000x600
   - type: passage
     useInExcerpt: false
     markdown: >-
@@ -178,7 +178,7 @@ body:
     border: false
     caption: "FPO: rocks under rippling water"
     alt: Rocks under rippling water
-    image: https://placehold.it/1000x600
+    image: https://via.placeholder.com/1000x600
   - type: passage
     useInExcerpt: false
     markdown: >-
@@ -200,10 +200,10 @@ body:
       In whispers and slow movements, I pointed out the newt to Evelyn. This was, I think, the first time she'd seen one. The first time she'd seen anything alive in a creek.
   - type: figure
     useInExcerpt: false
-    prominence: default
+    prominence: wide
     resize: false
     border: false
-    image: https://placehold.it/1000x600
+    image: https://via.placeholder.com/1000x600
     alt: Newt
     caption: "FPO: Newt"
   - type: passage
@@ -356,7 +356,7 @@ body:
     border: false
     alt: Baltimore alleyway
     caption: "FPO: Baltimore alleyway"
-    image: https://placehold.it/1000x600
+    image: https://via.placeholder.com/1000x600
   - type: passage
     useInExcerpt: false
     markdown: >-
