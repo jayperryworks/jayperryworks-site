@@ -1,9 +1,8 @@
 module.exports = ({
 	options = [
-		'xnarrow',
-	  'narrow',
+	  'small',
 	  'default',
-	  'wide'
+	  'large'
 	],
 	hint = 'Specify how wide this block should be, relative to the page layout.',
 	defaultValue = 'default'
