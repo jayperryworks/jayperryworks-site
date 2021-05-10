@@ -377,3 +377,11 @@ body:
 
 
       [^1]: Which is to say, by the shovel-full.
+  - type: figure
+    useInExcerpt: false
+    prominence: wide
+    resize: false
+    border: false
+    image: https://placehold.it/1000x600
+    alt: Trailhead blazes among dense trees
+    caption: Drawing of trailhead blazes among dense trees
