@@ -29,6 +29,11 @@ body:
       [^1]: Also I like the typography joke in the title of her site, _A Quick Brown Fox_.
       
       [^2]: Hat tip to [kottke.org](https://kottke.org) for the link to this list.
+
+  - type: sectionStart
+    uid: some-thoughts
+    label: An aside
+    
   - type: heading
     level: 2
     inlineMarkdown: "An aside: some brief thoughts"

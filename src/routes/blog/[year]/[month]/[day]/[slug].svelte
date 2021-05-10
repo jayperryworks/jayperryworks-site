@@ -76,5 +76,5 @@
 		</Wrapper>
 	</header>
 
-	<PostBody sections={post.body} />
+	<PostBody blocks={post.body} />
 </article>

@@ -30,6 +30,14 @@ body:
       choose. We spotted the blazes on nearby trees marking each diverging path:
       a loose ring of color swatches floating around us in the dense veil of
       leaves."
+  - type: figure
+    useInExcerpt: false
+    prominence: wide
+    resize: false
+    border: false
+    image: https://placehold.it/1000x600
+    alt: Trailhead blazes among dense trees
+    caption: FPO Drawing of trailhead blazes among dense trees
   - type: passage
     useInExcerpt: false
     markdown: >-
@@ -74,6 +82,14 @@ body:
 
 
       When I moved into my dorm room at UMBC, three hundred miles away, I brought my running shoes with me. But they stayed in the closet awhile. I was impatient to discover a more worldly, urban, well-adjusted version of myself that I was quite sure was somewhere to be found in Baltimore. That meant leaving my Virginia self behind &mdash; or at least significant parts of it. I wasn't sure what parts, exactly, so to be safe I kept them all backstage and tried to render myself a clean slate. I was not going to be that careless, provincial kid loping around the ridges and hollows back home. I had put away childish things, as they say.
+  - type: figure
+    useInExcerpt: false
+    prominence: default
+    resize: false
+    border: false
+    image: https://placehold.it/1000x600
+    caption: Drawing of shoes in a shady closet
+    alt: Shoes in a shady closet
   - type: passage
     useInExcerpt: false
     markdown: >-
@@ -98,6 +114,15 @@ body:
 
 
       [^1]: Four boys living together in a cramped apartment makes one appreciate the priceless value of fresh air.
+  - type: figure
+    useInExcerpt: false
+    prominence: wide
+    resize: false
+    border: false
+    caption: "FPO: low wide view of the road with silhouetted trees in distance,
+      running shoe about to land in the FG snow"
+    alt: Running in the snow
+    image: https://placehold.it/1000x600
   - type: passage
     useInExcerpt: false
     markdown: >-
@@ -146,6 +171,14 @@ body:
 
 
       She took a step toward the water and hesitated, nervous, caught in perhaps the most primal, human fear of them all: what lurks below the surface? We’re land creatures: scrawny, hairless bipeds designed for savannah. We’re out of our element but we’re drawn to water anyway.
+  - type: figure
+    useInExcerpt: false
+    prominence: narrow
+    resize: false
+    border: false
+    caption: "FPO: rocks under rippling water"
+    alt: Rocks under rippling water
+    image: https://placehold.it/1000x600
   - type: passage
     useInExcerpt: false
     markdown: >-
@@ -165,6 +198,14 @@ body:
 
 
       In whispers and slow movements, I pointed out the newt to Evelyn. This was, I think, the first time she'd seen one. The first time she'd seen anything alive in a creek.
+  - type: figure
+    useInExcerpt: false
+    prominence: default
+    resize: false
+    border: false
+    image: https://placehold.it/1000x600
+    alt: Newt
+    caption: "FPO: Newt"
   - type: passage
     useInExcerpt: false
     markdown: >
@@ -308,6 +349,14 @@ body:
 
 
       I used to treasure and protect this quirk in my wiring. Traipsing around Baltimore as a young art student, camera around my neck, I was mesmerized by the way the sunlight drew its severe triangles in the alleyways downtown, the way it threw the shadows of pedestrians onto the sidewalks, the way it lit up manikin faces in plate-glass storefronts.
+  - type: figure
+    useInExcerpt: false
+    prominence: wide
+    resize: false
+    border: false
+    alt: Baltimore alleyway
+    caption: "FPO: Baltimore alleyway"
+    image: https://placehold.it/1000x600
   - type: passage
     useInExcerpt: false
     markdown: >-
