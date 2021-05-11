@@ -32,7 +32,7 @@ body:
       leaves."
   - type: figure
     useInExcerpt: false
-    prominence: wide
+    prominence: large
     resize: false
     border: false
     image: https://via.placeholder.com/1000x600
@@ -116,7 +116,7 @@ body:
       [^1]: Four boys living together in a cramped apartment makes one appreciate the priceless value of fresh air.
   - type: figure
     useInExcerpt: false
-    prominence: wide
+    prominence: large
     resize: false
     border: false
     caption: "FPO: low wide view of the road with silhouetted trees in distance,
@@ -200,7 +200,7 @@ body:
       In whispers and slow movements, I pointed out the newt to Evelyn. This was, I think, the first time she'd seen one. The first time she'd seen anything alive in a creek.
   - type: figure
     useInExcerpt: false
-    prominence: wide
+    prominence: large
     resize: false
     border: false
     image: https://via.placeholder.com/1000x600
@@ -351,7 +351,7 @@ body:
       I used to treasure and protect this quirk in my wiring. Traipsing around Baltimore as a young art student, camera around my neck, I was mesmerized by the way the sunlight drew its severe triangles in the alleyways downtown, the way it threw the shadows of pedestrians onto the sidewalks, the way it lit up manikin faces in plate-glass storefronts.
   - type: figure
     useInExcerpt: false
-    prominence: wide
+    prominence: large
     resize: false
     border: false
     alt: Baltimore alleyway
