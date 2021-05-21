@@ -2,4 +2,4 @@
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
   X-Content-Type-Options: nosniff
-  Content-Security-Policy: default-src 'self' jayperryworks.com *.jayperryworks.com jayperry.works *.jayperry.works cloudfront.net *.cloudfront.net netlify.app *.netlify.app
+  Content-Security-Policy: default-src 'self' jayperryworks.com *.jayperryworks.com jayperry.works *.jayperry.works cloudfront.net *.cloudfront.net netlify.app *.netlify.app unpkg.com *unpkg.com
