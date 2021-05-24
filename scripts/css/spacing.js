@@ -120,7 +120,7 @@ module.exports = {
 
 		.gutter-wrapper {
 		  padding: ${get('medium', { split: true })};
-		  margin: -${get()};
+		  margin: -${get('medium')};
 		}
 
 	  .gutter-wrapper .gutter {
@@ -128,7 +128,7 @@ module.exports = {
 	  }
 
 		${Object.keys(spacing.scale)
-			.filter(size => size !== 'default')
+			.filter(size => size !== 'medium')
 			.map(size => `
 				.gutter-wrapper.${size} {
 				  padding: ${get(size, { split: true })};
@@ -139,6 +139,7 @@ module.exports = {
 			    padding: ${get(size, { split: true })};
 			  }
 			`)
+			.join('')
 		}
 	`
 }

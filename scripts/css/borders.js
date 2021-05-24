@@ -1,4 +1,4 @@
-const { borders, type, spacing } = require('../../content/design-tokens.js')
+const { borders, type, spacing, breakpoints } = require('../../content/design-tokens.js')
 const { helpers: theme } = require('./color.js')
 const { helpers: spacingHelpers } = require('./spacing.js')
 
@@ -112,7 +112,7 @@ module.exports = {
 				}
 
 				${Object.keys(spacing.outside).map(screen => `
-					@media screen and (max-width: ${screen}) {
+					@media screen and (max-width: ${breakpoints.sizes[screen]}${breakpoints.unit}) {
 						.border-seam-${side}::${borderSeamSelectors[side]} {
 							right: ${spacingHelpers.get(spacing.outside[screen])};
 						}
