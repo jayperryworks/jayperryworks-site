@@ -8,7 +8,7 @@ module.exports = {
   helpers: {
 	  get: (value, { unit = 'rem', base = 1 } = {}) => {
 	  	if (!unit) {
-	  		return modularscale(value, { base, ratio })
+	  		return modularscale(value, { base, ratio }).toFixed(2)
 	  	}
 	  	return modularscale(value, { base, ratio }).toFixed(2).concat(unit)
     }

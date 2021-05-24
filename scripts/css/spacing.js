@@ -2,8 +2,15 @@ const { spacing, breakpoints } = require('../../content/design-tokens.js')
 const { helpers: scale } = require('./scale.js')
 
 
-function get (name = 'medium', unit = 'rem') {
-	return scale.get(spacing.scale[name], unit)
+function get (name = 'medium', {
+	unit = 'rem',
+	split = false
+} = {}) {
+	if (split) {
+		const size = scale.get(spacing.scale[name], { unit: false })
+		return `${size / 2}${unit}`
+	}
+	return scale.get(spacing.scale[name], { unit })
 }
 
 module.exports = {
@@ -96,7 +103,7 @@ module.exports = {
 		${Object.keys(spacing.outside)
 			.filter(breakpoint => breakpoint !== 'default')
 			.map(breakpoint => `
-				@media screen and (min-size: ${breakpoints.sizes[breakpoint]}${breakpoints.unit}) {
+				@media screen and (min-width: ${breakpoints.sizes[breakpoint]}${breakpoints.unit}) {
 					.padding-x-outside {
 						padding-left: ${get(spacing.outside[breakpoint])};
 						padding-right: ${get(spacing.outside[breakpoint])};
@@ -104,6 +111,34 @@ module.exports = {
 				}
 			`)
 			.join('')
+		}
+
+		/* 
+			split gutters
+			-> add uniform gutters to a group of elements
+		*/
+
+		.gutter-wrapper {
+		  padding: ${get('medium', { split: true })};
+		  margin: -${get()};
+		}
+
+	  .gutter-wrapper .gutter {
+	    padding: ${get('medium', { split: true })};
+	  }
+
+		${Object.keys(spacing.scale)
+			.filter(size => size !== 'default')
+			.map(size => `
+				.gutter-wrapper.${size} {
+				  padding: ${get(size, { split: true })};
+				  margin: -${get(size)};
+				}
+
+			  .gutter-wrapper.${size} .gutter {
+			    padding: ${get(size, { split: true })};
+			  }
+			`)
 		}
 	`
 }

@@ -1,6 +1,6 @@
 <script>
-  export let fgColor = 'c-fg-bg',
-    bgColor = 'c-fg-primary'
+  export let fgColor = 'color-fg-bg',
+    bgColor = 'color-fg-primary'
 </script>
 
 <svg

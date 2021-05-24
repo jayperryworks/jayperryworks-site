@@ -106,6 +106,24 @@ const spacing = {
   }
 }
 
+const borders = {
+  seam: {
+    marker: {
+      h: 5,
+      w: 10
+    },
+    image: '/images/seam.svg'
+  },
+  widths: {
+    default: 1,
+    thick: 4
+  },
+  radius: {
+    size: 0.2,
+    unit: 'em'
+  }
+}
+
 const breakpoints = {
   sizes: {
     xsmall: 30,
@@ -125,5 +143,6 @@ module.exports = {
   scale,
   type,
   spacing,
+  borders,
   breakpoints
 }

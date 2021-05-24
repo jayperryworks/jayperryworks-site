@@ -147,7 +147,7 @@ module.exports = {
 		}
 
 		a {
-			${border.add('bottom')}
+			${border.add({ side: 'bottom' })};
 			transition: all 0.25s ease;
 			border-color: inherit;
 			color: inherit;
@@ -181,9 +181,9 @@ module.exports = {
 
 		${type.fonts.map(({ role }) => `
 			.type-font-${role} {
-				font: ${font(role)}
+				font-family: ${font(role)};
 			}
-		`)}
+		`).join('')}
 
 		.type-weight-bold {
 			font-weight: bold;

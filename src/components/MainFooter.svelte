@@ -29,30 +29,29 @@
   $: socialChannelList = socialChannels.map((channel, index) => {
     return `
       ${index == socialChannels.length - 1 ? 'and' : ''}
-      <strong class="c-fg-secondary t-font-display"><a href="${channel.url}">${channel.name}</a></strong>
+      <a class="color-fg-secondary | type-font-display type-weight-normal" href="${channel.url}">${channel.name}</a>
       `.trim()
   }).join(', ')
 </script>
 
 <footer class="border-seam-top padding-x-outside">
-  <div class="overflow-hidden">
+  <div class="hide-overflow">
     <div class="border-bottom padding-y">
-      <p class="c-fg-tertiary t-font-display t-scale-gamma">
+      <p class="color-fg-secondary | type-font-display type-scale-gamma">
         Keep in touch. You can also find me on {@html socialChannelList}.
       </p>
     </div>
     <div class="padding-y">
-      <div class="gutter-wrapper gutter-xnarrow">
+      <div class="gutter-wrapper xnarrow">
         <Bookend align="top">
           <div slot="left">
             <a
-              class="display-inline-block gutter t-link-undecorated"
-              style="height: 2.25rem; width: 10.9375rem;"
+              class="logo | gutter | type-link-undecorated"
               href="/"
             >
               <LogoJPW />
             </a>
-            <small class="display-inline-block gutter t-font-accent vertical-align-top">
+            <small class="copyright | gutter | type-font-accent | color-fg-secondary">
               &copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
             </small>
           </div>
@@ -74,5 +73,16 @@
 <style>
   footer {
     flex-shrink: 0;
+  }
+
+  .logo,
+  .copyright {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .logo {
+    height: 2.25rem;
+    width: 11rem;
   }
 </style>

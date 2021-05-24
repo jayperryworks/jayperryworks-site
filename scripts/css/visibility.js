@@ -69,6 +69,11 @@ module.exports = {
 			${hide}
 		}
 
+		/* hide overflow */
+		.hide-overflow {
+			overflow: hidden;
+		}
+
 		/* hide and show for print */
 		.print\\:show {
 			${hide}

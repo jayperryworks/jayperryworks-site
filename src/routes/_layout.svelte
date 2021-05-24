@@ -9,8 +9,7 @@
 
 <div
   id="spine-wrapper"
-  class:loading={$preloading}
-  style={setColor('highlight', { h: 300, s: 100, l: 40 })}
+  class:loading="{$preloading}"
 >
   <div id="main-wrapper">
     <slot></slot>
@@ -34,6 +33,17 @@
     margin: 0;
     min-height: 100%;
     min-height: 100vh;
+  }
+
+  img,
+  picture,
+  video {
+    max-width: 100%;
+  }
+
+  svg {
+    height: 100%;
+    width: 100%;
   }
 
   /* Animated 'spine' border */
