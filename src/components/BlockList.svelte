@@ -20,13 +20,24 @@
 		  const index = Object.keys(widths).find((item) => item == prominence)
 		  return widths[index] || 'default'
 		}
+
+		function getBlockClass(type) {
+			const classes = [
+				'passage',
+				'heading'
+			]
+
+			if (classes.includes(type)) {
+				return `block-${classes[type]}`
+			}
+		}
 </script>
 
 <div class="blocks padding-y-flow-wide">
 	{#each blocks as block}
 		<Wrapper
 		  width={getWidth(block.prominence)}
-		  class="block-{block.type === 'heading' ? 'heading' : 'text'}"
+		  class="{getBlockClass(block.type)}"
 		>
 		  {#if block.type == 'note'}
 		    <Note html={block.html} />
