@@ -67,14 +67,14 @@
 
   @supports (display: flex) {
     @media screen and (min-width: 30em) {
-      .xsmall\:horizontal {
+      .small\:horizontal {
         align-items: center;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
       }
 
-      .xsmall\:horizontal .item {
+      .small\:horizontal .item {
         display: inline-block;
         vertical-align: middle;
       }

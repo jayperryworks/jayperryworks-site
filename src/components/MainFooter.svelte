@@ -35,7 +35,7 @@
 </script>
 
 <footer class="border-seam-top padding-x-outside">
-  <p class="border-bottom | padding-y | color-fg-secondary | type-font-display type-scale-gamma type-leading-tight">
+  <p class="social-callout border-bottom | padding-y-wide | color-fg-secondary | type-font-display type-scale-gamma type-leading-tight">
     Keep in touch. You can also find me on {@html socialChannelList}.
   </p>
   <div class="padding-y hide-overflow">

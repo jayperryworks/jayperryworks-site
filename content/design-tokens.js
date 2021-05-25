@@ -26,12 +26,12 @@ const themes = {
   },
   default: {
     primary: palette.black,
-    secondary: { ...palette.black, l: 40 },
+    secondary: { ...palette.gray, l: 65 },
     highlight: palette.lavendar,
     bg: palette.white,
     island: palette.white,
     well: { ...palette.gray, l: 90 },
-    border: { ...palette.gray, l: 85 },
+    border: palette.gray,
     shadow: { ...palette.gray, a: 0.2 }
   }
 }
@@ -93,11 +93,11 @@ const spacing = {
   scale: {
     xxxnarrow: -12,
     xxnarrow: -8,
-    xnarrow: -4,
-    narrow: -2,
-    medium: 1,
-    wide: 3,
-    xwide: 6
+    xnarrow: -2,
+    narrow: 0,
+    medium: 3,
+    wide: 6,
+    xwide: 8
   },
   outside: {
     default: 'narrow',
