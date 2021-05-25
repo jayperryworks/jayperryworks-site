@@ -1,35 +1,28 @@
 const { breakpoints } = require('../../content/design-tokens.js')
 
 function query (size, content, direction = '>') {
-	const size = direction === '>'
+	const screen = direction === '>'
 		? `${breakpoints.sizes[size]}${breakpoints.unit}`
 		: `${breakpoints.sizes[size] - 0.01}${breakpoints.unit}`
 
+	const prop = direction === '>' ? 'min' : 'max'
+
 	return `
-		@media screen and (max-width: ${size}) {
+		@media screen and (${prop}-width: ${screen}) {
 			${content}
 		}
 	`
 }
 
 function responsiveClasses (className, block, direction = '>') {
-	if (direction === '<') {
-		return Object.keys(breakpoints.sizes).map(bp => `
-			@media screen and (max-width: ${breakpoints.sizes[bp] - 0.01}${breakpoints.unit}) {
-				.${bp}\\:${className} {
-					${block}
-				}
-			}
-		`).join('')
-	}
-
-	return Object.keys(breakpoints.sizes).map(bp => `
-		@media screen and (min-width: ${breakpoints.sizes[bp]}${breakpoints.unit}) {
+	return Object.keys(breakpoints.sizes).map((bp) => {
+		const css = `
 			.${bp}\\:${className} {
 				${block}
 			}
-		}
-	`).join('')
+		`
+		return query(bp, css, direction)
+	}).join('')
 }
 
 module.exports = {
