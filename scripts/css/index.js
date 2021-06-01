@@ -1,4 +1,7 @@
-// https://github.com/hankchizljaw/goron
+// Generate global CSS from design tokens
+// -> based heavily on Andy Picaccalilli's ideas in Gorko and Goron
+// Gorko: https://github.com/andy-piccalilli/gorko
+// Goron: https://github.com/hankchizljaw/goron
 const fs = require('fs')
 const path = require('path')
 
