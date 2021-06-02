@@ -1,5 +1,4 @@
 <script>
-  import arrow from 'icons/arrow-down.svg'
   import menu from 'icons/menu.svg'
   import Icon from './Icon.svelte'
 
@@ -8,9 +7,13 @@
   import LogoJP from './logos/LogoJP.svelte'
 
 	export let segment,
-    theme = false,
-    overlay = false,
-    hideMenu = false
+    overlay = false
+
+  let navOpen = false
+
+  function handleButtonClick (event) {
+    navOpen = !navOpen
+  }
 
   let items = [
     {
@@ -41,7 +44,6 @@
 <nav
   class="padding-x-outside"
   class:overlay
-  data-theme={theme || ''}
 >
   <div class="bookend">
     <a
@@ -51,17 +53,28 @@
       <LogoJP />
     </a>
 
-    <!-- large screen menu -->
+    <!-- nav -->
   	<div class="type-align-right">
-      {#if !hideMenu}
-        <ul class="nav horizontal xsmall:show margin-x-flow">
+      <button 
+        on:click="{e => navOpen = true}"
+        class="nav-open type-scale-epsilon type-font-accent"
+      >
+        Menu
+        <Icon svg="{menu}" margin="left" />
+      </button>
+      <div class="nav" hidden="{!navOpen}">
+        <button 
+          on:click="{e => navOpen = false}"
+          class="nav-close type-scale-epsilon type-font-accent"
+        >
+          Close
+        </button>
+        <ul class="nav-list">
           {#each items as item}
-            <li class="
-              {item.priority > 1 ? 'hide-visually small:show-visually' : ''}
-            ">
+            <li>
               <a
-                class="display-block padding-top-narrow type-font-accent type-link-undecorated"
-                class:type-highlight-top={segment === item.url}
+                class="type-font-accent type-link-undecorated"
+                class:current={segment === item.url}
                 rel={item.prefetch ? 'prefetch' : ''}
                 href={item.url}
               >
@@ -70,40 +83,7 @@
             </li>
           {/each}
         </ul>
-
-        <!-- small-screen menu -->
-        <Dropdown
-          label="Menu"
-          class="small:hide padding-top-narrow margin-left"
-        >
-          <span
-            slot="label"
-            class="display-block type-scale-zeta"
-          >
-            <Icon svg={menu} margin="right" />
-            <span class="type-font-accent">
-              Menu
-            </span>
-            <Icon svg={arrow} margin="left" size="small" />
-          </span>
-          <ul slot="dropdown" class="nav vertical">
-            {#each items as item, index}
-              <li
-                class="{priorityClass(item)}"
-                class:padding-bottom={index != items.length - 1}
-              >
-                <a
-                  class="display-block padding-x type-font-accent type-leading-tight type-link-undecorated type-scale-zeta"
-                  class:type-highlight-left={segment === item.url}
-                  href={item.url}
-                >
-                  {@html item.label}
-                </a>
-              </li>
-            {/each}
-          </ul>
-        </Dropdown>
-      {/if}
+      </div>
     </div>
   </div>
 </nav>
@@ -118,33 +98,59 @@
     }
   }
 
-  .logo {
-    display: block;
-    border: none;
-  }
-
   .overlay {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     background-color: transparent;
+    z-index: 4;
+  }
+
+  .logo {
+    display: block;
+    border: none;
+  }
+
+  button {
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+    display: inline-block;
+    outline: none;
+    padding: 0;
   }
 
   .nav {
+    display: block;
+    z-index: 4;
+  }
+
+  .nav[hidden] {
+    display: none;
+  }
+
+  .nav-list {
     display: inline-block;
     list-style: none;
   }
 
-  .nav > li {
+  .nav-list > li {
     margin-top: 0;
+    display: block;
   }
 
-  .nav.horizontal > li {
-    display: inline-block;
-  }
+  @media screen and (min-width: 42em) {
+    .nav[hidden] {
+      display:  inline-block;
+    }
 
-  .nav.vertical > li {
-    display:  block;
+    .nav-open {
+      display: none;
+    }
+
+    .nav-list > li {
+      display: inline-block;
+    }
   }
 </style>

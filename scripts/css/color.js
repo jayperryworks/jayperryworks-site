@@ -50,7 +50,7 @@ module.exports = {
 	},
 	customProperties: listCustomProperties('default'),
 	base: `
-		/* 
+		/* to be implemented later
 			@media screen and (prefers-color-scheme: dark) {
 				body {
 					${listCustomProperties('dark').join('\n')}
