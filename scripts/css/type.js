@@ -222,7 +222,7 @@ module.exports = {
 		}
 
 		/* alignment */
-		${['left', 'middle', 'right'].map((side) => {
+		${['left', 'center', 'right'].map((side) => {
 			return bp.responsiveClasses(
 				`type-align-${side}`,
 				`text-align: ${side};`

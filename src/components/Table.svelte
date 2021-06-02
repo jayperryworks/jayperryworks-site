@@ -98,7 +98,7 @@
     vertical-align: bottom;
   }
   
-  thead > th {
+  thead > :global(th) {
     padding-bottom: 0.5em;
   }
 

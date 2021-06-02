@@ -43,12 +43,8 @@
   class:overlay
   data-theme={theme || ''}
 >
-  <Bookend
-    breakpoint="none"
-    align="top"
-  >
+  <div class="bookend">
     <a
-      slot="left"
       class="logo"
       href="/"
     >
@@ -56,18 +52,16 @@
     </a>
 
     <!-- large screen menu -->
-  	<div slot="right">
+  	<div class="type-align-right">
       {#if !hideMenu}
-        <ul class="display-inline-block hide-below@xsmall list-undecorated margin-x-flow">
+        <ul class="nav horizontal xsmall:show margin-x-flow">
           {#each items as item}
             <li class="
-              display-inline-block
-              no-margin-top
-              {item.priority > 1 ? 'hide-visually show-visually-above@small' : ''}
+              {item.priority > 1 ? 'hide-visually small:show-visually' : ''}
             ">
               <a
-                class="display-block padding-top-narrow t-font-accent t-link-undecorated t-scale-zeta"
-                class:t-highlight-top={segment === item.url}
+                class="display-block padding-top-narrow type-font-accent type-link-undecorated"
+                class:type-highlight-top={segment === item.url}
                 rel={item.prefetch ? 'prefetch' : ''}
                 href={item.url}
               >
@@ -80,27 +74,27 @@
         <!-- small-screen menu -->
         <Dropdown
           label="Menu"
-          class="hide-above@small padding-top-narrow margin-left"
+          class="small:hide padding-top-narrow margin-left"
         >
           <span
             slot="label"
-            class="display-block t-scale-zeta"
+            class="display-block type-scale-zeta"
           >
             <Icon svg={menu} margin="right" />
-            <span class="hide-visually-above@xsmall t-font-accent">
+            <span class="type-font-accent">
               Menu
             </span>
             <Icon svg={arrow} margin="left" size="small" />
           </span>
-          <ul slot="dropdown" class="list-undecorated">
+          <ul slot="dropdown" class="nav vertical">
             {#each items as item, index}
               <li
-                class="display-block no-margin-top {priorityClass(item)}"
+                class="{priorityClass(item)}"
                 class:padding-bottom={index != items.length - 1}
               >
                 <a
-                  class="display-block padding-x t-font-accent t-leading-tight t-link-undecorated t-scale-zeta"
-                  class:t-highlight-left={segment === item.url}
+                  class="display-block padding-x type-font-accent type-leading-tight type-link-undecorated type-scale-zeta"
+                  class:type-highlight-left={segment === item.url}
                   href={item.url}
                 >
                   {@html item.label}
@@ -111,10 +105,19 @@
         </Dropdown>
       {/if}
     </div>
-  </Bookend>
+  </div>
 </nav>
 
 <style>
+  @supports (display:  flex) {
+    .bookend {
+      align-items: flex-start;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
   .logo {
     display: block;
     border: none;
@@ -126,5 +129,22 @@
     left: 0;
     right: 0;
     background-color: transparent;
+  }
+
+  .nav {
+    display: inline-block;
+    list-style: none;
+  }
+
+  .nav > li {
+    margin-top: 0;
+  }
+
+  .nav.horizontal > li {
+    display: inline-block;
+  }
+
+  .nav.vertical > li {
+    display:  block;
   }
 </style>

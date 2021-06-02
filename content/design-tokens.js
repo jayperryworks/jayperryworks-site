@@ -78,7 +78,7 @@ const type = {
     beta: { base: 3, fluid: 3, max: 6 },
     gamma: { base: 2, fluid: 2, max: 4 },
     delta: { base: 1, fluid: 1, max: 2 },
-    epsilon: { base: 0 },
+    epsilon: { base: 1 },
     zeta: { base: -1 },
   },
   leading: {
