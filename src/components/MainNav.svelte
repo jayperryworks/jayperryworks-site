@@ -57,7 +57,7 @@
   	<div class="type-align-right">
       <button 
         on:click="{e => navOpen = true}"
-        class="nav-open type-scale-epsilon type-font-accent"
+        class="type-scale-epsilon type-font-accent"
       >
         Menu
         <Icon svg="{menu}" margin="left" />
@@ -99,11 +99,11 @@
   }
 
   .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
     background-color: transparent;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
     z-index: 4;
   }
 
