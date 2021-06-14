@@ -24,6 +24,7 @@ function setCustomProperty (role, { h, s, l }) {
 		--color-${role}-h: ${h};
 		--color-${role}-s: ${s}%;
 		--color-${role}-l: ${l}%;
+		--color-${role}: hsl(var(--color-${role}-h), var(--color-${role}-s), var(--color-${role}-l));
 	`
 }
 
