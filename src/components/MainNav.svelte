@@ -62,8 +62,8 @@
       </button>
       <div 
         class="nav"
-        class:hide-visually="{navTransitioned && !navOpen}"
         class:open="{navOpen}"
+        class:closed="{navTransitioned && !navOpen}"
         on:transitionend="{e => { navTransitioned = true }}"
       >
         <button 
@@ -94,6 +94,7 @@
 </nav>
 
 <style>
+  /* --- layout --- */
   @supports (display:  flex) {
     .bookend {
       align-items: flex-start;
@@ -112,9 +113,10 @@
     z-index: 4;
   }
 
+  /* --- nav elements --- */
   .logo {
-    display: block;
     border: none;
+    display: block;
   }
 
   .nav-button {
@@ -137,40 +139,52 @@
   }
 
   .nav-button.close {
-    position: absolute;
-    top: 0;
-    right: 0;
     margin-right: 1.5em;
     margin-right: var(--space-medium);
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 
-  /* todo: add keyframe animation to handle hidden attr transition */
-  /* .visuallyHidden > (base state - hidden) > .open */
+  /* --- small-screen nav --- */
   :global(.js) .nav {
-    opacity: 0;
-    display: block;
-    z-index: 4;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     background-color: hsl(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.9);
+    bottom: 0;
+    display: block;
+    left: 0;
+    opacity: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
     transition: opacity 0.25s ease;
     will-change: opacity;
-  }
-
-  :global(.js) .nav.open {
-    opacity: 1;
+    z-index: 4;
   }
 
   @supports (display: flex) {
-    :global(.js) .nav.open {
+    :global(.js) .nav {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
     }
+  }
+
+  /* closed (visually hidden) state */
+  :global(.js) .nav.closed {
+    border: 0;
+    clip-path: inset(100%);
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  /* open (transitioned) state */
+  :global(.js) .nav.open {
+    opacity: 1;
   }
 
   .nav-list {
@@ -193,8 +207,8 @@
   }
 
   .nav-item {
-    font-size: var(--type-scale-delta);
     display: inline-block;
+    font-size: var(--type-scale-delta);
     position: relative;
     transition: color 0.25s ease-in-out;
     will-change: color, font-size;
@@ -202,16 +216,16 @@
 
   .nav-item.current::before {
     --size: 0.5em;
+    background-color: var(--color-highlight);
+    border-radius: 1000px;
     content: '';
     display: block;
-    position: absolute;
+    height: var(--size);
     left: calc(var(--space-medium) * -1);
+    position: absolute;
     top: 50%;
     transform: translateY(-50%);
     width: var(--size);
-    height: var(--size);
-    border-radius: 1000px;
-    background-color: var(--color-highlight);
   }
 
   /* --- large-screen nav --- */
@@ -222,9 +236,19 @@
 
     .nav,
     :global(.js) .nav {
-      display: inline-block;
-      position: relative;
       background-color: transparent;
+      display: inline-block;
+      opacity: 1;
+      position: relative;
+    }
+
+    :global(.js) .nav.closed {
+      clip-path: none;
+      clip: auto;
+      height: auto;
+      overflow: visible;
+      position: static;
+      width: auto;
     }
 
     .nav-item {
