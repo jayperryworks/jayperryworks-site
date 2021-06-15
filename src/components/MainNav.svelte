@@ -10,9 +10,11 @@
     overlay = false
 
   let navOpen = false
+  let navTransitioned = true
 
   function handleButtonClick () {
     navOpen = !navOpen
+    navTransitioned = false
   }
 
   let items = [
@@ -58,7 +60,12 @@
         Menu
         <Icon svg="{menu}" margin="left" />
       </button>
-      <div class="nav" hidden="{!navOpen}">
+      <div 
+        class="nav"
+        class:hide-visually="{navTransitioned && !navOpen}"
+        class:open="{navOpen}"
+        on:transitionend="{e => { navTransitioned = true }}"
+      >
         <button 
           on:click="{handleButtonClick}"
           class="nav-button close type-scale-epsilon type-font-accent"
@@ -114,12 +121,19 @@
     background-color: transparent;
     border: 0;
     box-shadow: none;
+    cursor: pointer;
     display: inline-block;
-    outline: none;
-    padding: 0;
     margin-top: 1em;
     margin-top: var(--space-narrow);
-    cursor: pointer;
+    outline: none;
+    padding: 0;
+    transition: color 0.25s ease-in-out;
+    will-change: color;
+  }
+
+  .nav-button:hover,
+  .nav-button:active {
+    color: var(--color-highlight);
   }
 
   .nav-button.close {
@@ -131,7 +145,9 @@
   }
 
   /* todo: add keyframe animation to handle hidden attr transition */
-  .nav {
+  /* .visuallyHidden > (base state - hidden) > .open */
+  :global(.js) .nav {
+    opacity: 0;
     display: block;
     z-index: 4;
     position: fixed;
@@ -140,19 +156,21 @@
     right: 0;
     bottom: 0;
     background-color: hsl(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.9);
+    transition: opacity 0.25s ease;
+    will-change: opacity;
+  }
+
+  :global(.js) .nav.open {
+    opacity: 1;
   }
 
   @supports (display: flex) {
-    .nav {
+    :global(.js) .nav.open {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
     }
-  }
-
-  :global(.js) .nav[hidden] {
-    display: none;
   }
 
   .nav-list {
@@ -196,16 +214,15 @@
     background-color: var(--color-highlight);
   }
 
+  /* --- large-screen nav --- */
   @media screen and (min-width: 30em) {
     .nav-button {
       display: none;
     }
 
-    .nav[hidden].nav[hidden] {
+    .nav,
+    :global(.js) .nav {
       display: inline-block;
-    }
-
-    .nav {
       position: relative;
       background-color: transparent;
     }
@@ -223,7 +240,7 @@
 
     .nav-item.current::before {
       background-color: var(--color-highlight);
-      height: 0.2em;
+      height: 0.125em;
       left: 0;
       position: absolute;
       right: 0;
