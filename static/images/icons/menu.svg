@@ -1,7 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>menu</title>
-    <g id="menu" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <path d="M13,12 L13,14 L1,14 L1,12 L13,12 Z M9,7 L9,9 L1,9 L1,7 L9,7 Z M15,2 L15,4 L1,4 L1,2 L15,2 Z" id="Combined-Shape" fill="#000000" fill-rule="nonzero"></path>
-    </g>
-</svg>
+<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke-linecap="square" stroke="currentColor"><path d="M.5 3.5h15M.5 8h8M.5 12.5h12"/></g></svg>
