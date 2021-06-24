@@ -40,7 +40,7 @@
 
 <PageTitle />
 
-<MainNav overlay />
+<MainNav segment="/" overlay />
 
 <main class="display-flex display-flex-column display-flex-fill">
 

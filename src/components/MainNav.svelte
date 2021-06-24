@@ -1,5 +1,6 @@
 <script>
   import menu from 'icons/menu.svg'
+  import close from 'icons/close.svg'
   import Icon from './Icon.svelte'
 
   import Bookend from './Bookend.svelte'
@@ -70,7 +71,7 @@
           on:click="{handleButtonClick}"
           class="nav-button close type-scale-epsilon type-font-accent"
         >
-          X
+          <Icon svg="{close}" margin="right" />
           <span class="hide-visually">Close</span>
         </button>
         <ul class="nav-list">
@@ -148,7 +149,7 @@
 
   /* --- small-screen nav --- */
   :global(.js) .nav {
-    background-color: hsl(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.9);
+    background-color: hsl(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95);
     bottom: 0;
     display: block;
     left: 0;
