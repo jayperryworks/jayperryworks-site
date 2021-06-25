@@ -19,12 +19,14 @@ function getCustomProperty (role, theme = 'default') {
 	return `hsl(${variables});`
 }
 
-function setCustomProperty (role, { h, s, l }) {
+function setCustomProperty (role, { h, s, l, a }) {
 	return `
 		--color-${role}-h: ${h};
 		--color-${role}-s: ${s}%;
 		--color-${role}-l: ${l}%;
-		--color-${role}: hsl(var(--color-${role}-h), var(--color-${role}-s), var(--color-${role}-l));
+		${a ? `--color-${role}-a: ${a};` : ''}
+		
+		--color-${role}: hsl(var(--color-${role}-h), var(--color-${role}-s), var(--color-${role}-l)${a ? `, ${a}` : ''});
 	`
 }
 
