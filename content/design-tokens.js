@@ -32,7 +32,7 @@ const themes = {
     island: palette.white,
     well: { ...palette.gray, l: 90 },
     border: palette.gray,
-    shadow: { ...palette.gray, a: 0.2 }
+    shadow: { ...palette.gray, a: 0.6 }
   }
 }
 
