@@ -25,7 +25,7 @@
 	import PageTitle from '@/components/PageTitle.svelte'
 	import Passage from '@/components/Passage.svelte'
 	import ResponsivePicture from '@/components/ResponsivePicture.svelte'
-	import TocPanel from '@/components/TocPanel.svelte'
+	import Panel from '@/components/Panel.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
 	export let content
@@ -88,12 +88,20 @@
 	</section>
 
 	<!-- pictures -->
-	<TocPanel 
-		heading={pictures.heading}
-		id={pictures.slug}
-		link={pictures.cta.link}
-		number={1}
-	>
+	<Panel id={pictures.slug}>
+		<header class="padding-bottom-wide">
+			<Wrapper width="xwide">
+				<a
+					class="toc-number type-scale-gamma type-font-accent type-link-undecorated | color-fg-secondary | padding-bottom-narrow"
+					href={pictures.cta.link}
+				>
+					01
+				</a>
+				<h2 class="type-scale-alpha">
+					<a href={pictures.cta.link}>{pictures.heading}</a>
+				</h2>
+			</Wrapper>
+		</header>
 		<Wrapper
 			class="display-flex-fill display-flex display-flex-column"
 			width="xwide"
@@ -134,15 +142,23 @@
 				</div>
 			</div>
 		</Wrapper>
-	</TocPanel>
+	</Panel>
 
 	<!-- blog -->
-	<TocPanel
-		number={2}
-		link={blog.cta.link}
-		heading={blog.heading}
-		id={blog.slug}
-	>
+	<Panel id={blog.slug}>
+		<header class="padding-bottom-wide">
+			<Wrapper width="xwide">
+				<a
+					class="toc-number type-scale-gamma type-font-accent type-link-undecorated | color-fg-secondary | padding-bottom-narrow"
+					href={blog.cta.link}
+				>
+					02
+				</a>
+				<h2 class="type-scale-alpha">
+					<a href={blog.cta.link}>{blog.heading}</a>
+				</h2>
+			</Wrapper>
+		</header>
 		<Wrapper
 			class="display-flex-fill display-flex display-flex-column display-flex-justify-center"
 			width="xwide"
@@ -188,10 +204,13 @@
 				</Button>
 			{/if}
 		</Wrapper>
-	</TocPanel>
+	</Panel>
 </main>
 
 <style>
+	.toc-number {
+		display: block;
+	}
 
 	.toc-link {
 		display: none;
