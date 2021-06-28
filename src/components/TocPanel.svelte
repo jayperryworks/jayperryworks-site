@@ -17,18 +17,18 @@
 </script>
 
 <article 
-	class="border-seam-top | padding-y-xwide padding-x-outside | display-flex display-flex-column | {classes}"
+	class="border-seam-top | padding-y-xwide padding-x-outside | {classes}"
 	id={id}
 >
 	<header class="padding-bottom-wide">
 		<Wrapper width="xwide">
 			<a
-				class="display-block | t-scale-gamma t-font-accent t-link-undecorated | c-fg-tertiary | padding-bottom-narrow"
+				class="number type-scale-gamma type-font-accent type-link-undecorated | color-fg-secondary | padding-bottom-narrow"
 				href={link}
 			>
 				{formattedNumber}
 			</a>
-			<h2 class="t-scale-alpha">
+			<h2 class="type-scale-alpha">
 				<a href={link}>{heading}</a>
 			</h2>
 		</Wrapper>
@@ -40,6 +40,12 @@
 	@supports (display: flex) {
 		article {
 			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
 		}
+	}
+
+	.number {
+		display: block;
 	}
 </style>

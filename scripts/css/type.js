@@ -56,14 +56,38 @@ function fontSize (size) {
 	return `font-size: ${scale.get(base)};`
 }
 
-const heading = `
-	${color.add('color', 'primary')}
-	font-family: ${font('display')};
-	font-weight: normal;
-	display: block;
-	line-height: ${type.leading.tight};
-	margin: 0;
-`
+function heading (selectors) {
+	return `
+		${selectors} {
+			${color.add('color', 'primary')}
+			font-family: ${font('display')};
+			font-weight: normal;
+			display: block;
+			line-height: ${type.leading.tight};
+			margin: 0;
+		}
+
+		${selectors.map(selector => `${selector} a`)} {
+			border-bottom: none;
+			color: inherit;
+		}
+
+		${selectors.map(selector => `
+			${selector} a:hover,
+			${selector} a:active
+		`)} {
+			${color.add('color', 'highlight')}
+		}
+
+		${selectors.map(selector => `${selector} strong`)} {
+			font-weight: normal;
+		}
+
+		${selectors.map(selector => `${selector} em`)} {
+			font-style: normal;
+		}
+	`
+}
 
 module.exports = {
 	name: 'Type',
@@ -125,14 +149,14 @@ module.exports = {
 		  line-height: ${type.leading.default};
 		}
 
-		h1,
-		h2,
-		h3,
-		h4,
-		h5,
-		h6 {
-			${heading}
-		}
+		${heading([
+			'h1',
+			'h2',
+			'h3',
+			'h4',
+			'h5',
+			'h6'
+		])}
 
 		${Object.keys(type.scale).map((size, index) => `
 			h${index + 1} {
@@ -163,21 +187,7 @@ module.exports = {
 		}
 	`,
 	utilities: `
-		.type-heading {
-			${heading}
-		}
-
-		.type-heading strong,
-		.type-heading .type-weight-bold,
-		.type-heading.type-weight-bold {
-			font-weight: normal;
-		}
-
-		.type-heading em,
-		.type-heading .type-style-italic,
-		.type-heading.type-style-italic {
-			font-style: normal;
-		}
+		${heading(['.type-heading'])}
 
 		${type.fonts.map(({ role }) => `
 			.type-font-${role} {

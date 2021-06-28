@@ -192,6 +192,7 @@
 </main>
 
 <style>
+
 	.toc-link {
 		display: none;
 	}
@@ -203,8 +204,11 @@
 	}
 
 	@supports (display: flex) {
-		.intro {
+		.panel {
 			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			flex: 1;
 		}
 
 		.toc-link {
