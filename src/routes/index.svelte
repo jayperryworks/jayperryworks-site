@@ -45,18 +45,25 @@
 <main class="display-flex display-flex-column display-flex-fill">
 
 	<!-- intro -->
-	<section class="intro | display-flex display-flex-column display-flex-fill | padding-top-xwide padding-x-outside">
+	<Panel
+		border="{false}"
+		padding="{{
+			x: 'outside',
+			top: 'xwide',
+			bottom: 'narrow'
+		}}"
+	>
 		<Wrapper
-			class="display-flex display-flex-column display-flex-fill | padding-top-wide"
+			class="intro-wrapper | padding-top-wide"
 			width="xwide"
 			flex
 		>
-			<div class="display-flex display-flex-column display-flex-fill display-flex-justify-center display-flex-align-start | padding-bottom-xwide">
+			<header class="display-flex display-flex-column display-flex-fill display-flex-justify-center display-flex-align-start | padding-bottom-xwide">
 				<Wrapper width="wide" centered={false}>
 					<h1 class="type-scale-alpha">{@html intro.headline}</h1>
 				</Wrapper>
 				<Wrapper 
-					class="type-scale-delta type-heading type-leading-default | padding-top"
+					class="type-scale-delta type-heading type-leading-default | padding-top padding-bottom-xwide"
 					centered={false}
 				>
 					<Passage html={intro.blurb}/>
@@ -69,10 +76,10 @@
 				>
 					{intro.cta.label}
 				</Button>
-			</div>
+			</header>
 
 			<!-- TOC link -->
-			<nav class="toc-link | padding-bottom-narrow">
+			<div class="toc-link">
 				<a
 					class="type-link-undecorated type-case-upper type-fontype-accent type-scale-eta type-weightype-bold"
 					href={`#${pictures.slug}`}
@@ -83,9 +90,9 @@
 					/>
 					Table of contents
 				</a>
-			</nav>
+			</div>
 		</Wrapper>
-	</section>
+	</Panel>
 
 	<!-- pictures -->
 	<Panel id={pictures.slug}>
@@ -223,8 +230,7 @@
 	}
 
 	@supports (display: flex) {
-		.panel {
-			min-height: 100vh;
+		.intro-wrapper {
 			display: flex;
 			flex-direction: column;
 			flex: 1;

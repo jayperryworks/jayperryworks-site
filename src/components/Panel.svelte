@@ -1,6 +1,18 @@
 <script>
-	export let id // the id attribute for the container, e.g. "blog",
+	export let id // the id attribute for the container, e.g. "blog"
 	export let centered
+	export let border = true
+	export let padding = {
+		x: 'outside',
+		y: 'xwide'
+	}
+
+	$: paddingClasses = Object.keys(padding).map((side) => {
+		if (padding[side] === 'default') {
+			return `padding-${side}`
+		}
+		return `padding-${side}-${padding[side]}`
+	}).join(' ')
 
 	// append additional classes as needed
 	let classes = ''
@@ -8,8 +20,9 @@
 </script>
 
 <article 
-	class="border-seam-top | padding-y-xwide padding-x-outside | {classes}"
+	class="{paddingClasses} | {classes}"
 	class:centered="{centered}"
+	class:border-seam-top="{border}"
 	{id}
 >
 	<slot></slot>
