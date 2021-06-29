@@ -56,7 +56,7 @@
       <button 
         on:click="{handleButtonClick}"
         class:hide="{navOpen === true}"
-        class="nav-button type-scale-epsilon type-font-accent"
+        class="nav-button type-scale-epsilon type-font-accent type-weight-light"
       >
         Menu
         <Icon svg="{menu}" margin="left" />
@@ -78,7 +78,7 @@
           {#each items as item}
             <li>
               <a
-                class="nav-item type-font-accent type-link-undecorated"
+                class="nav-item type-font-accent type-link-undecorated type-weight-light"
                 class:current={segment === item.url}
                 class:small-only="{item.show === 'small'}"
                 rel={item.prefetch ? 'prefetch' : ''}

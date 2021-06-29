@@ -18,7 +18,7 @@
   .gallery {
     /* default values */
     --gutter: var(--space-xnarrow);
-    --min-width: 240px;
+    --min-width: 300px;
     --breakpoint: 600px;
     --min-percentage: 33.33333%;
     --max-percentage: 100%;

@@ -111,7 +111,9 @@ module.exports = {
 		/* webfonts */
 		${type.fonts.map((font) => {
 			const { name, file, formats } = font
-			return font.variants.map(variant => webfont(name, file, { formats, ...variant })).join('')
+			if (file) {
+				return font.variants.map(variant => webfont(name, file, { formats, ...variant })).join('')
+			}
 		}, []).join('')}
 
 		/* global type */
@@ -194,6 +196,14 @@ module.exports = {
 				font-family: ${font(role)};
 			}
 		`).join('')}
+
+		.type-font-accent.type-weight-xlight {
+			font-weight: 100;
+		}
+
+		.type-font-accent.type-weight-light {
+			font-weight: 300;
+		}
 
 		.type-weight-bold {
 			font-weight: bold;

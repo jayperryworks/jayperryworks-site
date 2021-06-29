@@ -61,16 +61,9 @@ const type = {
       ]
     },
     {
-      name: 'Guardian Sans',
-      stack: "'Trebuchet', 'Lucida Grande', 'Verdana', sans-serif",
-      role: 'accent',
-      file: '/fonts/GuardianSans-Light-Web',
-      formats: ['woff', 'ttf'],
-      variants: [
-        { weight: 'light' }, 
-        { weight: 'normal' },
-        { weight: 'bold' }
-      ]
+      name: 'System',
+      stack: "system-ui, -apple-system, BlinkMacSystemFont, 'Avenir Next', 'Avenir', 'Segoe UI', 'Lucida Grande', 'Helvetica Neue', 'Helvetica', 'Fira Sans', 'Roboto', 'Noto', 'Droid Sans', 'Cantarell', 'Oxygen', 'Ubuntu', 'Franklin Gothic Medium', 'Century Gothic', 'Liberation Sans', sans-serif",
+      role: 'accent'
     }
   ],
   scale: {

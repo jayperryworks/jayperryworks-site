@@ -65,6 +65,7 @@
     font-family: var(--type-font-accent);
     font-size: 1rem; /* fallback reset */
     font-size: var(--font-size);
+    font-weight: 300;
     margin-bottom: var(--shadow-spread);
     padding: var(--padding-y) var(--padding-x) calc(var(--padding-y) - var(--baseline-compensation));
     position: relative;

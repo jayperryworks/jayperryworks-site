@@ -42,7 +42,7 @@
 
 <MainNav segment="/" overlay />
 
-<main class="display-flex display-flex-column display-flex-fill">
+<main class="fill-vertical">
 
 	<!-- intro -->
 	<Panel
@@ -54,25 +54,24 @@
 		}}"
 	>
 		<Wrapper
-			class="intro-wrapper | padding-top-wide"
-			width="xwide"
+			class="fill-vertical | padding-top-wide"
 			flex
+			width="xwide"
 		>
-			<header class="display-flex display-flex-column display-flex-fill display-flex-justify-center display-flex-align-start | padding-bottom-xwide">
+			<header class="fill-vertical justify-center | padding-bottom-xwide">
 				<Wrapper width="wide" centered={false}>
 					<h1 class="type-scale-alpha">{@html intro.headline}</h1>
 				</Wrapper>
 				<Wrapper 
-					class="type-scale-delta type-heading type-leading-default | padding-top padding-bottom-xwide"
 					centered={false}
+					class="type-scale-delta type-heading type-leading-default | padding-top padding-bottom-wide"
 				>
 					<Passage html={intro.blurb}/>
 				</Wrapper>
 				<Button
-					prefetch={true}
 					href={intro.cta.link}
 					iconRight={arrowRight}
-					class="margin-top-wide"
+					prefetch={true}
 				>
 					{intro.cta.label}
 				</Button>
@@ -81,7 +80,7 @@
 			<!-- TOC link -->
 			<div class="toc-link">
 				<a
-					class="type-link-undecorated type-case-upper type-fontype-accent type-scale-eta type-weightype-bold"
+					class="type-link-undecorated type-font-accent type-weight-light type-scale-eta"
 					href={`#${pictures.slug}`}
 				>
 					<Icon
@@ -99,7 +98,7 @@
 		<header class="padding-bottom-wide">
 			<Wrapper width="xwide">
 				<a
-					class="toc-number type-scale-gamma type-font-accent type-link-undecorated | color-fg-secondary | padding-bottom-narrow"
+					class="toc-number type-scale-gamma type-font-accent type-link-undecorated type-weight-xlight | color-fg-secondary | padding-bottom-narrow"
 					href={pictures.cta.link}
 				>
 					01
@@ -110,11 +109,11 @@
 			</Wrapper>
 		</header>
 		<Wrapper
-			class="display-flex-fill display-flex display-flex-column"
+			class="fill-vertical"
 			width="xwide"
 			flex
 		>
-			<div class="flag display-flex-fill">
+			<div class="flag">
 				<div class="flag-item blurb">
 					<Wrapper
 						class="margin-y-flow-wide"
@@ -152,11 +151,11 @@
 	</Panel>
 
 	<!-- blog -->
-	<Panel id={blog.slug}>
-		<header class="padding-bottom-wide">
+	<Panel id={blog.slug} class="padding-y-flow-wide">
+		<header>
 			<Wrapper width="xwide">
 				<a
-					class="toc-number type-scale-gamma type-font-accent type-link-undecorated | color-fg-secondary | padding-bottom-narrow"
+					class="toc-number type-scale-gamma type-font-accent type-link-undecorated type-weight-xlight | color-fg-secondary | padding-bottom-narrow"
 					href={blog.cta.link}
 				>
 					02
@@ -167,18 +166,18 @@
 			</Wrapper>
 		</header>
 		<Wrapper
-			class="display-flex-fill display-flex display-flex-column display-flex-justify-center"
+			class="fill-vertical justify-center"
 			width="xwide"
 			flex
 		>
-			<Gallery gutter="xwide" style="--min-width: 300px;">
+			<Gallery gutter="xwide">
 				{#each blog.list.posts as post, index}
 					<li
-						class:hide-below@xlarge={index >= 6}
-						class:hide-below@medium={index >= 4}
+						class:medium:show="{index >= 4 && index < 6}"
+						class:xlarge:show="{index >= 6}"
 					>
 						<time
-							class="c-fg-tertiary | display-block | padding-bottom-xnarrowRight | type-fontype-accent type-scale-eta"
+							class="color-fg-secondary | display-block | padding-bottom-xnarrow | type-font-accent type-weight-light type-scale-eta"
 							datetime={date(post.date, 'yyyy-M-dd')}
 						>
 							<a
@@ -192,7 +191,7 @@
 							<a href="{post.path}">{post.title}</a>
 						</h4>
 						{#if post.subtitle}
-							<p class="type-heading type-scale-delta type-fontype-accent | c-fg-tertiary | padding-top-xxnarrowRight">
+							<p class="type-heading type-scale-delta type-font-accent type-weight-light | color-fg-secondary | padding-top-xxnarrow">
 								<a href={post.path}>{post.subtitle}</a>
 							</p>
 						{/if}
@@ -230,10 +229,15 @@
 	}
 
 	@supports (display: flex) {
-		.intro-wrapper {
+		:global(.fill-vertical) {
 			display: flex;
 			flex-direction: column;
 			flex: 1;
+		}
+
+		.justify-center {
+			justify-content: center;
+			align-items: flex-start;
 		}
 
 		.toc-link {
@@ -245,6 +249,7 @@
 			display: flex;
 			flex-wrap: wrap;
 			overflow: hidden;
+			flex: 1;
 		}
 
 		.flag-item {
@@ -258,7 +263,6 @@
 
 		.flag-item.image {
 			flex: 1 1 600px;
-			justify-content: center;
 		}
 	}
 </style>

@@ -57,6 +57,7 @@
 <PageTitle title="Pictures" />
 
 <MainNav segment="pictures" />
+
 <main>
   <OutdentedBlurb
     class="padding-x-outside padding-y-xwide"

@@ -22,7 +22,7 @@ const unHideVisually = `
 `
 
 const hide = 'display: none !important;'
-const show = 'display: unset;'
+const show = 'display: unset !important;'
 
 module.exports = {
 	name: 'Visibility',
@@ -50,7 +50,7 @@ module.exports = {
 		}
 
 		${helpers.responsiveClasses('hide', hide)}
-		${helpers.responsiveClasses('show', show, '<')}
+		${helpers.responsiveClasses('show', hide, '<')}
 
 		/* hide and show if JS is supported */
 		.js .js\\:hide {
