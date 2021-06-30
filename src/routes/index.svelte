@@ -84,6 +84,7 @@
 					href={`#${pictures.slug}`}
 				>
 					<Icon
+						align="baseline"
 					  margin="right"
 					  svg={arrowDown}
 					/>

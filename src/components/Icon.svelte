@@ -1,7 +1,8 @@
 <script>
   export let svg,
     size = '',
-    margin = ''
+    margin = '',
+    align = 'middle'
 
   let classes = ''
   export { classes as class }
@@ -9,7 +10,7 @@
   let marginClass = margin ? `space-${margin}` : ''
 </script>
 
-<span class="icon {size} {marginClass} {classes}">
+<span class="icon {size} {marginClass} align-{align} {classes}">
   {@html svg}
 </span>
 
@@ -22,7 +23,6 @@
     fill: currentColor !important;
     height: 1em;
     height: var(--icon-size);
-    margin-top: -0.15em; /* scooch up a little on the baseline */
     max-height: 100%;
     max-width: 100%;
     pointer-events: none;
@@ -37,7 +37,6 @@
     margin: 0;
     max-height: 100%;
     width: 100%;
-    vertical-align: top;
   }
 
   .small {
@@ -58,5 +57,15 @@
 
   .space-left {
     margin-left: 0.25em;
+  }
+
+  .align-middle {
+    margin-top: -0.15em; /* scooch up a little on the baseline */
+    vertical-align: middle;
+  }
+
+  .align-baseline {
+    margin-top: 0;
+    vertical-align: baseline;
   }
 </style>

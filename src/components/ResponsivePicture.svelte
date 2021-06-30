@@ -21,7 +21,7 @@
 		cover = false,
 		fill = false
 
-	$: borderClass = border ? 'border border-solid' : ''
+	$: borderClass = border ? 'border solid' : ''
 
 	let classes = ''
 	export { classes as class }

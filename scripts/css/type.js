@@ -197,11 +197,13 @@ module.exports = {
 			}
 		`).join('')}
 
-		.type-font-accent.type-weight-xlight {
-			font-weight: 100;
+		.type-font-accent.type-weight-xlight,
+		.type-font-accent .type-weight-xlight {
+			font-weight: 200;
 		}
 
-		.type-font-accent.type-weight-light {
+		.type-font-accent.type-weight-light,
+		.type-font-accent .type-weight-light {
 			font-weight: 300;
 		}
 
