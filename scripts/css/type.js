@@ -128,8 +128,8 @@ module.exports = {
 		`)).join('')}
 
 		body {
+		  ${fontSize('epsilon')};
 		  font-family: ${font('body')};
-		  font-size: 1rem;
 		  line-height: ${type.leading.default};
 		}
 
