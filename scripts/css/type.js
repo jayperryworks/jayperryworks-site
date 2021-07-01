@@ -121,29 +121,11 @@ module.exports = {
 		  font-size: 100%;
 		}
 
-		@media screen and (max-width: ${breakpoints.sizes.small}) {
+		${type.screenScale.map(({ screen, size }) => bp.query(screen, `
 		  html {
-		    font-size: 105%;
+		    font-size: ${size}%;
 		  }
-		}
-
-		@media screen and (max-width: ${breakpoints.sizes.medium}) {
-		  html {
-		    font-size: 110%;
-		  }
-		}
-
-		@media screen and (max-width: ${breakpoints.sizes.large}) {
-		  html {
-		    font-size: 110%;
-		  }
-		}
-
-		@media screen and (max-width: ${breakpoints.sizes.xlarge}) {
-		  html {
-		    font-size: 120%;
-		  }
-		}
+		`)).join('')}
 
 		body {
 		  font-family: ${font('body')};

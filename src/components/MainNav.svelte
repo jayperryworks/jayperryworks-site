@@ -253,9 +253,9 @@
     }
 
     .nav-item {
-      font-size: var(--type-scale-epsilon);
-      padding-top: 1em;
-      padding-top: var(--space-narrow);
+      font-size: var(--type-scale-zeta);
+      padding-top: 0.8em;
+      padding-top: var(--space-xnarrow);
     }
 
     .nav-item:hover,

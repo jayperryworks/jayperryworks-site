@@ -72,8 +72,26 @@ const type = {
     gamma: { base: 2, fluid: 2, max: 4 },
     delta: { base: 1, fluid: 1, max: 2 },
     epsilon: { base: 1 },
-    zeta: { base: -1 },
+    zeta: { base: 0 },
   },
+  screenScale: [
+    {
+      screen: 'default',
+      size: 100
+    },
+    {
+      screen: 'small',
+      size: 105
+    },
+    {
+      screen: 'medium',
+      size: 110
+    },
+    {
+      screen: 'xlarge',
+      size: 120
+    }
+  ],
   leading: {
     tight: 1.2,
     default: 1.7

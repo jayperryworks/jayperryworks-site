@@ -14,16 +14,17 @@
 
 <script>
 	import { format } from 'date-fns'
-	import arrowSmallRight from 'icons/arrow-right.svg'
 	import arrowDottedLeft from 'icons/arrow-dotted-left.svg'
 	import arrowDottedRight from 'icons/arrow-dotted-right.svg'
+	import arrowSmallRight from 'icons/arrow-right.svg'
+	import BlockList from '@/components/BlockList.svelte'
+	import Bookend from '@/components/Bookend.svelte'
+	import Button from '@/components/Button.svelte'
+	import Figure from '@/components/Figure.svelte'
 	import Icon from '@/components/Icon.svelte'
 	import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
-	import BlockList from '@/components/BlockList.svelte'
-	import Figure from '@/components/Figure.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
-	import Bookend from '@/components/Bookend.svelte'
 
 	export let posts, number, total
 
@@ -59,7 +60,7 @@
 
 			<div slot="body">
 				<Wrapper centered={false}>
-					<ul class="list-undecorated margin-y-flow-xwide padding-y-flow-xwide | border-y-flow | type-leading">
+					<ul class="post-list margin-y-flow-xwide padding-y-flow-xwide | border-y-flow | type-leading-default">
 						{#each postsByYear[year] as post}
 							<li>
 								<article>
@@ -81,31 +82,27 @@
 										{/if}
 										<h2>{post.title}</h2>
 										{#if post.subtitle}
-											<p class="c-fg-tertiary t-font-accent t-scale-gamma">
+											<p class="color-fg-secondary type-font-accent type-scale-gamma">
 												{post.subtitle}
 											</p>
 										{/if}
 									</a>
 									<time
-										class="c-fg-tertiary display-block padding-top-xxnarrow padding-bottom t-font-accent t-scale-zeta t-weight-bold"
+										class="post-date color-fg-secondary padding-top-xxnarrow padding-bottom type-font-accent type-scale-epsilon type-weight-xlight"
 										datetime={date(post.date, 'yyyy-M-dd')}
 									>
 										{date(post.date)}
 									</time>
 									<BlockList blocks={post.excerpt} dropCap={false} />
 									{#if post.readMore}
-										<a
-											class="display-inline-block padding-top t-case-upper t-font-accent t-scale-zeta t-weight-bold t-link-undecorated"
-											rel="prefetch"
-											href={post.path}
+										<Button
+											href="{post.path}"
+											iconRight="{arrowSmallRight}"
+											size="small"
+											class="margin-top"
 										>
 											Read more
-											<Icon
-												svg={arrowSmallRight}
-												margin="left"
-												size="small"
-											/>
-										</a>
+										</Button>
 									{/if}
 								</article>
 							</li>
@@ -121,7 +118,7 @@
 		<div slot="left">
 			{#if prevPage > 0}
 				<a
-					class="t-link-undecorated t-scale-gamma t-heading"
+					class="t-link-undecorated type-scale-gamma t-heading"
 					href={`blog/page/${prevPage}`}
 				>
 					<Icon
@@ -136,7 +133,7 @@
 		<div slot="right">
 			{#if nextPage <= total}
 				<a
-					class="t-link-undecorated t-scale-gamma t-heading"
+					class="t-link-undecorated type-scale-gamma t-heading"
 					href={`blog/page/${nextPage}`}
 				>
 					<span class="pagination-label hide-below@small">Older posts</span>
@@ -152,7 +149,13 @@
 </footer>
 
 <style>
-	ul {
+	.post-date {
+		display: block;
+	}
+
+	.post-list {
+		list-style: none;
+		padding-left: 0;
 		margin: 0 0 1em 0;
 	}
 
