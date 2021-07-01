@@ -7,10 +7,13 @@
 	export { classes as class }
 
 	function convertToScale() {
+		if (ratio.includes('/')) {
+			return ratio
+				.split('/')
+				.map(interval => scale.get(interval, { unit: false }))
+				.join('/')
+		}
 		return ratio
-			.split('/')
-			.map(interval => scale.get(interval, { unit: false }))
-			.join('/')
 	}
 
 	$: style = `--ratio: ${useScale ? convertToScale() : ratio};`
