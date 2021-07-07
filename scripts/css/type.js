@@ -231,11 +231,6 @@ module.exports = {
 				.type-align-${side} {
 					text-align: ${side};
 				}
-
-				${bp.responsiveClasses(
-					`type-align-${side}`,
-					`text-align: ${side};`
-				)}
 			`
 		}).join('')}
 	`

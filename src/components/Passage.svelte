@@ -43,18 +43,20 @@
 
   /* footnotes */
   :global(.footnotes) {
-    color: var(--color-tertiary);
+    color: var(--color-secondary);
     font-size: var(--type-scale-zeta);
-    margin-bottom: var(--space-medium, 1em);
-    margin-top: var(--space-medium, 1em);
-    padding-top: var(--space-medium, 1em);
+  }
 
+  :global(.footnotes-list) {
+    padding-left: 1.2em;
   }
   
   :global(.footnotes li),
   :global(.footnotes p) {
-    color: var(--color-tertiary);
+    padding-left: 0;
+    color: var(--color-secondary);
     font-family: var(--type-font-accent);
+    font-weight: 300;
     font-size: var(--type-scale-zeta);
     letter-spacing: 0.02em;
   }
