@@ -7,7 +7,7 @@
 
 <!-- svelte-ignore a11y-structure -->
 <!-- Ignore this because this component is always used inside a figure parent -->
-<figcaption class="type-scale-zeta type-font-accent color-fg-secondary type-align-left padding-top-{spacing} padding-y-flow-xxnarrow {classes}">
+<figcaption class="type-scale-zeta type-font-accent type-weight-light color-fg-secondary type-align-left padding-top-{spacing} padding-y-flow-xxnarrow {classes}">
   {#if caption}{@html caption}{/if}
 
   {#if credit}

@@ -117,15 +117,15 @@ module.exports = {
 		}, []).join('')}
 
 		/* global type */
-		html {
-		  font-size: 100%;
-		}
-
-		${type.screenScale.map(({ screen, size }) => bp.query(screen, `
-		  html {
-		    font-size: ${size}%;
-		  }
-		`)).join('')}
+		${type.screenScale.map(({ screen, size }) => {
+			const css = `
+				html {
+			    font-size: ${size}%;
+			  }
+			`
+			if (screen === 'default') return css
+			return bp.query(screen, css)
+		}).join('')}
 
 		body {
 		  ${fontSize('epsilon')};
@@ -226,11 +226,17 @@ module.exports = {
 		}
 
 		/* alignment */
-		${['left', 'center', 'right'].map((side) => {
-			return bp.responsiveClasses(
-				`type-align-${side}`,
-				`text-align: ${side};`
-			)
+		${['center', 'right', 'left'].map((side) => {
+			return `
+				.type-align-${side} {
+					text-align: ${side};
+				}
+
+				${bp.responsiveClasses(
+					`type-align-${side}`,
+					`text-align: ${side};`
+				)}
+			`
 		}).join('')}
 	`
 }

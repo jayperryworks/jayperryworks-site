@@ -1,6 +1,10 @@
 const { breakpoints } = require('../../content/design-tokens.js')
 
 function query (size, content, direction = '>') {
+	if (!breakpoints.sizes[size]) {
+		throw `Error: screen size '${size}' doesn't exist in the design tokens.`
+	}
+
 	const screen = direction === '>'
 		? `${breakpoints.sizes[size]}${breakpoints.unit}`
 		: `${breakpoints.sizes[size] - 0.01}${breakpoints.unit}`
