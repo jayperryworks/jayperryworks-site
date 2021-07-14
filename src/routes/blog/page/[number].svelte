@@ -14,8 +14,8 @@
 
 <script>
 	import { format } from 'date-fns'
-	import arrowDottedLeft from 'icons/arrow-dotted-left.svg'
-	import arrowDottedRight from 'icons/arrow-dotted-right.svg'
+	import arrowLeft from 'icons/arrow-left.svg'
+	import arrowRight from 'icons/arrow-right.svg'
 	import arrowSmallRight from 'icons/arrow-right.svg'
 	import BlockList from '@/components/BlockList.svelte'
 	import Bookend from '@/components/Bookend.svelte'
@@ -82,13 +82,13 @@
 										{/if}
 										<h2>{post.title}</h2>
 										{#if post.subtitle}
-											<p class="color-fg-secondary type-font-accent type-scale-gamma">
+											<p class="color-fg-secondary type-font-accent type-scale-gamma type-weight-xlight type-leading-tight">
 												{post.subtitle}
 											</p>
 										{/if}
 									</a>
 									<time
-										class="post-date color-fg-secondary padding-top-xxnarrow padding-bottom type-font-accent type-scale-epsilon type-weight-xlight"
+										class="post-date color-fg-secondary padding-top-xnarrow padding-bottom type-font-accent type-scale-epsilon type-weight-xlight"
 										datetime={date(post.date, 'yyyy-M-dd')}
 									>
 										{date(post.date)}
@@ -114,38 +114,34 @@
 	</div>
 {/each}
 <footer class="border-seam-top-offset padding-x-outside padding-y-wide">
-	<Bookend breakpoint="none" fillSide="none">
-		<div slot="left">
+		<div class="left">
 			{#if prevPage > 0}
 				<a
-					class="t-link-undecorated type-scale-gamma t-heading"
+					class="type-link-undecorated type-scale-gamma type-heading"
 					href={`blog/page/${prevPage}`}
 				>
 					<Icon
-						svg={arrowDottedLeft}
-						size="xlarge"
-						class="margin-right-narrow"
+						svg={arrowLeft}
+						margin="right"
 					/>
 					<span class="pagination-label hide-below@small">Newer posts</span>
 				</a>
 			{/if}
 		</div>
-		<div slot="right">
+		<div class="right">
 			{#if nextPage <= total}
 				<a
-					class="t-link-undecorated type-scale-gamma t-heading"
+					class="type-link-undecorated type-scale-gamma type-heading"
 					href={`blog/page/${nextPage}`}
 				>
 					<span class="pagination-label hide-below@small">Older posts</span>
 					<Icon
-						svg={arrowDottedRight}
-						size="xlarge"
-						class="margin-left-narrow"
+						svg={arrowRight}
+						margin="left"
 					/>
 				</a>
 			{/if}
 		</div>
-	</Bookend>
 </footer>
 
 <style>
@@ -166,6 +162,5 @@
 	.pagination-label {
 		display: inline-block;
 		vertical-align: middle;
-		margin-top: -0.7em;
 	}
 </style>

@@ -173,6 +173,38 @@ module.exports = {
 	utilities: `
 		${heading(['.type-heading'])}
 
+		/* same as a heading, but a different font and color */
+		.type-subheading {
+			${color.add('color', 'secondary')}
+			font-family: ${font('accent')};
+			font-weight: 200;
+			display: block;
+			line-height: ${type.leading.tight};
+			margin: 0;
+		}
+
+		.type-scale-zeta.type-subheading {
+			font-weight: 300;
+		}
+
+		.type-subheading a {
+			border-bottom: none;
+			color: inherit;
+		}
+
+		.type-subheading a:hover,
+		.type-subheading a:active {
+			${color.add('color', 'highlight')}
+		}
+
+		.type-subheading strong {
+			font-weight: bold;
+		}
+
+		.type-subheading em {
+			font-style: italic;
+		}
+
 		${type.fonts.map(({ role }) => `
 			.type-font-${role} {
 				font-family: ${font(role)};

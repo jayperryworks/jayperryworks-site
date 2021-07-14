@@ -45,11 +45,11 @@
 	<header>
 		<Wrapper
 			width="wide"
-			class="t-align-center@small"
+			class="blog-heading"
 		>
 			<h1>{post.title}</h1>
 			{#if post.subtitle}
-				<p class="c-fg-tertiary padding-top-xxnarrow t-font-accent t-heading t-scale-beta">
+				<p class="type-subheading type-scale-beta">
 					{post.subtitle}
 				</p>
 			{/if}
@@ -67,7 +67,7 @@
 		</Wrapper>
 		<Wrapper class="border-bottom margin-bottom padding-bottom-xnarrow padding-top-xwide">
 			<time
-				class="c-fg-tertiary t-font-accent t-scale-zeta t-weight-bold"
+				class="color-fg-secondary type-font-accent type-scale-zeta type-weight-light"
 				datetime={formatDate('yyyy-M-dd')}
 			>
 				{formatDate('MMMM d, yyyy')}
@@ -77,3 +77,11 @@
 
 	<PostBody blocks={post.body} />
 </article>
+
+<style>
+	@media screen and (min-width: 43em) {
+		:global(.blog-heading) {
+			text-align: center;
+		}
+	}
+</style>

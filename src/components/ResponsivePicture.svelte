@@ -64,14 +64,12 @@
 
 <style>
 	picture {
-		display: inline-block;
-		max-width: 100%;
-		max-height: 100%;
+		position: relative;
 		overflow: hidden;
 	}
 
 	img {
-		object-fit: scale-down;
+		display: block;
 		width: 100%;
 		height: 100%;
 	}

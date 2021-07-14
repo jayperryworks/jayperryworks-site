@@ -28,7 +28,7 @@
 			]
 
 			if (classes.includes(type)) {
-				return `block-${classes[type]}`
+				return `block-${type}`
 			}
 		}
 </script>
@@ -55,7 +55,7 @@
 		  {/if}
 
 		  {#if block.type == 'figure'}
-		  	<div class="t-align-center">
+		  	<div class="type-align-center">
 		      <Figure
 		      	sources={block.image}
 		      	alt={block.alt}
@@ -76,7 +76,7 @@
 	      >
 	        <Gallery size={block.size}>
 	          {#each block.images as item}
-	            <li class="t-align-center">
+	            <li class="type-align-center">
 	              {#if item.image.versions && item.image.versions.length > 1}
 	                <ResponsivePicture
 	                  sources={item.image.versions}
@@ -106,7 +106,7 @@
 		  {/if}
 
 		  {#if block.type == 'update'}
-	      <h3 class="border-top padding-bottom-narrow padding-top t-case-upper t-font-accent t-scale-zeta t-weight-bold">Update</h3>
+	      <h3 class="border-top padding-bottom-narrow padding-top type-case-upper type-font-accent type-scale-zeta">Update</h3>
 	      <Passage html={block.html} />
 		  {/if}
 		</Wrapper>
@@ -114,12 +114,12 @@
 </div>
 
 <style>
-  .blocks :global(.block-heading + .block-text) {
+  .blocks :global(.block-heading + .block-passage) {
     padding-top: var(--space-narrow);
   }
 
   /* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
-  .blocks :global(.block-text + .block-text) {
+  .blocks :global(.block-passage + .block-passage) {
     padding-top: var(--space-medium);
   }
 </style>

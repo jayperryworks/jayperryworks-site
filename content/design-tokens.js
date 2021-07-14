@@ -93,8 +93,8 @@ const type = {
     }
   ],
   leading: {
-    tight: 1.2,
-    default: 1.7
+    tight: 1.3,
+    default: 1.8
   },
   // width of a line of body text, in characters (ch units)
   lineMeasure: 60
@@ -102,7 +102,6 @@ const type = {
 
 const spacing = {
   scale: {
-    xxxnarrow: -12,
     xxnarrow: -8,
     xnarrow: -2,
     narrow: 0,
