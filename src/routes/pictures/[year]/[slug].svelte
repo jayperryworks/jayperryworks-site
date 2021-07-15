@@ -61,33 +61,27 @@
 	<article>
 
 		<!-- Cover image -->
-		<header
-			class="padding-x-outside padding-y-xwide"
-			data-theme="reverse"
-		>
+		<header class="padding-x-outside padding-y-xwide">
 			<Cover
 				sources={post.cover}
 				alt={post.title}
 			/>
 
 			<!-- Title, media, size info -->
-			<Wrapper
-				width="narrow"
-				class="t-align-center padding-top"
-			>
-				<h1 class="display-inline-block@{metadataBreakpoint} no-padding-bottom@{metadataBreakpoint} padding-bottom-xnarrow t-font-accent t-scale-epsilon t-weight-bold">
+			<div class="metadata type-align-center padding-top">
+				<h1 class="metadata-title | type-font-accent type-scale-epsilon type-weight-light">
 					{post.title}
 				</h1>
 				<time
-					class="border-left@{metadataBreakpoint} c-fg-tertiary display-inline-block margin-left-narrow padding-left-narrow t-font-accent t-scale-epsilon"
+					class="metadata-subtitle | color-fg-secondary | type-font-accent type-weight-light type-scale-epsilon"
 					datetime="{formattedDate}"
 				>
 					{formattedDate}
 				</time>
-				<p class="border-left c-fg-tertiary display-inline-block margin-left-narrow padding-left-narrow t-font-accent t-scale-epsilon">
+				<p class="metadata-subtitle | color-fg-secondary | type-font-accent type-weight-light type-scale-epsilon type-leading-tight">
 					{post.format}{#if post.width && post.height}&nbsp;&bull; {post.width}" x {post.height}"{/if}
 				</p>
-			</Wrapper>
+			</div>
 		</header>
 
 		{#if post.intro}
@@ -156,5 +150,40 @@
 <style>
 	.outdent-heading {
 		margin-top: -0.1em;
+	}
+
+	.metadata {
+		--spacing: var(--space-xnarrow);
+		font-size: 0;
+	}
+
+	.metadata-title,
+	.metadata-subtitle {
+		display: block;
+	}
+
+	@media screen and (min-width: 20em) {
+		.metadata-subtitle {
+			display: inline-block;
+			border-color: var(--color-border);
+		}
+
+		.metadata-subtitle + .metadata-subtitle {
+			border-left: 1px solid;
+			margin-left: var(--spacing);
+			padding-left: var(--spacing);
+		}
+	}
+
+	@media screen and (min-width: 25em) {
+		.metadata-title {
+			display: inline-block;
+		}
+
+		.metadata > * + * {
+			border-left: 1px solid;
+			margin-left: var(--spacing);
+			padding-left: var(--spacing);
+		}
 	}
 </style>

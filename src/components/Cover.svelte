@@ -21,11 +21,15 @@
 		{credit}
 		{cover}
 		{border}
-		class="display-inline-block"
+		class="cover-figure"
 	/>
 </div>
 
 <style>
+	:global(.cover-figure) {
+		display: inline-block;
+	}
+
 	.container {
 		text-align: center;
 		font-size: 0;
