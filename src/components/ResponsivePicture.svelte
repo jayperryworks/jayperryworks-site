@@ -45,6 +45,8 @@
 
 <picture
 	class="{borderClass} {classes}"
+	class:contain
+	class:cover
 >
 	{#each enhancedFormat as source}
 		<source
@@ -56,8 +58,6 @@
 		src="{defaultSrc}"
 		srcset="{srcset(defaultFormat.sizes.slice(1))}"
 		{alt}
-		class:contain
-		class:cover
 		class:fill
 	>
 </picture>
@@ -74,11 +74,19 @@
 		height: 100%;
 	}
 
-	.contain {
-		object-fit: contain;
+	.contain,
+	.cover {
+		display: block;
+		width: 100%;
+		height: 100%;
 	}
 
-	.cover {
+	.contain img {
+		object-fit: contain;
+
+	}
+
+	.cover img {
 		object-fit: cover;
 	}
 

@@ -79,20 +79,20 @@
 		      <Gallery>
 		        {#each series.pictures as picture}
 		          <li>
-                <AspectRatio class="border solid">
-  		            <a
-  		              class="type-link-undecorated"
-  		              rel="prefetch"
-  		              href="{picture.path}"
-  		            >
+		            <a
+		              class="type-link-undecorated"
+		              rel="prefetch"
+		              href="{picture.path}"
+		            >
+                  <AspectRatio class="border solid">
   		              <ResponsivePicture
   		                sources={picture.thumbnail.versions}
   		                alt={picture.title}
                       cover
                       fill
   		              />
-  		            </a>
-                </AspectRatio>
+                  </AspectRatio>
+		            </a>
 		          </li>
 		        {/each}
 		        {#if series.pictures.length < 4}
