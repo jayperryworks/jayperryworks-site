@@ -86,26 +86,22 @@
 
 		{#if post.intro}
 			<!-- Intro -->
-			<OutdentedBlurb
-				blurbWidth={12}
-				class="padding-x-outside padding-y-xwide"
-			>
-				<h2
-					slot="blurb"
-					class="outdent-heading padding-bottom-narrow"
-				>
-					Backstory
-				</h2>
-				<div slot="body">
+			<section class="border-seam-top padding-x-outside padding-y-wide">
+				<Wrapper width="xwide">
+					<h2 class="outdent-heading padding-bottom-narrow">
+						Backstory
+					</h2>
 					<Passage html={post.intro} />
-				</div>
-			</OutdentedBlurb>
+				</Wrapper>
+			</section>
 		{/if}
 
 		{#if post.editions}
 			<!-- Editions -->
 			<section class="border-seam-top padding-x-outside padding-y-xwide">
-				<h2 class="padding-bottom-wide t-align-center@small">Available editions</h2>
+				<h2 class="editions-heading padding-bottom-wide">
+					Available editions
+				</h2>
 				{#if post.editions.length > 1}
 					<Wrapper width="xxwide">
 						<Gallery size="large" gutter="wide">
@@ -148,10 +144,6 @@
 </main>
 
 <style>
-	.outdent-heading {
-		margin-top: -0.1em;
-	}
-
 	.metadata {
 		--spacing: var(--space-xnarrow);
 		font-size: 0;
@@ -184,6 +176,12 @@
 			border-left: 1px solid;
 			margin-left: var(--spacing);
 			padding-left: var(--spacing);
+		}
+	}
+
+	@media screen and (min-width: 40em) {
+		.editions-heading {
+			text-align: center;
 		}
 	}
 </style>

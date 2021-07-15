@@ -1,22 +1,40 @@
 <script>
   import { titleize } from '@/utils/stringHelpers.js'
   import arrow from 'icons/arrow-right.svg'
+  import AspectRatio from '@/components/AspectRatio.svelte'
   import Button from '@/components/Button.svelte'
   import Card from '@/components/Card.svelte'
-  import FluidAspectImage from '@/components/FluidAspectImage.svelte'
+  import ResponsivePicture from '@/components/ResponsivePicture.svelte'
 
   export let edition
+
+  $: stats = [
+    {
+      label: 'Type',
+      value: titleize(edition.type)
+    },
+    {
+      label: 'Size',
+      value: `${edition.width}" x ${edition.height}"`
+    },
+    {
+      label: 'Paper size',
+      value: `${edition.width + (edition.border * 2)}" x ${edition.height + (edition.border * 2)}"`
+    }
+  ]
 </script>
 
 <Card>
 
   <!-- edition photo -->
   <div slot="figure">
-    <FluidAspectImage
-      sources={edition.photo}
-      alt={titleize(edition.name)}
-      cover
-    />
+    <AspectRatio>
+      <ResponsivePicture
+        sources="{edition.photo.versions}"
+        alt="{titleize(edition.name)}"
+        cover
+      />
+    </AspectRatio>
   </div>
 
   <!-- edition info -->
@@ -27,27 +45,25 @@
     <div class="info gutter">
 
       <!-- name -->
-      <h3 class="c-fg-tertiary padding-bottom-xnarrow">
-        <strong class="
-          c-fg-primary
-          t-font-display
-        ">{titleize(edition.name)}</strong> {titleize(edition.type)}&nbsp;Print
+      <h3 class="padding-bottom-xnarrow color-fg-secondary">
+        <strong class="color-fg-primary type-font-display">
+          {titleize(edition.name)}
+        </strong> 
+        {titleize(edition.type)}&nbsp;Print
       </h3>
 
       <!-- metadata -->
       <dl class="stats">
-        <div class="stats-group">
-          <dt class="stats-item stats-label">Type</dt>
-          <dd class="stats-item">{titleize(edition.type)}</dd>
+        {#each stats as stat}
+        <div class="stats-group type-scale-zeta">
+          <dt class="stats-item stats-label | type-font-accent type-weight-light | color-fg-secondary">
+            {stat.label}
+          </dt>
+          <dd class="stats-item type-font-accent type-weight-light">
+            {stat.value}
+          </dd>
         </div>
-        <div class="stats-group">
-          <dt class="stats-item stats-label">Size</dt>
-          <dd class="stats-item">{edition.width}" x {edition.height}"</dd>
-        </div>
-        <div class="stats-group">
-          <dt class="stats-item stats-label">Paper size</dt>
-          <dd class="stats-item">{edition.width + (edition.border * 2)}" x {edition.height + (edition.border * 2)}"</dd>
-        </div>
+        {/each}
       </dl>
     </div>
 
@@ -105,16 +121,9 @@
   }
 
   .stats-item {
-    color: var(--color-secondary);
     display: block;
-    font-family: var(--type-font-accent);
-    font-size: var(--type-scale-zeta);
     margin-left: 0; /* reset dt/dd default indent */
     vertical-align: baseline;
-  }
-
-  .stats-label {
-    color: var(--color-tertiary);
   }
   
   .stats-label::after {
