@@ -31,7 +31,7 @@
 
 			{#each typeExamples as example}
 			<section class="border border-round margin-top-wide padding">
-				<h2 class="type-font-accent type-scale-gamma color-fg-secondary">
+				<h2 class="type-font-accent type-weight-xlight type-scale-gamma color-fg-secondary">
 					{example.title}
 				</h2>
 				<ol class="padding-top padding-y-flow">
@@ -45,7 +45,7 @@
 			{/each}
 
 			<section class="border border-round margin-top-wide padding">
-				<h2 class="type-font-accent type-scale-gamma color-fg-secondary padding-bottom">
+				<h2 class="type-font-accent type-weight-xlight type-scale-gamma color-fg-secondary padding-bottom">
 					Body type sample
 				</h2>
 				<p>Lorem ipsum, dolor <strong>sit amet</strong>, consectetur adipisicing elit. Necessitatibus alias pariatur, <em>incidunt qui numquam</em> veniam quia nulla quo reprehenderit, ducimus fuga temporibus. Recusandae enim quo sit eos est illo quas!</p>
@@ -58,7 +58,7 @@
 
 			{#each ['default', 'small'] as size}
 				<section class="padding-top-wide">
-					<h2 class="type-font-accent type-scale-gamma color-fg-secondary padding-bottom">
+					<h2 class="type-font-accent type-weight-xlight type-scale-gamma color-fg-secondary padding-bottom">
 						{titleize(size)}
 					</h2>
 					<ul class="inline-list gutter-wrapper">
@@ -74,6 +74,12 @@
 					</ul>
 				</section>
 			{/each}
+		</Wrapper>
+	</section>
+
+	<section>
+		<Wrapper width="wide">
+			
 		</Wrapper>
 	</section>
 </main>

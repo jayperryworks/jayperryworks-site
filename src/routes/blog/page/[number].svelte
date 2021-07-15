@@ -113,9 +113,10 @@
 		</OutdentedBlurb>
 	</div>
 {/each}
-<footer class="border-seam-top-offset padding-x-outside padding-y-wide">
-		<div class="left">
-			{#if prevPage > 0}
+<footer class="border-seam-top padding-x-outside padding-y-wide">
+	<div class="pagination gutter-wrapper">
+		{#if prevPage > 0}
+			<div class="gutter">
 				<a
 					class="type-link-undecorated type-scale-gamma type-heading"
 					href={`blog/page/${prevPage}`}
@@ -124,24 +125,29 @@
 						svg={arrowLeft}
 						margin="right"
 					/>
-					<span class="pagination-label hide-below@small">Newer posts</span>
+					<span class="pagination-label">
+						Newer posts
+					</span>
 				</a>
-			{/if}
-		</div>
-		<div class="right">
-			{#if nextPage <= total}
+			</div>
+		{/if}
+		{#if nextPage <= total}
+			<div class="gutter">
 				<a
 					class="type-link-undecorated type-scale-gamma type-heading"
 					href={`blog/page/${nextPage}`}
 				>
-					<span class="pagination-label hide-below@small">Older posts</span>
+					<span class="pagination-label">
+						Older posts
+					</span>
 					<Icon
 						svg={arrowRight}
 						margin="left"
 					/>
 				</a>
-			{/if}
-		</div>
+			</div>
+		{/if}
+	</div>
 </footer>
 
 <style>
@@ -159,8 +165,17 @@
 		margin-top: -0.3em;
 	}
 
+	@supports (display: flex) {
+		.pagination {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;
+			text-align: center;
+		}
+	}
+
 	.pagination-label {
 		display: inline-block;
-		vertical-align: middle;
 	}
 </style>
