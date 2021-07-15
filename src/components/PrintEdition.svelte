@@ -37,7 +37,7 @@
     </AspectRatio>
   </div>
 
-  <!-- edition info -->
+<!-- edition info -->
   <div
     slot="content"
     class="info-wrapper gutter-wrapper"

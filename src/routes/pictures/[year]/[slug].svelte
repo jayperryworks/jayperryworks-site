@@ -88,10 +88,12 @@
 			<!-- Intro -->
 			<section class="border-seam-top padding-x-outside padding-y-wide">
 				<Wrapper width="xwide">
-					<h2 class="outdent-heading padding-bottom-narrow">
-						Backstory
-					</h2>
-					<Passage html={post.intro} />
+					<div class="flag">
+						<h2 class="flag-heading padding-bottom-narrow">
+							Backstory
+						</h2>
+						<Passage html={post.intro} />
+					</div>
 				</Wrapper>
 			</section>
 		{/if}
@@ -126,15 +128,14 @@
 				class="border-seam-top padding-x-outside padding-y-xwide"
 				id="about-{note.type}"
 			>
-				<OutdentedBlurb blurbWidth={20}>
-					<h2
-						slot="blurb"
-						class="outdent-heading padding-bottom-narrow"
-					>About {titleize(note.type)} prints</h2>
-					<div slot="body">
+				<Wrapper width="xwide">
+					<div class="flag">
+						<h2 class="flag-heading padding-bottom-narrow">
+							About {titleize(note.type)} prints
+						</h2>
 						<Note html={note.description} />
 					</div>
-				</OutdentedBlurb>
+				</Wrapper>
 			</aside>
 		{/each}
 	</article>
@@ -182,6 +183,21 @@
 	@media screen and (min-width: 40em) {
 		.editions-heading {
 			text-align: center;
+		}
+	}
+
+	@media screen and (min-width: 60em) {
+		@supports (display: grid) {
+			.flag {
+				padding-top: 0.1em;
+				display: grid;
+				grid-template-columns: minmax(auto, 28rem) minmax(30rem, 1fr);
+				grid-gap: var(--space-wide);
+			}
+
+			.flag-heading {
+				margin-top: -0.1em;
+			}
 		}
 	}
 </style>
