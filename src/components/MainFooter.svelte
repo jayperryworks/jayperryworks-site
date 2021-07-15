@@ -39,7 +39,7 @@
     Keep in touch. You can also find me on {@html socialChannelList}.
   </p>
   <div class="padding-y hide-overflow">
-    <div class="gutter-wrapper xnarrow">
+    <div class="gutter-wrapper narrow">
       <Bookend align="top">
         <div slot="left">
           <a
@@ -48,7 +48,7 @@
           >
             <LogoJPW />
           </a>
-          <small class="copyright | gutter | type-font-accent | color-fg-secondary">
+          <small class="copyright | gutter | type-font-accent type-weight-light type-leading-tight | color-fg-secondary">
             &copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
           </small>
         </div>

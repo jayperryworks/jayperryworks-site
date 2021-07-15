@@ -46,7 +46,7 @@
 </script>
 
 {#each Object.keys(postsByYear).reverse() as year, index}
-	<div class:border-seam-top={index > 0}>
+	<div class:border-seam-top="{index > 0}">
 		<OutdentedBlurb class="padding-x-outside padding-y-xwide">
 			<h1
 				slot="blurb"
@@ -59,24 +59,24 @@
 			</h1>
 
 			<div slot="body">
-				<Wrapper centered={false}>
+				<Wrapper centered="{false}">
 					<ul class="post-list margin-y-flow-xwide padding-y-flow-xwide | border-y-flow | type-leading-default">
 						{#each postsByYear[year] as post}
 							<li>
 								<article>
 									<a
 										rel="prefetch"
-										href={post.path}
+										href="{post.path}"
 										class="t-link-undecorated"
 									>
 										{#if post.cover && post.cover.image}
 											<div class="padding-bottom">
 												<Figure
-													sources={post.cover.image}
-													alt={post.cover.alt}
-													caption={post.cover.caption}
-													credit={post.cover.credit}
-													border={post.cover.border}
+													sources="{post.cover.image}"
+													alt="{post.cover.alt}"
+													caption="{post.cover.caption}"
+													credit="{post.cover.credit}"
+													border="{post.cover.border}"
 												/>
 											</div>
 										{/if}
@@ -88,12 +88,12 @@
 										{/if}
 									</a>
 									<time
-										class="post-date color-fg-secondary padding-top-xnarrow padding-bottom type-font-accent type-scale-epsilon type-weight-xlight"
-										datetime={date(post.date, 'yyyy-M-dd')}
+										class="post-date color-fg-secondary padding-bottom type-font-accent type-scale-epsilon type-weight-xlight"
+										datetime="{date(post.date, 'yyyy-M-dd')}"
 									>
 										{date(post.date)}
 									</time>
-									<BlockList blocks={post.excerpt} dropCap={false} />
+									<BlockList blocks="{post.excerpt}" dropCap="{false}" />
 									{#if post.readMore}
 										<Button
 											href="{post.path}"
@@ -119,10 +119,10 @@
 			<div class="gutter">
 				<a
 					class="type-link-undecorated type-scale-gamma type-heading"
-					href={`blog/page/${prevPage}`}
+					href="{`blog/page/${prevPage}`}"
 				>
 					<Icon
-						svg={arrowLeft}
+						svg="{arrowLeft}"
 						margin="right"
 					/>
 					<span class="pagination-label">
@@ -135,13 +135,13 @@
 			<div class="gutter">
 				<a
 					class="type-link-undecorated type-scale-gamma type-heading"
-					href={`blog/page/${nextPage}`}
+					href="{`blog/page/${nextPage}`}"
 				>
 					<span class="pagination-label">
 						Older posts
 					</span>
 					<Icon
-						svg={arrowRight}
+						svg="{arrowRight}"
 						margin="left"
 					/>
 				</a>

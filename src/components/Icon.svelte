@@ -18,9 +18,9 @@
   .icon {
     --icon-size: 1em;
 
-    color: inherit;
+    color: currentColor;
     display: inline-block;
-    fill: currentColor !important;
+    fill: currentColor;
     height: 1em;
     height: var(--icon-size);
     max-height: 100%;
@@ -33,7 +33,7 @@
 
   .icon :global(svg) {
     display: block;
-    fill: currentColor !important;
+    fill: currentColor;
     margin: 0;
     max-height: 100%;
     width: 100%;

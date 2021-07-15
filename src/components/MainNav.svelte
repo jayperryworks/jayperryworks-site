@@ -56,10 +56,10 @@
       <button 
         on:click="{handleButtonClick}"
         class:hide="{navOpen === true}"
-        class="nav-button type-scale-epsilon type-font-accent type-weight-light"
+        class="nav-button | type-scale-epsilon type-font-accent type-weight-xlight"
       >
         Menu
-        <Icon svg="{menu}" margin="left" />
+        <Icon svg="{menu}" margin="left" class="color-fg-primary" />
       </button>
       <div 
         class="nav"
