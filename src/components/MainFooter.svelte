@@ -30,7 +30,7 @@
     return `
       ${index == socialChannels.length - 1 ? 'and' : ''}
       <a class="color-fg-primary | type-font-display type-weight-normal" href="${channel.url}">${channel.name}</a>
-      `.trim()
+    `.trim()
   }).join(', ')
 </script>
 

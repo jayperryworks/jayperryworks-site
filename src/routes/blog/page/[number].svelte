@@ -114,7 +114,10 @@
 	</div>
 {/each}
 <footer class="border-seam-top padding-x-outside padding-y-wide">
-	<div class="pagination gutter-wrapper">
+	<div
+		class="pagination gutter-wrapper"
+		class:right-only="{prevPage === 0}"
+	>
 		{#if prevPage > 0}
 			<div class="gutter">
 				<a
@@ -172,6 +175,10 @@
 			align-items: center;
 			flex-wrap: wrap;
 			text-align: center;
+		}
+
+		.pagination.right-only {
+			justify-content: flex-end;
 		}
 	}
 
