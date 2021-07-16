@@ -17,35 +17,7 @@
   <MainFooter />
 </div>
 
-<style global>
-  *,
-  *:before,
-  *:after {
-    box-sizing: inherit;
-  }
-
-  html {
-    min-height: 100vh;
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    min-height: 100%;
-    min-height: 100vh;
-  }
-
-  img,
-  picture,
-  video {
-    max-width: 100%;
-  }
-
-  svg {
-    height: 100%;
-    width: 100%;
-  }
-
+<style>
   /* Animated 'spine' border */
   #spine-wrapper {
     --spine-color: hsl(

@@ -9,12 +9,13 @@ const modules = {
 	borders: require('./borders.js'),
 	breakpoints: require('./breakpoints.js'),
 	color: require('./color.js'),
-	spacing: require('./spacing.js'),
+	contentWidth: require('./contentWidth.js'),
+	reset: require('./reset.js'),
 	scale: require('./scale.js'),
-	type: require('./type.js'),
-	visibility: require('./visibility.js'),
+	spacing: require('./spacing.js'),
 	specialEffects: require('./specialEffects.js'),
-	contentWidth: require('./contentWidth.js')
+	type: require('./type.js'),
+	visibility: require('./visibility.js')
 }
 
 function render (type) {
