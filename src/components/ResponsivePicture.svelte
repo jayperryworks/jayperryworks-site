@@ -71,8 +71,6 @@
 
 	img {
 		display: block;
-		width: 100%;
-		height: 100%;
 	}
 
 	.contain,
@@ -92,7 +90,7 @@
 	}
 
 	/* only do this if object-fit is supported, so image doesn't get oddly cropped */
-	@supports (object-fit: scale-down) {
+	@supports (object-fit: contain) {
 		.fill {
 			position: absolute;
 			top: 0;
