@@ -1,127 +1,102 @@
 <script>
-  export let breakpoint = 'small',
-    align = 'middle',
-    fillSide = 'left',
-    itemWidth = false
+  export let breakpoint = 'none',
+    align = 'center',
+    fillSide = 'left'
 
   let classes = ''
   export {classes as class}
 
-  $: horizontalClass = breakpoint == 'none'
-    ? 'horizontal'
-    : `horizontal@${breakpoint}`
-
-  $: itemWidthStyle = itemWidth
-    ? `--item-width: ${itemWidth};`
-    : ''
+  $: breakpointClass = breakpoint !== 'none'
+    ? `${breakpoint}:horizontal`
+    : 'horizontal'
 </script>
 
 <div
-  class="bookend {horizontalClass} {classes}"
-  class:align-top={align === 'top'}
-  class:align-stretch={align === 'stretch'}
+  class="bookend {breakpointClass} {classes}"
+  class:align-top="{align === 'top'}"
+  class:align-stretch="{align === 'stretch'}"
 >
   <div
     class="item left"
     class:fill="{fillSide === 'left' || fillSide === 'both'}"
-    style={itemWidthStyle}
   >
     <slot name="left"></slot>
   </div>
   <div
     class="item right"
     class:fill="{fillSide === 'right' || fillSide === 'both'}"
-    style={itemWidthStyle}
   >
     <slot name="right"></slot>
   </div>
 </div>
 
-<style type="text/scss">
-  @use 'config/breakpoints';
-  @use 'bourbon';
-
+<style>
   .bookend {
     display: block;
     position: relative;
   }
 
-  .item {
-    --item-width: auto;
-
-    @include bourbon.clearfix;
-    clear: both;
-    display: block;
-    float: none;
-    position: relative;
-    vertical-align: middle;
-  }
-
-  @include breakpoints.suffix(
-    '.horizontal',
-    $default: true,
-    $sizes: [xsmall, small, medium, large]
-  ) {
-    @supports (display: flex) {
+  @supports (display: grid) {
+    .horizontal {
       align-items: center;
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
       justify-content: space-between;
     }
 
-    .item {
-      display: inline-block;
-      vertical-align: middle;
+    .horizontal.align-top {
+      align-items: top;
+    }
 
-      &.left {
-        float: left;
+    .horizontal.align-stretch {
+      align-items: stretch;
+    }
 
-        @supports (display: flex) {
-          float: none;
-        }
+    .horizontal.align-stretch .item {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .horizontal .item.right {
+      text-align: right;
+    }
+
+    .horizontal .item.fill {
+      flex: 1;
+    }
+
+    /* TODO find a better way to do this */
+    @media screen and (max-width:  42em) {
+      .horizontal {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
       }
 
-      &.right {
-        float: right;
+      .horizontal.align-top {
+        align-items: top;
+      }
+
+      .horizontal.align-stretch {
+        align-items: stretch;
+      }
+
+      .horizontal.align-stretch .item {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      .horizontal .item.right {
         text-align: right;
-
-        @supports (display: flex) {
-          float: none;
-          margin-left: auto;
-        }
       }
 
-      &.fill {
-        @supports (flex: 1) {
-          flex: 1;
-        }
-      }
-    }
-
-    &.align-top {
-      @supports (align-items: flex-start) {
-        align-items: flex-start !important;
-      }
-
-      .item {
-        vertical-align: top;
-      }
-    }
-
-    &.align-stretch {
-      @supports (align-items: flex-start) {
-        align-items: stretch !important;
-      }
-
-      .item {
-        max-width: var(--item-width);
-        vertical-align: top;
-
-        @supports (display: flex) {
-          display: flex;
-          flex-direction: column;
-          flex: 1;
-        }
+      .horizontal .item.fill {
+        flex: 1;
       }
     }
   }

@@ -19,10 +19,10 @@
   import { format } from 'date-fns'
   import { titleize } from '@/utils/stringHelpers.js'
   import arrow from 'icons/arrow-right.svg'
+  import AspectRatio from '@/components/AspectRatio.svelte'
   import Button from '@/components/Button.svelte'
   import Gallery from '@/components/Gallery.svelte'
   import MainNav from '@/components/MainNav.svelte'
-  import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
   import PageTitle from '@/components/PageTitle.svelte'
   import ResponsivePicture from '@/components/ResponsivePicture.svelte'
   import Wrapper from '@/components/Wrapper.svelte'
@@ -32,9 +32,8 @@
   // get unique series values from pictures array
   // and remove empty/undefined values
   // -> https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates#14438954
-  $: series = content.series
   $: picturesBySeries = [
-  	...series.map((name) => {
+  	...content.series.map((name) => {
   		return {
   			name: name,
   			pictures: pictures.filter(picture => picture.series === name)
@@ -48,22 +47,13 @@
   ]
 </script>
 
-<style>
-  h1 {
-    margin-top: -0.38em;
-  }
-</style>
-
 <PageTitle title="Pictures" />
 
 <MainNav segment="pictures" />
-<main>
-  <OutdentedBlurb
-    class="padding-x-outside padding-y-xwide"
-    blurbWidth="narrow"
-    bodyWidth="wide"
-  >
-    <div slot="blurb" class="padding-bottom-wide">
+
+<main class="padding-x-outside padding-y-xwide">
+  <Wrapper width="xxwide">
+    <header class="padding-bottom-wide">
       <h1 class="padding-bottom">{content.title}</h1>
       {#if content.intro}
       <Wrapper
@@ -75,30 +65,32 @@
         </div>
       </Wrapper>
       {/if}
-    </div>
+    </header>
 
-    <div
-    	slot="body"
-    	class="margin-y-between-wide padding-y-between-wide overflow-hidden"
-  	>
+    <div class="margin-y-flow-wide padding-y-flow-wide overflow-hidden">
     	{#each picturesBySeries as series, index}
-    		<section class:border-top="{index > 0}">
+    		<section>
     			{#if series.name}
-		    		<h2 class="t-scale-delta t-font-accent c-fg-tertiary padding-bottom-narrow"><strong>{titleize(series.name)}</strong> series</h2>
+		    		<h2 class="type-scale-gamma type-font-accent color-fg-secondary padding-bottom type-weight-xlight">
+              <strong class="type-weight-xlight color-fg-primary">{titleize(series.name)}</strong> series
+            </h2>
     			{/if}
 		      <Gallery>
 		        {#each series.pictures as picture}
 		          <li>
 		            <a
-		              class="t-link-undecorated"
+		              class="type-link-undecorated"
 		              rel="prefetch"
 		              href="{picture.path}"
 		            >
-		              <ResponsivePicture
-		                sources={picture.thumbnail.versions}
-		                alt={picture.title}
-		                border
-		              />
+                  <AspectRatio class="border solid">
+  		              <ResponsivePicture
+  		                sources={picture.thumbnail.versions}
+  		                alt={picture.title}
+                      cover
+                      fill
+  		              />
+                  </AspectRatio>
 		            </a>
 		          </li>
 		        {/each}
@@ -110,5 +102,5 @@
     		</section>
     	{/each}
     </div>
-  </OutdentedBlurb>
+  </Wrapper>
 </main>

@@ -21,7 +21,7 @@
 		cover = false,
 		fill = false
 
-	$: borderClass = border ? 'border border-solid' : ''
+	$: borderClass = border ? 'border solid' : ''
 
 	let classes = ''
 	export { classes as class }
@@ -43,32 +43,57 @@
 	}
 </script>
 
-<style type="text/scss">
+<picture
+	class="{classes}"
+	class:contain
+	class:cover
+>
+	{#each enhancedFormat as source}
+		<source
+			srcset="{srcset(source.sizes)}"
+			type="image/{source.format}"
+		>
+	{/each}
+	<img
+		class:fill
+		class="{borderClass}"
+		src="{defaultSrc}"
+		srcset="{srcset(defaultFormat.sizes.slice(1))}"
+		{alt}
+	>
+</picture>
+
+<style>
 	picture {
-		display: inline-block;
-		max-width: 100%;
-		max-height: 100%;
+		position: relative;
 		overflow: hidden;
 	}
 
 	img {
-		object-fit: scale-down;
+		display: block;
 		width: 100%;
 		height: 100%;
 	}
 
-	.contain {
-		object-fit: contain;
+	.contain,
+	.cover {
+		display: block;
+		width: 100%;
+		height: 100%;
 	}
 
-	.cover {
+	.contain img {
+		object-fit: contain;
+
+	}
+
+	.cover img {
 		object-fit: cover;
 	}
 
-	.fill {
-		// only do this if object-fit is supported,
-		// so image doesn't get oddly cropped
-		@supports (object-fit: scale-down) {
+	/* only do this if object-fit is supported, so image doesn't get oddly cropped */
+	@supports (object-fit: scale-down) {
+		.fill {
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -79,22 +104,3 @@
 		}
 	}
 </style>
-
-<picture
-	class="{borderClass} {classes}"
->
-	{#each enhancedFormat as source}
-		<source
-			srcset="{srcset(source.sizes)}"
-			type="image/{source.format}"
-		>
-	{/each}
-	<img
-		src="{defaultSrc}"
-		srcset="{srcset(defaultFormat.sizes.slice(1))}"
-		{alt}
-		class:contain
-		class:cover
-		class:fill
-	>
-</picture>

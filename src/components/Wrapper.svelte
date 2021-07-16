@@ -13,43 +13,34 @@
 
   let classes = ''
   export { classes as class }
+
+  $: widthClass = width === 'default' ? 'content-width' : `content-width-${width}`
 </script>
 
-<style type="text/scss">
-  @use "config/layout_width";
-
-  .wrapper {
-    position: relative;
-  }
-
-  .flex {
-  	width: 100%;
-  }
-
-  .centered {
-    margin-left: auto;
-    margin-right: auto;
-
-    .flex {
-    	@supports (display: flex) and (align-self: center) {
-    		align-self: center;
-    		margin-left: 0;
-    		margin-right: 0;
-    	}
-    }
-  }
-
-  @each $name, $w in layout_width.$list {
-    .#{$name} {
-      max-width: layout_width.get($name);
-    }
-  }
-</style>
-
 <div
-  class="wrapper {width} {classes}"
+  class="wrapper {widthClass} {classes}"
   class:centered
   class:flex
 >
   <slot />
 </div>
+
+<style>
+  .wrapper {
+    position: relative;
+  }
+
+  .centered {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @supports (display: flex) and (align-self: center) {
+    .flex {
+      width: 100%;
+      align-self: center;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+</style>

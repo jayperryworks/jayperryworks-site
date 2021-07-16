@@ -14,16 +14,17 @@
 
 <script>
 	import { format } from 'date-fns'
+	import arrowLeft from 'icons/arrow-left.svg'
+	import arrowRight from 'icons/arrow-right.svg'
 	import arrowSmallRight from 'icons/arrow-right.svg'
-	import arrowDottedLeft from 'icons/arrow-dotted-left.svg'
-	import arrowDottedRight from 'icons/arrow-dotted-right.svg'
+	import BlockList from '@/components/BlockList.svelte'
+	import Bookend from '@/components/Bookend.svelte'
+	import Button from '@/components/Button.svelte'
+	import Figure from '@/components/Figure.svelte'
 	import Icon from '@/components/Icon.svelte'
 	import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
-	import BlockList from '@/components/BlockList.svelte'
-	import Figure from '@/components/Figure.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
-	import Bookend from '@/components/Bookend.svelte'
 
 	export let posts, number, total
 
@@ -44,134 +45,143 @@
 	}
 </script>
 
-<style type="text/scss">
-	@use 'config/border';
-	@use 'config/type';
-	@use 'config/breakpoints' as bp;
+{#each Object.keys(postsByYear).reverse() as year, index}
+	<section class:border-seam-top="{index > 0}">
+		<div class="flag padding-x-outside padding-y-xwide">
+			<h1 class="padding-bottom-wide">
+				{year}
+			</h1>
 
-	ul {
+			<!-- posts -->
+			<Wrapper centered="{false}">
+				<ul class="post-list margin-y-flow-xwide padding-y-flow-xwide | border-y-flow | type-leading-default">
+					{#each postsByYear[year] as post}
+						<li>
+							<article>
+								<a
+									rel="prefetch"
+									href="{post.path}"
+									class="t-link-undecorated"
+								>
+									{#if post.cover && post.cover.image}
+										<div class="padding-bottom">
+											<Figure
+												sources="{post.cover.image}"
+												alt="{post.cover.alt}"
+												caption="{post.cover.caption}"
+												credit="{post.cover.credit}"
+												border="{post.cover.border}"
+											/>
+										</div>
+									{/if}
+									<h2>{post.title}</h2>
+									{#if post.subtitle}
+										<p class="color-fg-secondary type-font-accent type-scale-gamma type-weight-xlight type-leading-tight">
+											{post.subtitle}
+										</p>
+									{/if}
+								</a>
+								<time
+									class="post-date color-fg-secondary padding-bottom type-font-accent type-scale-epsilon type-weight-xlight"
+									datetime="{date(post.date, 'yyyy-M-dd')}"
+								>
+									{date(post.date)}
+								</time>
+								<BlockList blocks="{post.excerpt}" dropCap="{false}" />
+								{#if post.readMore}
+									<Button
+										href="{post.path}"
+										iconRight="{arrowSmallRight}"
+										size="small"
+										class="margin-top"
+									>
+										Read more
+									</Button>
+								{/if}
+							</article>
+						</li>
+					{/each}
+				</ul>
+			</Wrapper>
+		</div>
+	</section>
+{/each}
+<footer class="border-seam-top padding-x-outside padding-y-wide">
+	<div
+		class="pagination gutter-wrapper"
+		class:right-only="{prevPage === 0}"
+	>
+		{#if prevPage > 0}
+			<div class="gutter">
+				<a
+					class="type-link-undecorated type-scale-gamma type-heading"
+					href="{`blog/page/${prevPage}`}"
+				>
+					<Icon
+						svg="{arrowLeft}"
+						margin="right"
+					/>
+					<span class="pagination-label">
+						Newer posts
+					</span>
+				</a>
+			</div>
+		{/if}
+		{#if nextPage <= total}
+			<div class="gutter">
+				<a
+					class="type-link-undecorated type-scale-gamma type-heading"
+					href="{`blog/page/${nextPage}`}"
+				>
+					<span class="pagination-label">
+						Older posts
+					</span>
+					<Icon
+						svg="{arrowRight}"
+						margin="left"
+					/>
+				</a>
+			</div>
+		{/if}
+	</div>
+</footer>
+
+<style>
+	@media screen and (min-width: 70em) {
+		@supports (display: grid) {
+			.flag {
+				display: grid;
+				grid-template-columns: minmax(auto, 30vw) minmax(30rem, 1fr);
+				grid-gap: var(--space-wide);
+			}
+		}
+	}
+
+	.post-date {
+		display: block;
+	}
+
+	.post-list {
+		list-style: none;
+		padding-left: 0;
 		margin: 0 0 1em 0;
-		line-height: type.leading();
 	}
 
-	li + li {
-		@include border.add(top, $style: 'solid');
-	}
+	@supports (display: flex) {
+		.pagination {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;
+			text-align: center;
+		}
 
-	h1 {
-		margin-top: -0.3em;
+		.pagination.right-only {
+			justify-content: flex-end;
+		}
 	}
 
 	.pagination-label {
 		display: inline-block;
-		vertical-align: middle;
-		margin-top: -0.7em;
 	}
 </style>
-
-{#each Object.keys(postsByYear).reverse() as year, index}
-	<div class:border-seam-top={index > 0}>
-		<OutdentedBlurb class="padding-x-outside padding-y-xwide">
-			<h1
-				slot="blurb"
-				class="padding-bottom-wide"
-			>
-				{year === currentDate && number === '1'
-					? 'Recent posts'
-					: year
-				}
-			</h1>
-
-			<div slot="body">
-				<Wrapper centered={false}>
-					<ul class="list-undecorated margin-y-between-xwide padding-y-between-xwide">
-						{#each postsByYear[year] as post}
-							<li>
-								<article>
-									<a
-										rel="prefetch"
-										href={post.path}
-										class="t-link-undecorated"
-									>
-										{#if post.cover && post.cover.image}
-											<div class="padding-bottom">
-												<Figure
-													sources={post.cover.image}
-													alt={post.cover.alt}
-													caption={post.cover.caption}
-													credit={post.cover.credit}
-													border={post.cover.border}
-												/>
-											</div>
-										{/if}
-										<h2>{post.title}</h2>
-										{#if post.subtitle}
-											<p class="c-fg-tertiary t-font-accent t-scale-gamma">
-												{post.subtitle}
-											</p>
-										{/if}
-									</a>
-									<time
-										class="c-fg-tertiary display-block padding-top-xxnarrow padding-bottom t-font-accent t-scale-zeta t-weight-bold"
-										datetime={date(post.date, 'yyyy-M-dd')}
-									>
-										{date(post.date)}
-									</time>
-									<BlockList blocks={post.excerpt} dropCap={false} />
-									{#if post.readMore}
-										<a
-											class="display-inline-block padding-top t-case-upper t-font-accent t-scale-zeta t-weight-bold t-link-undecorated"
-											rel="prefetch"
-											href={post.path}
-										>
-											Read more
-											<Icon
-												svg={arrowSmallRight}
-												margin="left"
-												size="small"
-											/>
-										</a>
-									{/if}
-								</article>
-							</li>
-						{/each}
-					</ul>
-				</Wrapper>
-			</div>
-		</OutdentedBlurb>
-	</div>
-{/each}
-<footer class="border-seam-top-offset padding-x-outside padding-y-wide">
-	<Bookend breakpoint="none" fillSide="none">
-		<div slot="left">
-			{#if prevPage > 0}
-				<a
-					class="t-link-undecorated t-scale-gamma t-heading"
-					href={`blog/page/${prevPage}`}
-				>
-					<Icon
-						svg={arrowDottedLeft}
-						size="xlarge"
-						class="margin-right-narrow"
-					/>
-					<span class="pagination-label hide-below@small">Newer posts</span>
-				</a>
-			{/if}
-		</div>
-		<div slot="right">
-			{#if nextPage <= total}
-				<a
-					class="t-link-undecorated t-scale-gamma t-heading"
-					href={`blog/page/${nextPage}`}
-				>
-					<span class="pagination-label hide-below@small">Older posts</span>
-					<Icon
-						svg={arrowDottedRight}
-						size="xlarge"
-						class="margin-left-narrow"
-					/>
-				</a>
-			{/if}
-		</div>
-	</Bookend>
-</footer>

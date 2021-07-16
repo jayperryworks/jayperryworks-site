@@ -29,50 +29,55 @@
   $: socialChannelList = socialChannels.map((channel, index) => {
     return `
       ${index == socialChannels.length - 1 ? 'and' : ''}
-      <strong class="c-fg-secondary t-font-display"><a href="${channel.url}">${channel.name}</a></strong>
-      `.trim()
+      <a class="color-fg-primary | type-font-display type-weight-normal" href="${channel.url}">${channel.name}</a>
+    `.trim()
   }).join(', ')
 </script>
+
+<footer class="border-seam-top padding-x-outside">
+  <p class="social-callout border-bottom | padding-y-wide | color-fg-secondary | type-font-display type-scale-gamma type-leading-tight">
+    Keep in touch. You can also find me on {@html socialChannelList}.
+  </p>
+  <div class="padding-y hide-overflow">
+    <div class="gutter-wrapper narrow">
+      <Bookend align="top">
+        <div slot="left">
+          <a
+            class="logo | gutter | type-link-undecorated"
+            href="/"
+          >
+            <LogoJPW />
+          </a>
+          <small class="copyright | gutter | type-font-accent type-weight-xlight type-leading-tight type-scale-zeta | color-fg-secondary">
+            &copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
+          </small>
+        </div>
+
+        <!-- <div slot="right">
+          <a
+            href="/colophon"
+            class="c-fg-tertiary display-inline-block gutter t-case-upper t-font-accent t-link-undecorated t-scale-eta t-weight-bold vertical-align-top"
+          >
+            Colophon
+          </a>
+        </div> -->
+      </Bookend>
+    </div>
+  </div>
+</footer>
 
 <style>
   footer {
     flex-shrink: 0;
   }
+
+  .logo,
+  .copyright {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .logo {
+    width: 12rem;
+  }
 </style>
-
-<footer class="border-seam-top padding-x-outside">
-  <div class="overflow-hidden">
-    <div class="border-bottom padding-y">
-      <p class="c-fg-tertiary t-font-display t-scale-gamma">
-        Keep in touch. You can also find me on {@html socialChannelList}.
-      </p>
-    </div>
-    <div class="padding-y">
-      <div class="gutter-wrapper gutter-xnarrow">
-        <Bookend align="top">
-          <div slot="left">
-            <a
-              class="display-inline-block gutter t-link-undecorated"
-              style="height: 2.25rem; width: 10.9375rem;"
-              href="/"
-            >
-              <LogoJPW />
-            </a>
-            <small class="display-inline-block gutter t-font-accent vertical-align-top">
-              &copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
-            </small>
-          </div>
-
-          <!-- <div slot="right">
-            <a
-              href="/colophon"
-              class="c-fg-tertiary display-inline-block gutter t-case-upper t-font-accent t-link-undecorated t-scale-eta t-weight-bold vertical-align-top"
-            >
-              Colophon
-            </a>
-          </div> -->
-        </Bookend>
-      </div>
-    </div>
-  </div>
-</footer>

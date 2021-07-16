@@ -1,7 +1,8 @@
 <script>
   export let svg,
     size = '',
-    margin = ''
+    margin = '',
+    align = 'middle'
 
   let classes = ''
   export { classes as class }
@@ -9,46 +10,45 @@
   let marginClass = margin ? `space-${margin}` : ''
 </script>
 
-<style type="text/scss">
-  @use 'config/scale';
+<span class="icon {size} {marginClass} align-{align} {classes}">
+  {@html svg}
+</span>
 
+<style>
   .icon {
-    $size: 1em;
-    --icon-size: #{$size};
+    --icon-size: 1em;
 
-    color: inherit;
+    color: currentColor;
     display: inline-block;
-    fill: currentColor !important;
-    height: $size;
+    fill: currentColor;
+    height: 1em;
     height: var(--icon-size);
-    margin-top: -0.15em; /* scooch up a little on the baseline */
     max-height: 100%;
     max-width: 100%;
     pointer-events: none;
     vertical-align: middle;
-    width: $size;
+    width: 1em;
     width: var(--icon-size);
+  }
 
-    :global(svg) {
-      display: block;
-      fill: currentColor !important;
-      margin: 0;
-      max-height: 100%;
-      width: 100%;
-      vertical-align: top;
-    }
+  .icon :global(svg) {
+    display: block;
+    fill: currentColor;
+    margin: 0;
+    max-height: 100%;
+    width: 100%;
   }
 
   .small {
-    --icon-size: #{scale.get(-2, $unit: 1em)};
+    --icon-size: 0.7em;
   }
 
   .large {
-    --icon-size: #{scale.get(2, $unit: 1em)};
+    --icon-size: 1.44em;
   }
 
   .xlarge {
-    --icon-size: #{scale.get(4, $unit: 1em)};
+    --icon-size: 2.07em;
   }
 
   .space-right {
@@ -58,8 +58,14 @@
   .space-left {
     margin-left: 0.25em;
   }
-</style>
 
-<span class="icon {size} {marginClass} {classes}">
-  {@html svg}
-</span>
+  .align-middle {
+    margin-top: -0.15em; /* scooch up a little on the baseline */
+    vertical-align: middle;
+  }
+
+  .align-baseline {
+    margin-top: 0;
+    vertical-align: baseline;
+  }
+</style>

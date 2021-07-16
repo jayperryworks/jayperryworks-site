@@ -37,13 +37,11 @@
 <script>
 	import { format } from 'date-fns'
 	import { titleize } from '@/utils/stringHelpers.js'
-	import Bookend from '@/components/Bookend.svelte'
 	import Cover from '@/components/Cover.svelte'
 	import Gallery from '@/components/Gallery.svelte'
 	import MainNav from '@/components/MainNav.svelte'
 	import NextPrevThumbNav from '@/components/NextPrevThumbNav.svelte'
 	import Note from '@/components/Note.svelte'
-	import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
 	import Passage from '@/components/Passage.svelte'
 	import PrintEdition from '@/components/PrintEdition.svelte'
@@ -55,12 +53,6 @@
 	$: formattedDate = format(new Date(date.year, 0), 'yyyy')
 </script>
 
-<style>
-	.outdent-heading {
-		margin-top: -0.1em;
-	}
-</style>
-
 <PageTitle title="{post.title}" />
 
 <MainNav segment="pictures" theme="reverse" />
@@ -68,57 +60,49 @@
 	<article>
 
 		<!-- Cover image -->
-		<header
-			class="padding-x-outside padding-y-xwide"
-			data-theme="reverse"
-		>
+		<header class="padding-x-outside padding-y-xwide">
 			<Cover
 				sources={post.cover}
 				alt={post.title}
 			/>
 
 			<!-- Title, media, size info -->
-			<Wrapper
-				width="narrow"
-				class="t-align-center padding-top"
-			>
-				<h1 class="display-inline-block@{metadataBreakpoint} no-padding-bottom@{metadataBreakpoint} padding-bottom-xnarrow t-font-accent t-scale-epsilon t-weight-bold">
+			<div class="metadata type-align-center padding-top">
+				<h1 class="metadata-title | type-font-accent type-scale-epsilon type-weight-light">
 					{post.title}
 				</h1>
 				<time
-					class="border-left@{metadataBreakpoint} c-fg-tertiary display-inline-block margin-left-narrow padding-left-narrow t-font-accent t-scale-epsilon"
+					class="metadata-subtitle | color-fg-secondary | type-font-accent type-weight-light type-scale-epsilon"
 					datetime="{formattedDate}"
 				>
 					{formattedDate}
 				</time>
-				<p class="border-left c-fg-tertiary display-inline-block margin-left-narrow padding-left-narrow t-font-accent t-scale-epsilon">
+				<p class="metadata-subtitle | color-fg-secondary | type-font-accent type-weight-light type-scale-epsilon type-leading-tight">
 					{post.format}{#if post.width && post.height}&nbsp;&bull; {post.width}" x {post.height}"{/if}
 				</p>
-			</Wrapper>
+			</div>
 		</header>
 
 		{#if post.intro}
 			<!-- Intro -->
-			<OutdentedBlurb
-				blurbWidth={12}
-				class="padding-x-outside padding-y-xwide"
-			>
-				<h2
-					slot="blurb"
-					class="outdent-heading padding-bottom-narrow"
-				>
-					Backstory
-				</h2>
-				<div slot="body">
-					<Passage html={post.intro} />
-				</div>
-			</OutdentedBlurb>
+			<section class="border-seam-top padding-x-outside padding-y-wide">
+				<Wrapper width="xwide">
+					<div class="flag">
+						<h2 class="flag-heading padding-bottom-narrow">
+							Backstory
+						</h2>
+						<Passage html={post.intro} />
+					</div>
+				</Wrapper>
+			</section>
 		{/if}
 
 		{#if post.editions}
 			<!-- Editions -->
 			<section class="border-seam-top padding-x-outside padding-y-xwide">
-				<h2 class="padding-bottom-wide t-align-center@small">Available editions</h2>
+				<h2 class="editions-heading padding-bottom-wide">
+					Available editions
+				</h2>
 				{#if post.editions.length > 1}
 					<Wrapper width="xxwide">
 						<Gallery size="large" gutter="wide">
@@ -143,15 +127,14 @@
 				class="border-seam-top padding-x-outside padding-y-xwide"
 				id="about-{note.type}"
 			>
-				<OutdentedBlurb blurbWidth={20}>
-					<h2
-						slot="blurb"
-						class="outdent-heading padding-bottom-narrow"
-					>About {titleize(note.type)} prints</h2>
-					<div slot="body">
+				<Wrapper width="xwide">
+					<div class="flag">
+						<h2 class="flag-heading padding-bottom-narrow">
+							About {titleize(note.type)} prints
+						</h2>
 						<Note html={note.description} />
 					</div>
-				</OutdentedBlurb>
+				</Wrapper>
 			</aside>
 		{/each}
 	</article>
@@ -159,3 +142,61 @@
 		<NextPrevThumbNav {nav} heading="More prints &amp; paintings" />
 	{/if}
 </main>
+
+<style>
+	.metadata {
+		--spacing: var(--space-xnarrow);
+		font-size: 0;
+	}
+
+	.metadata-title,
+	.metadata-subtitle {
+		display: block;
+	}
+
+	@media screen and (min-width: 20em) {
+		.metadata-subtitle {
+			display: inline-block;
+			border-color: var(--color-border);
+		}
+
+		.metadata-subtitle + .metadata-subtitle {
+			border-left: 1px solid;
+			margin-left: var(--spacing);
+			padding-left: var(--spacing);
+		}
+	}
+
+	@media screen and (min-width: 25em) {
+		.metadata-title {
+			display: inline-block;
+		}
+
+		.metadata > * + * {
+			border-left: 1px solid;
+			margin-left: var(--spacing);
+			padding-left: var(--spacing);
+		}
+	}
+
+	@media screen and (min-width: 40em) {
+		.editions-heading {
+			text-align: center;
+		}
+	}
+
+	@media screen and (min-width: 60em) {
+		@supports (display: grid) {
+			.flag {
+				padding-top: 0.1em;
+				display: grid;
+				grid-template-columns: minmax(auto, 28rem) minmax(30rem, 1fr);
+				grid-gap: var(--space-wide);
+			}
+
+			.flag-heading {
+				margin-top: -0.1em;
+			}
+		}
+	}
+</style>

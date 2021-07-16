@@ -140,7 +140,7 @@ $leading: (
 @include bourbon.font-face(
   "guardian-sans-bold",
   "#{paths.$fonts}/GuardianSans-Semibold-Web",
-  ('ttf', 'woff')
+  ('ttf', 'woff', 'woff2')
 ) {
   font-display: swap;
   font-style: normal;

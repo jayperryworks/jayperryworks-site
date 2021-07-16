@@ -1,6 +1,6 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
-import render from '../utils/renderMarkdown.js'
+import render from '@/utils/renderMarkdown.js'
 import generateBlogList from '@/utils/generateBlogList.js'
 import { findInManifest } from '@/utils/imageHelpers.js'
 

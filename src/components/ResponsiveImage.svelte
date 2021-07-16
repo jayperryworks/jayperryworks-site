@@ -33,7 +33,16 @@
 	export { classes as class }
 </script>
 
-<style type="text/scss">
+<img
+	class="{borderClass} {classes}"
+	class:contain
+	class:cover
+	{src}
+	{srcset}
+	{alt}
+/>
+
+<style>
 	img {
 		display: inline-block;
 		max-width: 100%;
@@ -48,12 +57,3 @@
 		object-fit: cover;
 	}
 </style>
-
-<img
-	class="{borderClass} {classes}"
-	class:contain
-	class:cover
-	{src}
-	{srcset}
-	{alt}
-/>

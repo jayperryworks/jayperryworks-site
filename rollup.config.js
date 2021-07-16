@@ -1,41 +1,22 @@
-import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
+import babel from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
 import config from 'sapper/config/rollup.js';
-import replace from 'rollup-plugin-replace';
-import resolve from 'rollup-plugin-node-resolve';
-import svelte from 'rollup-plugin-svelte';
-import svg from 'rollup-plugin-svg';
-import { terser } from 'rollup-plugin-terser';
+import path from 'path';
 import pkg from './package.json';
+import replace from '@rollup/plugin-replace';
+import resolve from '@rollup/plugin-node-resolve';
+import svelte from 'rollup-plugin-svelte';
+import url from '@rollup/plugin-url';
+import { terser } from 'rollup-plugin-terser';
 
 // packages I added
+import inlineSvg from 'rollup-plugin-inline-svg';
 import sveltePreprocess from 'svelte-preprocess';
-import alias from 'rollup-plugin-alias';
+import alias from '@rollup/plugin-alias';
 
-const mode = process.env.NODE_ENV;
-const dev = mode === 'development';
-const legacy = !!process.env.SAPPER_LEGACY_BUILD;
-
-const onwarn = (warning, onwarn) =>
- 	(warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message)) ||
- 	(warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) ||
- 	onwarn(warning);
-const dedupe = importee => importee === 'svelte' || importee.startsWith('svelte/');
-
-const preprocess = [
-  sveltePreprocess({
-    scss: {
-      includePaths: [
-        'static/stylesheets',
-        'node_modules/bourbon/core',
-        'node_modules/include-media/dist'
-      ]
-    },
-    postcss: {
-      plugins: [require('autoprefixer')]
-    }
-  })
-];
+const preprocess = sveltePreprocess({
+  postcss: true
+});
 
 const aliases = alias({
   resolve: ['.js', '.svelte', '.svg'],
@@ -45,40 +26,64 @@ const aliases = alias({
       replacement: `${__dirname}/src`
     },
     {
+    	find: 'css',
+    	replacement: `${__dirname}/scripts/css`
+    },
+    {
       find: 'icons',
       replacement: `${__dirname}/static/images/icons`
     }
   ]
 })
 
+//---
+const mode = process.env.NODE_ENV;
+const dev = mode === 'development';
+const legacy = !!process.env.SAPPER_LEGACY_BUILD;
+
+const onwarn = (warning, onwarn) =>
+	(warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message)) ||
+	(warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) ||
+	onwarn(warning);
+
 export default {
 	client: {
 		input: config.client.input(),
 		output: config.client.output(),
-		preserveEntrySignatures: false,
 		plugins: [
-      svg(),
 			replace({
-				'process.browser': true,
-				'process.env.NODE_ENV': JSON.stringify(mode)
+				preventAssignment: true,
+				values:{
+					'process.browser': true,
+					'process.env.NODE_ENV': JSON.stringify(mode)
+				},
 			}),
 			svelte({
-				dev,
-				hydratable: true,
-				emitCss: true,
-        preprocess
+				compilerOptions: {
+					dev,
+					hydratable: true,
+				},
+				preprocess
+			}),
+			url({
+				sourceDir: path.resolve(__dirname, 'src/node_modules/images'),
+				publicPath: '/client/',
+				exclude: ['**/*.svg']
 			}),
 			resolve({
 				browser: true,
-        extensions: [ '.mjs', '.js', '.jsx', '.json', '.svg' ],
-				dedupe
+				extensions: [ '.mjs', '.js', '.jsx', '.json' ],
+				dedupe: ['svelte']
 			}),
-      aliases,
+			inlineSvg({
+				removeSVGTagAttrs: true
+			}),
+			aliases,
 			commonjs(),
 
 			legacy && babel({
 				extensions: ['.js', '.mjs', '.html', '.svelte'],
-				runtimeHelpers: true,
+				babelHelpers: 'runtime',
 				exclude: ['node_modules/@babel/**'],
 				presets: [
 					['@babel/preset-env', {
@@ -98,6 +103,7 @@ export default {
 			})
 		],
 
+		preserveEntrySignatures: false,
 		onwarn,
 	},
 
@@ -105,44 +111,60 @@ export default {
 		input: config.server.input(),
 		output: config.server.output(),
 		plugins: [
-      svg(),
 			replace({
-				'process.browser': false,
-				'process.env.NODE_ENV': JSON.stringify(mode)
+				preventAssignment: true,
+				values:{
+					'process.browser': false,
+					'process.env.NODE_ENV': JSON.stringify(mode)
+				},
 			}),
 			svelte({
-				generate: 'ssr',
-				dev,
-        preprocess
+				compilerOptions: {
+					dev,
+					generate: 'ssr',
+					hydratable: true,
+				},
+				preprocess,
+				emitCss: false
+			}),
+			url({
+				sourceDir: path.resolve(__dirname, 'src/node_modules/images'),
+				publicPath: '/client/',
+				emitFiles: false, // already emitted by client build
+				exclude: ['**/*.svg']
 			}),
 			resolve({
-        extensions: [ '.mjs', '.js', '.jsx', '.json', '.svg' ],
-				dedupe
+				extensions: [ '.mjs', '.js', '.jsx', '.json' ],
+				dedupe: ['svelte']
 			}),
-      aliases,
+			inlineSvg({
+				removeSVGTagAttrs: true
+			}),
+			aliases,
 			commonjs()
 		],
-		external: Object.keys(pkg.dependencies).concat(
-			require('module').builtinModules || Object.keys(process.binding('natives'))
-		),
-
+		external: Object.keys(pkg.dependencies).concat(require('module').builtinModules),
+		preserveEntrySignatures: 'strict',
 		onwarn,
 	},
 
-	// temporarily disabling the service worker until I can clean up the static folder to reduce unnecessary requests
+	// -> disabling service workers until i can clean up static assets
 	// serviceworker: {
 	// 	input: config.serviceworker.input(),
 	// 	output: config.serviceworker.output(),
 	// 	plugins: [
 	// 		resolve(),
 	// 		replace({
-	// 			'process.browser': true,
-	// 			'process.env.NODE_ENV': JSON.stringify(mode)
+	// 			preventAssignment: true,
+	// 			values:{
+	// 				'process.browser': true,
+	// 				'process.env.NODE_ENV': JSON.stringify(mode)
+	// 			},
 	// 		}),
 	// 		commonjs(),
 	// 		!dev && terser()
 	// 	],
-
+	// 	preserveEntrySignatures: false,
 	// 	onwarn,
 	// }
 };

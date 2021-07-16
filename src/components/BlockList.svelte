@@ -28,12 +28,12 @@
 			]
 
 			if (classes.includes(type)) {
-				return `block-${classes[type]}`
+				return `block-${type}`
 			}
 		}
 </script>
 
-<div class="blocks">
+<div class="blocks padding-y-flow-wide">
 	{#each blocks as block}
 		<Wrapper
 		  width={getWidth(block.prominence)}
@@ -55,7 +55,7 @@
 		  {/if}
 
 		  {#if block.type == 'figure'}
-		  	<div class="t-align-center">
+		  	<div class="type-align-center">
 		      <Figure
 		      	sources={block.image}
 		      	alt={block.alt}
@@ -67,10 +67,16 @@
 		  {/if}
 
 		  {#if block.type == 'gallery'}
-	      <Figure ...block>
+	      <Figure
+	      	sources={block.image}
+	      	alt={block.alt}
+	      	caption={block.caption}
+	      	credit={block.credit}
+	      	border={block.border}
+	      >
 	        <Gallery size={block.size}>
 	          {#each block.images as item}
-	            <li class="t-align-center">
+	            <li class="type-align-center">
 	              {#if item.image.versions && item.image.versions.length > 1}
 	                <ResponsivePicture
 	                  sources={item.image.versions}
@@ -100,28 +106,20 @@
 		  {/if}
 
 		  {#if block.type == 'update'}
-	      <h3 class="border-top padding-bottom-narrow padding-top t-case-upper t-font-accent t-scale-zeta t-weight-bold">Update</h3>
+	      <h3 class="border-top padding-bottom-narrow padding-top type-case-upper type-font-accent type-scale-zeta">Update</h3>
 	      <Passage html={block.html} />
 		  {/if}
 		</Wrapper>
 	{/each}
 </div>
 
-<style type="text/scss">
-  @use "config/spacing";
+<style>
+  .blocks :global(.block-heading + .block-passage) {
+    padding-top: var(--space-narrow);
+  }
 
-  .blocks {
-    > :global(* + *) {
-      padding-top: spacing.get('xwide');
-    }
-
-    :global(.block-heading + .block-text) {
-      padding-top: spacing.get('narrow');
-    }
-
-    // when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text
-    :global(.block-text + .block-text) {
-      padding-top: spacing.get();
-    }
+  /* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
+  .blocks :global(.block-passage + .block-passage) {
+    padding-top: var(--space-medium);
   }
 </style>

@@ -1,229 +1,105 @@
 <script>
-  import arrowLeft from 'icons/arrow-dotted-left.svg'
-  import arrowRight from 'icons/arrow-dotted-right.svg'
+  import { titleize } from '@/utils/stringHelpers.js'
+  import arrowLeft from 'icons/arrow-left.svg'
+  import arrowRight from 'icons/arrow-right.svg'
   import index from 'icons/index.svg'
-  import Bookend from '@/components/Bookend.svelte'
+  import AspectRatio from '@/components/AspectRatio.svelte'
   import Icon from '@/components/Icon.svelte'
   import ResponsivePicture from '@/components/ResponsivePicture.svelte'
 
   export let heading, nav, breakpoint = 'small'
 </script>
 
-<style type="text/scss">
-  @use 'config/border';
-  @use 'config/breakpoints' as bp;
-  @use 'config/scale';
-  @use 'config/spacing';
-  @use 'config/type';
+<nav class="border-seam-top border-solid border-top padding-x-outside padding-y-xwide">
+  <!-- heading and index link -->
+  <header class="padding-bottom-wide hide-overflow">
+    <div class="header-wrapper gutter-wrapper">
+      <h2 class="gutter">{heading}</h2>
+      <a
+        href="pictures"
+        class="gutter | type-font-accent type-link-undecorated type-weight-light | color-fg-secondary"
+      >
+        See all
+        <Icon
+          margin="left"
+          size="large"
+          svg={index}
+        />
+      </a>
+    </div>
+  </header>
 
-  $bp-layout: 'small';
-  $bp-card: 'xsmall';
+  <!-- prev/next cards -->
+  <div class="cards gutter-wrapper hide-overflow">
+    {#each Object.keys(nav) as link}
+      <a
+        class="card gutter narrow type-link-undecorated"
+        rel="prefetch"
+        href="{nav[link].path}"
+      >
+        <div class="card-figure">
+          <AspectRatio class="border solid">
+            <ResponsivePicture
+              sources="{nav[link].thumbnail.versions}"
+              alt="{nav[link].title}"
+              cover
+            />
+          </AspectRatio>
+        </div>
+        <h3 class="padding-top">
+          {#if link === 'previous'}
+            <Icon
+              svg="{arrowLeft}"
+              margin="right"
+              size="small"
+            />
+          {/if}
+          {titleize(link)}
+          {#if link === 'next'}
+            <Icon
+              svg="{arrowRight}"
+              margin="left"
+              size="small"
+            />
+          {/if}
+        </h3>
+      </a>
+    {/each}
+  </div>
+</nav>
 
-  .card {
-    @include border.add();
-    display: block;
-
-    @supports (display: flex) {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    @include bp.query('>#{$bp-layout}') {
-      &.left {
-        border-bottom-right-radius: border.$corner-radius;
-      }
-
-      &.right {
-        border-bottom-left-radius: border.$corner-radius;
-      }
-    }
-  }
-
-  .card-wrapper {
-    display: block;
-
-    @supports (display: flex) {
-      display: flex;
-    }
-
-    :global(.show-large-icon) {
-      @include bp.query('<50em') {
-        display: none;
-      }
-    }
-
-    :global(.hide-small-icon) {
-      @include bp.query('>50em') {
-        display: none;
-      }
-    }
-  }
-
+<style>
   .card-figure {
-    display: block;
-    max-width: scale.get(10);
-
-    @include bp.query('>#{$bp-layout}') {
-      .figure-right & {
-        order: 2;
-      }
-    }
-
-    @include bp.query('>50em') {
-      max-width: scale.get(11);
-    }
-
-    @include bp.query('>medium') {
-      max-width: scale.get(12);
-    }
+    max-width: 18rem;
   }
 
-  .card-content {
-    @include type.size-default;
-    display: block;
-
-    @supports (flex: 1) {
-      @include bp.query('>#{$bp-card}') {
-        flex: 1;
-      }
-
-      @include bp.query('>#{$bp-layout}') {
-        .figure-right & {
-          order: 1;
-        }
-      }
+  @supports (display: flex) {
+    .header-wrapper {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
     }
-  }
 
-  .index-button {
-    display: inline-block;
-    padding-top: spacing.get('narrow');
+    .cards {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
 
-    @include bp.query('>xsmall') {
-      line-height: 1;
-      padding-top: 0;
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
+    .card {
+      flex: 0 1 18rem;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .card:last-child {
+      justify-content: flex-end;
+    }
+
+    .card-figure {
+      max-width: 100%;
+      width: 100%;
     }
   }
 </style>
-
-<nav class="c-bg-well border-seam-top-offset border-solid border-top padding-x-outside padding-y-xwide">
-  <!-- heading and index link -->
-  <div class="margin-bottom position-relative">
-    <h2 class="t-align-center@small">
-      {heading}
-    </h2>
-    <a
-      href="pictures"
-      class="index-button t-case-upper t-font-accent t-link-undecorated t-scale-zeta t-weight-bold c-fg-tertiary"
-    >
-      <Icon
-        svg={index}
-        margin="right"
-        size="xlarge"
-        class="no-margin-top hide-above@xsmall"
-      />
-      See all
-      <Icon
-        svg={index}
-        margin="left"
-        size="xlarge"
-        class="no-margin-top hide-below@xsmall"
-      />
-    </a>
-  </div>
-
-  <!-- prev/next cards -->
-  <div class="overflow-hidden">
-    <Bookend
-      breakpoint={breakpoint}
-      align="stretch"
-      class="gutter-wrapper"
-      fillSide="both"
-      itemWidth="27rem"
-    >
-      <div
-        slot="left"
-        class="gutter display-flex display-flex-column display-flex-fill"
-      >
-        {#if nav.previous}
-          <a
-            class="card left padding-narrow"
-            rel="prefetch"
-            href={nav.previous.path}
-          >
-            <figure class="card-wrapper gutter-wrapper gutter-narrow">
-              <div class="card-figure gutter">
-                <ResponsivePicture
-                  sources={nav.previous.thumbnail.versions}
-                  alt={nav.previous.title}
-                  border
-                />
-              </div>
-              <figcaption class="card-content gutter">
-                <h3 class="c-fg-tertiary t-font-accent t-weight-bold t-scale-zeta t-case-upper">
-                  <Icon
-                    svg={arrowLeft}
-                    margin="right"
-                    class="no-margin-top hide-small-icon"
-                  />
-                  Previous
-                </h3>
-                <p class="padding-bottom-narrow padding-top-xxnarrow t-heading t-scale-gamma">
-                  {nav.previous.title}
-                </p>
-                <Icon
-                  svg={arrowLeft}
-                  size="xlarge"
-                  class="no-margin show-large-icon"
-                />
-              </figcaption>
-            </figure>
-          </a>
-        {/if}
-      </div>
-      <div
-        slot="right"
-        class="gutter display-flex display-flex-column display-flex-fill"
-      >
-        {#if nav.next}
-          <a
-            class="card right padding-narrow"
-            rel="prefetch"
-            href={nav.next.path}
-          >
-            <figure class="card-wrapper figure-right gutter-wrapper gutter-narrow">
-              <div class="card-figure gutter">
-                <ResponsivePicture
-                  sources={nav.next.thumbnail.versions}
-                  alt={nav.next.title}
-                  border
-                />
-              </div>
-              <figcaption class="card-content gutter">
-                <h3 class="c-fg-tertiary t-font-accent t-weight-bold t-scale-zeta t-case-upper">
-                  Next
-                  <Icon
-                    svg={arrowRight}
-                    margin="left"
-                    class="no-margin-top hide-small-icon"
-                  />
-                </h3>
-                <p class="padding-bottom-narrow padding-top-xxnarrow t-heading t-scale-gamma">{nav.next.title}</p>
-                <Icon
-                  svg={arrowRight}
-                  size="xlarge"
-                  class="no-margin show-large-icon"
-                />
-              </figcaption>
-            </figure>
-          </a>
-        {/if}
-      </div>
-    </Bookend>
-  </div>
-</nav>

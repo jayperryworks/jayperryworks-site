@@ -10,66 +10,6 @@
   $: gutterClass = spacing ? `gutter-${spacing}` : ''
 </script>
 
-<style type="text/scss">
-  @use 'config/type';
-
-  $breakpoint: 880px; // use px here because rem causes jank due to root type scaling
-  $figure-w: 76%;
-
-  .card {
-    --breakpoint: #{$breakpoint};
-    --figure-width: #{$figure-w};
-
-    display: block;
-    font-size: 0;
-    overflow: hidden;
-  }
-
-  .figure,
-  .content {
-    @include type.size-default;
-    display: inline-block;
-    max-width: 100%;
-    vertical-align: top;
-  }
-
-  .figure {
-    min-width: $figure-w;
-    min-width: var(--figure-width);
-    width: 100%; // fallback value if calc() isn't supported
-    width: calc((#{$breakpoint} - 100%) * 1000);
-    width: calc((var(--breakpoint) - 100%) * 1000);
-    text-align: center;
-  }
-
-  .content {
-    min-width: (100% - $figure-w);
-    min-width: calc(100% - var(--figure-width));
-    width: 100%; // fallback value if calc() isn't supported
-    width: calc((#{$breakpoint} - 100%) * 1000);
-    width: calc((var(--breakpoint) - 100%) * 1000);
-  }
-
-  /* --- modifiers --- */
-  .card.small {
-    $breakpoint: 480px;
-    $figure-w: 23%;
-
-    --breakpoint: #{$breakpoint};
-    --figure-width: #{$figure-w};
-
-    .figure {
-      min-width: $figure-w;
-      width: calc((#{$breakpoint} - 100%) * 1000);
-    }
-
-    .content {
-      min-width: (100% - $figure-w);
-      width: calc((#{$breakpoint} - 100%) * 1000);
-    }
-  }
-</style>
-
 <div
   class="overflow-hidden"
   style={breakpoint ? `--breakpoint: ${breakpoint};` : ''}
@@ -100,3 +40,41 @@
     </aside>
   {/if}
 </div>
+
+<style>
+  .card {
+    --breakpoint: 880px;
+    --figure-width: 76%;
+
+    display: block;
+    font-size: 0;
+    overflow: hidden;
+  }
+
+  .figure,
+  .content {
+    display: inline-block;
+    font-size: 1rem;
+    max-width: 100%;
+    vertical-align: top;
+  }
+
+  .figure {
+    min-width: var(--figure-width);
+    width: 100%; /* fallback value if calc() isn't supported */
+    width: calc((var(--breakpoint) - 100%) * 1000);
+    text-align: center;
+  }
+
+  .content {
+    min-width: calc(100% - var(--figure-width));
+    width: 100%; /* fallback value if calc() isn't supported */
+    width: calc((var(--breakpoint) - 100%) * 1000);
+  }
+
+  /* --- modifiers --- */
+  .card.small {
+    --breakpoint: 480px;
+    --figure-width: 23%;
+  }
+</style>

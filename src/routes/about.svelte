@@ -29,11 +29,8 @@
 		padding-y-xwide
 	">
 		<header>
-			<Wrapper
-				width="wide"
-				class="t-align-center@small padding-bottom-wide"
-			>
-				<h1 class="t-align-center@small">{content.title}</h1>
+			<Wrapper width="wide"class="padding-bottom-wide">
+				<h1>{content.title}</h1>
 				{#if content.cover}
 					<Cover
 						class="padding-top-wide"
@@ -49,3 +46,11 @@
 		<PostBody blocks={content.body} />
 	</article>
 </main>
+
+<style>
+	@media screen and (min-width: 40em) {
+		h1 {
+			text-align: center;
+		}
+	}
+</style>
