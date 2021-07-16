@@ -6,17 +6,17 @@
 	let classes = ''
 	export { classes as class }
 
-	function convertToScale() {
-		if (ratio.includes('/')) {
-			return ratio
-				.split('/')
-				.map(interval => scale.get(interval, { unit: false }))
-				.join('/')
-		}
-		return ratio
-	}
+	$: ratioNumbers = ratio.split('/').map((interval) => {
+			if (useScale) {
+				return scale.get(interval, { unit: false })
+			}
+			return parseFloat(interval)
+		})
 
-	$: style = `--ratio: ${useScale ? convertToScale() : ratio};`
+	$: style = `
+		--ratio: ${ratioNumbers[0]}/${ratioNumbers[ratioNumbers.length - 1]};
+		--reciprocal-ratio: ${ratioNumbers[ratioNumbers.length - 1] / ratioNumbers[0]};
+	`
 </script>
 
 <div
@@ -37,7 +37,8 @@
   .aspect-ratio::before {
     content: '';
     display: block;
-    padding-top: calc((1 / var(--ratio)) * 100%);
+    padding-top: 100%; /* non-variable fallback - simple square */
+    padding-top: calc(var(--reciprocal-ratio) * 100%);
   }
 
   @supports (aspect-ratio: 1) {
