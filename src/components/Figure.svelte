@@ -12,27 +12,16 @@
 
 	let classes = ''
 	export { classes as class }
-
-	$: versions = sources.versions && sources.versions.length > 1
 </script>
 
 <figure class={classes}>
 	<slot>
-		{#if versions}
-			<ResponsivePicture
-				sources="{sources.versions}"
-				{alt}
-				{border}
-				{cover}
-			/>
-		{:else}
-			<ResponsiveImage
-				sources="{sources.versions && sources.versions[0].sizes || sources}"
-				{alt}
-				{border}
-				{cover}
-			/>
-		{/if}
+		<ResponsivePicture
+			sources="{sources.versions}"
+			{alt}
+			{border}
+			{cover}
+		/>
 	</slot>
 	{#if caption || credit}
 		<Caption {caption} {credit} />

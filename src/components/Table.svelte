@@ -49,9 +49,9 @@
         {#each footer as row}
           <tr>
             {#each row as cell, index}
-                <td class=" t-font-accent t-weight-bold {alignClass(header[index].align)}">
-                  {cell}
-                </td>
+              <td class="type-font-accent type-weight-bold {alignClass(header[index].align)}">
+                {cell}
+              </td>
             {/each}
           </tr>
         {/each}
@@ -92,9 +92,7 @@
     color: var(--color-primary);
     font-family: var(--type-font-accent);
     font-size: var(--type-scale-eta);
-    font-weight: bold;
     text-align: left;
-    text-transform: uppercase;
     vertical-align: bottom;
   }
   
@@ -121,7 +119,13 @@
   }
 
   th {
+    color: var(--color-secondary);
     font-family: var(--type-font-accent);
+    font-weight: normal;
+  }
+
+  tbody th {
+    color: var(--color-primary);
     font-weight: bold;
   }
 </style>
