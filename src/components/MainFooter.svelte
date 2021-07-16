@@ -48,7 +48,7 @@
           >
             <LogoJPW />
           </a>
-          <small class="copyright | gutter | type-font-accent type-weight-light type-leading-tight | color-fg-secondary">
+          <small class="copyright | gutter | type-font-accent type-weight-xlight type-leading-tight type-scale-zeta | color-fg-secondary">
             &copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
           </small>
         </div>
@@ -78,7 +78,6 @@
   }
 
   .logo {
-    height: 2.25rem;
     width: 12rem;
   }
 </style>
