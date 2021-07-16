@@ -12,150 +12,94 @@
 
 <nav class="border-seam-top border-solid border-top padding-x-outside padding-y-xwide">
   <!-- heading and index link -->
-  <header class="margin-bottom">
-    <h2>
-      {heading}
-    </h2>
-    <a
-      href="pictures"
-      class="index-button type-font-accent type-link-undecorated type-weight-light color-fg-secondary"
-    >
-      See all
-      <Icon
-        margin="left"
-        size="large"
-        svg={index}
-      />
-    </a>
+  <header class="padding-bottom-wide hide-overflow">
+    <div class="header-wrapper gutter-wrapper">
+      <h2 class="gutter">{heading}</h2>
+      <a
+        href="pictures"
+        class="gutter | type-font-accent type-link-undecorated type-weight-light | color-fg-secondary"
+      >
+        See all
+        <Icon
+          margin="left"
+          size="large"
+          svg={index}
+        />
+      </a>
+    </div>
   </header>
 
   <!-- prev/next cards -->
-  <div class="hide-overflow">
-    <div class="gutter-wrapper wide">
-      {#each Object.keys(nav) as link}
-        <div class="gutter">
-          <a
-            class="card type-link-undecorated"
-            rel="prefetch"
-            href="{nav[link].path}"
-          >
-            <figure class="card-wrapper gutter-wrapper gutter-narrow">
-              <div class="card-figure gutter">
-                <AspectRatio class="border">
-                  <ResponsivePicture
-                    sources="{nav[link].thumbnail.versions}"
-                    alt="{nav[link].title}"
-                    cover
-                  />
-                </AspectRatio>
-              </div>
-              <figcaption class="card-content gutter">
-                <h3 class="c-fg-tertiary t-font-accent t-weight-bold t-scale-zeta t-case-upper">
-                  {#if link === 'previous'}
-                    <Icon
-                      svg="{arrowLeft}"
-                      margin="right"
-                    />
-                  {/if}
-                  {titleize(link)}
-                  {#if link === 'next'}
-                    <Icon
-                      svg="{arrowRight}"
-                      margin="left"
-                    />
-                  {/if}
-                </h3>
-              </figcaption>
-            </figure>
-          </a>
+  <div class="cards gutter-wrapper hide-overflow">
+    {#each Object.keys(nav) as link}
+      <a
+        class="card gutter narrow type-link-undecorated"
+        rel="prefetch"
+        href="{nav[link].path}"
+      >
+        <div class="card-figure">
+          <AspectRatio class="border solid">
+            <ResponsivePicture
+              sources="{nav[link].thumbnail.versions}"
+              alt="{nav[link].title}"
+              cover
+            />
+          </AspectRatio>
         </div>
-      {/each}
-    </div>
+        <h3 class="padding-top">
+          {#if link === 'previous'}
+            <Icon
+              svg="{arrowLeft}"
+              margin="right"
+              size="small"
+            />
+          {/if}
+          {titleize(link)}
+          {#if link === 'next'}
+            <Icon
+              svg="{arrowRight}"
+              margin="left"
+              size="small"
+            />
+          {/if}
+        </h3>
+      </a>
+    {/each}
   </div>
 </nav>
 
 <style>
-  header {
-    position: relative;
-  }
-
-  .index-button {
-    display: inline-block;
-    padding-top: var(--space-narrow);
-  }
-  
-  @media screen and (min-width: 30em) {
-    .index-button {
-      line-height: 1;
-      padding-top: 0;
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-  }
-
-  .card {
-    display: block;
-  }
-  
-  @supports (display: flex) {
-    .card {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-  }
-
-  .card-wrapper {
-    display: block;
-  }
-  
-  @supports (display: flex) {
-    .card-wrapper {
-      display: flex;
-    }
-  }
-
   .card-figure {
-    display: block;
-    max-width: 6.19rem;
-  }
-  
-  @media screen and (min-width: 42em) {
-    .figure-right .card-figure {
-      order: 2;
-    }
+    max-width: 18rem;
   }
 
-  @media screen and (min-width: 50em) {
+  @supports (display: flex) {
+    .header-wrapper {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .cards {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      flex: 0 1 18rem;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .card:last-child {
+      justify-content: flex-end;
+    }
+
     .card-figure {
-      max-width: 7.43rem;
-    }
-  }
-
-  @media screen and (min-width: 62em) {
-    .card-figure {
-      max-width: 8.92rem;
-    }
-  }
-
-  .card-content {
-    font-size: 1rem;
-    display: block;
-  }
-  
-  @supports (flex: 1) {
-    @media screen and (min-width: 30em) {
-      .card-content {
-        flex: 1;
-      }
-    }
-
-    @media screen and (min-width: 42em) {
-      .figure-right .card-content {
-        order: 1;
-      }
+      max-width: 100%;
+      width: 100%;
     }
   }
 </style>
