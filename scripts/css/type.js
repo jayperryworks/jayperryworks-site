@@ -148,6 +148,11 @@ module.exports = {
 			}
 		`).join('')}
 
+		h1,
+		h2 {
+			line-height: ${type.leading.xtight};
+		}
+
 		p {
 			margin-bottom: 0;
 			margin-top: 0;
@@ -244,6 +249,11 @@ module.exports = {
 				${fontSize(size)}
 			}
 		`).join('')}
+
+		.type-scale-alpha,
+		.type-scale-beta {
+			line-height: ${type.leading.xtight};
+		}
 
 		/* leading */
 		${Object.keys(type.leading).map(size => `

@@ -93,6 +93,7 @@ const type = {
     }
   ],
   leading: {
+    xtight: 1.2,
     tight: 1.3,
     default: 1.8
   },

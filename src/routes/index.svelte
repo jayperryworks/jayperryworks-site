@@ -60,7 +60,7 @@
 		>
 			<header class="fill-vertical justify-center | padding-bottom-xwide">
 				<Wrapper width="wide" centered={false}>
-					<h1 class="type-scale-alpha">{@html intro.headline}</h1>
+					<h1 class="type-leading-xtight">{@html intro.headline}</h1>
 				</Wrapper>
 				<Wrapper 
 					centered={false}
@@ -144,6 +144,7 @@
 							sources={pictures.coverImage.versions}
 							alt={pictures.heading}
 							fill
+							contain
 						/>
 					</a>
 				</div>
