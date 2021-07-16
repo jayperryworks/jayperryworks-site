@@ -42,7 +42,6 @@
 	import MainNav from '@/components/MainNav.svelte'
 	import NextPrevThumbNav from '@/components/NextPrevThumbNav.svelte'
 	import Note from '@/components/Note.svelte'
-	import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
 	import Passage from '@/components/Passage.svelte'
 	import PrintEdition from '@/components/PrintEdition.svelte'

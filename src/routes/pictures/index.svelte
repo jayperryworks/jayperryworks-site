@@ -23,7 +23,6 @@
   import Button from '@/components/Button.svelte'
   import Gallery from '@/components/Gallery.svelte'
   import MainNav from '@/components/MainNav.svelte'
-  import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
   import PageTitle from '@/components/PageTitle.svelte'
   import ResponsivePicture from '@/components/ResponsivePicture.svelte'
   import Wrapper from '@/components/Wrapper.svelte'
@@ -105,9 +104,3 @@
     </div>
   </Wrapper>
 </main>
-
-<style>
-  .picture-link {
-    display: block;
-  }
-</style>
