@@ -4,9 +4,14 @@
 		const response = await this.fetch(`blog/page/${number}.json`)
 		const data = await response.json()
 
+		const prevPage = parseInt(number) - 1
+		const nextPage = parseInt(number) + 1
+
+		const posts = data.posts
+
 		return {
-			number,
-			total: data.totalPages,
+			prevPage: prevPage > 0 ? prevPage : null,
+			nextPage: nextPage <= data.totalPages ? nextPage : null,
 			posts: data.posts
 		}
 	}
@@ -24,14 +29,26 @@
 	import Icon from '@/components/Icon.svelte'
 	import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
+	import PaginationNav from '@/components/PaginationNav.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
-	export let posts, number, total
+	export let posts, prevPage, nextPage
 
 	const currentDate = format(new Date(), 'yyyy')
 
-	$: nextPage = parseInt(number) + 1
-	$: prevPage = parseInt(number) - 1
+	$: previous = prevPage
+		? {
+				link: `blog/page/${prevPage}`,
+				label: 'Newer posts'
+			}
+		: null
+
+	$: next = nextPage
+		? {
+				link: `blog/page/${nextPage}`,
+				label: 'Older posts'
+			}
+		: null
 
 	$: postsByYear = posts.reduce((result, post) => {
 		if (!Object.keys(result).includes(post.date.year)) {
@@ -107,43 +124,7 @@
 	</section>
 {/each}
 <footer class="border-seam-top padding-x-outside padding-y-wide">
-	<div
-		class="pagination gutter-wrapper"
-		class:right-only="{prevPage === 0}"
-	>
-		{#if prevPage > 0}
-			<div class="gutter">
-				<a
-					class="type-link-undecorated type-scale-gamma type-heading"
-					href="{`blog/page/${prevPage}`}"
-				>
-					<Icon
-						svg="{arrowLeft}"
-						margin="right"
-					/>
-					<span class="pagination-label">
-						Newer posts
-					</span>
-				</a>
-			</div>
-		{/if}
-		{#if nextPage <= total}
-			<div class="gutter">
-				<a
-					class="type-link-undecorated type-scale-gamma type-heading"
-					href="{`blog/page/${nextPage}`}"
-				>
-					<span class="pagination-label">
-						Older posts
-					</span>
-					<Icon
-						svg="{arrowRight}"
-						margin="left"
-					/>
-				</a>
-			</div>
-		{/if}
-	</div>
+	<PaginationNav {previous} {next} />
 </footer>
 
 <style>
@@ -165,23 +146,5 @@
 		list-style: none;
 		padding-left: 0;
 		margin: 0 0 1em 0;
-	}
-
-	@supports (display: flex) {
-		.pagination {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			flex-wrap: wrap;
-			text-align: center;
-		}
-
-		.pagination.right-only {
-			justify-content: flex-end;
-		}
-	}
-
-	.pagination-label {
-		display: inline-block;
 	}
 </style>

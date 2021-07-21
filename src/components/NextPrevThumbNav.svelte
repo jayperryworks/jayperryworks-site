@@ -33,36 +33,38 @@
   <div class="cards gutter-wrapper hide-overflow">
     {#each Object.keys(nav) as link}
       <a
-        class="card gutter narrow type-link-undecorated"
+        class="card {link} gutter narrow type-link-undecorated"
         rel="prefetch"
         href="{nav[link].path}"
       >
-        <div class="card-figure">
-          <AspectRatio class="border solid">
-            <ResponsivePicture
-              sources="{nav[link].thumbnail.versions}"
-              alt="{nav[link].title}"
-              cover
-            />
-          </AspectRatio>
-        </div>
-        <h3 class="padding-top">
-          {#if link === 'previous'}
-            <Icon
-              svg="{arrowLeft}"
-              margin="right"
-              size="small"
-            />
-          {/if}
-          {titleize(link)}
-          {#if link === 'next'}
-            <Icon
-              svg="{arrowRight}"
-              margin="left"
-              size="small"
-            />
-          {/if}
-        </h3>
+        <slot>
+          <div class="card-figure">
+            <AspectRatio class="border solid">
+              <ResponsivePicture
+                sources="{nav[link].thumbnail.versions}"
+                alt="{nav[link].title}"
+                cover
+              />
+            </AspectRatio>
+          </div>
+          <h3 class="padding-top">
+            {#if link === 'previous'}
+              <Icon
+                svg="{arrowLeft}"
+                margin="right"
+                size="small"
+              />
+            {/if}
+            {titleize(link)}
+            {#if link === 'next'}
+              <Icon
+                svg="{arrowRight}"
+                margin="left"
+                size="small"
+              />
+            {/if}
+          </h3>
+        </slot>
       </a>
     {/each}
   </div>
@@ -93,7 +95,8 @@
       flex-wrap: wrap;
     }
 
-    .card:last-child {
+    .card.next {
+      margin-left: auto;
       justify-content: flex-end;
     }
 
