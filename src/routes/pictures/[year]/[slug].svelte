@@ -23,13 +23,19 @@
 			return
 		}
 
+		// get the data for the previous and next picture, if it exists
+		let nav = {}
+		if (listData.pictures[currentPost - 1]) {
+			nav.previous = listData.pictures[currentPost - 1]
+		}
+		if (listData.pictures[currentPost + 1]) {
+			nav.next = listData.pictures[currentPost + 1]
+		}
+
 		return {
 			post: data,
 			date: { year },
-			nav: {
-				previous: listData.pictures[currentPost - 1] || false,
-				next: listData.pictures[currentPost + 1] || false
-			}
+			nav
 		}
 	}
 </script>
@@ -40,9 +46,9 @@
 	import Cover from '@/components/Cover.svelte'
 	import Gallery from '@/components/Gallery.svelte'
 	import MainNav from '@/components/MainNav.svelte'
-	import NextPrevThumbNav from '@/components/NextPrevThumbNav.svelte'
 	import Note from '@/components/Note.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
+	import PaginationNavWithThumbs from '@/components/PaginationNavWithThumbs.svelte'
 	import Passage from '@/components/Passage.svelte'
 	import PrintEdition from '@/components/PrintEdition.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
@@ -139,7 +145,7 @@
 		{/each}
 	</article>
 	{#if nav.previous || nav.next}
-		<NextPrevThumbNav {nav} heading="More prints &amp; paintings" />
+		<PaginationNavWithThumbs {nav} heading="More prints &amp; paintings" />
 	{/if}
 </main>
 
