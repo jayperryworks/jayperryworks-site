@@ -39,14 +39,16 @@
 	$: previous = prevPage
 		? {
 				link: `blog/page/${prevPage}`,
-				label: 'Newer posts'
+				label: 'Newer posts',
+				direction: 'previous'
 			}
 		: null
 
 	$: next = nextPage
 		? {
 				link: `blog/page/${nextPage}`,
-				label: 'Older posts'
+				label: 'Older posts',
+				direction: 'next'
 			}
 		: null
 
@@ -124,7 +126,7 @@
 	</section>
 {/each}
 <footer class="border-seam-top padding-x-outside padding-y-wide">
-	<PaginationNav {previous} {next} />
+	<PaginationNav items="{[ previous, next ]}" />
 </footer>
 
 <style>
