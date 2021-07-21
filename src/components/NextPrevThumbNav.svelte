@@ -7,7 +7,7 @@
   import Icon from '@/components/Icon.svelte'
   import ResponsivePicture from '@/components/ResponsivePicture.svelte'
 
-  export let heading, nav, breakpoint = 'small'
+  export let heading, nav
 </script>
 
 <nav class="border-seam-top border-solid border-top padding-x-outside padding-y-xwide">

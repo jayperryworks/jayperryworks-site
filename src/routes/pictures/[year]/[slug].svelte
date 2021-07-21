@@ -23,13 +23,19 @@
 			return
 		}
 
+		// get the data for the previous and next picture, if it exists
+		let nav = {}
+		if (listData.pictures[currentPost - 1]) {
+			nav.previous = listData.pictures[currentPost - 1]
+		}
+		if (listData.pictures[currentPost + 1]) {
+			nav.next = listData.pictures[currentPost + 1]
+		}
+
 		return {
 			post: data,
 			date: { year },
-			nav: {
-				previous: listData.pictures[currentPost - 1] || false,
-				next: listData.pictures[currentPost + 1] || false
-			}
+			nav
 		}
 	}
 </script>
