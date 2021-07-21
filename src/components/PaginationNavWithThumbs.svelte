@@ -5,6 +5,7 @@
   import index from 'icons/index.svg'
   import AspectRatio from '@/components/AspectRatio.svelte'
   import Icon from '@/components/Icon.svelte'
+  import PaginationNav from '@/components/PaginationNav.svelte'
   import ResponsivePicture from '@/components/ResponsivePicture.svelte'
 
   export let heading, nav
@@ -30,44 +31,46 @@
   </header>
 
   <!-- prev/next cards -->
-  <div class="cards gutter-wrapper hide-overflow">
+  <PaginationNav>
     {#each Object.keys(nav) as link}
-      <a
-        class="card {link} gutter narrow type-link-undecorated"
-        rel="prefetch"
-        href="{nav[link].path}"
-      >
-        <slot>
-          <div class="card-figure">
-            <AspectRatio class="border solid">
-              <ResponsivePicture
-                sources="{nav[link].thumbnail.versions}"
-                alt="{nav[link].title}"
-                cover
-              />
-            </AspectRatio>
-          </div>
-          <h3 class="padding-top">
-            {#if link === 'previous'}
-              <Icon
-                svg="{arrowLeft}"
-                margin="right"
-                size="small"
-              />
-            {/if}
+      <li class="card {link} gutter">
+        <a
+          class="card-figure type-link-undecorated"
+          href="{nav[link].path}"
+        >
+          <AspectRatio class="border solid">
+            <ResponsivePicture
+              sources="{nav[link].thumbnail.versions}"
+              alt="{nav[link].title}"
+              cover
+            />
+          </AspectRatio>
+        </a>
+        <h3 class="padding-top">
+          {#if link === 'previous'}
+            <Icon
+              svg="{arrowLeft}"
+              margin="right"
+              size="small"
+            />
+          {/if}
+          <a
+            class="card-link"
+            href="{nav[link].path}"
+          >
             {titleize(link)}
-            {#if link === 'next'}
-              <Icon
-                svg="{arrowRight}"
-                margin="left"
-                size="small"
-              />
-            {/if}
-          </h3>
-        </slot>
-      </a>
+          </a>
+          {#if link === 'next'}
+            <Icon
+              svg="{arrowRight}"
+              margin="left"
+              size="small"
+            />
+          {/if}
+        </h3>
+      </li>
     {/each}
-  </div>
+  </PaginationNav>
 </nav>
 
 <style>
@@ -83,26 +86,12 @@
       align-items: center;
     }
 
-    .cards {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-
-    .card {
-      flex: 0 1 18rem;
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    .card.next {
-      margin-left: auto;
-      justify-content: flex-end;
-    }
-
     .card-figure {
-      max-width: 100%;
       width: 100%;
+    }
+
+    .card-link {
+      display: inline-block;
     }
   }
 </style>

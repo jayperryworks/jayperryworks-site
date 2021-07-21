@@ -6,7 +6,7 @@
 	export let items = []
 	export let itemWidth = 18
 
-	$: style = `style="--item-width: ${itemWidth};"`
+	$: style = `--item-width: ${itemWidth}rem;`
 </script>
 
 <ul
@@ -17,6 +17,7 @@
 		{#each items as item}
 			{#if item}
 				<li
+					class="gutter"
 					class:previous="{item.direction === 'previous'}"
 					class:next="{item.direction === 'next'}"
 				>
@@ -54,14 +55,14 @@
 	    flex-wrap: wrap;
 	  }
 
-	  li,
+	  .pagination :global(li),
 	  .item {
 	    flex: 0 1 var(--item-width);
 	    display: flex;
 	    flex-wrap: wrap;
 	  }
 
-	  li.next,
+	  .pagination :global(li.next),
 	  .item.next {
 	    margin-left: auto;
 	    justify-content: flex-end;

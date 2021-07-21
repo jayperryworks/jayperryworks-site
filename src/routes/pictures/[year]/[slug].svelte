@@ -46,9 +46,9 @@
 	import Cover from '@/components/Cover.svelte'
 	import Gallery from '@/components/Gallery.svelte'
 	import MainNav from '@/components/MainNav.svelte'
-	import NextPrevThumbNav from '@/components/NextPrevThumbNav.svelte'
 	import Note from '@/components/Note.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
+	import PaginationNavWithThumbs from '@/components/PaginationNavWithThumbs.svelte'
 	import Passage from '@/components/Passage.svelte'
 	import PrintEdition from '@/components/PrintEdition.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
@@ -145,7 +145,7 @@
 		{/each}
 	</article>
 	{#if nav.previous || nav.next}
-		<NextPrevThumbNav {nav} heading="More prints &amp; paintings" />
+		<PaginationNavWithThumbs {nav} heading="More prints &amp; paintings" />
 	{/if}
 </main>
 
