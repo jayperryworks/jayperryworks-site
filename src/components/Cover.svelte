@@ -5,7 +5,6 @@
 		alt = '',
 		caption = false,
 		credit = false,
-		height = 'default',
 		cover = false,
 		border = false
 

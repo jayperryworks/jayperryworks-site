@@ -2,10 +2,10 @@
   import { titleize } from '@/utils/stringHelpers.js'
   import BlockList from './BlockList.svelte'
 
-  export let blocks, dropCap = true
+  export let blocks
 
   // create a list of sections from the yml blocks in each page
-  let sections = blocks.reduce((result, block) => {
+  $: sections = blocks.reduce((result, block) => {
 
     // if the block is a section, then add a new section to the array
     if (block.type === 'sectionStart') {
@@ -28,11 +28,6 @@
     result[result.length - 1].blocks.push(block)
     return result
   }, [])
-
-  // add dropCap flag to first passage
-  if (dropCap) {
-    sections[0].blocks.find((block) => block.type === 'passage').dropCap = true
-  }
 </script>
 
 <div class="body padding-y-flow-xwide margin-y-flow-xwide">

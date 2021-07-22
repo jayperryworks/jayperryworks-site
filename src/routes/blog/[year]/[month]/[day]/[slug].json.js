@@ -1,5 +1,6 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
+import generateBlogList from '@/utils/generateBlogList.js'
 import renderMarkdown from '@/utils/renderMarkdown.js'
 import renderPostBody from '@/utils/renderPostBody.js'
 import { findInManifest } from '@/utils/imageHelpers.js'
@@ -9,6 +10,8 @@ export function get(req, res, next) {
 	const header = {
 		'Content-Type': 'application/json'
 	}
+
+	const path = ``
 
 	let data = yaml.safeLoad(
 		fs.readFileSync(
@@ -25,7 +28,6 @@ export function get(req, res, next) {
 	}
 
 	if (data.cover) {
-
 		// resize the cover image if needed
 		if (data.cover.resize) {
 			data.cover.image = findInManifest(data.cover.image)
@@ -68,8 +70,14 @@ export function get(req, res, next) {
 		}
 	})
 
-	// create responsive resizes of images as needed
+	// get all blog posts for the prev/next page nav
+	const postList = generateBlogList('content/blog')
+	const thisPost = postList.find(({ path }) => {
+		return path === `blog/${year}/${month}/${day}/${slug}`
+	})
+	const prevPost = postList[postList.indexOf(thisPost) - 1]
+	const nextPost = postList[postList.indexOf(thisPost) + 1]
 
 	res.writeHead(200, header)
-	res.end(JSON.stringify(data))
+	res.end(JSON.stringify({ ...data, previous: prevPost, next: nextPost }))
 }
