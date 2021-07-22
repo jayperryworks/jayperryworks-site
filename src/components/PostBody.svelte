@@ -2,7 +2,7 @@
   import { titleize } from '@/utils/stringHelpers.js'
   import BlockList from './BlockList.svelte'
 
-  export let blocks, dropCap = true
+  export let blocks
 
   // create a list of sections from the yml blocks in each page
   $: sections = blocks.reduce((result, block) => {

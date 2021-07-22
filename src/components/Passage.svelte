@@ -1,29 +1,15 @@
 <script>
-  export let html,
-    lead = false
-
-    console.log(lead)
+  export let html
 
   let classes = ''
   export { classes as class }
 </script>
 
-<div class="content type-scale-epsilon {classes}" class:lead>
+<div class="content type-scale-epsilon {classes}">
   {@html html}
 </div>
 
 <style>
-  /* Lead paragraph with drop cap */
-  @supports (initial-letter: 2) {
-    .lead > :global(p:first-of-type::first-letter) {
-      font-family: var(--type-font-accent);
-      font-size: 3.5rem;
-      font-weight: bold;
-      initial-letter: 2;
-      margin-right: 0.1em;
-    }
-  }
-
   .content :global(* + *) {
     margin-top: 1em;
   }
