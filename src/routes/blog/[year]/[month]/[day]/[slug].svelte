@@ -30,9 +30,20 @@
 	import PostBody from '@/components/PostBody.svelte'
 	import ResponsiveImage from '@/components/ResponsiveImage.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
+	import PaginationNav from '@/components/PaginationNav.svelte'
 
-	export let post;
-	export let date;
+	export let post
+	export let date
+
+	$: prevPost = post.previous && {
+		direction: 'previous',
+		path: post.previous.path
+	}
+	$: nextPost = post.next && {
+		direction: 'next',
+		path: post.next.path
+	}
+	$: paginationNavItems = [ prevPost, nextPost ].filter(Boolean)
 
 	function formatDate(formatString) {
 		return format(new Date(date.year, date.month, date.day), formatString)
@@ -77,6 +88,9 @@
 
 	<PostBody blocks={post.body} />
 </article>
+<nav class="border-seam-top padding-y-wide padding-x-outside">
+	<PaginationNav items="{paginationNavItems}" />
+</nav>
 
 <style>
 	@media screen and (min-width: 43em) {

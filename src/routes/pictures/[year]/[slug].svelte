@@ -23,19 +23,26 @@
 			return
 		}
 
-		// get the data for the previous and next picture, if it exists
-		let nav = {}
+		let prevPage, nextPage
 		if (listData.pictures[currentPost - 1]) {
-			nav.previous = listData.pictures[currentPost - 1]
+			prevPage = {
+				direction: 'previous',
+				...listData.pictures[currentPost - 1]
+			}
 		}
+
 		if (listData.pictures[currentPost + 1]) {
-			nav.next = listData.pictures[currentPost + 1]
+			nextPage = {
+				direction: 'next',
+				...listData.pictures[currentPost + 1]
+			}
 		}
 
 		return {
 			post: data,
 			date: { year },
-			nav
+			prevPage,
+			nextPage
 		}
 	}
 </script>
@@ -43,17 +50,19 @@
 <script>
 	import { format } from 'date-fns'
 	import { titleize } from '@/utils/stringHelpers.js'
+	import index from 'icons/index.svg'
 	import Cover from '@/components/Cover.svelte'
 	import Gallery from '@/components/Gallery.svelte'
+	import Icon from '@/components/Icon.svelte'
 	import MainNav from '@/components/MainNav.svelte'
 	import Note from '@/components/Note.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
-	import PaginationNavWithThumbs from '@/components/PaginationNavWithThumbs.svelte'
+	import PaginationNav from '@/components/PaginationNav.svelte'
 	import Passage from '@/components/Passage.svelte'
 	import PrintEdition from '@/components/PrintEdition.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
-	export let post, date, nav
+	export let post, date, prevPage, nextPage
 	let metadataBreakpoint = 'xsmall'
 
 	$: formattedDate = format(new Date(date.year, 0), 'yyyy')
@@ -144,8 +153,26 @@
 			</aside>
 		{/each}
 	</article>
-	{#if nav.previous || nav.next}
-		<PaginationNavWithThumbs {nav} heading="More prints &amp; paintings" />
+	{#if prevPage || nextPage}
+		<nav class="border-seam-top border-solid border-top padding-x-outside padding-y-xwide">
+			<header class="padding-bottom-wide hide-overflow">
+			  <div class="footer-nav-header gutter-wrapper">
+			    <h2 class="gutter">More prints &amp; paintings</h2>
+			    <a
+			      href="pictures"
+			      class="gutter | type-font-accent type-link-undecorated type-weight-light | color-fg-secondary"
+			    >
+			      See all
+			      <Icon
+			        margin="left"
+			        size="large"
+			        svg={index}
+			      />
+			    </a>
+			  </div>
+			</header>
+			<PaginationNav items="{[ prevPage, nextPage ]}" />
+		</nav>
 	{/if}
 </main>
 
@@ -203,6 +230,15 @@
 			.flag-heading {
 				margin-top: -0.1em;
 			}
+		}
+	}
+
+	@supports (display: flex) {
+		.footer-nav-header {
+		  display: flex;
+		  justify-content: space-between;
+		  flex-wrap: wrap;
+		  align-items: center;
 		}
 	}
 </style>

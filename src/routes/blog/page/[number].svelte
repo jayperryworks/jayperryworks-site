@@ -38,7 +38,7 @@
 
 	$: previous = prevPage
 		? {
-				link: `blog/page/${prevPage}`,
+				path: `blog/page/${prevPage}`,
 				label: 'Newer posts',
 				direction: 'previous'
 			}
@@ -46,7 +46,7 @@
 
 	$: next = nextPage
 		? {
-				link: `blog/page/${nextPage}`,
+				path: `blog/page/${nextPage}`,
 				label: 'Older posts',
 				direction: 'next'
 			}
@@ -125,9 +125,9 @@
 		</div>
 	</section>
 {/each}
-<footer class="border-seam-top padding-x-outside padding-y-wide">
+<nav class="border-seam-top padding-x-outside padding-y-wide">
 	<PaginationNav items="{[ previous, next ]}" />
-</footer>
+</nav>
 
 <style>
 	@media screen and (min-width: 70em) {

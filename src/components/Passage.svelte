@@ -2,6 +2,8 @@
   export let html,
     lead = false
 
+    console.log(lead)
+
   let classes = ''
   export { classes as class }
 </script>
