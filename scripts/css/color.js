@@ -8,7 +8,7 @@ function hsl (color) {
 }
 
 function getValue (role, theme = 'default') {
-	return hsl(color.themes[theme][role])
+	return color.themes[theme][role]
 }
 
 function getCustomProperty (role, theme = 'default') {

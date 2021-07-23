@@ -37,7 +37,7 @@
 	}
 </script>
 
-<PageTitle />
+<PageTitle highlightColor = "{{ h: 50, s: 10, l:90 }}" />
 
 <MainNav segment="/" overlay />
 

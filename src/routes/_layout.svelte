@@ -3,8 +3,17 @@
   import color from 'css/color.js'
   import MainFooter from '@/components/MainFooter.svelte'
 
+  const { getValue: getColorValue } = color.helpers
+
   const { preloading } = stores()
-  const setColor = color.helpers.setCustomProperty
+
+  // export let highlightColor = getColorValue('highlight')
+
+  // $: style = `
+  //   --color-highlight-h: ${highlightColor.h};
+  //   --color-highlight-s: ${highlightColor.s}%;
+  //   --color-highlight-l: ${highlightColor.l}%;
+  // `
 </script>
 
 <div
@@ -21,9 +30,9 @@
   /* Animated 'spine' border */
   #spine-wrapper {
     --spine-color: hsl(
-        var(--color-highlight-h),
-        var(--color-highlight-s),
-        var(--color-highlight-l)
+      var(--color-highlight-h),
+      var(--color-highlight-s), 
+      var(--color-highlight-l)
     );
     --spine-color-tint: hsl(
       var(--color-highlight-h),
