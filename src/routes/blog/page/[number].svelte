@@ -64,6 +64,8 @@
 	}
 </script>
 
+<PageTitle title="Blog" />
+
 {#each Object.keys(postsByYear).reverse() as year, index}
 	<section class:border-seam-top="{index > 0}">
 		<div class="flag padding-x-outside padding-y-xwide">
@@ -125,6 +127,7 @@
 		</div>
 	</section>
 {/each}
+
 <nav class="border-seam-top padding-x-outside padding-y-wide">
 	<PaginationNav items="{[ previous, next ]}" />
 </nav>

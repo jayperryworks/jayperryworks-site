@@ -4,6 +4,7 @@ format: Panel
 width: 24
 height: 24
 category: prints
+highlight: { h: 2, s: 78, l: 66 }
 tags:
   - acrylic
   - india ink

@@ -48,10 +48,7 @@
 		  {/if}
 
 		  {#if block.type == 'passage'}
-	      <Passage
-	        html={block.html}
-	        lead={block.dropCap}
-	      />
+	      <Passage html={block.html} />
 		  {/if}
 
 		  {#if block.type == 'figure'}
