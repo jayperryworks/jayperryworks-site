@@ -5,6 +5,7 @@ series: Seasons
 category: prints
 cover: /images/uploads/work-2019-seasons-winter.jpg
 thumb: /images/uploads/work-2019-seasons-winter-thumb.jpg
+highlight: { h: 170, s: 5, l: 65 }
 editions:
   - border: 2
     photo: /images/uploads/work-2019-seasons-winter-large-DSCF0203.jpg

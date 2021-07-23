@@ -26,6 +26,7 @@
 	import ResponsivePicture from '@/components/ResponsivePicture.svelte'
 	import Panel from '@/components/Panel.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
+	import PageHighlightColor from '@/components/PageHighlightColor.svelte'
 
 	export let content
 
@@ -37,7 +38,8 @@
 	}
 </script>
 
-<PageTitle highlightColor = "{{ h: 50, s: 10, l:90 }}" />
+<PageTitle />
+<PageHighlightColor color="{content.highlight}" />
 
 <MainNav segment="/" overlay />
 

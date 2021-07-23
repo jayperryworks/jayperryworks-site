@@ -5,6 +5,7 @@ series: Seasons
 category: prints
 cover: /images/uploads/work-2018-seasons-fall.jpg
 thumb: /images/uploads/work-2018-seasons-thumb.jpg
+highlight: { h: 257, s: 32, l: 60 }
 editions:
   - border: 1
     photo: /images/uploads/seasons-fall-large.jpg
