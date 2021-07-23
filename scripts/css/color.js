@@ -8,7 +8,7 @@ function hsl (color) {
 }
 
 function getValue (role, theme = 'default') {
-	return hsl(color.themes[theme][role])
+	return color.themes[theme][role]
 }
 
 function getCustomProperty (role, theme = 'default') {
@@ -26,7 +26,12 @@ function setCustomProperty (role, { h, s, l, a }) {
 		--color-${role}-l: ${l}%;
 		${a ? `--color-${role}-a: ${a};` : ''}
 		
-		--color-${role}: hsl(var(--color-${role}-h), var(--color-${role}-s), var(--color-${role}-l)${a ? `, ${a}` : ''});
+		--color-${role}: hsl(
+			var(--color-${role}-h),
+			var(--color-${role}-s),
+			var(--color-${role}-l)
+			${a ? `, ${a}` : ''}
+		);
 	`
 }
 

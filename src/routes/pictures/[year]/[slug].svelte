@@ -56,6 +56,7 @@
 	import Icon from '@/components/Icon.svelte'
 	import MainNav from '@/components/MainNav.svelte'
 	import Note from '@/components/Note.svelte'
+	import PageTheme from '@/components/PageTheme.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
 	import PaginationNav from '@/components/PaginationNav.svelte'
 	import Passage from '@/components/Passage.svelte'
@@ -69,6 +70,7 @@
 </script>
 
 <PageTitle title="{post.title}" />
+<PageTheme color="{post.highlight}" />
 
 <MainNav segment="pictures" theme="reverse" />
 <main>

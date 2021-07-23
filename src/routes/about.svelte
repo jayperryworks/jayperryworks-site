@@ -15,12 +15,17 @@
 <script>
 	import Cover from '@/components/Cover.svelte'
 	import MainNav from '@/components/MainNav.svelte'
+	import PageTheme from '@/components/PageTheme.svelte'
+	import PageTitle from '@/components/PageTitle.svelte'
 	import PostBody from '@/components/PostBody.svelte'
 	import ResponsiveImage from '@/components/ResponsiveImage.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
 	export let content
 </script>
+
+<PageTitle title="Profile" />
+<PageTheme color="{content.highlight}" />
 
 <MainNav segment="about" />
 <main>

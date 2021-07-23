@@ -26,11 +26,12 @@
 	import { format } from 'date-fns'
 	import Cover from '@/components/Cover.svelte'
 	import Figure from '@/components/Figure.svelte'
+	import PageTheme from '@/components/PageTheme.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
+	import PaginationNav from '@/components/PaginationNav.svelte'
 	import PostBody from '@/components/PostBody.svelte'
 	import ResponsiveImage from '@/components/ResponsiveImage.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
-	import PaginationNav from '@/components/PaginationNav.svelte'
 
 	export let post
 	export let date
@@ -51,6 +52,7 @@
 </script>
 
 <PageTitle title="{post.title}" />
+<PageTheme color="{post.highlight}" />
 
 <article class="padding-x-outside padding-y-xwide">
 	<header>
