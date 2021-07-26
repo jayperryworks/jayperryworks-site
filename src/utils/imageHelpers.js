@@ -22,7 +22,7 @@ const sharp = require('sharp')
 // }
 //
 async function resizeImage (sourcePath, {
-	widths = [600, 1200, 1600, 2000],
+	widths = [600, 1200, 1600],
 	formats = ['jpg', 'webp'],
 	// the path where the output images with go
 	outputPath = '/images/resizes',

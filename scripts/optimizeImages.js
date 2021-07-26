@@ -56,11 +56,15 @@ function getDir (dir) {
 function getPictureImages (dir) {
 	return getDir(dir).reduce((result, data) => {
 		const images = [
-			{ original: data.cover },
+			{ original: data.cover,
+				options: {
+					widths: [1000, 1600, 2000]
+				}
+			},
 			{
 				original: data.thumb,
 				options: {
-					widths: [400, 800, 1000]
+					widths: [600, 1000]
 				}
 			},
 			...(data.editions && data.editions.map((edition) => {

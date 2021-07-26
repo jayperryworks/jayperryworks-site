@@ -1,0 +1,35 @@
+title: Seasons (summer)
+date: 2021-06-06T17:09:00.205Z
+format: Digital print
+series: Seasons
+category: prints
+cover: /images/uploads/work-2021-seasons-summer.jpg
+thumb: /images/uploads/work-2021-seasons-thumb-summer.jpg
+highlight: { h: 68, s: 46, l: 50 }
+editions:
+  - border: 2
+    photo: /images/uploads/work-2021-seasons-summer-24x16.jpg
+    name: large
+    price: 85
+    type: giclee
+    url: 'https://www.etsy.com/listing/977342484/seasons-summer'
+    width: 24
+    height: 16
+
+  - border: 1
+    photo: /images/uploads/work-2021-seasons-summer-18x12.jpg
+    name: medium
+    price: 60
+    type: giclee
+    url: 'https://www.etsy.com/listing/977342484/seasons-summer'
+    width: 18
+    height: 12
+
+  - border: 1
+    photo: /images/uploads/work-2021-seasons-summer-12x8.jpg
+    name: small
+    price: 35
+    type: giclee
+    url: 'https://www.etsy.com/listing/977342484/seasons-summer'
+    width: 12
+    height: 8
