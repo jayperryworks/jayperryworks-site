@@ -1,0 +1,35 @@
+title: Whirligigs
+date: 2020-05-13T03:06:18.736Z
+format: Digital painting
+category: prints
+series: Inventory
+tags:
+  - black-and-white
+  - inventory
+cover: /images/uploads/work-2021-curtains.jpg
+thumb: /images/uploads/work-2021-curtains-thumb.jpg
+editions:
+  - type: giclee
+    border: 2
+    name: Large
+    width: 24
+    height: 16
+    price: 85
+    url: 'https://www.etsy.com/listing/1021384795/curtains'
+    photo: /images/uploads/work-2021-curtains-24x16.jpg
+  - type: giclee
+    border: 1
+    name: Medium
+    width: 18
+    height: 12
+    price: 60
+    url: 'https://www.etsy.com/listing/1021384795/curtains'
+    photo: /images/uploads/work-2021-curtains-18x12.jpg
+  - type: giclee
+    border: 1
+    name: Small
+    width: 12
+    height: 8
+    price: 35
+    url: 'https://www.etsy.com/listing/1021384795/curtains'
+    photo: /images/uploads/work-2021-curtains-12x8.jpg

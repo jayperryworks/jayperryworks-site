@@ -10,7 +10,7 @@ editions:
   - border: 2
     photo: /images/uploads/work-2021-seasons-spring-24x16.jpg
     name: large
-    price: 80
+    price: 85
     type: giclee
     url: 'https://www.etsy.com/listing/991309189/seasons-spring'
     width: 24
@@ -19,7 +19,7 @@ editions:
   - border: 1
     photo: /images/uploads/work-2021-seasons-spring-18x12.jpg
     name: medium
-    price: 55
+    price: 60
     type: giclee
     url: 'https://www.etsy.com/listing/991309189/seasons-spring'
     width: 18
@@ -28,7 +28,7 @@ editions:
   - border: 1
     photo: /images/uploads/work-2021-seasons-spring-12x8.jpg
     name: small
-    price: 30
+    price: 35
     type: giclee
     url: 'https://www.etsy.com/listing/991309189/seasons-spring'
     width: 12
