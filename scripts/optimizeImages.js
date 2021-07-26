@@ -64,7 +64,7 @@ function getPictureImages (dir) {
 			{
 				original: data.thumb,
 				options: {
-					widths: [400, 1000]
+					widths: [600, 1000]
 				}
 			},
 			...(data.editions && data.editions.map((edition) => {
