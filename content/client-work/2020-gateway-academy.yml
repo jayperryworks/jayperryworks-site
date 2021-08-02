@@ -1,0 +1,11 @@
+title: Gateway Academy
+cover: /uploads/client-2020-GA-cover.jpg
+body:
+  - type: passage
+    markdown: |-
+      Gateway Academy was an e-learning platform designed to help banks in Sub-Saharan East Africa implement better financial support for their poorest customers.
+      Developed under partnership with several other companies, we built a complex, robust digital product over several years using modern processes: rapid prototyping, agile development, styleguide-driven design, etc. Despite the NGO context and large number of stakeholders, our process and culture resembled a small startup.
+      In my art-direction role, I led a small team responsible for UX/UI design, front-end development, and branding. We began our alpha prototyping in early 2017, with content models and wireframe prototypes. A bit later we created a component library and styleguide to help the development team build coded prototypes. As we evolved the branding and visual design, we evolved the styleguide and UI library in parallel.
+
+  - type: gallery
+    
