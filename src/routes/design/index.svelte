@@ -42,11 +42,45 @@
 		<li>
 			<article class="border-seam-top padding-x-outside padding-y-xwide">
 				<Wrapper width="xwide">
-					<figure class="tablet shadow">
+					<figure class="tablet shadow margin-bottom">
 						<img 
-							src="/images/devices/GA_CourseProgress.jpg"
+							src="/images/GA_CourseProgress.jpg"
 							alt="Gateway Academy"
 						>
+					</figure>
+					<h3>Gateway Academy</h3>
+					<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
+					<Button
+						iconRight="{arrowRight}"
+						link="#"
+					>
+						Read more
+					</Button>
+				</Wrapper>
+			</article>
+		</li>
+		<li>
+			<article class="border-seam-top padding-x-outside padding-y-xwide">
+				<Wrapper width="xwide">
+					<figure class="phone-gallery padding-bottom">
+						<div class="phone shadow">
+							<img 
+								src="/images/tela-intro.jpg"
+								alt="Tela home screen"
+							>
+						</div>
+						<div class="phone shadow">
+							<img 
+								src="/images/tela-intro.jpg"
+								alt="Tela home screen"
+							>
+						</div>
+						<div class="phone shadow">
+							<img 
+								src="/images/tela-intro.jpg"
+								alt="Tela home screen"
+							>
+						</div>
 					</figure>
 					<h3>Gateway Academy</h3>
 					<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
@@ -64,13 +98,14 @@
 
 <style>
 	.tablet {
-		--bezel-width: 2.5em;
-		--bezel-radius: 2.75em;
+		--bezel-width-x: 3.75%;
+		--bezel-width-y: 5%;
+		--bezel-radius: 4.5% / 6%;
 
 		background-color: #fff;
 		background-color: var(--color-bg);
-		border: 2px solid #dfdfdf;
-		border: 2px solid var(--color-border);
+		border: 1px solid #dfdfdf;
+		border: 1px solid var(--color-border);
 		display: block;
 		aspect-ratio: 4 / 3;
 		position: relative;
@@ -78,20 +113,70 @@
 		border-radius: var(--bezel-radius);
 	}
 
+	@media screen and (min-width: 40em) {
+		.tablet {
+			border-width: 2px;
+		}
+	}
+
 	.tablet img {
-		border-radius: 0.5em;
+		border-radius: 0.75% / 1%;
 		border: 1px solid #dfdfdf;
 		border: 1px solid var(--color-border);
 		object-fit: cover;
 		object-position: top center;
 		display: inline-block;
 		position: absolute;
-		top: var(--bezel-width);
-		bottom: var(--bezel-width);
-		left: var(--bezel-width);
-		right: var(--bezel-width);
-		width: calc(100% - (2 * var(--bezel-width)));
-		height: calc(100% - (2 * var(--bezel-width)));
+		top: var(--bezel-width-y);
+		bottom: var(--bezel-width-y);
+		left: var(--bezel-width-x);
+		right: var(--bezel-width-x);
+		width: calc(100% - (2 * var(--bezel-width-x)));
+		height: calc(100% - (2 * var(--bezel-width-y)));
+	}
+
+	.phone-gallery {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+		grid-gap: var(--space-medium);
+	}
+
+	.phone {
+		--bezel-width-y: 6%;
+		--bezel-width-x: 3.5%;
+		--bezel-radius: 10% / 5%;
+
+		background-color: #fff;
+		background-color: var(--color-bg);
+		border: 1px solid #dfdfdf;
+		border: 1px solid var(--color-border);
+		display: block;
+		aspect-ratio: 1 / 2.2;
+		position: relative;
+		overflow: hidden;
+		border-radius: var(--bezel-radius);
+	}
+
+	@media screen and (min-width: 40em) {
+		.phone {
+			border-width: 2px;
+		}
+	}
+
+	.phone img {
+		border-radius: 2% / 1%;
+		border: 1px solid #dfdfdf;
+		border: 1px solid var(--color-border);
+		object-fit: cover;
+		object-position: top center;
+		display: block;
+		position: absolute;
+		top: var(--bezel-width-y);
+		bottom: var(--bezel-width-y);
+		left: var(--bezel-width-x);
+		right: var(--bezel-width-x);
+		width: calc(100% - (2 * var(--bezel-width-x)));
+		height: calc(100% - (2 * var(--bezel-width-y)));
 	}
 
 	.case-studies {
