@@ -80,7 +80,7 @@ module.exports = {
 					],
 					default: 'giclee'
 				},
-				...dimensions(['width', 'height', 'border']),
+				...dimensions({ props: ['width', 'height', 'border'] }),
 				{
 					label: 'Price',
 					name: 'price',

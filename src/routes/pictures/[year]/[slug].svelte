@@ -94,9 +94,11 @@
 				>
 					{formattedDate}
 				</time>
-				<p class="metadata-subtitle | color-fg-secondary | type-font-accent type-weight-light type-scale-epsilon type-leading-tight">
-					{post.format}{#if post.width && post.height}&nbsp;&bull; {post.width}" x {post.height}"{/if}
-				</p>
+				{#if post.format}
+					<p class="metadata-subtitle | color-fg-secondary | type-font-accent type-weight-light type-scale-epsilon type-leading-tight">
+						{post.format}{#if post.width && post.height}&nbsp;&bull; {post.width}" x {post.height}"{/if}
+					</p>
+				{/if}
 			</div>
 		</header>
 
