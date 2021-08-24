@@ -25,7 +25,7 @@ fs.writeFileSync(
 		  repo: git.repository,
 		  branch: git.deployBranch
 		},
-		media_folder: 'source/assets/uploads',
+		media_folder: 'static/images/uploads',
 		public_folder: '/uploads',
 		site_url: url,
 		publish_mode: 'editorial_workflow',
