@@ -13,7 +13,7 @@
 	export { classes as class }
 </script>
 
-<figure class="{type} shadow {classes}">
+<div class="bezel {type} shadow {classes}">
 	<AspectRatio
 		ratio="{ratios[type]}"
 		useScale="{false}"
@@ -23,7 +23,7 @@
 			alt="{alt}"
 		>
 	</AspectRatio>
-</figure>
+</div>
 
 <style>
 	/* 
@@ -31,7 +31,7 @@
 		- default/fallback is showing the image by itself
 	*/
 	@supports (background-color: var(--color-bg)) {
-		figure {
+		.bezel {
 			--bezel-radius: 4.5% / 6%;
 			--bezel-width-x: 5%;
 			--bezel-width-y: 5%;
@@ -46,31 +46,31 @@
 		}
 
 		@media screen and (min-width: 40em) {
-			figure {
+			.bezel {
 				border-width: 2px;
 			}
 		}
 
 		/* select the AspectRatio container */
-		figure > :global(*) {
+		.bezel > :global(*) {
 			--screen-radius:  0.75% / 1%;
 
 			border-radius: var(--screen-radius);
 			border: 1px solid var(--color-border);
 		}
 
-		figure img {
+		.bezel img {
 			object-fit: cover;
 			object-position: top center;
 		}
 
-		figure.phone {
+		.bezel.phone {
 			--bezel-radius: 10% / 5%;
 			--bezel-width-x: 3.5%;
 			--bezel-width-y: 11%;
 		}
 
-		figure.phone img {
+		.bezel.phone img {
 			--screen-radius: 2% / 1%;
 		}
 	}

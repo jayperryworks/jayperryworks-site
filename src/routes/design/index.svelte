@@ -63,7 +63,7 @@
 		<li>
 			<article class="border-seam-top padding-x-outside padding-y-xwide">
 				<Wrapper width="xwide">
-					<div class="device-gallery padding-bottom">
+					<figure class="device-gallery padding-bottom">
 						<DeviceFrame
 							image="/images/tela-intro.jpg"
 							alt="Tela home screen"
@@ -79,7 +79,7 @@
 							alt="Tela home screen"
 							type="phone"
 						/>
-					</div>
+					</figure>
 					<h3>Gateway Academy</h3>
 					<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
 					<Button
@@ -95,89 +95,26 @@
 			<article class="border-seam-top padding-x-outside padding-y-xwide">
 				<Wrapper width="xwide">
 					<figure class="padding-bottom">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
-							<defs>
-								<style>
-									svg {
-										/*background-image: url('/images/baldwin-mockup.jpg');*/
-										background-size: contain;
-										background-position: top left;
-										background-repeat: no-repeat;
-										overflow: hidden;
-									}
-
-									image, circle {
-										/*opacity: 0.6;*/
-									}
-									circle {
-										fill: var(--color-bg);
-									}
-								</style>
-								<clipPath id="zoom-top">
-									<circle
-										r="100"
-										cx="393"
-										cy="140"
-									/>
-								</clipPath>
-								<clipPath id="zoom-bottom">
-									<circle
-										r="72"
-										cx="375"
-										cy="360"
-									/>
-								</clipPath>
-								<filter id="shadow">
-						      <feDropShadow
-						      	dx="0"
-						      	dy="2"
-						      	stdDeviation="3"
-					         	style="flood-color: var(--color-shadow);"
-				         	/>
-						    </filter>
-							</defs>
-							<image
-								href="/images/baldwin-poster.jpg"
-								width="334"
-								height="500"
-								x="0"
-								y="0"
-							/>
-							<circle
-								r="103"
-								cx="393"
-								cy="140"
-								fill="currentColor"
-								id="zoom-top-border"
-								style="fill: var(--color-border); filter: url('#shadow');"
-							/>
-							<image
-								href="/images/baldwin-poster.jpg"
-								width="891"
-								height="1333"
-								x="-150"
-								y="-300"
-								clip-path="url('#zoom-top')"
-							/>
-							<circle
-								r="75"
-								cx="375"
-								cy="360"
-								fill="currentColor"
-								id="zoom-top-border"
-								style="fill: var(--color-border); filter: url('#shadow');"
-							/>
-							<image
-								href="/images/baldwin-poster.jpg"
-								width="700"
-								height="1047"
-								x="-60"
-								y="-380"
-								clip-path="url('#zoom-bottom')"
-							/>
-						</svg>
+						<img src="/images/baldwin-poster.jpg" alt="Baldwin">
 					</figure>
 					<h3>The Baldwin Prize</h3>
+					<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
+					<Button
+						iconRight="{arrowRight}"
+						link="#"
+					>
+						Read more
+					</Button>
+				</Wrapper>
+			</article>
+		</li>
+		<li>
+			<article class="border-seam-top padding-x-outside padding-y-xwide">
+				<Wrapper width="xwide">
+					<figure class="padding-bottom">
+						<img src="/images/baldwin-poster.jpg" alt="Baldwin">
+					</figure>
+					<h3>GPOBA branding</h3>
 					<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
 					<Button
 						iconRight="{arrowRight}"
