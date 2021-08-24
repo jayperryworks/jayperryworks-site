@@ -63,7 +63,7 @@
 		<li>
 			<article class="border-seam-top padding-x-outside padding-y-xwide">
 				<Wrapper width="xwide">
-					<figure class="device-gallery padding-bottom">
+					<figure class="cover-gallery padding-bottom">
 						<DeviceFrame
 							image="/images/tela-intro.jpg"
 							alt="Tela home screen"
@@ -112,7 +112,18 @@
 			<article class="border-seam-top padding-x-outside padding-y-xwide">
 				<Wrapper width="xwide">
 					<figure class="padding-bottom">
-						<img src="/images/baldwin-poster.jpg" alt="Baldwin">
+						<ul class="cover-gallery">
+							<li class="device phone">
+								<DeviceFrame
+									image="/images/tela-intro.jpg"
+									alt="Tela home screen"
+									type="phone"
+								/>
+							</li>
+							<li class="book spread">
+								<img src="/images/book-mockup-spread.jpg" alt="GPOBA">
+							</li>
+						</ul>
 					</figure>
 					<h3>GPOBA branding</h3>
 					<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
@@ -129,10 +140,18 @@
 </section>
 
 <style>
-	.device-gallery {
+	.cover-gallery {
+		align-items: center;
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 		grid-gap: var(--space-medium);
+		grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+		justify-content: center;
+		list-style: none;
+		padding-left: 0;
+	}
+
+	.cover-gallery > .device.phone + .book.spread {
+		grid-column: span 5;
 	}
 
 	.case-studies {
