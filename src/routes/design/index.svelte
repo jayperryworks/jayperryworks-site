@@ -10,7 +10,7 @@
 		{
 			images: [
 				{
-					image: '/images/GA_CourseProgress.jpg',
+					source: '/images/GA_CourseProgress.jpg',
 					device: 'tablet',
 					orientation: 'landscape'
 				}
@@ -22,19 +22,19 @@
 		{
 			images: [
 				{
-					image: '/images/tela-intro.jpg',
+					source: '/images/tela-intro.jpg',
 					alt: 'Tela home screen',
 					device: 'phone',
 					orientation: 'portrait'
 				},
 				{
-					image: '/images/tela-intro.jpg',
+					source: '/images/tela-intro.jpg',
 					alt: 'Tela home screen',
 					device: 'phone',
 					orientation: 'portrait'
 				},
 				{
-					image: '/images/tela-intro.jpg',
+					source: '/images/tela-intro.jpg',
 					alt: 'Tela home screen',
 					device: 'phone',
 					orientation: 'portrait'
@@ -47,7 +47,7 @@
 		{
 			images: [
 				{
-					image: '/images/baldwin-poster.jpg'
+					source: '/images/baldwin-poster.jpg'
 				}
 			],
 			title: 'The Baldwin Prize',
@@ -57,13 +57,13 @@
 		{
 			images: [
 				{
-					image: '/images/tela-intro.jpg',
+					source: '/images/tela-intro.jpg',
 					alt: 'Annual report cover on a phone',
 					device: 'phone',
 					orientation: 'portrait'
 				},
 				{
-					image: '/images/book-mockup-spread.jpg',
+					source: '/images/book-mockup-spread.jpg',
 					alt: 'Annual report spread',
 					colspan: 5
 				}
@@ -109,78 +109,40 @@
 		<p class="padding-top">Here’s a few of my favorite projects. I’m not able to publicly share some of my work due to copyright and confidentiality restrictions, but I can provide more work examples on request. Contact me if you’d like to talk.</p>
 	</header>
 	<ul class="case-studies">
-		<li>
-			<article class="border-seam-top padding-x-outside padding-y-xwide">
-				<Wrapper width="xwide" class="cover">
-					<DeviceFrame
-						image="/images/GA_CourseProgress.jpg"
-						alt="Gateway Academy"
-					/>
-					<div class="cover-content">
-						<h3>Gateway Academy</h3>
-						<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
-						<Button
-							iconRight="{arrowRight}"
-							link="#"
+		{#each toc as project}
+			<li class="border-seam-top padding-x-outside padding-y-xwide">
+				<Wrapper width="xwide">
+					<article class="cover">
+						<figure
+							class="cover-figure"
+							class:cover-gallery="{project.images.length > 1}"
 						>
-							Read more
-						</Button>
-					</div>
+							{#each project.images as image}
+								{#if image.device}
+									<DeviceFrame
+										image="{image.source}"
+										alt="{image.alt || project.title}"
+										type="{image.device}"
+									/>
+								{:else}
+									<img src="{image.source}" alt="{image.alt || project.title}">
+								{/if}
+							{/each}
+						</figure>
+						<div class="cover-content">
+							<h3>{project.title}</h3>
+							<p class="type-subheading type-scale-delta padding-bottom">{project.subhead}</p>
+							<Button
+								iconRight="{arrowRight}"
+								link="{project.link}"
+							>
+								Read more
+							</Button>
+						</div>
+					</article>
 				</Wrapper>
-			</article>
-		</li>
-		<li>
-			<article class="border-seam-top padding-x-outside padding-y-xwide">
-				<Wrapper width="xwide" class="cover">
-					<figure class="cover-figure cover-gallery padding-bottom">
-						<DeviceFrame
-							image="/images/tela-intro.jpg"
-							alt="Tela home screen"
-							type="phone"
-						/>
-						<DeviceFrame
-							image="/images/tela-intro.jpg"
-							alt="Tela home screen"
-							type="phone"
-						/>
-						<DeviceFrame
-							image="/images/tela-intro.jpg"
-							alt="Tela home screen"
-							type="phone"
-						/>
-					</figure>
-					<div class="cover-content">
-						<h3>Gateway Academy</h3>
-						<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
-						<Button
-							iconRight="{arrowRight}"
-							link="#"
-						>
-							Read more
-						</Button>
-					</div>
-				</Wrapper>
-			</article>
-		</li>
-		<li>
-			<article class="border-seam-top padding-x-outside padding-y-xwide">
-				<Wrapper width="xwide" class="cover">
-					<figure class="cover-figure">
-						<img src="/images/baldwin-poster.jpg" alt="Baldwin">
-					</figure>
-					<div class="cover-content">
-						<h3>The Baldwin Prize</h3>
-						<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
-						<Button
-							iconRight="{arrowRight}"
-							link="#"
-						>
-							Read more
-						</Button>
-					</div>
-				</Wrapper>
-			</article>
-		</li>
+			</li>
+		{/each}
 		<li>
 			<article class="border-seam-top padding-x-outside padding-y-xwide">
 				<Wrapper width="xwide" class="cover">
