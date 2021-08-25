@@ -5,6 +5,74 @@
 	import MainNav from '@/components/MainNav.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 	import AspectRatio from '@/components/AspectRatio.svelte'
+
+	let toc = [
+		{
+			images: [
+				{
+					image: '/images/GA_CourseProgress.jpg',
+					device: 'tablet',
+					orientation: 'landscape'
+				}
+			],
+			title: 'Gateway Academy',
+			subhead: 'A financial e-learning platform for Sub-Saharan East Africa',
+			link: '#'
+		},
+		{
+			images: [
+				{
+					image: '/images/tela-intro.jpg',
+					alt: 'Tela home screen',
+					device: 'phone',
+					orientation: 'portrait'
+				},
+				{
+					image: '/images/tela-intro.jpg',
+					alt: 'Tela home screen',
+					device: 'phone',
+					orientation: 'portrait'
+				},
+				{
+					image: '/images/tela-intro.jpg',
+					alt: 'Tela home screen',
+					device: 'phone',
+					orientation: 'portrait'
+				}
+			],
+			title: 'Tela',
+			subhead: 'A financial e-learning platform for Sub-Saharan East Africa',
+			link: '#'
+		},
+		{
+			images: [
+				{
+					image: '/images/baldwin-poster.jpg'
+				}
+			],
+			title: 'The Baldwin Prize',
+			subhead: 'A financial e-learning platform for Sub-Saharan East Africa',
+			link: '#'
+		},
+		{
+			images: [
+				{
+					image: '/images/tela-intro.jpg',
+					alt: 'Annual report cover on a phone',
+					device: 'phone',
+					orientation: 'portrait'
+				},
+				{
+					image: '/images/book-mockup-spread.jpg',
+					alt: 'Annual report spread',
+					colspan: 5
+				}
+			],
+			title: 'GPOBA branding',
+			subhead: 'A financial e-learning platform for Sub-Saharan East Africa',
+			link: '#'
+		},
+	]
 </script>
 
 <MainNav />
@@ -43,27 +111,28 @@
 	<ul class="case-studies">
 		<li>
 			<article class="border-seam-top padding-x-outside padding-y-xwide">
-				<Wrapper width="xwide">
+				<Wrapper width="xwide" class="cover">
 					<DeviceFrame
-						class="margin-bottom"
 						image="/images/GA_CourseProgress.jpg"
 						alt="Gateway Academy"
 					/>
-					<h3>Gateway Academy</h3>
-					<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
-					<Button
-						iconRight="{arrowRight}"
-						link="#"
-					>
-						Read more
-					</Button>
+					<div class="cover-content">
+						<h3>Gateway Academy</h3>
+						<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
+						<Button
+							iconRight="{arrowRight}"
+							link="#"
+						>
+							Read more
+						</Button>
+					</div>
 				</Wrapper>
 			</article>
 		</li>
 		<li>
 			<article class="border-seam-top padding-x-outside padding-y-xwide">
-				<Wrapper width="xwide">
-					<figure class="cover-gallery padding-bottom">
+				<Wrapper width="xwide" class="cover">
+					<figure class="cover-figure cover-gallery padding-bottom">
 						<DeviceFrame
 							image="/images/tela-intro.jpg"
 							alt="Tela home screen"
@@ -80,38 +149,42 @@
 							type="phone"
 						/>
 					</figure>
-					<h3>Gateway Academy</h3>
-					<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
-					<Button
-						iconRight="{arrowRight}"
-						link="#"
-					>
-						Read more
-					</Button>
+					<div class="cover-content">
+						<h3>Gateway Academy</h3>
+						<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
+						<Button
+							iconRight="{arrowRight}"
+							link="#"
+						>
+							Read more
+						</Button>
+					</div>
 				</Wrapper>
 			</article>
 		</li>
 		<li>
 			<article class="border-seam-top padding-x-outside padding-y-xwide">
-				<Wrapper width="xwide">
-					<figure class="padding-bottom">
+				<Wrapper width="xwide" class="cover">
+					<figure class="cover-figure">
 						<img src="/images/baldwin-poster.jpg" alt="Baldwin">
 					</figure>
-					<h3>The Baldwin Prize</h3>
-					<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
-					<Button
-						iconRight="{arrowRight}"
-						link="#"
-					>
-						Read more
-					</Button>
+					<div class="cover-content">
+						<h3>The Baldwin Prize</h3>
+						<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
+						<Button
+							iconRight="{arrowRight}"
+							link="#"
+						>
+							Read more
+						</Button>
+					</div>
 				</Wrapper>
 			</article>
 		</li>
 		<li>
 			<article class="border-seam-top padding-x-outside padding-y-xwide">
-				<Wrapper width="xwide">
-					<figure class="padding-bottom">
+				<Wrapper width="xwide" class="cover">
+					<figure class="cover-figure">
 						<ul class="cover-gallery">
 							<li class="device phone">
 								<DeviceFrame
@@ -125,14 +198,16 @@
 							</li>
 						</ul>
 					</figure>
-					<h3>GPOBA branding</h3>
-					<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
-					<Button
-						iconRight="{arrowRight}"
-						link="#"
-					>
-						Read more
-					</Button>
+					<div class="cover-content">
+						<h3>GPOBA branding</h3>
+						<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
+						<Button
+							iconRight="{arrowRight}"
+							link="#"
+						>
+							Read more
+						</Button>
+					</div>
 				</Wrapper>
 			</article>
 		</li>
@@ -140,6 +215,16 @@
 </section>
 
 <style>
+	:global(.cover) {
+		display: grid;
+		grid-gap: var(--space-wide);
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	}
+
+	.cover-figure {
+		grid-column: span 2;
+	}
+
 	.cover-gallery {
 		align-items: center;
 		display: grid;
