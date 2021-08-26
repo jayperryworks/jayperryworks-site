@@ -60,12 +60,13 @@
 					source: '/images/tela-intro.jpg',
 					alt: 'Annual report cover on a phone',
 					device: 'phone',
-					orientation: 'portrait'
+					orientation: 'portrait',
+					priority: 2
 				},
 				{
 					source: '/images/book-mockup-spread.jpg',
 					alt: 'Annual report spread',
-					colspan: 5
+					width: 'xwide'
 				}
 			],
 			title: 'GPOBA branding',
@@ -110,7 +111,7 @@
 	</header>
 	<ul class="case-studies">
 		{#each toc as project}
-			<li class="border-seam-top padding-x-outside padding-y-xwide">
+			<li class="toc-item border-seam-top padding-x-outside padding-y-xwide">
 				<Wrapper width="xwide">
 					<article class="cover">
 						<figure
@@ -118,15 +119,20 @@
 							class:cover-gallery="{project.images.length > 1}"
 						>
 							{#each project.images as image}
-								{#if image.device}
-									<DeviceFrame
-										image="{image.source}"
-										alt="{image.alt || project.title}"
-										type="{image.device}"
-									/>
-								{:else}
-									<img src="{image.source}" alt="{image.alt || project.title}">
-								{/if}
+								<div class="{image.width || 'default'} {image.priority ? `priority:${image.priority}` : ''}">
+									{#if image.device}
+										<DeviceFrame
+											image="{image.source}"
+											alt="{image.alt || project.title}"
+											type="{image.device}"
+										/>
+									{:else}
+										<img
+											src="{image.source}"
+											alt="{image.alt || project.title}"
+										>
+									{/if}
+								</div>
 							{/each}
 						</figure>
 						<div class="cover-content">
@@ -143,62 +149,82 @@
 				</Wrapper>
 			</li>
 		{/each}
-		<li>
-			<article class="border-seam-top padding-x-outside padding-y-xwide">
-				<Wrapper width="xwide" class="cover">
-					<figure class="cover-figure">
-						<ul class="cover-gallery">
-							<li class="device phone">
-								<DeviceFrame
-									image="/images/tela-intro.jpg"
-									alt="Tela home screen"
-									type="phone"
-								/>
-							</li>
-							<li class="book spread">
-								<img src="/images/book-mockup-spread.jpg" alt="GPOBA">
-							</li>
-						</ul>
-					</figure>
-					<div class="cover-content">
-						<h3>GPOBA branding</h3>
-						<p class="type-subheading type-scale-delta padding-bottom">A financial e-learning platform for Sub-Saharan East Africa</p>
-						<Button
-							iconRight="{arrowRight}"
-							link="#"
-						>
-							Read more
-						</Button>
-					</div>
-				</Wrapper>
-			</article>
-		</li>
 	</ul>
 </section>
 
 <style>
-	:global(.cover) {
+	.toc-item {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	.toc-item > :global(*) {
+		width: 100%;
+	}
+
+	.cover {
 		display: grid;
-		grid-gap: var(--space-wide);
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		grid-gap: var(--space-medium);
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		align-items: center;
+	}
+
+	@media screen and (min-width: 50em) {
+		.cover {
+			grid-gap: var(--space-wide);
+		}
 	}
 
 	.cover-figure {
-		grid-column: span 2;
+		text-align: center;
+	}
+
+	@media screen and (min-width: 25em) {
+		.cover-figure {
+			grid-column: span 2;
+		}
+	}
+
+	.cover-figure img {
+		max-height: 80vh;
 	}
 
 	.cover-gallery {
 		align-items: center;
 		display: grid;
-		grid-gap: var(--space-medium);
+		grid-gap: var(--space-narrow);
 		grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
 		justify-content: center;
 		list-style: none;
 		padding-left: 0;
 	}
 
-	.cover-gallery > .device.phone + .book.spread {
-		grid-column: span 5;
+	.cover-gallery .priority\:2 {
+		display: none;
+	}
+
+	@media screen and (min-width: 40em) {
+		.cover-gallery .priority\:2 {
+			display: block;
+		}
+	}
+
+	@media screen and (min-width: 30em) {
+		.cover-gallery {
+			grid-gap: var(--space-medium);
+		}
+	}
+
+	.cover-gallery .xwide {
+		grid-column: span 2;
+	}
+
+	@media screen and (min-width: 40em) {
+		.cover-gallery .xwide {
+			grid-column: span 5;
+		}
 	}
 
 	.case-studies {
