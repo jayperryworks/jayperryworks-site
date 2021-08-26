@@ -64,15 +64,15 @@
 					<h1 class="type-leading-xtight">{@html intro.headline}</h1>
 				</Wrapper>
 				<Wrapper 
-					centered={false}
+					centered="{false}"
 					class="type-scale-delta type-heading type-leading-default | padding-top padding-bottom-wide"
 				>
 					<Passage html={intro.blurb}/>
 				</Wrapper>
 				<Button
-					href={intro.cta.link}
-					iconRight={arrowRight}
-					prefetch={true}
+					href="{intro.cta.link}"
+					iconRight="{arrowRight}"
+					prefetch="{true}"
 				>
 					{intro.cta.label}
 				</Button>
@@ -87,7 +87,7 @@
 					<Icon
 						align="baseline"
 					  margin="right"
-					  svg={arrowDown}
+					  svg="{arrowDown}"
 					/>
 					Table of contents
 				</a>
@@ -96,7 +96,7 @@
 	</Panel>
 
 	<!-- pictures -->
-	<Panel id={pictures.slug}>
+	<Panel id="{pictures.slug}">
 		<header class="padding-bottom-wide">
 			<Wrapper width="xwide">
 				<a
@@ -106,7 +106,7 @@
 					01
 				</a>
 				<h2 class="type-scale-alpha">
-					<a href={pictures.cta.link}>{pictures.heading}</a>
+					<a href="{pictures.cta.link}">{pictures.heading}</a>
 				</h2>
 			</Wrapper>
 		</header>
@@ -119,42 +119,42 @@
 				<div class="flag-item blurb">
 					<Wrapper
 						class="margin-y-flow-wide"
-						centered={false}
+						centered="{false}"
 					>
 						
 						{#if pictures.blurb}
-							<Passage html={pictures.blurb} class="type-scale-delta type-heading type-leading-default"/>
+							<Passage html="{pictures.blurb}" class="type-scale-delta type-heading type-leading-default"/>
 						{/if}
 						{#if pictures.cta}
 							<Button
-								prefetch={true}
-								href={pictures.cta.link}
-								iconRight={arrowRight}
+								prefetch="{true}"
+								href="{pictures.cta.link}"
+								iconRight="{arrowRight}"
 							>
 								{pictures.cta.label}
 							</Button>
 						{/if}
 					</Wrapper>
 				</div>
-				<div class="flag-item image">
+				<figure class="flag-item image">
 					<a
 						class="cover-image | type-link-undecorated"
-						href={pictures.cta.link}
+						href="{pictures.cta.link}"
 					>
 						<ResponsivePicture
-							sources={pictures.coverImage.versions}
-							alt={pictures.heading}
+							sources="{pictures.coverImage.versions}"
+							alt="{pictures.heading}"
 							fill
 							contain
 						/>
 					</a>
-				</div>
+				</figure>
 			</div>
 		</Wrapper>
 	</Panel>
 
 	<!-- blog -->
-	<Panel id={blog.slug} class="padding-y-flow-wide">
+	<Panel id="{blog.slug}" class="padding-y-flow-wide">
 		<header>
 			<Wrapper width="xwide">
 				<a
@@ -164,7 +164,7 @@
 					02
 				</a>
 				<h2 class="type-scale-alpha">
-					<a href={blog.cta.link}>{blog.heading}</a>
+					<a href="{blog.cta.link}">{blog.heading}</a>
 				</h2>
 			</Wrapper>
 		</header>
@@ -185,7 +185,7 @@
 						>
 							<a
 								class="type-link-undecorated"
-								href={post.path}
+								href="{post.path}"
 							>
 								{date(post.date)}
 							</a>
@@ -195,7 +195,7 @@
 						</h4>
 						{#if post.subtitle}
 							<p class="type-heading type-scale-delta type-font-accent type-weight-light | color-fg-secondary | padding-top-xxnarrow">
-								<a href={post.path}>{post.subtitle}</a>
+								<a href="{post.path}">{post.subtitle}</a>
 							</p>
 						{/if}
 					</li>
@@ -205,9 +205,9 @@
 		<Wrapper width="xwide" flex>
 			{#if blog.cta}
 				<Button
-					prefetch={true}
-					href={blog.cta.link}
-					iconRight={arrowRight}
+					prefetch="{true}"
+					href="{blog.cta.link}"
+					iconRight="{arrowRight}"
 				>
 					{blog.cta.label}
 				</Button>
@@ -238,7 +238,7 @@
 			flex: 1;
 		}
 
-		.justify-center {
+		:global(.justify-center) {
 			justify-content: center;
 			align-items: flex-start;
 		}

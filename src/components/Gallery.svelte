@@ -1,15 +1,19 @@
 <script>
-  export let size = '',
-    gutter = 'xnarrow',
-    flex = false
+  export let size = ''
+  export let gutter = 'xnarrow'
+  export let flex = false
+  export let alignCenter
+  export let justifyCenter
 
-  export let style = ''
+  $: style = `--gutter: var(--space-${gutter});`
 </script>
 
 <ul
   class="gallery {size}"
   class:flex
-  style="--gutter: var(--space-{gutter}); {style}"
+  class:alignCenter
+  class:justifyCenter
+  {style}
 >
   <slot {size}>Add list items here</slot>
 </ul>
@@ -110,5 +114,13 @@
       display: flex;
       flex-direction: column;
     }
+  }
+
+  .alignCenter {
+    align-items: center;
+  }
+
+  .justifyCenter {
+    justify-content: center;
   }
 </style>

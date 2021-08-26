@@ -3,8 +3,8 @@
 	import Button from '@/components/Button.svelte'
 	import DeviceFrame from '@/components/DeviceFrame.svelte'
 	import MainNav from '@/components/MainNav.svelte'
+	import Panel from '@/components/Panel.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
-	import AspectRatio from '@/components/AspectRatio.svelte'
 
 	let toc = [
 		{
@@ -109,126 +109,122 @@
 		<h2>Case studies</h2>
 		<p class="padding-top">Here’s a few of my favorite projects. I’m not able to publicly share some of my work due to copyright and confidentiality restrictions, but I can provide more work examples on request. Contact me if you’d like to talk.</p>
 	</header>
-	<ul class="case-studies">
-		{#each toc as project}
-			<li class="toc-item border-seam-top padding-x-outside padding-y-xwide">
-				<Wrapper width="xwide">
-					<article class="cover">
-						<figure
-							class="cover-figure"
-							class:cover-gallery="{project.images.length > 1}"
+	{#each toc as project}
+		<Panel id="{project.slug}" centered>
+			<Wrapper width="xxwide" flex>
+				<div class="flag">
+					<figure
+						class="flag-item figure"
+						class:gallery="{project.images.length > 1}"
+					>
+						{#each project.images as image}
+							<div class="{image.width || 'default'} {image.priority ? `priority:${image.priority}` : ''}">
+								{#if image.device}
+									<DeviceFrame
+										image="{image.source}"
+										alt="{image.alt || project.title}"
+										type="{image.device}"
+										class="flag-image"
+									/>
+								{:else}
+									<img
+										src="{image.source}"
+										alt="{image.alt || project.title}"
+										class="flag-image"
+									>
+								{/if}
+							</div>
+						{/each}
+					</figure>
+					<div class="flag-item blurb">
+						<h3>{project.title}</h3>
+						<p class="type-subheading type-scale-delta padding-bottom">
+							{project.subhead}
+						</p>
+						<Button
+							iconRight="{arrowRight}"
+							link="{project.link}"
 						>
-							{#each project.images as image}
-								<div class="{image.width || 'default'} {image.priority ? `priority:${image.priority}` : ''}">
-									{#if image.device}
-										<DeviceFrame
-											image="{image.source}"
-											alt="{image.alt || project.title}"
-											type="{image.device}"
-										/>
-									{:else}
-										<img
-											src="{image.source}"
-											alt="{image.alt || project.title}"
-										>
-									{/if}
-								</div>
-							{/each}
-						</figure>
-						<div class="cover-content">
-							<h3>{project.title}</h3>
-							<p class="type-subheading type-scale-delta padding-bottom">{project.subhead}</p>
-							<Button
-								iconRight="{arrowRight}"
-								link="{project.link}"
-							>
-								Read more
-							</Button>
-						</div>
-					</article>
-				</Wrapper>
-			</li>
-		{/each}
-	</ul>
+							Read more
+						</Button>
+					</div>
+				</div>
+			</Wrapper>
+		</Panel>
+	{/each}
 </section>
 
 <style>
-	.toc-item {
-		min-height: 100vh;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-	}
-
-	.toc-item > :global(*) {
-		width: 100%;
-	}
-
-	.cover {
+	.flag {
+		--gutter: var(--space-medium);
+		
 		display: grid;
-		grid-gap: var(--space-medium);
+		grid-gap: var(--gutter);
 		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 		align-items: center;
 	}
 
 	@media screen and (min-width: 50em) {
-		.cover {
-			grid-gap: var(--space-wide);
+		.flag {
+			--gutter: var(--space-wide);
 		}
 	}
 
-	.cover-figure {
+	.flag-item.figure {
 		text-align: center;
+		padding-bottom: 1em;
+		padding-bottom: var(--gutter);
+	}
+
+	@supports (display: grid) {
+		.flag-item.figure {
+			padding-bottom: 0;
+		}
 	}
 
 	@media screen and (min-width: 25em) {
-		.cover-figure {
+		.flag-item.figure {
 			grid-column: span 2;
 		}
 	}
 
-	.cover-figure img {
+	.flag :global(.flag-image) {
 		max-height: 80vh;
 	}
 
-	.cover-gallery {
-		align-items: center;
-		display: grid;
-		grid-gap: var(--space-narrow);
-		grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-		justify-content: center;
-		list-style: none;
-		padding-left: 0;
+	@supports (display: grid) {
+		.gallery {
+			align-items: center;
+			display: grid;
+			grid-gap: var(--space-narrow);
+			grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+			justify-content: center;
+		}
 	}
 
-	.cover-gallery .priority\:2 {
+	.gallery .priority\:2 {
 		display: none;
 	}
 
 	@media screen and (min-width: 40em) {
-		.cover-gallery .priority\:2 {
+		.gallery .priority\:2 {
 			display: block;
 		}
 	}
 
 	@media screen and (min-width: 30em) {
-		.cover-gallery {
+		.gallery {
 			grid-gap: var(--space-medium);
 		}
 	}
 
-	.cover-gallery .xwide {
+	.gallery .xwide {
 		grid-column: span 2;
 	}
 
 	@media screen and (min-width: 40em) {
-		.cover-gallery .xwide {
+		.gallery .xwide {
 			grid-column: span 5;
 		}
-	}
-
-	.case-studies {
-		list-style: none;
-		padding-left: 0;
 	}
 </style>
