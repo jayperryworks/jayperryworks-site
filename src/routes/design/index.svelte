@@ -118,13 +118,12 @@
 						class:gallery="{project.images.length > 1}"
 					>
 						{#each project.images as image}
-							<div class="{image.width || 'default'} {image.priority ? `priority:${image.priority}` : ''}">
+							<div class="{image.width || 'default'} {image.priority ? `priority:${image.priority}` : 'priority:1'}">
 								{#if image.device}
 									<DeviceFrame
 										image="{image.source}"
 										alt="{image.alt || project.title}"
 										type="{image.device}"
-										class="flag-image"
 									/>
 								{:else}
 									<img
@@ -188,8 +187,13 @@
 		}
 	}
 
-	.flag :global(.flag-image) {
+	.flag .flag-image {
 		max-height: 80vh;
+	}
+
+	/* if grid is not supported, only display the first item in a gallery */
+	.gallery > :nth-child(n + 2) {
+		display: none;
 	}
 
 	@supports (display: grid) {
@@ -200,11 +204,16 @@
 			grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
 			justify-content: center;
 		}
+
+		.gallery > :nth-child(n + 2) {
+			display: unset;
+		}
+
+		.gallery .priority\:2 {
+			display: none;
+		}
 	}
 
-	.gallery .priority\:2 {
-		display: none;
-	}
 
 	@media screen and (min-width: 40em) {
 		.gallery .priority\:2 {

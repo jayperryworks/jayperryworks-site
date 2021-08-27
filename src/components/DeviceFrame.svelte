@@ -13,14 +13,14 @@
 	export { classes as class }
 </script>
 
-<div class="bezel {type} shadow {classes}">
+<div class="bezel {type} shadow">
 	<AspectRatio
 		ratio="{ratios[type]}"
 		useScale="{false}"
 	>
 		<img 
-			src="{image}"
 			alt="{alt}"
+			src="{image}"
 		>
 	</AspectRatio>
 </div>
