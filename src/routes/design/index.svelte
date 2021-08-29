@@ -26,7 +26,7 @@
 	let { title, intro, clients, toc } = content
 </script>
 
-<MainNav />
+<MainNav segment="design" />
 
 <header class="padding-x-outside padding-top-xwide padding-y-flow">
 	<h1>{title}</h1>
@@ -34,14 +34,12 @@
 </header>
 
 <section class="padding-x-outside padding-top-wide padding-y-flow">
-	<h2>Selected clients</h2>
+	<h2>{clients.title}</h2>
 	<Passage html="{clients.intro}" />
 	<Wrapper centered="{false}">
 		<Gallery bullets class="no-padding-top">
 			{#each clients.items as client}
-				<li>
-					<span class="type-scale-epsilon bullet">{client}</span>
-				</li>
+				<li><span class="type-scale-epsilon bullet">{client}</span></li>
 			{/each}
 		</Gallery>
 	</Wrapper>
