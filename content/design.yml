@@ -1,0 +1,66 @@
+title: Design work
+intro: |-
+  I have a broad background, a result of both curiosity and necessity. I like working with small teams, and I’ve often worn extra hats that the budget couldn’t fill. That suites me fine: I like hats, and I like to find patterns in complex processes. While user interface design and branding are my main focuses these days, I also have experience in publication design, print and environmental design, advertising, video and broadcast, and education.
+
+  In addition to my design work, I’m a front-end coder. I love Javascript, HTML, and CSS. I advocate for semantics; inclusive accessibility; speed; and device-agnostic, responsive layouts. I tend to see my coding work as a natural extension of my design process. I like to “explore” with code via prototypes, and I love using styleguides and design systems to build consensus on complex projects.
+
+clients:
+  title: Selected clients
+  intro: |-
+    I’m located in the Baltimore-DC metro area and, being near the U.S. government, I’ve ended up working frequently with nonprofits and NGOs. I’ve also worked with a number of startups, small businesses, and tech- and entertainment-industry folks. I’m very, very lucky to have had the chance to work with so many organizations I admire, and to contribute, in some small way, to their missions.
+
+    Here’s a few clients I’ve worked with over the years, as part of various teams and agencies:
+  items:
+    - Discovery Communications
+    - World Wildlife Fund
+    - Defenders of Wildlife
+    - World Bank Group
+
+toc:
+  title: Case studies
+  intro: |-
+    Here’s a few of my favorite projects. I’m not able to publicly share some of my work due to copyright and confidentiality restrictions, but I can provide more work examples on request. Contact me if you’d like to talk.
+  items:
+    - title: Gateway Academy
+      subhead: A financial e-learning platform for Sub-Saharan East Africa
+      link: '#'
+      images:
+        - source: /images/GA_CourseProgress.jpg
+          device: tablet
+          orientation: landscape
+    
+    - title: Tela
+      subhead: A financial e-learning platform for Sub-Saharan East Africa
+      link: '#'
+      images:
+        - source: /images/tela-intro.jpg
+          alt: Tela home screen
+          device: phone
+          orientation: portrait
+        - source: /images/tela-intro.jpg
+          alt: Tela home screen
+          device: phone
+          orientation: portrait
+        - source: /images/tela-intro.jpg
+          alt: Tela home screen
+          device: phone
+          orientation: portrait
+    
+    - title: The Baldwin Prize
+      subhead: A financial e-learning platform for Sub-Saharan East Africa
+      link: '#'
+      images:
+        - source: /images/baldwin-poster.jpg
+    
+    - title: GPOBA branding
+      subhead: A financial e-learning platform for Sub-Saharan East Africa
+      link: '#'
+      images:
+        - source: /images/tela-intro.jpg
+          alt: Annual report cover on a phone
+          device: phone
+          orientation: portrait
+          priority: 2
+        - source: /images/book-mockup-spread.jpg
+          alt: Annual report spread
+          width: xwide

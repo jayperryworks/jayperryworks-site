@@ -13,7 +13,7 @@
 	export { classes as class }
 </script>
 
-<div class="bezel {type} shadow">
+<div class="bezel {type} shadow {classes}">
 	<AspectRatio
 		ratio="{ratios[type]}"
 		useScale="{false}"

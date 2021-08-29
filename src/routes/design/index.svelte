@@ -1,115 +1,58 @@
+<script context="module">
+	export async function preload({ params, query }) {
+	  const response = await this.fetch('design.json')
+	  const data = await response.json()
+
+	  if (response.status !== 200) {
+	    this.error(response.status, data.message)
+	    return
+	  }
+
+	  return { content: data }
+	}
+</script>
+
 <script>
 	import arrowRight from 'icons/arrow-right.svg'
 	import Button from '@/components/Button.svelte'
 	import DeviceFrame from '@/components/DeviceFrame.svelte'
+	import Gallery from '@/components/Gallery.svelte'
 	import MainNav from '@/components/MainNav.svelte'
 	import Panel from '@/components/Panel.svelte'
+	import Passage from '@/components/Passage.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
-	let toc = [
-		{
-			images: [
-				{
-					source: '/images/GA_CourseProgress.jpg',
-					device: 'tablet',
-					orientation: 'landscape'
-				}
-			],
-			title: 'Gateway Academy',
-			subhead: 'A financial e-learning platform for Sub-Saharan East Africa',
-			link: '#'
-		},
-		{
-			images: [
-				{
-					source: '/images/tela-intro.jpg',
-					alt: 'Tela home screen',
-					device: 'phone',
-					orientation: 'portrait'
-				},
-				{
-					source: '/images/tela-intro.jpg',
-					alt: 'Tela home screen',
-					device: 'phone',
-					orientation: 'portrait'
-				},
-				{
-					source: '/images/tela-intro.jpg',
-					alt: 'Tela home screen',
-					device: 'phone',
-					orientation: 'portrait'
-				}
-			],
-			title: 'Tela',
-			subhead: 'A financial e-learning platform for Sub-Saharan East Africa',
-			link: '#'
-		},
-		{
-			images: [
-				{
-					source: '/images/baldwin-poster.jpg'
-				}
-			],
-			title: 'The Baldwin Prize',
-			subhead: 'A financial e-learning platform for Sub-Saharan East Africa',
-			link: '#'
-		},
-		{
-			images: [
-				{
-					source: '/images/tela-intro.jpg',
-					alt: 'Annual report cover on a phone',
-					device: 'phone',
-					orientation: 'portrait',
-					priority: 2
-				},
-				{
-					source: '/images/book-mockup-spread.jpg',
-					alt: 'Annual report spread',
-					width: 'xwide'
-				}
-			],
-			title: 'GPOBA branding',
-			subhead: 'A financial e-learning platform for Sub-Saharan East Africa',
-			link: '#'
-		},
-	]
+	export let content
+	let { title, intro, clients, toc } = content
 </script>
 
 <MainNav />
 
-<header class="padding-x-outside padding-top-xwide">
-	<h1>Design work</h1>
-	<p class="padding-top">
-		I have a broad background, a result of both curiosity and necessity. I like working with small teams, and I’ve often worn extra hats that the budget couldn’t fill. That suites me fine: I like hats, and I like to find patterns in complex processes. While user interface design and branding are my main focuses these days, I also have experience in publication design, print and environmental design, advertising, video and broadcast, and education.
-	</p>
-	<p>
-		In addition to my design work, I’m a front-end coder. I love Javascript, HTML, and CSS. I advocate for semantics; inclusive accessibility; speed; and device-agnostic, responsive layouts. I tend to see my coding work as a natural extension of my design process. I like to “explore” with code via prototypes, and I love using styleguides and design systems to build consensus on complex projects.
-	</p>
+<header class="padding-x-outside padding-top-xwide padding-y-flow">
+	<h1>{title}</h1>
+	<Passage html="{intro}" />
 </header>
 
-<section class="padding-x-outside padding-top-wide">
+<section class="padding-x-outside padding-top-wide padding-y-flow">
 	<h2>Selected clients</h2>
-	<p class="padding-top">
-		I’m located in the Baltimore-DC metro area and, being near the U.S. government, I’ve ended up working frequently with nonprofits and NGOs. I’ve also worked with a number of startups, small businesses, and tech- and entertainment-industry folks. I’m very, very lucky to have had the chance to work with so many organizations I admire, and to contribute, in some small way, to their missions.
-	</p>
-	<p>
-		Here’s a few clients I’ve worked with over the years, as part of various teams and agencies:
-	</p>
-	<ul>
-		<li>Discovery Communications</li>
-		<li>World Wildlife Fund</li>
-		<li>Defenders of Wildlife</li>
-		<li>World Bank Group</li>
-	</ul>
+	<Passage html="{clients.intro}" />
+	<Wrapper centered="{false}">
+		<Gallery bullets class="no-padding-top">
+			{#each clients.items as client}
+				<li>
+					<span class="type-scale-epsilon bullet">{client}</span>
+				</li>
+			{/each}
+		</Gallery>
+	</Wrapper>
 </section>
 
 <section class="padding-top-wide">
-	<header class="padding-x-outside padding-bottom-wide">
-		<h2>Case studies</h2>
-		<p class="padding-top">Here’s a few of my favorite projects. I’m not able to publicly share some of my work due to copyright and confidentiality restrictions, but I can provide more work examples on request. Contact me if you’d like to talk.</p>
+	<header class="padding-x-outside padding-bottom-wide padding-y-flow">
+		<h2>{toc.title}</h2>
+		<Passage html="{toc.intro}" />
 	</header>
-	{#each toc as project}
+	{#each toc.items as project}
 		<Panel id="{project.slug}" centered>
 			<Wrapper width="xxwide" flex>
 				<div class="flag">
@@ -154,6 +97,11 @@
 </section>
 
 <style>
+	.bullet::before {
+		content: '\2022';
+		padding-right: 0.25em;
+	}
+
 	.flag {
 		--gutter: var(--space-medium);
 		

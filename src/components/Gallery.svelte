@@ -10,8 +10,8 @@
 
 <ul
   class="gallery {size}"
-  class:flex
   class:alignCenter
+  class:flex
   class:justifyCenter
   {style}
 >
@@ -29,7 +29,6 @@
 
     display: block;
     font-size: 0;
-    list-style: none;
     margin: -1px;
     margin: calc((var(--gutter) / 2) * -1);
     padding-left: 0;
@@ -84,7 +83,6 @@
     padding: calc(var(--gutter) / 2);
     position: relative;
     vertical-align: top;
-
 
     /* fallback fluid sizing method using a calc() hack
       -> allows grid to be somewhat responsive without media queries
