@@ -9,12 +9,18 @@ clients:
   intro: |-
     I’m located in the Baltimore-DC metro area and, being near the U.S. government, I’ve ended up working frequently with nonprofits and NGOs. I’ve also worked with a number of startups, small businesses, and tech- and entertainment-industry folks. I’m very, very lucky to have had the chance to work with so many organizations I admire, and to contribute, in some small way, to their missions.
 
-    Here’s a few clients I’ve worked with over the years, as part of various teams and agencies:
+    Here’s a few organizations I’ve worked with over the years, as part of various teams and agencies:
   items:
-    - Discovery Communications
-    - World Wildlife Fund
+    - Audubon Society
+    - Chesapeake Bay Foundation
     - Defenders of Wildlife
+    - Discovery Communications
+    - European Union
+    - Penn State University
+    - United Nations
     - World Bank Group
+    - World Food Program
+    - World Wildlife Fund super long title blah blah
 
 toc:
   title: Case studies

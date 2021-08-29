@@ -95,9 +95,18 @@
 </section>
 
 <style>
+	.bullet {
+		padding-left: 1em;
+		display: block;
+	}
+
 	.bullet::before {
 		content: '\2022';
-		padding-right: 0.25em;
+		line-height: var(--type-leading-default);
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
 	}
 
 	.flag {
