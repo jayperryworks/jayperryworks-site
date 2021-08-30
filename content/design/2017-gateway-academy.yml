@@ -1,0 +1,72 @@
+title: Gateway Academy
+subhead: A financial e-learning platform for Sub-Saharan East Africa
+cover: 
+  images: 
+    - source: /images/GA_CourseProgress.jpg
+      device: tablet
+      orientation: landscape
+metadata:
+  date: 2017 - 2020
+  client: Consultative Group to Assist the Poor, World Bank Group
+  agency: Bivee, Inc.
+  role: Design Director
+  contributions:
+    - art direction
+    - UX/UI design
+    - branding design
+    - front-end development
+    - styleguide development
+  collaborators:
+    - Scott Schaffter
+    - Helly Stoyanova
+    - Nicholas Kingston
+    - Haley Cline
+body:
+  - type: passage
+    markdown: |-
+      Gateway Academy was an e-learning platform designed to help banks in Sub-Saharan East Africa implement better financial support for their poorest customers.
+
+      Developed under partnership with several other companies, we built a complex, robust digital product over several years using modern processes: rapid prototyping, agile development, styleguide-driven design, etc. Despite the NGO context and large number of stakeholders, our process and culture resembled a small startup.
+
+      In my art-direction role, I led a small team responsible for UX/UI design, front-end development, and branding. We began our alpha prototyping in early 2017, with content models and wireframe prototypes. A bit later we created a component library and styleguide to help the development team build coded prototypes. As we evolved the branding and visual design, we evolved the styleguide and UI library in parallel.
+
+  - type: gallery
+    prominence: large
+    resize: true
+    images:
+      - image: /images/GA_CourseProgress.jpg
+        device: tablet
+        orientation: landscape
+        width: wide
+      - image: /images/GA_CourseProgress.jpg
+        device: tablet
+        orientation: landscape
+      - image: /images/GA_CourseProgress.jpg
+        device: tablet
+        orientation: landscape
+
+  - type: heading
+    inlineMarkdown: A styleguide-driven design process
+
+  - type: passage
+    markdown: |-
+      Over several years of continuous development, my design team built a comprehensive styleguide to document the brand, tone and voice, workflow, and our ever-evolving library of UI components.
+
+  - type: gallery
+    prominence: large
+    resize: true
+    images:
+      - image: /images/GA_CourseProgress.jpg
+        device: tablet
+        orientation: landscape
+        width: wide
+      - image: /images/GA_CourseProgress.jpg
+        device: tablet
+        orientation: landscape
+      - image: /images/GA_CourseProgress.jpg
+        device: tablet
+        orientation: landscape
+      - image: /images/GA_CourseProgress.jpg
+        device: tablet
+        orientation: landscape
+        width: xwide
