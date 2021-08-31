@@ -1,15 +1,5 @@
 title: GPOBA
 subhead: A financial e-learning platform for Sub-Saharan East Africa
-cover: 
-  images:
-    - source: /images/tela-intro.jpg
-      alt: Annual report cover on a phone
-      device: phone
-      orientation: portrait
-      priority: 2
-    - source: /images/book-mockup-spread.jpg
-      alt: Annual report spread
-      width: xwide
 metadata:
   date: 2015 - 2016
   client: World Bank Group, Global Practice on Output-based Aid
