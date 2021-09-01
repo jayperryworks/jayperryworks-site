@@ -29,14 +29,14 @@ body:
     prominence: large
     resize: true
     images:
-      - image: /images/GA_CourseProgress.jpg
+      - image: /images/uploads/design-2017-ga-course-progress.jpg
         device: tablet
         orientation: landscape
         width: wide
-      - image: /images/GA_CourseProgress.jpg
+      - image: /images/uploads/design-2017-ga-course-progress.jpg
         device: tablet
         orientation: landscape
-      - image: /images/GA_CourseProgress.jpg
+      - image: /images/uploads/design-2017-ga-course-progress.jpg
         device: tablet
         orientation: landscape
 
@@ -51,17 +51,17 @@ body:
     prominence: large
     resize: true
     images:
-      - image: /images/GA_CourseProgress.jpg
+      - image: /images/uploads/design-2017-ga-course-progress.jpg
         device: tablet
         orientation: landscape
         width: wide
-      - image: /images/GA_CourseProgress.jpg
+      - image: /images/uploads/design-2017-ga-course-progress.jpg
         device: tablet
         orientation: landscape
-      - image: /images/GA_CourseProgress.jpg
+      - image: /images/uploads/design-2017-ga-course-progress.jpg
         device: tablet
         orientation: landscape
-      - image: /images/GA_CourseProgress.jpg
+      - image: /images/uploads/design-2017-ga-course-progress.jpg
         device: tablet
         orientation: landscape
         width: xwide

@@ -18,43 +18,52 @@
 
 <script>
 	import { format } from 'date-fns'
+	import { titleize } from '@/utils/stringHelpers.js'
+	import Metadata from '@/components/Metadata.svelte'
 	import PageTheme from '@/components/PageTheme.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
 	import PostBody from '@/components/PostBody.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
 	export let post
+
+	$: credits = Object.keys(post.metadata).map((label) => {
+		let value = post.metadata[label]
+
+		if (Array.isArray(value)) {
+			value = Object.values(value)
+			value[0] = titleize(value[0])
+		} else {
+			value = titleize(value)
+		}
+
+		return {
+			label: titleize(label),
+			value
+		}
+	})
 </script>
 
 <PageTitle title="{post.title}" />
 <PageTheme color="{post.highlight}" />
 
 <article class="padding-x-outside padding-y-xwide">
-	<header>
-		<Wrapper>
+	<header class="type-align-center padding-bottom-wide">
+		<Wrapper width="xwide">
 			<h1>{post.title}</h1>
 			{#if post.subtitle}
-				<p class="type-subheading type-scale-beta">
+				<p class="type-subheading type-scale-gamma">
 					{post.subtitle}
 				</p>
 			{/if}
 		</Wrapper>
 	</header>
+
+	<PostBody blocks={post.body} />
+	
+	<!-- credits -->
 	<aside>
-		<dl>
-			{#each Object.keys(post.metadata) as label}
-				<div>
-					<dt>{label}</dt>
-					{#if Array.isArray(post.metadata[label])}
-						{#each Object.values(post.metadata[label]) as value}
-							<dd>{value}</dd>
-						{/each}
-					{:else}
-						<dd>{post.metadata[label]}</dd>
-					{/if}
-				</div>
-			{/each}
-		</dl>
+		<h2 class="padding-bottom-narrow">Credits</h2>
+		<Metadata data="{credits}" />
 	</aside>
-	<!-- <PostBody blocks={post.body} /> -->
 </article>

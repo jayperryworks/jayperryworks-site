@@ -1,0 +1,83 @@
+title: GPOBA
+subhead: A financial e-learning platform for Sub-Saharan East Africa
+metadata:
+  date: 2015 - 2016
+  client: World Bank Group, Global Practice on Output-based Aid
+  agency: Bivee, Inc.
+  role: Design Director
+  contributions:
+    - editorial design
+    - web design
+    - web development
+    - branding design
+    - styleguide development
+  collaborators:
+    - Scott Schaffter
+    - Helly Stoyanova
+    - Nicholas Kingston
+    - Haley Cline
+body:
+  - type: passage
+    markdown: |-
+      In 2015, my team designed and developed a multi- platform annual report for GPOBA, a World Bank development trust fund. The challenge: there wasn’t much time, the budget was tight, the writing was still in progress, and they needed to release print and online versions simultaneously.
+
+      At the time, GPOBA had a logo, but not a well- developed brand system. I developed a simple design language that built on their existing color palette and the World Bank’s huge, wonderful photo library. After a few iterations, I fleshed out this language into its print and web applications, adapting it to suit its context but preserving a consistent feel throughout.
+
+      To give the GPOBA team enough time to finish editing their content, my team and I developed a Git-based content workflow, where markdown-formatted “master” text could be flowed into both the web and print templates, and updated easily when new changes came in.
+
+  - type: gallery
+    prominence: large
+    resize: true
+    size: small
+    caption: The screen version of the annual report.
+    images:
+      - image: /images/uploads/design-2017-tela-intro.jpg
+        device: phone
+        orientation: portrait
+      - image: /images/uploads/design-2017-ga-course-progress.jpg
+        device: tablet
+        orientation: landscape
+        width: wide
+      - image: /images/uploads/design-2017-ga-course-progress.jpg
+        device: tablet
+        orientation: landscape
+        width: wide
+
+  - type: gallery
+    prominence: large
+    resize: true
+    caption: The print version of the annual report.
+    images:
+      - image: /images/uploads/design-2015-gpoba-ar-spread.jpg
+        alt: Annual report cover
+      - image: /images/uploads/design-2015-gpoba-ar-spread.jpg
+        alt: Annual report spread
+        width: wide
+
+  - type: heading
+    inlineMarkdown: A branding facelift
+
+  - type: passage
+    markdown: |-
+      GPOBA liked the work we did on their annual report so much that they asked us to document our design language so that they could adapt it for their other branded collateral.
+
+      We conducted a research and analysis phase to look more closely at their overall communications strategy. We presented a series of recommendations, and then worked with their team to implement and document the system. Finally, we produced an extensive, online styleguide which the team could share and continue developing.
+
+      We were limited in what we were able to change (for instance, we were not able to significantly change their logo), but the result, nonetheless, was a significant step in the right direction. The process of discussing and documenting a set of specific brand guidelines was revelatory for a small group who were only beginning to develop an intentional, unique identity of their own.
+
+  - type: gallery
+    prominence: large
+    resize: true
+    caption: The brand styleguide.
+    images:
+      - image: /images/uploads/design-2017-ga-course-progress.jpg
+        device: tablet
+        orientation: landscape
+      - image: /images/uploads/design-2017-ga-course-progress.jpg
+        device: tablet
+        orientation: landscape
+        width: wide
+      - image: /images/uploads/design-2017-ga-course-progress.jpg
+        device: tablet
+        orientation: landscape
+        width: wide

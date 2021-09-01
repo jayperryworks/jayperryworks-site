@@ -76,6 +76,23 @@ function getPictureImages (dir) {
 	}, [])
 }
 
+function getDesignImages (dir) {
+	return getDir(dir).reduce((result, data) => {
+		let images = []
+
+		// body block images
+		data.body.forEach((block) => {
+			block.image && images.push({ original: block.image })
+			block.images && block.images.map((item) => {
+				images.push({ original: item.image })
+			})
+		})
+
+		result.push(...images)
+		return result
+	}, [])
+}
+
 function getBlogImages (dir) {
 	return getDir(dir).reduce((result, data) => {
 		let images = []
@@ -139,6 +156,7 @@ async function resizeAndGenerateManifest (images) {
 resizeAndGenerateManifest([
 	...getBlogImages('../content/blog'),
 	...getPictureImages('../content/pictures'),
+	...getDesignImages('../content/design'),
 	...getAboutImages('../content/about.yml'),
 	...getHomeImages('../content/home.yml')
 ])

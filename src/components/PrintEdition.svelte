@@ -84,7 +84,6 @@
 <style>
   .info-wrapper {
     --breakpoint: 10rem;
-
   }
   
   @supports (display: flex) {
