@@ -1,5 +1,6 @@
 <script>
 	import AspectRatio from '@/components/AspectRatio.svelte'
+	import ResponsivePicture from '@/components/ResponsivePicture.svelte'
 
 	export let type = 'tablet'
 	export let image, alt
@@ -18,10 +19,10 @@
 		ratio="{ratios[type]}"
 		useScale="{false}"
 	>
-		<img 
+		<ResponsivePicture
 			alt="{alt}"
-			src="{image}"
-		>
+			sources="{image}"
+		/>
 	</AspectRatio>
 </div>
 
@@ -59,7 +60,7 @@
 			border: 1px solid var(--color-border);
 		}
 
-		.bezel img {
+		.bezel :global(img) {
 			object-fit: cover;
 			object-position: top center;
 		}
@@ -70,7 +71,7 @@
 			--bezel-width-y: 11%;
 		}
 
-		.bezel.phone img {
+		.bezel.phone :global(img) {
 			--screen-radius: 2% / 1%;
 		}
 	}

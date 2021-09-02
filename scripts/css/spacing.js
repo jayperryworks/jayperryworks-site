@@ -100,6 +100,11 @@ module.exports = {
 			padding-right: ${get(spacing.outside.default)};
 		}
 
+		.margin-x-auto {
+			margin-left: auto;
+			margin-right: auto;
+		}
+
 		${Object.keys(spacing.outside)
 			.filter(breakpoint => breakpoint !== 'default')
 			.map(breakpoint => `

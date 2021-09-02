@@ -44,7 +44,6 @@
 </script>
 
 <picture
-	class="{classes}"
 	class:contain
 	class:cover
 >
@@ -56,7 +55,7 @@
 	{/each}
 	<img
 		class:fill
-		class="{borderClass}"
+		class="{classes} {borderClass}"
 		src="{defaultSrc}"
 		srcset="{srcset(defaultFormat.sizes.slice(1))}"
 		{alt}

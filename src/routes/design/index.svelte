@@ -20,6 +20,7 @@
 	import MainNav from '@/components/MainNav.svelte'
 	import Panel from '@/components/Panel.svelte'
 	import Passage from '@/components/Passage.svelte'
+	import ResponsivePicture from '@/components/ResponsivePicture.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
 	export let content
@@ -62,16 +63,16 @@
 							<div class="{image.width || 'default'} {image.priority ? `priority:${image.priority}` : 'priority:1'}">
 								{#if image.device}
 									<DeviceFrame
-										image="{image.source}"
+										image="{image.source.versions}"
 										alt="{image.alt || project.title}"
 										type="{image.device}"
 									/>
 								{:else}
-									<img
-										src="{image.source}"
+									<ResponsivePicture
+										sources="{image.source.versions}"
 										alt="{image.alt || project.title}"
-										class="flag-image"
-									>
+										class="margin-x-auto"
+									/>
 								{/if}
 							</div>
 						{/each}
@@ -142,7 +143,7 @@
 		}
 	}
 
-	.flag .flag-image {
+	.flag :global(img) {
 		max-height: 80vh;
 	}
 

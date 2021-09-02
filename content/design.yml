@@ -31,7 +31,7 @@ toc:
       subhead: A financial e-learning platform for Sub-Saharan East Africa
       link: '#'
       images:
-        - source: /images/GA_CourseProgress.jpg
+        - source: /images/uploads/design-2017-ga-course-progress.jpg
           device: tablet
           orientation: landscape
     
@@ -39,15 +39,15 @@ toc:
       subhead: A financial e-learning platform for Sub-Saharan East Africa
       link: '#'
       images:
-        - source: /images/tela-intro.jpg
+        - source: /images/uploads/design-2017-tela-intro.jpg
           alt: Tela home screen
           device: phone
           orientation: portrait
-        - source: /images/tela-intro.jpg
+        - source: /images/uploads/design-2017-tela-intro.jpg
           alt: Tela home screen
           device: phone
           orientation: portrait
-        - source: /images/tela-intro.jpg
+        - source: /images/uploads/design-2017-tela-intro.jpg
           alt: Tela home screen
           device: phone
           orientation: portrait
@@ -56,17 +56,17 @@ toc:
       subhead: A financial e-learning platform for Sub-Saharan East Africa
       link: '#'
       images:
-        - source: /images/baldwin-poster.jpg
+        - source: /images/uploads/design-2017-baldwin-poster.jpg
     
     - title: GPOBA branding
       subhead: A financial e-learning platform for Sub-Saharan East Africa
       link: '#'
       images:
-        - source: /images/tela-intro.jpg
+        - source: /images/uploads/design-2017-tela-intro.jpg
           alt: Annual report cover on a phone
           device: phone
           orientation: portrait
           priority: 2
-        - source: /images/book-mockup-spread.jpg
+        - source: /images/uploads/design-2015-gpoba-ar-spread.jpg
           alt: Annual report spread
           width: xwide

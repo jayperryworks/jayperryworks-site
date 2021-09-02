@@ -23,9 +23,11 @@ export async function get(req, res) {
   }
 
   // create responsive resizes of the thumbnail images
-  // pictures.forEach((picture) => {
-  // 	picture.thumbnail = findInManifest(picture.thumbnail)
-  // })
+  content.toc.items.forEach((item) => {
+    item.images.forEach((image) => {
+      image.source = findInManifest(image.source)
+    })
+  })
 
 	res.writeHead(200, {
 		'Content-Type': 'application/json'

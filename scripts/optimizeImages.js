@@ -76,6 +76,17 @@ function getPictureImages (dir) {
 	}, [])
 }
 
+function getDesignIndexImages(file) {
+	const data = getFile(file)
+	return data.toc.items.reduce((result, item) => {
+		const images = item.images.map((image) => {
+			return { original: image.source }
+		})
+		result.push(...images)
+		return result
+	}, [])
+}
+
 function getDesignImages (dir) {
 	return getDir(dir).reduce((result, data) => {
 		let images = []
@@ -156,6 +167,7 @@ async function resizeAndGenerateManifest (images) {
 resizeAndGenerateManifest([
 	...getBlogImages('../content/blog'),
 	...getPictureImages('../content/pictures'),
+	...getDesignIndexImages('../content/design.yml'),
 	...getDesignImages('../content/design'),
 	...getAboutImages('../content/about.yml'),
 	...getHomeImages('../content/home.yml')
