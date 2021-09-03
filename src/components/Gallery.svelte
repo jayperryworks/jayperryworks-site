@@ -2,6 +2,7 @@
   export let size = ''
   export let gutter = 'xnarrow'
   export let flex = false
+  export let constrainContent = true
   export let alignCenter
   export let justifyCenter
 
@@ -13,6 +14,7 @@
   class:alignCenter
   class:flex
   class:justifyCenter
+  class:constrainContent
   {style}
 >
   <slot {size}>Add list items here</slot>
@@ -96,14 +98,25 @@
   
   @supports (display: grid) {
     .gallery :global(li) {
-      max-width: var(--content-width-default);
       min-width: auto;
       padding: 0;
       width: auto;
     }
+
+    .gallery.constrainContent :global(li) {
+      max-width: var(--content-width-default);
+    }
+
+    .gallery :global(li.wide) {
+      grid-column: span 2;
+    }
+
+    .gallery :global(li.xwide) {
+      grid-column: span 3;
+    }
   }
 
-  .large :global(li) {
+  .large.constrainContent :global(li) {
     max-width: var(--content-width-wide);
   }
 

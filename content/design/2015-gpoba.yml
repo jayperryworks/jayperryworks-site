@@ -26,7 +26,9 @@ body:
       To give the GPOBA team enough time to finish editing their content, my team and I developed a Git-based content workflow, where markdown-formatted “master” text could be flowed into both the web and print templates, and updated easily when new changes came in.
 
   - type: gallery
+    gutter: wide
     prominence: large
+    constrainContent: false
     resize: true
     size: small
     caption: The screen version of the annual report.
@@ -37,14 +39,11 @@ body:
       - image: /images/uploads/design-2017-ga-course-progress.jpg
         device: tablet
         orientation: landscape
-        width: wide
-      - image: /images/uploads/design-2017-ga-course-progress.jpg
-        device: tablet
-        orientation: landscape
-        width: wide
+        width: xwide
 
   - type: gallery
     prominence: large
+    gutter: wide
     resize: true
     caption: The print version of the annual report.
     images:

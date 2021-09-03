@@ -72,9 +72,17 @@
 	      	credit={block.credit}
 	      	border={block.border}
 	      >
-	        <Gallery size={block.size} gutter="{block.gutter}">
+	        <Gallery
+	        	size={block.size}
+	        	gutter="{block.gutter}"
+	        	constrainContent="{block.constrainContent || false}"
+        	>
 	          {#each block.images as item}
-	            <li class="type-align-center">
+	            <li
+	            	class="type-align-center"
+	            	class:wide="{item.width === 'wide'}"
+	            	class:xwide="{item.width === 'xwide'}"
+            	>
 	            	{#if item.device}
 	            		<DeviceFrame
 	            			type="{item.device}"
