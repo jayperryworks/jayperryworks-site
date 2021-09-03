@@ -19,6 +19,7 @@
 <script>
 	import { format } from 'date-fns'
 	import { titleize } from '@/utils/stringHelpers.js'
+	import MainNav from '@/components/MainNav.svelte'
 	import Metadata from '@/components/Metadata.svelte'
 	import PageTheme from '@/components/PageTheme.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
@@ -32,9 +33,10 @@
 
 		if (Array.isArray(value)) {
 			value = Object.values(value)
+			// console.log(value)
 			value[0] = titleize(value[0])
 		} else {
-			value = titleize(value)
+			value = titleize(String(value))
 		}
 
 		return {
@@ -46,6 +48,8 @@
 
 <PageTitle title="{post.title}" />
 <PageTheme color="{post.highlight}" />
+
+<MainNav segment="design" />
 
 <article class="padding-x-outside padding-y-xwide">
 	<header class="type-align-center padding-bottom-wide">

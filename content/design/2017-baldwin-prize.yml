@@ -16,6 +16,11 @@ metadata:
     - Helly Stoyanova
     - Haley Cline
 body:
+  - type: figure
+    resize: true
+    image: /images/uploads/design-2017-baldwin-poster.jpg
+    caption: The finished poster
+  
   - type: passage
     markdown: |-
       The Baldwin Prize is a writing scholarship hosted at Baltimore City College High School. Students submit personal essays for educational grant prizes. Named for legendary writer and civil rights activist James Baldwin, the program aims to inspire students to emulate his example and make their own voices heard.
@@ -23,8 +28,3 @@ body:
       For the 2017 edition, Lionel asked my team to develop a poster that could be displayed at the awards ceremony and given to students as a keepsake. His idea was to incorporate quotes from all the submissions into the poster, so that every student could see their contribution as part of the greater whole.
 
       After a few rounds of sketching and brainstorming, we arrived at a simple concept: a “constellation of words” that coalesced into a portrait of James Baldwin. Working with illustrator [Alexandre Siqueira](https://cargocollective.com/alexandresiqueira), I arranged a lot of student essay quotes (I lost count) into an intricate array of dots and connecting outlines. The portrait itself was rendered in ethereal, dark tones to keep the quotes in the foreground.
-
-  - type: figure
-    resize: true
-    image: /images/uploads/design-2017-baldwin-poster.jpg
-    caption: The finished poster

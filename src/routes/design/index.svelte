@@ -84,7 +84,7 @@
 						</p>
 						<Button
 							iconRight="{arrowRight}"
-							link="{project.link}"
+							href="{project.link}"
 						>
 							Read more
 						</Button>

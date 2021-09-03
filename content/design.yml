@@ -29,7 +29,7 @@ toc:
   items:
     - title: Gateway Academy
       subhead: A financial e-learning platform for Sub-Saharan East Africa
-      link: '#'
+      link: '/design/2017/gateway-academy'
       images:
         - source: /images/uploads/design-2017-ga-course-progress.jpg
           device: tablet
@@ -37,7 +37,7 @@ toc:
     
     - title: Tela
       subhead: A financial e-learning platform for Sub-Saharan East Africa
-      link: '#'
+      link: '/design/2017/tela/'
       images:
         - source: /images/uploads/design-2017-tela-intro.jpg
           alt: Tela home screen
@@ -54,13 +54,13 @@ toc:
     
     - title: The Baldwin Prize
       subhead: A financial e-learning platform for Sub-Saharan East Africa
-      link: '#'
+      link: '/design/2017/baldwin-prize/'
       images:
         - source: /images/uploads/design-2017-baldwin-poster.jpg
     
     - title: GPOBA branding
       subhead: A financial e-learning platform for Sub-Saharan East Africa
-      link: '#'
+      link: '/design/2015/gpoba/'
       images:
         - source: /images/uploads/design-2017-tela-intro.jpg
           alt: Annual report cover on a phone

@@ -1,5 +1,6 @@
 <script>
 	import Caption from './Caption.svelte'
+  import DeviceFrame from './DeviceFrame.svelte'
   import Figure from './Figure.svelte'
   import Gallery from './Gallery.svelte'
   import Note from './Note.svelte'
@@ -71,21 +72,29 @@
 	      	credit={block.credit}
 	      	border={block.border}
 	      >
-	        <Gallery size={block.size}>
+	        <Gallery size={block.size} gutter="{block.gutter}">
 	          {#each block.images as item}
 	            <li class="type-align-center">
-	              {#if item.image.versions && item.image.versions.length > 1}
-	                <ResponsivePicture
-	                  sources={item.image.versions}
-	                  alt={item.alt}
-	                  border={item.border}
-	                />
-	              {:else}
-	                <ResponsiveImage
-	                  sources={item.image.versions && item.image.versions[0].sizes || item.image}
-	                  alt={item.alt}
-	                  border={item.border}
-	                />
+	            	{#if item.device}
+	            		<DeviceFrame
+	            			type="{item.device}"
+	            			image="{item.image.versions}"
+	            			alt="{item.alt}"
+            			/>
+	            	{:else}
+		              {#if item.image.versions && item.image.versions.length > 1}
+		                <ResponsivePicture
+		                  sources={item.image.versions}
+		                  alt={item.alt}
+		                  border={item.border}
+		                />
+		              {:else}
+		                <ResponsiveImage
+		                  sources={item.image.versions && item.image.versions[0].sizes || item.image}
+		                  alt={item.alt}
+		                  border={item.border}
+		                />
+		              {/if}
 	              {/if}
 	            </li>
 	          {/each}
