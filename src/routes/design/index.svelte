@@ -15,6 +15,7 @@
 <script>
 	import arrowRight from 'icons/arrow-right.svg'
 	import Button from '@/components/Button.svelte'
+	import Collage from '@/components/Collage.svelte'
 	import DeviceFrame from '@/components/DeviceFrame.svelte'
 	import Gallery from '@/components/Gallery.svelte'
 	import MainNav from '@/components/MainNav.svelte'
@@ -55,28 +56,27 @@
 		<Panel id="{project.slug}" centered>
 			<Wrapper width="xxwide" flex>
 				<div class="flag">
-					<figure
-						class="flag-item figure"
-						class:gallery="{project.images.length > 1}"
-					>
-						{#each project.images as image}
-							<div class="{image.width || 'default'} {image.priority ? `priority:${image.priority}` : 'priority:1'}">
-								{#if image.device}
-									<DeviceFrame
-										image="{image.source.versions}"
-										alt="{image.alt || project.title}"
-										type="{image.device}"
-									/>
-								{:else}
-									<ResponsivePicture
-										sources="{image.source.versions}"
-										alt="{image.alt || project.title}"
-										class="margin-x-auto"
-									/>
-								{/if}
-							</div>
-						{/each}
-					</figure>
+					<div class="flag-item figure">
+						<Collage>
+							{#each project.images as image}
+								<div class="{image.width || 'default'} {image.priority ? `priority:${image.priority}` : 'priority:1'}">
+									{#if image.device}
+										<DeviceFrame
+											image="{image.source.versions}"
+											alt="{image.alt || project.title}"
+											type="{image.device}"
+										/>
+									{:else}
+										<ResponsivePicture
+											sources="{image.source.versions}"
+											alt="{image.alt || project.title}"
+											class="margin-x-auto"
+										/>
+									{/if}
+								</div>
+							{/each}
+						</Collage>
+					</div>
 					<div class="flag-item blurb">
 						<h3>{project.title}</h3>
 						<p class="type-subheading type-scale-delta padding-bottom">
@@ -145,51 +145,5 @@
 
 	.flag :global(img) {
 		max-height: 80vh;
-	}
-
-	/* if grid is not supported, only display the first item in a gallery */
-	.gallery > :nth-child(n + 2) {
-		display: none;
-	}
-
-	@supports (display: grid) {
-		.gallery {
-			align-items: center;
-			display: grid;
-			grid-gap: var(--space-narrow);
-			grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-			justify-content: center;
-		}
-
-		.gallery > :nth-child(n + 2) {
-			display: unset;
-		}
-
-		.gallery .priority\:2 {
-			display: none;
-		}
-	}
-
-
-	@media screen and (min-width: 40em) {
-		.gallery .priority\:2 {
-			display: block;
-		}
-	}
-
-	@media screen and (min-width: 30em) {
-		.gallery {
-			grid-gap: var(--space-medium);
-		}
-	}
-
-	.gallery .xwide {
-		grid-column: span 2;
-	}
-
-	@media screen and (min-width: 40em) {
-		.gallery .xwide {
-			grid-column: span 5;
-		}
 	}
 </style>

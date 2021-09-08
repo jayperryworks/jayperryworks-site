@@ -25,7 +25,7 @@ body:
 
       To give the GPOBA team enough time to finish editing their content, my team and I developed a Git-based content workflow, where markdown-formatted “master” text could be flowed into both the web and print templates, and updated easily when new changes came in.
 
-  - type: gallery
+  - type: collage
     gutter: wide
     prominence: large
     constrainContent: false
@@ -41,7 +41,7 @@ body:
         orientation: landscape
         width: xwide
 
-  - type: gallery
+  - type: collage
     prominence: large
     gutter: wide
     resize: true

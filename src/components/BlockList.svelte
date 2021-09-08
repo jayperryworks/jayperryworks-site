@@ -1,5 +1,6 @@
 <script>
 	import Caption from './Caption.svelte'
+  import Collage from './Collage.svelte'
   import DeviceFrame from './DeviceFrame.svelte'
   import Figure from './Figure.svelte'
   import Gallery from './Gallery.svelte'
@@ -108,6 +109,37 @@
 	          {/each}
 	        </Gallery>
 	      </Figure>
+		  {/if}
+
+		  {#if block.type == 'collage'}
+		  	<figure>
+			  	<Collage>
+			  		{#each block.images as item}
+			  			<div class="{item.width || 'default'} {item.priority ? `priority:${item.priority}` : 'priority:1'}">
+								{#if item.device}
+									<DeviceFrame
+										image="{item.image.versions}"
+										alt="{item.alt}"
+										type="{item.device}"
+									/>
+								{:else}
+									<ResponsivePicture
+										sources="{item.image.versions}"
+										alt="{item.alt}"
+										class="margin-x-auto"
+									/>
+								{/if}
+							</div>
+			  		{/each}
+			  	</Collage>
+		  		{#if block.caption}
+		  			<Caption 
+		  				caption="{block.caption}"
+		  				credit="{block.credit}"
+		  				class="padding-top-narrow"
+	  				/>
+	  			{/if}
+	  		</figure>
 		  {/if}
 
 		  {#if block.type == 'table'}
