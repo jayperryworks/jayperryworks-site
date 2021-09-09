@@ -51,8 +51,8 @@
 
 <MainNav segment="design" />
 
-<article class="padding-x-outside padding-y-xwide">
-	<header class="type-align-center padding-bottom-wide">
+<article>
+	<header class="padding-x-outside padding-top-xwide type-align-center">
 		<Wrapper width="xwide">
 			<h1>{post.title}</h1>
 			{#if post.subtitle}
@@ -63,11 +63,13 @@
 		</Wrapper>
 	</header>
 
-	<PostBody blocks={post.body} />
+	<PostBody blocks={post.body} class="padding-x-outside padding-y-wide" />
 	
 	<!-- credits -->
-	<aside>
-		<h2 class="padding-bottom-narrow">Credits</h2>
-		<Metadata data="{credits}" />
+	<aside class="border-seam-top padding-x-outside padding-y-xwide">
+		<h2 class="padding-bottom type-align-center">Credits</h2>
+		<Wrapper width="xwide">
+			<Metadata data="{credits}" gutter="medium" />
+		</Wrapper>
 	</aside>
 </article>

@@ -1,52 +1,57 @@
 <script>
 	export let data
+	export let gutter = 'narrow'
+	export let size = 18
 
 	let classes = ''
 	export { classes as class }
+
+	$: style = `
+		--gutter: var(--space-${gutter});
+		--col-size: ${size}rem;
+	`
 </script>
 
-<dl class="gutter-wrapper narrow {classes}">
+<dl
+	class="{classes}"
+	{style}
+>
   {#each data as stat}
-  <div class="group gutter">
-    <dt class="item label | color-fg-secondary">
-      <span class="type-font-accent type-weight-light">{stat.label}</span>
-    </dt>
-    {#if Array.isArray(stat.value)}
-    	{#each stat.value as valueItem}
-		    <dd class="item series">
-		      <span class="type-font-accent type-weight-light">{valueItem}</span>
+	  <div class="group">
+	    <dt class="item label | color-fg-secondary">
+	      <span class="type-font-accent type-weight-light">{stat.label}</span>
+	    </dt>
+	    {#if Array.isArray(stat.value)}
+	    	{#each stat.value as valueItem}
+			    <dd class="item series">
+			      <span class="type-font-accent type-weight-light">{valueItem}</span>
+			    </dd>
+		    {/each}
+	    {:else}
+	    	<dd class="item">
+		      <span class="type-font-accent type-weight-light">{stat.value}</span>
 		    </dd>
-	    {/each}
-    {:else}
-    	<dd class="item">
-	      <span class="type-font-accent type-weight-light">{stat.value}</span>
-	    </dd>
-    {/if}
-  </div>
+	    {/if}
+	  </div>
   {/each}
 </dl>
 
 <style>
 	dl {
-	  --min-width: 16rem;
 	  --type-size: var(--type-scale-zeta);
 	  list-style: none;
-	  font-size: 0;
+	  display: block;
 	}
 
+
 	.group {
-	  display: inline-block;
-	  margin: 0;
-	  width: var(--min-width);
+	  display: block;
 	  vertical-align: top;
 	}
-	
-	@media screen and (min-width: 30em) {
-	  .group {
-	    max-width: 100%;
-	    min-width: var(--min-width);
-	    width: calc((var(--min-width) - 100%) * 1000);
-	  }
+
+	.group + .group {
+		margin-top: 1em;
+		margin-top: var(--gutter);
 	}
 
 	.item {
@@ -66,16 +71,31 @@
 		margin: 0;
 	}
 
-	.item.series::after {
+	.item.series > span::after {
+		white-space: nowrap;
 		content: var(--separator) ' ';
 		font-size: var(--type-size);
 	}
 
-	.item.series:last-of-type::after {
+	.item.series:last-of-type > span::after {
 		content: '';
 	}
 
 	.label::after {
 	  content: ':';
+	}
+
+	@supports (display: grid) {
+		@media screen and (min-width: 25em) {
+			dl {
+			  display: grid;
+			  grid-template-columns: repeat(auto-fit, minmax(var(--col-size), 1fr));
+			  grid-gap: var(--gutter);
+			}
+
+		  .group + .group {
+		    margin-top: 0;
+		  }
+		}
 	}
 </style>

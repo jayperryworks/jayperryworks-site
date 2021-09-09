@@ -4,6 +4,7 @@
   import AspectRatio from '@/components/AspectRatio.svelte'
   import Button from '@/components/Button.svelte'
   import Card from '@/components/Card.svelte'
+  import Metadata from '@/components/Metadata.svelte'
   import ResponsivePicture from '@/components/ResponsivePicture.svelte'
 
   export let edition
@@ -53,18 +54,11 @@
       </h3>
 
       <!-- metadata -->
-      <dl class="stats">
-        {#each stats as stat}
-        <div class="stats-group type-scale-zeta">
-          <dt class="stats-item stats-label | type-font-accent type-weight-light | color-fg-secondary">
-            {stat.label}
-          </dt>
-          <dd class="stats-item type-font-accent type-weight-light">
-            {stat.value}
-          </dd>
-        </div>
-        {/each}
-      </dl>
+      <Metadata
+        data="{stats}"
+        gutter="xxnarrow"
+        size="{6}"
+      />
     </div>
 
     <!-- purchase button -->
@@ -98,34 +92,5 @@
         flex: 1 0 var(--breakpoint);
       }
     }
-  }
-
-  .stats {
-    --min-width: 6rem;
-    list-style: none;
-  }
-
-  .stats-group {
-    display: inline-block;
-    margin: 0;
-    width: var(--min-width);
-  }
-  
-  @media screen and (min-width: 30em) {
-    .stats-group {
-      max-width: 100%;
-      min-width: var(--min-width);
-      width: calc((var(--breakpoint) - 100%) * 1000);
-    }
-  }
-
-  .stats-item {
-    display: block;
-    margin-left: 0; /* reset dt/dd default indent */
-    vertical-align: baseline;
-  }
-  
-  .stats-label::after {
-    content: ':';
   }
 </style>
