@@ -28,16 +28,18 @@ toc:
     Here’s a few of my favorite projects. I’m not able to publicly share some of my work due to copyright and confidentiality restrictions, but I can provide more work samples on request. [Contact me](mailto:hi@jayperryworks.com) if you’d like to talk.
   items:
     - title: Gateway Academy
+      slug: gateway-academy
       subhead: A financial e-learning platform for Sub-Saharan East Africa
-      link: '/design/2017/gateway-academy'
+      path: '/design/2017/gateway-academy'
       images:
         - source: /images/uploads/design-2017-ga-course-progress.jpg
           device: tablet
           orientation: landscape
     
     - title: Tela
+      slug: tela
       subhead: A financial e-learning platform for Sub-Saharan East Africa
-      link: '/design/2017/tela/'
+      path: '/design/2017/tela/'
       images:
         - source: /images/uploads/design-2017-tela-intro.jpg
           alt: Tela home screen
@@ -53,14 +55,16 @@ toc:
           orientation: portrait
     
     - title: The Baldwin Prize
+      slug: baldwin-prize
       subhead: A financial e-learning platform for Sub-Saharan East Africa
-      link: '/design/2017/baldwin-prize/'
+      path: '/design/2017/baldwin-prize/'
       images:
         - source: /images/uploads/design-2017-baldwin-poster.jpg
     
     - title: GPOBA branding
+      slug: gpoba
       subhead: A financial e-learning platform for Sub-Saharan East Africa
-      link: '/design/2015/gpoba/'
+      path: '/design/2015/gpoba/'
       images:
         - source: /images/uploads/design-2017-tela-intro.jpg
           alt: Annual report cover on a phone

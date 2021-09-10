@@ -21,6 +21,7 @@
 			grid-gap: var(--space-narrow);
 			grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
 			justify-content: center;
+			grid-auto-flow: dense;
 		}
 
 		.collage > :global(:nth-child(n + 2)) {

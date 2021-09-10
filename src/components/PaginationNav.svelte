@@ -70,29 +70,31 @@
 </ul>
 
 <style>
-	@supports (display: flex) {
-	  .pagination {
-	    display: flex;
-	    justify-content: space-between;
-	    flex-wrap: wrap;
-	  }
+	@media screen and (min-width: 40em) {
+		@supports (display: flex) {
+		  .pagination {
+		    display: flex;
+		    justify-content: space-between;
+		    flex-wrap: wrap;
+		  }
 
-	  .pagination :global(li),
-	  .item {
-	    flex: 0 1 var(--item-width);
-	    display: flex;
-	    flex-wrap: wrap;
-	  }
+		  .pagination :global(li),
+		  .item {
+		    flex: 0 1 var(--item-width);
+		    display: flex;
+		    flex-wrap: wrap;
+		  }
 
-	  .pagination :global(li.next),
-	  .item.next {
-	    margin-left: auto;
-	    justify-content: flex-end;
-	  }
+		  .pagination :global(li.next),
+		  .item.next {
+		    margin-left: auto;
+		    justify-content: flex-end;
+		  }
 
-  	.thumbnail {
-      width: 100%;
-    }
+	  	.thumbnail {
+	      width: 100%;
+	    }
+		}
 	}
 
 	.label {
