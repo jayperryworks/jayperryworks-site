@@ -19,10 +19,7 @@
 	}
 </script>
 
-<ul
-	class="pagination gutter-wrapper narrow hide-overflow"
-	{style}
->
+<ul {style}>
 	{#each items as item}
 		{#if item}
 			<li
@@ -45,22 +42,22 @@
 					</a>
 				{/if}
 				<a
-					class="type-link-undecorated type-scale-gamma type-heading"
+					class="label type-link-undecorated type-scale-gamma type-heading"
 					href="{item.path}"
 				>
 					{#if item.direction === 'previous'}
 						<Icon
 							svg="{arrowLeft}"
-							margin="right"
+							class="arrow left"
 						/>
 					{/if}
-					<span class="label">
+					<span>
 						{item.label || titleize(item.direction)}
 					</span>
 					{#if item.direction === 'next'}
 						<Icon
 							svg="{arrowRight}"
-							margin="left"
+							class="arrow right"
 						/>
 					{/if}
 				</a>
@@ -70,34 +67,53 @@
 </ul>
 
 <style>
-	@media screen and (min-width: 40em) {
-		@supports (display: flex) {
-		  .pagination {
-		    display: flex;
-		    justify-content: space-between;
-		    flex-wrap: wrap;
+	ul {
+		list-style: none;
+		margin: 0;
+		padding-left: 0;
+	}
+
+	li {
+	  display: flex;
+	  flex-wrap: wrap;
+	}
+
+	li + li {
+	  padding-top: 1em;
+	  padding-top: var(--space-medium);
+	}
+
+	.label {
+		align-items: center;
+		display: flex;
+	}
+
+	.label > :global(* + *) {
+		display: inline-block;
+		margin-left: 1em;
+		margin-left: var(--space-xnarrow);
+	}
+
+	@media screen and (min-width: 30em) {
+		@supports (display: grid) {
+		  ul {
+		    display: grid;
+		    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+		    grid-gap: var(--space-medium);
 		  }
 
-		  .pagination :global(li),
-		  .item {
-		    flex: 0 1 var(--item-width);
-		    display: flex;
-		    flex-wrap: wrap;
+		  li + li {
+		  	padding-top: 0;
 		  }
 
-		  .pagination :global(li.next),
-		  .item.next {
-		    margin-left: auto;
-		    justify-content: flex-end;
+		  li.next {
+		    justify-self: end;
+		    text-align: right;
 		  }
 
 	  	.thumbnail {
 	      width: 100%;
 	    }
 		}
-	}
-
-	.label {
-		display: inline-block;
 	}
 </style>
