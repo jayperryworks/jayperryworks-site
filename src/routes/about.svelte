@@ -1,14 +1,40 @@
 <script context="module">
+	import { PrismicLink } from 'apollo-link-prismic'
+	import { InMemoryCache } from 'apollo-cache-inmemory'
+	import ApolloClient from 'apollo-client'
+	import gql from 'graphql-tag'
+	import accessToken from '@root/prismic.config.js'
+
 	export async function preload() {
-		const response = await this.fetch('about.json')
-		const content = await response.json()
+		const client = new ApolloClient({
+		  link: PrismicLink({
+		    uri: "https://jpw-api.cdn.prismic.io/graphql",
+		    accessToken
+		  }),
+		  cache: new InMemoryCache()
+		})
 
-		if (response.status !== 200) {
-			this.error(response.status, content.message)
-			return
+		try {
+			const response = await client.query({
+				query: gql`
+					query{
+						page(uid: "about", lang: "en-us") {
+					    title
+					    subtitle
+					    body {
+					      __typename
+					    }
+					  }
+					}
+				`
+			})
+
+			return {
+				content: await response.data.page
+			}
+		} catch (error) {
+			this.error(error)
 		}
-
-		return { content }
 	}
 </script>
 
@@ -22,6 +48,10 @@
 	import Wrapper from '@/components/Wrapper.svelte'
 
 	export let content
+
+	$: title = content.title[0].text
+	$: subtitle = content.subtitle?.[0]?.text || null
+
 </script>
 
 <PageTitle title="Profile" />
@@ -35,7 +65,12 @@
 	">
 		<header>
 			<Wrapper width="wide"class="padding-bottom-wide">
-				<h1>{content.title}</h1>
+				<h1>{title}</h1>
+				{#if subtitle}
+					<p class="subtitle padding-top-xxnarrow type-font-accent type-weight-xlight color-fg-secondary type-scale-beta">
+						{subtitle}
+					</p>
+				{/if}
 				{#if content.cover}
 					<Cover
 						class="padding-top-wide"
@@ -54,7 +89,7 @@
 
 <style>
 	@media screen and (min-width: 40em) {
-		h1 {
+		h1, .subtitle {
 			text-align: center;
 		}
 	}

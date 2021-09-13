@@ -21,6 +21,10 @@ const preprocess = sveltePreprocess({
 const aliases = alias({
   resolve: ['.js', '.svelte', '.svg'],
   entries: [
+  	{
+  		find: '@root',
+  		replacement: `${__dirname}/`
+  	},
     {
       find: '@',
       replacement: `${__dirname}/src`
