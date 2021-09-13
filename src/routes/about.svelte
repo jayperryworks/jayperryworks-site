@@ -1,36 +1,27 @@
 <script context="module">
-	import { PrismicLink } from 'apollo-link-prismic'
-	import { InMemoryCache } from 'apollo-cache-inmemory'
-	import ApolloClient from 'apollo-client'
-	import gql from 'graphql-tag'
-	import accessToken from '@root/prismic.config.js'
+	import prismic from '@/utils/prismicQuery.js'
 
 	export async function preload() {
-		const client = new ApolloClient({
-		  link: PrismicLink({
-		    uri: "https://jpw-api.cdn.prismic.io/graphql",
-		    accessToken
-		  }),
-		  cache: new InMemoryCache()
-		})
-
 		try {
-			const response = await client.query({
-				query: gql`
-					query{
-						page(uid: "about", lang: "en-us") {
-					    title
-					    subtitle
-					    body {
-					      __typename
-					    }
-					  }
-					}
-				`
-			})
+			const response = await prismic(`
+				query{
+					page(uid: "about", lang: "en-us") {
+				    title
+				    subtitle
+				    body {
+				      __typename
+				    }
+				  }
+				}
+			`
+			)
+
+			const { title, subtitle, body } = await response.data.page
 
 			return {
-				content: await response.data.page
+				title: title[0].text,
+				subtitle: subtitle?.[0]?.text || null,
+				body
 			}
 		} catch (error) {
 			this.error(error)
@@ -47,15 +38,13 @@
 	import ResponsiveImage from '@/components/ResponsiveImage.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
-	export let content
-
-	$: title = content.title[0].text
-	$: subtitle = content.subtitle?.[0]?.text || null
+	export let title, subtitle, body
+	export let highlight = null
 
 </script>
 
 <PageTitle title="Profile" />
-<PageTheme color="{content.highlight}" />
+<PageTheme color="{highlight}" />
 
 <MainNav segment="about" />
 <main>
@@ -71,19 +60,10 @@
 						{subtitle}
 					</p>
 				{/if}
-				{#if content.cover}
-					<Cover
-						class="padding-top-wide"
-						sources={content.cover.image}
-						alt={content.cover.alt}
-						caption={content.cover.caption}
-						credit={content.cover.credit}
-					/>
-				{/if}
 			</Wrapper>
 		</header>
 
-		<PostBody blocks={content.body} />
+		<!-- <PostBody blocks={content.body} /> -->
 	</article>
 </main>
 

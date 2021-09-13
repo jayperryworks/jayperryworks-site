@@ -5,6 +5,7 @@ yarn-error.log
 npm-debug.log
 /cypress/screenshots/
 /__sapper__/
+prismic.config.js
 
 # ignore generated static files
 /static/sitemap.xml
