@@ -7,6 +7,7 @@ import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 import svelte from 'rollup-plugin-svelte';
 import url from '@rollup/plugin-url';
+import json from '@rollup/plugin-json';
 import { terser } from 'rollup-plugin-terser';
 
 // packages I added
@@ -84,6 +85,7 @@ export default {
 			}),
 			aliases,
 			commonjs(),
+			json(),
 
 			legacy && babel({
 				extensions: ['.js', '.mjs', '.html', '.svelte'],
@@ -145,7 +147,8 @@ export default {
 				removeSVGTagAttrs: true
 			}),
 			aliases,
-			commonjs()
+			commonjs(),
+			json()
 		],
 		external: Object.keys(pkg.dependencies).concat(require('module').builtinModules),
 		preserveEntrySignatures: 'strict',

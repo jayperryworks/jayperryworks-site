@@ -6,6 +6,8 @@ npm-debug.log
 /cypress/screenshots/
 /__sapper__/
 prismic.config.js
+prismic.fragments.json
+.prismic-token
 
 # ignore generated static files
 /static/sitemap.xml

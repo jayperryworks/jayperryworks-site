@@ -10,6 +10,14 @@
 				    subtitle
 				    body {
 				      __typename
+				      ... on PageBodyHeading {
+				        type
+				        primary {
+				          title1
+				          level
+				          subheading
+				        }
+				      }
 				    }
 				  }
 				}
@@ -41,6 +49,7 @@
 	export let title, subtitle, body
 	export let highlight = null
 
+	console.log(body)
 </script>
 
 <PageTitle title="Profile" />
