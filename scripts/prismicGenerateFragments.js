@@ -1,8 +1,11 @@
+require('dotenv').config();
+
 const fetch = require('node-fetch');
 const fs = require('fs');
-const token = require('../prismic.config.js');
+
 const repo = 'jpw-api';
 const outFilePath = './src/utils/prismicFragments.json';
+const token = process.env.PRISMIC_TOKEN;
 
 let restUrl = `https://${repo}.cdn.prismic.io/api/v2`;
 let graphqlUrl = `https://${repo}.cdn.prismic.io/graphql?query=%7B%20__schema%20%7B%20types%20%7B%20kind%20name%20possibleTypes%20%7B%20name%20%7D%20%7D%20%7D%20%7D`;

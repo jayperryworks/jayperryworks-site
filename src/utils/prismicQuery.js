@@ -5,8 +5,9 @@ import {
 } from 'apollo-cache-inmemory'
 import ApolloClient from 'apollo-client'
 import gql from 'graphql-tag'
-import accessToken from '@root/prismic.config.js'
 import fragmentTypes from '@/utils/prismicFragments.json'
+
+const accessToken = process.env.PRISMIC_TOKEN
 
 const fragmentMatcher = new IntrospectionFragmentMatcher(
   { introspectionQueryResultData: fragmentTypes },
