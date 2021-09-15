@@ -7,7 +7,7 @@
     "css:generate": "node ./scripts/css/index.js",
     "css:format": "prettier --write ./static/stylesheets/*",
     "css:optimize": "npx postcss ./static/stylesheets/* -r",
-    "prep:prismic": "node ./scripts/prismicApolloIntrospect.js --repo jpw-api --out ./prismic.fragments.json --token ./.prismic-token",
+    "prep:prismic": "node ./scripts/prismic.generate-fragments.js",
     "prep:sitemap": "node ./scripts/sitemap",
     "prep:redirects": "node ./scripts/redirects",
     "prep:images": "node ./scripts/optimizeImages.js",

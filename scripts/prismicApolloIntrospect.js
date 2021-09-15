@@ -35,9 +35,9 @@ async function generateFragmentTypes() {
 
   headers['prismic-ref'] = ref.ref;
 
-  const result = await fetch(fragmentsQuery, {
-    headers
-  }).then((result) => result.json());
+  const result = await fetch(fragmentsQuery, headers).then(
+    (result) => result.json()
+  );
 
   const filteredData = result.data.__schema.types.filter(
     (type) => type.possibleTypes !== null

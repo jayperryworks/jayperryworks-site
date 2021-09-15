@@ -1,13 +1,15 @@
 .DS_Store
+.env
 /node_modules/
 /src/node_modules/@sapper/
 yarn-error.log
 npm-debug.log
 /cypress/screenshots/
 /__sapper__/
+
+# ignore generated CMS data
 prismic.config.js
-prismic.fragments.json
-.prismic-token
+src/utils/prismicFragments.json
 
 # ignore generated static files
 /static/sitemap.xml
