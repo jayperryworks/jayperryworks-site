@@ -18,20 +18,21 @@
 	import arrowDown from 'icons/arrow-down.svg'
 	import arrowRight from 'icons/arrow-right.svg'
 	import Button from '@/components/Button.svelte'
+	import DeviceFrame from '@/components/DeviceFrame.svelte'
 	import Gallery from '@/components/Gallery.svelte'
 	import Icon from '@/components/Icon.svelte'
 	import MainNav from '@/components/MainNav.svelte'
+	import PageTheme from '@/components/PageTheme.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
+	import Panel from '@/components/Panel.svelte'
 	import Passage from '@/components/Passage.svelte'
 	import ResponsivePicture from '@/components/ResponsivePicture.svelte'
-	import Panel from '@/components/Panel.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
-	import PageTheme from '@/components/PageTheme.svelte'
 
 	export let content
 
 	let { intro } = content
-	let { pictures, blog } = content.tableOfContents
+	let { pictures, design, blog } = content.tableOfContents
 
 	function date(date, template = 'MM.dd') {
 		return format(new Date(date.year, date.month, date.day), template)
@@ -153,6 +154,74 @@
 		</Wrapper>
 	</Panel>
 
+	<!-- design -->
+	<Panel id="{design.slug}">
+		<header class="padding-bottom-wide">
+			<Wrapper width="xwide">
+				<a
+					class="toc-number type-scale-gamma type-font-accent type-link-undecorated type-weight-xlight | color-fg-secondary | padding-bottom-narrow"
+					href={design.cta.link}
+				>
+					02
+				</a>
+				<h2 class="type-scale-alpha">
+					<a href="{design.cta.link}">{design.heading}</a>
+				</h2>
+			</Wrapper>
+		</header>
+		<Wrapper
+			class="fill-vertical"
+			width="xwide"
+			flex
+		>
+			<div class="flag gutter-wrapper wide">
+				<div class="flag-item blurb | gutter">
+					<Wrapper
+						class="margin-y-flow-wide"
+						centered="{false}"
+					>
+						
+						{#if design.blurb}
+							<Passage html="{design.blurb}" class="type-scale-delta type-heading type-leading-default"/>
+						{/if}
+						{#if design.cta}
+							<Button
+								prefetch="{true}"
+								href="{design.cta.link}"
+								iconRight="{arrowRight}"
+							>
+								{design.cta.label}
+							</Button>
+						{/if}
+					</Wrapper>
+				</div>
+				<figure class="flag-item image | gutter">
+					<a
+						class="cover-image | type-link-undecorated"
+						href="{design.cta.link}"
+					>
+						{#if design.device}
+							<div class="cover-device">
+								<DeviceFrame
+									image="{design.coverImage.versions}"
+									alt="{design.heading}"
+									device="{design.device}"
+								/>
+							</div>
+						{:else}
+							<ResponsivePicture
+								sources="{design.coverImage.versions}"
+								alt="{design.heading}"
+								fill
+								contain
+							/>
+						{/if}
+					</a>
+				</figure>
+			</div>
+		</Wrapper>
+	</Panel>
+
 	<!-- blog -->
 	<Panel id="{blog.slug}" class="padding-y-flow-wide">
 		<header>
@@ -173,7 +242,7 @@
 			width="xwide"
 			flex
 		>
-			<Gallery gutter="xwide">
+			<Gallery gutter="xwide" class="full-width">
 				{#each blog.list.posts as post, index}
 					<li
 						class:medium:show="{index >= 4 && index < 6}"
@@ -231,6 +300,11 @@
 		height: 50vh;
 	}
 
+	.cover-device {
+		/* temporary magic number to keep the tablet (with AspectRatio child) from overflowing its container. TODO: find a better way to fix this */
+		max-width: 63vh;
+	}
+
 	@supports (display: flex) {
 		:global(.fill-vertical) {
 			display: flex;
@@ -241,6 +315,10 @@
 		:global(.justify-center) {
 			justify-content: center;
 			align-items: flex-start;
+		}
+
+		:global(.full-width) {
+			width: 100%;
 		}
 
 		.toc-link {

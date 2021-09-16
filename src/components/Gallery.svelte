@@ -6,11 +6,14 @@
   export let alignCenter
   export let justifyCenter
 
+  let classes = ''
+  export { classes as class }
+
   $: style = `--gutter: var(--space-${gutter});`
 </script>
 
 <ul
-  class="gallery {size}"
+  class="gallery {size} {classes}"
   class:alignCenter
   class:flex
   class:justifyCenter
