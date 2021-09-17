@@ -64,18 +64,13 @@
   }
 
   .large {
-    --min-width: 600px;
+    --min-width: 500px;
     --breakpoint: 1200px;
     --min-percentage: 25%;
+    grid-template-columns: 1fr;
   }
 
-  @media screen and (min-width: 30em) {
-    .large {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  @media screen and (min-width: 42em) {
+  @media screen and (min-width: 40em) {
     .large {
       grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
     }

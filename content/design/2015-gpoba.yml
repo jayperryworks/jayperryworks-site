@@ -33,13 +33,25 @@ body:
     size: small
     caption: The screen version of the annual report.
     images:
-      - image: /images/uploads/design-2017-tela-intro.jpg
+      - image: /images/uploads/design-gpoba-home-phone.jpg
         device: phone
         orientation: portrait
-      - image: /images/uploads/design-2017-ga-course-progress.jpg
+        priority: 2
+      - image: /images/uploads/design-gpoba-tablet-cover.jpg
         device: tablet
         orientation: landscape
         width: xwide
+
+  - type: collage
+    gutter: wide
+    prominence: large
+    constrainContent: false
+    resize: true
+    images:
+      - image: /images/uploads/design-gpoba-tablet-chapter.jpg
+        device: tablet
+      - image: /images/uploads/design-gpoba-tablet-map.jpg
+        device: tablet
 
   - type: collage
     prominence: large
@@ -47,9 +59,10 @@ body:
     resize: true
     caption: The print version of the annual report.
     images:
-      - image: /images/uploads/design-2015-gpoba-ar-spread.jpg
+      - image: /images/uploads/design-gpoba-book-cover.png
+        priority: 2
         alt: Annual report cover
-      - image: /images/uploads/design-2015-gpoba-ar-spread.jpg
+      - image: /images/uploads/design-gpoba-book-spread.png
         alt: Annual report spread
         width: wide
 
@@ -62,21 +75,13 @@ body:
 
       We conducted a research and analysis phase to look more closely at their overall communications strategy. We presented a series of recommendations, and then worked with their team to implement and document the system. Finally, we produced an extensive, online styleguide which the team could share and continue developing.
 
-      We were limited in what we were able to change (for instance, we were not able to significantly change their logo), but the result, nonetheless, was a significant step in the right direction. The process of discussing and documenting a set of specific brand guidelines was revelatory for a small group who were only beginning to develop an intentional, unique identity of their own.
-
-  - type: gallery
+  - type: collage
     prominence: large
+    gutter: wide
     resize: true
-    caption: The brand styleguide.
+    caption: The brand styleguide
     images:
-      - image: /images/uploads/design-2017-ga-course-progress.jpg
-        device: tablet
-        orientation: landscape
-      - image: /images/uploads/design-2017-ga-course-progress.jpg
-        device: tablet
-        orientation: landscape
-        width: wide
-      - image: /images/uploads/design-2017-ga-course-progress.jpg
-        device: tablet
-        orientation: landscape
-        width: wide
+      - image: /images/uploads/design-gpoba-styleguide-tablet-color.jpg
+        device: tablet-portrait
+      - image: /images/uploads/design-gpoba-styleguide-tablet-type.jpg
+        device: tablet-portrait
