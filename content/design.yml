@@ -1,0 +1,76 @@
+title: Design work
+intro: |-
+  I have a broad background, a result of both curiosity and necessity. I like working with small teams, and I’ve often worn extra hats that the budget couldn’t fill. That suites me fine: I like hats, and I like to find patterns in complex processes. While user interface design and branding are my main focuses these days, I also have experience in publication design, print and environmental design, advertising, video and broadcast, and education.
+
+  In addition to my design work, I’m a front-end coder. I love Javascript, HTML, and CSS. I advocate for semantics; inclusive accessibility; speed; and device-agnostic, responsive layouts. I tend to see my coding work as a natural extension of my design process. I like to “explore” with code via prototypes, and I love using styleguides and design systems to build consensus on complex projects.
+
+clients:
+  title: Selected clients
+  intro: |-
+    I’m located in the Baltimore-DC metro area and, being near the U.S. government, I’ve ended up working frequently with nonprofits and NGOs. I’ve also worked with a number of startups, small businesses, and tech- and entertainment-industry folks. I’m very, very lucky to have had the chance to work with so many organizations I admire, and to contribute, in some small way, to their missions.
+
+    Here’s a few organizations I’ve worked with over the years, as part of various teams and agencies:
+  items:
+    - Audubon Society
+    - Chesapeake Bay Foundation
+    - Defenders of Wildlife
+    - Discovery Communications
+    - European Union
+    - Penn State University
+    - United Nations
+    - World Bank Group
+    - World Food Program
+    - World Wildlife Fund
+
+toc:
+  title: Case studies
+  intro: |-
+    Here’s a few of my favorite projects. I’m not able to publicly share some of my work due to copyright and confidentiality restrictions, but I can provide more work samples on request. [Contact me](mailto:hi@jayperryworks.com) if you’d like to talk.
+  items:
+    - title: Gateway Academy
+      slug: gateway-academy
+      subhead: A financial e-learning platform for Sub-Saharan East Africa
+      path: '/design/2017/gateway-academy'
+      images:
+        - source: /images/uploads/gateway-tablet-progress.jpg
+          device: tablet
+          orientation: landscape
+    
+    - title: Tela
+      slug: tela
+      subhead: A financial e-learning platform for Sub-Saharan East Africa
+      path: '/design/2017/tela/'
+      images:
+        - source: /images/uploads/tela-start.jpg
+          alt: Tela home screen
+          device: phone
+          orientation: portrait
+        - source: /images/uploads/tela-summary.jpg
+          alt: Tela summary screen
+          device: phone
+          orientation: portrait
+        - source: /images/uploads/tela-data.jpg
+          alt: Tela data screen
+          device: phone
+          orientation: portrait
+    
+    - title: The Baldwin Prize
+      slug: baldwin-prize
+      subhead: A financial e-learning platform for Sub-Saharan East Africa
+      path: '/design/2017/baldwin-prize/'
+      images:
+        - source: /images/uploads/design-2017-baldwin-poster.jpg
+    
+    - title: GPOBA branding
+      slug: gpoba
+      subhead: A financial e-learning platform for Sub-Saharan East Africa
+      path: '/design/2015/gpoba/'
+      images:
+        - source: /images/uploads/design-gpoba-home-phone.jpg
+          alt: Annual report cover on a phone
+          device: phone
+          orientation: portrait
+          priority: 2
+        - source: /images/uploads/design-gpoba-book-spread.png
+          alt: Annual report spread
+          width: xwide

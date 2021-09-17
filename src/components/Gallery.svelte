@@ -1,15 +1,24 @@
 <script>
-  export let size = '',
-    gutter = 'xnarrow',
-    flex = false
+  export let size = ''
+  export let gutter = 'xnarrow'
+  export let flex = false
+  export let constrainContent = true
+  export let alignCenter
+  export let justifyCenter
 
-  export let style = ''
+  let classes = ''
+  export { classes as class }
+
+  $: style = `--gutter: var(--space-${gutter});`
 </script>
 
 <ul
-  class="gallery {size}"
+  class="gallery {size} {classes}"
+  class:alignCenter
   class:flex
-  style="--gutter: var(--space-{gutter}); {style}"
+  class:justifyCenter
+  class:constrainContent
+  {style}
 >
   <slot {size}>Add list items here</slot>
 </ul>
@@ -25,7 +34,6 @@
 
     display: block;
     font-size: 0;
-    list-style: none;
     margin: -1px;
     margin: calc((var(--gutter) / 2) * -1);
     padding-left: 0;
@@ -56,18 +64,13 @@
   }
 
   .large {
-    --min-width: 600px;
+    --min-width: 500px;
     --breakpoint: 1200px;
     --min-percentage: 25%;
+    grid-template-columns: 1fr;
   }
 
-  @media screen and (min-width: 30em) {
-    .large {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  @media screen and (min-width: 42em) {
+  @media screen and (min-width: 40em) {
     .large {
       grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
     }
@@ -81,7 +84,6 @@
     position: relative;
     vertical-align: top;
 
-
     /* fallback fluid sizing method using a calc() hack
       -> allows grid to be somewhat responsive without media queries
       -> mainly for IE and old browsers
@@ -94,14 +96,25 @@
   
   @supports (display: grid) {
     .gallery :global(li) {
-      max-width: var(--content-width-default);
       min-width: auto;
       padding: 0;
       width: auto;
     }
+
+    .gallery.constrainContent :global(li) {
+      max-width: var(--content-width-default);
+    }
+
+    .gallery :global(li.wide) {
+      grid-column: span 2;
+    }
+
+    .gallery :global(li.xwide) {
+      grid-column: span 3;
+    }
   }
 
-  .large :global(li) {
+  .large.constrainContent :global(li) {
     max-width: var(--content-width-wide);
   }
 
@@ -110,5 +123,13 @@
       display: flex;
       flex-direction: column;
     }
+  }
+
+  .alignCenter {
+    align-items: center;
+  }
+
+  .justifyCenter {
+    justify-content: center;
   }
 </style>

@@ -43,7 +43,8 @@ module.exports = {
 		  line-height: 1.5;
 		  margin: 0;
 		  min-height: 100vh;
-		  text-rendering: optimizeSpeed;
+		  text-rendering: optimizeLegibility;
+		  font-variant-ligatures: contextual;
 		}
 
 		/* Elements that don't have a class get default styles */

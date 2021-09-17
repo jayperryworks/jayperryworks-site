@@ -1,5 +1,7 @@
 <script>
 	import Caption from './Caption.svelte'
+  import Collage from './Collage.svelte'
+  import DeviceFrame from './DeviceFrame.svelte'
   import Figure from './Figure.svelte'
   import Gallery from './Gallery.svelte'
   import Note from './Note.svelte'
@@ -53,44 +55,103 @@
 
 		  {#if block.type == 'figure'}
 		  	<div class="type-align-center">
-		      <Figure
-		      	sources={block.image}
-		      	alt={block.alt}
-		      	caption={block.caption}
-		      	credit={block.credit}
-		      	border={block.border}
-		      />
+		  		{#if block.device}
+		  			<Figure
+		  				caption={block.caption}
+		  				credit={block.credit}
+		  				border={block.border}
+	  				>
+	        		<DeviceFrame
+	        			type="{block.device}"
+	        			image="{block.image.versions}"
+	        			alt="{block.alt}"
+	      			/>
+	      		</Figure>
+		  		{:else}
+			      <Figure
+			      	sources={block.image}
+			      	alt={block.alt}
+			      	caption={block.caption}
+			      	credit={block.credit}
+			      	border={block.border}
+			      />
+		      {/if}
 		    </div>
 		  {/if}
 
 		  {#if block.type == 'gallery'}
 	      <Figure
-	      	sources={block.image}
-	      	alt={block.alt}
 	      	caption={block.caption}
 	      	credit={block.credit}
 	      	border={block.border}
 	      >
-	        <Gallery size={block.size}>
+	        <Gallery
+	        	size={block.size}
+	        	gutter="{block.gutter}"
+	        	constrainContent="{block.constrainContent || false}"
+        	>
 	          {#each block.images as item}
-	            <li class="type-align-center">
-	              {#if item.image.versions && item.image.versions.length > 1}
-	                <ResponsivePicture
-	                  sources={item.image.versions}
-	                  alt={item.alt}
-	                  border={item.border}
-	                />
-	              {:else}
-	                <ResponsiveImage
-	                  sources={item.image.versions && item.image.versions[0].sizes || item.image}
-	                  alt={item.alt}
-	                  border={item.border}
-	                />
+	            <li
+	            	class="type-align-center"
+	            	class:wide="{item.width === 'wide'}"
+	            	class:xwide="{item.width === 'xwide'}"
+            	>
+	            	{#if item.device}
+	            		<DeviceFrame
+	            			type="{item.device}"
+	            			image="{item.image.versions}"
+	            			alt="{item.alt}"
+            			/>
+	            	{:else}
+		              {#if item.image.versions && item.image.versions.length > 1}
+		                <ResponsivePicture
+		                  sources={item.image.versions}
+		                  alt={item.alt}
+		                  border={item.border}
+		                />
+		              {:else}
+		                <ResponsiveImage
+		                  sources={item.image.versions && item.image.versions[0].sizes || item.image}
+		                  alt={item.alt}
+		                  border={item.border}
+		                />
+		              {/if}
 	              {/if}
 	            </li>
 	          {/each}
 	        </Gallery>
 	      </Figure>
+		  {/if}
+
+		  {#if block.type == 'collage'}
+		  	<figure>
+			  	<Collage>
+			  		{#each block.images as item}
+			  			<div class="{item.width || 'default'} {item.priority ? `priority:${item.priority}` : 'priority:1'}">
+								{#if item.device}
+									<DeviceFrame
+										image="{item.image.versions}"
+										alt="{item.alt}"
+										type="{item.device}"
+									/>
+								{:else}
+									<ResponsivePicture
+										sources="{item.image.versions}"
+										alt="{item.alt}"
+										class="margin-x-auto"
+									/>
+								{/if}
+							</div>
+			  		{/each}
+			  	</Collage>
+		  		{#if block.caption}
+		  			<Caption 
+		  				caption="{block.caption}"
+		  				credit="{block.credit}"
+		  				class="padding-top-narrow"
+	  				/>
+	  			{/if}
+	  		</figure>
 		  {/if}
 
 		  {#if block.type == 'table'}

@@ -4,6 +4,9 @@
 
   export let blocks
 
+  let classes = ''
+  export { classes as class }
+
   // create a list of sections from the yml blocks in each page
   $: sections = blocks.reduce((result, block) => {
 
@@ -30,7 +33,7 @@
   }, [])
 </script>
 
-<div class="body padding-y-flow-xwide margin-y-flow-xwide">
+<div class="body padding-y-flow-xwide margin-y-flow-xwide {classes}">
   {#each sections as section}
     {#if section.uid}
       <section id={section.uid}>

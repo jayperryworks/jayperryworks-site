@@ -29,6 +29,10 @@
       url: 'pictures'
     },
     {
+      label: 'Design',
+      url: 'design'
+    },
+    {
       label: 'Blog',
       url: 'blog'
     },

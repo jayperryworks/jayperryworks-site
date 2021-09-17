@@ -3,6 +3,8 @@
 
 	export let ratio = "2/1"
 	export let useScale = true
+	export let scroll = false
+
 	let classes = ''
 	export { classes as class }
 
@@ -21,6 +23,7 @@
 
 <div
 	class="aspect-ratio {classes}"
+	class:scroll
 	{style}
 >
 	<div class="content">
@@ -32,6 +35,7 @@
 	.aspect-ratio {
 	  position: relative;
 	  width: 100%;
+	  overflow: hidden;
 	}
 
   .aspect-ratio::before {
@@ -51,21 +55,25 @@
   	}
   }
 
+  .scroll {
+  	overflow-y: scroll;
+  }
+
 	.content {
+	  display: block;
 	  height: 100%;
 	  left: 0;
 	  position: absolute;
 	  top: 0;
 	  width: 100%;
-	  display: block;
 	}
   
   @supports (display: flex) {
   	.content {
+	    align-items: center;
 	    display: flex;
 	    flex-direction: column;
 	    justify-content: center;
-	    align-items: center;
 	  }
 	}
 </style>
