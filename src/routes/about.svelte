@@ -1,5 +1,5 @@
 <script context="module">
-	import prismic from '@/utils/prismicQuery.js'
+	import prismic, { blockQueries } from '@/utils/prismicQuery.js'
 
 	export async function preload() {
 		try {
@@ -10,14 +10,7 @@
 				    subtitle
 				    body {
 				      __typename
-				      ... on PageBodyHeading {
-				        type
-				        primary {
-				          title1
-				          level
-				          subheading
-				        }
-				      }
+				      ${Object.values(blockQueries).map(type => type())}
 				    }
 				  }
 				}

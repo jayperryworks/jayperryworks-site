@@ -21,7 +21,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache({ fragmentMatcher })
 })
 
-const blockQueries = {
+export const blockQueries = {
   heading: (typename = 'PageBodyHeading') => `
     ...on ${typename} {
       type
