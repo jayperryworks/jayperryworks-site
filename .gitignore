@@ -5,6 +5,8 @@ yarn-error.log
 npm-debug.log
 /cypress/screenshots/
 /__sapper__/
+.env
+/src/utils/prismicFragments.json
 
 # ignore generated static files
 /static/sitemap.xml
