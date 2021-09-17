@@ -65,13 +65,15 @@
 
 	export let post, prevPage, nextPage
 
+	// format the credits content for the Metadata component below
 	$: credits = Object.keys(post.metadata).map((label) => {
 		let value = post.metadata[label]
 
+		// if the metadata item has more than one value, capitalize the first
 		if (Array.isArray(value)) {
 			value = Object.values(value)
-			// console.log(value)
 			value[0] = titleize(value[0])
+		// otherwise, capitalize the string
 		} else {
 			value = titleize(String(value))
 		}
@@ -93,9 +95,9 @@
 		<header class="padding-x-outside padding-top-xwide type-align-center">
 			<Wrapper width="xwide">
 				<h1>{post.title}</h1>
-				{#if post.subtitle}
+				{#if post.client}
 					<p class="type-subheading type-scale-gamma">
-						{post.subtitle}
+						{post.client}
 					</p>
 				{/if}
 			</Wrapper>

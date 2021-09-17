@@ -1,22 +1,7 @@
 title: Tela
-subtitle: A financial e-learning platform for Sub-Saharan East Africa
-cover: 
-  images:
-    - image: /images/uploads/design-2017-tela-intro.jpg
-      alt: Tela home screen
-      device: phone
-      orientation: portrait
-    - image: /images/uploads/design-2017-tela-intro.jpg
-      alt: Tela home screen
-      device: phone
-      orientation: portrait
-    - image: /images/uploads/design-2017-tela-intro.jpg
-      alt: Tela home screen
-      device: phone
-      orientation: portrait
+client: Bivee, Inc.
 metadata:
   date: 2017 - 2020
-  client: Bivee, Inc.
   agency: Bivee, Inc.
   role: Design Director
   contributions:
@@ -38,16 +23,16 @@ body:
     resize: true
     gutter: wide
     images:
-      - image: /images/uploads/design-2017-tela-intro.jpg
+      - image: /images/uploads/tela-start.jpg
         alt: Tela home screen
         device: phone
         orientation: portrait
-      - image: /images/uploads/design-2017-tela-intro.jpg
-        alt: Tela home screen
+      - image: /images/uploads/tela-summary.jpg
+        alt: Tela summary screen
         device: phone
         orientation: portrait
-      - image: /images/uploads/design-2017-tela-intro.jpg
-        alt: Tela home screen
+      - image: /images/uploads/tela-data.jpg
+        alt: Tela data screen
         device: phone
         orientation: portrait
 
