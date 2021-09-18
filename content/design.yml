@@ -38,7 +38,7 @@ toc:
     
     - title: Tela
       slug: tela
-      subhead: A financial e-learning platform for Sub-Saharan East Africa
+      subhead: A treatment tracking app for cancer patients
       path: '/design/2017/tela/'
       images:
         - source: /images/uploads/tela-start.jpg
@@ -56,14 +56,14 @@ toc:
     
     - title: The Baldwin Prize
       slug: baldwin-prize
-      subhead: A financial e-learning platform for Sub-Saharan East Africa
+      subhead: A writing scholarship about finding your voice
       path: '/design/2017/baldwin-prize/'
       images:
         - source: /images/uploads/design-2017-baldwin-poster.jpg
     
-    - title: GPOBA branding
+    - title: GPOBA
       slug: gpoba
-      subhead: A financial e-learning platform for Sub-Saharan East Africa
+      subhead: An annual report and branding facelift for a World Bank partnership 
       path: '/design/2015/gpoba/'
       images:
         - source: /images/uploads/design-gpoba-home-phone.jpg
