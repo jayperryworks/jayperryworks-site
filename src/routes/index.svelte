@@ -44,7 +44,7 @@
 
 <MainNav segment="/" overlay />
 
-<main class="fill-vertical">
+<main class="fill-vertical | hide-overflow">
 
 	<!-- intro -->
 	<Panel
@@ -112,7 +112,7 @@
 			</Wrapper>
 		</header>
 		<Wrapper
-			class="fill-vertical"
+			class="fill-vertical | hide-overflow"
 			width="xwide"
 			flex
 		>
@@ -170,7 +170,7 @@
 			</Wrapper>
 		</header>
 		<Wrapper
-			class="fill-vertical"
+			class="fill-vertical | hide-overflow"
 			width="xwide"
 			flex
 		>
