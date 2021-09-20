@@ -1,8 +1,7 @@
 title: Gateway Academy
-subhead: A financial e-learning platform for Sub-Saharan East Africa
+client: Consultative Group to Assist the Poor, World Bank Group
 metadata:
   date: 2017 - 2020
-  client: Consultative Group to Assist the Poor, World Bank Group
   agency: Bivee, Inc.
   role: Design Director
   contributions:
@@ -17,6 +16,13 @@ metadata:
     - Nicholas Kingston
     - Haley Cline
 body:
+  - type: figure
+    image: /images/uploads/gateway-tablet-marketing.jpg
+    device: tablet
+    prominence: large
+    alt: The marketing site
+    caption: The Gateway Academy marketing site
+
   - type: passage
     markdown: |-
       Gateway Academy was an e-learning platform designed to help banks in Sub-Saharan East Africa implement better financial support for their poorest customers.
@@ -25,20 +31,15 @@ body:
 
       In my art-direction role, I led a small team responsible for UX/UI design, front-end development, and branding. We began our alpha prototyping in early 2017, with content models and wireframe prototypes. A bit later we created a component library and styleguide to help the development team build coded prototypes. As we evolved the branding and visual design, we evolved the styleguide and UI library in parallel.
 
-  - type: gallery
+  - type: collage
     prominence: large
+    gutter: wide
     resize: true
     images:
-      - image: /images/uploads/design-2017-ga-course-progress.jpg
+      - image: /images/uploads/gateway-tablet-video.jpg
         device: tablet
-        orientation: landscape
-        width: wide
-      - image: /images/uploads/design-2017-ga-course-progress.jpg
+      - image: /images/uploads/gateway-tablet-progress.jpg
         device: tablet
-        orientation: landscape
-      - image: /images/uploads/design-2017-ga-course-progress.jpg
-        device: tablet
-        orientation: landscape
 
   - type: heading
     inlineMarkdown: A styleguide-driven design process
@@ -47,21 +48,23 @@ body:
     markdown: |-
       Over several years of continuous development, my design team built a comprehensive styleguide to document the brand, tone and voice, workflow, and our ever-evolving library of UI components.
 
-  - type: gallery
+  - type: figure
+    image: /images/uploads/gateway-styleguide-tablet-themes.jpg
+    device: tablet
+    alt: The theming page of the styleguide
     prominence: large
+
+  - type: gallery
+    gutter: wide
+    prominence: large
+    size: large
     resize: true
     images:
-      - image: /images/uploads/design-2017-ga-course-progress.jpg
+      - image: /images/uploads/gateway-styleguide-tablet-color.jpg
         device: tablet
-        orientation: landscape
-        width: wide
-      - image: /images/uploads/design-2017-ga-course-progress.jpg
+      - image: /images/uploads/gateway-styleguide-tablet-font.jpg
         device: tablet
-        orientation: landscape
-      - image: /images/uploads/design-2017-ga-course-progress.jpg
+      - image: /images/uploads/gateway-styleguide-tablet-logo.jpg
         device: tablet
-        orientation: landscape
-      - image: /images/uploads/design-2017-ga-course-progress.jpg
+      - image: /images/uploads/gateway-styleguide-tablet-scale.jpg
         device: tablet
-        orientation: landscape
-        width: xwide

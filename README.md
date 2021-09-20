@@ -10,3 +10,9 @@ A portfolio site and blog. Built with [Svelte/Sapper](https://svelte.dev) and [N
 
 ## Deployment
 Run `npm run export`
+
+## License
+
+The code of this website is open source and freely available. You're very welcome to adapt it and learn from it; this site itself is a product of what I've learned from many other talented coders.
+
+The site's content, graphics, and visual design are copyrighted, with all rights reserved. This is my own writing, illustration, and design work and it cannot be reproduced, under any circumstances, without my permission.

@@ -7,6 +7,7 @@
 
 	const ratios = {
 		'tablet': '4/3',
+		'tablet-portrait': '3/4',
 		'phone': '1/2'
 	}
 
@@ -63,6 +64,14 @@
 		.bezel :global(img) {
 			object-fit: cover;
 			object-position: top center;
+		}
+
+		.bezel.tablet-portrait {
+			--bezel-radius: 6% / 4.5%;
+		}
+
+		.bezel.tablet-portrait :global(img) {
+			--screen-radius: 1% / 0.75%;
 		}
 
 		.bezel.phone {

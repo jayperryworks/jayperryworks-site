@@ -55,20 +55,32 @@
 
 		  {#if block.type == 'figure'}
 		  	<div class="type-align-center">
-		      <Figure
-		      	sources={block.image}
-		      	alt={block.alt}
-		      	caption={block.caption}
-		      	credit={block.credit}
-		      	border={block.border}
-		      />
+		  		{#if block.device}
+		  			<Figure
+		  				caption={block.caption}
+		  				credit={block.credit}
+		  				border={block.border}
+	  				>
+	        		<DeviceFrame
+	        			type="{block.device}"
+	        			image="{block.image.versions}"
+	        			alt="{block.alt}"
+	      			/>
+	      		</Figure>
+		  		{:else}
+			      <Figure
+			      	sources={block.image}
+			      	alt={block.alt}
+			      	caption={block.caption}
+			      	credit={block.credit}
+			      	border={block.border}
+			      />
+		      {/if}
 		    </div>
 		  {/if}
 
 		  {#if block.type == 'gallery'}
 	      <Figure
-	      	sources={block.image}
-	      	alt={block.alt}
 	      	caption={block.caption}
 	      	credit={block.credit}
 	      	border={block.border}

@@ -10,11 +10,15 @@ export function get(req, res) {
 	)
 
 	// table of contents
-	const { pictures, blog } = data.tableOfContents
+	const { pictures, design, blog } = data.tableOfContents
 
 	// pictures
 	pictures.blurb = render(pictures.blurb)
 	pictures.coverImage = findInManifest(pictures.coverImage)
+
+	// design
+	design.blurb = render(design.blurb)
+	design.coverImage = findInManifest(design.coverImage)
 
 	// blog
 	blog.list.posts = generateBlogList(blog.list.source, {
