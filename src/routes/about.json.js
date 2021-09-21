@@ -1,5 +1,3 @@
-import fs from 'fs'
-import yaml from 'js-yaml'
 import prismic, { blockQueries } from '@/utils/prismicQuery.js'
 import { findInManifest } from '@/utils/imageHelpers.js'
 import markdown from '@/utils/renderMarkdown.js'
