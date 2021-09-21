@@ -1,38 +1,44 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
-import renderPostBody from '@/utils/renderPostBody.js'
+import prismic, { blockQueries } from '@/utils/prismicQuery.js'
 import { findInManifest } from '@/utils/imageHelpers.js'
+import markdown from '@/utils/renderMarkdown.js'
 
-export function get(req, res) {
-  let data = yaml.safeLoad(
-    fs.readFileSync('content/about.yml', 'utf-8')
-  )
+export async function get(req, res) {
+  let response = await prismic(`
+    query{
+      page(uid: "about", lang: "en-us") {
+        title
+        subtitle
+        body {
+          __typename
+          ${Object.values(blockQueries).map(type => type())}
+        }
+      }
+    }
+  `)
 
-  // resize the cover image
-  if (data.cover && data.cover.image) {
-  	data.cover.image = findInManifest(data.cover.image)
-  }
+  let { title, subtitle, body } = await response.data.page
 
-  data.body = renderPostBody(data.body)
+  body = body.map((slice) => {
+    if (slice.primary.markdown) {
+      slice.primary.html = markdown(slice.primary.markdown[0].text)
+    }
 
-  // resize body images
-  data.body.forEach((block) => {
-  	// if it has an 'image' field (e.g. figure), resize it
-  	if (block.image) {
-  		block.image = findInManifest(block.image)
-  	}
+    if (slice.primary.caption) {
+      slice.primary.caption = markdown(slice.primary.caption[0].text)
+    }
 
-  	if (block.images) {
-  		// if it has an 'images' field (e.g. gallery), resize each
-  		block.images.forEach((item) => {
-				item.image = findInManifest(item.image)
-  		})
-  	}
+    return slice
   })
 
   res.writeHead(200, {
     'Content-Type': 'application/json'
   })
 
-  res.end(JSON.stringify(data))
+  res.end(JSON.stringify({
+    title: title?.[0]?.text,
+    subtitle: subtitle?.[0]?.text,
+    body
+  }))
 }

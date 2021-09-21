@@ -21,10 +21,33 @@
 	import ResponsiveImage from '@/components/ResponsiveImage.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
-	export let title, subtitle, body
+	// blocks
+	import Passage from '@/components/Passage.svelte'
+
+	export let content
+	let { title, subtitle, body } = content
 	export let highlight = null
 
-	console.log(body)
+	function getWidth(prominence) {
+	  const widths = {
+	    small: 'narrow',
+	    medium: 'default',
+	    large: 'wide'
+	  }
+	  const index = Object.keys(widths).find((item) => item == prominence)
+	  return widths[index] || 'default'
+	}
+
+	function getBlockClass(type) {
+		const classes = [
+			'passage',
+			'heading'
+		]
+
+		if (classes.includes(type)) {
+			return `block-${type}`
+		}
+	}
 </script>
 
 <PageTitle title="Profile" />
@@ -48,6 +71,16 @@
 		</header>
 
 		<!-- <PostBody blocks={content.body} /> -->
+		{#each body as slice}
+			<Wrapper
+				width="{getWidth(slice.primary.prominence)}"
+				class="{getBlockClass(slice.type)}"
+			>
+				{#if slice.type === 'passage'}
+					<Passage html="{slice.primary.html}" />
+				{/if}
+			</Wrapper>
+		{/each}
 	</article>
 </main>
 

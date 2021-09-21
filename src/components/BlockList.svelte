@@ -11,28 +11,28 @@
   import Table from './Table.svelte'
   import Wrapper from './Wrapper.svelte'
 
-		export let blocks
+	export let blocks
 
-		function getWidth(prominence) {
-		  const widths = {
-		    small: 'narrow',
-		    medium: 'default',
-		    large: 'wide'
-		  }
-		  const index = Object.keys(widths).find((item) => item == prominence)
-		  return widths[index] || 'default'
+	function getWidth(prominence) {
+	  const widths = {
+	    small: 'narrow',
+	    medium: 'default',
+	    large: 'wide'
+	  }
+	  const index = Object.keys(widths).find((item) => item == prominence)
+	  return widths[index] || 'default'
+	}
+
+	function getBlockClass(type) {
+		const classes = [
+			'passage',
+			'heading'
+		]
+
+		if (classes.includes(type)) {
+			return `block-${type}`
 		}
-
-		function getBlockClass(type) {
-			const classes = [
-				'passage',
-				'heading'
-			]
-
-			if (classes.includes(type)) {
-				return `block-${type}`
-			}
-		}
+	}
 </script>
 
 <div class="blocks padding-y-flow-wide">
