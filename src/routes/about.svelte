@@ -1,32 +1,14 @@
 <script context="module">
-	import prismic, { blockQueries } from '@/utils/prismicQuery.js'
-
 	export async function preload() {
-		try {
-			const response = await prismic(`
-				query{
-					page(uid: "about", lang: "en-us") {
-				    title
-				    subtitle
-				    body {
-				      __typename
-				      ${Object.values(blockQueries).map(type => type())}
-				    }
-				  }
-				}
-			`
-			)
+		const response = await this.fetch('about.json')
+		const content = await response.json()
 
-			const { title, subtitle, body } = await response.data.page
-
-			return {
-				title: title[0].text,
-				subtitle: subtitle?.[0]?.text || null,
-				body
-			}
-		} catch (error) {
-			this.error(error)
+		if (response.status !== 200) {
+			this.error(response.status, content.message)
+			return
 		}
+
+		return { content }
 	}
 </script>
 
