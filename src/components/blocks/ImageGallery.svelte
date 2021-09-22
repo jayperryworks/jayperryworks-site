@@ -10,13 +10,13 @@
 	caption={caption}
 	credit={credit}
 >
-  <Gallery size={columnSize} {gutter}>
+  <Gallery size="{columnSize}" {gutter}>
     {#each images as item}
       <li class="type-align-center type-scale-zero">
         <ResponsiveImage
-          sources={item.image}
-          alt={item.alt}
-          border={item.border}
+          sources="{item.image}"
+          alt="{item.alt}"
+          border="{item.border}"
         />
       </li>
     {/each}

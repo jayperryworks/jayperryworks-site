@@ -1,4 +1,4 @@
-import { camelCase } from 'change-case';
+import { camelCase, paramCase } from 'change-case';
 import prismic, { blockQueries } from '@/utils/prismicQuery.js';
 import { findInManifest } from '@/utils/imageHelpers.js';
 import markdown from '@/utils/renderMarkdown.js';
@@ -95,7 +95,7 @@ export async function get(req, res) {
             ? renderMarkdown(slice.primary.caption)
             : null,
           attribution: slice.primary.attribution,
-          columnSize: slice.primary.column_size,
+          columnSize: paramCase(slice.primary.column_size),
           images: slice.fields.map((item) => {
             return {
               image: getImageVersions(item.image),
