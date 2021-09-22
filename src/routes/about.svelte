@@ -13,7 +13,6 @@
 </script>
 
 <script>
-	import Cover from '@/components/Cover.svelte'
 	import MainNav from '@/components/MainNav.svelte'
 	import PageTheme from '@/components/PageTheme.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
@@ -23,31 +22,10 @@
 
 	// blocks
 	import Passage from '@/components/Passage.svelte'
+	import Figure from '@/components/Figure.svelte'
 
 	export let content
-	let { title, subtitle, body } = content
-	export let highlight = null
-
-	function getWidth(prominence) {
-	  const widths = {
-	    small: 'narrow',
-	    medium: 'default',
-	    large: 'wide'
-	  }
-	  const index = Object.keys(widths).find((item) => item == prominence)
-	  return widths[index] || 'default'
-	}
-
-	function getBlockClass(type) {
-		const classes = [
-			'passage',
-			'heading'
-		]
-
-		if (classes.includes(type)) {
-			return `block-${type}`
-		}
-	}
+	let { title, subtitle, body, highlight } = content
 </script>
 
 <PageTitle title="Profile" />
@@ -71,16 +49,33 @@
 		</header>
 
 		<!-- <PostBody blocks={content.body} /> -->
-		{#each body as slice}
-			<Wrapper
-				width="{getWidth(slice.primary.prominence)}"
-				class="{getBlockClass(slice.type)}"
-			>
-				{#if slice.type === 'passage'}
-					<Passage html="{slice.primary.html}" />
-				{/if}
-			</Wrapper>
-		{/each}
+		<div class="blocks padding-y-flow-wide">
+			{#each body as slice}
+				<Wrapper
+					width="{slice.prominence}"
+					class="block-{slice.type}"
+				>
+					{#if slice.type === 'passage'}
+						<Passage html="{slice.body}" />
+					{/if}
+
+					{#if slice.type === 'figure'}
+						<div class="type-align-center">
+							<figure>
+								<ResponsiveImage
+									sources="{slice.image}"
+									alt="{slice.alt}"
+									border="{slice.border}"
+								/>
+								{#if slice.caption}
+									<figcaption>{@html slice.caption}</figcaption>
+								{/if}
+							</figure>
+						</div>
+					{/if}
+				</Wrapper>
+			{/each}
+		</div>
 	</article>
 </main>
 
@@ -89,5 +84,14 @@
 		h1, .subtitle {
 			text-align: center;
 		}
+	}
+
+	.blocks :global(.block-heading + .block-passage) {
+	  padding-top: var(--space-narrow);
+	}
+
+	/* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
+	.blocks :global(.block-passage + .block-passage) {
+	  padding-top: var(--space-medium);
 	}
 </style>
