@@ -122,6 +122,7 @@
   .logo {
     border: none;
     display: block;
+    max-width: 2.5rem;
   }
 
   .nav-button {
