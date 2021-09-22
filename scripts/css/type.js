@@ -250,6 +250,11 @@ module.exports = {
 			}
 		`).join('')}
 
+		/* zero out the type size to avoid whitespace bugs */
+		.type-scale-zero {
+			font-size: 0 !important;
+		}
+
 		.type-scale-alpha,
 		.type-scale-beta {
 			line-height: ${type.leading.xtight};

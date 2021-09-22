@@ -1,3 +1,4 @@
+import { camelCase } from 'change-case';
 import prismic, { blockQueries } from '@/utils/prismicQuery.js';
 import { findInManifest } from '@/utils/imageHelpers.js';
 import markdown from '@/utils/renderMarkdown.js';
@@ -6,7 +7,10 @@ function renderMarkdown (field) {
   return markdown(field[0].text);
 }
 
-function getImageVersions (imageField, versions = ['large', 'medium', 'small']) {
+function getImageVersions (
+  imageField,
+  versions = ['Small', 'Medium', 'Large']
+) {
   if (imageField[versions[0]]) {
     return versions.map((version) => {
       return {
@@ -37,9 +41,9 @@ function getSliceWidth (prominence) {
 
 function getSharedSliceFields (slice) {
   return {
-    includeInExcerpt: slice.primary.include_in_excerpt,
+    includeInExcerpt: slice.primary.include_in_excerpt || false,
     prominence: getSliceWidth(slice.primary.prominence),
-    type: slice.type
+    type: camelCase(slice.type)
   }
 }
 
@@ -84,6 +88,22 @@ export async function get(req, res) {
           ...getSharedSliceFields(slice)
         };
         break;
+      }
+      case 'image_gallery': {
+        slice = {
+          caption: slice.primary.caption 
+            ? renderMarkdown(slice.primary.caption)
+            : null,
+          attribution: slice.primary.attribution,
+          size: slice.primary.column_size,
+          images: slice.fields.map((item) => {
+            return {
+              image: getImageVersions(item.image),
+              alt: item.image.alt
+            }
+          }),
+          ...getSharedSliceFields(slice)
+        }
       }
     }
 

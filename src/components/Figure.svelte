@@ -36,7 +36,7 @@
  		{/if}
 	</slot>
 	{#if caption || credit}
-		<Caption {caption} {credit} />
+		<Caption {caption} {credit} class="margin-x-auto content-width" />
 	{/if}
 </figure>
 

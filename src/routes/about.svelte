@@ -23,6 +23,7 @@
 	// blocks
 	import Passage from '@/components/Passage.svelte'
 	import Figure from '@/components/Figure.svelte'
+	import Gallery from '@/components/Gallery.svelte'
 
 	export let content
 	let { title, subtitle, body, highlight } = content
@@ -38,7 +39,7 @@
 		padding-y-xwide
 	">
 		<header>
-			<Wrapper width="wide"class="padding-bottom-wide">
+			<Wrapper width="wide" class="padding-bottom-wide">
 				<h1>{title}</h1>
 				{#if subtitle}
 					<p class="subtitle padding-top-xxnarrow type-font-accent type-weight-xlight color-fg-secondary type-scale-beta">
@@ -50,28 +51,51 @@
 
 		<!-- <PostBody blocks={content.body} /> -->
 		<div class="blocks padding-y-flow-wide">
-			{#each body as slice}
+			{#each body as block}
 				<Wrapper
-					width="{slice.prominence}"
-					class="block-{slice.type}"
+					width="{block.prominence}"
+					class="block-{block.type}"
 				>
-					{#if slice.type === 'passage'}
-						<Passage html="{slice.body}" />
+					{#if block.type === 'passage'}
+						<Passage html="{block.body}" />
 					{/if}
 
-					{#if slice.type === 'figure'}
+					{#if block.type === 'figure'}
 						<div class="type-align-center">
-							<figure>
+							<Figure
+								caption="{block.caption}"
+								credit="{block.attribution}"
+							>
 								<ResponsiveImage
-									sources="{slice.image}"
-									alt="{slice.alt}"
-									border="{slice.border}"
+									sources="{block.image}"
+									alt="{block.alt}"
+									border="{block.border}"
 								/>
-								{#if slice.caption}
-									<figcaption>{@html slice.caption}</figcaption>
-								{/if}
-							</figure>
+							</Figure>
 						</div>
+					{/if}
+
+					{#if block.type === 'imageGallery'}
+			      <Figure
+			      	caption={block.caption}
+			      	credit={block.credit}
+			      >
+			        <Gallery
+			        	size={block.size}
+			        	gutter="{block.gutter}"
+			        	constrainContent="{block.constrainContent || false}"
+		        	>
+			          {#each block.images as item}
+			            <li class="type-align-center type-scale-zero">
+		                <ResponsiveImage
+		                  sources={item.image}
+		                  alt={item.alt}
+		                  border={item.border}
+		                />
+			            </li>
+			          {/each}
+			        </Gallery>
+			      </Figure>
 					{/if}
 				</Wrapper>
 			{/each}
