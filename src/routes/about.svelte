@@ -23,7 +23,7 @@
 	// blocks
 	import Passage from '@/components/Passage.svelte'
 	import Figure from '@/components/Figure.svelte'
-	import Gallery from '@/components/Gallery.svelte'
+	import ImageGallery from '@/components/blocks/ImageGallery.svelte'
 
 	export let content
 	let { title, subtitle, body, highlight } = content
@@ -49,7 +49,6 @@
 			</Wrapper>
 		</header>
 
-		<!-- <PostBody blocks={content.body} /> -->
 		<div class="blocks padding-y-flow-wide">
 			{#each body as block}
 				<Wrapper
@@ -57,7 +56,7 @@
 					class="block-{block.type}"
 				>
 					{#if block.type === 'passage'}
-						<Passage html="{block.body}" />
+						<Passage {...block} />
 					{/if}
 
 					{#if block.type === 'figure'}
@@ -76,26 +75,7 @@
 					{/if}
 
 					{#if block.type === 'imageGallery'}
-			      <Figure
-			      	caption={block.caption}
-			      	credit={block.credit}
-			      >
-			        <Gallery
-			        	size={block.size}
-			        	gutter="{block.gutter}"
-			        	constrainContent="{block.constrainContent || false}"
-		        	>
-			          {#each block.images as item}
-			            <li class="type-align-center type-scale-zero">
-		                <ResponsiveImage
-		                  sources={item.image}
-		                  alt={item.alt}
-		                  border={item.border}
-		                />
-			            </li>
-			          {/each}
-			        </Gallery>
-			      </Figure>
+						<ImageGallery {...block} />
 					{/if}
 				</Wrapper>
 			{/each}

@@ -61,7 +61,7 @@ export async function get(req, res) {
     }
   `);
 
-  let { title, subtitle, uid, body, highlight } = await response.data.page;
+  let { title, subtitle, body, highlight } = await response.data.page;
 
   title = title?.[0]?.text;
   subtitle = subtitle?.[0]?.text;
@@ -71,7 +71,7 @@ export async function get(req, res) {
       case 'passage': {
         slice = {
           type: 'passage',
-          body: renderMarkdown(slice.primary.markdown),
+          html: renderMarkdown(slice.primary.markdown),
           ...getSharedSliceFields(slice)
         };
         break;
@@ -95,7 +95,7 @@ export async function get(req, res) {
             ? renderMarkdown(slice.primary.caption)
             : null,
           attribution: slice.primary.attribution,
-          size: slice.primary.column_size,
+          columnSize: slice.primary.column_size,
           images: slice.fields.map((item) => {
             return {
               image: getImageVersions(item.image),
