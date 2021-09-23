@@ -5,13 +5,10 @@ import { camelCase, paramCase } from 'change-case';
 
 export async function get(req, res, next) {
 	const { year, slug } = req.params
-	const header = {
-		'Content-Type': 'application/json'
-	}
 
 	let response = await prismic(`
 	  query{
-	    picture(uid: "frozen-waterfall", lang: "en-us") {
+	    picture(uid: "${slug}", lang: "en-us") {
 	      _linkType
 	      title
 	      cover
@@ -112,8 +109,6 @@ export async function get(req, res, next) {
 		// -> https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates#14438954
 		content.printDescriptions = [...new Set(printDescriptions.map(JSON.stringify))]
 	}
-
-	console.log(content)
 
 	res.writeHead(200, {
 		'Content-Type': 'application/json'

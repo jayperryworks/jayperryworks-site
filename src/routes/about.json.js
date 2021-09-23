@@ -1,32 +1,11 @@
 import { camelCase, paramCase } from 'change-case';
-import prismic, { blockQueries } from '@/utils/prismicQuery.js';
+import prismic, { blockQueries, getImageVersions } from '@/utils/prismicQuery.js';
 import { findInManifest } from '@/utils/imageHelpers.js';
 import markdown from '@/utils/renderMarkdown.js';
+import errors from '@/utils/errorMessages.js';
 
 function renderMarkdown (field) {
   return markdown(field[0].text);
-}
-
-function getImageVersions (
-  imageField,
-  versions = ['Small', 'Medium', 'Large']
-) {
-  if (imageField[versions[0]]) {
-    return versions.map((version) => {
-      return {
-        path: imageField[version].url,
-        size: imageField[version].dimensions.width
-      }
-    })
-  }
-
-  // if the image doesn't have versions, return the original
-  return [
-    {
-      path: imageField.url,
-      size: imageField.dimensions.width
-    }
-  ]
 }
 
 function getSliceWidth (prominence) {
@@ -61,12 +40,22 @@ export async function get(req, res) {
     }
   `);
 
-  let { title, subtitle, body, highlight } = await response.data.page;
+  let data = await response.data.page;
 
-  title = title?.[0]?.text;
-  subtitle = subtitle?.[0]?.text;
+  if (!data) {
+    res.writeHead(404, header);
+    res.end(JSON.stringify({
+      message: errors.general
+    }));
+    return;
+  }
 
-  body = body.map((slice) => {
+  let content = {};
+
+  content.title = data.title?.[0]?.text;
+  content.subtitle = data.subtitle?.[0]?.text;
+
+  content.body = data.body.map((slice) => {
     switch (slice.type) {
       case 'passage': {
         slice = {
@@ -114,10 +103,5 @@ export async function get(req, res) {
     'Content-Type': 'application/json'
   });
 
-  res.end(JSON.stringify({
-    title,
-    subtitle,
-    body,
-    highlight
-  }));
+  res.end(JSON.stringify(content));
 }
