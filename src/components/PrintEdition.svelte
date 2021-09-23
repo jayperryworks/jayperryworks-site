@@ -5,7 +5,7 @@
   import Button from '@/components/Button.svelte'
   import Card from '@/components/Card.svelte'
   import Metadata from '@/components/Metadata.svelte'
-  import ResponsivePicture from '@/components/ResponsivePicture.svelte'
+  import ResponsiveImage from '@/components/ResponsiveImage.svelte'
 
   export let edition
 
@@ -30,8 +30,8 @@
   <!-- edition photo -->
   <div slot="figure">
     <AspectRatio>
-      <ResponsivePicture
-        sources="{edition.photo.versions}"
+      <ResponsiveImage
+        sources="{edition.photo}"
         alt="{titleize(edition.name)}"
         cover
       />

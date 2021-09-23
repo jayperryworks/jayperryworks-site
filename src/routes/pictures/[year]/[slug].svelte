@@ -10,39 +10,9 @@
 			return
 		}
 
-		// grab the list of posts for the next/prev nav
-		// -> TODO get this from the store after the index page populates it?
-		const list = await this.fetch('pictures.json')
-		const listData = await list.json()
-		const currentPost = listData.pictures.indexOf(
-			listData.pictures.find(item => item.slug === slug)
-		)
-
-		if (list.status !== 200) {
-			this.error(list.status, listData.message)
-			return
-		}
-
-		let prevPage, nextPage
-		if (listData.pictures[currentPost - 1]) {
-			prevPage = {
-				direction: 'previous',
-				...listData.pictures[currentPost - 1]
-			}
-		}
-
-		if (listData.pictures[currentPost + 1]) {
-			nextPage = {
-				direction: 'next',
-				...listData.pictures[currentPost + 1]
-			}
-		}
-
 		return {
 			post: data,
-			date: { year },
-			prevPage,
-			nextPage
+			date: { year }
 		}
 	}
 </script>
@@ -63,8 +33,9 @@
 	import PrintEdition from '@/components/PrintEdition.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
-	export let post, date, prevPage, nextPage
+	export let post, date
 	let metadataBreakpoint = 'xsmall'
+	let { prevPage, nextPage } = post
 
 	$: formattedDate = format(new Date(date.year, 0), 'yyyy')
 </script>
@@ -94,9 +65,9 @@
 				>
 					{formattedDate}
 				</time>
-				{#if post.format}
+				{#if post.media}
 					<p class="metadata-subtitle | color-fg-secondary | type-font-accent type-weight-light type-scale-epsilon type-leading-tight">
-						{post.format}{#if post.width && post.height}&nbsp;&bull; {post.width}" x {post.height}"{/if}
+						{post.media}{#if post.width && post.height}&nbsp;&bull; {post.width}" x {post.height}"{/if}
 					</p>
 				{/if}
 			</div>
@@ -157,7 +128,7 @@
 			</aside>
 		{/each}
 	</article>
-	{#if prevPage || nextPage}
+	{#if post.prevPage || post.nextPage}
 		<nav class="border-seam-top border-solid border-top padding-x-outside padding-y-xwide">
 			<header class="padding-bottom-wide hide-overflow">
 			  <div class="footer-nav-header gutter-wrapper">
@@ -175,7 +146,7 @@
 			    </a>
 			  </div>
 			</header>
-			<PaginationNav items="{[ prevPage, nextPage ]}" />
+			<PaginationNav items="{[ post.prevPage, post.nextPage ]}" />
 		</nav>
 	{/if}
 </main>
