@@ -1,38 +1,123 @@
-import fs from 'fs'
-import yaml from 'js-yaml'
-import renderPostBody from '@/utils/renderPostBody.js'
-import { findInManifest } from '@/utils/imageHelpers.js'
+import { camelCase, paramCase } from 'change-case';
+import prismic, { blockQueries } from '@/utils/prismicQuery.js';
+import { findInManifest } from '@/utils/imageHelpers.js';
+import markdown from '@/utils/renderMarkdown.js';
 
-export function get(req, res) {
-  let data = yaml.safeLoad(
-    fs.readFileSync('content/about.yml', 'utf-8')
-  )
+function renderMarkdown (field) {
+  return markdown(field[0].text);
+}
 
-  // resize the cover image
-  if (data.cover && data.cover.image) {
-  	data.cover.image = findInManifest(data.cover.image)
+function getImageVersions (
+  imageField,
+  versions = ['Small', 'Medium', 'Large']
+) {
+  if (imageField[versions[0]]) {
+    return versions.map((version) => {
+      return {
+        path: imageField[version].url,
+        size: imageField[version].dimensions.width
+      }
+    })
   }
 
-  data.body = renderPostBody(data.body)
+  // if the image doesn't have versions, return the original
+  return [
+    {
+      path: imageField.url,
+      size: imageField.dimensions.width
+    }
+  ]
+}
 
-  // resize body images
-  data.body.forEach((block) => {
-  	// if it has an 'image' field (e.g. figure), resize it
-  	if (block.image) {
-  		block.image = findInManifest(block.image)
-  	}
+function getSliceWidth (prominence) {
+  const widths = {
+    Small: 'narrow',
+    Medium: 'default',
+    Large: 'wide'
+  }
 
-  	if (block.images) {
-  		// if it has an 'images' field (e.g. gallery), resize each
-  		block.images.forEach((item) => {
-				item.image = findInManifest(item.image)
-  		})
-  	}
+  return widths[prominence] || 'default'
+}
+
+function getSharedSliceFields (slice) {
+  return {
+    includeInExcerpt: slice.primary.include_in_excerpt || false,
+    prominence: getSliceWidth(slice.primary.prominence),
+    type: camelCase(slice.type)
+  }
+}
+
+export async function get(req, res) {
+  let response = await prismic(`
+    query{
+      page(uid: "about", lang: "en-us") {
+        title
+        subtitle
+        body {
+          __typename
+          ${Object.values(blockQueries).map(type => type())}
+        }
+      }
+    }
+  `);
+
+  let { title, subtitle, body, highlight } = await response.data.page;
+
+  title = title?.[0]?.text;
+  subtitle = subtitle?.[0]?.text;
+
+  body = body.map((slice) => {
+    switch (slice.type) {
+      case 'passage': {
+        slice = {
+          type: 'passage',
+          html: renderMarkdown(slice.primary.markdown),
+          ...getSharedSliceFields(slice)
+        };
+        break;
+      }
+      case 'figure': {
+        slice = {
+          alt: slice.primary.image.alt,
+          attribution: slice.primary.attribution,
+          border: slice.primary.border || false,
+          caption: slice.primary.caption 
+            ? renderMarkdown(slice.primary.caption)
+            : null,
+          image: getImageVersions(slice.primary.image),
+          ...getSharedSliceFields(slice)
+        };
+        break;
+      }
+      case 'image_gallery': {
+        slice = {
+          caption: slice.primary.caption 
+            ? renderMarkdown(slice.primary.caption)
+            : null,
+          attribution: slice.primary.attribution,
+          columnSize: paramCase(slice.primary.column_size),
+          images: slice.fields.map((item) => {
+            return {
+              image: getImageVersions(item.image),
+              alt: item.image.alt
+            }
+          }),
+          ...getSharedSliceFields(slice)
+        }
+      }
+    }
+
+    return slice;
   })
 
   res.writeHead(200, {
     'Content-Type': 'application/json'
-  })
+  });
 
-  res.end(JSON.stringify(data))
+  res.end(JSON.stringify({
+    title,
+    subtitle,
+    body,
+    highlight
+  }));
 }

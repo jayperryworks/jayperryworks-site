@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import config from 'sapper/config/rollup.js';
@@ -7,6 +10,7 @@ import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 import svelte from 'rollup-plugin-svelte';
 import url from '@rollup/plugin-url';
+import json from '@rollup/plugin-json';
 import { terser } from 'rollup-plugin-terser';
 
 // packages I added
@@ -21,6 +25,10 @@ const preprocess = sveltePreprocess({
 const aliases = alias({
   resolve: ['.js', '.svelte', '.svg'],
   entries: [
+  	{
+  		find: '@root',
+  		replacement: `${__dirname}/`
+  	},
     {
       find: '@',
       replacement: `${__dirname}/src`
@@ -80,6 +88,7 @@ export default {
 			}),
 			aliases,
 			commonjs(),
+			json(),
 
 			legacy && babel({
 				extensions: ['.js', '.mjs', '.html', '.svelte'],
@@ -141,7 +150,8 @@ export default {
 				removeSVGTagAttrs: true
 			}),
 			aliases,
-			commonjs()
+			commonjs(),
+			json()
 		],
 		external: Object.keys(pkg.dependencies).concat(require('module').builtinModules),
 		preserveEntrySignatures: 'strict',

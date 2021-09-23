@@ -13,7 +13,6 @@
 </script>
 
 <script>
-	import Cover from '@/components/Cover.svelte'
 	import MainNav from '@/components/MainNav.svelte'
 	import PageTheme from '@/components/PageTheme.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
@@ -21,11 +20,17 @@
 	import ResponsiveImage from '@/components/ResponsiveImage.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
+	// blocks
+	import Passage from '@/components/Passage.svelte'
+	import Figure from '@/components/Figure.svelte'
+	import ImageGallery from '@/components/blocks/ImageGallery.svelte'
+
 	export let content
+	let { title, subtitle, body, highlight } = content
 </script>
 
 <PageTitle title="Profile" />
-<PageTheme color="{content.highlight}" />
+<PageTheme color="{highlight}" />
 
 <MainNav segment="about" />
 <main>
@@ -34,28 +39,63 @@
 		padding-y-xwide
 	">
 		<header>
-			<Wrapper width="wide"class="padding-bottom-wide">
-				<h1>{content.title}</h1>
-				{#if content.cover}
-					<Cover
-						class="padding-top-wide"
-						sources={content.cover.image}
-						alt={content.cover.alt}
-						caption={content.cover.caption}
-						credit={content.cover.credit}
-					/>
+			<Wrapper width="wide" class="padding-bottom-wide">
+				<h1>{title}</h1>
+				{#if subtitle}
+					<p class="subtitle padding-top-xxnarrow type-font-accent type-weight-xlight color-fg-secondary type-scale-beta">
+						{subtitle}
+					</p>
 				{/if}
 			</Wrapper>
 		</header>
 
-		<PostBody blocks={content.body} />
+		<div class="blocks padding-y-flow-wide">
+			{#each body as block}
+				<Wrapper
+					width="{block.prominence}"
+					class="block-{block.type}"
+				>
+					{#if block.type === 'passage'}
+						<Passage {...block} />
+					{/if}
+
+					{#if block.type === 'figure'}
+						<div class="type-align-center">
+							<Figure
+								caption="{block.caption}"
+								credit="{block.attribution}"
+							>
+								<ResponsiveImage
+									sources="{block.image}"
+									alt="{block.alt}"
+									border="{block.border}"
+								/>
+							</Figure>
+						</div>
+					{/if}
+
+					{#if block.type === 'imageGallery'}
+						<ImageGallery {...block} />
+					{/if}
+				</Wrapper>
+			{/each}
+		</div>
 	</article>
 </main>
 
 <style>
 	@media screen and (min-width: 40em) {
-		h1 {
+		h1, .subtitle {
 			text-align: center;
 		}
+	}
+
+	.blocks :global(.block-heading + .block-passage) {
+	  padding-top: var(--space-narrow);
+	}
+
+	/* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
+	.blocks :global(.block-passage + .block-passage) {
+	  padding-top: var(--space-medium);
 	}
 </style>
