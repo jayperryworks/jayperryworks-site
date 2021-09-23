@@ -21,6 +21,28 @@ const client = new ApolloClient({
   cache: new InMemoryCache({ fragmentMatcher })
 })
 
+export function getImageVersions (
+  imageField,
+  versions = ['Small', 'Medium', 'Large']
+) {
+  if (imageField[versions[0]]) {
+    return versions.map((version) => {
+      return {
+        path: imageField[version].url,
+        size: imageField[version].dimensions.width
+      }
+    })
+  }
+
+  // if the image doesn't have versions, return the original
+  return [
+    {
+      path: imageField.url,
+      size: imageField.dimensions.width
+    }
+  ]
+}
+
 export const blockQueries = {
   heading: (typename = 'PageBodyHeading') => `
     ...on ${typename} {
