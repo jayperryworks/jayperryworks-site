@@ -22,7 +22,7 @@
 	$: srcset = versions
 		? sources.slice(1).map((source) => {
 				return source.size
-					? `${source.path} ${source.size}w`
+					? `${source.path} ${source.size || source.width}w`
 					: source.path
 			}).join(', ')
 		: ''

@@ -4,7 +4,7 @@
 	import arrowRight from 'icons/arrow-right.svg'
 	import AspectRatio from '@/components/AspectRatio.svelte'
 	import Icon from '@/components/Icon.svelte'
-	import ResponsivePicture from '@/components/ResponsivePicture.svelte'
+	import ResponsiveImage from '@/components/ResponsiveImage.svelte'
 
 	export let items = []
 	export let itemWidth = 18
@@ -33,8 +33,8 @@
 					  href="{item.path}"
 					>
 					  <AspectRatio class="border solid">
-					    <ResponsivePicture
-					      sources="{item.thumbnail.versions}"
+					    <ResponsiveImage
+					      sources="{item.thumbnail}"
 					      alt="{item.label}"
 					      cover
 					    />

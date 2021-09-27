@@ -50,7 +50,7 @@
 		<!-- Cover image -->
 		<header class="padding-x-outside padding-y-xwide">
 			<Cover
-				sources={post.cover}
+				sources={post.cover.image}
 				alt={post.title}
 			/>
 
@@ -65,9 +65,9 @@
 				>
 					{formattedDate}
 				</time>
-				{#if post.media}
+				{#if post.format}
 					<p class="metadata-subtitle | color-fg-secondary | type-font-accent type-weight-light type-scale-epsilon type-leading-tight">
-						{post.media}{#if post.width && post.height}&nbsp;&bull; {post.width}" x {post.height}"{/if}
+						{post.format}{#if post.width && post.height}&nbsp;&bull; {post.width}" x {post.height}"{/if}
 					</p>
 				{/if}
 			</div>

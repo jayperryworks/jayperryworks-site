@@ -29,7 +29,8 @@ export function getImageVersions (
     return versions.map((version) => {
       return {
         path: imageField[version].url,
-        size: imageField[version].dimensions.width
+        width: imageField[version].dimensions.width,
+        height: imageField[version].dimensions.height
       }
     })
   }
