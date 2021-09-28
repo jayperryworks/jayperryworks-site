@@ -147,18 +147,21 @@ export async function get(req, res, next) {
 	content.width = pageData.width;
 	content.height = pageData.height;
 
+	// highlight color
 	if (pageData.highlight) {
 		// convert the color from a hex to hsl (array)...
-		content.highlight = convertColor.hex.hsl(pageData.highlight)
-			// ...and then to an object, so we can use each for CSS variables
-			// -> e.g. --color-highlight-h
-			.reduce((result, value, index) => {
-				const key = Object.keys(result)[index];
-				result[key] = value;
-				return result;
-			}, { h: null, s: null, l: null })
+		const highlightHSL = convertColor.hex.hsl(pageData.highlight);
+
+		// ...and then to an object, so we can use each for CSS variables
+		// -> e.g. --color-highlight-h
+		content.highlight = highlightHSL.reduce((result, value, index) => {
+			const key = Object.keys(result)[index];
+			result[key] = value;
+			return result;
+		}, { h: null, s: null, l: null })
 	}
 
+	// cover image
 	if (pageData.cover) {
 		const versions = getImageVersions(pageData.cover);
 
@@ -174,6 +177,7 @@ export async function get(req, res, next) {
 		content.description = render(pageData.description?.[0]?.text);
 	}
 
+	// picture format (media and substrate)
 	if (pageData.media && pageData.substrate) {
 		const media = arrayToSentence(pageData.media.map(item => item.medium));
 		content.format = sentenceCase(`${media} on ${pageData.substrate}`);
@@ -209,6 +213,7 @@ export async function get(req, res, next) {
 		content.printDescriptions = [...new Set(printDescriptions.map(JSON.stringify))].map(JSON.parse);
 	}
 
+	// next and previous page nav data
 	const currentPageIndex = listData.indexOf(
 		listData.find(item => item.node._meta.uid === slug)
 	);
