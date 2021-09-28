@@ -49,6 +49,13 @@
 		object-fit: scale-down;
 	}
 
+	.contain,
+	.cover {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
 	.contain {
 		object-fit: contain;
 	}

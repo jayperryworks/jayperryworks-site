@@ -9,7 +9,7 @@
     }
 
     return {
-      content: data.content,
+      series: data.series,
       pictures: data.pictures
     }
   }
@@ -24,19 +24,17 @@
   import Gallery from '@/components/Gallery.svelte'
   import MainNav from '@/components/MainNav.svelte'
   import PageTitle from '@/components/PageTitle.svelte'
-  import ResponsivePicture from '@/components/ResponsivePicture.svelte'
+  import ResponsiveImage from '@/components/ResponsiveImage.svelte'
   import Wrapper from '@/components/Wrapper.svelte'
 
-  export let content, pictures
+  export let series, pictures
 
-  // get unique series values from pictures array
-  // and remove empty/undefined values
-  // -> https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates#14438954
+  // sort the pictures list by series
   $: picturesBySeries = [
-  	...content.series.map((name) => {
+  	...series.map(({ title, uid }) => {
   		return {
-  			name: name,
-  			pictures: pictures.filter(picture => picture.series === name)
+  			title,
+  			pictures: pictures.filter(picture => picture.series === uid)
   		}
   	}),
   	// unsorted pictures (no series)
@@ -54,25 +52,15 @@
 <main class="padding-x-outside padding-y-xwide">
   <Wrapper width="xxwide">
     <header class="padding-bottom-wide">
-      <h1 class="padding-bottom">{content.title}</h1>
-      {#if content.intro}
-      <Wrapper
-        centered={false}
-        class="margin-right"
-      >
-        <div class="t-content padding-bottom">
-          {@html content.intro}
-        </div>
-      </Wrapper>
-      {/if}
+      <h1>Recent work</h1>
     </header>
 
-    <div class="margin-y-flow-wide padding-y-flow-wide overflow-hidden">
+    <div class="padding-y-flow-xwide overflow-hidden">
     	{#each picturesBySeries as series, index}
     		<section>
-    			{#if series.name}
+    			{#if series.title}
 		    		<h2 class="type-scale-gamma type-font-accent color-fg-secondary padding-bottom type-weight-xlight">
-              <strong class="type-weight-xlight color-fg-primary">{titleize(series.name)}</strong> series
+              <strong class="type-weight-xlight color-fg-primary">{titleize(series.title)}</strong> series
             </h2>
     			{/if}
 		      <Gallery>
@@ -84,11 +72,10 @@
 		              href="{picture.path}"
 		            >
                   <AspectRatio class="border solid">
-  		              <ResponsivePicture
-  		                sources={picture.thumbnail.versions}
-  		                alt={picture.title}
+  		              <ResponsiveImage
+  		                sources={picture.cover.image}
+  		                alt={picture.cover.alt}
                       cover
-                      fill
   		              />
                   </AspectRatio>
 		            </a>

@@ -100,7 +100,7 @@ export async function get(req, res, next) {
 		}
 	`);
 
-	// queries a list of all pictures for the previous/next links
+	// query a list of all pictures for the previous/next links
 	let listResponse = await prismic(`
 		query{
 	    allPictures(sortBy: year_completed_DESC) {
