@@ -4,6 +4,7 @@ import render from '@/utils/renderMarkdown.js'
 
 import arrayToSentence from 'array-to-sentence';
 import calculateAspectRatio from 'calculate-aspect-ratio';
+import convertColor from 'color-convert';
 import { camelCase, paramCase, noCase, sentenceCase } from 'change-case';
 
 // set width and height depending on Landscape/Portrait orientation
@@ -12,17 +13,18 @@ function getEditionDimensions (orientation, { long_side, short_side }) {
 		return {
 			height: long_side,
 			width: short_side
-		}
+		};
 	}
 
 	return {
 		width: long_side,
 		height: short_side
-	}
+	};
 }
 
-function paginationData (page, direction) {
-	const versions = getImageVersions(page.cover)
+// build an object for the previous and next pages nav
+function getPaginationData (page, direction) {
+	const versions = getImageVersions(page.cover);
 
 	return {
 		direction,
@@ -30,11 +32,11 @@ function paginationData (page, direction) {
 		label: page.title[0].text,
 		path: `pictures/${page.year_completed}/${page._meta.uid}/`,
 		aspectRatio: calculateAspectRatio(versions[0].width, versions[0].height)
-	}
+	};
 }
 
 export async function get(req, res, next) {
-	const { year, slug } = req.params
+	const { year, slug } = req.params;
 
 	// query the data for this page
 	let pageResponse = await prismic(`
@@ -43,7 +45,9 @@ export async function get(req, res, next) {
 		    _linkType
 		    title
 		    cover
+		    highlight
 		    description
+		    orientation
 		    width
 		    height
 		    media {
@@ -69,7 +73,6 @@ export async function get(req, res, next) {
 		          name
 		          photo
 		          limit
-		          orientation
 		          size {
 		            __typename
 		            ... on Print_size {
@@ -144,8 +147,20 @@ export async function get(req, res, next) {
 	content.width = pageData.width;
 	content.height = pageData.height;
 
+	if (pageData.highlight) {
+		// convert the color from a hex to hsl (array)...
+		content.highlight = convertColor.hex.hsl(pageData.highlight)
+			// ...and then to an object, so we can use each for CSS variables
+			// -> e.g. --color-highlight-h
+			.reduce((result, value, index) => {
+				const key = Object.keys(result)[index];
+				result[key] = value;
+				return result;
+			}, { h: null, s: null, l: null })
+	}
+
 	if (pageData.cover) {
-		const versions = getImageVersions(pageData.cover)
+		const versions = getImageVersions(pageData.cover);
 
 		content.cover = {
 			image: versions,
@@ -162,7 +177,6 @@ export async function get(req, res, next) {
 	if (pageData.media && pageData.substrate) {
 		const media = arrayToSentence(pageData.media.map(item => item.medium));
 		content.format = sentenceCase(`${media} on ${pageData.substrate}`);
-		console.log(content.format)
 	}
 
 	// grab info about the print editions, if there are any
@@ -177,9 +191,9 @@ export async function get(req, res, next) {
 				type: size.print_type?.name?.[0].text,
 				description: render(size.print_type?.description?.[0]?.text)
 			});
-			
+
 			return {
-				...getEditionDimensions(orientation, size),
+				...getEditionDimensions(pageData.orientation, size),
 				limit,
 				border: size.border,
 				name: name?.[0]?.text,
@@ -197,20 +211,20 @@ export async function get(req, res, next) {
 
 	const currentPageIndex = listData.indexOf(
 		listData.find(item => item.node._meta.uid === slug)
-	)
+	);
 
-	if (currentPageIndex >= 0) {
-		content.prevPage = paginationData(
+	if (currentPageIndex > 0) {
+		content.prevPage = getPaginationData(
 			listData[currentPageIndex - 1].node,
 			'previous'
-		)
+		);
 	}
 
-	if (currentPageIndex <= listData.length - 1) {
-		content.nextPage = paginationData(
+	if (currentPageIndex < listData.length - 1) {
+		content.nextPage = getPaginationData(
 			listData[currentPageIndex + 1].node,
 			'next'
-		)
+		);
 	}
 
 	res.writeHead(200, {
