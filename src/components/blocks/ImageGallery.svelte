@@ -7,8 +7,8 @@
 </script>
 
 <Figure
-	caption={caption}
-	credit={credit}
+	caption="{caption}"
+	credit="{credit}"
 >
   <Gallery size="{columnSize}" {gutter}>
     {#each images as item}

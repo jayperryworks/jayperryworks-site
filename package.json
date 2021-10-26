@@ -2,7 +2,7 @@
   "name": "jay-perry-works-site",
   "repository": "https://github.com/jayperryworks/jayperryworks-site/",
   "description": "The website for Jay Perry Works",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "scripts": {
     "css:generate": "node ./scripts/css/index.js",
     "css:format": "prettier --write ./static/stylesheets/*",
