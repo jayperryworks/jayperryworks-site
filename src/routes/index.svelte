@@ -27,6 +27,7 @@
 	import Panel from '@/components/Panel.svelte'
 	import Passage from '@/components/Passage.svelte'
 	import ResponsivePicture from '@/components/ResponsivePicture.svelte'
+	import SignupForm from '@/components/SignupForm.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
 	export let content
@@ -64,7 +65,7 @@
 				<Wrapper width="wide" centered={false}>
 					<h1 class="type-leading-xtight">{@html intro.headline}</h1>
 				</Wrapper>
-				<Wrapper 
+				<Wrapper
 					centered="{false}"
 					class="type-scale-delta type-heading type-leading-default | padding-top padding-bottom-wide"
 				>
@@ -96,6 +97,13 @@
 		</Wrapper>
 	</Panel>
 
+	<!-- newsletter -->
+	<Panel id="newsletter">
+		<Wrapper width="xwide">
+			<SignupForm />
+		</Wrapper>
+	</Panel>
+
 	<!-- pictures -->
 	<Panel id="{pictures.slug}">
 		<header class="padding-bottom-wide">
@@ -122,7 +130,7 @@
 						class="margin-y-flow-wide"
 						centered="{false}"
 					>
-						
+
 						{#if pictures.blurb}
 							<Passage html="{pictures.blurb}" class="type-scale-delta type-heading type-leading-default"/>
 						{/if}
@@ -180,7 +188,7 @@
 						class="margin-y-flow-wide"
 						centered="{false}"
 					>
-						
+
 						{#if design.blurb}
 							<Passage html="{design.blurb}" class="type-scale-delta type-heading type-leading-default"/>
 						{/if}

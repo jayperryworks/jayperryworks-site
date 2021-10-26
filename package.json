@@ -64,6 +64,7 @@
     "@rollup/plugin-replace": "^2.4.2",
     "@rollup/plugin-url": "^6.0.0",
     "autoprefixer": "^9.8.6",
+    "campaignmonitor": "^1.0.14",
     "change-case": "^4.1.2",
     "cssnano": "^5.0.5",
     "dotenv": "^10.0.0",
