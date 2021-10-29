@@ -9,6 +9,8 @@ import * as sapper from '@sapper/server';
 const { PORT, NODE_ENV, CAMPAIGN_MONITOR_TOKEN, CAMPAIGN_MONITOR_LIST_ID } = process.env;
 const dev = NODE_ENV === 'development';
 
+// const encodedCMKey = Buffer.from(CAMPAIGN_MONITOR_TOKEN).toString('base64');
+
 polka() // You can also use Express
 	.use(
 		compression({ threshold: 0 }),
