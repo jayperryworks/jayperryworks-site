@@ -1,5 +1,6 @@
 <script context="module">
-	export async function preload() {
+	export async function preload(page, session) {
+		const { CAMPAIGN_MONITOR_TOKEN, CAMPAIGN_MONITOR_LIST_ID } = session;
 		const response = await this.fetch('index.json');
 		const data = await response.json();
 
@@ -8,7 +9,11 @@
 			return;
 		}
 
-		return { content: data };
+		return {
+			content: data,
+			apiKey: CAMPAIGN_MONITOR_TOKEN,
+			listID: CAMPAIGN_MONITOR_LIST_ID
+		};
 	}
 </script>
 
@@ -30,7 +35,7 @@
 	import SignupForm from '@/components/SignupForm.svelte';
 	import Wrapper from '@/components/Wrapper.svelte';
 
-	export let content;
+	export let content, apiKey, listID;
 
 	let { intro } = content;
 	let { pictures, design, blog } = content.tableOfContents;
@@ -100,7 +105,7 @@
 	<!-- newsletter -->
 	<Panel id="newsletter">
 		<Wrapper width="xwide">
-			<SignupForm />
+			<SignupForm {apiKey} {listID} />
 		</Wrapper>
 	</Panel>
 
