@@ -1,39 +1,39 @@
 <script context="module">
 	export async function preload() {
-		const response = await this.fetch('index.json')
-		const data = await response.json()
+		const response = await this.fetch('index.json');
+		const data = await response.json();
 
 		if (response.status !== 200) {
-			this.error(response.status, data.message)
-			return
+			this.error(response.status, data.message);
+			return;
 		}
 
-		return { content: data }
+		return { content: data };
 	}
 </script>
 
 <script>
-	import { onDestroy } from 'svelte'
-	import { format } from 'date-fns'
-	import arrowDown from 'icons/arrow-down.svg'
-	import arrowRight from 'icons/arrow-right.svg'
-	import Button from '@/components/Button.svelte'
-	import DeviceFrame from '@/components/DeviceFrame.svelte'
-	import Gallery from '@/components/Gallery.svelte'
-	import Icon from '@/components/Icon.svelte'
-	import MainNav from '@/components/MainNav.svelte'
-	import PageTheme from '@/components/PageTheme.svelte'
-	import PageTitle from '@/components/PageTitle.svelte'
-	import Panel from '@/components/Panel.svelte'
-	import Passage from '@/components/Passage.svelte'
-	import ResponsivePicture from '@/components/ResponsivePicture.svelte'
-	import SignupForm from '@/components/SignupForm.svelte'
-	import Wrapper from '@/components/Wrapper.svelte'
+	import { onDestroy } from 'svelte';
+	import { format } from 'date-fns';
+	import arrowDown from 'icons/arrow-down.svg';
+	import arrowRight from 'icons/arrow-right.svg';
+	import Button from '@/components/Button.svelte';
+	import DeviceFrame from '@/components/DeviceFrame.svelte';
+	import Gallery from '@/components/Gallery.svelte';
+	import Icon from '@/components/Icon.svelte';
+	import MainNav from '@/components/MainNav.svelte';
+	import PageTheme from '@/components/PageTheme.svelte';
+	import PageTitle from '@/components/PageTitle.svelte';
+	import Panel from '@/components/Panel.svelte';
+	import Passage from '@/components/Passage.svelte';
+	import ResponsivePicture from '@/components/ResponsivePicture.svelte';
+	import SignupForm from '@/components/SignupForm.svelte';
+	import Wrapper from '@/components/Wrapper.svelte';
 
-	export let content
+	export let content;
 
-	let { intro } = content
-	let { pictures, design, blog } = content.tableOfContents
+	let { intro } = content;
+	let { pictures, design, blog } = content.tableOfContents;
 
 	function date(date, template = 'MM.dd') {
 		return format(new Date(date.year, date.month, date.day), template)
