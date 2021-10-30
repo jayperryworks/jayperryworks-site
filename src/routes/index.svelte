@@ -9,11 +9,7 @@
 			return;
 		}
 
-		return {
-			content: data,
-			apiKey: CAMPAIGN_MONITOR_TOKEN,
-			listID: CAMPAIGN_MONITOR_LIST_ID
-		};
+		return { content: data };
 	}
 </script>
 
@@ -35,7 +31,7 @@
 	import SignupForm from '@/components/SignupForm.svelte';
 	import Wrapper from '@/components/Wrapper.svelte';
 
-	export let content, apiKey, listID;
+	export let content;
 
 	let { intro } = content;
 	let { pictures, design, blog } = content.tableOfContents;
@@ -105,7 +101,7 @@
 	<!-- newsletter -->
 	<Panel id="newsletter">
 		<Wrapper width="xwide">
-			<SignupForm {apiKey} {listID} />
+			<SignupForm />
 		</Wrapper>
 	</Panel>
 
