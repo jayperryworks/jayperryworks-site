@@ -43,7 +43,7 @@
 			"EmailAddress": email,
 			"Resubscribe": true,
 			"RestartSubscriptionBasedAutoresponders": true,
-			"ConsentToTrack":"Yes"
+			"ConsentToTrack":"No"
 		});
 
 		try {
