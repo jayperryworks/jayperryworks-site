@@ -1,11 +1,14 @@
 <script>
 	import axios from 'axios';
+	import validator from 'email-validator';
 	import { stores } from '@sapper/app';
 	import { fade } from 'svelte/transition';
 
+	// --- props
 	let classes = ''
 	export { classes as class };
 
+	// --- stores
 	// mailing list data is stored in environment variables
 	// -> pull environment variables from session store
 	// -> see server.js for session data config
@@ -15,19 +18,26 @@
 		CAMPAIGN_MONITOR_LIST_ID: listID
 	} = $session;
 
+	// --- state
+	let email = '';
 	// unsent, error, success
 	let status = 'unsent';
-	let email = '';
+	let validationError = false;
 
-	const fadeDuration = 250;
+	// --- config
+	const endpoint = `https://api.createsend.com/api/v3.2/subscribers/${listID}.json`;
+	const auth = {
+		username: apiKey,
+		password: 'x'
+	};
+	const transitionDuration = 250;
 
 	async function addSubscriber () {
-		const endpoint = `https://api.createsend.com/api/v3.2/subscribers/${listID}.json`;
-
-		const auth = {
-			username: apiKey,
-			password: 'x'
-		};
+		// validate the input value before doing anything else
+		if (!validator.validate(email)) {
+			validationError = true;
+			return;
+		}
 
 		const body = JSON.stringify({
 			"EmailAddress": email,
@@ -38,28 +48,28 @@
 
 		try {
 			const response = await axios.post(endpoint, body, { auth, withCredentials: true });
-			console.log('Success!');
 			status = 'success';
 		} catch(error) {
-			if (error.response) {
-				// The request was made and the server responded with a status code
-				// that falls out of the range of 2xx
-				console.log('\nResponse:');
-				console.log(error.response.data);
-				console.log(error.response.status);
-				console.log(error.response.headers);
-			} else if (error.request) {
+			if (error.request) {
 				// The request was made but no response was received
 				// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
 				// http.ClientRequest in node.js
-				console.log('\nNo response received.');
+				console.log('No response received.');
 				console.log(error.request);
-			} else {
+			}
+
+			if (error.response) {
+				// The request was made and the server responded with a status code
+				// that falls out of the range of 2xx
+				console.log('Error in response:');
+				console.log(error.response.data);
+				console.log(error.response.status);
+				console.log(error.response.headers);
 				// Something happened in setting up the request that triggered an Error
 				console.log('Error', error.message);
 			}
 
-			console.log('\nConfig:');
+			console.log('Config:');
 			console.log(error.config);
 			status = 'error';
 		};
@@ -67,12 +77,12 @@
 </script>
 
 <div class="{classes}">
-	{#if status==='unsent'}
+	{#if status === 'unsent'}
 		<form
 			action="https://www.createsend.com/t/subscribeerror?description="
 			data-id="191722FC90141D02184CB1B62AB3DC26C77337A7609D430DF9E072373A1C86B95B49F8C39B0DB02DDC7587DD1E29E6F1B4C8A1DE72B89F44D3AEEF142A58ECBD"
 			method="post"
-			transition:fade="{{ duration: fadeDuration }}"
+			transition:fade="{{ duration: transitionDuration }}"
 		>
 			<label for="email">Email</label>
 			<input
@@ -91,19 +101,24 @@
 			>
 				Subscribe
 			</button>
+			{#if validationError}
+				<aside transition:fade>
+					<p>Sorry, this doesn't look like a valid email address. Please double check and try again.</p>
+				</aside>
+			{/if}
 		</form>
 	{/if}
 
 	{#if status === 'success'}
-		<p transition:fade="{{ duration: fadeDuration, delay: fadeDuration }}">
+		<p transition:fade="{{ duration: transitionDuration, delay: transitionDuration }}">
 			Yay it worked! You're totally subscribed!
 		</p>
 	{/if}
 
 	{#if status === 'error'}
-		<div transition:fade="{{ duration: fadeDuration, delay: fadeDuration }}">
-			<h3>Oh dear, this bicycle has gone rubber-side-up.</h3>
-			<p>Let's try this the old-fashioned way: please <a href="mailto:hi@jayperryworks.com">send me an email</a> with "Subscribe" as the subject line, and I'll sign up you. Sorry for the inconvenience.</p>
+		<div transition:fade="{{ duration: transitionDuration, delay: transitionDuration }}">
+			<h3>Oh dear, something went wrong.</h3>
+			<p>Let's try this the old-fashioned way: please <a href="mailto:hi@jayperryworks.com">send me an email</a> with "Subscribe" as the subject line, and I'll sign you up. Sorry for the inconvenience.</p>
 		</div>
 	{/if}
 </div>
