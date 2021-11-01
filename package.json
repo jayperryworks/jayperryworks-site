@@ -37,7 +37,7 @@
     "color-convert": "^1.9.3",
     "compression": "^1.7.1",
     "date-fns": "^2.17.0",
-    "email-validator": "^2.0.4",
+		"email-validator": "^2.0.4",
     "fs": "0.0.1-security",
     "graphql": "^15.5.3",
     "graphql-tag": "^2.12.5",
@@ -47,12 +47,12 @@
     "minimist": ">=1.2.3",
     "path": "^0.12.7",
     "polka": "^1.0.0-next.11",
-    "prismic-apollo-introspect": "^0.1.0",
-    "sharp": "^0.25.4",
+    "sharp": "^0.29.2",
     "sirv": "^0.4.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.1",
+		"@babel/core": "^7.13.1",
+		"dotenv": "^10.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.7.4",
     "@babel/plugin-transform-runtime": "^7.13.7",
     "@babel/preset-env": "^7.13.5",
@@ -72,19 +72,19 @@
     "modularscale-js": "^3.0.1",
     "npm-run-all": "^4.1.5",
     "onchange": "^7.1.0",
-    "postcss": "^8.3.0",
     "postcss-cli": "^8.3.1",
     "postcss-load-config": "^3.0.1",
+    "postcss": "^8.3.0",
     "prettier": "2.2.1",
     "prettify-xml": "^1.2.0",
-    "rollup": "^2.42.0",
     "rollup-plugin-inline-svg": "^2.0.0",
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-svg": "^2.0.0",
     "rollup-plugin-terser": "^7.0.2",
+    "rollup": "^2.42.0",
     "sapper": "^0.29.1",
     "serialize-javascript": ">=3.1.0",
-    "svelte": "^3.32.3",
-    "svelte-preprocess": "^3.9.12"
+    "svelte-preprocess": "^3.9.12",
+    "svelte": "^3.32.3"
   }
 }
