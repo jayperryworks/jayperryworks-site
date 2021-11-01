@@ -52,7 +52,6 @@
   },
   "devDependencies": {
 		"@babel/core": "^7.13.1",
-		"dotenv": "^10.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.7.4",
     "@babel/plugin-transform-runtime": "^7.13.7",
     "@babel/preset-env": "^7.13.5",
