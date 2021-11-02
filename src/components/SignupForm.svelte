@@ -3,6 +3,7 @@
 	import validator from 'email-validator';
 	import { stores } from '@sapper/app';
 	import { fade } from 'svelte/transition';
+	import Button from '@/components/Button.svelte';
 
 	// --- props
 	let classes = ''
@@ -84,23 +85,33 @@
 			method="post"
 			transition:fade="{{ duration: transitionDuration }}"
 		>
-			<label for="email">Email</label>
-			<input
-				bind:value="{email}"
-				aria-label="Email"
-				autocomplete="Email"
-				id="email"
-				maxlength="200"
-				name="cm-yuuuult-yuuuult"
-				required
-				type="email"
+			<label
+				class="type-font-accent type-scale-epsilon type-weight-light color-fg-secondary"
+				for="email"
 			>
-			<button
-				on:click|preventDefault="{addSubscriber}"
-				type="submit"
-			>
-				Subscribe
-			</button>
+				Email
+			</label>
+			<div class="row">
+				<input
+					bind:value="{email}"
+					class="type-scale-epsilon type-font-accent type-weight-light"
+					aria-label="Email"
+					autocomplete="Email"
+					placeholder="name@domain.com"
+					id="email"
+					maxlength="200"
+					name="cm-yuuuult-yuuuult"
+					required
+					type="email"
+				>
+				<Button
+					on:click="{addSubscriber}"
+					role="button"
+					type="submit"
+				>
+					Subscribe
+				</Button>
+			</div>
 			{#if validationError}
 				<aside transition:fade>
 					<p>Sorry, this doesn't look like a valid email address. Please double check and try again.</p>
@@ -122,3 +133,45 @@
 		</div>
 	{/if}
 </div>
+
+<style>
+	form {
+		--gutter: var(--space-narrow);
+	}
+
+	.row {
+		margin-bottom: calc(var(--gutter) * -1);
+	}
+
+	input {
+		background-color: var(--color-well);
+		border-radius: 0.2em;
+		border: 1px solid var(--color-primary);
+		box-shadow: inset 0 2px 0 var(--color-shadow);
+		margin-bottom: var(--gutter);
+		margin-right: var(--gutter);
+		outline: 0;
+		padding: 0.57em 1.2em;
+		transition: all 0.25s ease-in-out;
+	}
+
+	input:focus {
+		background-color: var(--color-bg);
+		border-color: var(--color-highlight);
+		box-shadow: none;
+		outline: 0;
+	}
+
+	input::placeholder {
+		color: var(--color-secondary);
+		opacity: 0.6;
+		font-family: var(--type-font-accent);
+		font-weight: light;
+	}
+
+	label {
+		display: block;
+		margin-bottom: 0.5em;
+		margin-bottom: var(--gutter);
+	}
+</style>

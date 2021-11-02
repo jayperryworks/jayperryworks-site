@@ -3,11 +3,11 @@
 
   export let href,
     target = '',
-    role = '',
     size = '',
     iconLeft = '',
     iconRight = '',
-    prefetch = false
+    prefetch = false,
+		role = 'link'
 
   let classes = ''
   export { classes as class }
@@ -15,33 +15,63 @@
   $: rel = prefetch ? 'prefetch' : ''
 </script>
 
-<a
-  {href}
-  {rel}
-  {target}
-  class="button {role} {size} {classes}"
-  class:has-icon="{iconLeft || iconRight}"
-  class:left="{iconLeft}"
-  class:right="{iconRight}"
->
-  {#if iconLeft}
-    <Icon
-      svg={iconLeft}
-      size="{size === 'small' ? '' : 'small'}"
-      class="icon left"
-    />
-  {/if}
+{#if role === 'link'}
+	<a
+		{href}
+		{rel}
+		{target}
+		class="button {role} {size} {classes}"
+		class:has-icon="{iconLeft || iconRight}"
+		class:left="{iconLeft}"
+		class:right="{iconRight}"
+	>
+		{#if iconLeft}
+			<Icon
+				svg={iconLeft}
+				size="{size === 'small' ? '' : 'small'}"
+				class="icon left"
+			/>
+		{/if}
 
-  <slot></slot>
+		<slot></slot>
 
-  {#if iconRight}
-    <Icon
-      svg={iconRight}
-      size="{size === 'small' ? '' : 'small'}"
-      class="icon right"
-    />
-  {/if}
-</a>
+		{#if iconRight}
+			<Icon
+				svg={iconRight}
+				size="{size === 'small' ? '' : 'small'}"
+				class="icon right"
+			/>
+		{/if}
+	</a>
+{/if}
+
+{#if role === 'button'}
+	<button
+		on:click|preventDefault
+		class="button {role} {size} {classes}"
+		class:has-icon="{iconLeft || iconRight}"
+		class:left="{iconLeft}"
+		class:right="{iconRight}"
+	>
+		{#if iconLeft}
+			<Icon
+				svg={iconLeft}
+				size="{size === 'small' ? '' : 'small'}"
+				class="icon left"
+			/>
+		{/if}
+
+		<slot></slot>
+
+		{#if iconRight}
+			<Icon
+				svg={iconRight}
+				size="{size === 'small' ? '' : 'small'}"
+				class="icon right"
+			/>
+		{/if}
+</button>
+{/if}
 
 <style>
   .button {
