@@ -3,12 +3,9 @@
 	import { stores } from '@sapper/app';
 	import axios from 'axios';
 	import validator from 'email-validator';
+	import warning from 'icons/warning.svg';
 	import Button from '@/components/Button.svelte';
-	import Wrapper from '@/components/Wrapper.svelte';
-
-	// --- props
-	let classes = ''
-	export { classes as class };
+	import Icon from '@/components/Icon.svelte';
 
 	// --- stores
 	// mailing list data is stored in environment variables
@@ -113,15 +110,29 @@
 			</Button>
 		</div>
 		{#if validationError}
-			<aside transition:fade>
-				<p>Sorry, this doesn't look like a valid email address. Please double check and try again.</p>
+			<aside
+				class="flag color-bg-primary color-fg-bg solid padding-narrow margin-top-narrow border-round"
+				transition:fade
+			>
+				<div class="signifier">
+					<Icon svg="{warning}" size="large" />
+				</div>
+				<h3 class="title type-font-accent type-weight-light type-scale-epsilon color-fg-bg">
+					Sorry, this doesn't look like a valid email address.
+				</h3>
+				<p class="content type-font-accent type-weight-light type-scale-zeta">
+					Please double check it and try again.
+				</p>
 			</aside>
 		{/if}
 	</form>
 {/if}
 
 {#if status === 'success'}
-	<p transition:fade="{{ duration: transitionDuration, delay: transitionDuration }}">
+	<p
+		class="type-font-accent type-weight-light"
+		transition:fade="{{ duration: transitionDuration, delay: transitionDuration }}"
+	>
 		Yay it worked! You're totally subscribed!
 	</p>
 {/if}
@@ -143,7 +154,7 @@
 	}
 
 	input {
-		background-color: var(--color-well);
+		background-color: hsl(var(--color-well-h), var(--color-well-s), 97%);
 		border-radius: 0.2em;
 		border: 1px solid var(--color-primary);
 		margin-bottom: var(--gutter);
@@ -153,12 +164,13 @@
 		transition: all 0.25s ease-in-out;
 		display: inline-block;
 		min-width: 12rem;
+		box-shadow: inset 0 2px 0px hsl(var(--color-well-h), var(--color-well-s), 80%, 0.4);
 	}
 
 	input:focus {
 		background-color: var(--color-bg);
 		border-color: var(--color-highlight);
-		/* box-shadow: none; */
+		box-shadow: none;
 		outline: 0;
 	}
 
@@ -170,7 +182,7 @@
 
 	input::placeholder {
 		color: var(--color-secondary);
-		opacity: 0.6;
+		opacity: 1;
 		font-family: var(--type-font-accent);
 		font-weight: light;
 	}
@@ -189,5 +201,35 @@
 		.row input {
 			flex: 1;
 		}
+	}
+
+	.flag {
+		--flag-gap: var(--space-xnarrow);
+		display: grid;
+		grid-column-gap: var(--flag-gap, 1em);
+		grid-template-columns: auto 1fr;
+		grid-template-rows: repeat(3, minmax(min-content, max-content)) 1fr;
+		grid-template-areas:
+			'signifier .'
+			'signifier title'
+			'signifier content'
+			'. content';
+	}
+
+	.title {
+		grid-area: title;
+		align-self: center;
+		display: flex;
+		align-items: center;
+	}
+
+	.signifier {
+		grid-area: signifier;
+		display: flex;
+		align-self: center;
+	}
+
+	.content {
+		grid-area: content;
 	}
 </style>

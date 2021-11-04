@@ -18,8 +18,8 @@ module.exports = {
 	helpers: { get },
 	customProperties: Object.keys(spacing.scale).map(name => `
 		--space-${name}: ${get(name)};
-	`),
-	utilities: `		
+	`).join(''),
+	utilities: `
 		${['padding', 'margin'].map(prop => `
 			/* ${prop} */
 
@@ -74,7 +74,7 @@ module.exports = {
 				.${prop}-y-flow-${size} > * + * {
 					${prop}-top: ${get(size)};
 				}
-			`)}
+			`).join('')}
 
 			/* sides */
 			${['left', 'right', 'top', 'bottom'].map(side => `
@@ -118,7 +118,7 @@ module.exports = {
 			.join('')
 		}
 
-		/* 
+		/*
 			split gutters
 			-> add uniform gutters to a group of elements
 		*/

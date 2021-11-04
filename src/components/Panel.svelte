@@ -2,11 +2,11 @@
 	export let id // the id attribute for the container, e.g. "blog"
 	export let centered
 	export let border = true
+	export let fullScreen = true
 	export let padding = {
 		x: 'outside',
 		y: 'xwide'
 	}
-	export let fullScreen = true
 
 	$: paddingClasses = Object.keys(padding).map((side) => {
 		if (padding[side] === 'default') {
