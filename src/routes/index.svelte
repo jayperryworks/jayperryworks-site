@@ -99,9 +99,21 @@
 	</Panel>
 
 	<!-- newsletter -->
-	<Panel id="newsletter">
-		<Wrapper width="xwide">
-			<SignupForm />
+	<Panel id="newsletter" fullScreen="{false}">
+		<Wrapper width="xwide" flex>
+			<a
+					class="toc-number type-scale-gamma type-font-accent type-link-undecorated type-weight-xlight | color-fg-secondary | padding-bottom-narrow"
+					href={pictures.cta.link}
+				>
+					01
+				</a>
+			<h2 class="type-scale-alpha">
+				My newsletter: <strong class="color-fg-highlight">Along the way</strong>
+			</h2>
+			<Wrapper centered="{false}">
+				<p class="padding-bottom padding-top-xnarrow">Short, illustrated essays delivered to your inbox each month, exploring questions around technology, nature, and history.</p>
+				<SignupForm />
+			</Wrapper>
 		</Wrapper>
 	</Panel>
 
@@ -113,7 +125,7 @@
 					class="toc-number type-scale-gamma type-font-accent type-link-undecorated type-weight-xlight | color-fg-secondary | padding-bottom-narrow"
 					href={pictures.cta.link}
 				>
-					01
+					02
 				</a>
 				<h2 class="type-scale-alpha">
 					<a href="{pictures.cta.link}">{pictures.heading}</a>
@@ -171,7 +183,7 @@
 					class="toc-number type-scale-gamma type-font-accent type-link-undecorated type-weight-xlight | color-fg-secondary | padding-bottom-narrow"
 					href={design.cta.link}
 				>
-					02
+					03
 				</a>
 				<h2 class="type-scale-alpha">
 					<a href="{design.cta.link}">{design.heading}</a>

@@ -30,7 +30,7 @@ const themes = {
     highlight: palette.lavendar,
     bg: palette.white,
     island: palette.white,
-    well: { ...palette.gray, l: 98 },
+    well: { ...palette.gray, l: 95 },
     border: palette.gray,
     shadow: { ...palette.gray, a: 0.6 }
   }

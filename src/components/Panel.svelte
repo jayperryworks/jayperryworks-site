@@ -6,6 +6,7 @@
 		x: 'outside',
 		y: 'xwide'
 	}
+	export let fullScreen = true
 
 	$: paddingClasses = Object.keys(padding).map((side) => {
 		if (padding[side] === 'default') {
@@ -19,17 +20,18 @@
 	export { classes as class }
 </script>
 
-<article 
+<article
 	class="{paddingClasses} | {classes}"
-	class:centered="{centered}"
 	class:border-seam-top="{border}"
+	class:centered="{centered}"
+	class:fullScreen
 	{id}
 >
 	<slot></slot>
 </article>
 
 <style>
-	article {
+	.fullScreen {
 		min-height: 100vh;
 	}
 
