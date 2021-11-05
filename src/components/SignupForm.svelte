@@ -3,9 +3,8 @@
 	import { stores } from '@sapper/app';
 	import axios from 'axios';
 	import validator from 'email-validator';
-	import warning from 'icons/warning.svg';
 	import Button from '@/components/Button.svelte';
-	import Icon from '@/components/Icon.svelte';
+	import Alert from '@/components/Alert.svelte';
 
 	// --- stores
 	// mailing list data is stored in environment variables
@@ -110,20 +109,9 @@
 			</Button>
 		</div>
 		{#if validationError}
-			<aside
-				class="flag color-bg-primary color-fg-bg solid padding-narrow margin-top-narrow border-round"
-				transition:fade
-			>
-				<div class="signifier">
-					<Icon svg="{warning}" size="large" />
-				</div>
-				<h3 class="title type-font-accent type-weight-light type-scale-epsilon color-fg-bg">
-					Sorry, this doesn't look like a valid email address.
-				</h3>
-				<p class="content type-font-accent type-weight-light type-scale-zeta">
-					Please double check it and try again.
-				</p>
-			</aside>
+			<Alert title="Hmm, this doesn't look like a valid email address.">
+				Please double check it and try again.
+			</Alert>
 		{/if}
 	</form>
 {/if}
@@ -201,35 +189,5 @@
 		.row input {
 			flex: 1;
 		}
-	}
-
-	.flag {
-		--flag-gap: var(--space-xnarrow);
-		display: grid;
-		grid-column-gap: var(--flag-gap, 1em);
-		grid-template-columns: auto 1fr;
-		grid-template-rows: repeat(3, minmax(min-content, max-content)) 1fr;
-		grid-template-areas:
-			'signifier .'
-			'signifier title'
-			'signifier content'
-			'. content';
-	}
-
-	.title {
-		grid-area: title;
-		align-self: center;
-		display: flex;
-		align-items: center;
-	}
-
-	.signifier {
-		grid-area: signifier;
-		display: flex;
-		align-self: center;
-	}
-
-	.content {
-		grid-area: content;
 	}
 </style>
