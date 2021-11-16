@@ -1,6 +1,5 @@
 <script context="module">
-	export async function preload(page, session) {
-		const { CAMPAIGN_MONITOR_TOKEN, CAMPAIGN_MONITOR_LIST_ID } = session;
+	export async function preload() {
 		const response = await this.fetch('index.json');
 		const data = await response.json();
 
