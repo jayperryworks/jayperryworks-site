@@ -117,19 +117,24 @@
 {/if}
 
 {#if status === 'success'}
-	<p
-		class="type-font-accent type-weight-light"
+	<div
 		transition:fade="{{ duration: transitionDuration, delay: transitionDuration }}"
+		class="border-top padding-top"
 	>
-		Yay it worked! You're totally subscribed!
-	</p>
+		<h3>You're subscribed. Thanks!</h3>
+		<p class="padding-top-xnarrow">
+			You'll receive the next issue when it goes out, and you can unsubscribe anytime with one click.
+		</p>
+	</div>
 {/if}
 
 {#if status === 'error'}
-	<div transition:fade="{{ duration: transitionDuration, delay: transitionDuration }}">
-		<h3>Oh dear, something went wrong.</h3>
-		<p>Let's try this the old-fashioned way: please <a href="mailto:hi@jayperryworks.com">send me an email</a> with "Subscribe" as the subject line, and I'll sign you up. Sorry for the inconvenience.</p>
-	</div>
+	<Alert
+		title="Oh dear, something went wrong."
+		transition="{{ duration: transitionDuration, delay: transitionDuration }}"
+	>
+		Let's try this the old-fashioned way: please <a href="mailto:hi@jayperryworks.com">send me an email</a> with "Subscribe" as the subject line, and I'll sign you up. Sorry for the inconvenience.
+	</Alert>
 {/if}
 
 <style>
