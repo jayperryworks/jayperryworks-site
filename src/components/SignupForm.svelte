@@ -28,6 +28,10 @@
 		username: apiKey,
 		password: 'x'
 	};
+	const headers = {
+		'Content-Type': 'application/json',
+		'Accept': 'application/json'
+	};
 	const transitionDuration = 250;
 
 	async function addSubscriber () {
@@ -45,7 +49,11 @@
 		});
 
 		try {
-			const response = await axios.post(endpoint, body, { auth, withCredentials: true });
+			const response = await axios.post(
+				endpoint,
+				body,
+				{ auth, headers, withCredentials: false }
+			);
 			status = 'success';
 		} catch(error) {
 			if (error.request) {
