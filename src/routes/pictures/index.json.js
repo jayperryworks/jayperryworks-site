@@ -1,18 +1,19 @@
-import errors from '@/utils/errorMessages.js'
-import prismic, { blockQueries, getImageVersions } from '@/utils/prismicQuery.js';
-import render from '@/utils/renderMarkdown.js'
+import errors from '@/utils/errorMessages.js';
+import prismic, { getImageVersions } from '@/utils/prismicQuery.js';
+import render from '@/utils/renderMarkdown.js';
+import { format } from 'date-fns';
 
 export async function get(req, res) {
 
   // query a list of all pictures for the previous/next links
   let response = await prismic(`
     query{
-      allPictures(sortBy: year_completed_DESC) {
+      allPictures(sortBy: date_completed_DESC) {
         edges {
           node {
             title
             cover
-            year_completed
+            date_completed
             orientation
             _meta {
               uid
@@ -51,7 +52,8 @@ export async function get(req, res) {
     let picture = {};
 
     picture.title = pictureData.title?.[0]?.text;
-    picture.path = `/pictures/${pictureData.year_completed}/${pictureData._meta.uid}/`;
+		picture.yearCompleted = format(new Date(pictureData.date_completed), 'yyyy');
+    picture.path = `/pictures/${picture.yearCompleted}/${pictureData._meta.uid}/`;
 
     // cover image
     if (pictureData.cover) {
