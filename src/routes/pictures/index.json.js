@@ -2,6 +2,7 @@ import errors from '@/utils/errorMessages.js';
 import prismic, { getImageVersions } from '@/utils/prismicQuery.js';
 import render from '@/utils/renderMarkdown.js';
 import { format } from 'date-fns';
+import { UniqueDirectivesPerLocationRule } from 'graphql';
 
 export async function get(req, res) {
 
@@ -15,6 +16,8 @@ export async function get(req, res) {
             cover
             date_completed
             orientation
+						width
+						height
             _meta {
               uid
             }
@@ -28,6 +31,18 @@ export async function get(req, res) {
                 }
               }
             }
+						body {
+							... on PictureBodyEdition {
+								primary {
+									size {
+										... on Print_size {
+											long_side
+											short_side
+										}
+									}
+								}
+							}
+						}
             _linkType
           }
         }
@@ -54,6 +69,10 @@ export async function get(req, res) {
     picture.title = pictureData.title?.[0]?.text;
 		picture.yearCompleted = format(new Date(pictureData.date_completed), 'yyyy');
     picture.path = `/pictures/${picture.yearCompleted}/${pictureData._meta.uid}/`;
+
+		if (pictureData.width) {
+			picture.aspect = pictureData.width / pictureData.height;
+		}
 
     // cover image
     if (pictureData.cover) {
