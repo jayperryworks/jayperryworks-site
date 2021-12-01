@@ -1,43 +1,42 @@
 <script context="module">
 	export async function preload({ params, query }) {
 		// get the post for this page using the date and slug params
-		const { year, slug } = params
-		const response = await this.fetch(`pictures/${year}/${slug}.json`)
-		const data = await response.json()
+		const { year, slug } = params;
+		const response = await this.fetch(`pictures/${year}/${slug}.json`);
+		const data = await response.json();
 
 		if (response.status !== 200) {
-			this.error(response.status, data.message)
-			return
+			this.error(response.status, data.message);
+			return;
 		}
 
 		return {
 			post: data,
 			date: { year }
-		}
+		};
 	}
 </script>
 
 <script>
-	import { format } from 'date-fns'
-	import { titleize } from '@/utils/stringHelpers.js'
-	import index from 'icons/index.svg'
-	import Cover from '@/components/Cover.svelte'
-	import Gallery from '@/components/Gallery.svelte'
-	import Icon from '@/components/Icon.svelte'
-	import MainNav from '@/components/MainNav.svelte'
-	import Note from '@/components/Note.svelte'
-	import PageTheme from '@/components/PageTheme.svelte'
-	import PageTitle from '@/components/PageTitle.svelte'
-	import PaginationNav from '@/components/PaginationNav.svelte'
-	import Passage from '@/components/Passage.svelte'
-	import PrintEdition from '@/components/PrintEdition.svelte'
-	import Wrapper from '@/components/Wrapper.svelte'
+	import { format } from 'date-fns';
+	import { titleize } from '@/utils/stringHelpers.js';
+	import index from 'icons/index.svg';
+	import Cover from '@/components/Cover.svelte';
+	import Gallery from '@/components/Gallery.svelte';
+	import Icon from '@/components/Icon.svelte';
+	import MainNav from '@/components/MainNav.svelte';
+	import Note from '@/components/Note.svelte';
+	import PageTheme from '@/components/PageTheme.svelte';
+	import PageTitle from '@/components/PageTitle.svelte';
+	import PaginationNav from '@/components/PaginationNav.svelte';
+	import Passage from '@/components/Passage.svelte';
+	import PrintEdition from '@/components/PrintEdition.svelte';
+	import Wrapper from '@/components/Wrapper.svelte';
 
-	export let post, date
-	let metadataBreakpoint = 'xsmall'
-	let { prevPage, nextPage } = post
+	export let post, date;
+	let { prevPage, nextPage } = post;
 
-	$: formattedDate = format(new Date(date.year, 0), 'yyyy')
+	$: formattedDate = format(new Date(date.year, 0), 'yyyy');
 </script>
 
 <PageTitle title="{post.title}" />
@@ -146,7 +145,7 @@
 			    </a>
 			  </div>
 			</header>
-			<PaginationNav items="{[ post.prevPage, post.nextPage ]}" />
+			<PaginationNav items="{[ prevPage, nextPage ]}" />
 		</nav>
 	{/if}
 </main>

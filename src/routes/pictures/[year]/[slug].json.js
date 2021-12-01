@@ -1,11 +1,11 @@
-import errors from '@/utils/errorMessages.js'
-import prismic, { blockQueries, getImageVersions } from '@/utils/prismicQuery.js';
-import render from '@/utils/renderMarkdown.js'
-
+import { sentenceCase } from 'change-case';
+import { format } from 'date-fns';
 import arrayToSentence from 'array-to-sentence';
 import calculateAspectRatio from 'calculate-aspect-ratio';
 import convertColor from 'color-convert';
-import { camelCase, paramCase, noCase, sentenceCase } from 'change-case';
+import errors from '@/utils/errorMessages.js'
+import prismic, { getImageVersions } from '@/utils/prismicQuery.js';
+import render from '@/utils/renderMarkdown.js'
 
 // set width and height depending on Landscape/Portrait orientation
 function getEditionDimensions (orientation, { long_side, short_side }) {
@@ -25,12 +25,13 @@ function getEditionDimensions (orientation, { long_side, short_side }) {
 // build an object for the previous and next pages nav
 function getPaginationData (page, direction) {
 	const versions = getImageVersions(page.cover);
+	const yearCompleted = format(new Date(page.date_completed), 'yyyy');
 
 	return {
 		direction,
 		thumbnail: versions,
 		label: page.title[0].text,
-		path: `pictures/${page.year_completed}/${page._meta.uid}/`,
+		path: `pictures/${yearCompleted}/${page._meta.uid}/`,
 		aspectRatio: calculateAspectRatio(versions[0].width, versions[0].height)
 	};
 }
@@ -41,91 +42,101 @@ export async function get(req, res, next) {
 	// query the data for this page
 	let pageResponse = await prismic(`
 	  query{
-		  picture(uid: "${slug}", lang: "en-us") {
-		    _linkType
-		    title
-		    cover
-		    highlight
-		    description
-		    orientation
-		    width
-		    height
-		    media {
-		      medium
-		    }
-		    substrate
-		    series {
-		      ... on Picture_series {
-		        title
-		        _meta {
-		          uid
-		        }
-		      }
-		    }
-		    _meta {
-		      tags
-		    }
-		    body {
-		      __typename
-		      ... on PictureBodyEdition {
-		        type
-		        primary {
-		          name
-		          photo
-		          limit
-		          size {
-		            __typename
-		            ... on Print_size {
-		              long_side
-		              short_side
-		              border
-		              base_price
-		              print_type {
-		                _linkType
-		                __typename
-		                ... on Print_type {
-		                  name
-		                  description
-		                  _meta {
-		                    id
-		                  }
-		                }
-		              }
-		            }
-		          }
-		        }
-		      }
-		    }
-		  }
+			picture(uid: "${slug}", lang: "en-us") {
+				_linkType
+				title
+				cover
+				highlight
+				description
+				orientation
+				width
+				height
+				media {
+					medium {
+						...on Picture_medium {
+							name
+						}
+					}
+				}
+				substrate {
+					...on Picture_substrate {
+						name
+					}
+				}
+				series {
+					... on Picture_series {
+						title
+						_meta {
+							uid
+						}
+					}
+				}
+				_meta {
+					tags
+				}
+				body {
+					__typename
+					... on PictureBodyEdition {
+						type
+						primary {
+							name
+							photo
+							limit
+							size {
+								__typename
+								... on Print_size {
+									long_side
+									short_side
+									border
+									base_price
+									print_type {
+										_linkType
+										__typename
+										... on Print_type {
+											name
+											description
+											_meta {
+												id
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	`);
 
 	// query a list of all pictures for the previous/next links
 	let listResponse = await prismic(`
 		query{
-	    allPictures(sortBy: year_completed_DESC) {
-	      edges {
-	        node {
-	          title
-	          cover
-	          year_completed
-	          _meta {
-	            uid
-	          }
-	          series {
-	            _linkType
-	            ... on Picture_series {
-	              title
-	              _meta {
-	                uid
-	              }
-	            }
-	          }
-	          _linkType
-	        }
-	      }
-	    }
-		}
+      allPictures(sortBy: date_completed_DESC) {
+        edges {
+          node {
+            title
+            cover
+            date_completed
+            orientation
+            _meta {
+              uid
+            }
+            series {
+              _linkType
+              ... on Picture_series {
+                title
+                description
+                _meta {
+                  uid
+                }
+              }
+            }
+            _linkType
+          }
+        }
+      }
+    }
 	`);
 
 	let pageData = await pageResponse.data.picture;
@@ -179,8 +190,8 @@ export async function get(req, res, next) {
 
 	// picture format (media and substrate)
 	if (pageData.media && pageData.substrate) {
-		const media = arrayToSentence(pageData.media.map(item => item.medium));
-		content.format = sentenceCase(`${media} on ${pageData.substrate}`);
+		const media = arrayToSentence(pageData.media.map(item => item.medium.name));
+		content.format = sentenceCase(`${media} on ${pageData.substrate.name}`);
 	}
 
 	// grab info about the print editions, if there are any
@@ -190,7 +201,7 @@ export async function get(req, res, next) {
 		// get the resized versions of the edition images
 		content.editions = pageData.body.map((edition) => {
 			const { name, photo, size, orientation, limit } = edition.primary
-			
+
 			printDescriptions.push({
 				type: size.print_type?.name?.[0].text,
 				description: render(size.print_type?.description?.[0]?.text)
