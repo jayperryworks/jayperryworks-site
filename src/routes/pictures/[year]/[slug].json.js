@@ -155,8 +155,12 @@ export async function get(req, res, next) {
 
 	content.title = pageData.title?.[0]?.text;
 	content.tags = pageData._meta.tags;
-	content.width = pageData.width;
-	content.height = pageData.height;
+
+	if (content.width) {
+		content.width = pageData.width;
+		content.height = pageData.height;
+		content.aspect = (pageData.width/pageData.height);
+	}
 
 	// highlight color
 	if (pageData.highlight) {
@@ -169,7 +173,7 @@ export async function get(req, res, next) {
 			const key = Object.keys(result)[index];
 			result[key] = value;
 			return result;
-		}, { h: null, s: null, l: null })
+		}, { h: null, s: null, l: null });
 	}
 
 	// cover image
@@ -201,6 +205,11 @@ export async function get(req, res, next) {
 		// get the resized versions of the edition images
 		content.editions = pageData.body.map((edition) => {
 			const { name, photo, size, orientation, limit } = edition.primary
+			const dimensions = getEditionDimensions(pageData.orientation, size);
+
+			if (!content.aspect) {
+				content.aspect = dimensions.width / dimensions.height;
+			}
 
 			printDescriptions.push({
 				type: size.print_type?.name?.[0].text,
@@ -208,7 +217,7 @@ export async function get(req, res, next) {
 			});
 
 			return {
-				...getEditionDimensions(pageData.orientation, size),
+				...dimensions,
 				limit,
 				border: size.border,
 				name: name?.[0]?.text,
@@ -216,7 +225,6 @@ export async function get(req, res, next) {
 				price: size.base_price,
 				type: size.print_type?.name?.[0].text
 			};
-
 		});
 
 		// get unique edition types for this picture, e.g. 'giclee'
