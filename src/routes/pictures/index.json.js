@@ -2,7 +2,7 @@ import errors from '@/utils/errorMessages.js';
 import prismic, { getImageVersions } from '@/utils/prismicQuery.js';
 import render from '@/utils/renderMarkdown.js';
 import { format } from 'date-fns';
-import { UniqueDirectivesPerLocationRule } from 'graphql';
+import { getEditionDimensions } from '../../utils/prismicQuery';
 
 export async function get(req, res) {
 
@@ -71,7 +71,13 @@ export async function get(req, res) {
     picture.path = `/pictures/${picture.yearCompleted}/${pictureData._meta.uid}/`;
 
 		if (pictureData.width) {
-			picture.aspect = pictureData.width / pictureData.height;
+			picture.ratio = `${pictureData.width}/${pictureData.height}`;
+		}
+
+		if (!pictureData.width) {
+			const { size } = pictureData.body[0].primary
+			const dimensions = getEditionDimensions(pictureData.orientation, size);
+			picture.ratio = `${dimensions.width}/${dimensions.height}`;
 		}
 
     // cover image

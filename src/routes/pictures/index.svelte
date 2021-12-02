@@ -32,9 +32,12 @@
   // sort the pictures list by series
   $: picturesBySeries = [
   	...series.map(({ title, uid }) => {
+			const seriesPictures = pictures.filter(picture => picture.series === uid);
+
   		return {
   			title,
-  			pictures: pictures.filter(picture => picture.series === uid)
+  			pictures: seriesPictures,
+				ratio: seriesPictures[0].ratio
   		}
   	}),
   	// unsorted pictures (no series)
@@ -71,7 +74,11 @@
 		              rel="prefetch"
 		              href="{picture.path}"
 		            >
-                  <AspectRatio class="border solid">
+                  <AspectRatio
+										class="border solid"
+										ratio="{series.ratio}"
+										useScale="{series.ratio ? false : true}"
+									>
   		              <ResponsiveImage
   		                sources={picture.cover.image}
   		                alt={picture.cover.alt}

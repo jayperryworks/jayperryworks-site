@@ -44,6 +44,21 @@ export function getImageVersions (
   ]
 }
 
+// set width and height depending on Landscape/Portrait orientation
+export function getEditionDimensions (orientation, { long_side, short_side }) {
+	if (orientation === 'Portrait') {
+		return {
+			height: long_side,
+			width: short_side
+		};
+	}
+
+	return {
+		width: long_side,
+		height: short_side
+	};
+}
+
 export const blockQueries = {
   heading: (typename = 'PageBodyHeading') => `
     ...on ${typename} {

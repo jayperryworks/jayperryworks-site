@@ -4,23 +4,8 @@ import arrayToSentence from 'array-to-sentence';
 import calculateAspectRatio from 'calculate-aspect-ratio';
 import convertColor from 'color-convert';
 import errors from '@/utils/errorMessages.js'
-import prismic, { getImageVersions } from '@/utils/prismicQuery.js';
+import prismic, { getImageVersions, getEditionDimensions } from '@/utils/prismicQuery.js';
 import render from '@/utils/renderMarkdown.js'
-
-// set width and height depending on Landscape/Portrait orientation
-function getEditionDimensions (orientation, { long_side, short_side }) {
-	if (orientation === 'Portrait') {
-		return {
-			height: long_side,
-			width: short_side
-		};
-	}
-
-	return {
-		width: long_side,
-		height: short_side
-	};
-}
 
 // build an object for the previous and next pages nav
 function getPaginationData (page, direction) {
@@ -204,7 +189,7 @@ export async function get(req, res, next) {
 
 		// get the resized versions of the edition images
 		content.editions = pageData.body.map((edition) => {
-			const { name, photo, size, orientation, limit } = edition.primary
+			const { name, photo, size, limit } = edition.primary
 			const dimensions = getEditionDimensions(pageData.orientation, size);
 
 			if (!content.aspect) {
