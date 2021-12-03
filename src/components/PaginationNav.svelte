@@ -6,16 +6,16 @@
 	import Icon from '@/components/Icon.svelte'
 	import ResponsiveImage from '@/components/ResponsiveImage.svelte'
 
-	export let items = []
-	export let itemWidth = 18
+	export let items = [];
+	export let itemWidth = 18;
 
 	$: style = `--item-width: ${itemWidth}rem;`
 
 	function label (item) {
 		if (item.label) {
-			return item.label
+			return item.label;
 		}
-		return
+		return;
 	}
 </script>
 
@@ -29,10 +29,10 @@
 			>
 				{#if item.thumbnail}
 					<a
-					  class="thumbnail type-link-undecorated padding-bottom"
+					  class="thumbnail type-link-undecorated margin-bottom"
 					  href="{item.path}"
 					>
-					  <AspectRatio class="border solid">
+					  <AspectRatio class="border solid" ratio="{item.ratio}">
 					    <ResponsiveImage
 					      sources="{item.thumbnail}"
 					      alt="{item.label}"
@@ -87,6 +87,8 @@
 	.label {
 		align-items: center;
 		display: flex;
+		max-width: var(--item-width);
+		margin-top: auto;
 	}
 
 	.label > :global(* + *) {
@@ -110,6 +112,7 @@
 		  li.next {
 		    justify-self: end;
 		    text-align: right;
+				align-items: end;
 		  }
 
 	  	.thumbnail {
@@ -119,17 +122,14 @@
 				overflow: hidden;
 				height: var(--size);
 				width: var(--size);
+				flex: 1;
 	    }
-
-			.next > .thumbnail {
-				align-self: end;
-			}
 		}
 	}
 
 	@media screen and (min-width: 48em) {
 		.thumbnail {
-			--size: 16rem;
+			--size: var(--item-width);
 		}
 	}
 </style>

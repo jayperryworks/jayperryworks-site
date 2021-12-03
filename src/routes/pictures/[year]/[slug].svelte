@@ -35,7 +35,6 @@
 
 	export let post, date;
 	let { prevPage, nextPage } = post;
-	console.log(post.aspect);
 
 	$: formattedDate = format(new Date(date.year, 0), 'yyyy');
 </script>

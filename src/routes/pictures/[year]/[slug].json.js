@@ -17,7 +17,7 @@ function getPaginationData (page, direction) {
 		thumbnail: versions,
 		label: page.title[0].text,
 		path: `pictures/${yearCompleted}/${page._meta.uid}/`,
-		aspectRatio: calculateAspectRatio(versions[0].width, versions[0].height)
+		ratio: calculateAspectRatio(versions[0].width, versions[0].height).split(':').join('/')
 	};
 }
 

@@ -1,8 +1,9 @@
+import { format } from 'date-fns';
+import { getEditionDimensions } from '../../utils/prismicQuery';
+import calculateAspectRatio from 'calculate-aspect-ratio';
 import errors from '@/utils/errorMessages.js';
 import prismic, { getImageVersions } from '@/utils/prismicQuery.js';
 import render from '@/utils/renderMarkdown.js';
-import { format } from 'date-fns';
-import { getEditionDimensions } from '../../utils/prismicQuery';
 
 export async function get(req, res) {
 
@@ -15,9 +16,6 @@ export async function get(req, res) {
             title
             cover
             date_completed
-            orientation
-						width
-						height
             _meta {
               uid
             }
@@ -31,19 +29,6 @@ export async function get(req, res) {
                 }
               }
             }
-						body {
-							... on PictureBodyEdition {
-								primary {
-									size {
-										... on Print_size {
-											long_side
-											short_side
-										}
-									}
-								}
-							}
-						}
-            _linkType
           }
         }
       }
@@ -70,22 +55,13 @@ export async function get(req, res) {
 		picture.yearCompleted = format(new Date(pictureData.date_completed), 'yyyy');
     picture.path = `/pictures/${picture.yearCompleted}/${pictureData._meta.uid}/`;
 
-		if (pictureData.width) {
-			picture.ratio = `${pictureData.width}/${pictureData.height}`;
-		}
-
-		if (!pictureData.width) {
-			const { size } = pictureData.body[0].primary
-			const dimensions = getEditionDimensions(pictureData.orientation, size);
-			picture.ratio = `${dimensions.width}/${dimensions.height}`;
-		}
-
     // cover image
     if (pictureData.cover) {
       picture.cover = {
         image: getImageVersions(pictureData.cover),
         alt: pictureData.cover.alt
       };
+			picture.ratio = calculateAspectRatio(picture.cover.image[0].width, picture.cover.image[0].height).split(':').join('/');
     }
 
     // series data
@@ -104,6 +80,7 @@ export async function get(req, res) {
     return picture;
   });
 
+	// create an array of series, removing duplicate values
   series = [...new Set(series.map(JSON.stringify))].map(JSON.parse);
 
 	res.writeHead(200, {
