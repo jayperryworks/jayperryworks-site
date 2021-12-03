@@ -15,7 +15,7 @@
 		if (item.label) {
 			return item.label
 		}
-		return 
+		return
 	}
 </script>
 
@@ -75,7 +75,8 @@
 
 	li {
 	  display: flex;
-	  flex-wrap: wrap;
+	  /* flex-wrap: wrap; */
+		flex-direction: column;
 	}
 
 	li + li {
@@ -112,8 +113,23 @@
 		  }
 
 	  	.thumbnail {
-	      width: 100%;
+				--size: 12rem;
+				display: block;
+				width: 100%;
+				overflow: hidden;
+				height: var(--size);
+				width: var(--size);
 	    }
+
+			.next > .thumbnail {
+				align-self: end;
+			}
+		}
+	}
+
+	@media screen and (min-width: 48em) {
+		.thumbnail {
+			--size: 16rem;
 		}
 	}
 </style>
