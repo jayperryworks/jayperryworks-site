@@ -7,7 +7,7 @@
 	import ResponsiveImage from '@/components/ResponsiveImage.svelte'
 
 	export let items = [];
-	export let itemWidth = 18;
+	export let itemWidth = 25;
 
 	$: style = `--item-width: ${itemWidth}rem;`
 
@@ -32,13 +32,11 @@
 					  class="thumbnail type-link-undecorated margin-bottom"
 					  href="{item.path}"
 					>
-					  <AspectRatio class="border solid" ratio="{item.ratio}">
 					    <ResponsiveImage
+								class="border solid"
 					      sources="{item.thumbnail}"
 					      alt="{item.label}"
-					      cover
 					    />
-					  </AspectRatio>
 					</a>
 				{/if}
 				<a
@@ -74,9 +72,11 @@
 	}
 
 	li {
-	  display: flex;
-	  /* flex-wrap: wrap; */
+		align-items: start;
 		flex-direction: column;
+		justify-self: start;
+		max-width: var(--item-width);
+	  display: flex;
 	}
 
 	li + li {
@@ -87,8 +87,8 @@
 	.label {
 		align-items: center;
 		display: flex;
-		max-width: var(--item-width);
 		margin-top: auto;
+		max-width: var(--item-width);
 	}
 
 	.label > :global(* + *) {
@@ -101,8 +101,8 @@
 		@supports (display: grid) {
 		  ul {
 		    display: grid;
-		    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 		    grid-gap: var(--space-medium);
+		    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 		  }
 
 		  li + li {
@@ -110,26 +110,33 @@
 		  }
 
 		  li.next {
+				align-items: end;
 		    justify-self: end;
 		    text-align: right;
-				align-items: end;
 		  }
 
 	  	.thumbnail {
-				--size: 12rem;
+				--size: 8rem;
 				display: block;
-				width: 100%;
 				overflow: hidden;
-				height: var(--size);
-				width: var(--size);
-				flex: 1;
+				width: 100%;
 	    }
+
+			.thumbnail > :global(img) {
+				max-height: var(--size);
+			}
 		}
 	}
 
 	@media screen and (min-width: 48em) {
 		.thumbnail {
-			--size: var(--item-width);
+			--size: 12rem;
+		}
+	}
+
+	@media screen and (min-width: 75em) {
+		.thumbnail {
+			--size: 16rem;
 		}
 	}
 </style>
