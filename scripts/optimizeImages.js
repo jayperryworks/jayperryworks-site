@@ -166,9 +166,7 @@ async function resizeAndGenerateManifest (images) {
 
 resizeAndGenerateManifest([
 	...getBlogImages('../content/blog'),
-	...getPictureImages('../content/pictures'),
 	...getDesignIndexImages('../content/design.yml'),
 	...getDesignImages('../content/design'),
-	...getAboutImages('../content/about.yml'),
 	...getHomeImages('../content/home.yml')
 ])
