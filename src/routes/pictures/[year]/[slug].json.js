@@ -108,7 +108,6 @@ export async function get(req, res, next) {
               uid
             }
             series {
-              _linkType
               ... on Picture_series {
                 title
                 description
@@ -217,7 +216,6 @@ export async function get(req, res, next) {
 		content.printDescriptions = [...new Set(printDescriptions.map(JSON.stringify))].map(JSON.parse);
 	}
 
-	// next and previous page nav data
 	const currentPageIndex = listData.indexOf(
 		listData.find(item => item.node._meta.uid === slug)
 	);
