@@ -115,6 +115,10 @@
 		    text-align: right;
 		  }
 
+			.next > .label {
+				margin-left: auto;
+			}
+
 	  	.thumbnail {
 				--size: 8rem;
 				display: block;
