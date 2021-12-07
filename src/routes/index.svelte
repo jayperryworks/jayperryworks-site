@@ -44,7 +44,7 @@
 
 <MainNav segment="/" overlay />
 
-<main class="fill-vertical | hide-overflow">
+<main class="fill-vertical">
 
 	<!-- intro -->
 	<Panel
@@ -64,7 +64,7 @@
 				<Wrapper width="wide" centered={false}>
 					<h1 class="type-leading-xtight">{@html intro.headline}</h1>
 				</Wrapper>
-				<Wrapper 
+				<Wrapper
 					centered="{false}"
 					class="type-scale-delta type-heading type-leading-default | padding-top padding-bottom-wide"
 				>
@@ -122,7 +122,7 @@
 						class="margin-y-flow-wide"
 						centered="{false}"
 					>
-						
+
 						{#if pictures.blurb}
 							<Passage html="{pictures.blurb}" class="type-scale-delta type-heading type-leading-default"/>
 						{/if}
@@ -180,7 +180,7 @@
 						class="margin-y-flow-wide"
 						centered="{false}"
 					>
-						
+
 						{#if design.blurb}
 							<Passage html="{design.blurb}" class="type-scale-delta type-heading type-leading-default"/>
 						{/if}

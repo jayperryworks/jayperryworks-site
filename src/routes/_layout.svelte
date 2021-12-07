@@ -8,6 +8,7 @@
 
 <div
   id="spine-wrapper"
+	class="overflow-hidden"
   class:loading="{$preloading}"
 >
   <div id="main-wrapper">
