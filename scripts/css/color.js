@@ -11,6 +11,10 @@ function getValue (role, theme = 'default') {
 	return color.themes[theme][role]
 }
 
+function getHSLValue (role, theme = 'default') {
+	return hsl(color.themes[theme][role]);
+}
+
 function getCustomProperty (role, theme = 'default') {
 	const variables = Object.keys(color.themes[theme][role]).map(channel => `
 		var(--color-${role}-${channel})
@@ -25,7 +29,7 @@ function setCustomProperty (role, { h, s, l, a }) {
 		--color-${role}-s: ${s}%;
 		--color-${role}-l: ${l}%;
 		${a ? `--color-${role}-a: ${a};` : ''}
-		
+
 		--color-${role}: hsl(
 			var(--color-${role}-h),
 			var(--color-${role}-s),
@@ -52,6 +56,7 @@ module.exports = {
 	name: 'Color',
 	helpers: {
 		getValue,
+		getHSLValue,
 		getCustomProperty,
 		setCustomProperty,
 		add
