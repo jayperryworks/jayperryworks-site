@@ -1,7 +1,7 @@
 const { color } = require('../../content/design-tokens.js')
 
 function hsl (color) {
-  if (color.a && color.a !== 1) {
+  if (color?.a < 1) {
   	return `hsl(${color.h}, ${color.s}%, ${color.l}%, ${color.a})`
   }
   return `hsl(${color.h}, ${color.s}%, ${color.l}%)`
