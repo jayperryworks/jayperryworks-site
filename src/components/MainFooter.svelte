@@ -8,28 +8,20 @@
       name: "Etsy",
       url: "https://jayperry.etsy.com/"
     },
-    {
-      name: "Twitter",
-      url: "https://twitter.com/inkpixelswords"
-    },
-    {
-      name: "Pinterest",
-      url: "https://www.pinterest.com/jayperryworks/"
-    },
+		{
+			name: "Instagram",
+			url: "https://www.instagram.com/jayperryworks/"
+		},
     {
       name: "Github",
       url: "https://github.com/jayperryworks"
     },
-    {
-      name: "Pocket",
-      url: "https://getpocket.com/%40j%40jayperryworks.com"
-    }
   ]
 
   $: socialChannelList = socialChannels.map((channel, index) => {
     return `
       ${index == socialChannels.length - 1 ? 'and' : ''}
-      <a class="color-fg-primary | type-font-display type-weight-normal" href="${channel.url}">${channel.name}</a>
+      <a class="color-fg-primary | type-font-display type-weight-normal" href="${channel.url}" target="_blank">${channel.name}</a>
     `.trim()
   }).join(', ')
 </script>
