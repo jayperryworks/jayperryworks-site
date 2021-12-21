@@ -1,17 +1,14 @@
-import { PrismicLink } from 'apollo-link-prismic'
-import {
-  InMemoryCache,
-  IntrospectionFragmentMatcher
-} from 'apollo-cache-inmemory'
-import ApolloClient from 'apollo-client'
-import gql from 'graphql-tag'
-import fragmentTypes from '@/utils/prismicFragments.json'
+import { PrismicLink } from 'apollo-link-prismic';
+import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+import ApolloClient from 'apollo-client';
+import gql from 'graphql-tag';
+import fragmentTypes from '@/utils/prismicFragments.json';
 
-const accessToken = process.env.PRISMIC_TOKEN
+const accessToken = process.env.PRISMIC_TOKEN;
 
 const fragmentMatcher = new IntrospectionFragmentMatcher(
   { introspectionQueryResultData: fragmentTypes },
-)
+);
 
 const client = new ApolloClient({
   link: PrismicLink({
@@ -19,7 +16,9 @@ const client = new ApolloClient({
     accessToken
   }),
   cache: new InMemoryCache({ fragmentMatcher })
-})
+});
+
+export const maxItemsPerResponse = 20;
 
 export function getImageVersions (
   imageField,
