@@ -25,7 +25,6 @@
   import Wrapper from '@/components/Wrapper.svelte';
 
   export let picturesBySeries;
-	console.log(picturesBySeries)
 </script>
 
 <PageTitle title="Pictures" />
