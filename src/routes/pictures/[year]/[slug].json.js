@@ -28,7 +28,6 @@ export async function get(req, res, next) {
 	let pageResponse = await prismic(`
 	  query{
 			picture(uid: "${slug}", lang: "en-us") {
-				_linkType
 				title
 				cover
 				highlight
@@ -52,7 +51,7 @@ export async function get(req, res, next) {
 					... on Picture_series {
 						title
 						_meta {
-							uid
+							id
 						}
 					}
 				}
@@ -105,14 +104,14 @@ export async function get(req, res, next) {
             date_completed
             orientation
             _meta {
-              uid
+							id
             }
             series {
               ... on Picture_series {
                 title
                 description
                 _meta {
-                  uid
+									id
                 }
               }
             }
