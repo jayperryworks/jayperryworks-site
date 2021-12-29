@@ -24,6 +24,7 @@ async function query(cursor = null, previousResponse = null) {
 						cover
 						date_completed
 						_meta {
+							id
 							uid
 						}
 						series {

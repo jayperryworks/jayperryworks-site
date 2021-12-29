@@ -56,6 +56,7 @@ export async function get(req, res, next) {
 					}
 				}
 				_meta {
+					id
 					tags
 				}
 				body {
@@ -97,6 +98,10 @@ export async function get(req, res, next) {
 	let listResponse = await prismic(`
 		query{
       allPictures(sortBy: date_completed_DESC) {
+				pageInfo {
+					hasNextPage
+					endCursor
+				}
         edges {
           node {
             title
@@ -105,17 +110,8 @@ export async function get(req, res, next) {
             orientation
             _meta {
 							id
+							uid
             }
-            series {
-              ... on Picture_series {
-                title
-                description
-                _meta {
-									id
-                }
-              }
-            }
-            _linkType
           }
         }
       }
@@ -218,6 +214,8 @@ export async function get(req, res, next) {
 	const currentPageIndex = listData.indexOf(
 		listData.find(item => item.node._meta.uid === slug)
 	);
+
+	console.log(currentPageIndex)
 
 	if (currentPageIndex > 0) {
 		content.prevPage = getPaginationData(
