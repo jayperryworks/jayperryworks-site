@@ -38,7 +38,7 @@
     "graphql": "^15.5.3",
     "graphql-tag": "^2.12.5",
     "js-yaml": "^3.14.1",
-    "markdown-it": "^12.2.0",
+    "markdown-it": "^12.3.2",
     "markdown-it-footnote": "^3.0.2",
     "minimist": ">=1.2.3",
     "path": "^0.12.7",
