@@ -1,5 +1,5 @@
 import { camelCase, paramCase } from 'change-case';
-import prismic, { blockQueries, getImageVersions } from '@/utils/prismicQuery.js';
+import { query, blockQueries, getImageVersions } from '@/utils/prismicQuery.js';
 import { findInManifest } from '@/utils/imageHelpers.js';
 import markdown from '@/utils/renderMarkdown.js';
 import errors from '@/utils/errorMessages.js';
@@ -27,7 +27,7 @@ function getSharedSliceFields (slice) {
 }
 
 export async function get(req, res) {
-  let response = await prismic(`
+  let response = await query(`
     query{
       page(uid: "about", lang: "en-us") {
         title
@@ -70,7 +70,7 @@ export async function get(req, res) {
           alt: slice.primary.image.alt,
           attribution: slice.primary.attribution,
           border: slice.primary.border || false,
-          caption: slice.primary.caption 
+          caption: slice.primary.caption
             ? renderMarkdown(slice.primary.caption)
             : null,
           image: getImageVersions(slice.primary.image),
@@ -80,7 +80,7 @@ export async function get(req, res) {
       }
       case 'image_gallery': {
         slice = {
-          caption: slice.primary.caption 
+          caption: slice.primary.caption
             ? renderMarkdown(slice.primary.caption)
             : null,
           attribution: slice.primary.attribution,

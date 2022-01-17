@@ -1,14 +1,12 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
 import { findInManifest } from '@/utils/imageHelpers.js'
-import generatePictureList from '@/utils/generatePictureList.js'
 import render from '@/utils/renderMarkdown.js'
 
 export async function get(req, res) {
   let content = yaml.safeLoad(
     fs.readFileSync('content/design.yml', 'utf-8')
   )
-  // const pictures = generatePictureList('content/pictures')
 
   if (content.intro) {
     content.intro = render(content.intro)

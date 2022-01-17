@@ -4,20 +4,18 @@ import arrayToSentence from 'array-to-sentence';
 import calculateAspectRatio from 'calculate-aspect-ratio';
 import convertColor from 'color-convert';
 import errors from '@/utils/errorMessages.js'
-import prismic, { getImageVersions, getEditionDimensions } from '@/utils/prismicQuery.js';
+import { query, getImageVersions, getEditionDimensions } from '@/utils/prismicQuery.js';
 import render from '@/utils/renderMarkdown.js'
+import generatePictureList from '@/utils/generatePictureList.js'
 
 // build an object for the previous and next pages nav
 function getPaginationData (page, direction) {
-	const versions = getImageVersions(page.cover);
-	const yearCompleted = format(new Date(page.date_completed), 'yyyy');
-
 	return {
 		direction,
-		thumbnail: versions,
+		thumbnail: page.cover.image,
 		label: page.title[0].text,
-		path: `pictures/${yearCompleted}/${page._meta.uid}/`,
-		ratio: calculateAspectRatio(versions[0].width, versions[0].height).split(':').join('/')
+		path: `pictures/${page.yearCompleted}/${page.slug}/`,
+		ratio: calculateAspectRatio(page.cover.image[0].width, page.cover.image[0].height).split(':').join('/')
 	};
 }
 
@@ -25,7 +23,7 @@ export async function get(req, res, next) {
 	const { year, slug } = req.params;
 
 	// query the data for this page
-	let pageResponse = await prismic(`
+	let pageResponse = await query(`
 	  query{
 			picture(uid: "${slug}", lang: "en-us") {
 				title
@@ -94,32 +92,10 @@ export async function get(req, res, next) {
 		}
 	`);
 
-	// query a list of all pictures for the previous/next links
-	let listResponse = await prismic(`
-		query{
-      allPictures(sortBy: date_completed_DESC) {
-				pageInfo {
-					hasNextPage
-					endCursor
-				}
-        edges {
-          node {
-            title
-            cover
-            date_completed
-            orientation
-            _meta {
-							id
-							uid
-            }
-          }
-        }
-      }
-    }
-	`);
-
 	let pageData = await pageResponse.data.picture;
-	let listData = await listResponse.data.allPictures.edges;
+
+	// query a list of all pictures for the previous/next links
+	let listData = await generatePictureList();
 
 	if (!pageData) {
 		res.writeHead(404, header);
@@ -212,21 +188,19 @@ export async function get(req, res, next) {
 	}
 
 	const currentPageIndex = listData.indexOf(
-		listData.find(item => item.node._meta.uid === slug)
+		listData.find(item => item.slug === slug)
 	);
-
-	console.log(currentPageIndex)
 
 	if (currentPageIndex > 0) {
 		content.prevPage = getPaginationData(
-			listData[currentPageIndex - 1].node,
+			listData[currentPageIndex - 1],
 			'previous'
 		);
 	}
 
 	if (currentPageIndex < listData.length - 1) {
 		content.nextPage = getPaginationData(
-			listData[currentPageIndex + 1].node,
+			listData[currentPageIndex + 1],
 			'next'
 		);
 	}
