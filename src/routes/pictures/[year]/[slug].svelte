@@ -5,6 +5,13 @@
 		const response = await this.fetch(`pictures/${year}/${slug}.json`);
 		const data = await response.json();
 
+		const pictures = await this.fetch('pictures.json');
+		const picturesData = await pictures.json();
+
+		const currentPageIndex = picturesData.indexOf(
+			picturesData.find(item => item.slug === slug)
+		);
+
 		if (response.status !== 200) {
 			this.error(response.status, data.message);
 			return;
@@ -12,7 +19,8 @@
 
 		return {
 			post: data,
-			date: { year }
+			date: { year },
+			pictures: currentPageIndex
 		};
 	}
 </script>
@@ -33,7 +41,8 @@
 	import PrintEdition from '@/components/PrintEdition.svelte';
 	import Wrapper from '@/components/Wrapper.svelte';
 
-	export let post, date;
+	export let post, date, pictures;
+	// console.log(pictures)
 	let { prevPage, nextPage } = post;
 
 	$: formattedDate = format(new Date(date.year, 0), 'yyyy');

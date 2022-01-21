@@ -100,9 +100,5 @@ module.exports = async (groupBy = null) => {
 		})
 		.concat(picturesWithoutSeries);
 
-	sortedPictures.forEach((p) => {
-		console.log(`${p.slug}: ${p.yearCompleted}, ${p.series}`);
-	});
-
 	return sortedPictures;
 }

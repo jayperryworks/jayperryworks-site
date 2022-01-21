@@ -8,7 +8,7 @@
       return;
     }
 
-    return { picturesBySeries: data };
+    return { picturesBySeries: data, test: testData };
   }
 </script>
 
