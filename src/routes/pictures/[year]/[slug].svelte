@@ -1,26 +1,55 @@
 <script context="module">
-	export async function preload({ params, query }) {
+	// build an object for the previous and next pages nav
+	function getPaginationData (page, direction) {
+		const { cover, title: label, path, ratio } = page;
+
+		return {
+			direction,
+			label,
+			path,
+			ratio,
+			thumbnail: cover.image
+		};
+	}
+
+	export async function preload({ params }) {
 		// get the post for this page using the date and slug params
 		const { year, slug } = params;
-		const response = await this.fetch(`pictures/${year}/${slug}.json`);
-		const data = await response.json();
+		const postResponse = await this.fetch(`pictures/${year}/${slug}.json`);
+		const post = await postResponse.json();
 
-		const pictures = await this.fetch('pictures.json');
-		const picturesData = await pictures.json();
+		const picturesResponse = await this.fetch('pictures.json');
+		const pictures = await picturesResponse.json();
 
-		const currentPageIndex = picturesData.indexOf(
-			picturesData.find(item => item.slug === slug)
+		const currentPageIndex = pictures?.indexOf(
+			pictures.find(item => item.slug === slug)
 		);
 
-		if (response.status !== 200) {
-			this.error(response.status, data.message);
+		const pagination = {};
+
+		if (currentPageIndex > 0) {
+		pagination.prevPage = getPaginationData(
+			pictures[currentPageIndex - 1],
+			'previous'
+		);
+	}
+
+	if (currentPageIndex < pictures.length - 1) {
+		pagination.nextPage = getPaginationData(
+			pictures[currentPageIndex + 1],
+			'next'
+		);
+	}
+
+		if (postResponse.status !== 200) {
+			this.error(postResponse.status, post.message);
 			return;
 		}
 
 		return {
-			post: data,
 			date: { year },
-			pictures: currentPageIndex
+			post,
+			...pagination
 		};
 	}
 </script>
@@ -41,9 +70,7 @@
 	import PrintEdition from '@/components/PrintEdition.svelte';
 	import Wrapper from '@/components/Wrapper.svelte';
 
-	export let post, date, pictures;
-	// console.log(pictures)
-	let { prevPage, nextPage } = post;
+	export let post, date, nextPage, prevPage;
 
 	$: formattedDate = format(new Date(date.year, 0), 'yyyy');
 </script>
@@ -136,7 +163,7 @@
 			</aside>
 		{/each}
 	</article>
-	{#if post.prevPage || post.nextPage}
+	{#if prevPage || nextPage}
 		<nav class="border-seam-top border-solid border-top padding-x-outside padding-y-xwide">
 			<header class="padding-bottom-wide hide-overflow">
 			  <div class="footer-nav-header gutter-wrapper">

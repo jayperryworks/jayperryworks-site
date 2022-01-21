@@ -1,14 +1,34 @@
 <script context="module">
-  export async function preload({ params, query }) {
-    const response = await this.fetch('pictures.json');
-    const data = await response.json();
+  export async function preload() {
+    const picturesResponse = await this.fetch('pictures.json');
+    const pictures = await picturesResponse.json();
 
-    if (response.status !== 200) {
-      this.error(response.status, data.message);
+    const seriesResponse = await this.fetch('pictures/series.json');
+    const series = await seriesResponse.json();
+
+    if (picturesResponse.status !== 200 || seriesResponse.status !== 200) {
+      this.error(picturesResponse.status, pictures.message);
+      this.error(seriesResponse.status, series.message);
       return;
     }
 
-    return { picturesBySeries: data, test: testData };
+		// group the pictures data by series in one big array
+		let picturesBySeries = series.map((group) => {
+			const seriesPictures = pictures.filter(picture => picture.series === group.uid);
+
+			return {
+				...group,
+				ratio: seriesPictures?.[0]?.ratio,
+				pictures: seriesPictures
+			}
+		});
+
+		// add pictures to the array that aren't part of a series
+		picturesBySeries.push({
+			pictures: pictures.filter(picture => !picture.series)
+		});
+
+    return { picturesBySeries };
   }
 </script>
 

@@ -8,19 +8,8 @@ import { query, getImageVersions, getEditionDimensions } from '@/utils/prismicQu
 import render from '@/utils/renderMarkdown.js'
 import generatePictureList from '@/utils/generatePictureList.js'
 
-// build an object for the previous and next pages nav
-function getPaginationData (page, direction) {
-	return {
-		direction,
-		thumbnail: page.cover.image,
-		label: page.title[0].text,
-		path: `pictures/${page.yearCompleted}/${page.slug}/`,
-		ratio: calculateAspectRatio(page.cover.image[0].width, page.cover.image[0].height).split(':').join('/')
-	};
-}
-
 export async function get(req, res) {
-	const { year, slug } = req.params;
+	const { slug } = req.params;
 
 	// query the data for this page
 	let pageResponse = await query(`
@@ -93,9 +82,6 @@ export async function get(req, res) {
 	`);
 
 	let pageData = await pageResponse.data.picture;
-
-	// query a list of all pictures for the previous/next links
-	let listData = await generatePictureList();
 
 	if (!pageData) {
 		res.writeHead(404, header);
@@ -185,24 +171,6 @@ export async function get(req, res) {
 		// get unique edition types for this picture, e.g. 'giclee'
 		// -> https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates#14438954
 		content.printDescriptions = [...new Set(printDescriptions.map(JSON.stringify))].map(JSON.parse);
-	}
-
-	const currentPageIndex = listData.indexOf(
-		listData.find(item => item.slug === slug)
-	);
-
-	if (currentPageIndex > 0) {
-		content.prevPage = getPaginationData(
-			listData[currentPageIndex - 1],
-			'previous'
-		);
-	}
-
-	if (currentPageIndex < listData.length - 1) {
-		content.nextPage = getPaginationData(
-			listData[currentPageIndex + 1],
-			'next'
-		);
 	}
 
 	res.writeHead(200, {
