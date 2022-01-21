@@ -1,6 +1,6 @@
 const { InMemoryCache, IntrospectionFragmentMatcher } = require('apollo-cache-inmemory');
 const { PrismicLink } = require('apollo-link-prismic');
-const ApolloClient = require('apollo-client').ApolloClient;
+const ApolloClient = require('apollo-client');
 const fragmentTypes = require('./prismicFragments.json');
 const gql = require('graphql-tag');
 
