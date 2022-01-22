@@ -22,7 +22,7 @@
 	$: srcset = versions
 		? sources.slice(1).map((source) => {
 				return source.size
-					? `${source.path} ${source.size}w`
+					? `${source.path} ${source.size || source.width}w`
 					: source.path
 			}).join(', ')
 		: ''
@@ -47,6 +47,13 @@
 		display: inline-block;
 		max-width: 100%;
 		object-fit: scale-down;
+	}
+
+	.contain,
+	.cover {
+		display: block;
+		width: 100%;
+		height: 100%;
 	}
 
 	.contain {

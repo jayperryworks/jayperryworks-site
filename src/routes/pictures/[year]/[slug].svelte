@@ -1,72 +1,78 @@
 <script context="module">
-	export async function preload({ params, query }) {
+	// build an object for the previous and next pages nav
+	function getPaginationData (page, direction) {
+		const { cover, title: label, path, ratio } = page;
+
+		return {
+			direction,
+			label,
+			path,
+			ratio,
+			thumbnail: cover.image
+		};
+	}
+
+	export async function preload({ params }) {
 		// get the post for this page using the date and slug params
-		const { year, slug } = params
-		const response = await this.fetch(`pictures/${year}/${slug}.json`)
-		const data = await response.json()
+		const { year, slug } = params;
+		const postResponse = await this.fetch(`pictures/${year}/${slug}.json`);
+		const post = await postResponse.json();
 
-		if (response.status !== 200) {
-			this.error(response.status, data.message)
-			return
-		}
+		const picturesResponse = await this.fetch('pictures.json');
+		const pictures = await picturesResponse.json();
 
-		// grab the list of posts for the next/prev nav
-		// -> TODO get this from the store after the index page populates it?
-		const list = await this.fetch('pictures.json')
-		const listData = await list.json()
-		const currentPost = listData.pictures.indexOf(
-			listData.pictures.find(item => item.slug === slug)
-		)
+		const currentPageIndex = pictures?.indexOf(
+			pictures.find(item => item.slug === slug)
+		);
 
-		if (list.status !== 200) {
-			this.error(list.status, listData.message)
-			return
-		}
+		const pagination = {};
 
-		let prevPage, nextPage
-		if (listData.pictures[currentPost - 1]) {
-			prevPage = {
-				direction: 'previous',
-				...listData.pictures[currentPost - 1]
-			}
-		}
+		if (currentPageIndex > 0) {
+		pagination.prevPage = getPaginationData(
+			pictures[currentPageIndex - 1],
+			'previous'
+		);
+	}
 
-		if (listData.pictures[currentPost + 1]) {
-			nextPage = {
-				direction: 'next',
-				...listData.pictures[currentPost + 1]
-			}
+	if (currentPageIndex < pictures.length - 1) {
+		pagination.nextPage = getPaginationData(
+			pictures[currentPageIndex + 1],
+			'next'
+		);
+	}
+
+		if (postResponse.status !== 200) {
+			this.error(postResponse.status, post.message);
+			return;
 		}
 
 		return {
-			post: data,
 			date: { year },
-			prevPage,
-			nextPage
-		}
+			post,
+			...pagination
+		};
 	}
 </script>
 
 <script>
-	import { format } from 'date-fns'
-	import { titleize } from '@/utils/stringHelpers.js'
-	import index from 'icons/index.svg'
-	import Cover from '@/components/Cover.svelte'
-	import Gallery from '@/components/Gallery.svelte'
-	import Icon from '@/components/Icon.svelte'
-	import MainNav from '@/components/MainNav.svelte'
-	import Note from '@/components/Note.svelte'
-	import PageTheme from '@/components/PageTheme.svelte'
-	import PageTitle from '@/components/PageTitle.svelte'
-	import PaginationNav from '@/components/PaginationNav.svelte'
-	import Passage from '@/components/Passage.svelte'
-	import PrintEdition from '@/components/PrintEdition.svelte'
-	import Wrapper from '@/components/Wrapper.svelte'
+	import { format } from 'date-fns';
+	import { titleize } from '@/utils/stringHelpers.js';
+	import index from 'icons/index.svg';
+	import Cover from '@/components/Cover.svelte';
+	import Gallery from '@/components/Gallery.svelte';
+	import Icon from '@/components/Icon.svelte';
+	import MainNav from '@/components/MainNav.svelte';
+	import Note from '@/components/Note.svelte';
+	import PageTheme from '@/components/PageTheme.svelte';
+	import PageTitle from '@/components/PageTitle.svelte';
+	import PaginationNav from '@/components/PaginationNav.svelte';
+	import Passage from '@/components/Passage.svelte';
+	import PrintEdition from '@/components/PrintEdition.svelte';
+	import Wrapper from '@/components/Wrapper.svelte';
 
-	export let post, date, prevPage, nextPage
-	let metadataBreakpoint = 'xsmall'
+	export let post, date, nextPage, prevPage;
 
-	$: formattedDate = format(new Date(date.year, 0), 'yyyy')
+	$: formattedDate = format(new Date(date.year, 0), 'yyyy');
 </script>
 
 <PageTitle title="{post.title}" />
@@ -79,7 +85,7 @@
 		<!-- Cover image -->
 		<header class="padding-x-outside padding-y-xwide">
 			<Cover
-				sources={post.cover}
+				sources={post.cover.image}
 				alt={post.title}
 			/>
 
