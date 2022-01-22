@@ -54,6 +54,7 @@ export async function get(req, res) {
 							name
 							photo
 							limit
+							etsy_url
 							size {
 								__typename
 								... on Print_size {
@@ -145,7 +146,7 @@ export async function get(req, res) {
 
 		// get the resized versions of the edition images
 		content.editions = pageData.body.map((edition) => {
-			const { name, photo, size, limit } = edition.primary
+			const { name, photo, size, limit, etsy_url: url } = edition.primary
 			const dimensions = getEditionDimensions(pageData.orientation, size);
 
 			if (!content.aspect) {
@@ -164,7 +165,8 @@ export async function get(req, res) {
 				name: name?.[0]?.text,
 				photo: getImageVersions(photo),
 				price: size.base_price,
-				type: size.print_type?.name?.[0].text
+				type: size.print_type?.name?.[0].text,
+				url
 			};
 		});
 
