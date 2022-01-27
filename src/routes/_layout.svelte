@@ -3,21 +3,12 @@
   import color from 'css/color.js'
   import MainFooter from '@/components/MainFooter.svelte'
 
-  const { getValue: getColorValue } = color.helpers
-
   const { preloading } = stores()
-
-  // export let highlightColor = getColorValue('highlight')
-
-  // $: style = `
-  //   --color-highlight-h: ${highlightColor.h};
-  //   --color-highlight-s: ${highlightColor.s}%;
-  //   --color-highlight-l: ${highlightColor.l}%;
-  // `
 </script>
 
 <div
   id="spine-wrapper"
+	class="overflow-hidden"
   class:loading="{$preloading}"
 >
   <div id="main-wrapper">
@@ -31,16 +22,16 @@
   #spine-wrapper {
     --spine-color: hsl(
       var(--color-highlight-h),
-      var(--color-highlight-s), 
+      var(--color-highlight-s),
       var(--color-highlight-l)
     );
     --spine-color-tint: hsl(
       var(--color-highlight-h),
-      var(--color-highlight-s), 
+      var(--color-highlight-s),
       calc(var(--color-highlight-l) + 10%)
     );
     --spine-stripe-size: 30px;
-    --spine-width: 0.6rem;
+    --spine-width: 0.35rem;
 
     padding-left: var(--spine-width);
     position: relative;
@@ -79,16 +70,22 @@
     }
   }
 
+	@media screen and (min-width: 42em) {
+		#spine-wrapper {
+			--spine-width: 0.6rem;
+		}
+	}
+
   #main-wrapper {
     position: relative;
   }
-  
+
   @supports (display: flex) {
     body {
       display: flex;
       flex-direction: column;
     }
-    
+
     #sapper,
     #spine-wrapper,
     #main-wrapper {

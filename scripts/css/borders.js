@@ -1,11 +1,11 @@
-const { borders, type, spacing, breakpoints } = require('../../content/design-tokens.js')
-const { helpers: theme } = require('./color.js')
-const { helpers: spacingHelpers } = require('./spacing.js')
+const { borders, type, spacing, breakpoints } = require('../../content/design-tokens.js');
+const { helpers: theme } = require('./color.js');
+const { helpers: spacingHelpers } = require('./spacing.js');
 
 const borderSeamSelectors = {
 	top: 'before',
 	bottom: 'after'
-}
+};
 
 function add ({
 	side = 'all',
@@ -13,7 +13,7 @@ function add ({
 	style = 'dashed'
 } = {}) {
 	return `
-		border${side === 'all' ? '' : `-${side}`}: ${borders.widths.default}px ${style} ${theme.getValue('border')};
+		border${side === 'all' ? '' : `-${side}`}: ${borders.widths.default}px ${style} ${theme.getHSLValue('border')};
 		border${side === 'all' ? '' : `-${side}`}: ${borders.widths.default}px ${style} ${theme.getCustomProperty('border')};
 	`
 }
@@ -74,7 +74,7 @@ module.exports = {
 			border-left-style: solid;
 		}
 
-		/* 
+		/*
 			"Seam" effect border
 			-> use an svg pattern to create a styled border that looks like stitching
 		*/
@@ -86,7 +86,7 @@ module.exports = {
 
 			@supports(
 				border-image:
-					url('whatever.svg')
+					url('${borders.seam.image}')
 					${borders.seam.marker.h} 0 0 ${borders.seam.marker.w}
 					repeat
 			) {
@@ -111,13 +111,18 @@ module.exports = {
 					z-index: 3;
 				}
 
-				${Object.keys(spacing.outside).map(screen => `
-					@media screen and (max-width: ${breakpoints.sizes[screen]}${breakpoints.unit}) {
-						.border-seam-${side}::${borderSeamSelectors[side]} {
-							right: ${spacingHelpers.get(spacing.outside[screen])};
-						}
+				${Object.keys(spacing.outside).map((screen) => {
+					if (screen != 'default') {
+						return `
+							@media screen and (max-width: ${breakpoints.sizes[screen]}${breakpoints.unit}) {
+								.border-seam-${side}::${borderSeamSelectors[side]} {
+									right: ${spacingHelpers.get(spacing.outside[screen])};
+								}
+							}
+						`;
 					}
-				`).join('')}
+					return;
+				}).join('')}
 			}
 		`).join('')}
 	`

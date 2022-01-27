@@ -4,18 +4,18 @@
 	import arrowRight from 'icons/arrow-right.svg'
 	import AspectRatio from '@/components/AspectRatio.svelte'
 	import Icon from '@/components/Icon.svelte'
-	import ResponsivePicture from '@/components/ResponsivePicture.svelte'
+	import ResponsiveImage from '@/components/ResponsiveImage.svelte'
 
-	export let items = []
-	export let itemWidth = 18
+	export let items = [];
+	export let itemWidth = 25;
 
 	$: style = `--item-width: ${itemWidth}rem;`
 
 	function label (item) {
 		if (item.label) {
-			return item.label
+			return item.label;
 		}
-		return 
+		return;
 	}
 </script>
 
@@ -29,16 +29,14 @@
 			>
 				{#if item.thumbnail}
 					<a
-					  class="thumbnail type-link-undecorated padding-bottom"
+					  class="thumbnail type-link-undecorated margin-bottom"
 					  href="{item.path}"
 					>
-					  <AspectRatio class="border solid">
-					    <ResponsivePicture
-					      sources="{item.thumbnail.versions}"
+					    <ResponsiveImage
+								class="border solid"
+					      sources="{item.thumbnail}"
 					      alt="{item.label}"
-					      cover
 					    />
-					  </AspectRatio>
 					</a>
 				{/if}
 				<a
@@ -74,8 +72,11 @@
 	}
 
 	li {
+		align-items: start;
+		flex-direction: column;
+		justify-self: start;
+		max-width: var(--item-width);
 	  display: flex;
-	  flex-wrap: wrap;
 	}
 
 	li + li {
@@ -86,6 +87,8 @@
 	.label {
 		align-items: center;
 		display: flex;
+		margin-top: auto;
+		max-width: var(--item-width);
 	}
 
 	.label > :global(* + *) {
@@ -98,8 +101,8 @@
 		@supports (display: grid) {
 		  ul {
 		    display: grid;
-		    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 		    grid-gap: var(--space-medium);
+		    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 		  }
 
 		  li + li {
@@ -107,13 +110,37 @@
 		  }
 
 		  li.next {
+				align-items: end;
 		    justify-self: end;
 		    text-align: right;
 		  }
 
+			.next > .label {
+				margin-left: auto;
+			}
+
 	  	.thumbnail {
-	      width: 100%;
+				--size: 8rem;
+				display: block;
+				overflow: hidden;
+				width: 100%;
 	    }
+
+			.thumbnail > :global(img) {
+				max-height: var(--size);
+			}
+		}
+	}
+
+	@media screen and (min-width: 48em) {
+		.thumbnail {
+			--size: 12rem;
+		}
+	}
+
+	@media screen and (min-width: 75em) {
+		.thumbnail {
+			--size: 16rem;
 		}
 	}
 </style>

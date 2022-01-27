@@ -1,7 +1,7 @@
 const { color } = require('../../content/design-tokens.js')
 
 function hsl (color) {
-  if (color.a && color.a !== 1) {
+  if (color?.a < 1) {
   	return `hsl(${color.h}, ${color.s}%, ${color.l}%, ${color.a})`
   }
   return `hsl(${color.h}, ${color.s}%, ${color.l}%)`
@@ -9,6 +9,10 @@ function hsl (color) {
 
 function getValue (role, theme = 'default') {
 	return color.themes[theme][role]
+}
+
+function getHSLValue (role, theme = 'default') {
+	return hsl(color.themes[theme][role]);
 }
 
 function getCustomProperty (role, theme = 'default') {
@@ -25,7 +29,7 @@ function setCustomProperty (role, { h, s, l, a }) {
 		--color-${role}-s: ${s}%;
 		--color-${role}-l: ${l}%;
 		${a ? `--color-${role}-a: ${a};` : ''}
-		
+
 		--color-${role}: hsl(
 			var(--color-${role}-h),
 			var(--color-${role}-s),
@@ -52,6 +56,7 @@ module.exports = {
 	name: 'Color',
 	helpers: {
 		getValue,
+		getHSLValue,
 		getCustomProperty,
 		setCustomProperty,
 		add

@@ -1,13 +1,13 @@
 <script>
-  import { titleize } from '@/utils/stringHelpers.js'
-  import arrow from 'icons/arrow-right.svg'
-  import AspectRatio from '@/components/AspectRatio.svelte'
-  import Button from '@/components/Button.svelte'
-  import Card from '@/components/Card.svelte'
-  import Metadata from '@/components/Metadata.svelte'
-  import ResponsivePicture from '@/components/ResponsivePicture.svelte'
+  import { titleize } from '@/utils/stringHelpers.js';
+  import arrow from 'icons/arrow-right.svg';
+  import AspectRatio from '@/components/AspectRatio.svelte';
+  import Button from '@/components/Button.svelte';
+  import Card from '@/components/Card.svelte';
+  import Metadata from '@/components/Metadata.svelte';
+  import ResponsiveImage from '@/components/ResponsiveImage.svelte';
 
-  export let edition
+  export let edition;
 
   $: stats = [
     {
@@ -22,7 +22,7 @@
       label: 'Paper size',
       value: `${edition.width + (edition.border * 2)}" x ${edition.height + (edition.border * 2)}"`
     }
-  ]
+  ];
 </script>
 
 <Card>
@@ -30,8 +30,8 @@
   <!-- edition photo -->
   <div slot="figure">
     <AspectRatio>
-      <ResponsivePicture
-        sources="{edition.photo.versions}"
+      <ResponsiveImage
+        sources="{edition.photo}"
         alt="{titleize(edition.name)}"
         cover
       />
@@ -49,7 +49,7 @@
       <h3 class="padding-bottom-xnarrow color-fg-secondary">
         <strong class="color-fg-primary type-font-display">
           {titleize(edition.name)}
-        </strong> 
+        </strong>
         {titleize(edition.type)}&nbsp;Print
       </h3>
 
@@ -79,7 +79,7 @@
   .info-wrapper {
     --breakpoint: 10rem;
   }
-  
+
   @supports (display: flex) {
     @media screen and (min-width: 30em) {
       .info-wrapper {
@@ -87,7 +87,7 @@
         flex-direction: row;
         flex-wrap: wrap;
       }
-      
+
       .info {
         flex: 1 0 var(--breakpoint);
       }
