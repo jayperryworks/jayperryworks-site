@@ -104,6 +104,12 @@ const blockQueries = {
   `
 }
 
+// return the literal text from a Prismic Title or Key Text field
+// -> the API response is an array of objects with 'text' props
+function getString (field) {
+	return field.map(({ text }) => text).join('');
+}
+
 async function query (queryString) {
 	return await client.query({
 		query: gql`${queryString}`
@@ -172,6 +178,7 @@ module.exports = {
 	blockQueries,
 	getEditionDimensions,
 	getImageVersions,
+	getString,
 	query,
 	queryAll
 }

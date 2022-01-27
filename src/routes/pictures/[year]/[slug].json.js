@@ -1,5 +1,4 @@
 import { sentenceCase } from 'change-case';
-import { format } from 'date-fns';
 import arrayToSentence from 'array-to-sentence';
 import calculateAspectRatio from 'calculate-aspect-ratio';
 import convertColor from 'color-convert';
@@ -9,6 +8,8 @@ import render from '@/utils/renderMarkdown.js'
 import generatePictureList from '@/utils/generatePictureList.js'
 
 export async function get(req, res) {
+	const header = { 'Content-Type': 'application/json' };
+
 	const { slug } = req.params;
 
 	// query the data for this page
@@ -175,9 +176,6 @@ export async function get(req, res) {
 		content.printDescriptions = [...new Set(printDescriptions.map(JSON.stringify))].map(JSON.parse);
 	}
 
-	res.writeHead(200, {
-		'Content-Type': 'application/json'
-	});
-
+	res.writeHead(200, header);
 	res.end(JSON.stringify(content));
 }
