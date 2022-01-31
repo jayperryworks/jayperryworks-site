@@ -1,6 +1,5 @@
 import errors from '@/utils/errorMessages.js'
 import { query, getString, convertColorToHSL, renderBlockContent, blockQueries } from '@/utils/prismicQuery.js';
-import { titleize } from '@/utils/stringHelpers';
 
 export async function get ({ params }, res) {
 	const { id } = params;
@@ -71,7 +70,7 @@ export async function get ({ params }, res) {
 		background: background && convertColorToHSL(background)
 	}
 
-	// chapter.body = renderBlockContent(body);
+	chapter.body = renderBlockContent(body);
 
 	res.writeHead(200, {
 		'Content-Type': 'application/json'

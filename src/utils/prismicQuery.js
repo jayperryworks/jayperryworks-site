@@ -5,6 +5,7 @@ const convertColor = require('color-convert');
 const fragmentTypes = require('./prismicFragments.json');
 const gql = require('graphql-tag');
 const markdown = require('./renderMarkdown.js');
+const { camelCase, paramCase } = require('change-case');
 
 const accessToken = process.env.PRISMIC_TOKEN;
 
@@ -114,6 +115,16 @@ const blockQueries = {
       }
     }
   `
+}
+
+function getSliceWidth(prominence) {
+	const widths = {
+		Small: 'narrow',
+		Medium: 'default',
+		Large: 'wide'
+	}
+
+	return widths[prominence] || 'default'
 }
 
 function getSharedSliceFields (slice) {
