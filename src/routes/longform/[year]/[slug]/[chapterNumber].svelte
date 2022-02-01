@@ -1,4 +1,6 @@
 <script context="module">
+	import { noCase } from 'change-case';
+
 	export async function preload({ params }) {
 		// get the post for this page using the date and slug params
 		const { year, slug } = params;
@@ -30,7 +32,7 @@
 		// if there's a previous chapter...
 		if ((indexNumber - 1) >= 0) {
 			pagination.push({
-				label: project.chapters[indexNumber - 1]?.title,
+				label: `Previous ${noCase(project.chapterLabel)}`,
 				direction: 'previous',
 				path: `${path}/${chapterNumber - 1}`
 			})
@@ -39,7 +41,7 @@
 		// if there's a next chapter
 		if (project.chapters[indexNumber + 1]) {
 			pagination.push({
-				label: project.chapters[indexNumber + 1]?.title,
+				label: `Next ${noCase(project.chapterLabel)}`,
 				direction: 'next',
 				path: `${path}/${chapterNumber + 1}`
 			})

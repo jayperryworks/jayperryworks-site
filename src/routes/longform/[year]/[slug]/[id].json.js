@@ -21,6 +21,7 @@ export async function get ({ params }, res) {
 					node {
 						title
 						subtitle
+						display_title
 						highlight_color
 						primary_foreground_color
 						secondary_foreground_color

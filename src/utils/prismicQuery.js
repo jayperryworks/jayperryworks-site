@@ -119,9 +119,9 @@ const blockQueries = {
 
 function getSliceWidth(prominence) {
 	const widths = {
-		Small: 'narrow',
-		Medium: 'default',
-		Large: 'wide'
+		Small: 'small',
+		Medium: 'medium',
+		Large: 'large'
 	}
 
 	return widths[prominence] || 'default'
