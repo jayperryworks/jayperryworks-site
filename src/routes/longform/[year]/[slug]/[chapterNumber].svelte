@@ -6,40 +6,47 @@
 		// -> convert it to a number before assigning (instead of destructuring as above) so we can do math with it below
 		// -> otherwise, if chapterNumber = "1", chapterNumber + 1 = "11"
 		const chapterNumber = parseInt(params.chapterNumber);
+		// the chapters are numbered from 1, while the project.chapters array is numbered from 0.
+		// -> store a reference to the index number in a new var to reduce confusion
+		const indexNumber = chapterNumber - 1;
 
 		// the absolute path to this longform project
 		const path = `/longform/${year}/${slug}`;
 
+		// query the whole project to get a list of chapters
 		const projectResponse = await this.fetch(`${path}.json`);
 		const project = await projectResponse.json();
 
+		// find the ID of this chapter
 		const id = project.chapters[chapterNumber - 1]?.id;
 
+		// use the current chapter ID to get the rest of this chapter's content
 		const chapterResponse = await this.fetch(`${path}/${id}.json`);
 		const chapter = await chapterResponse.json();
 
-		console.log(chapterNumber)
-
+		// set up data for next/prev pagination nav
 		let pagination = [];
 
-		if ((chapterNumber - 2) >= 0) {
+		// if there's a previous chapter...
+		if ((indexNumber - 1) >= 0) {
 			pagination.push({
-				title: project.chapters[chapterNumber - 2]?.title || 'Continue',
+				label: project.chapters[indexNumber - 1]?.title,
 				direction: 'previous',
 				path: `${path}/${chapterNumber - 1}`
 			})
 		}
 
-		if (project.chapters[chapterNumber]) {
+		// if there's a next chapter
+		if (project.chapters[indexNumber + 1]) {
 			pagination.push({
-				title: project.chapters[chapterNumber]?.title || 'Continue',
+				label: project.chapters[indexNumber + 1]?.title,
 				direction: 'next',
 				path: `${path}/${chapterNumber + 1}`
 			})
 		}
 
 		return {
-			isCoverPage: (parseInt(chapterNumber) === 1),
+			isCoverPage: (chapterNumber === 1),
 			date: { year },
 			project,
 			chapter,
