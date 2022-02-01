@@ -24,7 +24,6 @@ export async function get(req, res) {
 							secondary_foreground_color
 							highlight_color
 							_meta {
-								uid
 								id
 							}
 						}

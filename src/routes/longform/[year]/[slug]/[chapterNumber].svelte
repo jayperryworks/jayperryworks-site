@@ -1,26 +1,49 @@
 <script context="module">
 	export async function preload({ params }) {
 		// get the post for this page using the date and slug params
-		const { year, slug, chapterNumber } = params;
-		const projectResponse = await this.fetch(`longform/${year}/${slug}.json`);
+		const { year, slug } = params;
+		// the chapter number is a prop of the params object, but it's a string
+		// -> convert it to a number before assigning (instead of destructuring as above) so we can do math with it below
+		// -> otherwise, if chapterNumber = "1", chapterNumber + 1 = "11"
+		const chapterNumber = parseInt(params.chapterNumber);
+
+		// the absolute path to this longform project
+		const path = `/longform/${year}/${slug}`;
+
+		const projectResponse = await this.fetch(`${path}.json`);
 		const project = await projectResponse.json();
 
 		const id = project.chapters[chapterNumber - 1]?.id;
 
-		const chapterResponse = await this.fetch(`longform/${year}/${slug}/${id}.json`);
+		const chapterResponse = await this.fetch(`${path}/${id}.json`);
 		const chapter = await chapterResponse.json();
 
+		console.log(chapterNumber)
+
+		let pagination = [];
+
+		if ((chapterNumber - 2) >= 0) {
+			pagination.push({
+				title: project.chapters[chapterNumber - 2]?.title || 'Continue',
+				direction: 'previous',
+				path: `${path}/${chapterNumber - 1}`
+			})
+		}
+
+		if (project.chapters[chapterNumber]) {
+			pagination.push({
+				title: project.chapters[chapterNumber]?.title || 'Continue',
+				direction: 'next',
+				path: `${path}/${chapterNumber + 1}`
+			})
+		}
+
 		return {
-			isCoverPage: (chapterNumber == 1),
+			isCoverPage: (parseInt(chapterNumber) === 1),
 			date: { year },
 			project,
 			chapter,
-			pagination: [
-				// previous chapter
-				project.chapters[chapterNumber- 2],
-				// next chapter
-				project.chapters[chapterNumber]
-			],
+			pagination,
 			slug
 		};
 	}
@@ -34,7 +57,6 @@
 	import { format } from 'date-fns';
 
 	export let isCoverPage, project, chapter, date, pagination;
-	console.log(isCoverPage)
 
 	$:formattedDate = format(new Date(date.year, 0), 'yyyy');
 </script>
