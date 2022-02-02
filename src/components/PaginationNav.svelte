@@ -50,7 +50,7 @@
 						/>
 					{/if}
 					<span>
-						{item.label || titleize(item.direction)}
+						{@html item.label || titleize(item.direction)}
 					</span>
 					{#if item.direction === 'next'}
 						<Icon

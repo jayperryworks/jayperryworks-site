@@ -30,7 +30,6 @@
 	import PageTitle from '@/components/PageTitle.svelte'
 	import PaginationNav from '@/components/PaginationNav.svelte'
 	import PostBody from '@/components/PostBody.svelte'
-	import ResponsiveImage from '@/components/ResponsiveImage.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
 	export let post

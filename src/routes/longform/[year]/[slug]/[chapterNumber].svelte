@@ -1,6 +1,13 @@
 <script context="module">
 	import { noCase } from 'change-case';
 
+	function getPaginationLabel (direction, label, title = null) {
+		if (title) {
+			return `<span class="color-fg-secondary">${direction} ${noCase(label)}:</span> ${title}`
+		}
+		return `<span class="color-fg-secondary">${direction} ${noCase(label)}</span>`
+	}
+
 	export async function preload({ params }) {
 		// get the post for this page using the date and slug params
 		const { year, slug } = params;
@@ -31,8 +38,14 @@
 
 		// if there's a previous chapter...
 		if ((indexNumber - 1) >= 0) {
+			const prevChapter = project.chapters[indexNumber - 1];
+
 			pagination.push({
-				label: `Previous ${noCase(project.chapterLabel)}`,
+				label: getPaginationLabel(
+					'Previous',
+					project.chapterLabel,
+					prevChapter.displayTitle && prevChapter.title
+				),
 				direction: 'previous',
 				path: `${path}/${chapterNumber - 1}`
 			})
@@ -40,8 +53,14 @@
 
 		// if there's a next chapter
 		if (project.chapters[indexNumber + 1]) {
+			const nextChapter = project.chapters[indexNumber + 1];
+
 			pagination.push({
-				label: `Next ${noCase(project.chapterLabel)}`,
+				label: getPaginationLabel(
+					'Next',
+					project.chapterLabel,
+					nextChapter.displayTitle && nextChapter.title
+				),
 				direction: 'next',
 				path: `${path}/${chapterNumber + 1}`
 			})
@@ -62,34 +81,48 @@
 	import MainNav from '@/components/MainNav.svelte';
 	import PostBody from '@/components/PostBody.svelte';
 	import PaginationNav from '@/components/PaginationNav.svelte';
+	import Wrapper from '@/components/Wrapper.svelte';
+	import PageTitle from '@/components/PageTitle.svelte';
+	import PageTheme from '@/components/PageTheme.svelte';
 
 	import { format } from 'date-fns';
 
 	export let isCoverPage, project, chapter, date, pagination;
 
+	$: pageTitle = chapter.displayTitle ? `${project.title}: ${chapter.title}` : project.title;
+
 	$:formattedDate = format(new Date(date.year, 0), 'yyyy');
 </script>
 
+<PageTitle title="{pageTitle}" />
+<PageTheme theme="{chapter.theme}" />
+
 <MainNav segment="writing" />
 <main>
-	{#if isCoverPage}
-		<header>
-			<h1>{project.title}</h1>
-			{#if project.subtitle}
-			<p>{project.subtitle}</p>
-			{/if}
-			<time datetime="{formattedDate}">{formattedDate}</time>
+	<article class="padding-x-outside padding-y-xwide">
+		<header class="padding-bottom-xwide">
+			<Wrapper
+				width="wide"
+				class="type-align-center"
+			>
+				{#if isCoverPage}
+					<h1>{project.title}</h1>
+					{#if project.subtitle}
+					<p>{project.subtitle}</p>
+					{/if}
+				{:else}
+					{#if chapter.title}
+						<h1 class="type-scale-beta">{chapter.title}</h1>
+					{/if}
+					{#if chapter.subtitle}
+						<p>{chapter.subtitle}</p>
+					{/if}
+				{/if}
+			</Wrapper>
 		</header>
-	{:else}
-		<header>
-			{#if chapter.title}
-				<h1 class="type-scale-beta">{chapter.title}</h1>
-			{/if}
-			{#if chapter.subtitle}
-				<p>{chapter.subtitle}</p>
-			{/if}
-		</header>
-	{/if}
-	<PostBody blocks={chapter.body} />
-	<PaginationNav items="{pagination}" />
+		<PostBody blocks={chapter.body} />
+	</article>
+	<nav class="padding-bottom-xwide padding-x-outside">
+		<PaginationNav items="{pagination}" />
+	</nav>
 </main>
