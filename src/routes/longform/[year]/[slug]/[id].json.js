@@ -64,15 +64,17 @@ export async function get ({ params }, res) {
 		chapter.subtitle = subtitle && getString(subtitle);
 	}
 
-	let theme = {
+	// consolidate color fields into a single theme object
+	const theme = {
 		highlight,
 		primary,
 		secondary,
 		bg
 	}
 
-	// assign to chapter.theme only the color values that have been set
-	// and convert them to HSL objects
+	// add the theme object to the chapter data
+	// -> assign to chapter.theme only the color values that have been set
+	// -> and convert each to HSL objects
 	// -> e.g. if only 'bg' is set, then chapter.theme = { bg: {h, s, l} }
 	chapter.theme = Object.keys(theme).reduce((result, role) => {
 		if (theme[role]) {
