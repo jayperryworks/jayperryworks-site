@@ -95,7 +95,7 @@
 </script>
 
 <PageTitle title="{pageTitle}" />
-<PageTheme theme="{chapter.theme}" />
+<PageTheme {...chapter.theme} />
 
 <MainNav segment="writing" />
 <main>

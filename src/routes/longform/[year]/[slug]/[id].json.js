@@ -53,7 +53,7 @@ export async function get ({ params }, res) {
 		highlight_color: highlight,
 		primary_foreground_color: primary,
 		secondary_foreground_color: secondary,
-		background_color: background,
+		background_color: bg,
 		body
 	} = response.data.allLongform_chapters.edges[0].node;
 
@@ -68,7 +68,7 @@ export async function get ({ params }, res) {
 		highlight: highlight && convertColorToHSL(highlight),
 		primary: primary && convertColorToHSL(primary),
 		secondary: secondary && convertColorToHSL(secondary),
-		background: background && convertColorToHSL(background)
+		bg: bg && convertColorToHSL(bg)
 	}
 
 	chapter.body = renderBlockContent(body);

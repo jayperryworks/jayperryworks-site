@@ -15,12 +15,8 @@ function getHSLValue (role, theme = 'default') {
 	return hsl(color.themes[theme][role]);
 }
 
-function getCustomProperty (role, theme = 'default') {
-	const variables = Object.keys(color.themes[theme][role]).map(channel => `
-		var(--color-${role}-${channel})
-	`).join(', ')
-
-	return `hsl(${variables});`
+function getCustomProperty (role) {
+	return `var(--color-${role});`
 }
 
 function setCustomProperty (role, { h, s, l, a }) {
@@ -73,6 +69,7 @@ module.exports = {
 
 		body {
 			${add('color', 'primary')}
+			${add('background-color', 'bg')}
 		}
 	`,
 	utilities: Object.keys(color.themes.default)
