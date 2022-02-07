@@ -64,12 +64,23 @@ export async function get ({ params }, res) {
 		chapter.subtitle = subtitle && getString(subtitle);
 	}
 
-	chapter.theme = {
-		highlight: highlight && convertColorToHSL(highlight),
-		primary: primary && convertColorToHSL(primary),
-		secondary: secondary && convertColorToHSL(secondary),
-		bg: bg && convertColorToHSL(bg)
+	let theme = {
+		highlight,
+		primary,
+		secondary,
+		bg
 	}
+
+	// assign to chapter.theme only the color values that have been set
+	// and convert them to HSL objects
+	// -> e.g. if only 'bg' is set, then chapter.theme = { bg: {h, s, l} }
+	chapter.theme = Object.keys(theme).reduce((result, role) => {
+		if (theme[role]) {
+			result[role] = convertColorToHSL(theme[role]);
+		}
+
+		return result;
+	}, {});
 
 	chapter.body = renderBlockContent(body);
 

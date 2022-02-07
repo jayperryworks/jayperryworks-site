@@ -21,7 +21,7 @@
 	// if no highlight, use primary
 
 	$: colorVariables = Object.keys(theme).map((role) => {
-		const values = theme[role.toString()];
+		const values = theme[role];
 
 		if (values) {
 			return helpers.setCustomProperty(role, values);
