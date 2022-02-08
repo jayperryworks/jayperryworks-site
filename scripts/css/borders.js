@@ -12,9 +12,11 @@ function add ({
 	color = 'border',
 	style = 'dashed'
 } = {}) {
+	const prop = `border${side === 'all' ? '' : `-${side}`}`;
+
 	return `
-		border${side === 'all' ? '' : `-${side}`}: ${borders.widths.default}px ${style} ${theme.getHSLValue('border')};
-		border${side === 'all' ? '' : `-${side}`}: ${borders.widths.default}px ${style} ${theme.getCustomProperty('border')};
+		${prop}: ${borders.widths.default}px ${style} ${theme.getHSLValue('border')};
+		${prop}: ${borders.widths.default}px ${style} ${theme.getCustomProperty('border')};
 	`
 }
 
@@ -84,45 +86,24 @@ module.exports = {
 				position: relative;
 			}
 
-			@supports(
-				border-image:
-					url('${borders.seam.image}')
-					${borders.seam.marker.h} 0 0 ${borders.seam.marker.w}
-					repeat
-			) {
-				.border-seam-${side} {
-					border-${side}: none;
-				}
+			.border-seam-${side}::${borderSeamSelectors[side]} {
+				${side}: -${borders.seam.marker.h / 2}${borders.seam.marker.unit};
+				background-color: ${theme.getHSLValue('primary')};
+				background-color: ${theme.getCustomProperty('primary')};
+				content: '';
+				display: block;
+				height: ${borders.seam.marker.h}${borders.seam.marker.unit};
+				left: -${borders.spine.default.width}${borders.spine.default.unit};
+				position: absolute;
+				width: ${borders.spine.default.width}${borders.spine.default.unit};
+				z-index: 3;
+			}
 
+			@media screen and (min-width: ${breakpoints.sizes.small}${breakpoints.unit}) {
 				.border-seam-${side}::${borderSeamSelectors[side]} {
-					${side}: -${borders.seam.marker.h / 2}px;
-					border-image:
-					  url('${borders.seam.image}')
-					  ${borders.seam.marker.h} 0 0 ${borders.seam.marker.w}
-					  repeat;
-					border-style: solid;
-					border-width: ${borders.seam.marker.h}px 0 0 10px;
-					content: '';
-					display: block;
-					height: 0;
-					left: -${borders.seam.marker.w}px;
-					position: absolute;
-					right: ${spacingHelpers.get(spacing.outside.default)};
-					z-index: 3;
+					width: ${borders.spine.small.width}${borders.spine.small.unit};
+					left: -${borders.spine.small.width}${borders.spine.small.unit};
 				}
-
-				${Object.keys(spacing.outside).map((screen) => {
-					if (screen != 'default') {
-						return `
-							@media screen and (max-width: ${breakpoints.sizes[screen]}${breakpoints.unit}) {
-								.border-seam-${side}::${borderSeamSelectors[side]} {
-									right: ${spacingHelpers.get(spacing.outside[screen])};
-								}
-							}
-						`;
-					}
-					return;
-				}).join('')}
 			}
 		`).join('')}
 	`

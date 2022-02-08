@@ -20,8 +20,6 @@
 		}
 	}).join('');
 
-	console.log(bg)
-
 	// Need to 'escape' the <style> tag because the Svelte compiler gets mad when a literal is injected like this
 	// -> https://github.com/sveltejs/kit/issues/3128
 	$: style = `

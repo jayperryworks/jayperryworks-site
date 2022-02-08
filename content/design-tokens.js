@@ -118,16 +118,27 @@ const spacing = {
 }
 
 const borders = {
+	spine: {
+		default: {
+			width: 0.35,
+			unit: 'rem'
+		},
+		small: {
+			width: 0.6,
+			unit: 'rem'
+		}
+	},
   seam: {
     marker: {
-      h: 5,
-      w: 10
+      h: 0.5,
+			unit: 'rem'
     },
     image: '/images/seam.svg'
   },
   widths: {
     default: 1,
-    thick: 4
+    thick: 4,
+		unit: 'px'
   },
   radius: {
     size: 0.2,
