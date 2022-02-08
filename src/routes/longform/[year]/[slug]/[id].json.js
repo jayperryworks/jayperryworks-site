@@ -66,10 +66,10 @@ export async function get ({ params }, res) {
 
 	// consolidate color fields into a single theme object
 	const theme = {
-		highlight,
+		bg,
 		primary,
 		secondary,
-		bg
+		highlight
 	}
 
 	// add the theme object to the chapter data
@@ -83,6 +83,23 @@ export async function get ({ params }, res) {
 
 		return result;
 	}, {});
+
+	// if these colors aren't specified in the Prismic data, derive each from the bg color
+	const themeFallbacks = {
+		primary: 25,
+		secondary: 45,
+		border: (chapter.theme?.bg?.l - 20) || 40,
+		shadow: (chapter.theme?.bg?.l - 40) || 10
+	}
+
+	Object.keys(themeFallbacks).forEach((role) => {
+		if (!chapter.theme[role]) {
+			chapter.theme[role] = chapter.theme.bg && {
+				...chapter.theme.bg,
+				l: themeFallbacks[role]
+			}
+		}
+	})
 
 	chapter.body = renderBlockContent(body);
 
