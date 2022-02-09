@@ -25,6 +25,10 @@
       show: 'small'
     },
     {
+      label: 'Patapsco essay',
+      url: 'longform/2022/patapsco/1'
+    },
+    {
       label: 'Prints &amp; paintings',
       url: 'pictures'
     },
@@ -57,7 +61,7 @@
 
     <!-- nav -->
   	<div class="type-align-right">
-      <button 
+      <button
         on:click="{handleButtonClick}"
         class:hide="{navOpen === true}"
         class="nav-button | type-scale-epsilon type-font-accent type-weight-xlight"
@@ -65,13 +69,13 @@
         Menu
         <Icon svg="{menu}" margin="left" class="color-fg-primary" />
       </button>
-      <div 
+      <div
         class="nav"
         class:open="{navOpen}"
         class:closed="{navTransitioned && !navOpen}"
         on:transitionend="{e => { navTransitioned = true }}"
       >
-        <button 
+        <button
           on:click="{handleButtonClick}"
           class="nav-button close type-scale-epsilon type-font-accent"
         >
