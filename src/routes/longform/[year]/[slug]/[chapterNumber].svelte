@@ -33,6 +33,9 @@
 		const chapterResponse = await this.fetch(`${path}/${id}.json`);
 		const chapter = await chapterResponse.json();
 
+		chapter.path = `${path}/${chapterNumber}`;
+		console.log(chapter.path)
+
 		// set up data for next/prev pagination nav
 		let pagination = [];
 
@@ -85,19 +88,15 @@
 	import PageTitle from '@/components/PageTitle.svelte';
 	import PageTheme from '@/components/PageTheme.svelte';
 
-	import { format } from 'date-fns';
-
 	export let isCoverPage, project, chapter, date, pagination;
 
 	$: pageTitle = chapter.displayTitle ? `${project.title}: ${chapter.title}` : project.title;
-
-	$:formattedDate = format(new Date(date.year, 0), 'yyyy');
 </script>
 
 <PageTitle title="{pageTitle}" />
 <PageTheme {...chapter.theme} />
 
-<MainNav segment="writing" />
+<MainNav segment="{chapter.path}" />
 <main>
 	<article class="padding-x-outside padding-y-xwide">
 		<header class="padding-bottom-xwide">
