@@ -23,7 +23,13 @@ function add ({
 module.exports = {
 	name: 'Borders',
 	customProperties: [
-		`--border-radius: ${borders.radius.size}${borders.radius.unit};`
+		`--border-radius: ${borders.radius.size}${borders.radius.unit};`,
+		// spine custom props for each screen width
+		...Object.keys(borders.spine).map((size) => {
+			const values = borders.spine[size];
+			const propSuffix = size !== 'default' ? `-${size}` : '';
+			return `--spine-width${propSuffix}: ${values.width}${values.unit};`;
+		})
 	],
 	helpers: {
 		add
@@ -94,17 +100,23 @@ module.exports = {
 				display: block;
 				height: ${borders.seam.marker.h}${borders.seam.marker.unit};
 				left: -${borders.spine.default.width}${borders.spine.default.unit};
+				left: calc(var(--spine-width) * -1);
 				position: absolute;
 				width: ${borders.spine.default.width}${borders.spine.default.unit};
+				width: var(--spine-width);
 				z-index: 3;
 			}
 
-			@media screen and (min-width: ${breakpoints.sizes.small}${breakpoints.unit}) {
-				.border-seam-${side}::${borderSeamSelectors[side]} {
-					width: ${borders.spine.small.width}${borders.spine.small.unit};
-					left: -${borders.spine.small.width}${borders.spine.small.unit};
-				}
-			}
+			${Object.keys(borders.spine).filter(s => s !== 'default').map((size) => {
+				return `
+					@media screen and (min-width: ${breakpoints.sizes[size]}${breakpoints.unit}) {
+						.border-seam-${side}::${borderSeamSelectors[side]} {
+							left: calc(var(--spine-width-${size}) * -1);
+							width: var(--spine-width-${size});
+						}
+					}
+				`;
+			}).join('')}
 		`).join('')}
 	`
 }

@@ -20,18 +20,14 @@
 <style>
   /* Animated 'spine' border */
   #spine-wrapper {
-    --spine-color: hsl(
-      var(--color-highlight-h),
-      var(--color-highlight-s),
-      var(--color-highlight-l)
-    );
+    --spine-color: var(--color-highlight);
+
     --spine-color-tint: hsl(
       var(--color-highlight-h),
       var(--color-highlight-s),
       calc(var(--color-highlight-l) + 10%)
     );
     --spine-stripe-size: 30px;
-    --spine-width: 0.35rem;
 
     padding-left: var(--spine-width);
     position: relative;
@@ -70,12 +66,6 @@
     }
   }
 
-	@media screen and (min-width: 42em) {
-		#spine-wrapper {
-			--spine-width: 0.6rem;
-		}
-	}
-
   #main-wrapper {
     position: relative;
   }
@@ -94,4 +84,14 @@
       flex: 1;
     }
   }
+
+	@media screen and (min-width: 42em) {
+		#spine-wrapper {
+			padding-left: var(--spine-width-small);
+		}
+
+		#spine-wrapper::before {
+			width: var(--spine-width-small);
+		}
+	}
 </style>
