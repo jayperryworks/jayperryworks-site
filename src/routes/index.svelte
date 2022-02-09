@@ -40,7 +40,7 @@
 </script>
 
 <PageTitle />
-<PageTheme color="{content.highlight}" />
+<PageTheme highlight="{content.highlight}" />
 
 <MainNav segment="/" overlay />
 

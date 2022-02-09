@@ -1,6 +1,5 @@
 <script>
   import { stores } from '@sapper/app'
-  import color from 'css/color.js'
   import MainFooter from '@/components/MainFooter.svelte'
 
   const { preloading } = stores()

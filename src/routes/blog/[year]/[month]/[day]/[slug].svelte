@@ -51,7 +51,7 @@
 </script>
 
 <PageTitle title="{post.title}" />
-<PageTheme color="{post.highlight}" />
+<PageTheme highlight="{post.highlight}" />
 
 <article class="padding-x-outside padding-y-xwide">
 	<header>

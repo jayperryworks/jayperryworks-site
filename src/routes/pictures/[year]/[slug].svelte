@@ -79,7 +79,7 @@
 </script>
 
 <PageTitle title="{post.title}" />
-<PageTheme color="{post.highlight}" />
+<PageTheme highlight="{post.highlight}" />
 
 <MainNav segment="pictures" theme="reverse" />
 <main>

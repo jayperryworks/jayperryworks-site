@@ -86,7 +86,7 @@
 </script>
 
 <PageTitle title="{post.title}" />
-<PageTheme color="{post.highlight}" />
+<PageTheme highlight="{post.highlight}" />
 
 <MainNav segment="design" />
 
@@ -102,9 +102,9 @@
 				{/if}
 			</Wrapper>
 		</header>
-	
+
 		<PostBody blocks={post.body} class="padding-x-outside padding-y-wide" />
-		
+
 		<!-- credits -->
 		<aside class="border-seam-top padding-x-outside padding-y-xwide">
 			<h2 class="padding-bottom type-align-center">Credits</h2>
