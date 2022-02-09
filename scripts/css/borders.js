@@ -28,7 +28,7 @@ module.exports = {
 		...Object.keys(borders.spine).map((size) => {
 			const values = borders.spine[size];
 			const propSuffix = size !== 'default' ? `-${size}` : '';
-			return `--spine-width${propSuffix}: ${values.width}${values.unit};`;
+			return `--border-spine-width${propSuffix}: ${values.width}${values.unit};`;
 		})
 	],
 	helpers: {
@@ -83,8 +83,73 @@ module.exports = {
 		}
 
 		/*
-			"Seam" effect border
-			-> use an svg pattern to create a styled border that looks like stitching
+			"Spine" border effect
+			-> a stripe on the left side of the layout, a la a book spine, that also displays loading status
+		*/
+		.border-spine {
+			--spine-color: ${theme.getHSLValue('border')};
+			--spine-color: var(--color-highlight);
+
+			--spine-color-tint: hsl(
+				var(--color-highlight-h),
+				var(--color-highlight-s),
+				calc(var(--color-highlight-l) + 10%)
+			);
+			--spine-stripe-size: 30px;
+
+			padding-left: var(--border-spine-width);
+			position: relative;
+		}
+
+		.border-spine::before {
+			background-color: var(--spine-color);
+			bottom: 0;
+			content: '';
+			display: block;
+			left: 0;
+			position: fixed;
+			top: 0;
+			width: var(--border-spine-width);
+			z-index: 0;
+		}
+
+		@keyframes stripes {
+			from { background-position: 0 0; }
+			to   { background-position: var(--spine-stripe-size) var(--spine-stripe-size); }
+		}
+
+		@supports (background: repeating-linear-gradient(45deg, #fff, #000)) {
+			.border-spine.loading::before {
+				/* cheers to https://css-tricks.com/uniqlo-stripe-hovers/ */
+				animation: stripes 0.75s linear infinite;
+				background: repeating-linear-gradient(
+					-45deg,
+					var(--spine-color),
+					var(--spine-color) 25%,
+					var(--spine-color-tint) 25%,
+					var(--spine-color-tint) 50%,
+					var(--spine-color) 50%
+				) top left fixed;
+				background-size: var(--spine-stripe-size) var(--spine-stripe-size);
+			}
+		}
+
+		${Object.keys(borders.spine).filter(s => s !== 'default').map((size) => {
+			return `
+				@media screen and (min-width: ${breakpoints.sizes[size]}${breakpoints.unit}) {
+					.border-spine {
+						padding-left: var(--border-spine-width-${size});
+					}
+					.border-spine::before {
+						width: var(--border-spine-width-${size});
+					}
+				}
+			`;
+		}).join('')}
+
+		/*
+			"Seam" border effect
+			-> use a pseudo-element to create a border that overlays the "spine" and suggests stitching
 		*/
 		${Object.keys(borderSeamSelectors).map(side => `
 			.border-seam-${side} {
@@ -100,10 +165,10 @@ module.exports = {
 				display: block;
 				height: ${borders.seam.marker.h}${borders.seam.marker.unit};
 				left: -${borders.spine.default.width}${borders.spine.default.unit};
-				left: calc(var(--spine-width) * -1);
+				left: calc(var(--border-spine-width) * -1);
 				position: absolute;
 				width: ${borders.spine.default.width}${borders.spine.default.unit};
-				width: var(--spine-width);
+				width: var(--border-spine-width);
 				z-index: 3;
 			}
 
@@ -111,8 +176,8 @@ module.exports = {
 				return `
 					@media screen and (min-width: ${breakpoints.sizes[size]}${breakpoints.unit}) {
 						.border-seam-${side}::${borderSeamSelectors[side]} {
-							left: calc(var(--spine-width-${size}) * -1);
-							width: var(--spine-width-${size});
+							left: calc(var(--border-spine-width-${size}) * -1);
+							width: var(--border-spine-width-${size});
 						}
 					}
 				`;

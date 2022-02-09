@@ -8,7 +8,7 @@
 
 <div
   id="spine-wrapper"
-	class="overflow-hidden"
+	class="border-spine overflow-hidden"
   class:loading="{$preloading}"
 >
   <div id="main-wrapper">
@@ -18,54 +18,6 @@
 </div>
 
 <style>
-  /* Animated 'spine' border */
-  #spine-wrapper {
-    --spine-color: var(--color-highlight);
-
-    --spine-color-tint: hsl(
-      var(--color-highlight-h),
-      var(--color-highlight-s),
-      calc(var(--color-highlight-l) + 10%)
-    );
-    --spine-stripe-size: 30px;
-
-    padding-left: var(--spine-width);
-    position: relative;
-  }
-
-  #spine-wrapper::before {
-    background-color: var(--spine-color);
-    bottom: 0;
-    content: '';
-    display: block;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: var(--spine-width);
-    z-index: 0;
-  }
-
-  @keyframes stripes {
-    from { background-position: 0 0; }
-    to   { background-position: var(--spine-stripe-size) var(--spine-stripe-size); }
-  }
-
-  @supports (background: repeating-linear-gradient(45deg, #fff, #000)) {
-    #spine-wrapper.loading::before {
-      /* cheers to https://css-tricks.com/uniqlo-stripe-hovers/ */
-      animation: stripes 0.75s linear infinite;
-      background: repeating-linear-gradient(
-        -45deg,
-        var(--spine-color),
-        var(--spine-color) 25%,
-        var(--spine-color-tint) 25%,
-        var(--spine-color-tint) 50%,
-        var(--spine-color) 50%
-      ) top left fixed;
-      background-size: var(--spine-stripe-size) var(--spine-stripe-size);
-    }
-  }
-
   #main-wrapper {
     position: relative;
   }
@@ -84,14 +36,4 @@
       flex: 1;
     }
   }
-
-	@media screen and (min-width: 42em) {
-		#spine-wrapper {
-			padding-left: var(--spine-width-small);
-		}
-
-		#spine-wrapper::before {
-			width: var(--spine-width-small);
-		}
-	}
 </style>
