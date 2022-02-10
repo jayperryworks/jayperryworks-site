@@ -8,8 +8,6 @@
 	export let shadow = helpers.getValue('shadow');
 	export let highlight = helpers.getValue('highlight');
 
-	export let color = highlight;
-
 	$: theme = { bg, primary, secondary, highlight, border, shadow };
 
 	$: colorVariables = Object.keys(theme).map((role) => {

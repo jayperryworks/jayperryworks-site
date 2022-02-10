@@ -71,7 +71,6 @@
 
 		return {
 			isCoverPage: (chapterNumber === 1),
-			date: { year },
 			project,
 			chapter,
 			pagination,
@@ -88,7 +87,7 @@
 	import PageTitle from '@/components/PageTitle.svelte';
 	import PageTheme from '@/components/PageTheme.svelte';
 
-	export let isCoverPage, project, chapter, date, pagination;
+	export let isCoverPage, project, chapter, pagination;
 
 	$: pageTitle = chapter.displayTitle ? `${project.title}: ${chapter.title}` : project.title;
 </script>
