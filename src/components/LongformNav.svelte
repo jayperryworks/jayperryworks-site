@@ -7,16 +7,11 @@
 	import LogoJP from './logos/LogoJP.svelte';
 
 	export let projectTitle,
-		chapterLabel,
-		chapterNumber,
-		chapterTitle,
+		currentPath,
 		projectPath,
 		overlay = false,
 		showProjectTitle = true,
-		showChapterTitle = true,
 		tableOfContents;
-
-	$: currentChapter = chapterTitle && `${chapterLabel} ${chapterNumber}: ${chapterTitle}`;
 
 	let navOpen = false
   let navTransitioned = true
@@ -48,18 +43,13 @@
 
 		<!-- nav -->
   	<div class="type-align-right">
-			{#if chapterTitle && showChapterTitle}
-				<p class="title chapter | type-font-accent type-weight-light type-scale-zeta type-leading-xtight | padding-top-xnarrow padding-right-narrow">
-					<span class="color-fg-secondary">{chapterLabel} {chapterNumber}:</span> {chapterTitle}
-				</p>
-			{/if}
       <button
         on:click="{handleButtonClick}"
         class:hide="{navOpen === true}"
-        class="nav-button | type-scale-epsilon type-font-accent type-weight-xlight type-leading-xtight"
+        class="nav-button | type-font-accent type-weight-light type-leading-xtight"
       >
-        <span class="hide-visually">Table of contents</span>
-        <Icon svg="{menu}" margin="left" class="color-fg-primary" />
+        Table of contents
+        <Icon svg="{menu}" class="color-fg-primary | margin-left-xnarrow" />
       </button>
       <div
         class="nav"
@@ -74,19 +64,25 @@
           <Icon svg="{close}" margin="right" />
           <span class="hide-visually">Close</span>
         </button>
-        <ul class="nav-list">
-          {#each tableOfContents as item}
-            <li>
-              <a
-                class="nav-item type-font-accent type-link-undecorated type-weight-light"
-                class:current="{chapterTitle === item.title}"
-                href="{item.path}"
-              >
-                {@html item.title}
-              </a>
-            </li>
-          {/each}
-        </ul>
+				<div class="type-align-left">
+					<h2 class="type-scale-alpha padding-bottom">
+						<a href="{projectPath}">{projectTitle}</a>
+					</h2>
+						<ul class="nav-list">
+							{#each tableOfContents as item}
+								<li>
+									<a
+						on:click="{handleButtonClick}"
+										class="nav-item type-font-accent type-link-undecorated type-weight-light"
+										class:current="{currentPath === item.path}"
+										href="{item.path}"
+									>
+										{@html item.title}
+									</a>
+								</li>
+							{/each}
+						</ul>
+				</div>
       </div>
     </div>
   </div>
@@ -130,23 +126,18 @@
   }
 
 	.title {
-		display: inline-block;
+		display: none;
 		border: 0;
 		vertical-align: top;
 	}
 
-	@media screen and (max-width: 25em) {
-		.title.chapter {
-			display: none;
-		}
-	}
-
   .nav-button {
-    background-color: transparent;
+		background-color: transparent;
     border: 0;
     box-shadow: none;
     cursor: pointer;
     display: inline-block;
+		font-size: var(--type-scale-epsilon);
     margin-top: 1em;
     margin-top: var(--space-xnarrow);
     outline: none;
@@ -157,16 +148,26 @@
 
   .nav-button:hover,
   .nav-button:active {
-    color: var(--color-highlight);
+		color: var(--color-highlight);
   }
 
   .nav-button.close {
-    margin-right: 1.5em;
+		margin-right: 1.5em;
     margin-right: var(--space-medium);
     position: absolute;
     right: 0;
     top: 0;
   }
+
+	@media screen and (min-width: 25em) {
+		.title {
+			display: inline-block;
+		}
+
+		.nav-button {
+			font-size: var(--type-scale-zeta);
+		}
+	}
 
   /* --- small-screen nav --- */
   :global(.js) .nav {
@@ -249,65 +250,4 @@
     transform: translateY(-50%);
     width: var(--size);
   }
-
-  /* --- large-screen nav --- */
-  /* @media screen and (min-width: 30em) {
-    .nav-button {
-      display: none;
-    }
-
-    .nav,
-    :global(.js) .nav {
-      background-color: transparent;
-      display: inline-block;
-      opacity: 1;
-      position: relative;
-    }
-
-    :global(.js) .nav.closed {
-      clip-path: none;
-      clip: auto;
-      height: auto;
-      overflow: visible;
-      position: static;
-      width: auto;
-    }
-
-    .nav-item {
-      font-size: var(--type-scale-zeta);
-      padding-top: 0.8em;
-      padding-top: var(--space-xnarrow);
-    }
-
-    .nav-item:hover,
-    .nav-item:active {
-      color: var(--color-highlight);
-    }
-
-    .nav-item.current::before {
-      background-color: var(--color-highlight);
-      height: 0.125em;
-      left: 0;
-      position: absolute;
-      right: 0;
-      top: 0;
-      transform: none;
-      width: auto;
-    }
-
-    .nav-item.small-only {
-      display: none;
-    }
-
-    .nav-list > li {
-      display: inline-block;
-    }
-
-    .nav-list > li + li {
-      margin-left: 1em;
-      margin-left: var(--space-narrow);
-      margin-top:  0;
-      padding-top: 0;
-    }
-  } */
 </style>

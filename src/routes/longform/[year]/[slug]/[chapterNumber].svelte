@@ -104,10 +104,9 @@
 <LongformNav
 	projectTitle="{project.title}"
 	projectPath="{project.chapters[0].path}"
-	chapterTitle="{chapter.title}"
+	currentPath="{chapter.path}"
 	tableOfContents="{project.chapters}"
-	chapterLabel="{project.chapterLabel}"
-	chapterNumber="{chapter.number}"
+	showProjectTitle="{!isCoverPage}"
 />
 
 <main>
