@@ -5,15 +5,6 @@ export async function get ({ params }, res) {
 	const { id } = params;
 	const header = { 'Content-Type': 'application/json' };
 
-	// do this on the client/preload:
-	// query the project and get list of chapters
-	// populate nav with chapters list
-	// find the current chapter in the list and get it's ID
-	// -> (chapters[number - 1].id)
-	// get the chapter server route for for page content
-
-	const contentType = 'Longform_chapter'
-
 	const response = await query(`
 		query{
 			allLongform_chapters(id: "${id}") {

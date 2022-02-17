@@ -1,71 +1,64 @@
 <script>
-  import menu from 'icons/menu.svg';
+	import menu from 'icons/menu.svg';
   import close from 'icons/close.svg';
   import Icon from './Icon.svelte';
-;
+
   import Bookend from './Bookend.svelte';
-  import LogoJP from './logos/LogoJP.svelte';
+	import LogoJP from './logos/LogoJP.svelte';
 
-	export let segment,
-    overlay = false;
+	export let projectTitle,
+		chapterLabel,
+		chapterNumber,
+		chapterTitle,
+		projectPath,
+		overlay = false,
+		showProjectTitle = true,
+		showChapterTitle = true,
+		tableOfContents;
 
-  let navOpen = false;
-  let navTransitioned = true;
+	$: currentChapter = chapterTitle && `${chapterLabel} ${chapterNumber}: ${chapterTitle}`;
+
+	let navOpen = false
+  let navTransitioned = true
 
   function handleButtonClick () {
-    navOpen = !navOpen;
-    navTransitioned = false;
+    navOpen = !navOpen
+    navTransitioned = false
   }
-
-  let items = [
-    {
-      label: 'Home',
-      url: '/',
-      show: 'small'
-    },
-    {
-      label: 'Patapsco essay',
-      url: 'longform/2022/patapsco/1'
-    },
-    {
-      label: 'Prints &amp; paintings',
-      url: 'pictures'
-    },
-    {
-      label: 'Design',
-      url: 'design'
-    },
-    {
-      label: 'Blog',
-      url: 'blog'
-    },
-    {
-      label: 'About',
-      url: 'about'
-    }
-  ];
 </script>
 
 <nav
-  class="padding-x-outside"
-  class:overlay
+	class="padding-x-outside"
+	class:overlay
 >
-  <div class="bookend">
-    <a
-      class="logo"
-      href="/"
-    >
-      <LogoJP />
-    </a>
+	<div class="bookend">
+		<div class="nav-title">
+			<a href="/" class="logo">
+				<LogoJP />
+			</a>
+			{#if projectTitle && showProjectTitle}
+				<a
+					class="title | type-font-accent type-weight-light type-scale-zeta type-leading-xtight | margin-left padding-top-xnarrow"
+					href="{projectPath}"
+				>
+					{projectTitle}
+				</a>
+			{/if}
+		</div>
 
-    <!-- nav -->
+		<!-- nav -->
   	<div class="type-align-right">
+			{#if chapterTitle && showChapterTitle}
+				<p class="title chapter | type-font-accent type-weight-light type-scale-zeta type-leading-xtight | padding-top-xnarrow padding-right-narrow">
+					<span class="color-fg-secondary">{chapterLabel} {chapterNumber}:</span> {chapterTitle}
+				</p>
+			{/if}
       <button
         on:click="{handleButtonClick}"
         class:hide="{navOpen === true}"
-        class="nav-button | type-scale-epsilon type-font-accent type-weight-xlight"
+        class="nav-button | type-scale-epsilon type-font-accent type-weight-xlight type-leading-xtight"
       >
-        Menu
+        <span class="hide-visually">Table of contents</span>
         <Icon svg="{menu}" margin="left" class="color-fg-primary" />
       </button>
       <div
@@ -82,16 +75,14 @@
           <span class="hide-visually">Close</span>
         </button>
         <ul class="nav-list">
-          {#each items as item}
+          {#each tableOfContents as item}
             <li>
               <a
                 class="nav-item type-font-accent type-link-undecorated type-weight-light"
-                class:current={segment === item.url}
-                class:small-only="{item.show === 'small'}"
-                rel={item.prefetch ? 'prefetch' : ''}
-                href={item.url}
+                class:current="{chapterTitle === item.title}"
+                href="{item.path}"
               >
-                {@html item.label}
+                {@html item.title}
               </a>
             </li>
           {/each}
@@ -122,11 +113,33 @@
   }
 
   /* --- nav elements --- */
+	@supports (display: flex) {
+		.nav-title {
+			display: flex;
+			align-items: flex-start;
+			flex-direction: row;
+			justify-content: flex-start;
+		}
+	}
+
   .logo {
     border: none;
-    display: block;
+    display: inline-block;
     max-width: 2.5rem;
+		font-size: 0;
   }
+
+	.title {
+		display: inline-block;
+		border: 0;
+		vertical-align: top;
+	}
+
+	@media screen and (max-width: 25em) {
+		.title.chapter {
+			display: none;
+		}
+	}
 
   .nav-button {
     background-color: transparent;
@@ -135,7 +148,7 @@
     cursor: pointer;
     display: inline-block;
     margin-top: 1em;
-    margin-top: var(--space-narrow);
+    margin-top: var(--space-xnarrow);
     outline: none;
     padding: 0;
     transition: color 0.25s ease-in-out;
@@ -238,7 +251,7 @@
   }
 
   /* --- large-screen nav --- */
-  @media screen and (min-width: 36em) {
+  /* @media screen and (min-width: 30em) {
     .nav-button {
       display: none;
     }
@@ -296,5 +309,5 @@
       margin-top:  0;
       padding-top: 0;
     }
-  }
+  } */
 </style>

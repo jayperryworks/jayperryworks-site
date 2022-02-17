@@ -1,4 +1,4 @@
-const { type, breakpoints } = require('../../content/design-tokens.js')
+const { type } = require('../../content/design-tokens.js')
 const { helpers: color } = require('./color.js')
 const { helpers: border } = require('./borders.js')
 const { helpers: bp } = require('./breakpoints.js')
@@ -59,12 +59,12 @@ function fontSize (size) {
 function heading (selectors) {
 	return `
 		${selectors} {
-			${color.add('color', 'primary')}
 			font-family: ${font('display')};
 			font-weight: normal;
 			display: block;
 			line-height: ${type.leading.tight};
 			margin: 0;
+			max-width: none; /* reset default width of p elements */
 		}
 
 		${selectors.map(selector => `${selector} a`)} {
@@ -95,7 +95,7 @@ module.exports = {
 		...Object.keys(type.scale).map((size) => {
 			const { base, max, fluid } = type.scale[size]
 			return `
-				--type-scale-${size}: ${max 
+				--type-scale-${size}: ${max
 					? fluidScale(base, max, fluid)
 					: scale.get(base)
 				};

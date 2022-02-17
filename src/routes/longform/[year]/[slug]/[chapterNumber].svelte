@@ -26,6 +26,12 @@
 		const projectResponse = await this.fetch(`${path}.json`);
 		const project = await projectResponse.json();
 
+		// add a path to each chapter in the project
+		// -> for the nav links
+		project.chapters.forEach((chapter, index) => {
+			chapter.path = `${path}/${index + 1}`;
+		})
+
 		// find the ID of this chapter
 		const id = project.chapters[chapterNumber - 1]?.id;
 
@@ -33,8 +39,8 @@
 		const chapterResponse = await this.fetch(`${path}/${id}.json`);
 		const chapter = await chapterResponse.json();
 
+		chapter.number = chapterNumber;
 		chapter.path = `${path}/${chapterNumber}`;
-		console.log(chapter.path)
 
 		// set up data for next/prev pagination nav
 		let pagination = [];
@@ -80,7 +86,7 @@
 </script>
 
 <script>
-	import MainNav from '@/components/MainNav.svelte';
+	import LongformNav from '@/components/LongformNav.svelte';
 	import PostBody from '@/components/PostBody.svelte';
 	import PaginationNav from '@/components/PaginationNav.svelte';
 	import Wrapper from '@/components/Wrapper.svelte';
@@ -95,7 +101,15 @@
 <PageTitle title="{pageTitle}" />
 <PageTheme {...chapter.theme} />
 
-<MainNav segment="{chapter.path}" />
+<LongformNav
+	projectTitle="{project.title}"
+	projectPath="{project.chapters[0].path}"
+	chapterTitle="{chapter.title}"
+	tableOfContents="{project.chapters}"
+	chapterLabel="{project.chapterLabel}"
+	chapterNumber="{chapter.number}"
+/>
+
 <main>
 	<article class="padding-x-outside padding-y-xwide">
 		<header class="padding-bottom-xwide">
@@ -106,14 +120,17 @@
 				{#if isCoverPage}
 					<h1>{project.title}</h1>
 					{#if project.subtitle}
-					<p>{project.subtitle}</p>
+						<p>{project.subtitle}</p>
 					{/if}
 				{:else}
 					{#if chapter.title}
+						<p class="subtitle | type-heading type-scale-delta type-font-accent type-weight-xlight | color-fg-secondary | padding-bottom-xnarrow">
+							{project.chapterLabel} {chapter.number}
+						</p>
 						<h1 class="type-scale-beta">{chapter.title}</h1>
 					{/if}
 					{#if chapter.subtitle}
-						<p>{chapter.subtitle}</p>
+						<p class="subtitle | type-heading type-scale-gamma type-font-accent type-weight-xlight | color-fg-secondary | padding-top-xnarrow">{chapter.subtitle}</p>
 					{/if}
 				{/if}
 			</Wrapper>
@@ -124,3 +141,9 @@
 		<PaginationNav items="{pagination}" />
 	</nav>
 </main>
+
+<style>
+	.subtitle {
+		max-width: none;
+	}
+</style>

@@ -1,12 +1,12 @@
 <script>
   export let fgColor = 'color-fg-bg',
-    bgColor = 'color-fg-primary'
+    bgColor = 'color-fg-primary';
 </script>
 
 <svg
-  width="39"
   height="40"
   viewBox="0 0 39 40"
+  width="39"
   xmlns="http://www.w3.org/2000/svg"
 >
   <title>Jay Perry Works</title>
