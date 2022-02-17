@@ -33,7 +33,7 @@
 			</a>
 			{#if projectTitle && showProjectTitle}
 				<a
-					class="title | type-font-accent type-weight-light type-scale-zeta type-leading-xtight | margin-left padding-top-xnarrow"
+					class="title | type-font-accent type-weight-light type-scale-zeta type-leading-xtight | margin-left"
 					href="{projectPath}"
 				>
 					{projectTitle}
@@ -92,6 +92,7 @@
   /* --- layout --- */
   @supports (display:  flex) {
     .bookend {
+			--nav-top-margin: var(--space-narrow);
       align-items: flex-start;
       display: flex;
       flex-direction: row;
@@ -126,8 +127,10 @@
   }
 
 	.title {
-		display: none;
 		border: 0;
+		display: none;
+		padding-top: 1em;
+		padding-top: var(--nav-top-margin);
 		vertical-align: top;
 	}
 
@@ -139,7 +142,7 @@
     display: inline-block;
 		font-size: var(--type-scale-epsilon);
     margin-top: 1em;
-    margin-top: var(--space-xnarrow);
+    margin-top: var(--nav-top-margin);
     outline: none;
     padding: 0;
     transition: color 0.25s ease-in-out;
@@ -226,7 +229,7 @@
   }
 
   .nav-list > li + li {
-    padding-top: var(--space-narrow);
+    padding-top: var(--nav-top-margin);
   }
 
   .nav-item {
