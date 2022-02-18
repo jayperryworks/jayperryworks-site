@@ -42,21 +42,28 @@ const type = {
       name: 'Publico Headline',
       stack: "'Publico', 'Georgia', 'Times', 'Times New Roman', serif",
       role: 'display',
-      file: '/fonts/PublicoHeadline-Roman-Web',
       formats: ['woff', 'ttf'],
-      variants: [{ weight: 'normal' }]
+      variants: [
+				{
+					weight: 'normal',
+					file: '/fonts/PublicoHeadline-Roman-Web'
+				}
+			]
     },
     {
       name: 'Publico Text',
       stack: "'Publico', 'Georgia', 'Times', 'Times New Roman', serif",
       role: 'body',
-      file: '/fonts/PublicoText-Roman-Web',
       formats: ['woff', 'ttf'],
       variants: [
-        { weight: 'normal' },
+				{
+					weight: 'normal',
+					file: '/fonts/PublicoText-Roman-Web'
+				},
         {
-          weight: 'normal',
-          style: 'italic'
+					weight: 'normal',
+          style: 'italic',
+					file: '/fonts/PublicoText-Italic-Web'
         }
       ]
     },

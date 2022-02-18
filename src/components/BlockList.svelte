@@ -1,29 +1,36 @@
 <script>
-	import Caption from './Caption.svelte'
-  import Collage from './Collage.svelte'
-  import DeviceFrame from './DeviceFrame.svelte'
-  import Figure from './Figure.svelte'
-  import Gallery from './Gallery.svelte'
-  import Note from './Note.svelte'
-  import Passage from './Passage.svelte'
-  import ResponsiveImage from './ResponsiveImage.svelte'
-  import ResponsivePicture from './ResponsivePicture.svelte'
-  import Table from './Table.svelte'
-  import Wrapper from './Wrapper.svelte'
+	import Caption from './Caption.svelte';
+  import Collage from './Collage.svelte';
+  import DeviceFrame from './DeviceFrame.svelte';
+  import Figure from './Figure.svelte';
+  import Gallery from './Gallery.svelte';
+  import Note from './Note.svelte';
+  import Passage from './Passage.svelte';
+  import ResponsiveImage from './ResponsiveImage.svelte';
+  import ResponsivePicture from './ResponsivePicture.svelte';
+  import Table from './Table.svelte';
+  import Wrapper from './Wrapper.svelte';
+  import Quote from './blocks/Quote.svelte';
 
-	export let blocks
+	export let blocks;
 
 	function getWidth(prominence) {
 	  const widths = {
 	    small: 'narrow',
 	    medium: 'default',
 	    large: 'wide'
-	  }
-	  const index = Object.keys(widths).find((item) => item == prominence)
-	  return widths[index] || 'default'
+	  };
+	  const index = Object.keys(widths).find((item) => item == prominence);
+	  return widths[index] || 'default';
 	}
 
 	function getBlockClass(type) {
+		// a quote block behaves the same as a passage,
+		// so assign it the same class
+		if (type === 'quote') {
+			type = 'passage'
+		}
+
 		const classes = [
 			'passage',
 			'heading'
@@ -36,13 +43,14 @@
 </script>
 
 <div class="blocks padding-y-flow-wide">
+
 	{#each blocks as block}
-		<Wrapper
-		  width={getWidth(block.prominence)}
-		  class="{getBlockClass(block.type)}"
-		>
+	<Wrapper
+	width={getWidth(block.prominence)}
+	class="{getBlockClass(block.type)}"
+	>
 		  {#if block.type == 'note'}
-		    <Note html={block.html} />
+		    <Note html="{block.html}" />
 		  {/if}
 
 		  {#if block.type == 'heading'}
@@ -50,16 +58,20 @@
 		  {/if}
 
 		  {#if block.type == 'passage'}
-	      <Passage html={block.html} />
+	      <Passage html="{block.html}" />
 		  {/if}
+
+			{#if block.type == 'quote'}
+				<Quote html="{block.html}" />
+			{/if}
 
 		  {#if block.type == 'figure'}
 		  	<div class="type-align-center">
 		  		{#if block.device}
 		  			<Figure
-		  				caption={block.caption}
-		  				credit={block.credit}
-		  				border={block.border}
+		  				caption="{block.caption}"
+		  				credit="{block.credit}"
+		  				border="{block.border}"
 	  				>
 	        		<DeviceFrame
 	        			type="{block.device}"
@@ -69,11 +81,11 @@
 	      		</Figure>
 		  		{:else}
 			      <Figure
-			      	sources={block.image}
-			      	alt={block.alt}
-			      	caption={block.caption}
-			      	credit={block.credit}
-			      	border={block.border}
+			      	sources="{block.image}"
+			      	alt="{block.alt}"
+			      	caption="{block.caption}"
+			      	credit="{block.credit}"
+			      	border="{block.border}"
 			      />
 		      {/if}
 		    </div>
@@ -81,12 +93,12 @@
 
 		  {#if block.type == 'gallery'}
 	      <Figure
-	      	caption={block.caption}
-	      	credit={block.credit}
-	      	border={block.border}
+	      	caption="{block.caption}"
+	      	credit="{block.credit}"
+	      	border="{block.border}"
 	      >
 	        <Gallery
-	        	size={block.size}
+	        	size="{block.size}"
 	        	gutter="{block.gutter}"
 	        	constrainContent="{block.constrainContent || false}"
         	>
@@ -105,15 +117,15 @@
 	            	{:else}
 		              {#if item.image.versions && item.image.versions.length > 1}
 		                <ResponsivePicture
-		                  sources={item.image.versions}
-		                  alt={item.alt}
-		                  border={item.border}
+		                  sources="{item.image.versions}"
+		                  alt="{item.alt}"
+		                  border="{item.border}"
 		                />
 		              {:else}
 		                <ResponsiveImage
-		                  sources={item.image.versions && item.image.versions[0].sizes || item.image}
-		                  alt={item.alt}
-		                  border={item.border}
+		                  sources="{item.image.versions && item.image.versions[0].sizes || item.image}"
+		                  alt="{item.alt}"
+		                  border="{item.border}"
 		                />
 		              {/if}
 	              {/if}
@@ -145,7 +157,7 @@
 			  		{/each}
 			  	</Collage>
 		  		{#if block.caption}
-		  			<Caption 
+		  			<Caption
 		  				caption="{block.caption}"
 		  				credit="{block.credit}"
 		  				class="padding-top-narrow"
@@ -165,7 +177,7 @@
 
 		  {#if block.type == 'update'}
 	      <h3 class="border-top padding-bottom-narrow padding-top type-case-upper type-font-accent type-scale-zeta">Update</h3>
-	      <Passage html={block.html} />
+	      <Passage html="{block.html}" />
 		  {/if}
 		</Wrapper>
 	{/each}

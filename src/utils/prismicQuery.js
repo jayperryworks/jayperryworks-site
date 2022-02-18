@@ -89,6 +89,16 @@ const blockQueries = {
       }
     }
   `,
+  quote: (contentTypeName = 'PageBody', blockName = 'Quote') => `
+    ... on ${contentTypeName}${blockName} {
+      type
+      primary {
+        markdown
+				attribution
+				include_in_excerpt
+      }
+    }
+  `,
   figure: (contentTypeName = 'PageBody', blockName = 'Figure') => `
     ... on ${contentTypeName}${blockName} {
       type
@@ -140,10 +150,17 @@ function renderBlockContent (blocks) {
 		switch (slice.type) {
 			case 'passage': {
 				slice = {
-					type: 'passage',
 					html: renderMarkdown(slice.primary.markdown),
 					...getSharedSliceFields(slice)
 				};
+				break;
+			}
+			case 'quote': {
+				slice = {
+					html: renderMarkdown(slice.primary.markdown),
+					attribution: slice.primary.attribution,
+					...getSharedSliceFields(slice)
+				}
 				break;
 			}
 			case 'figure': {

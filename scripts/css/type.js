@@ -110,9 +110,11 @@ module.exports = {
 	base: `
 		/* webfonts */
 		${type.fonts.map((font) => {
-			const { name, file, formats } = font
-			if (file) {
-				return font.variants.map(variant => webfont(name, file, { formats, ...variant })).join('')
+			const { name, formats, variants } = font
+			if (formats && variants) {
+				return variants.map((variant) => {
+					return webfont(name, variant.file, { formats, ...variant })
+				}).join('')
 			}
 		}, []).join('')}
 

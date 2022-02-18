@@ -3,6 +3,7 @@ import { query, getString, convertColorToHSL, renderBlockContent, blockQueries }
 
 export async function get ({ params }, res) {
 	const { id } = params;
+
 	const header = { 'Content-Type': 'application/json' };
 
 	const response = await query(`
