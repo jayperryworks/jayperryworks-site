@@ -138,6 +138,7 @@
 		background-color: transparent;
     border: 0;
     box-shadow: none;
+		color: var(--color-primary);
     cursor: pointer;
     display: inline-block;
 		font-size: var(--type-scale-epsilon);

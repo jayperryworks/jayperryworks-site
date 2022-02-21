@@ -1,11 +1,11 @@
 <script context="module">
 	import { noCase } from 'change-case';
 
-	function getPaginationLabel (direction, label, title = null) {
+	function getPaginationLabel (direction, title = null) {
 		if (title) {
-			return `<span class="color-fg-secondary">${direction} ${noCase(label)}:</span> ${title}`
+			return `<span class="color-fg-secondary">${direction}:</span> ${title}`
 		}
-		return `<span class="color-fg-secondary">${direction} ${noCase(label)}</span>`
+		return `<span class="color-fg-secondary">${direction}</span>`
 	}
 
 	export async function preload({ params }) {
@@ -52,7 +52,6 @@
 			pagination.push({
 				label: getPaginationLabel(
 					'Previous',
-					project.chapterLabel,
 					prevChapter.displayTitle && prevChapter.title
 				),
 				direction: 'previous',
@@ -67,7 +66,6 @@
 			pagination.push({
 				label: getPaginationLabel(
 					'Next',
-					project.chapterLabel,
 					nextChapter.displayTitle && nextChapter.title
 				),
 				direction: 'next',
