@@ -1,6 +1,0 @@
-//  Global animation styles
-
-// base transition used globally
-@mixin transition($duration: 0.25s, $ease: ease-in-out) {
-  transition: all $duration $ease;
-}

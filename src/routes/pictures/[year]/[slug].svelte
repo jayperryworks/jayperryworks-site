@@ -1,8 +1,11 @@
 <script context="module">
 	// build an object for the previous and next pages nav
-	function getPaginationData (page, direction) {
-		const { cover, title: label, path, ratio } = page;
-
+	function getPaginationData (direction, {
+		cover,
+		title: label,
+		path,
+		ratio
+	}) {
 		return {
 			direction,
 			label,
@@ -28,18 +31,18 @@
 		const pagination = {};
 
 		if (currentPageIndex > 0) {
-		pagination.prevPage = getPaginationData(
-			pictures[currentPageIndex - 1],
-			'previous'
-		);
-	}
+			pagination.prevPage = getPaginationData(
+				'previous',
+				pictures[currentPageIndex - 1]
+			);
+		}
 
-	if (currentPageIndex < pictures.length - 1) {
-		pagination.nextPage = getPaginationData(
-			pictures[currentPageIndex + 1],
-			'next'
-		);
-	}
+		if (currentPageIndex < pictures.length - 1) {
+			pagination.nextPage = getPaginationData(
+				'next',
+				pictures[currentPageIndex + 1]
+			);
+		}
 
 		if (postResponse.status !== 200) {
 			this.error(postResponse.status, post.message);
@@ -76,7 +79,7 @@
 </script>
 
 <PageTitle title="{post.title}" />
-<PageTheme color="{post.highlight}" />
+<PageTheme highlight="{post.highlight}" />
 
 <MainNav segment="pictures" theme="reverse" />
 <main>

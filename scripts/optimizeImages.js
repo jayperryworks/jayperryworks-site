@@ -53,29 +53,6 @@ function getDir (dir) {
 	}
 }
 
-function getPictureImages (dir) {
-	return getDir(dir).reduce((result, data) => {
-		const images = [
-			{ original: data.cover,
-				options: {
-					widths: [1000, 1600, 2000]
-				}
-			},
-			{
-				original: data.thumb,
-				options: {
-					widths: [600, 1000]
-				}
-			},
-			...(data.editions && data.editions.map((edition) => {
-				return { original: edition.photo }
-			}))
-		]
-		result.push(...images)
-		return result
-	}, [])
-}
-
 function getDesignIndexImages(file) {
 	const data = getFile(file)
 	return data.toc.items.reduce((result, item) => {
@@ -144,9 +121,16 @@ function getAboutImages (file) {
 
 function getHomeImages (file) {
 	const data = getFile(file)
-	return [{
-		original: data.tableOfContents.pictures.coverImage
-	}]
+	return Object.keys(data.tableOfContents).reduce((result, section) => {
+		const { coverImage } = data.tableOfContents[section];
+
+		if (coverImage) {
+			result.push({
+				original: coverImage
+			})
+		}
+		return result
+	}, [])
 }
 
 async function resizeAndGenerateManifest (images) {

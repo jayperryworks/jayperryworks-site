@@ -1,21 +1,20 @@
 <script>
-  import menu from 'icons/menu.svg'
-  import close from 'icons/close.svg'
-  import Icon from './Icon.svelte'
-
-  import Bookend from './Bookend.svelte'
-  import Dropdown from './Dropdown.svelte'
-  import LogoJP from './logos/LogoJP.svelte'
+  import menu from 'icons/menu.svg';
+  import close from 'icons/close.svg';
+  import Icon from './Icon.svelte';
+;
+  import Bookend from './Bookend.svelte';
+  import LogoJP from './logos/LogoJP.svelte';
 
 	export let segment,
-    overlay = false
+    overlay = false;
 
-  let navOpen = false
-  let navTransitioned = true
+  let navOpen = false;
+  let navTransitioned = true;
 
   function handleButtonClick () {
-    navOpen = !navOpen
-    navTransitioned = false
+    navOpen = !navOpen;
+    navTransitioned = false;
   }
 
   let items = [
@@ -23,6 +22,10 @@
       label: 'Home',
       url: '/',
       show: 'small'
+    },
+    {
+      label: 'Patapsco essay',
+      url: 'longform/2022/patapsco/1'
     },
     {
       label: 'Prints &amp; paintings',
@@ -40,7 +43,7 @@
       label: 'About',
       url: 'about'
     }
-  ]
+  ];
 </script>
 
 <nav
@@ -57,7 +60,7 @@
 
     <!-- nav -->
   	<div class="type-align-right">
-      <button 
+      <button
         on:click="{handleButtonClick}"
         class:hide="{navOpen === true}"
         class="nav-button | type-scale-epsilon type-font-accent type-weight-xlight"
@@ -65,13 +68,13 @@
         Menu
         <Icon svg="{menu}" margin="left" class="color-fg-primary" />
       </button>
-      <div 
+      <div
         class="nav"
         class:open="{navOpen}"
         class:closed="{navTransitioned && !navOpen}"
         on:transitionend="{e => { navTransitioned = true }}"
       >
-        <button 
+        <button
           on:click="{handleButtonClick}"
           class="nav-button close type-scale-epsilon type-font-accent"
         >
@@ -235,7 +238,7 @@
   }
 
   /* --- large-screen nav --- */
-  @media screen and (min-width: 30em) {
+  @media screen and (min-width: 36em) {
     .nav-button {
       display: none;
     }

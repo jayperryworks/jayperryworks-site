@@ -19,15 +19,11 @@
 
 <script>
 	import { format } from 'date-fns'
-	import arrowLeft from 'icons/arrow-left.svg'
-	import arrowRight from 'icons/arrow-right.svg'
 	import arrowSmallRight from 'icons/arrow-right.svg'
 	import BlockList from '@/components/BlockList.svelte'
-	import Bookend from '@/components/Bookend.svelte'
 	import Button from '@/components/Button.svelte'
 	import Figure from '@/components/Figure.svelte'
-	import Icon from '@/components/Icon.svelte'
-	import OutdentedBlurb from '@/components/OutdentedBlurb.svelte'
+	import PageTheme from '@/components/PageTheme.svelte'
 	import PageTitle from '@/components/PageTitle.svelte'
 	import PaginationNav from '@/components/PaginationNav.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
@@ -65,6 +61,7 @@
 </script>
 
 <PageTitle title="Blog" />
+<PageTheme />
 
 {#each Object.keys(postsByYear).reverse() as year, index}
 	<section class:border-seam-top="{index > 0}">

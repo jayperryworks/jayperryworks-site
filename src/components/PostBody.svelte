@@ -1,11 +1,11 @@
 <script>
-  import { titleize } from '@/utils/stringHelpers.js'
-  import BlockList from './BlockList.svelte'
+  import { titleize } from '@/utils/stringHelpers.js';
+  import BlockList from './BlockList.svelte';
 
-  export let blocks
-
-  let classes = ''
-  export { classes as class }
+  export let blocks;
+;
+  let classes = '';
+  export { classes as class };
 
   // create a list of sections from the yml blocks in each page
   $: sections = blocks.reduce((result, block) => {
@@ -16,24 +16,22 @@
         uid: block.uid,
         label: block.label || titleize(block.uid),
         blocks: []
-      })
-      return result
+      });
+      return result;
     }
 
     // if the first blocks are outside a section, then make a generic div
     if (result.length === 0 && block.type !== 'sectionStart') {
-      result.push({
-        blocks: []
-      })
+      result.push({ blocks: [] });
     }
 
     // add the block object to the last 'section' array item
-    result[result.length - 1].blocks.push(block)
-    return result
-  }, [])
+    result[result.length - 1].blocks.push(block);
+    return result;
+  }, []);
 </script>
 
-<div class="body padding-y-flow-xwide margin-y-flow-xwide {classes}">
+<div class="padding-y-flow-xwide margin-y-flow-xwide {classes}">
   {#each sections as section}
     {#if section.uid}
       <section id={section.uid}>

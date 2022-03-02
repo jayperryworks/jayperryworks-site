@@ -30,7 +30,6 @@
 	import PageTitle from '@/components/PageTitle.svelte'
 	import PaginationNav from '@/components/PaginationNav.svelte'
 	import PostBody from '@/components/PostBody.svelte'
-	import ResponsiveImage from '@/components/ResponsiveImage.svelte'
 	import Wrapper from '@/components/Wrapper.svelte'
 
 	export let post
@@ -52,7 +51,7 @@
 </script>
 
 <PageTitle title="{post.title}" />
-<PageTheme color="{post.highlight}" />
+<PageTheme highlight="{post.highlight}" />
 
 <article class="padding-x-outside padding-y-xwide">
 	<header>

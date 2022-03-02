@@ -30,7 +30,7 @@
 </script>
 
 <PageTitle title="Profile" />
-<PageTheme color="{highlight}" />
+<PageTheme highlight="{highlight}" />
 
 <MainNav segment="about" />
 <main>

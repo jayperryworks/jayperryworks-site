@@ -33,13 +33,11 @@
 </script>
 
 <script>
-  import { format } from 'date-fns';
   import { titleize } from '@/utils/stringHelpers.js';
-  import arrow from 'icons/arrow-right.svg';
   import AspectRatio from '@/components/AspectRatio.svelte';
-  import Button from '@/components/Button.svelte';
   import Gallery from '@/components/Gallery.svelte';
   import MainNav from '@/components/MainNav.svelte';
+  import PageTheme from '@/components/PageTheme.svelte';
   import PageTitle from '@/components/PageTitle.svelte';
   import ResponsiveImage from '@/components/ResponsiveImage.svelte';
   import Wrapper from '@/components/Wrapper.svelte';
@@ -48,6 +46,7 @@
 </script>
 
 <PageTitle title="Pictures" />
+<PageTheme />
 
 <MainNav segment="pictures" />
 

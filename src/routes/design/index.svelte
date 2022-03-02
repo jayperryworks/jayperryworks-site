@@ -1,32 +1,37 @@
 <script context="module">
 	export async function preload({ params, query }) {
-	  const response = await this.fetch('design.json')
-	  const data = await response.json()
+	  const response = await this.fetch('design.json');
+	  const data = await response.json();
 
 	  if (response.status !== 200) {
-	    this.error(response.status, data.message)
-	    return
+	    this.error(response.status, data.message);
+	    return;
 	  }
 
-	  return { content: data }
+	  return { content: data };
 	}
 </script>
 
 <script>
-	import arrowRight from 'icons/arrow-right.svg'
-	import Button from '@/components/Button.svelte'
-	import Collage from '@/components/Collage.svelte'
-	import DeviceFrame from '@/components/DeviceFrame.svelte'
-	import Gallery from '@/components/Gallery.svelte'
-	import MainNav from '@/components/MainNav.svelte'
-	import Panel from '@/components/Panel.svelte'
-	import Passage from '@/components/Passage.svelte'
-	import ResponsivePicture from '@/components/ResponsivePicture.svelte'
-	import Wrapper from '@/components/Wrapper.svelte'
+	import arrowRight from 'icons/arrow-right.svg';
+	import Button from '@/components/Button.svelte';
+	import Collage from '@/components/Collage.svelte';
+	import DeviceFrame from '@/components/DeviceFrame.svelte';
+	import Gallery from '@/components/Gallery.svelte';
+	import MainNav from '@/components/MainNav.svelte';
+	import PageTheme from '@/components/PageTheme.svelte';
+	import PageTitle from '@/components/PageTitle.svelte';
+	import Panel from '@/components/Panel.svelte';
+	import Passage from '@/components/Passage.svelte';
+	import ResponsivePicture from '@/components/ResponsivePicture.svelte';
+	import Wrapper from '@/components/Wrapper.svelte';
 
-	export let content
-	let { title, intro, clients, toc } = content
+	export let content;
+	let { title, intro, clients, toc } = content;
 </script>
+
+<PageTitle title="Design" />
+<PageTheme />
 
 <MainNav segment="design" />
 
@@ -112,7 +117,7 @@
 
 	.flag {
 		--gutter: var(--space-medium);
-		
+
 		display: grid;
 		grid-gap: var(--gutter);
 		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

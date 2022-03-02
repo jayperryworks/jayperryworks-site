@@ -12,16 +12,24 @@ function add ({
 	color = 'border',
 	style = 'dashed'
 } = {}) {
+	const prop = `border${side === 'all' ? '' : `-${side}`}`;
+
 	return `
-		border${side === 'all' ? '' : `-${side}`}: ${borders.widths.default}px ${style} ${theme.getHSLValue('border')};
-		border${side === 'all' ? '' : `-${side}`}: ${borders.widths.default}px ${style} ${theme.getCustomProperty('border')};
+		${prop}: ${borders.widths.default}px ${style} ${theme.getHSLValue('border')};
+		${prop}: ${borders.widths.default}px ${style} ${theme.getCustomProperty('border')};
 	`
 }
 
 module.exports = {
 	name: 'Borders',
 	customProperties: [
-		`--border-radius: ${borders.radius.size}${borders.radius.unit};`
+		`--border-radius: ${borders.radius.size}${borders.radius.unit};`,
+		// spine custom props for each screen width
+		...Object.keys(borders.spine).map((size) => {
+			const values = borders.spine[size];
+			const propSuffix = size !== 'default' ? `-${size}` : '';
+			return `--border-spine-width${propSuffix}: ${values.width}${values.unit};`;
+		})
 	],
 	helpers: {
 		add
@@ -75,8 +83,73 @@ module.exports = {
 		}
 
 		/*
-			"Seam" effect border
-			-> use an svg pattern to create a styled border that looks like stitching
+			"Spine" border effect
+			-> a stripe on the left side of the layout, a la a book spine, that also displays loading status
+		*/
+		.border-spine {
+			--spine-color: ${theme.getHSLValue('border')};
+			--spine-color: var(--color-highlight);
+
+			--spine-color-tint: hsl(
+				var(--color-highlight-h),
+				var(--color-highlight-s),
+				calc(var(--color-highlight-l) + 10%)
+			);
+			--spine-stripe-size: 30px;
+
+			padding-left: var(--border-spine-width);
+			position: relative;
+		}
+
+		.border-spine::before {
+			background-color: var(--spine-color);
+			bottom: 0;
+			content: '';
+			display: block;
+			left: 0;
+			position: fixed;
+			top: 0;
+			width: var(--border-spine-width);
+			z-index: 0;
+		}
+
+		@keyframes stripes {
+			from { background-position: 0 0; }
+			to   { background-position: var(--spine-stripe-size) var(--spine-stripe-size); }
+		}
+
+		@supports (background: repeating-linear-gradient(45deg, #fff, #000)) {
+			.border-spine.loading::before {
+				/* cheers to https://css-tricks.com/uniqlo-stripe-hovers/ */
+				animation: stripes 0.75s linear infinite;
+				background: repeating-linear-gradient(
+					-45deg,
+					var(--spine-color),
+					var(--spine-color) 25%,
+					var(--spine-color-tint) 25%,
+					var(--spine-color-tint) 50%,
+					var(--spine-color) 50%
+				) top left fixed;
+				background-size: var(--spine-stripe-size) var(--spine-stripe-size);
+			}
+		}
+
+		${Object.keys(borders.spine).filter(s => s !== 'default').map((size) => {
+			return `
+				@media screen and (min-width: ${breakpoints.sizes[size]}${breakpoints.unit}) {
+					.border-spine {
+						padding-left: var(--border-spine-width-${size});
+					}
+					.border-spine::before {
+						width: var(--border-spine-width-${size});
+					}
+				}
+			`;
+		}).join('')}
+
+		/*
+			"Seam" border effect
+			-> use a pseudo-element to create a border that overlays the "spine" and suggests stitching
 		*/
 		${Object.keys(borderSeamSelectors).map(side => `
 			.border-seam-${side} {
@@ -84,46 +157,31 @@ module.exports = {
 				position: relative;
 			}
 
-			@supports(
-				border-image:
-					url('${borders.seam.image}')
-					${borders.seam.marker.h} 0 0 ${borders.seam.marker.w}
-					repeat
-			) {
-				.border-seam-${side} {
-					border-${side}: none;
-				}
-
-				.border-seam-${side}::${borderSeamSelectors[side]} {
-					${side}: -${borders.seam.marker.h / 2}px;
-					border-image:
-					  url('${borders.seam.image}')
-					  ${borders.seam.marker.h} 0 0 ${borders.seam.marker.w}
-					  repeat;
-					border-style: solid;
-					border-width: ${borders.seam.marker.h}px 0 0 10px;
-					content: '';
-					display: block;
-					height: 0;
-					left: -${borders.seam.marker.w}px;
-					position: absolute;
-					right: ${spacingHelpers.get(spacing.outside.default)};
-					z-index: 3;
-				}
-
-				${Object.keys(spacing.outside).map((screen) => {
-					if (screen != 'default') {
-						return `
-							@media screen and (max-width: ${breakpoints.sizes[screen]}${breakpoints.unit}) {
-								.border-seam-${side}::${borderSeamSelectors[side]} {
-									right: ${spacingHelpers.get(spacing.outside[screen])};
-								}
-							}
-						`;
-					}
-					return;
-				}).join('')}
+			.border-seam-${side}::${borderSeamSelectors[side]} {
+				${side}: -${borders.seam.marker.h / 2}${borders.seam.marker.unit};
+				background-color: ${theme.getHSLValue('primary')};
+				background-color: ${theme.getCustomProperty('primary')};
+				content: '';
+				display: block;
+				height: ${borders.seam.marker.h}${borders.seam.marker.unit};
+				left: -${borders.spine.default.width}${borders.spine.default.unit};
+				left: calc(var(--border-spine-width) * -1);
+				position: absolute;
+				width: ${borders.spine.default.width}${borders.spine.default.unit};
+				width: var(--border-spine-width);
+				z-index: 3;
 			}
+
+			${Object.keys(borders.spine).filter(s => s !== 'default').map((size) => {
+				return `
+					@media screen and (min-width: ${breakpoints.sizes[size]}${breakpoints.unit}) {
+						.border-seam-${side}::${borderSeamSelectors[side]} {
+							left: calc(var(--border-spine-width-${size}) * -1);
+							width: var(--border-spine-width-${size});
+						}
+					}
+				`;
+			}).join('')}
 		`).join('')}
 	`
 }

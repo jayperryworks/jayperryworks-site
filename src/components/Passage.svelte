@@ -1,11 +1,12 @@
 <script>
-  export let html
+  export let html,
+		typeSize = 'epsilon';
 
-  let classes = ''
-  export { classes as class }
+  let classes = '';
+  export { classes as class };
 </script>
 
-<div class="content type-scale-epsilon {classes}">
+<div class="content type-scale-{typeSize} {classes}">
   {@html html}
 </div>
 
@@ -29,6 +30,13 @@
     margin: 1.2em 0;
   }
 
+	.content > :global(blockquote) {
+		padding-left: 1.44em;
+		font-size: 0.8em;
+		font-size: var(--type-scale-zeta);
+		font-style: italic;
+	}
+
   /* footnotes */
   :global(.footnotes) {
     color: var(--color-secondary);
@@ -38,7 +46,7 @@
   :global(.footnotes-list) {
     padding-left: 1.2em;
   }
-  
+
   :global(.footnotes li),
   :global(.footnotes p) {
     padding-left: 0;

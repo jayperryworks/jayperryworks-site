@@ -42,21 +42,28 @@ const type = {
       name: 'Publico Headline',
       stack: "'Publico', 'Georgia', 'Times', 'Times New Roman', serif",
       role: 'display',
-      file: '/fonts/PublicoHeadline-Roman-Web',
       formats: ['woff', 'ttf'],
-      variants: [{ weight: 'normal' }]
+      variants: [
+				{
+					weight: 'normal',
+					file: '/fonts/PublicoHeadline-Roman-Web'
+				}
+			]
     },
     {
       name: 'Publico Text',
       stack: "'Publico', 'Georgia', 'Times', 'Times New Roman', serif",
       role: 'body',
-      file: '/fonts/PublicoText-Roman-Web',
       formats: ['woff', 'ttf'],
       variants: [
-        { weight: 'normal' },
+				{
+					weight: 'normal',
+					file: '/fonts/PublicoText-Roman-Web'
+				},
         {
-          weight: 'normal',
-          style: 'italic'
+					weight: 'normal',
+          style: 'italic',
+					file: '/fonts/PublicoText-Italic-Web'
         }
       ]
     },
@@ -118,16 +125,27 @@ const spacing = {
 }
 
 const borders = {
+	spine: {
+		default: {
+			width: 0.35,
+			unit: 'rem'
+		},
+		small: {
+			width: 0.6,
+			unit: 'rem'
+		}
+	},
   seam: {
     marker: {
-      h: 5,
-      w: 10
+      h: 0.5,
+			unit: 'rem'
     },
     image: '/images/seam.svg'
   },
   widths: {
     default: 1,
-    thick: 4
+    thick: 4,
+		unit: 'px'
   },
   radius: {
     size: 0.2,

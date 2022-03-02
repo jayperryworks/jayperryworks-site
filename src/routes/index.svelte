@@ -32,7 +32,7 @@
 	export let content
 
 	let { intro } = content
-	let { pictures, design, blog } = content.tableOfContents
+	let { writing, pictures, design, blog } = content.tableOfContents
 
 	function date(date, template = 'MM.dd') {
 		return format(new Date(date.year, date.month, date.day), template)
@@ -40,7 +40,7 @@
 </script>
 
 <PageTitle />
-<PageTheme color="{content.highlight}" />
+<PageTheme highlight="{content.highlight}" />
 
 <MainNav segment="/" overlay />
 
@@ -96,6 +96,64 @@
 		</Wrapper>
 	</Panel>
 
+	<!-- writing -->
+	<Panel id="{writing.slug}">
+		<header class="padding-bottom-wide">
+			<Wrapper width="xwide">
+				<a
+					class="toc-number type-scale-gamma type-font-accent type-link-undecorated type-weight-xlight | color-fg-secondary | padding-bottom-narrow"
+					href={writing.cta.link}
+				>
+					01
+				</a>
+				<h2 class="type-scale-alpha">
+					<a href="{writing.cta.link}">{writing.heading}</a>
+				</h2>
+			</Wrapper>
+		</header>
+		<Wrapper
+			class="fill-vertical | hide-overflow"
+			width="xwide"
+			flex
+		>
+			<div class="flag | gutter-wrapper wide">
+				<div class="flag-item blurb | gutter">
+					<Wrapper
+						class="margin-y-flow-wide"
+						centered="{false}"
+					>
+
+						{#if writing.blurb}
+							<Passage html="{writing.blurb}" class="type-scale-delta type-heading type-leading-default"/>
+						{/if}
+						{#if writing.cta}
+							<Button
+								prefetch="{true}"
+								href="{writing.cta.link}"
+								iconRight="{arrowRight}"
+							>
+								{writing.cta.label}
+							</Button>
+						{/if}
+					</Wrapper>
+				</div>
+				<figure class="flag-item image | gutter">
+					<a
+						class="cover-image | type-link-undecorated"
+						href="{writing.cta.link}"
+					>
+						<ResponsivePicture
+							sources="{writing.coverImage.versions}"
+							alt="{writing.heading}"
+							fill
+							contain
+						/>
+					</a>
+				</figure>
+			</div>
+		</Wrapper>
+	</Panel>
+
 	<!-- pictures -->
 	<Panel id="{pictures.slug}">
 		<header class="padding-bottom-wide">
@@ -104,7 +162,7 @@
 					class="toc-number type-scale-gamma type-font-accent type-link-undecorated type-weight-xlight | color-fg-secondary | padding-bottom-narrow"
 					href={pictures.cta.link}
 				>
-					01
+					02
 				</a>
 				<h2 class="type-scale-alpha">
 					<a href="{pictures.cta.link}">{pictures.heading}</a>
@@ -162,7 +220,7 @@
 					class="toc-number type-scale-gamma type-font-accent type-link-undecorated type-weight-xlight | color-fg-secondary | padding-bottom-narrow"
 					href={design.cta.link}
 				>
-					02
+					03
 				</a>
 				<h2 class="type-scale-alpha">
 					<a href="{design.cta.link}">{design.heading}</a>

@@ -1,8 +1,11 @@
 const { InMemoryCache, IntrospectionFragmentMatcher } = require('apollo-cache-inmemory');
 const { PrismicLink } = require('apollo-link-prismic');
 const ApolloClient = require('apollo-client');
+const convertColor = require('color-convert');
 const fragmentTypes = require('./prismicFragments.json');
 const gql = require('graphql-tag');
+const markdown = require('./renderMarkdown.js');
+const { camelCase, paramCase } = require('change-case');
 
 const accessToken = process.env.PRISMIC_TOKEN;
 
@@ -41,7 +44,7 @@ function getImageVersions (
   ]
 }
 
-// set width and height depending on Landscape/Portrait orientation
+// set width and height of a Picture Print Edition depending on Landscape/Portrait orientation
 function getEditionDimensions (orientation, { long_side, short_side }) {
 	if (orientation === 'Portrait') {
 		return {
@@ -56,9 +59,19 @@ function getEditionDimensions (orientation, { long_side, short_side }) {
 	};
 }
 
+// return the literal text from a Prismic Title or Key Text field
+// -> the API response is an array of objects with 'text' props
+function getString(field) {
+	return field.map(({ text }) => text).join('');
+}
+
+function renderMarkdown(field) {
+	return markdown(getString(field));
+}
+
 const blockQueries = {
-  heading: (typename = 'PageBodyHeading') => `
-    ...on ${typename} {
+  heading: (contentTypeName = 'PageBody', blockName = 'Heading') => `
+    ...on ${contentTypeName}${blockName} {
       type
       primary {
         title1
@@ -67,8 +80,8 @@ const blockQueries = {
       }
     }
   `,
-  passage: (typename = 'PageBodyPassage') => `
-    ... on ${typename} {
+  passage: (contentTypeName = 'PageBody', blockName = 'Passage') => `
+    ... on ${contentTypeName}${blockName} {
       type
       primary {
         markdown
@@ -76,8 +89,18 @@ const blockQueries = {
       }
     }
   `,
-  figure: (typename = 'PageBodyFigure') => `
-    ... on ${typename} {
+  quote: (contentTypeName = 'PageBody', blockName = 'Quote') => `
+    ... on ${contentTypeName}${blockName} {
+      type
+      primary {
+        markdown
+				attribution
+				include_in_excerpt
+      }
+    }
+  `,
+  figure: (contentTypeName = 'PageBody', blockName = 'Figure') => `
+    ... on ${contentTypeName}${blockName} {
       type
       primary {
         image
@@ -88,8 +111,8 @@ const blockQueries = {
       }
     }
   `,
-  imageGallery: (typename = 'PageBodyImage_gallery') => `
-    ... on ${typename} {
+  imageGallery: (contentTypeName = 'PageBody', blockName = 'Image_gallery') => `
+    ... on ${contentTypeName}${blockName} {
       type
       primary {
         caption
@@ -104,10 +127,94 @@ const blockQueries = {
   `
 }
 
+function getSliceWidth(prominence) {
+	const widths = {
+		Small: 'small',
+		Medium: 'medium',
+		Large: 'large'
+	}
+
+	return widths[prominence] || 'default'
+}
+
+function getSharedSliceFields (slice) {
+	return {
+		includeInExcerpt: slice.primary.include_in_excerpt || false,
+		prominence: getSliceWidth(slice.primary.prominence),
+		type: camelCase(slice.type)
+	}
+}
+
+function renderBlockContent (blocks) {
+	return blocks.map((slice) => {
+		switch (slice.type) {
+			case 'passage': {
+				slice = {
+					html: renderMarkdown(slice.primary.markdown),
+					...getSharedSliceFields(slice)
+				};
+				break;
+			}
+			case 'quote': {
+				slice = {
+					html: renderMarkdown(slice.primary.markdown),
+					attribution: slice.primary.attribution,
+					...getSharedSliceFields(slice)
+				}
+				break;
+			}
+			case 'figure': {
+				slice = {
+					alt: slice.primary.image.alt,
+					attribution: slice.primary.attribution,
+					border: slice.primary.border || false,
+					caption: slice.primary.caption
+						? renderMarkdown(slice.primary.caption)
+						: null,
+					image: getImageVersions(slice.primary.image),
+					...getSharedSliceFields(slice)
+				};
+				break;
+			}
+			case 'image_gallery': {
+				slice = {
+					caption: slice.primary.caption
+						? renderMarkdown(slice.primary.caption)
+						: null,
+					attribution: slice.primary.attribution,
+					columnSize: paramCase(slice.primary.column_size),
+					images: slice.fields.map((item) => {
+						return {
+							image: getImageVersions(item.image),
+							alt: item.image.alt
+						}
+					}),
+					...getSharedSliceFields(slice)
+				}
+			}
+		}
+
+		return slice;
+	})
+}
+
 async function query (queryString) {
 	return await client.query({
 		query: gql`${queryString}`
 	})
+}
+
+function convertColorToHSL (hex) {
+	// convert the color from a hex to hsl (array)...
+	const hsl = convertColor.hex.hsl(hex);
+
+	// ...and then to an object, so we can use each for CSS variables
+	// -> e.g. --color-highlight-h
+	return hsl.reduce((result, value, index) => {
+		const key = Object.keys(result)[index];
+		result[key] = value;
+		return result;
+	}, { h: null, s: null, l: null });
 }
 
 // Query all documents of a certain type from Prismic
@@ -170,8 +277,11 @@ async function queryAll ({
 
 module.exports = {
 	blockQueries,
+	convertColorToHSL,
 	getEditionDimensions,
 	getImageVersions,
+	getString,
+	renderBlockContent,
 	query,
 	queryAll
 }
