@@ -15,9 +15,6 @@
 		// -> convert it to a number before assigning (instead of destructuring as above) so we can do math with it below
 		// -> otherwise, if chapterNumber = "1", chapterNumber + 1 = "11"
 		const chapterNumber = parseInt(params.chapterNumber);
-		// the chapters are numbered from 1, while the project.chapters array is numbered from 0.
-		// -> store a reference to the index number in a new var to reduce confusion
-		const indexNumber = chapterNumber - 1;
 
 		// the absolute path to this longform project
 		const path = `/longform/${year}/${slug}`;
@@ -42,17 +39,7 @@
 		chapter.number = chapterNumber;
 		chapter.path = `${path}/${chapterNumber}`;
 
-		// if there's a next chapter, set up data for next/prev pagination nav
-		// const nextChapter = project.chapters[indexNumber + 1]
-		// 	? {
-		// 			label: project.chapterLabel,
-		// 			number: indexNumber + 1,
-		// 			title: project.chapters[indexNumber + 1].title
-		// 		}
-		// 	: undefined;
-
 		return {
-			isCoverPage: (chapterNumber === 1),
 			project,
 			chapter,
 			slug
@@ -69,7 +56,7 @@
 	import PostBody from '@/components/PostBody.svelte';
 	import Wrapper from '@/components/Wrapper.svelte';
 
-	export let isCoverPage, project, chapter;
+	export let slug, project, chapter;
 
 	$: pageTitle = chapter.displayTitle
 		? `${project.title}: ${chapter.title}`
@@ -81,7 +68,7 @@
 <PageTitle title="{pageTitle}" />
 <PageTheme {...chapter.theme} />
 
-<MainNav segment="{chapter.slug}" theme="reverse" />
+<MainNav segment="{slug}" theme="reverse" />
 
 <main>
 	<article class="padding-x-outside padding-y-xwide">
@@ -90,21 +77,27 @@
 				width="wide"
 				class="type-align-center"
 			>
-				{#if isCoverPage}
-					<h1>{project.title}</h1>
-					{#if project.subtitle}
-						<p>{project.subtitle}</p>
-					{/if}
-				{:else}
-					{#if chapter.title}
-						<p class="subtitle | type-heading type-scale-delta type-font-accent type-weight-xlight | color-fg-secondary | padding-bottom-xnarrow">
-							{project.chapterLabel} {chapter.number}
-						</p>
-						<h1 class="type-scale-beta">{chapter.title}</h1>
-					{/if}
-					{#if chapter.subtitle}
-						<p class="subtitle | type-heading type-scale-gamma type-font-accent type-weight-xlight | color-fg-secondary | padding-top-xnarrow">{chapter.subtitle}</p>
-					{/if}
+				<h1>{project.title}</h1>
+				{#if project.subtitle}
+					<p>{project.subtitle}</p>
+				{/if}
+				<Wrapper>
+					<ol class="timeline">
+						{#each project.chapters as item}
+						<li>
+							<a class:current="{item.path === chapter.path}" href="{item.path}">{item.title}</a>
+						</li>
+						{/each}
+					</ol>
+				</Wrapper>
+				<p class="subtitle | type-heading type-scale-gamma type-font-accent type-weight-xlight | color-fg-secondary | padding-bottom-xnarrow">
+					{project.chapterLabel} {chapter.number}
+				</p>
+				{#if chapter.title}
+					<h1 class="type-scale-beta">{chapter.title}</h1>
+				{/if}
+				{#if chapter.subtitle}
+					<p class="subtitle | type-heading type-scale-gamma type-font-accent type-weight-xlight | color-fg-secondary | padding-top-xnarrow">{chapter.subtitle}</p>
 				{/if}
 			</Wrapper>
 		</header>
@@ -138,5 +131,23 @@
 <style>
 	.subtitle {
 		max-width: none;
+	}
+
+	.timeline {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.timeline a {
+		display: block;
+		border-radius: 10000px;
+		border: 2px solid var(--color-primary);
+		width: 2em;
+		height: 2em;
+		overflow: hidden;
+	}
+
+	.timeline .current {
+		border-color: var(--color-highlight);
 	}
 </style>
