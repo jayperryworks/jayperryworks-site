@@ -41,6 +41,7 @@
 
 		chapter.number = chapterNumber;
 		chapter.path = `${path}/${chapterNumber}`;
+		chapter.slug = slug;
 
 		// set up data for next/prev pagination nav
 		let pagination = [];
@@ -84,7 +85,7 @@
 </script>
 
 <script>
-	import LongformNav from '@/components/LongformNav.svelte';
+	import MainNav from '@/components/MainNav.svelte';
 	import PostBody from '@/components/PostBody.svelte';
 	import PaginationNav from '@/components/PaginationNav.svelte';
 	import Wrapper from '@/components/Wrapper.svelte';
@@ -99,13 +100,7 @@
 <PageTitle title="{pageTitle}" />
 <PageTheme {...chapter.theme} />
 
-<LongformNav
-	projectTitle="{project.title}"
-	projectPath="{project.chapters[0].path}"
-	currentPath="{chapter.path}"
-	tableOfContents="{project.chapters}"
-	showProjectTitle="{!isCoverPage}"
-/>
+<MainNav segment="{chapter.slug}" theme="reverse" />
 
 <main>
 	<article class="padding-x-outside padding-y-xwide">
