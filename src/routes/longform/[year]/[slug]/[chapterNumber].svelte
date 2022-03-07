@@ -41,60 +41,41 @@
 
 		chapter.number = chapterNumber;
 		chapter.path = `${path}/${chapterNumber}`;
-		chapter.slug = slug;
 
-		// set up data for next/prev pagination nav
-		let pagination = [];
-
-		// if there's a previous chapter...
-		if ((indexNumber - 1) >= 0) {
-			const prevChapter = project.chapters[indexNumber - 1];
-
-			pagination.push({
-				label: getPaginationLabel(
-					'Previous',
-					prevChapter.displayTitle && prevChapter.title
-				),
-				direction: 'previous',
-				path: `${path}/${chapterNumber - 1}`
-			})
-		}
-
-		// if there's a next chapter
-		if (project.chapters[indexNumber + 1]) {
-			const nextChapter = project.chapters[indexNumber + 1];
-
-			pagination.push({
-				label: getPaginationLabel(
-					'Next',
-					nextChapter.displayTitle && nextChapter.title
-				),
-				direction: 'next',
-				path: `${path}/${chapterNumber + 1}`
-			})
-		}
+		// if there's a next chapter, set up data for next/prev pagination nav
+		// const nextChapter = project.chapters[indexNumber + 1]
+		// 	? {
+		// 			label: project.chapterLabel,
+		// 			number: indexNumber + 1,
+		// 			title: project.chapters[indexNumber + 1].title
+		// 		}
+		// 	: undefined;
 
 		return {
 			isCoverPage: (chapterNumber === 1),
 			project,
 			chapter,
-			pagination,
 			slug
 		};
 	}
 </script>
 
 <script>
+	import arrowRight from 'icons/arrow-right.svg'
+	import Icon from '@/components/Icon.svelte'
 	import MainNav from '@/components/MainNav.svelte';
-	import PostBody from '@/components/PostBody.svelte';
-	import PaginationNav from '@/components/PaginationNav.svelte';
-	import Wrapper from '@/components/Wrapper.svelte';
-	import PageTitle from '@/components/PageTitle.svelte';
 	import PageTheme from '@/components/PageTheme.svelte';
+	import PageTitle from '@/components/PageTitle.svelte';
+	import PostBody from '@/components/PostBody.svelte';
+	import Wrapper from '@/components/Wrapper.svelte';
 
-	export let isCoverPage, project, chapter, pagination;
+	export let isCoverPage, project, chapter;
 
-	$: pageTitle = chapter.displayTitle ? `${project.title}: ${chapter.title}` : project.title;
+	$: pageTitle = chapter.displayTitle
+		? `${project.title}: ${chapter.title}`
+		: project.title;
+
+	$: nextChapter = project.chapters[chapter.number + 1];
 </script>
 
 <PageTitle title="{pageTitle}" />
@@ -129,9 +110,29 @@
 		</header>
 		<PostBody blocks={chapter.body} />
 	</article>
-	<nav class="padding-bottom-xwide padding-x-outside">
-		<PaginationNav items="{pagination}" />
-	</nav>
+	{#if nextChapter}
+		<nav class="padding-bottom-xwide padding-x-outside">
+			<Wrapper>
+				<a
+					class="type-heading type-scale-gamma type-font-accent type-weight-xlight type-link-undecorated | color-fg-secondary | padding-bottom-xnarrow"
+					href="{nextChapter.path}"
+				>
+					{project.chapterLabel} {chapter.number + 1}
+				</a>
+				<a
+					class="type-heading type-scale-beta type-link-undecorated"
+					href="{nextChapter.path}"
+				>
+					{nextChapter.title}
+					<Icon
+						svg="{arrowRight}"
+						margin="left"
+						size="small"
+					/>
+				</a>
+			</Wrapper>
+		</nav>
+	{/if}
 </main>
 
 <style>

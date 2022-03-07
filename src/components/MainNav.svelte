@@ -84,8 +84,6 @@
         </button>
         <ul class="nav-list">
           {#each items as item}
-						{@debug segment}
-						{@debug item}
             <li>
               <a
                 class="nav-item type-font-accent type-link-undecorated type-weight-light"
