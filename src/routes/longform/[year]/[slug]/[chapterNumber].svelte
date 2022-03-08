@@ -27,6 +27,7 @@
 		// -> for the nav links
 		project.chapters.forEach((chapter, index) => {
 			chapter.path = `${path}/${index + 1}`;
+			chapter.complete = index < (chapterNumber - 1);
 		})
 
 		// find the ID of this chapter
@@ -54,18 +55,15 @@
 	import PageTheme from '@/components/PageTheme.svelte';
 	import PageTitle from '@/components/PageTitle.svelte';
 	import PostBody from '@/components/PostBody.svelte';
+	import SequenceNav from '@/components/SequenceNav.svelte';
 	import Wrapper from '@/components/Wrapper.svelte';
 
 	export let slug, project, chapter;
 
-	$: pageTitle = chapter.displayTitle
-		? `${project.title}: ${chapter.title}`
-		: project.title;
-
 	$: nextChapter = project.chapters[chapter.number + 1];
 </script>
 
-<PageTitle title="{pageTitle}" />
+<PageTitle title="{project.title}" />
 <PageTheme {...chapter.theme} />
 
 <MainNav segment="{slug}" theme="reverse" />
@@ -81,14 +79,11 @@
 				{#if project.subtitle}
 					<p>{project.subtitle}</p>
 				{/if}
-				<Wrapper>
-					<ol class="timeline">
-						{#each project.chapters as item}
-						<li>
-							<a class:current="{item.path === chapter.path}" href="{item.path}">{item.title}</a>
-						</li>
-						{/each}
-					</ol>
+				<Wrapper class="padding-top-xwide padding-bottom">
+					<SequenceNav
+						steps="{project.chapters}"
+						currentPath="{chapter.path}"
+					/>
 				</Wrapper>
 				<p class="subtitle | type-heading type-scale-gamma type-font-accent type-weight-xlight | color-fg-secondary | padding-bottom-xnarrow">
 					{project.chapterLabel} {chapter.number}
@@ -105,9 +100,13 @@
 	</article>
 	{#if nextChapter}
 		<nav class="padding-bottom-xwide padding-x-outside">
-			<Wrapper>
+			<Wrapper class="type-align-right">
+				<SequenceNav
+					steps="{project.chapters}"
+					currentPath="{chapter.path}"
+				/>
 				<a
-					class="type-heading type-scale-gamma type-font-accent type-weight-xlight type-link-undecorated | color-fg-secondary | padding-bottom-xnarrow"
+					class="type-heading type-scale-gamma type-font-accent type-weight-xlight type-link-undecorated | color-fg-secondary | padding-top-wide padding-bottom-xnarrow"
 					href="{nextChapter.path}"
 				>
 					{project.chapterLabel} {chapter.number + 1}
@@ -125,29 +124,13 @@
 				</a>
 			</Wrapper>
 		</nav>
+	{:else}
+
 	{/if}
 </main>
 
 <style>
 	.subtitle {
 		max-width: none;
-	}
-
-	.timeline {
-		display: flex;
-		justify-content: space-between;
-	}
-
-	.timeline a {
-		display: block;
-		border-radius: 10000px;
-		border: 2px solid var(--color-primary);
-		width: 2em;
-		height: 2em;
-		overflow: hidden;
-	}
-
-	.timeline .current {
-		border-color: var(--color-highlight);
 	}
 </style>
