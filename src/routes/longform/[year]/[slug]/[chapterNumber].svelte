@@ -56,11 +56,12 @@
 	import PageTitle from '@/components/PageTitle.svelte';
 	import PostBody from '@/components/PostBody.svelte';
 	import SequenceNav from '@/components/SequenceNav.svelte';
+	import SequenceNavStep from '@/components/SequenceNavStep.svelte';
 	import Wrapper from '@/components/Wrapper.svelte';
 
 	export let slug, project, chapter;
 
-	$: nextChapter = project.chapters[chapter.number + 1];
+	$: nextChapter = project.chapters[chapter.number];
 </script>
 
 <PageTitle title="{project.title}" />
@@ -79,12 +80,20 @@
 				{#if project.subtitle}
 					<p>{project.subtitle}</p>
 				{/if}
-				<Wrapper class="padding-top-xwide padding-bottom">
-					<SequenceNav
-						steps="{project.chapters}"
-						currentPath="{chapter.path}"
-					/>
+
+				<Wrapper class="padding-y-wide">
+					<SequenceNav>
+						{#each project.chapters as step, index}
+							<SequenceNavStep
+								label="{step.title}"
+								path="{step.path}"
+								current="{step.path === chapter.path}"
+								complete="{step.complete}"
+							/>
+						{/each}
+					</SequenceNav>
 				</Wrapper>
+
 				<p class="subtitle | type-heading type-scale-gamma type-font-accent type-weight-xlight | color-fg-secondary | padding-bottom-xnarrow">
 					{project.chapterLabel} {chapter.number}
 				</p>
@@ -101,10 +110,17 @@
 	{#if nextChapter}
 		<nav class="padding-bottom-xwide padding-x-outside">
 			<Wrapper class="type-align-right">
-				<SequenceNav
-					steps="{project.chapters}"
-					currentPath="{chapter.path}"
-				/>
+				<SequenceNav>
+					{#each project.chapters as step}
+						<SequenceNavStep
+							label="{step.title}"
+							path="{step.path}"
+							complete="{step.complete || step.path === chapter.path}"
+							next="{step.path === nextChapter.path}"
+						/>
+					{/each}
+				</SequenceNav>
+
 				<a
 					class="type-heading type-scale-gamma type-font-accent type-weight-xlight type-link-undecorated | color-fg-secondary | padding-top-wide padding-bottom-xnarrow"
 					href="{nextChapter.path}"
@@ -124,8 +140,6 @@
 				</a>
 			</Wrapper>
 		</nav>
-	{:else}
-
 	{/if}
 </main>
 
