@@ -109,20 +109,20 @@
 		</header>
 		<PostBody blocks={chapter.body} />
 	</article>
-	{#if nextChapter}
-		<nav class="padding-bottom-xwide padding-x-outside">
-			<Wrapper class="type-align-right">
-				<SequenceNav>
-					{#each project.chapters as step}
-						<SequenceNavStep
-							label="{step.title}"
-							path="{step.path}"
-							complete="{step.complete || step.path === chapter.path}"
-							next="{step.path === nextChapter.path}"
-						/>
-					{/each}
-				</SequenceNav>
+	<nav class="padding-bottom-xwide padding-x-outside">
+		<Wrapper class="type-align-right">
+			<SequenceNav>
+				{#each project.chapters as step}
+					<SequenceNavStep
+						label="{step.title}"
+						path="{step.path}"
+						complete="{step.complete || step.path === chapter.path}"
+						next="{step.path === nextChapter?.path}"
+					/>
+				{/each}
+			</SequenceNav>
 
+			{#if nextChapter}
 				<div class="next | padding-top-wide | type-scale-beta">
 					<p>
 						<a
@@ -148,9 +148,13 @@
 						/>
 					</a>
 				</div>
-			</Wrapper>
-		</nav>
-	{/if}
+			{:else}
+				<aside class="type-font-body type-style-italic type-scale-gamma type-align-center | padding-top-wide | color-fg-secondary">
+					The end
+				</aside>
+			{/if}
+		</Wrapper>
+	</nav>
 </main>
 
 <style>
