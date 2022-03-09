@@ -12,15 +12,15 @@
 		class:next
 		class:complete
 		href="{path}"
-		title="{label}"
 	>
-		<span class="hide-visually">{label}</span>
+		<span class="tooltip">{label}</span>
 	</a>
 </li>
 
 <style>
 	.step {
 		--dot-size: 1.2em;
+		--transition-duration: 0.25s;
 
 		display: block;
 		position: relative;
@@ -28,10 +28,11 @@
 		border: 2px solid var(--color-primary);
 		width: var(--dot-size);
 		height: var(--dot-size);
-		overflow: hidden;
 		background-color: var(--color-bg);
+		cursor: pointer;
 	}
 
+	/* highlight dot */
 	.step::before {
 		--margin: 0.19em;
 
@@ -43,12 +44,13 @@
 		position: absolute;
 		right: var(--margin);
 		top: var(--margin);
-		transition-duration: 0.25s;
+		transition-duration: var(--transition-duration);
 		transition-property: opacity, background-color;
 		transition-timing-function: ease-in-out;
 		will-change: opacity, background-color;
 		z-index: 1;
 	}
+
 
 	.step.current::before {
 		background-color: var(--color-highlight);
@@ -69,7 +71,7 @@
 		opacity: 1;
 	}
 
-	.step:hover::before {
+		.step:hover::before {
 		background-color: var(--color-primary);
 		opacity: 1;
 		animation: none;
@@ -83,5 +85,62 @@
 		to {
 			opacity: 1;
 		}
+	}
+
+	/* tooltip */
+	.tooltip {
+		--bg: var(--color-bg);
+		--border: var(--color-border);
+		--pointer-size: 0.6em;
+
+		box-shadow: 0 0.05rem 0.5rem var(--color-shadow);
+		background-color: var(--bg);
+		border-radius: 0.25em;
+		border: 1px solid var(--border);
+		bottom: calc(var(--dot-size) + var(--pointer-size) + 1em);
+		color: var(--color-primary);
+		content: attr(title);
+		display: block;
+		font-family: var(--type-font-accent);
+		font-size: var(--type-scale-zeta);
+		left: 50%;
+		line-height: var(--type-leading-tight);
+		max-width: 16rem;
+		min-width: 8rem;
+		opacity: 0;
+		padding: var(--space-narrow) var(--space-xnarrow);
+		position: absolute;
+		text-align: center;
+		transform: translateX(-50%);
+		transition: var(--transition-duration) opacity ease-in-out;
+		will-change: opacity;
+		z-index: 4;
+	}
+
+	.tooltip::before,
+	.tooltip::after {
+		border-left: var(--pointer-size) solid transparent;
+		border-right: var(--pointer-size) solid transparent;
+		content: '';
+		display: inline-block;
+		height: 0;
+		left: 50%;
+		position: absolute;
+		transform: translateX(-50%);
+		width: 0;
+	}
+
+	.tooltip::before {
+		border-top: var(--pointer-size) solid var(--border);
+		bottom: calc(var(--pointer-size) * -1);
+	}
+
+	.tooltip::after {
+		border-top: var(--pointer-size) solid var(--bg);
+		bottom: calc((var(--pointer-size) - 0.1em) * -1);
+	}
+
+	.step:hover .tooltip {
+		opacity: 1;
 	}
 </style>

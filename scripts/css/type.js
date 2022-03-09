@@ -101,7 +101,8 @@ module.exports = {
 				};
 			`
 		}),
-		...type.fonts.map(f => `--type-font-${f.role}: ${font(f.role)};`)
+		...type.fonts.map(f => `--type-font-${f.role}: ${font(f.role)};`),
+		...Object.keys(type.leading).map(l => `--type-leading-${l}: ${type.leading[l]};`)
 	],
 	helpers: {
 		font,

@@ -81,7 +81,7 @@ export async function get ({ params }, res) {
 		primary: 25,
 		secondary: 45,
 		border: (chapter.theme?.bg?.l - 20) || 40,
-		shadow: (chapter.theme?.bg?.l - 40) || 10
+		shadow: (chapter.theme?.bg?.l - 10) || 10
 	}
 
 	Object.keys(themeFallbacks).forEach((role) => {
