@@ -101,7 +101,9 @@
 					<h1 class="type-scale-beta">{chapter.title}</h1>
 				{/if}
 				{#if chapter.subtitle}
-					<p class="subtitle | type-heading type-scale-gamma type-font-accent type-weight-xlight | color-fg-secondary | padding-top-xnarrow">{chapter.subtitle}</p>
+					<p class="subtitle | type-heading type-scale-gamma type-font-accent type-weight-xlight | color-fg-secondary | padding-top-xnarrow">
+						{chapter.subtitle}
+					</p>
 				{/if}
 			</Wrapper>
 		</header>
@@ -121,23 +123,31 @@
 					{/each}
 				</SequenceNav>
 
-				<a
-					class="type-heading type-scale-gamma type-font-accent type-weight-xlight type-link-undecorated | color-fg-secondary | padding-top-wide padding-bottom-xnarrow"
-					href="{nextChapter.path}"
-				>
-					{project.chapterLabel} {chapter.number + 1}
-				</a>
-				<a
-					class="type-heading type-scale-beta type-link-undecorated"
-					href="{nextChapter.path}"
-				>
-					{nextChapter.title}
-					<Icon
-						svg="{arrowRight}"
-						margin="left"
-						size="small"
-					/>
-				</a>
+				<div class="next | padding-top-wide | type-scale-beta">
+					<p>
+						<a
+							class="type-heading type-scale-gamma type-font-accent type-weight-xlight type-link-undecorated | color-fg-secondary | padding-bottom-xxnarrow"
+							href="{nextChapter.path}"
+						>
+							{project.chapterLabel} {chapter.number + 1}
+						</a>
+						<a
+							class="type-heading type-link-undecorated"
+							href="{nextChapter.path}"
+						>
+							{nextChapter.title}
+						</a>
+					</p>
+					<a
+						class="next-icon | type-link-undecorated"
+						href="{nextChapter.path}"
+					>
+						<Icon
+							svg="{arrowRight}"
+							size="small"
+						/>
+					</a>
+				</div>
 			</Wrapper>
 		</nav>
 	{/if}
@@ -146,5 +156,16 @@
 <style>
 	.subtitle {
 		max-width: none;
+	}
+
+	.next {
+		display: flex;
+		align-items: flex-end;
+		justify-content: flex-end;
+	}
+
+	.next-icon {
+		display: block;
+		padding-left: 0.4em;
 	}
 </style>

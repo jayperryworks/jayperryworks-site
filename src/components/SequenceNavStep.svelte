@@ -43,9 +43,8 @@
 		position: absolute;
 		right: var(--margin);
 		top: var(--margin);
-		/* transition: opacity 0.25s ease-in-out; */
-		transition-property: opacity, background-color;
 		transition-duration: 0.25s;
+		transition-property: opacity, background-color;
 		transition-timing-function: ease-in-out;
 		will-change: opacity, background-color;
 		z-index: 1;
