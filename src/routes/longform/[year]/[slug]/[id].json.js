@@ -13,7 +13,6 @@ export async function get ({ params }, res) {
 					node {
 						title
 						subtitle
-						display_title
 						highlight_color
 						primary_foreground_color
 						secondary_foreground_color
@@ -41,7 +40,6 @@ export async function get ({ params }, res) {
 	const {
 		title,
 		subtitle,
-		display_title: displayTitle,
 		highlight_color: highlight,
 		primary_foreground_color: primary,
 		secondary_foreground_color: secondary,
@@ -51,10 +49,8 @@ export async function get ({ params }, res) {
 
 	let chapter = {};
 
-	if (displayTitle) {
-		chapter.title = title && getString(title);
-		chapter.subtitle = subtitle && getString(subtitle);
-	}
+	chapter.title = title && getString(title);
+	chapter.subtitle = subtitle && getString(subtitle);
 
 	// consolidate color fields into a single theme object
 	const theme = {
