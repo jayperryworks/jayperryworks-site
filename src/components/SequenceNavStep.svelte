@@ -74,7 +74,7 @@
 		opacity: 1;
 	}
 
-		.step:hover::before {
+	.step:hover::before {
 		background-color: var(--color-primary);
 		opacity: 1;
 		animation: none;

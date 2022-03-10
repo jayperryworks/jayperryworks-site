@@ -15,11 +15,12 @@
 
 <style>
 	.tooltip {
-		--show: 0;
 		--bg: hsl(var(--color-bg-h), var(--color-bg-s), calc(var(--color-bg-l) + 15%));
 		--border: var(--color-border);
-		--pointer-size: 0.6em;
 		--pointer-margin: var(--space-xnarrow);
+		--pointer-size: 0.6em;
+		--show: 0;
+		--transition-duration: 0.25s;
 
 		background-color: var(--bg);
 		border-radius: 0.25em;
