@@ -61,10 +61,18 @@
 
 	export let slug, project, chapter;
 
+	let { title, subtitle, chapters, chapterLabel } = project;
+
 	$: nextChapter = project.chapters[chapter.number];
+
+	function timelineTooltipAlign(index) {
+		if (index === 0) return 'start';
+		if (index === chapters.length - 1) return 'end';
+		return 'center';
+	}
 </script>
 
-<PageTitle title="{project.title}" />
+<PageTitle title="{title}" />
 <PageTheme {...chapter.theme} />
 
 <MainNav segment="{slug}" theme="reverse" />
@@ -76,26 +84,27 @@
 				width="wide"
 				class="type-align-center"
 			>
-				<h1>{project.title}</h1>
-				{#if project.subtitle}
-					<p>{project.subtitle}</p>
+				<h1>{title}</h1>
+				{#if subtitle}
+					<p>{subtitle}</p>
 				{/if}
 
 				<Wrapper class="padding-y-wide">
 					<SequenceNav>
-						{#each project.chapters as step, index}
+						{#each chapters as step, index}
 							<SequenceNavStep
 								label="{step.title}"
 								path="{step.path}"
 								current="{step.path === chapter.path}"
 								complete="{step.complete}"
+								tooltipAlign="{timelineTooltipAlign(index)}"
 							/>
 						{/each}
 					</SequenceNav>
 				</Wrapper>
 
 				<p class="subtitle | type-heading type-scale-gamma type-font-accent type-weight-xlight | color-fg-secondary | padding-bottom-xnarrow">
-					{project.chapterLabel} {chapter.number}
+					{chapterLabel} {chapter.number}
 				</p>
 				{#if chapter.title}
 					<h1 class="type-scale-beta">{chapter.title}</h1>
@@ -112,12 +121,13 @@
 	<nav class="padding-bottom-xwide padding-x-outside">
 		<Wrapper class="type-align-right">
 			<SequenceNav>
-				{#each project.chapters as step}
+				{#each chapters as step, index}
 					<SequenceNavStep
 						label="{step.title}"
 						path="{step.path}"
 						complete="{step.complete || step.path === chapter.path}"
 						next="{step.path === nextChapter?.path}"
+						tooltipAlign="{timelineTooltipAlign(index)}"
 					/>
 				{/each}
 			</SequenceNav>
@@ -129,7 +139,7 @@
 							class="type-heading type-scale-gamma type-font-accent type-weight-xlight type-link-undecorated | color-fg-secondary | padding-bottom-xxnarrow"
 							href="{nextChapter.path}"
 						>
-							{project.chapterLabel} {chapter.number + 1}
+							{chapterLabel} {chapter.number + 1}
 						</a>
 						<a
 							class="type-heading type-link-undecorated"
