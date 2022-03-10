@@ -25,7 +25,8 @@
     },
     {
       label: 'Patapsco essay',
-      url: 'longform/2022/patapsco/1'
+      url: 'longform/2022/patapsco/1',
+			slug: 'patapsco'
     },
     {
       label: 'Prints &amp; paintings',
@@ -86,7 +87,7 @@
             <li>
               <a
                 class="nav-item type-font-accent type-link-undecorated type-weight-light"
-                class:current={segment === item.url}
+                class:current={segment === item.url || segment === item.slug}
                 class:small-only="{item.show === 'small'}"
                 rel={item.prefetch ? 'prefetch' : ''}
                 href={item.url}

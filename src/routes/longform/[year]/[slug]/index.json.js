@@ -19,7 +19,6 @@ export async function get(req, res) {
 						...on Longform_chapter {
 							title
 							subtitle
-							display_title
 							background_color
 							primary_foreground_color
 							secondary_foreground_color
@@ -65,7 +64,6 @@ export async function get(req, res) {
 				_meta,
 				title,
 				subtitle,
-				display_title: displayTitle,
 				background_color: background,
 				highlight_color:highlight,
 				primary_foreground_color: primary,
@@ -77,7 +75,6 @@ export async function get(req, res) {
 				id: _meta.id,
 				title: title && getString(title),
 				subtitle: subtitle && getString(subtitle),
-				displayTitle,
 				theme: {
 					background: background && convertColorToHSL(background),
 					highlight: highlight && convertColorToHSL(highlight),
