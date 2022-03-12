@@ -17,6 +17,7 @@ export async function get ({ params }, res) {
 						primary_foreground_color
 						secondary_foreground_color
 						background_color
+						test_text
 						body {
 							${Object.keys(blockQueries).map((name) => {
 								return blockQueries[name]('Longform_chapterBody');
@@ -44,6 +45,7 @@ export async function get ({ params }, res) {
 		primary_foreground_color: primary,
 		secondary_foreground_color: secondary,
 		background_color: bg,
+		test_text: testText,
 		body
 	} = response.data.allLongform_chapters.edges[0].node;
 
@@ -51,6 +53,7 @@ export async function get ({ params }, res) {
 
 	chapter.title = title && getString(title);
 	chapter.subtitle = subtitle && getString(subtitle);
+	chapter.testText = testText;
 
 	// consolidate color fields into a single theme object
 	const theme = {
@@ -58,7 +61,7 @@ export async function get ({ params }, res) {
 		primary,
 		secondary,
 		highlight
-	}
+	};
 
 	// add the theme object to the chapter data
 	// -> assign to chapter.theme only the color values that have been set
@@ -78,7 +81,7 @@ export async function get ({ params }, res) {
 		secondary: 45,
 		border: (chapter.theme?.bg?.l - 20) || 40,
 		shadow: (chapter.theme?.bg?.l - 10) || 10
-	}
+	};
 
 	Object.keys(themeFallbacks).forEach((role) => {
 		if (!chapter.theme[role]) {
@@ -87,7 +90,7 @@ export async function get ({ params }, res) {
 				l: themeFallbacks[role]
 			}
 		}
-	})
+	});
 
 	chapter.body = renderBlockContent(body);
 
