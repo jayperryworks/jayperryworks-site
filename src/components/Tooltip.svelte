@@ -1,5 +1,9 @@
 <script>
 	export let align = 'center';
+
+	// The tooltip is hidden by default.
+	// -> It can be shown by either passing in "true" on this prop...
+	// -> or, set the `--show` CSS variable to 1.
 	export let show = false;
 
 	let classes = '';
