@@ -1,5 +1,6 @@
 <script context="module">
 	import * as prismicHelpers from '@prismicio/helpers';
+	import Tooltip from '@/components/Tooltip.svelte';
 
 	function getPaginationLabel (direction, title = null) {
 		if (title) {
@@ -14,7 +15,7 @@
 			const label = children.toString().replace('(', '').replace(')', '').concat('.');
 			// capitalize the first letter
 			label.charAt(0).toUpperCase();
-			return `<button>+<Tooltip>${label}</Tooltip></button>`
+			return `<button>+<span class="tooltip">${(label)}</span></button>`
 		}
 
 		return null
