@@ -18,17 +18,12 @@ function arrayToSentence (array, { period = true } = {}) {
 	// and prepend 'and' to the last item if there's more than 1 item
 	array = array.map((string, index) => {
 		if (index === 0) return sentenceCase(string);
-		if (index === array.length - 1) return `and ${string.toLowerCase()}`;
+		if (index === array.length - 1) return `and ${string.toLowerCase()}${end}`;
 		return string.toLowerCase();
 	});
 
-	// if there's only 2 items, don't add commas
-	if (array.length <= 2) {
-		return array.join(' ') + end;
-	}
-
-	// add commas otherwise, including an oxford comma
-	return array.join(', ') + end;
+	// add commas if there are more than 2 items
+	return (array.length > 2) ? array.join(', ') : array.join(' ');
 }
 
 module.exports = {
