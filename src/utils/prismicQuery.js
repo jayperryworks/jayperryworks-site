@@ -1,11 +1,12 @@
 const { InMemoryCache, IntrospectionFragmentMatcher } = require('apollo-cache-inmemory');
-const { PrismicLink } = require('apollo-link-prismic');
+const { createPrismicLink } = require('apollo-link-prismic');
 const ApolloClient = require('apollo-client');
 const convertColor = require('color-convert');
 const fragmentTypes = require('./prismicFragments.json');
 const gql = require('graphql-tag');
 const markdown = require('./renderMarkdown.js');
 const { camelCase, paramCase } = require('change-case');
+const fetch = require('node-fetch');
 
 const accessToken = process.env.PRISMIC_TOKEN;
 
@@ -14,12 +15,19 @@ const fragmentMatcher = new IntrospectionFragmentMatcher(
 );
 
 const client = new ApolloClient({
-  link: PrismicLink({
-    uri: "https://jpw-api.cdn.prismic.io/graphql",
-    accessToken
+	link: createPrismicLink({
+    repositoryName: 'jpw-api',
+    accessToken,
+		fetch
   }),
   cache: new InMemoryCache({ fragmentMatcher })
 });
+
+async function query(queryString) {
+	return await client.query({
+		query: gql`${queryString}`
+	})
+}
 
 function getImageVersions (
   imageField,
@@ -195,12 +203,6 @@ function renderBlockContent (blocks) {
 		}
 
 		return slice;
-	})
-}
-
-async function query (queryString) {
-	return await client.query({
-		query: gql`${queryString}`
 	})
 }
 
