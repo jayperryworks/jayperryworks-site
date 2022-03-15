@@ -1,6 +1,5 @@
 import { camelCase, paramCase } from 'change-case';
-import { query, blockQueries, getImageVersions } from '@/utils/prismicQuery.js';
-import { findInManifest } from '@/utils/imageHelpers.js';
+import { query, blockQueries, renderBlockContent } from '@/utils/prismicQuery.js';
 import markdown from '@/utils/renderMarkdown.js';
 import errors from '@/utils/errorMessages.js';
 
@@ -33,8 +32,9 @@ export async function get(req, res) {
         title
         subtitle
         body {
-          __typename
-          ${Object.values(blockQueries).map(type => type())}
+          ${Object.keys(blockQueries).map((name) => {
+						return blockQueries[name]();
+					})}
         }
       }
     }
@@ -50,54 +50,14 @@ export async function get(req, res) {
     return;
   }
 
+	let { title, subtitle, body } = data;
+
   let content = {};
 
-  content.title = data.title?.[0]?.text;
-  content.subtitle = data.subtitle?.[0]?.text;
+  content.title = title?.[0]?.text;
+  content.subtitle = subtitle?.[0]?.text;
 
-  content.body = data.body.map((slice) => {
-    switch (slice.type) {
-      case 'passage': {
-        slice = {
-          type: 'passage',
-          html: renderMarkdown(slice.primary.markdown),
-          ...getSharedSliceFields(slice)
-        };
-        break;
-      }
-      case 'figure': {
-        slice = {
-          alt: slice.primary.image.alt,
-          attribution: slice.primary.attribution,
-          border: slice.primary.border || false,
-          caption: slice.primary.caption
-            ? renderMarkdown(slice.primary.caption)
-            : null,
-          image: getImageVersions(slice.primary.image),
-          ...getSharedSliceFields(slice)
-        };
-        break;
-      }
-      case 'image_gallery': {
-        slice = {
-          caption: slice.primary.caption
-            ? renderMarkdown(slice.primary.caption)
-            : null,
-          attribution: slice.primary.attribution,
-          columnSize: paramCase(slice.primary.column_size),
-          images: slice.fields.map((item) => {
-            return {
-              image: getImageVersions(item.image),
-              alt: item.image.alt
-            }
-          }),
-          ...getSharedSliceFields(slice)
-        }
-      }
-    }
-
-    return slice;
-  })
+	content.body = renderBlockContent(body);
 
   res.writeHead(200, {
     'Content-Type': 'application/json'

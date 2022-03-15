@@ -1,14 +1,14 @@
 <script context="module">
 	export async function preload() {
-		const response = await this.fetch('about.json')
-		const content = await response.json()
+		const response = await this.fetch('about.json');
+		const content = await response.json();
 
 		if (response.status !== 200) {
-			this.error(response.status, content.message)
-			return
+			this.error(response.status, content.message);
+			return;
 		}
 
-		return { content }
+		return { content };
 	}
 </script>
 
