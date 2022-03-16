@@ -1,7 +1,5 @@
 <script context="module">
 	import * as prismicHelpers from '@prismicio/helpers';
-	import Tooltip from '@/components/Tooltip.svelte';
-	import expand from 'icons/expand.svg';
 
 	function getPaginationLabel (direction, title = null) {
 		if (title) {
@@ -17,7 +15,7 @@
 			// capitalize the first letter
 			label.charAt(0).toUpperCase();
 			return `
-				<button class="note show">
+				<button class="note">
 					<svg class="note-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke-width="2"><line x1="16" y1="8" x2="0" y2="8" stroke="currentColor"></line><line x1="8" y1="0" x2="8" y2="16" stroke="currentColor"></line></g></svg>
 					<span class="note-flyout center">${label}</span>
 				</button>
@@ -72,6 +70,7 @@
 </script>
 
 <script>
+	import { onMount } from 'svelte';
 	import arrowRight from 'icons/arrow-right.svg'
 	import Icon from '@/components/Icon.svelte'
 	import MainNav from '@/components/MainNav.svelte';
@@ -90,11 +89,22 @@
 
 	$: nextChapter = project.chapters[chapter.number];
 
-	function timelineTooltipAlign(index) {
+	function timelineTooltipAlign (index) {
 		if (index === 0) return 'start';
 		if (index === chapters.length - 1) return 'end';
 		return 'center';
 	}
+
+	// add click events to the tooltips the old fashioned way
+	// -> because the Svelte runtime can't handle injected strings
+	onMount(() => {
+		const notes = document.querySelectorAll('.note')
+		notes.forEach((note) => {
+			note.addEventListener('click', (event) => {
+				event.target.classList.toggle('show');
+			});
+		});
+	});
 </script>
 
 <PageTitle title="{title}" />
