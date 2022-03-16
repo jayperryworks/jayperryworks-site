@@ -1,11 +1,9 @@
-import { sentenceCase } from 'change-case';
-import arrayToSentence from 'array-to-sentence';
+import { sentenceCase, arrayToSentence } from '@/utils/stringHelpers';
 import calculateAspectRatio from 'calculate-aspect-ratio';
 import convertColor from 'color-convert';
 import errors from '@/utils/errorMessages.js'
 import { query, getImageVersions, getEditionDimensions } from '@/utils/prismicQuery.js';
 import render from '@/utils/renderMarkdown.js'
-import generatePictureList from '@/utils/generatePictureList.js'
 
 export async function get(req, res) {
 	const header = { 'Content-Type': 'application/json' };
@@ -137,8 +135,10 @@ export async function get(req, res) {
 
 	// picture format (media and substrate)
 	if (pageData.media && pageData.substrate) {
-		const media = arrayToSentence(pageData.media.map(item => item.medium.name));
-		content.format = sentenceCase(`${media} on ${pageData.substrate.name}`);
+		let { media, substrate } = pageData;
+		media = media.map(({ medium }) => medium.name);
+		const format = arrayToSentence(media, { period: false });
+		content.format = sentenceCase(`${format} on ${substrate.name.toLowerCase()}`);
 	}
 
 	// grab info about the print editions, if there are any
