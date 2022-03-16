@@ -1,6 +1,7 @@
 <script context="module">
 	import * as prismicHelpers from '@prismicio/helpers';
 	import Tooltip from '@/components/Tooltip.svelte';
+	import expand from 'icons/expand.svg';
 
 	function getPaginationLabel (direction, title = null) {
 		if (title) {
@@ -15,7 +16,12 @@
 			const label = children.toString().replace('(', '').replace(')', '').concat('.');
 			// capitalize the first letter
 			label.charAt(0).toUpperCase();
-			return `<button>+<span class="tooltip">${(label)}</span></button>`
+			return `
+				<button class="note show">
+					<svg class="note-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke-width="2"><line x1="16" y1="8" x2="0" y2="8" stroke="currentColor"></line><line x1="8" y1="0" x2="8" y2="16" stroke="currentColor"></line></g></svg>
+					<span class="note-flyout center">${label}</span>
+				</button>
+			`
 		}
 
 		return null
@@ -201,5 +207,127 @@
 	.next-icon {
 		display: block;
 		padding-left: 0.4em;
+	}
+
+	:global(.note) {
+		--size: 0.7em;
+		background-color: var(--color-secondary);
+		border-radius: 1000px;
+		border: 0;
+		color: var(--color-bg);
+		cursor: pointer;
+		display: inline-block;
+		padding: 0.25em;
+		position: relative;
+		transition: background-color 0.25s ease;
+		vertical-align: baseline;
+		will-change: color;
+	}
+
+	:global(.note):hover,
+	:global(.note.show) {
+		background-color: var(--color-highlight);
+	}
+
+	:global(.note-icon) {
+		display: block;
+		height: var(--size);
+		line-height: var(--size);
+		max-height: 100%;
+		max-width: 100%;
+		pointer-events: none;
+		width: var(--size);
+	}
+
+	:global(.note-flyout) {
+		--bg: hsl(var(--color-bg-h), var(--color-bg-s), calc(var(--color-bg-l) + 15%));
+		--border: var(--color-border);
+		--pointer-margin: var(--space-xnarrow);
+		--pointer-size: 0.6em;
+		--show: 0;
+		--transition-duration: 0.25s;
+
+		background-color: var(--bg);
+		border-radius: 0.25em;
+		border: 1px solid var(--border);
+		bottom: calc(var(--size) + var(--pointer-size) + 1em);
+		box-shadow: 0 0.05rem 0.5rem var(--color-shadow);
+		color: var(--color-primary);
+		content: attr(title);
+		display: block;
+		font-family: var(--type-font-accent);
+		font-size: var(--type-scale-zeta);
+		line-height: var(--type-leading-tight);
+		max-width: 18rem;
+		min-width: 12rem;
+		opacity: var(--show);
+		padding: var(--space-xnarrow) var(--pointer-margin);
+		position: absolute;
+		transition: var(--transition-duration) opacity ease-in-out;
+		will-change: opacity;
+		z-index: 4;
+	}
+
+	:global(.note-flyout)::before,
+	:global(.note-flyout)::after {
+		border-left: var(--pointer-size) solid transparent;
+		border-right: var(--pointer-size) solid transparent;
+		content: '';
+		display: inline-block;
+		height: 0;
+		position: absolute;
+		width: 0;
+	}
+
+	:global(.note-flyout.start) {
+		left: calc(var(--pointer-margin) * -1);
+		text-align: left;
+	}
+
+	:global(.note-flyout.end) {
+		right: calc(var(--pointer-margin) * -1);
+		text-align: right;
+	}
+
+	:global(.note-flyout.center) {
+		left: 50%;
+		text-align: center;
+		transform: translateX(-50%);
+	}
+
+	:global(.note-flyout)::before {
+		border-top: var(--pointer-size) solid var(--border);
+		bottom: calc(var(--pointer-size) * -1);
+	}
+
+	:global(.note-flyout)::after {
+		border-top: var(--pointer-size) solid var(--bg);
+		bottom: calc((var(--pointer-size) - 0.1em) * -1);
+	}
+
+	:global(.note-flyout.start)::before,
+	:global(.note-flyout.start)::after {
+		left: var(--pointer-margin);
+	}
+
+	:global(.note-flyout.end)::before,
+	:global(.note-flyout.end)::after {
+		right: var(--pointer-margin);
+	}
+
+	:global(.note-flyout.center)::before,
+	:global(.note-flyout.center)::after {
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	:global(.note.center .note-flyout) {
+		left: 50%;
+		text-align: center;
+		transform: translateX(-50%);
+	}
+
+	:global(.note.show .note-flyout) {
+		--show: 1;
 	}
 </style>

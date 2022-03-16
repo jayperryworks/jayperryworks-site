@@ -6,12 +6,6 @@
 
   let classes = '';
   export { classes as class };
-
-	// onMount(() => {
-	// 	document.querySelectorAll('.footnote-ref').forEach(ref => {
-	// 		console.log(ref.firstChild.attributes[0].nodeValue);
-	// 	});
-	// });
 </script>
 
 <div class="content type-scale-{typeSize} {classes}">
