@@ -1,6 +1,7 @@
 const { camelCase, paramCase } = require('change-case');
 const { createPrismicLink } = require('apollo-link-prismic');
 const { InMemoryCache, IntrospectionFragmentMatcher } = require('apollo-cache-inmemory');
+const { sentenceCase } = require('./stringHelpers.js');
 const ApolloClient = require('apollo-client');
 const convertColor = require('color-convert');
 const fetch = require('node-fetch');
@@ -83,11 +84,10 @@ function htmlSerializer(type, element, content, children) {
 		//  remove the parentheses and add a period so it reads as a sentence.
 		const label = children.toString().replace('(', '').replace(')', '').concat('.');
 		// capitalize the first letter
-		label.charAt(0).toUpperCase();
 		return `
 				<button class="note">
 					<svg class="note-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke-width="2"><line x1="16" y1="8" x2="0" y2="8" stroke="currentColor"></line><line x1="8" y1="0" x2="8" y2="16" stroke="currentColor"></line></g></svg>
-					<span class="note-flyout center">${label}</span>
+					<span class="note-flyout center">${sentenceCase(label)}</span>
 				</button>
 			`
 	}

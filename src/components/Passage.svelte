@@ -15,6 +15,7 @@
 		const notes = contentElement.querySelectorAll('.note');
 		notes.forEach((note) => {
 			note.addEventListener('click', (event) => {
+				console.log(event)
 				event.target.classList.toggle('show');
 			});
 		});
@@ -88,6 +89,7 @@
     padding: 0.25em 1em;
   }
 
+	/* footnote popovers */
 	:global(.note) {
 		--size: 0.7em;
 		background-color: var(--color-secondary);
