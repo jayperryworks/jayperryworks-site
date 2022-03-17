@@ -1,12 +1,13 @@
-const { InMemoryCache, IntrospectionFragmentMatcher } = require('apollo-cache-inmemory');
+const { camelCase, paramCase } = require('change-case');
 const { createPrismicLink } = require('apollo-link-prismic');
+const { InMemoryCache, IntrospectionFragmentMatcher } = require('apollo-cache-inmemory');
 const ApolloClient = require('apollo-client');
 const convertColor = require('color-convert');
+const fetch = require('node-fetch');
 const fragmentTypes = require('./prismicFragments.json');
 const gql = require('graphql-tag');
 const markdown = require('./renderMarkdown.js');
-const { camelCase, paramCase } = require('change-case');
-const fetch = require('node-fetch');
+const prismicHelpers = require('@prismicio/helpers');
 
 const accessToken = process.env.PRISMIC_TOKEN;
 
@@ -77,6 +78,23 @@ function renderMarkdown(field) {
 	return markdown(getString(field));
 }
 
+function htmlSerializer(type, element, content, children) {
+	if (element.data?.label === 'note') {
+		//  remove the parentheses and add a period so it reads as a sentence.
+		const label = children.toString().replace('(', '').replace(')', '').concat('.');
+		// capitalize the first letter
+		label.charAt(0).toUpperCase();
+		return `
+				<button class="note">
+					<svg class="note-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke-width="2"><line x1="16" y1="8" x2="0" y2="8" stroke="currentColor"></line><line x1="8" y1="0" x2="8" y2="16" stroke="currentColor"></line></g></svg>
+					<span class="note-flyout center">${label}</span>
+				</button>
+			`
+	}
+
+	return null
+}
+
 const blockQueries = {
   heading: (contentTypeName = 'PageBody', blockName = 'Heading') => `
     ...on ${contentTypeName}${blockName} {
@@ -93,6 +111,7 @@ const blockQueries = {
       type
       primary {
         markdown
+				structured_text
         include_in_excerpt
       }
     }
@@ -158,7 +177,9 @@ function renderBlockContent (blocks) {
 		switch (slice.type) {
 			case 'passage': {
 				slice = {
-					html: renderMarkdown(slice.primary.markdown),
+					html: slice.primary.structured_text
+						? prismicHelpers.asHTML(slice.primary.structured_text, null, htmlSerializer)
+						: renderMarkdown(slice.primary.markdown),
 					...getSharedSliceFields(slice)
 				};
 				break;

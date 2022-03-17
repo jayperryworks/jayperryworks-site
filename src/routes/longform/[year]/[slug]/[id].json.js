@@ -17,7 +17,6 @@ export async function get ({ params }, res) {
 						primary_foreground_color
 						secondary_foreground_color
 						background_color
-						test_text
 						body {
 							${Object.keys(blockQueries).map((name) => {
 								return blockQueries[name]('Longform_chapterBody');

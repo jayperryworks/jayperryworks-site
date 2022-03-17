@@ -88,17 +88,6 @@
     padding: 0.25em 1em;
   }
 
-	.next {
-		display: flex;
-		align-items: flex-end;
-		justify-content: flex-end;
-	}
-
-	.next-icon {
-		display: block;
-		padding-left: 0.4em;
-	}
-
 	:global(.note) {
 		--size: 0.7em;
 		background-color: var(--color-secondary);

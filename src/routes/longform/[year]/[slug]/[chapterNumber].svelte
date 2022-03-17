@@ -1,29 +1,5 @@
 <script context="module">
-	import * as prismicHelpers from '@prismicio/helpers';
 
-	function getPaginationLabel (direction, title = null) {
-		if (title) {
-			return `<span class="color-fg-secondary">${direction}:</span> ${title}`
-		}
-		return `<span class="color-fg-secondary">${direction}</span>`
-	}
-
-	function htmlSerializer (type, element, content, children) {
-		 if (element.data?.label === 'note') {
-			//  remove the parentheses and add a period so it reads as a sentence.
-			const label = children.toString().replace('(', '').replace(')', '').concat('.');
-			// capitalize the first letter
-			label.charAt(0).toUpperCase();
-			return `
-				<button class="note">
-					<svg class="note-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke-width="2"><line x1="16" y1="8" x2="0" y2="8" stroke="currentColor"></line><line x1="8" y1="0" x2="8" y2="16" stroke="currentColor"></line></g></svg>
-					<span class="note-flyout center">${label}</span>
-				</button>
-			`
-		}
-
-		return null
-	}
 
 	export async function preload({ params }) {
 		// get the post for this page using the date and slug params
@@ -80,8 +56,6 @@
 	import SequenceNavStep from '@/components/SequenceNavStep.svelte';
 	import Wrapper from '@/components/Wrapper.svelte';
 
-	import Passage from '@/components/Passage.svelte';
-
 	export let slug, project, chapter;
 
 	let { title, subtitle, chapters, chapterLabel } = project;
@@ -137,7 +111,6 @@
 						{chapter.subtitle}
 					</p>
 				{/if}
-				<Passage class="padding-top-wide type-align-left" html="{chapter.testText}" />
 			</Wrapper>
 		</header>
 		<PostBody blocks={chapter.body} />
@@ -194,5 +167,16 @@
 <style>
 	.subtitle {
 		max-width: none;
+	}
+
+	.next {
+		display: flex;
+		align-items: flex-end;
+		justify-content: flex-end;
+	}
+
+	.next-icon {
+		display: block;
+		padding-left: 0.4em;
 	}
 </style>
