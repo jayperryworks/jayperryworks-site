@@ -18,7 +18,7 @@
 			note.addEventListener('click', (event) => {
 				const noteEl = event.target;
 				const noteRect = noteEl.getBoundingClientRect();
-				const margin = 150;
+				const margin = 100;
 
 				noteEl.classList.toggle('show');
 
@@ -105,9 +105,24 @@
     padding: 0.25em 1em;
   }
 
+	/* inline icons */
+	:global(.icon) {
+		--size: 0.8em;
+
+		display: inline-block;
+		height: var(--size);
+		line-height: var(--size);
+		margin-left: 0.25em;
+		max-height: 100%;
+		max-width: 100%;
+		pointer-events: none;
+		vertical-align: baseline;
+		width: var(--size);
+	}
+
 	/* footnote popovers */
 	:global(.note) {
-		--size: 0.7em;
+		--size: 0.8em;
 		--bg: hsl(var(--color-bg-h), var(--color-bg-s), calc(var(--color-bg-l) + 15%));
 		--border: var(--color-border);
 		--pointer-margin: var(--space-xnarrow);
@@ -120,11 +135,9 @@
 		border: 0;
 		color: var(--color-bg);
 		cursor: pointer;
-		display: inline-block;
 		padding: 0.25em;
 		position: relative;
 		transition: background-color 0.25s ease;
-		vertical-align: baseline;
 		will-change: color;
 	}
 
@@ -133,14 +146,10 @@
 		background-color: var(--color-highlight);
 	}
 
-	:global(.note-icon) {
+	:global(.note .icon) {
 		display: block;
-		height: var(--size);
-		line-height: var(--size);
-		max-height: 100%;
-		max-width: 100%;
-		pointer-events: none;
-		width: var(--size);
+		position: relative;
+		margin: 0;
 	}
 
 	:global(.note-flyout) {

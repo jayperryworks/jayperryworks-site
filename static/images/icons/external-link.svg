@@ -1,0 +1,7 @@
+<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+	<g fill="none" fill-rule="evenodd" stroke="#444">
+		<rect id="frame" stroke="#444444" x="0.5" y="0.5" width="15" height="15"></rect>
+		<line x1="13.1821591" y1="7.95398449" x2="3.28266415" y2="7.95398449" id="arrow-tail" stroke="#444444" stroke-linecap="square" transform="translate(8.171751, 8.257538) rotate(-45.000000) translate(-8.171751, -8.257538) "></line>
+		<polyline id="arrow-head" stroke="#444444" transform="translate(10.000000, 6.000000) scale(-1, 1) rotate(-45.000000) translate(-10.000000, -6.000000) " points="4.34314575 8.82842712 10 3.17157288 15.6568542 8.82842712"></polyline>
+	</g>
+</svg>
