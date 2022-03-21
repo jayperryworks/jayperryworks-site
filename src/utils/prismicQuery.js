@@ -83,7 +83,7 @@ function htmlSerializer(type, element, content, children) {
 	if (element.type === 'hyperlink' && element.data.target === '_blank') {
 		console.log(element)
 		return `
-			<a href="${element.data.url}">
+			<a href="${element.data.url}" target="_blank">
 				${children}
 				<svg class="icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
 					<g fill="none" fill-rule="evenodd">
