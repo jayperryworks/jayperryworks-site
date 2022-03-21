@@ -80,29 +80,13 @@ function renderMarkdown(field) {
 }
 
 function htmlSerializer(type, element, content, children) {
-	if (element.type === 'hyperlink' && element.data.target === '_blank') {
-		console.log(element)
-		return `
-			<a href="${element.data.url}" target="_blank">
-				${children}
-				<svg class="icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-					<g fill="none" fill-rule="evenodd">
-						<rect id="frame" stroke="currentColor" x="0.5" y="0.5" width="15" height="15"></rect>
-						<line x1="13.1821591" y1="7.95398449" x2="3.28266415" y2="7.95398449" id="arrow-tail" stroke="currentColor" stroke-linecap="square" transform="translate(8.171751, 8.257538) rotate(-45.000000) translate(-8.171751, -8.257538) "></line>
-						<polyline id="arrow-head" stroke="currentColor" transform="translate(10.000000, 6.000000) scale(-1, 1) rotate(-45.000000) translate(-10.000000, -6.000000) " points="4.34314575 8.82842712 10 3.17157288 15.6568542 8.82842712"></polyline>
-					</g>
-				</svg>
-			</a>
-		`;
-	}
-
 	if (element.data?.label === 'note') {
 		//  remove the parentheses and add a period so it reads as a sentence.
 		const label = children.toString().replace('(', '').replace(')', '').concat('.');
 		// capitalize the first letter
 		return `
 				<button class="note align-center">
-					<svg class="icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke-width="2"><line x1="16" y1="8" x2="0" y2="8" stroke="currentColor"></line><line x1="8" y1="0" x2="8" y2="16" stroke="currentColor"></line></g></svg>
+					<svg class="note-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke-width="2"><line x1="16" y1="8" x2="0" y2="8" stroke="currentColor"></line><line x1="8" y1="0" x2="8" y2="16" stroke="currentColor"></line></g></svg>
 					<span class="note-flyout">${sentenceCase(label)}</span>
 				</button>
 			`

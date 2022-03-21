@@ -31,8 +31,6 @@ module.exports = (
 
 		// if the link uses an absolute url...
 		if (url.includes('http')) {
-			console.log(tokens[idx])
-
 			if (targetIndex < 0) {
 				// add new attribute
 				tokens[idx].attrPush(['target', '_blank']);

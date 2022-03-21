@@ -55,6 +55,24 @@
     margin-top: 1.5em;
   }
 
+
+	/* add an icon after external links */
+	@supports (mask: url('/images/icons/external-link.svg') no-repeat 50% 50%) {
+		.content :global(a[href^='http']::after) {
+			--size: 0.7em;
+
+			background-color: currentColor;
+			content: '';
+			display: inline-block;
+			height: var(--size);
+			margin: 0 0.1em 0 0.25em;
+			mask: url('/images/icons/external-link.svg') no-repeat 50% 50%;
+			position: relative;
+			vertical-align: baseline;
+			width: var(--size);
+		}
+	}
+
   /* horizontal rules
     -> created for footnotes
   */
@@ -72,7 +90,8 @@
 		font-style: italic;
 	}
 
-  /* footnotes */
+  /* footnotes - DEPRECATED */
+	/* -> keeping this for now because there are still some markdown footnotes in old blog posts */
   :global(.footnotes) {
     color: var(--color-secondary);
     font-size: var(--type-scale-zeta);
@@ -105,23 +124,8 @@
     padding: 0.25em 1em;
   }
 
-	/* inline icons */
-	:global(.icon) {
-		--size: 0.8em;
-
-		display: inline-block;
-		height: var(--size);
-		line-height: var(--size);
-		margin-left: 0.25em;
-		max-height: 100%;
-		max-width: 100%;
-		pointer-events: none;
-		vertical-align: baseline;
-		width: var(--size);
-	}
-
 	/* footnote popovers */
-	:global(.note) {
+	.content :global(.note) {
 		--size: 0.8em;
 		--bg: hsl(var(--color-bg-h), var(--color-bg-s), calc(var(--color-bg-l) + 15%));
 		--border: var(--color-border);
@@ -141,18 +145,26 @@
 		will-change: color;
 	}
 
-	:global(.note):hover,
-	:global(.note.show) {
+	.content :global(.note):hover,
+	.content :global(.note.show) {
 		background-color: var(--color-highlight);
 	}
 
-	:global(.note .icon) {
+	.content :global(.note-icon) {
 		display: block;
-		position: relative;
+		height: var(--size);
+		line-height: var(--size);
+		margin-left: 0.25em;
 		margin: 0;
+		max-height: 100%;
+		max-width: 100%;
+		pointer-events: none;
+		position: relative;
+		vertical-align: text-bottom;
+		width: var(--size);
 	}
 
-	:global(.note-flyout) {
+	.content :global(.note-flyout) {
 		background-color: var(--bg);
 		border-radius: 0.25em;
 		border: 1px solid var(--border);
@@ -174,8 +186,8 @@
 		z-index: 4;
 	}
 
-	:global(.note-flyout)::before,
-	:global(.note-flyout)::after {
+	.content :global(.note-flyout)::before,
+	.content :global(.note-flyout)::after {
 		border-left: var(--pointer-size) solid transparent;
 		border-right: var(--pointer-size) solid transparent;
 		content: '';
@@ -185,53 +197,53 @@
 		width: 0;
 	}
 
-	:global(.note-flyout)::before {
+	.content :global(.note-flyout)::before {
 		border-top: var(--pointer-size) solid var(--border);
 		bottom: calc(var(--pointer-size) * -1);
 	}
 
-	:global(.note-flyout)::after {
+	.content :global(.note-flyout)::after {
 		border-top: var(--pointer-size) solid var(--bg);
 		bottom: calc((var(--pointer-size) - 0.1em) * -1);
 	}
 
 	/* flyout alignment modifiers */
 	/* center */
-	:global(.note.align-center .note-flyout) {
+	.content :global(.note.align-center .note-flyout) {
 		left: 50%;
 		text-align: center;
 		transform: translateX(-50%);
 	}
 
-	:global(.note.align-center .note-flyout)::before,
-	:global(.note.align-center .note-flyout)::after {
+	.content :global(.note.align-center .note-flyout)::before,
+	.content :global(.note.align-center .note-flyout)::after {
 		left: 50%;
 		transform: translateX(-50%);
 	}
 
 	/* start */
-	:global(.note.align-start .note-flyout) {
+	.content :global(.note.align-start .note-flyout) {
 		left: calc(var(--pointer-margin) * -1);
 		text-align: left;
 	}
 
-	:global(.note.align-start .note-flyout)::before,
-	:global(.note.align-start .note-flyout)::after {
+	.content :global(.note.align-start .note-flyout)::before,
+	.content :global(.note.align-start .note-flyout)::after {
 		left: var(--pointer-margin);
 	}
 
 	/* end */
-	:global(.note.align-end .note-flyout) {
+	.content :global(.note.align-end .note-flyout) {
 		right: calc(var(--pointer-margin) * -1);
 		text-align: right;
 	}
 
-	:global(.note.align-end .note-flyout)::before,
-	:global(.note.align-end .note-flyout)::after {
+	.content :global(.note.align-end .note-flyout)::before,
+	.content :global(.note.align-end .note-flyout)::after {
 		right: var(--pointer-margin);
 	}
 
-	:global(.note.show .note-flyout) {
+	.content :global(.note.show .note-flyout) {
 		--show: 1;
 	}
 </style>
