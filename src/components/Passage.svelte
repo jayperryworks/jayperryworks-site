@@ -1,5 +1,5 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
   export let html,
 		typeSize = 'epsilon';
@@ -7,21 +7,37 @@
   let classes = '';
   export { classes as class };
 
-	let contentElement;
+	let contentElement, browserWidth;
 
 	// add click events to the tooltips the old fashioned way
 	// -> because the Svelte runtime can't handle injected strings
 	onMount(() => {
+		// https://usefulangle.com/post/190/javascript-window-width-height
 		const notes = contentElement.querySelectorAll('.note');
 		notes.forEach((note) => {
 			note.addEventListener('click', (event) => {
-				console.log(event)
-				event.target.classList.toggle('show');
+				const noteEl = event.target;
+				const noteRect = noteEl.getBoundingClientRect();
+				const margin = 150;
+
+				noteEl.classList.toggle('show');
+
+				// console.log(noteRect.left, browserWidth - noteRect.right, margin);
+				if (noteRect.left < margin) {
+					noteEl.classList.remove('align-center');
+					noteEl.classList.add('align-start');
+				}
+
+				if ((browserWidth - noteRect.right) < margin) {
+					noteEl.classList.remove('align-center');
+					noteEl.classList.add('align-end');
+				}
 			});
 		});
 	});
 </script>
 
+<svelte:window bind:innerWidth="{browserWidth}" />
 <div
 	bind:this="{contentElement}"
 	class="content type-scale-{typeSize} {classes}"
@@ -92,6 +108,13 @@
 	/* footnote popovers */
 	:global(.note) {
 		--size: 0.7em;
+		--bg: hsl(var(--color-bg-h), var(--color-bg-s), calc(var(--color-bg-l) + 15%));
+		--border: var(--color-border);
+		--pointer-margin: var(--space-xnarrow);
+		--pointer-size: 0.6em;
+		--show: 0;
+		--transition-duration: 0.25s;
+
 		background-color: var(--color-secondary);
 		border-radius: 1000px;
 		border: 0;
@@ -121,13 +144,6 @@
 	}
 
 	:global(.note-flyout) {
-		--bg: hsl(var(--color-bg-h), var(--color-bg-s), calc(var(--color-bg-l) + 15%));
-		--border: var(--color-border);
-		--pointer-margin: var(--space-xnarrow);
-		--pointer-size: 0.6em;
-		--show: 0;
-		--transition-duration: 0.25s;
-
 		background-color: var(--bg);
 		border-radius: 0.25em;
 		border: 1px solid var(--border);
@@ -160,22 +176,6 @@
 		width: 0;
 	}
 
-	:global(.note-flyout.start) {
-		left: calc(var(--pointer-margin) * -1);
-		text-align: left;
-	}
-
-	:global(.note-flyout.end) {
-		right: calc(var(--pointer-margin) * -1);
-		text-align: right;
-	}
-
-	:global(.note-flyout.center) {
-		left: 50%;
-		text-align: center;
-		transform: translateX(-50%);
-	}
-
 	:global(.note-flyout)::before {
 		border-top: var(--pointer-size) solid var(--border);
 		bottom: calc(var(--pointer-size) * -1);
@@ -186,26 +186,40 @@
 		bottom: calc((var(--pointer-size) - 0.1em) * -1);
 	}
 
-	:global(.note-flyout.start)::before,
-	:global(.note-flyout.start)::after {
-		left: var(--pointer-margin);
-	}
-
-	:global(.note-flyout.end)::before,
-	:global(.note-flyout.end)::after {
-		right: var(--pointer-margin);
-	}
-
-	:global(.note-flyout.center)::before,
-	:global(.note-flyout.center)::after {
-		left: 50%;
-		transform: translateX(-50%);
-	}
-
-	:global(.note.center .note-flyout) {
+	/* flyout alignment modifiers */
+	/* center */
+	:global(.note.align-center .note-flyout) {
 		left: 50%;
 		text-align: center;
 		transform: translateX(-50%);
+	}
+
+	:global(.note.align-center .note-flyout)::before,
+	:global(.note.align-center .note-flyout)::after {
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	/* start */
+	:global(.note.align-start .note-flyout) {
+		left: calc(var(--pointer-margin) * -1);
+		text-align: left;
+	}
+
+	:global(.note.align-start .note-flyout)::before,
+	:global(.note.align-start .note-flyout)::after {
+		left: var(--pointer-margin);
+	}
+
+	/* end */
+	:global(.note.align-end .note-flyout) {
+		right: calc(var(--pointer-margin) * -1);
+		text-align: right;
+	}
+
+	:global(.note.align-end .note-flyout)::before,
+	:global(.note.align-end .note-flyout)::after {
+		right: var(--pointer-margin);
 	}
 
 	:global(.note.show .note-flyout) {

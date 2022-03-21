@@ -85,9 +85,9 @@ function htmlSerializer(type, element, content, children) {
 		const label = children.toString().replace('(', '').replace(')', '').concat('.');
 		// capitalize the first letter
 		return `
-				<button class="note">
+				<button class="note align-center">
 					<svg class="note-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke-width="2"><line x1="16" y1="8" x2="0" y2="8" stroke="currentColor"></line><line x1="8" y1="0" x2="8" y2="16" stroke="currentColor"></line></g></svg>
-					<span class="note-flyout center">${sentenceCase(label)}</span>
+					<span class="note-flyout">${sentenceCase(label)}</span>
 				</button>
 			`
 	}
