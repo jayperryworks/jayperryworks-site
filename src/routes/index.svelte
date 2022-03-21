@@ -64,12 +64,9 @@
 				<Wrapper width="wide" centered={false}>
 					<h1 class="type-leading-xtight">{@html intro.headline}</h1>
 				</Wrapper>
-				<Wrapper
-					centered="{false}"
-					class="type-scale-delta type-heading type-leading-default | padding-top padding-bottom-wide"
-				>
-					<Passage html={intro.blurb}/>
-				</Wrapper>
+				<p class="type-scale-delta type-font-display | padding-top padding-bottom-wide">
+					{@html intro.blurb}
+				</p>
 				<Button
 					href="{intro.cta.link}"
 					iconRight="{arrowRight}"
