@@ -1,6 +1,5 @@
 <script>
 	import Caption from './Caption.svelte'
-	import DeviceFrame from './DeviceFrame.svelte'
 	import ResponsiveImage from './ResponsiveImage.svelte'
 	import ResponsivePicture from './ResponsivePicture.svelte'
 
