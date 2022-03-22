@@ -13,16 +13,16 @@ const prismicHelpers = require('@prismicio/helpers');
 const accessToken = process.env.PRISMIC_TOKEN;
 
 const fragmentMatcher = new IntrospectionFragmentMatcher(
-  { introspectionQueryResultData: fragmentTypes },
+	{ introspectionQueryResultData: fragmentTypes },
 );
 
 const client = new ApolloClient({
 	link: createPrismicLink({
-    repositoryName: 'jpw-api',
-    accessToken,
+		repositoryName: 'jpw-api',
+		accessToken,
 		fetch
-  }),
-  cache: new InMemoryCache({ fragmentMatcher })
+	}),
+	cache: new InMemoryCache({ fragmentMatcher })
 });
 
 async function query(queryString) {
@@ -32,26 +32,26 @@ async function query(queryString) {
 }
 
 function getImageVersions (
-  imageField,
-  versions = ['Small', 'Medium', 'Large']
+	imageField,
+	versions = ['Small', 'Medium', 'Large']
 ) {
-  if (imageField[versions[0]]) {
-    return versions.map((version) => {
-      return {
-        path: imageField[version].url,
-        width: imageField[version].dimensions.width,
-        height: imageField[version].dimensions.height
-      }
-    })
-  }
+	if (imageField[versions[0]]) {
+		return versions.map((version) => {
+			return {
+				path: imageField[version].url,
+				width: imageField[version].dimensions.width,
+				height: imageField[version].dimensions.height
+			}
+		})
+	}
 
-  // if the image doesn't have versions, return the original
-  return [
-    {
-      path: imageField.url,
-      size: imageField.dimensions.width
-    }
-  ]
+	// if the image doesn't have versions, return the original
+	return [
+		{
+			path: imageField.url,
+			size: imageField.dimensions.width
+		}
+	]
 }
 
 // set width and height of a Picture Print Edition depending on Landscape/Portrait orientation
@@ -96,62 +96,62 @@ function htmlSerializer(type, element, content, children) {
 }
 
 const blockQueries = {
-  heading: (contentTypeName = 'PageBody', blockName = 'Heading') => `
-    ...on ${contentTypeName}${blockName} {
-      type
-      primary {
-        title1
-        level
-        subheading
-      }
-    }
-  `,
-  passage: (contentTypeName = 'PageBody', blockName = 'Passage') => `
-    ... on ${contentTypeName}${blockName} {
-      type
-      primary {
-        markdown
+	heading: (contentTypeName = 'PageBody', blockName = 'Heading') => `
+		...on ${contentTypeName}${blockName} {
+			type
+			primary {
+				title1
+				level
+				subheading
+			}
+		}
+	`,
+	passage: (contentTypeName = 'PageBody', blockName = 'Passage') => `
+		... on ${contentTypeName}${blockName} {
+			type
+			primary {
+				markdown
 				structured_text
-        include_in_excerpt
-      }
-    }
-  `,
-  quote: (contentTypeName = 'PageBody', blockName = 'Quote') => `
-    ... on ${contentTypeName}${blockName} {
-      type
-      primary {
-        markdown
+				include_in_excerpt
+			}
+		}
+	`,
+	quote: (contentTypeName = 'PageBody', blockName = 'Quote') => `
+		... on ${contentTypeName}${blockName} {
+			type
+			primary {
+				markdown
 				attribution
 				include_in_excerpt
-      }
-    }
-  `,
-  figure: (contentTypeName = 'PageBody', blockName = 'Figure') => `
-    ... on ${contentTypeName}${blockName} {
-      type
-      primary {
-        image
-        prominence
-        caption
-        attribution
-        include_in_excerpt
-      }
-    }
-  `,
-  imageGallery: (contentTypeName = 'PageBody', blockName = 'Image_gallery') => `
-    ... on ${contentTypeName}${blockName} {
-      type
-      primary {
-        caption
-        attribution
-        prominence
-        column_size
-      }
-      fields {
-        image
-      }
-    }
-  `
+			}
+		}
+	`,
+	figure: (contentTypeName = 'PageBody', blockName = 'Figure') => `
+		... on ${contentTypeName}${blockName} {
+			type
+			primary {
+				image
+				prominence
+				caption
+				attribution
+				include_in_excerpt
+			}
+		}
+	`,
+	imageGallery: (contentTypeName = 'PageBody', blockName = 'Image_gallery') => `
+		... on ${contentTypeName}${blockName} {
+			type
+			primary {
+				caption
+				attribution
+				prominence
+				column_size
+			}
+			fields {
+				image
+			}
+		}
+	`
 }
 
 function getSliceWidth(prominence) {
@@ -259,7 +259,7 @@ async function queryAll ({
 
 	// construct a graphql query string from the parameters object, including `pageInfo` metadata fields to tell us where we are in the sequence
 	let response = await query(`
-    query{
+		query{
 			${type}(${queryArguments}) {
 				pageInfo {
 					hasNextPage
