@@ -59,6 +59,7 @@
 		src="{defaultSrc}"
 		srcset="{srcset(defaultFormat.sizes.slice(1))}"
 		{alt}
+		loading="lazy"
 	>
 </picture>
 

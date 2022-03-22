@@ -40,6 +40,7 @@
 	{src}
 	{srcset}
 	{alt}
+	loading="lazy"
 />
 
 <style>
