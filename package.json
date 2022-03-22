@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@prismicio/client": "^5.1.0",
+    "@prismicio/helpers": "^2.2.0",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link-prismic": "^1.0.9",

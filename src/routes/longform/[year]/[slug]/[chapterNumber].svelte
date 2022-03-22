@@ -1,12 +1,5 @@
 <script context="module">
-	import { noCase } from 'change-case';
 
-	function getPaginationLabel (direction, title = null) {
-		if (title) {
-			return `<span class="color-fg-secondary">${direction}:</span> ${title}`
-		}
-		return `<span class="color-fg-secondary">${direction}</span>`
-	}
 
 	export async function preload({ params }) {
 		// get the post for this page using the date and slug params
@@ -40,6 +33,10 @@
 		chapter.number = chapterNumber;
 		chapter.path = `${path}/${chapterNumber}`;
 
+		if (chapter.testText) {
+			chapter.testText = prismicHelpers.asHTML(chapter.testText, null, htmlSerializer);
+		}
+
 		return {
 			project,
 			chapter,
@@ -65,7 +62,7 @@
 
 	$: nextChapter = project.chapters[chapter.number];
 
-	function timelineTooltipAlign(index) {
+	function timelineTooltipAlign (index) {
 		if (index === 0) return 'start';
 		if (index === chapters.length - 1) return 'end';
 		return 'center';

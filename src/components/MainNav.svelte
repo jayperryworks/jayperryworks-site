@@ -2,8 +2,6 @@
   import menu from 'icons/menu.svg';
   import close from 'icons/close.svg';
   import Icon from './Icon.svelte';
-;
-  import Bookend from './Bookend.svelte';
   import LogoJP from './logos/LogoJP.svelte';
 
 	export let segment,
