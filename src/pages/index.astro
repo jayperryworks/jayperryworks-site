@@ -1,0 +1,48 @@
+---
+// Style Imports
+import '../styles/global.css';
+import expand from '../icons/expand.svg?raw';
+
+// Component Imports
+import Block from '../components/Block.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+// You can import components from any supported Framework here!
+
+
+// Component Script:
+// You can write any JavaScript/TypeScript that you'd like here.
+// It will run during the build, but never in the browser.
+// All variables are available to use in the HTML template below.
+
+// Full Astro Component Syntax:
+// https://docs.astro.build/core-concepts/astro-components/
+
+const body = [
+	{
+		type: 'figure',
+		path: 'https://via.placeholder.com/1200x800',
+		alt: 'placeholder',
+		prominence: 'wide'
+	},
+	{
+		type: 'passage',
+		html: `
+			Lorem ipsum dolor sit amet 
+			<button class="note">
+				${expand}
+				<span class="tooltip center">Adipiscig elit nonummy.</span>
+			</button>. Velit massa donec dapibus purus rhoncus ac blandit lacus curabitur justo iaculis cras. Quis sollicitudin cras bibendum incididunt tellus eleifend elementum eiusmod enim. Posuere in feugiat vel pretium integer condimentum 
+			<button class="note">
+				${expand}
+				<span class="tooltip center">Auctor aliquet porta.</span>
+			</button>. Fames tempor elementum est tortor fermentum eget at purus gravida tempus nullam.
+		`,
+		prominence: 'default'
+	}
+];
+---
+<BaseLayout path="home">
+	<main class="padding-y-flow-wide padding-y-xwide">
+		{body.map(block => <Block {block} />)}
+	</main>
+</BaseLayout>
