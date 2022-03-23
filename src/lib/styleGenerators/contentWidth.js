@@ -6,7 +6,7 @@ const widths = {
 	xxwide: 112
 }
 
-module.exports = {
+export default {
 	name: 'Content Width',
 	customProperties: Object.keys(widths).map((width) => {
 		return `--content-width-${width}: ${widths[width]}rem;`

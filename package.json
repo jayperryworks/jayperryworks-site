@@ -6,9 +6,9 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"css:generate": "node ./scripts/css/index.js",
-		"css:format": "prettier --write ./static/stylesheets/*",
-		"css:optimize": "npx postcss ./static/stylesheets/* -r",
+		"css:generate": "node ./scripts/renderStyles.js",
+		"css:format": "prettier --write ./src/styles/*",
+		"css:optimize": "npx postcss ./src/styles/* -r",
 		"prep:css": "run-s css:generate css:optimize",
 		"dev": "astro dev",
 		"start": "astro dev",
@@ -25,6 +25,7 @@
 		"cssnano": "^5.1.5",
 		"fs": "^0.0.1-security",
 		"markdown-it": "^12.3.2",
+		"modularscale-js": "^3.0.1",
 		"npm-run-all": "^4.1.5",
 		"vite-svg-loader": "^3.1.2"
 	}

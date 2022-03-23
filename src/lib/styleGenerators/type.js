@@ -1,8 +1,8 @@
-const { type } = require('../design-tokens.js')
-const { helpers: color } = require('./color.js')
-const { helpers: border } = require('./borders.js')
-const { helpers: bp } = require('./breakpoints.js')
-const { helpers: scale } = require('./scale.js')
+import { type } from '../design-tokens.js';
+import { helpers as color } from './color.js';
+import { helpers as border } from './borders.js';
+import { helpers as bp } from './breakpoints.js';
+import { helpers as scale } from './scale.js';
 
 function webfont (name, filename, {
 	formats = ['woff', 'ttf'],
@@ -89,7 +89,7 @@ function heading (selectors) {
 	`
 }
 
-module.exports = {
+export default {
 	name: 'Type',
 	customProperties: [
 		...Object.keys(type.scale).map((size) => {

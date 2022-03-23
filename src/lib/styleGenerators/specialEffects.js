@@ -1,6 +1,6 @@
-const { helpers: color } = require('./color.js')
+import { helpers as color } from './color.js';
 
-module.exports = {
+export default {
 	name: 'Special effects',
 	utilities: `
 		.shadow {

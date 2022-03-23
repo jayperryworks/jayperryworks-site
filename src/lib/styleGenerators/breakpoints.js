@@ -1,4 +1,4 @@
-const { breakpoints } = require('../design-tokens.js')
+import { breakpoints } from '../design-tokens.js';
 
 function query (size, content, direction = '>') {
 	if (!breakpoints.sizes[size]) {
@@ -29,7 +29,7 @@ function responsiveClasses (className, block, direction = '>') {
 	}).join('')
 }
 
-module.exports = {
+export default {
 	name: 'Breakpoints',
 	helpers: { query, responsiveClasses },
 	customProperties: Object.keys(breakpoints.sizes).map(bp => `

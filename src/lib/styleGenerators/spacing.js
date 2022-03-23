@@ -1,5 +1,5 @@
-const { spacing, breakpoints } = require('../design-tokens.js')
-const { helpers: scale } = require('./scale.js')
+import { spacing, breakpoints } from '../design-tokens.js';
+import { helpers as scale } from './scale.js';
 
 
 function get (name = 'medium', {
@@ -13,7 +13,7 @@ function get (name = 'medium', {
 	return scale.get(spacing.scale[name], { unit })
 }
 
-module.exports = {
+export default {
 	name: 'Spacing',
 	helpers: { get },
 	customProperties: Object.keys(spacing.scale).map(name => `
@@ -147,4 +147,4 @@ module.exports = {
 			.join('')
 		}
 	`
-}
+};

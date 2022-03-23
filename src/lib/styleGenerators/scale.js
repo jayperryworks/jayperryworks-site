@@ -1,5 +1,5 @@
-const modularscale = require('modularscale-js')
-const { scale: ratio } = require('../design-tokens.js')
+import modularscale from 'modularscale-js';
+import { scale as ratio } from '../design-tokens.js';
 
 function get (value, {
 	unit = 'rem',
@@ -25,7 +25,7 @@ function get (value, {
 
 // base scale
 // -> config object for modularscale library
-module.exports = {
+export default {
 	name: 'Scale',
   helpers: {
 	  get

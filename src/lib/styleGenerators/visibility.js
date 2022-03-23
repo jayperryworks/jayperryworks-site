@@ -1,5 +1,5 @@
-const { breakpoints } = require('../design-tokens.js')
-const { helpers } = require('./breakpoints.js')
+import { breakpoints } from '../design-tokens.js';
+import { helpers } from './breakpoints.js';
 
 const hideVisually = `
 	border: 0;
@@ -24,7 +24,7 @@ const unHideVisually = `
 const hide = 'display: none !important;'
 const show = 'display: unset !important;'
 
-module.exports = {
+export default {
 	name: 'Visibility',
 	utilities: `
 		/* hide and show visually */

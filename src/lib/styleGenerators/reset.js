@@ -1,5 +1,5 @@
 // Adapted from https://piccalil.li/blog/a-modern-css-reset/
-module.exports = {
+export default {
 	name: 'Reset',
 	base: `
 		/* Box sizing rules */
@@ -77,7 +77,7 @@ module.exports = {
 		  html:focus-within {
 		   scroll-behavior: auto;
 		  }
-		  
+
 		  *,
 		  *::before,
 		  *::after {
@@ -88,4 +88,4 @@ module.exports = {
 		  }
 		}
 	`
-}
+};

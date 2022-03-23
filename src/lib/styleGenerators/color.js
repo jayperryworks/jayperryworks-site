@@ -1,4 +1,4 @@
-const { color } = require('../design-tokens.js');
+import { color } from '../design-tokens.js';
 
 function hsl (color) {
   if (color?.a < 1) {
@@ -48,7 +48,7 @@ function add (prop, role) {
 	`
 }
 
-module.exports = {
+export default {
 	name: 'Color',
 	helpers: {
 		getValue,
