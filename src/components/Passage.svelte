@@ -9,35 +9,56 @@
 
 	let contentElement, browserWidth;
 
-	// add click events to the tooltips the old fashioned way
-	// -> because the Svelte runtime can't handle injected strings
-	onMount(() => {
-		// https://usefulangle.com/post/190/javascript-window-width-height
-		const notes = contentElement.querySelectorAll('.note');
-		notes.forEach((note) => {
-			note.addEventListener('click', (event) => {
-				const noteEl = event.target;
-				const noteRect = noteEl.getBoundingClientRect();
+	let notes;
+
+	function alignNotes () {
+		if (notes) {
+			notes.forEach((note) => {
+				const noteRect = note.getBoundingClientRect();
 				const margin = 100;
+				console.log('align')
 
-				noteEl.classList.toggle('show');
-
-				// console.log(noteRect.left, browserWidth - noteRect.right, margin);
+				// change the note's alignment
+				// based on its proximity to the edge of the browser window
 				if (noteRect.left < margin) {
-					noteEl.classList.remove('align-center');
-					noteEl.classList.add('align-start');
+					note.classList.remove('align-center', 'align-start', 'align-end');
+					note.classList.add('align-start');
 				}
 
 				if ((browserWidth - noteRect.right) < margin) {
-					noteEl.classList.remove('align-center');
-					noteEl.classList.add('align-end');
+					note.classList.remove('align-center', 'align-start', 'align-end');
+					note.classList.add('align-end');
 				}
+			});
+		}
+	}
+
+	// add click events to the tooltips the old fashioned way
+	// -> because the Svelte runtime can't handle injected strings
+	// https://usefulangle.com/post/190/javascript-window-width-height
+	onMount(() => {
+		notes = contentElement.querySelectorAll('.note');
+		alignNotes();
+
+		notes.forEach((note) => {
+			note.addEventListener('click', (event) => {
+				event.target.classList.toggle('show');
 			});
 		});
 	});
+
+	onDestroy(()=> {
+		if (notes) {
+			notes.forEach((note) => {
+				note.removeEventListener('click');
+			});
+
+			notes = null;
+		}
+	});
 </script>
 
-<svelte:window bind:innerWidth="{browserWidth}" />
+<svelte:window bind:innerWidth="{browserWidth}" on:resize="{alignNotes}" />
 <div
 	bind:this="{contentElement}"
 	class="content type-scale-{typeSize} {classes}"
