@@ -1,3 +1,6 @@
+const name = 'Content width';
+
+// helpers
 const widths = {
 	narrow: 30,
 	default: 40,
@@ -6,26 +9,32 @@ const widths = {
 	xxwide: 112
 }
 
-export default {
-	name: 'Content Width',
-	customProperties: Object.keys(widths).map((width) => {
-		return `--content-width-${width}: ${widths[width]}rem;`
-	}),
-	utilities: Object.keys(widths).map((width) => {
-		if (width !== 'default') {
-			return `
-				.content-width-${width} {
-					max-width: ${widths[width]}rem;
-					max-width: var(--content-width-${width});
-				}
-			`
-		}
+// custom properties
+const customProperties = Object.keys(widths).map((width) => `
+	--content-width-${width}: ${widths[width]}rem;
+`);
 
+// utilities
+const utilities = Object.keys(widths).map((width) => {
+	if (width !== 'default') {
 		return `
-			.content-width {
-				max-width: ${widths.default}rem;
-				max-width: var(--content-width-default);
+			.content-width-${width} {
+				max-width: ${widths[width]}rem;
+				max-width: var(--content-width-${width});
 			}
 		`
-	})
-}
+	}
+
+	return `
+		.content-width {
+			max-width: ${widths.default}rem;
+			max-width: var(--content-width-default);
+		}
+	`
+}).join('\n');
+
+// css output
+export { name, customProperties, utilities };
+
+// js helpers
+export default { widths };

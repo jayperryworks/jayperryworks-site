@@ -1,24 +1,23 @@
 import * as borders from './borders.js';
-
-// import breakpoints from './breakpoints.js';
-// import color from './color.js';
-// import contentWidth from './contentWidth.js';
-// import reset from './reset.js';
-// import scale from './scale.js';
-// import spacing from './spacing.js';
-// import specialEffects from './specialEffects.js';
-// import type from './type.js';
-// import visibility from './visibility.js';
+import * as breakpoints from './breakpoints.js';
+import * as color from './color.js';
+import * as contentWidth from './contentWidth.js';
+import * as reset from './reset.js';
+import * as scale from './scale.js';
+import * as spacing from './spacing.js';
+import * as specialEffects from './specialEffects.js';
+import * as type from './type.js';
+import * as visibility from './visibility.js';
 
 export {
 	borders,
-	// breakpoints,
-	// color,
-	// contentWidth,
-	// reset,
-	// scale,
-	// spacing,
-	// specialEffects,
-	// type,
-	// visibility
+	breakpoints,
+	color,
+	contentWidth,
+	reset,
+	scale,
+	spacing,
+	specialEffects,
+	type,
+	visibility
 };

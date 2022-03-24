@@ -1,7 +1,5 @@
 import { borders, breakpoints } from '../design-tokens.js';
-import color from './color.js';
-
-const { helpers: theme } = color;
+import theme from './color.js';
 
 const name = 'Borders';
 
@@ -13,7 +11,16 @@ function add (options = {}) {
 		style = 'dashed'
 	} = options;
 
-	const prop = `border${side === 'all' ? '' : `-${side}`}`;
+	// map directional sides (in LTR/English) to logical properties
+	const logicalProps = {
+		'top': 'block-start',
+		'bottom': 'block-end',
+		'y': 'block',
+		'x': 'inline',
+		'left': 'inline-start',
+		'right': 'inline-end'
+	};
+	const prop = `border${side === 'all' ? '' : `-${logicalProps[side]}`}`;
 
 	return `
 		${prop}: ${borders.widths.default}px ${style} ${theme.getHSLValue(color)};
@@ -62,7 +69,7 @@ utilities.flow = `
 	}
 
 	.border-y-flow.solid > * + * {
-		border-top-style: solid;
+		border-block-start-style: solid;
 	}
 
 	.border-x-flow > * + * {
@@ -70,7 +77,7 @@ utilities.flow = `
 	}
 
 	.border-x-flow.solid > * + * {
-		border- left-style: solid;
+		border-inline-start-style: solid;
 	}
 `;
 

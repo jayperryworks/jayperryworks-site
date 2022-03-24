@@ -1,5 +1,10 @@
 import { breakpoints } from '../design-tokens.js';
 
+const name = 'Breakpoints';
+
+// helpers
+let helpers = {};
+
 function query (size, content, direction = '>') {
 	if (!breakpoints.sizes[size]) {
 		throw `Error: screen size '${size}' doesn't exist in the design tokens.`
@@ -29,10 +34,13 @@ function responsiveClasses (className, block, direction = '>') {
 	}).join('')
 }
 
-export default {
-	name: 'Breakpoints',
-	helpers: { query, responsiveClasses },
-	customProperties: Object.keys(breakpoints.sizes).map(bp => `
-		--breakpoint-${bp}: ${breakpoints.sizes[bp]}${breakpoints.unit};
-	`)
-}
+// custom properties
+const customProperties = Object.keys(breakpoints.sizes).map(bp => `
+	--breakpoint-${bp}: ${breakpoints.sizes[bp]}${breakpoints.unit};
+`);
+
+// style output
+export { name, customProperties };
+
+// js helpers
+export default { query, responsiveClasses };

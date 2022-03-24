@@ -1,5 +1,8 @@
 import { color } from '../design-tokens.js';
 
+const name = 'Color';
+
+// helpers
 function hsl (color) {
   if (color?.a < 1) {
   	return `hsl(${color.h}, ${color.s}%, ${color.l}%, ${color.a})`
@@ -38,7 +41,7 @@ function setCustomProperty (role, { h, s, l, a }) {
 function listCustomProperties (theme) {
 	return Object.keys(color.themes[theme]).map((role) => {
 		return setCustomProperty(role, color.themes[theme][role])
-	})
+	});
 }
 
 function add (prop, role) {
@@ -48,40 +51,47 @@ function add (prop, role) {
 	`
 }
 
-export default {
-	name: 'Color',
-	helpers: {
-		getValue,
-		getHSLValue,
-		getCustomProperty,
-		setCustomProperty,
-		add
-	},
-	customProperties: listCustomProperties('default'),
-	base: `
-		/* to be implemented later
-			@media screen and (prefers-color-scheme: dark) {
-				body {
-					${listCustomProperties('dark').join('\n')}
-				}
-			}
-		*/
+// custom properties
+const customProperties = listCustomProperties('default');
 
-		body {
-			${add('color', 'primary')}
-			${add('background-color', 'bg')}
+// base
+const base = `
+	/* to be implemented later
+		@media screen and (prefers-color-scheme: dark) {
+			body {
+				${listCustomProperties('dark').join('\n')}
+			}
 		}
-	`,
-	utilities: Object.keys(color.themes.default)
-		.filter(roleName => roleName !== 'shadow')
-		.map(roleName => `
-			.color-fg-${roleName} {
-				${add('color', roleName)}
-			}
+	*/
 
-			.color-bg-${roleName} {
-				${add('background-color', roleName)}
-			}
-		`)
-		.join('\n')
-}
+	body {
+		${add('color', 'primary')}
+		${add('background-color', 'bg')}
+	}
+`;
+
+// utilities
+const utilities = Object.keys(color.themes.default)
+.filter(roleName => roleName !== 'shadow')
+.map(roleName => `
+		.color-fg-${roleName} {
+			${add('color', roleName)}
+		}
+
+		.color-bg-${roleName} {
+			${add('background-color', roleName)}
+		}
+	`)
+.join('\n')
+
+// css output
+export { name, customProperties, base, utilities };
+
+// js helpers
+export default {
+	getValue,
+	getHSLValue,
+	getCustomProperty,
+	setCustomProperty,
+	add
+};
