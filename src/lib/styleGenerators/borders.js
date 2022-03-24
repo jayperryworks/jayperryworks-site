@@ -1,8 +1,11 @@
 import { borders, breakpoints } from '../design-tokens.js';
-import { helpers as theme } from './color.js';
+import color from './color.js';
 
-export const name = 'Borders';
+const { helpers: theme } = color;
 
+const name = 'Borders';
+
+// --- helpers ---
 function add (options = {}) {
 	const {
 		side = 'all',
@@ -18,9 +21,8 @@ function add (options = {}) {
 	`;
 }
 
-export const helpers = { add };
-
-export const customProperties = [
+// --- custom properties ---
+const customProperties = [
 	`--border-radius: ${borders.radius.size}${borders.radius.unit};`,
 	// spine custom props for each screen width
 	...Object.keys(borders.spine).map((size) => {
@@ -30,8 +32,50 @@ export const customProperties = [
 	})
 ];
 
+// --- utilities ---
+let utilities = {};
+
+// basic border classes
+utilities.basics = `
+	.border {
+		${add()}
+	}
+
+	.no-border {
+		border: 0!important;
+	}
+
+	/* variations */
+	.border.solid {
+		border-style: solid;
+	}
+
+	.border-round {
+		border-radius: ${borders.radius.size}${borders.radius.unit};
+	}
+`;
+
+// 'flow' classes for adding borders between children
+utilities.flow = `
+	.border-y-flow > * + * {
+		${add({ side: 'top' })}
+	}
+
+	.border-y-flow.solid > * + * {
+		border-top-style: solid;
+	}
+
+	.border-x-flow > * + * {
+		${add({ side: 'left' })}
+	}
+
+	.border-x-flow.solid > * + * {
+		border- left-style: solid;
+	}
+`;
+
 // 'side' classes, e.g. .border-top, .border-right, etc.
-const sideUtilities = ['top', 'right', 'bottom', 'left'].map(side => `
+utilities.sides = ['top', 'right', 'bottom', 'left'].map(side => `
 	.border-${side} {
 		${add({ side })}
 	}
@@ -43,7 +87,7 @@ const sideUtilities = ['top', 'right', 'bottom', 'left'].map(side => `
 	.border-${side}.solid {
 		border-${side}-style: solid;
 	}
-`).join('')
+`).join('');
 
 // "Seam" border effect
 // 	-> use a pseudo - element to create a border that overlays the "spine" and suggests stitching
@@ -52,7 +96,7 @@ const seamSelectors = {
 	bottom: 'after'
 };
 
-const seamUtilities = Object.keys(seamSelectors).map(side => `
+utilities.seam = Object.keys(seamSelectors).map(side => `
 	.border-seam-${side} {
 		${add({ side })}
 		position: relative;
@@ -83,47 +127,9 @@ const seamUtilities = Object.keys(seamSelectors).map(side => `
 	`).join('')}
 `).join('');
 
-export const utilities = `
-	.border {
-		${add()}
-	}
-
-	.no-border {
-		border: 0!important;
-	}
-
-	/* variations */
-	.border.solid {
-		border-style: solid;
-	}
-
-	.border-round {
-		border-radius: ${borders.radius.size}${borders.radius.unit};
-	}
-
-	${sideUtilities}
-
-	.border-y-flow > * + * {
-		${add({ side: 'top' })}
-	}
-
-	.border-y-flow.solid > * + * {
-		border-top-style: solid;
-	}
-
-	.border-x-flow > * + * {
-		${add({ side: 'left' })}
-	}
-
-	.border-x-flow.solid > * + * {
-		border- left-style: solid;
-	}
-
-	/*
-		"Spine" border effect
-		-> a stripe on the left side of the layout, a la a book spine, that also displays loading status
-	*/
-
+// "Spine" border effect
+// 	-> a stripe on the left side of the layout, a la a book spine, that also displays loading status
+utilities.spine = `
 	.border-spine {
 		--spine-color: ${theme.getHSLValue('border')};
 		--spine-color: var(--color-highlight);
@@ -164,11 +170,13 @@ export const utilities = `
 			}
 		`;
 	}).join('')}
+`;
 
-	/*
-		"Seam" border effect
-		-> use a pseudo-element to create a border that overlays the "spine" and suggests stitching
-	*/
+// convert utilities object to a string
+utilities = Object.values(utilities).join('');
 
-	${seamUtilities}
-`
+// style output
+export { name, customProperties, utilities };
+
+// helpers
+export default { add };

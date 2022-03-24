@@ -1,43 +1,44 @@
 // scale ratio
-export const scale = 1.2;
+const scale = 1.2;
 
 // color scheme
-export const color = {
-	palette: {
-		black: { h: 0, s: 0, l: 27 },
-		gray: { h: 223, s: 7, l: 78 },
-		green: { h: 148, s: 43, l: 66 },
-		lavendar: { h: 223, s: 75, l: 70 },
-		orange: { h: 38, s: 86, l: 64 },
-		red: { h: 345, s: 74, l: 58 },
-		white: { h: 0, s: 0, l: 100  }
+let color = {};
+
+color.palette = {
+	black: { h: 0, s: 0, l: 27 },
+	gray: { h: 223, s: 7, l: 78 },
+	green: { h: 148, s: 43, l: 66 },
+	lavendar: { h: 223, s: 75, l: 70 },
+	orange: { h: 38, s: 86, l: 64 },
+	red: { h: 345, s: 74, l: 58 },
+	white: { h: 0, s: 0, l: 100  }
+};
+
+color.themes = {
+	dark: {
+		primary: color.palette.white,
+		secondary: {...color.palette.gray, l: 40 },
+		highlight: color.palette.lavendar,
+		bg: color.palette.black,
+		island: { ...color.palette.black, l: 35 },
+		well: { ...color.palette.black, l: 17 },
+		border: { ...color.palette.black, l: 20 },
+		shadow: { ...color.palette.black, l: 0, a: 0.4 }
 	},
-	themes: {
-		dark: {
-			primary: this.palette.white,
-			secondary: {...this.palette.gray, l: 40 },
-			highlight: this.palette.lavendar,
-			bg: this.palette.black,
-			island: { ...this.palette.black, l: 35 },
-			well: { ...this.palette.black, l: 17 },
-			border: { ...this.palette.black, l: 20 },
-			shadow: { ...this.palette.black, l: 0, a: 0.4 }
-		},
-		default: {
-			primary: this.palette.black,
-			secondary: { ...this.palette.gray, l: 65 },
-			highlight: this.palette.lavendar,
-			bg: this.palette.white,
-			island: this.palette.white,
-			well: { ...this.palette.gray, l: 90 },
-			border: this.palette.gray,
-			shadow: { ...this.palette.gray, a: 0.6 }
-		}
+	default: {
+		primary: color.palette.black,
+		secondary: { ...color.palette.gray, l: 65 },
+		highlight: color.palette.lavendar,
+		bg: color.palette.white,
+		island: color.palette.white,
+		well: { ...color.palette.gray, l: 90 },
+		border: color.palette.gray,
+		shadow: { ...color.palette.gray, a: 0.6 }
 	}
 };
 
 // type treatments
-export const type = {
+const type = {
   fonts: [
     {
       name: 'Publico Headline',
@@ -109,7 +110,7 @@ export const type = {
   lineMeasure: 60
 }
 
-export const spacing = {
+const spacing = {
   scale: {
     xxnarrow: -8,
     xnarrow: -2,
@@ -125,7 +126,7 @@ export const spacing = {
   }
 };
 
-export const borders = {
+const borders = {
 	spine: {
 		default: {
 			width: 0.35,
@@ -154,7 +155,7 @@ export const borders = {
   }
 };
 
-export const breakpoints = {
+const breakpoints = {
   sizes: {
     xsmall: 30,
     small: 42,
@@ -164,3 +165,5 @@ export const breakpoints = {
   },
   unit: 'em'
 };
+
+export { scale, color, spacing, borders, type, breakpoints };
