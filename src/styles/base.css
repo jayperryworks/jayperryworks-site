@@ -371,8 +371,8 @@ select {
 	font-family: "Publico Headline";
 	font-style: normal;
 	font-weight: normal;
-	src: url("/fonts/PublicoHeadline-Roman-Web.woff") format("woff"),
-		url("/fonts/PublicoHeadline-Roman-Web.ttf") format("ttf");
+	src: url("/assets/fonts/PublicoHeadline-Roman-Web.woff") format("woff"),
+		url("/assets/fonts/PublicoHeadline-Roman-Web.ttf") format("ttf");
 }
 
 @font-face {
@@ -380,8 +380,8 @@ select {
 	font-family: "Publico Text";
 	font-style: normal;
 	font-weight: normal;
-	src: url("/fonts/PublicoText-Roman-Web.woff") format("woff"),
-		url("/fonts/PublicoText-Roman-Web.ttf") format("ttf");
+	src: url("/assets/fonts/PublicoText-Roman-Web.woff") format("woff"),
+		url("/assets/fonts/PublicoText-Roman-Web.ttf") format("ttf");
 }
 
 @font-face {
@@ -389,8 +389,8 @@ select {
 	font-family: "Publico Text";
 	font-style: italic;
 	font-weight: normal;
-	src: url("/fonts/PublicoText-Italic-Web.woff") format("woff"),
-		url("/fonts/PublicoText-Italic-Web.ttf") format("ttf");
+	src: url("/assets/fonts/PublicoText-Italic-Web.woff") format("woff"),
+		url("/assets/fonts/PublicoText-Italic-Web.ttf") format("ttf");
 }
 
 /* global type */

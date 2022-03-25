@@ -1,5 +1,9 @@
 ---
-const { segment, overlay } = Astro.props;
+import '../styles/utilities/spacing.css';
+import '../styles/utilities/type.css';
+import '../styles/utilities/color.css';
+
+const { segment = 'home', overlay } = Astro.props;
 
 const items = [
   {

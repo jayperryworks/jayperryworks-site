@@ -1,10 +1,12 @@
 ---
 // Style Imports
-import '../styles/global.css';
+import '../styles/utilities/spacing.css';
+
 import expand from '../icons/expand.svg?raw';
 
 // Component Imports
 import Block from '../components/Block.astro';
+import Test from '../components/Test.svelte';
 import BaseLayout from '../layouts/BaseLayout.astro';
 // You can import components from any supported Framework here!
 
@@ -27,11 +29,11 @@ const body = [
 	{
 		type: 'passage',
 		html: `
-			Lorem ipsum dolor sit amet 
+			Lorem ipsum dolor sit amet
 			<button class="note">
 				${expand}
 				<span class="tooltip center">Adipiscig elit nonummy.</span>
-			</button>. Velit massa donec dapibus purus rhoncus ac blandit lacus curabitur justo iaculis cras. Quis sollicitudin cras bibendum incididunt tellus eleifend elementum eiusmod enim. Posuere in feugiat vel pretium integer condimentum 
+			</button>. Velit massa donec dapibus purus rhoncus ac blandit lacus curabitur justo iaculis cras. Quis sollicitudin cras bibendum incididunt tellus eleifend elementum eiusmod enim. Posuere in feugiat vel pretium integer condimentum
 			<button class="note">
 				${expand}
 				<span class="tooltip center">Auctor aliquet porta.</span>
@@ -43,6 +45,7 @@ const body = [
 ---
 <BaseLayout path="home">
 	<main class="padding-y-flow-wide padding-y-xwide">
+		<Test client:visible />
 		{body.map(block => <Block {block} />)}
 	</main>
 </BaseLayout>

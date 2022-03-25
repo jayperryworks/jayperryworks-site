@@ -48,7 +48,7 @@ const type = {
       variants: [
 				{
 					weight: 'normal',
-					file: '/fonts/PublicoHeadline-Roman-Web'
+					file: '/assets/fonts/PublicoHeadline-Roman-Web'
 				}
 			]
     },
@@ -60,12 +60,12 @@ const type = {
       variants: [
 				{
 					weight: 'normal',
-					file: '/fonts/PublicoText-Roman-Web'
+					file: '/assets/fonts/PublicoText-Roman-Web'
 				},
         {
 					weight: 'normal',
           style: 'italic',
-					file: '/fonts/PublicoText-Italic-Web'
+					file: '/assets/fonts/PublicoText-Italic-Web'
         }
       ]
     },
