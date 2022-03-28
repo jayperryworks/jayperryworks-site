@@ -3,7 +3,7 @@
   import BlockList from './BlockList.svelte';
 
   export let blocks;
-;
+
   let classes = '';
   export { classes as class };
 

@@ -1,4 +1,5 @@
 import svgLoader from 'vite-svg-loader';
+import svelte from '@astrojs/svelte';
 
 export default {
   // projectRoot: '.',     // Where to resolve all URLs relative to. Useful if you have a monorepo project.
@@ -20,5 +21,5 @@ export default {
       }
     })]
   },
-  renderers: [ '@astrojs/renderer-svelte' ]
+	integrations: [ svelte() ]
 };
