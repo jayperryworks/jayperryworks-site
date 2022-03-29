@@ -1,21 +1,19 @@
 <!--
 	Responsive image
-	-> loads an array of source objects and converts to a srcset attribute
+	- loads an array of source objects and converts to a srcset attribute
  -->
 <script lang="ts">
-import Number from "../../_old/src/routes/blog/page/[number].svelte";
-
 	export let sources: Array<{
-			path: String;
-			width: Number;
-			height: Number;
+			path: string;
+			width: number;
+			height: number;
 		}>,
-	alt: String = '',
-	border: Boolean = false,
-	contain: Boolean = false,
-	cover: Boolean = false;
+	alt: string = '',
+	border: boolean = false,
+	contain: boolean = false,
+	cover: boolean = false;
 
-	let className: String = '';
+	let className: string = '';
 	export { className as class };
 
 	$: src = sources[0].path;

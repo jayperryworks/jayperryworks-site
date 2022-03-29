@@ -1,5 +1,22 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node"
-  }
+    "moduleResolution": "node",
+		"baseUrl": ".",
+		"paths": {
+			"@components/*": [
+				"src/components/*"
+			],
+			"@blocks/*": [
+				"src/components/blocks/*"
+			],
+			"@icons/*": [
+				"src/icons/*"
+			],
+			"@styles/*": [
+				"src/styles/*"
+			]
+		}
+  },
+	"include": ["src/**/*", "scripts/**/*"],
+	"exclude": ["node_modules", "_old/**/*"]
 }

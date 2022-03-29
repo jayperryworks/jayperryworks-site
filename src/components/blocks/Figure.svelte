@@ -2,12 +2,11 @@
 	import Image from '../Image.svelte';
 
 	export let sources: Array<{
-			path: String;
-			width: Number;
-			height: Number;
-		}>,
-		alt: String,
-		caption: String = '';
+		path: string;
+		width: number;
+		height: number;
+	}>;
+	export let alt: string;
 </script>
 
 <figure class="type-align-center">

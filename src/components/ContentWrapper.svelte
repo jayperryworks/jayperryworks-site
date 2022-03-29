@@ -6,21 +6,23 @@
      needs to set a layout width and padding will make the content narrower.
      Instead, add padding to a parent container.
 -->
-<script>
-  export let width = 'default'
-  export let centered = true
-  export let flex = false
+<script lang="ts">
+	import '@styles/utilities/contentWidth.css';
 
-  let className = ''
-  export { className as class }
+  export let width: string = 'default';
+  export let centered: boolean = true;
+  export let flexChild: boolean = false;
 
-  $: widthClass = width === 'default' ? 'content-width' : `content-width-${width}`
+  let className: string = '';
+  export { className as class };
+
+  $: widthClass = width === 'default' ? 'content-width' : `content-width-${width}`;
 </script>
 
 <div
   class="wrapper {widthClass} {className}"
   class:centered
-  class:flex
+  class:flexChild
 >
   <slot />
 </div>
@@ -36,7 +38,7 @@
   }
 
   @supports (display: flex) and (align-self: center) {
-    .flex {
+    .flexChild {
       width: 100%;
       align-self: center;
       margin-left: 0;
