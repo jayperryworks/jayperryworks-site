@@ -24,12 +24,10 @@ tableOfContents:
     heading: Prints & paintings
     slug: pictures
     blurb: |-
-      I make pictures. Often more slowly than I'd like. Putting pencil to paper — dragging it around and leaving a mark behind — is a simple act that, in theory, precludes thought. But instead it stirs up endless anxieties and joys and fixations in me and this is probably why I can't work faster. Nonetheless, leaving one mark always makes me want to leave another.
-
-      And so: on to the next one.
+      Over the past decade, I've become fascinated with printmaking. I've gradually developed a working process that combines digital and traditional techniques, and I'm forever exploring the complicated ways that ink and paper work together to form an image. It's a bottomless rabbit hole I'll probably never see the bottom of.
     coverImage: /images/uploads/work-2016-shoes.jpg
     cta:
-      label: See what's on my refrigerator door
+      label: See more of my work
       link: pictures
   design:
     heading: Design work
@@ -37,7 +35,7 @@ tableOfContents:
     blurb: |-
       My first gig was a website for an employment office in my hometown. I was lucky to get that job, and I've been lucky ever since; I've worked with many clients who do great work that I'm proud to contribute to.
 
-      Along the way I've followed a winding path, but branding and interaction design have become specialties. I especially love the way that branding and user experience influence one another, and I love building a brand concept out into a living design system.
+      Along the way I've followed a winding path, but branding and user interface (UX/UI) design have become specialties. I especially love the way that branding and user experience influence one another, and I love building a brand concept out into a living design system.
     coverImage: /images/uploads/design-gpoba-tablet-cover.jpg
     device: tablet
     cta:

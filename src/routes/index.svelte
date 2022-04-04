@@ -152,64 +152,6 @@
 		</Wrapper>
 	</Panel>
 
-	<!-- pictures -->
-	<Panel id="{pictures.slug}">
-		<header class="padding-bottom-wide">
-			<Wrapper width="xwide">
-				<a
-					class="toc-number type-scale-gamma type-font-accent type-link-undecorated type-weight-xlight | color-fg-secondary | padding-bottom-narrow"
-					href={pictures.cta.link}
-				>
-					02
-				</a>
-				<h2 class="type-scale-alpha">
-					<a href="{pictures.cta.link}">{pictures.heading}</a>
-				</h2>
-			</Wrapper>
-		</header>
-		<Wrapper
-			class="fill-vertical | hide-overflow"
-			width="xwide"
-			flex
-		>
-			<div class="flag">
-				<div class="flag-item blurb">
-					<Wrapper
-						class="margin-y-flow-wide"
-						centered="{false}"
-					>
-
-						{#if pictures.blurb}
-							<Passage html="{pictures.blurb}" class="type-scale-delta type-heading type-leading-default"/>
-						{/if}
-						{#if pictures.cta}
-							<Button
-								prefetch="{true}"
-								href="{pictures.cta.link}"
-								iconRight="{arrowRight}"
-							>
-								{pictures.cta.label}
-							</Button>
-						{/if}
-					</Wrapper>
-				</div>
-				<figure class="flag-item image">
-					<a
-						class="cover-image | type-link-undecorated"
-						href="{pictures.cta.link}"
-					>
-						<ResponsivePicture
-							sources="{pictures.coverImage.versions}"
-							alt="{pictures.heading}"
-							fill
-							contain
-						/>
-					</a>
-				</figure>
-			</div>
-		</Wrapper>
-	</Panel>
-
 	<!-- design -->
 	<Panel id="{design.slug}">
 		<header class="padding-bottom-wide">
@@ -218,7 +160,7 @@
 					class="toc-number type-scale-gamma type-font-accent type-link-undecorated type-weight-xlight | color-fg-secondary | padding-bottom-narrow"
 					href={design.cta.link}
 				>
-					03
+					02
 				</a>
 				<h2 class="type-scale-alpha">
 					<a href="{design.cta.link}">{design.heading}</a>
@@ -272,6 +214,64 @@
 								contain
 							/>
 						{/if}
+					</a>
+				</figure>
+			</div>
+		</Wrapper>
+	</Panel>
+
+	<!-- pictures -->
+	<Panel id="{pictures.slug}">
+		<header class="padding-bottom-wide">
+			<Wrapper width="xwide">
+				<a
+					class="toc-number type-scale-gamma type-font-accent type-link-undecorated type-weight-xlight | color-fg-secondary | padding-bottom-narrow"
+					href={pictures.cta.link}
+				>
+					03
+				</a>
+				<h2 class="type-scale-alpha">
+					<a href="{pictures.cta.link}">{pictures.heading}</a>
+				</h2>
+			</Wrapper>
+		</header>
+		<Wrapper
+			class="fill-vertical | hide-overflow"
+			width="xwide"
+			flex
+		>
+			<div class="flag">
+				<div class="flag-item blurb">
+					<Wrapper
+						class="margin-y-flow-wide"
+						centered="{false}"
+					>
+
+						{#if pictures.blurb}
+							<Passage html="{pictures.blurb}" class="type-scale-delta type-heading type-leading-default"/>
+						{/if}
+						{#if pictures.cta}
+							<Button
+								prefetch="{true}"
+								href="{pictures.cta.link}"
+								iconRight="{arrowRight}"
+							>
+								{pictures.cta.label}
+							</Button>
+						{/if}
+					</Wrapper>
+				</div>
+				<figure class="flag-item image">
+					<a
+						class="cover-image | type-link-undecorated"
+						href="{pictures.cta.link}"
+					>
+						<ResponsivePicture
+							sources="{pictures.coverImage.versions}"
+							alt="{pictures.heading}"
+							fill
+							contain
+						/>
 					</a>
 				</figure>
 			</div>
