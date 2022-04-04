@@ -13,7 +13,6 @@
 </script>
 
 <script>
-	import { onDestroy } from 'svelte'
 	import { format } from 'date-fns'
 	import arrowDown from 'icons/arrow-down.svg'
 	import arrowRight from 'icons/arrow-right.svg'
@@ -61,12 +60,14 @@
 			width="xwide"
 		>
 			<header class="fill-vertical justify-center | padding-bottom-xwide">
-				<Wrapper width="wide" centered={false}>
+				<Wrapper width="wide" centered={false} class="padding-bottom-wide">
 					<h1 class="type-leading-xtight">{@html intro.headline}</h1>
+					{#if intro.blurb}
+						<p class="type-scale-delta type-font-display | padding-top">
+							{@html intro.blurb}
+						</p>
+					{/if}
 				</Wrapper>
-				<p class="type-scale-delta type-font-display | padding-top padding-bottom-wide">
-					{@html intro.blurb}
-				</p>
 				<Button
 					href="{intro.cta.link}"
 					iconRight="{arrowRight}"

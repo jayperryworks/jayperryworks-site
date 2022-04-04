@@ -3,11 +3,11 @@ date: 2019-12-16
 
 # markdown allowed here
 intro:
-  headline: I'm an independent designer, illustrator, and&nbsp;writer living near Baltimore.
+  headline: I'm an independent designer, illustrator, and writer.
   blurb: |-
-    I do a bunch of different things and probably have too many preoccupations. But all my work boils down to roughly the same thing: putting bits and pieces together to tell a story &mdash; that is, a structure that takes you from one place to another. With, ideally, some good views along the way.
+    For the last 20 years I've developed [user interfaces, publications, and brands](/design) for clients all over the world. I also like to write [essays](/longform/2022/patapsco/1) and make [prints](/pictures). I have a lot of interests, but a common thread for me is assembling bigger stories from many small details. I love to connect dots and find new relationships.
   cta:
-    label: A bit more about me, with pictures
+    label: A bit more about me
     link: about
 
 tableOfContents:
@@ -15,7 +15,7 @@ tableOfContents:
     heading: Patapsco
     slug: patapsco
     blurb: |-
-      An illustrated essay about the forest that raised me.
+      An illustrated essay about Patapsco Valley State Park. This forest has been a constant in my life since I first stumbled into Baltimore as a student. Now I find myself introducing it to my daughter.
     coverImage: /images/uploads/entrance@5000w.jpg
     cta:
       label: Start reading
@@ -35,7 +35,7 @@ tableOfContents:
     heading: Design work
     slug: design
     blurb: |-
-      I've been designing things for about 20 years. My first gig was a website for an employment office in my hometown. I was lucky to get that job, and I've been lucky ever since; I've worked with many clients who do great work that I'm proud to contribute to.
+      My first gig was a website for an employment office in my hometown. I was lucky to get that job, and I've been lucky ever since; I've worked with many clients who do great work that I'm proud to contribute to.
 
       Along the way I've followed a winding path, but branding and interaction design have become specialties. I especially love the way that branding and user experience influence one another, and I love building a brand concept out into a living design system.
     coverImage: /images/uploads/design-gpoba-tablet-cover.jpg
