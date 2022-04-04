@@ -33,6 +33,10 @@
 		}
 	}
 
+	function handleNoteClick (event) {
+		event.target.classList.toggle('show');
+	}
+
 	// add click events to the tooltips the old fashioned way
 	// -> because the Svelte runtime can't handle injected strings
 	// https://usefulangle.com/post/190/javascript-window-width-height
@@ -41,16 +45,14 @@
 		alignNotes();
 
 		notes.forEach((note) => {
-			note.addEventListener('click', (event) => {
-				event.target.classList.toggle('show');
-			});
+			note.addEventListener('click', handleNoteClick);
 		});
 	});
 
 	onDestroy(()=> {
 		if (notes) {
 			notes.forEach((note) => {
-				note.removeEventListener('click');
+				note.removeEventListener('click', handleNoteClick);
 			});
 
 			notes = null;
