@@ -9,23 +9,27 @@ export function get(req, res) {
 		fs.readFileSync('content/home.yml', 'utf-8')
 	);
 
+	// intro
+	data.intro.headline = render(data.intro.headline, { inline: true });
+	data.intro.blurb = render(data.intro.blurb);
+
 	// table of contents
-	const { writing, pictures, design, blog } = data.tableOfContents;
+	let { writing, pictures, design, blog } = data.tableOfContents;
 
-	// writing
-	writing.blurb = render(writing.blurb);
-	writing.coverImage = findInManifest(writing.coverImage);
+	function renderTOCItem(item) {
+		return {
+			...item,
+			blurb: render(item.blurb),
+			coverImage: findInManifest(item.coverImage)
+		}
+	}
 
-	// pictures
-	pictures.blurb = render(pictures.blurb);
-	pictures.coverImage = findInManifest(pictures.coverImage);
-
-	// design
-	design.blurb = render(design.blurb);
-	design.coverImage = findInManifest(design.coverImage);
+	data.tableOfContents.writing = renderTOCItem(writing);
+	data.tableOfContents.pictures = renderTOCItem(pictures);
+	data.tableOfContents.design = renderTOCItem(design);
 
 	// blog
-	blog.list.posts = generateBlogList(blog.list.source, {
+	data.tableOfContents.blog.list.posts = generateBlogList(blog.list.source, {
 		start: 0,
 		end: blog.list.length
 	});
