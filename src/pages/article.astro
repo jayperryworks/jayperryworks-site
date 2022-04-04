@@ -7,8 +7,8 @@ import Block from '../components/Block.svelte';
 import * as prismic from '@prismicio/client';
 import * as prismicHelpers from '@prismicio/helpers';
 
-const endpoint = prismic.getEndpoint('jpw-api');
-const accessToken = import.meta.env.PRISMIC_TOKEN;
+const endpoint: string = prismic.getEndpoint('jpw-api');
+const accessToken: string | boolean = import.meta.env.PRISMIC_TOKEN;
 const client = prismic.createClient(endpoint, { accessToken });
 
 // YbDuIRUAADEAj-if

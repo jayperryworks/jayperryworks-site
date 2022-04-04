@@ -186,7 +186,6 @@
 		max-width: 100%;
 		pointer-events: none;
 		position: relative;
-		vertical-align: text-bottom;
 		width: var(--size);
 	}
 
