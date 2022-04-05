@@ -4,21 +4,21 @@ import theme from './color.js';
 const name = 'Borders';
 
 // --- helpers ---
-function add (options = {}) {
+function add(options = {}) {
 	const {
 		side = 'all',
 		color = 'border',
-		style = 'dashed'
+		style = 'dashed',
 	} = options;
 
 	// map directional sides (in LTR/English) to logical properties
 	const logicalProps = {
-		'top': 'block-start',
-		'bottom': 'block-end',
-		'y': 'block',
-		'x': 'inline',
-		'left': 'inline-start',
-		'right': 'inline-end'
+		top: 'block-start',
+		bottom: 'block-end',
+		y: 'block',
+		x: 'inline',
+		left: 'inline-start',
+		right: 'inline-end',
 	};
 	const prop = `border${side === 'all' ? '' : `-${logicalProps[side]}`}`;
 
@@ -40,10 +40,10 @@ const customProperties = [
 ];
 
 // --- utilities ---
-let utilities = {};
+const utilityClasses = {};
 
 // basic border classes
-utilities.basics = `
+utilityClasses.basics = `
 	.border {
 		${add()}
 	}
@@ -63,7 +63,7 @@ utilities.basics = `
 `;
 
 // 'flow' classes for adding borders between children
-utilities.flow = `
+utilityClasses.flow = `
 	.border-y-flow > * + * {
 		${add({ side: 'top' })}
 	}
@@ -82,7 +82,7 @@ utilities.flow = `
 `;
 
 // 'side' classes, e.g. .border-top, .border-right, etc.
-utilities.sides = ['top', 'right', 'bottom', 'left'].map(side => `
+utilityClasses.sides = ['top', 'right', 'bottom', 'left'].map(side => `
 	.border-${side} {
 		${add({ side })}
 	}
@@ -103,7 +103,7 @@ const seamSelectors = {
 	bottom: 'after'
 };
 
-utilities.seam = Object.keys(seamSelectors).map(side => `
+utilityClasses.seam = Object.keys(seamSelectors).map(side => `
 	.border-seam-${side} {
 		${add({ side })}
 		position: relative;
@@ -136,7 +136,7 @@ utilities.seam = Object.keys(seamSelectors).map(side => `
 
 // "Spine" border effect
 // 	-> a stripe on the left side of the layout, a la a book spine, that also displays loading status
-utilities.spine = `
+utilityClasses.spine = `
 	.border-spine {
 		--spine-color: ${theme.getHSLValue('border')};
 		--spine-color: var(--color-highlight);
@@ -165,25 +165,27 @@ utilities.spine = `
 		z-index: 0;
 	}
 
-	${Object.keys(borders.spine).filter(s => s !== 'default').map((size) => {
-		return `
-			@media screen and (min-width: ${breakpoints.sizes[size]}${breakpoints.unit}) {
-				.border-spine {
-					padding-left: var(--border-spine-width-${size});
-				}
-				.border-spine::before {
-					width: var(--border-spine-width-${size});
-				}
+	${Object.keys(borders.spine).filter(s => s !== 'default').map((size) => `
+		@media screen and (min-width: ${breakpoints.sizes[size]}${breakpoints.unit}) {
+			.border-spine {
+				padding-left: var(--border-spine-width-${size});
 			}
-		`;
-	}).join('')}
+			.border-spine::before {
+				width: var(--border-spine-width-${size});
+			}
+		}
+	`).join('')}
 `;
 
 // convert utilities object to a string
-utilities = Object.values(utilities).join('');
+const utilities = Object.values(utilityClasses).join('');
 
 // style output
-export { name, customProperties, utilities };
+export {
+	name,
+	customProperties,
+	utilities,
+};
 
 // helpers
 export default { add };

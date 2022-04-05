@@ -9,17 +9,17 @@ import path from 'path';
 import * as modules from '../src/lib/styleGenerators/index.js';
 
 // https://bobbyhadz.com/blog/javascript-dirname-is-not-defined-in-es-module-scope
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 const outputPath = '../src/styles';
 
-function render (type, styles) {
+function render(type, styles) {
 	if (Array.isArray(styles[type])) return styles[type].join('');
 
 	return styles[type];
 }
 
-function renderAll (type) {
+function renderAll(type) {
 	return Object.values(modules).reduce((result, styles) => {
 		if (styles[type]) {
 			result.push(`
@@ -33,12 +33,12 @@ function renderAll (type) {
 }
 
 // base styles
-if (!fs.existsSync(path.join(__dirname, outputPath))) {
-	fs.mkdirSync(path.join(__dirname, outputPath));
+if (!fs.existsSync(path.join(dirname, outputPath))) {
+	fs.mkdirSync(path.join(dirname, outputPath));
 }
 
 fs.writeFileSync(
-	path.join(__dirname, `${outputPath}/base.css`),
+	path.join(dirname, `${outputPath}/base.css`),
 	`
 		/* --- Global custom properties --- */
 		:root {
@@ -48,19 +48,19 @@ fs.writeFileSync(
 
 		/* --- Base styles --- */
 		${renderAll('base')}
-	`
+	`,
 );
 
 // utilities
-if (!fs.existsSync(path.join(__dirname, `${outputPath}/utilities`))) {
-	fs.mkdirSync(path.join(__dirname, `${outputPath}/utilities`));
+if (!fs.existsSync(path.join(dirname, `${outputPath}/utilities`))) {
+	fs.mkdirSync(path.join(dirname, `${outputPath}/utilities`));
 }
 
 Object.keys(modules).forEach((name) => {
 	if (modules[name].utilities) {
 		fs.writeFileSync(
-			path.join(__dirname, `${outputPath}/utilities/${name}.css`),
-			render('utilities', modules[name])
+			path.join(dirname, `${outputPath}/utilities/${name}.css`),
+			render('utilities', modules[name]),
 		);
 	}
 });
