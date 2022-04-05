@@ -7,59 +7,59 @@ import scale from './scale.js';
 const name = 'Type';
 
 // --- helpers ---
-function webfont (name, filename, {
+function webfont(fontName, filename, {
 	formats = ['woff', 'ttf'],
 	weight = 'normal',
-	style = 'normal'
+	style = 'normal',
 } = {}) {
 	return `
 		@font-face {
 		  font-display: swap;
-		  font-family: '${name}';
+		  font-family: '${fontName}';
 		  font-style: ${style};
 		  font-weight: ${weight};
-		  src: ${formats.map(format => `
+		  src: ${formats.map((format) => `
 		  	url('${filename}.${format}') format('${format}')
 	  	`).join(', ')};
 		}
-	`
+	`;
 }
 
-function font (role) {
-	const font = type.fonts.find((font) => font.role === role)
+function font(role) {
+	const token = type.fonts.find((item) => item.role === role);
 
-	return `'${font.name}', ${font.stack};`
+	return `'${token.name}', ${token.stack};`;
 }
 
-function middleSize (minSize, maxSize) {
-	minSize = scale.get(minSize, { unit: false })
-	maxSize = scale.get(maxSize, { unit: false })
-	return ((minSize + maxSize) / 2).toFixed(2)
+function middleSize(minScale, maxScale) {
+	const minSize = scale.get(minScale, { unit: false });
+	const maxSize = scale.get(maxScale, { unit: false });
+	return ((minSize + maxSize) / 2).toFixed(2);
 }
 
-function fluidScale (minSize, maxSize, fluidTarget = 2) {
+function fluidScale(minSize, maxSize, fluidTarget = 2) {
 	return `
 		clamp(
 			${scale.get(minSize)},
 			calc(1rem + ${fluidTarget}vw),
 			${scale.get(maxSize)}
 		);
-	`
+	`;
 }
 
-function fontSize (size) {
-	const { base, fluid, max } = type.scale[size]
+function fontSize(size) {
+	const { base, fluid, max } = type.scale[size];
 
 	if (max) {
 		return `
 			font-size: ${middleSize(base, max)}rem;
 			font-size: ${fluidScale(base, max, fluid)};
-		`
+		`;
 	}
-	return `font-size: ${scale.get(base)};`
+	return `font-size: ${scale.get(base)};`;
 }
 
-function heading (selectors) {
+function heading(selectors = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']) {
 	return `
 		${selectors} {
 			font-family: ${font('display')};
@@ -70,65 +70,76 @@ function heading (selectors) {
 			max-width: none; /* reset default width of p elements */
 		}
 
-		${selectors.map(selector => `${selector} a`)} {
+		${selectors.map((selector) => `${selector} a`)} {
 			border-bottom: none;
 			color: inherit;
 		}
 
-		${selectors.map(selector => `
+		${selectors.map((selector) => `
 			${selector} a:hover,
 			${selector} a:active
 		`)} {
 			${color.add('color', 'highlight')}
 		}
 
-		${selectors.map(selector => `${selector} strong`)} {
+		${selectors.map((selector) => `${selector} strong`)} {
 			font-weight: normal;
 		}
 
-		${selectors.map(selector => `${selector} em`)} {
+		${selectors.map((selector) => `${selector} em`)} {
 			font-style: normal;
 		}
-	`
+	`;
 }
 
 // --- custom properties ---
 const customProperties = [
 	...Object.keys(type.scale).map((size) => {
-		const { base, max, fluid } = type.scale[size]
+		const { base, max, fluid } = type.scale[size];
 		return `
 			--type-scale-${size}: ${max
 				? fluidScale(base, max, fluid)
 				: scale.get(base)
 			};
-		`
+		`;
 	}),
-	...type.fonts.map(f => `--type-font-${f.role}: ${font(f.role)};`),
-	...Object.keys(type.leading).map(l => `--type-leading-${l}: ${type.leading[l]};`)
+	...type.fonts.map((f) => `--type-font-${f.role}: ${font(f.role)};`),
+	...Object.keys(type.leading).map((l) => `--type-leading-${l}: ${type.leading[l]};`),
 ];
+
+const webfonts = type.fonts.reduce((result, token) => {
+	/* eslint-disable no-shadow */
+	// -> the 'name' declaration is a value destructured from the token object
+	const { name, formats, variants } = token;
+	if (formats && variants) {
+		const fontFace = variants.map((variant) => webfont(
+			name,
+			variant.file,
+			{ formats, ...variant },
+		)).join('');
+		result.push(fontFace);
+	}
+	return result;
+	/* eslint-enable no-shadow */
+}, []).join('');
+
+const responsiveScaling = type.screenScale.map(({ screen, size }) => {
+	const css = `
+			html {
+				font-size: ${size}%;
+			}
+		`;
+	if (screen === 'default') return css;
+	return bp.query(screen, css);
+}).join('');
 
 // --- base styles ---
 const base = `
 	/* webfonts */
-	${type.fonts.map((font) => {
-		const { name, formats, variants } = font
-		if (formats && variants) {
-			return variants.map((variant) => {
-				return webfont(name, variant.file, { formats, ...variant })
-			}).join('')
-		}
-	}, []).join('')}
+	${webfonts}
 
 	/* global type */
-	${type.screenScale.map(({ screen, size }) => {
-		const css = `
-			html {
-				font-size: ${size}%;
-			}
-		`
-		if (screen === 'default') return css
-		return bp.query(screen, css)
-	}).join('')}
+	${responsiveScaling}
 
 	body {
 		${fontSize('epsilon')};
@@ -136,14 +147,7 @@ const base = `
 		line-height: ${type.leading.default};
 	}
 
-	${heading([
-		'h1',
-		'h2',
-		'h3',
-		'h4',
-		'h5',
-		'h6'
-	])}
+	${heading()}
 
 	${Object.keys(type.scale).map((size, index) => `
 		h${index + 1} {
@@ -265,7 +269,7 @@ const utilities = `
 	}
 
 	/* leading */
-	${Object.keys(type.leading).map(size => `
+	${Object.keys(type.leading).map((size) => `
 		.type-leading-${size} {
 			line-height: ${type.leading[size]};
 		}
@@ -277,17 +281,23 @@ const utilities = `
 	}
 
 	/* alignment */
-	${['center', 'right', 'left'].map((side) => {
-		return `
-			.type-align-${side} {
-				text-align: ${side};
-			}
-		`
-	}).join('')}
+	${['center', 'right', 'left'].map((side) => `
+		.type-align-${side} {
+			text-align: ${side};
+		}
+	`).join('')}
 `;
 
 // css output
-export { name, customProperties, base, utilities };
+export {
+	name,
+	customProperties,
+	base,
+	utilities,
+};
 
 // js helpers
-export default { font, fontSize };
+export default {
+	font,
+	fontSize,
+};

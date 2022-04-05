@@ -1,63 +1,62 @@
 <script>
-	import { onDestroy, onMount } from 'svelte';
+import { onDestroy, onMount } from 'svelte';
 
-  export let html,
-		typeSize = 'epsilon';
+export let html;
+export let typeSize = 'epsilon';
 
-  let classes = '';
-  export { classes as class };
+let classes = '';
+export { classes as class };
 
-	let contentElement, browserWidth;
+let contentElement, browserWidth;
 
-	let notes;
+let notes;
 
-	function alignNotes () {
-		if (notes) {
-			notes.forEach((note) => {
-				const noteRect = note.getBoundingClientRect();
-				const margin = 100;
-				console.log('align')
-
-				// change the note's alignment
-				// based on its proximity to the edge of the browser window
-				if (noteRect.left < margin) {
-					note.classList.remove('align-center', 'align-start', 'align-end');
-					note.classList.add('align-start');
-				}
-
-				if ((browserWidth - noteRect.right) < margin) {
-					note.classList.remove('align-center', 'align-start', 'align-end');
-					note.classList.add('align-end');
-				}
-			});
-		}
-	}
-
-	function handleNoteClick (event) {
-		event.target.classList.toggle('show');
-	}
-
-	// add click events to the tooltips the old fashioned way
-	// -> because the Svelte runtime can't handle injected strings
-	// https://usefulangle.com/post/190/javascript-window-width-height
-	onMount(() => {
-		notes = contentElement.querySelectorAll('.note');
-		alignNotes();
-
+function alignNotes() {
+	if (notes) {
 		notes.forEach((note) => {
-			note.addEventListener('click', handleNoteClick);
+			const noteRect = note.getBoundingClientRect();
+			const margin = 100;
+
+			// change the note's alignment
+			// based on its proximity to the edge of the browser window
+			if (noteRect.left < margin) {
+				note.classList.remove('align-center', 'align-start', 'align-end');
+				note.classList.add('align-start');
+			}
+
+			if ((browserWidth - noteRect.right) < margin) {
+				note.classList.remove('align-center', 'align-start', 'align-end');
+				note.classList.add('align-end');
+			}
 		});
-	});
+	}
+}
 
-	onDestroy(()=> {
-		if (notes) {
-			notes.forEach((note) => {
-				note.removeEventListener('click', handleNoteClick);
-			});
+function handleNoteClick(event) {
+	event.target.classList.toggle('show');
+}
 
-			notes = null;
-		}
+// add click events to the tooltips the old fashioned way
+// -> because the Svelte runtime can't handle injected strings
+// https://usefulangle.com/post/190/javascript-window-width-height
+onMount(() => {
+	notes = contentElement.querySelectorAll('.note');
+	alignNotes();
+
+	notes.forEach((note) => {
+		note.addEventListener('click', handleNoteClick);
 	});
+});
+
+onDestroy(()=> {
+	if (notes) {
+		notes.forEach((note) => {
+			note.removeEventListener('click', handleNoteClick);
+		});
+
+		notes = null;
+	}
+});
 </script>
 
 <svelte:window bind:innerWidth="{browserWidth}" on:resize="{alignNotes}" />
@@ -65,18 +64,18 @@
 	bind:this="{contentElement}"
 	class="content type-scale-{typeSize} {classes}"
 >
-  {@html html}
+	{@html html}
 </div>
 
 <style>
-  .content :global(* + *) {
-    margin-top: 1em;
-  }
+	.content :global(* + *) {
+		margin-top: 1em;
+	}
 
-  /* --- headings --- */
-  .content :global(* + :is(h1, h2, h3, h4, h5, h6)) {
-    margin-top: 1.5em;
-  }
+	/* --- headings --- */
+	.content :global(* + :is(h1, h2, h3, h4, h5, h6)) {
+		margin-top: 1.5em;
+	}
 
 
 	/* add an icon after external links */
@@ -96,15 +95,15 @@
 		}
 	}
 
-  /* horizontal rules
-    -> created for footnotes
-  */
-  .content > :global(hr) {
-    border: 0;
-    border-top: 1px solid var(--color-border);
-    height: 0;
-    margin: 1.2em 0;
-  }
+	/* horizontal rules
+		-> created for footnotes
+	*/
+	.content > :global(hr) {
+		border: 0;
+		border-top: 1px solid var(--color-border);
+		height: 0;
+		margin: 1.2em 0;
+	}
 
 	.content > :global(blockquote) {
 		padding-left: 1.44em;
@@ -113,39 +112,39 @@
 		font-style: italic;
 	}
 
-  /* footnotes - DEPRECATED */
+	/* footnotes - DEPRECATED */
 	/* -> keeping this for now because there are still some markdown footnotes in old blog posts */
-  :global(.footnotes) {
-    color: var(--color-secondary);
-    font-size: var(--type-scale-zeta);
-  }
+	:global(.footnotes) {
+		color: var(--color-secondary);
+		font-size: var(--type-scale-zeta);
+	}
 
-  :global(.footnotes-list) {
-    padding-left: 1.2em;
-  }
+	:global(.footnotes-list) {
+		padding-left: 1.2em;
+	}
 
-  :global(.footnotes li),
-  :global(.footnotes p) {
-    padding-left: 0;
-    color: var(--color-secondary);
-    font-family: var(--type-font-accent);
-    font-weight: 300;
-    font-size: var(--type-scale-zeta);
-    letter-spacing: 0.02em;
-  }
+	:global(.footnotes li),
+	:global(.footnotes p) {
+		padding-left: 0;
+		color: var(--color-secondary);
+		font-family: var(--type-font-accent);
+		font-weight: 300;
+		font-size: var(--type-scale-zeta);
+		letter-spacing: 0.02em;
+	}
 
-  :global(.footnote) {
-    background-color: transparent;
-    border-color: inherit;
-    border-radius: var(--border-radius);
-    border: 1px solid var(--color-secondary);
-    color: inherit;
-    display: inline-block;
-    font-family: var(--type-font-accent);
-    line-height: 1;
-    margin-left: 0.25em;
-    padding: 0.25em 1em;
-  }
+	:global(.footnote) {
+		background-color: transparent;
+		border-color: inherit;
+		border-radius: var(--border-radius);
+		border: 1px solid var(--color-secondary);
+		color: inherit;
+		display: inline-block;
+		font-family: var(--type-font-accent);
+		line-height: 1;
+		margin-left: 0.25em;
+		padding: 0.25em 1em;
+	}
 
 	/* footnote popovers */
 	.content :global(.note) {

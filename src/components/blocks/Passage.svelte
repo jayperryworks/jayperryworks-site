@@ -1,63 +1,62 @@
 <script>
-	import '../../styles/components/tooltip.css';
+import '../../styles/components/tooltip.css';
 
-	import { onDestroy, onMount } from 'svelte';
+import { onDestroy, onMount } from 'svelte';
 
-  export let html,
-		typeSize = 'epsilon';
+export let html,
+	typeSize = 'epsilon';
 
-  let className = '';
-  export { className as class };
+let className = '';
+export { className as class };
 
-	let contentElement, browserWidth;
+let contentElement, browserWidth;
 
-	let notes;
+let notes;
 
-	function alignNotes () {
-		if (notes) {
-			notes.forEach((note) => {
-				const noteRect = note.getBoundingClientRect();
-				const margin = 100;
-				console.log('align')
-
-				// change the note's alignment
-				// based on its proximity to the edge of the browser window
-				if (noteRect.left < margin) {
-					note.classList.remove('align-center', 'align-start', 'align-end');
-					note.classList.add('align-start');
-				}
-
-				if ((browserWidth - noteRect.right) < margin) {
-					note.classList.remove('align-center', 'align-start', 'align-end');
-					note.classList.add('align-end');
-				}
-			});
-		}
-	}
-
-	// add click events to the tooltips the old fashioned way
-	// -> because the Svelte runtime can't handle injected strings
-	// https://usefulangle.com/post/190/javascript-window-width-height
-	onMount(() => {
-		notes = contentElement.querySelectorAll('.note');
-		alignNotes();
-
+function alignNotes () {
+	if (notes) {
 		notes.forEach((note) => {
-			note.addEventListener('click', (event) => {
-				event.target.classList.toggle('show');
-			});
+			const noteRect = note.getBoundingClientRect();
+			const margin = 100;
+
+			// change the note's alignment
+			// based on its proximity to the edge of the browser window
+			if (noteRect.left < margin) {
+				note.classList.remove('align-center', 'align-start', 'align-end');
+				note.classList.add('align-start');
+			}
+
+			if ((browserWidth - noteRect.right) < margin) {
+				note.classList.remove('align-center', 'align-start', 'align-end');
+				note.classList.add('align-end');
+			}
+		});
+	}
+}
+
+// add click events to the tooltips the old fashioned way
+// -> because the Svelte runtime can't handle injected strings
+// https://usefulangle.com/post/190/javascript-window-width-height
+onMount(() => {
+	notes = contentElement.querySelectorAll('.note');
+	alignNotes();
+
+	notes.forEach((note) => {
+		note.addEventListener('click', (event) => {
+			event.target.classList.toggle('show');
 		});
 	});
+});
 
-	onDestroy(()=> {
-		if (notes) {
-			notes.forEach((note) => {
-				note.removeEventListener('click');
-			});
+onDestroy(()=> {
+	if (notes) {
+		notes.forEach((note) => {
+			note.removeEventListener('click');
+		});
 
-			notes = null;
-		}
-	});
+		notes = null;
+	}
+});
 </script>
 
 <svelte:window

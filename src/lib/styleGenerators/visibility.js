@@ -13,7 +13,7 @@ const hideVisually = `
   padding: 0;
   position: absolute;
   width: 1px;
-`
+`;
 
 const unHideVisually = `
 	clip: auto;
@@ -22,10 +22,10 @@ const unHideVisually = `
   overflow: visible;
   position: static;
   width: auto;
-`
+`;
 
-const hide = 'display: none !important;'
-const show = 'display: unset !important;'
+const hide = 'display: none !important;';
+const show = 'display: unset !important;';
 
 const utilities = `
 	/* hide and show visually */

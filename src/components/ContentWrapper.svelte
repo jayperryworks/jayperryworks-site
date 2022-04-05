@@ -7,16 +7,16 @@
      Instead, add padding to a parent container.
 -->
 <script lang="ts">
-	import '@styles/utilities/contentWidth.css';
+import '@styles/utilities/contentWidth.css';
 
-  export let width: string = 'default';
-  export let centered: boolean = true;
-  export let flexChild: boolean = false;
+export let width = 'default';
+export let centered = true;
+export let flexChild = false;
 
-  let className: string = '';
-  export { className as class };
+let className = '';
+export { className as class };
 
-  $: widthClass = width === 'default' ? 'content-width' : `content-width-${width}`;
+$: widthClass = width === 'default' ? 'content-width' : `content-width-${width}`;
 </script>
 
 <div
