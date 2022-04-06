@@ -1,27 +1,30 @@
-<!--
-	Responsive image
-	- loads an array of source objects and converts to a srcset attribute
- -->
 <script lang="ts">
-	export let sources: Array<{
-			path: string;
-			width: number;
-			height: number;
-		}>,
-	alt: string = '',
-	border: boolean = false,
-	contain: boolean = false,
-	cover: boolean = false;
+// Responsive image
+// - loads an array of source objects and converts to a srcset attribute
+export let sources: Array<{
+		path: string;
+		width: number;
+		height: number;
+	}>;
+export let alt = '';
+export let border = false;
+export let contain = false;
+export let cover = false;
 
-	let className: string = '';
-	export { className as class };
+let className = '';
+export { className as class };
 
-	$: src = sources[0].path;
-	$: srcset = sources.length > 1
-		? sources.slice(1).map((source) => {
-				return `${source.path} ${source.width}w`;
-			}).join(', ')
-		: '';
+$: src = sources[0].path;
+
+function srcset(sources) {
+	if (sources.length > 1) {
+		return sources.slice(1).map((source) => {
+			return `${source.path} ${source.width}w`;
+		}).join(', ');
+	}
+
+	return '';
+}
 </script>
 
 <img
