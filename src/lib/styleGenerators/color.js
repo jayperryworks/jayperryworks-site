@@ -3,26 +3,31 @@ import { color } from '../design-tokens.js';
 const name = 'Color';
 
 // helpers
-function hsl (color) {
-  if (color?.a < 1) {
-  	return `hsl(${color.h}, ${color.s}%, ${color.l}%, ${color.a})`
-  }
-  return `hsl(${color.h}, ${color.s}%, ${color.l}%)`
+function hsl(colorToken) {
+	if (colorToken?.a < 1) {
+		return `hsl(${colorToken.h}, ${colorToken.s}%, ${colorToken.l}%, ${colorToken.a})`;
+	}
+	return `hsl(${colorToken.h}, ${colorToken.s}%, ${colorToken.l}%)`;
 }
 
-function getValue (role, theme = 'default') {
-	return color.themes[theme][role]
+function getValue(role, theme = 'default') {
+	return color.themes[theme][role];
 }
 
-function getHSLValue (role, theme = 'default') {
+function getHSLValue(role, theme = 'default') {
 	return hsl(color.themes[theme][role]);
 }
 
-function getCustomProperty (role) {
-	return `var(--color-${role});`
+function getCustomProperty(role) {
+	return `var(--color-${role});`;
 }
 
-function setCustomProperty (role, { h, s, l, a }) {
+function setCustomProperty(role, {
+	h,
+	s,
+	l,
+	a,
+}) {
 	return `
 		--color-${role}-h: ${h};
 		--color-${role}-s: ${s}%;
@@ -35,20 +40,23 @@ function setCustomProperty (role, { h, s, l, a }) {
 			var(--color-${role}-l)
 			${a ? `, ${a}` : ''}
 		);
-	`
+	`;
 }
 
-function listCustomProperties (theme) {
+function listCustomProperties(theme) {
+	/* eslint-disable arrow-body-style */
+	// -> using a return block for readability/line-width
 	return Object.keys(color.themes[theme]).map((role) => {
-		return setCustomProperty(role, color.themes[theme][role])
+		return setCustomProperty(role, color.themes[theme][role]);
 	});
+	/* eslint-enable arrow-body-style */
 }
 
-function add (prop, role) {
+function add(prop, role) {
 	return `
 		${prop}: ${hsl(color.themes.default[role])};
 		${prop}: ${getCustomProperty(role)};
-	`
+	`;
 }
 
 // custom properties
@@ -72,20 +80,25 @@ const base = `
 
 // utilities
 const utilities = Object.keys(color.themes.default)
-.filter(roleName => roleName !== 'shadow')
-.map(roleName => `
-		.color-fg-${roleName} {
-			${add('color', roleName)}
-		}
+	.filter((roleName) => roleName !== 'shadow')
+	.map((roleName) => `
+			.color-fg-${roleName} {
+				${add('color', roleName)}
+			}
 
-		.color-bg-${roleName} {
-			${add('background-color', roleName)}
-		}
-	`)
-.join('\n')
+			.color-bg-${roleName} {
+				${add('background-color', roleName)}
+			}
+		`)
+	.join('\n');
 
 // css output
-export { name, customProperties, base, utilities };
+export {
+	name,
+	customProperties,
+	base,
+	utilities,
+};
 
 // js helpers
 export default {
@@ -93,5 +106,5 @@ export default {
 	getHSLValue,
 	getCustomProperty,
 	setCustomProperty,
-	add
+	add,
 };

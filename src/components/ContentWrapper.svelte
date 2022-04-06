@@ -1,12 +1,10 @@
-<!--
-  Wrapper
-  -> a container that constrains the layout width, centers content on
-     larger screens
-  -> note that a wrapper should never have horizontal padding, because it
-     needs to set a layout width and padding will make the content narrower.
-     Instead, add padding to a parent container.
--->
 <script lang="ts">
+// Wrapper
+// -> a container that constrains the layout width, centers content on
+//    larger screens
+// -> note that a wrapper should never have horizontal padding, because it
+//    needs to set a layout width and padding will make the content narrower.
+//    Instead, add padding to a parent container.
 import '@styles/utilities/contentWidth.css';
 
 export let width = 'default';

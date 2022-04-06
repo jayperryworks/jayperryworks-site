@@ -36,7 +36,7 @@ const customProperties = [
 		const values = borders.spine[size];
 		const propSuffix = size !== 'default' ? `-${size}` : '';
 		return `--border-spine-width${propSuffix}: ${values.width}${values.unit};`;
-	})
+	}),
 ];
 
 // --- utilities ---
@@ -82,7 +82,7 @@ utilityClasses.flow = `
 `;
 
 // 'side' classes, e.g. .border-top, .border-right, etc.
-utilityClasses.sides = ['top', 'right', 'bottom', 'left'].map(side => `
+utilityClasses.sides = ['top', 'right', 'bottom', 'left'].map((side) => `
 	.border-${side} {
 		${add({ side })}
 	}
@@ -100,10 +100,10 @@ utilityClasses.sides = ['top', 'right', 'bottom', 'left'].map(side => `
 // 	-> use a pseudo - element to create a border that overlays the "spine" and suggests stitching
 const seamSelectors = {
 	top: 'before',
-	bottom: 'after'
+	bottom: 'after',
 };
 
-utilityClasses.seam = Object.keys(seamSelectors).map(side => `
+utilityClasses.seam = Object.keys(seamSelectors).map((side) => `
 	.border-seam-${side} {
 		${add({ side })}
 		position: relative;
@@ -124,7 +124,7 @@ utilityClasses.seam = Object.keys(seamSelectors).map(side => `
 		z-index: 3;
 	}
 
-	${Object.keys(borders.spine).filter(s => s !== 'default').map(size => `
+	${Object.keys(borders.spine).filter((s) => s !== 'default').map((size) => `
 		@media screen and (min-width: ${breakpoints.sizes[size]}${breakpoints.unit}) {
 			.border-seam-${side}::${seamSelectors[side]} {
 				left: calc(var(--border-spine-width-${size}) * -1);
@@ -165,7 +165,7 @@ utilityClasses.spine = `
 		z-index: 0;
 	}
 
-	${Object.keys(borders.spine).filter(s => s !== 'default').map((size) => `
+	${Object.keys(borders.spine).filter((s) => s !== 'default').map((size) => `
 		@media screen and (min-width: ${breakpoints.sizes[size]}${breakpoints.unit}) {
 			.border-spine {
 				padding-left: var(--border-spine-width-${size});

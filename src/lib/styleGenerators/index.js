@@ -19,5 +19,5 @@ export {
 	spacing,
 	specialEffects,
 	type,
-	visibility
+	visibility,
 };

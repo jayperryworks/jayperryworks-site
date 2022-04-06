@@ -6,8 +6,8 @@ const widths = {
 	default: 40,
 	wide: 64,
 	xwide: 75,
-	xxwide: 112
-}
+	xxwide: 112,
+};
 
 // custom properties
 const customProperties = Object.keys(widths).map((width) => `
@@ -22,7 +22,7 @@ const utilities = Object.keys(widths).map((width) => {
 				max-width: ${widths[width]}rem;
 				max-width: var(--content-width-${width});
 			}
-		`
+		`;
 	}
 
 	return `
@@ -30,7 +30,7 @@ const utilities = Object.keys(widths).map((width) => {
 			max-width: ${widths.default}rem;
 			max-width: var(--content-width-default);
 		}
-	`
+	`;
 }).join('\n');
 
 // css output

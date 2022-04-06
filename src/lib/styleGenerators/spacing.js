@@ -6,27 +6,29 @@ const name = 'Spacing';
 const props = ['padding', 'margin'];
 
 // --- helpers ---
-function get (name = 'medium', {
-	unit = 'rem',
-	split = false
-} = {}) {
+function get(sizeName = 'medium', options = {}) {
+	const {
+		unit = 'rem',
+		split = false,
+	} = options;
+
 	if (split) {
-		const size = scale.get(spacing.scale[name], { unit: false })
-		return `${size / 2}${unit}`
+		const size = scale.get(spacing.scale[sizeName], { unit: false });
+		return `${size / 2}${unit}`;
 	}
-	return scale.get(spacing.scale[name], { unit })
+	return scale.get(spacing.scale[sizeName], { unit });
 }
 
 // --- custom properties ---
-const customProperties = Object.keys(spacing.scale).map(name => `
-	--space-${name}: ${get(name)};
+const customProperties = Object.keys(spacing.scale).map((sizeName) => `
+	--space-${sizeName}: ${get(sizeName)};
 `);
 
 // --- utilities ---
-let utilities = {};
+const utilityClasses = {};
 
 // all sides
-utilities.basics = props.map((prop) => `
+utilityClasses.basics = props.map((prop) => `
 	/* ${prop} */
 
 	/* all sides */
@@ -40,7 +42,7 @@ utilities.basics = props.map((prop) => `
 `).join('\n');
 
 // vertical and horizontal spacing
-utilities.axes = props.map((prop) => `
+utilityClasses.axes = props.map((prop) => `
 	/* ${prop} */
 
 	.${prop}-x {
@@ -63,8 +65,10 @@ utilities.axes = props.map((prop) => `
 `).join('\n');
 
 // sizing variations
-utilities.sizes = props.map((prop) => {
-	return Object.keys(spacing.scale).map(size => `
+/* eslint-disable arrow-body-style */
+// -> using a return block here for readability/line width
+utilityClasses.sizes = props.map((prop) => {
+	return Object.keys(spacing.scale).map((size) => `
 		/* ${prop} */
 
 		.${prop}-${size} {
@@ -90,10 +94,13 @@ utilities.sizes = props.map((prop) => {
 		}
 	`).join('');
 }).join('');
+/* eslint-enable arrow-body-style */
 
 // sides
-utilities.sides = props.map((prop) => {
-	return ['left', 'right', 'top', 'bottom'].map(side => `
+/* eslint-disable arrow-body-style */
+// -> using a return block here for readability/line width
+utilityClasses.sides = props.map((prop) => {
+	return ['left', 'right', 'top', 'bottom'].map((side) => `
 		/* ${prop} */
 
 		.${prop}-${side} {
@@ -104,16 +111,17 @@ utilities.sides = props.map((prop) => {
 			${prop}-${side}: 0 !important;
 		}
 
-		${Object.keys(spacing.scale).map(size => `
+		${Object.keys(spacing.scale).map((size) => `
 			.${prop}-${side}-${size} {
 				${prop}-${side}: ${get(size)};
 			}
 		`).join('')}
 	`).join('');
 }).join('\n');
+/* eslint-enable arrow-body-style */
 
 // outside spacing
-utilities.outside = `
+utilityClasses.outside = `
 	.padding-x-outside {
 		padding-left: ${get(spacing.outside.default)};
 		padding-right: ${get(spacing.outside.default)};
@@ -125,22 +133,21 @@ utilities.outside = `
 	}
 
 	${Object.keys(spacing.outside)
-		.filter(breakpoint => breakpoint !== 'default')
-		.map(breakpoint => `
-			@media screen and (min-width: ${breakpoints.sizes[breakpoint]}${breakpoints.unit}) {
-				.padding-x-outside {
-					padding-left: ${get(spacing.outside[breakpoint])};
-					padding-right: ${get(spacing.outside[breakpoint])};
-				}
+	.filter((breakpoint) => breakpoint !== 'default')
+	.map((breakpoint) => `
+		@media screen and (min-width: ${breakpoints.sizes[breakpoint]}${breakpoints.unit}) {
+			.padding-x-outside {
+				padding-left: ${get(spacing.outside[breakpoint])};
+				padding-right: ${get(spacing.outside[breakpoint])};
 			}
-		`)
-		.join('')
-	}
+		}
+	`)
+	.join('')}
 `;
 
 // split gutters
 // 	-> add uniform gutters to a group of elements
-utilities.gutters = `
+utilityClasses.gutters = `
 	.gutter-wrapper {
 		padding: ${get('medium', { split: true })};
 		margin: -${get('medium')};
@@ -151,22 +158,21 @@ utilities.gutters = `
 	}
 
 	${Object.keys(spacing.scale)
-		.filter(size => size !== 'medium')
-		.map(size => `
-			.gutter-wrapper.${size} {
-				padding: ${get(size, { split: true })};
-				margin: -${get(size)};
-			}
+	.filter((size) => size !== 'medium')
+	.map((size) => `
+		.gutter-wrapper.${size} {
+			padding: ${get(size, { split: true })};
+			margin: -${get(size)};
+		}
 
-			.gutter-wrapper.${size} .gutter {
-				padding: ${get(size, { split: true })};
-			}
-		`)
-		.join('')
-	}
+		.gutter-wrapper.${size} .gutter {
+			padding: ${get(size, { split: true })};
+		}
+	`)
+	.join('')}
 `;
 
-utilities = Object.values(utilities).join('');
+const utilities = Object.values(utilityClasses).join('');
 
 // css output
 export { name, customProperties, utilities };
