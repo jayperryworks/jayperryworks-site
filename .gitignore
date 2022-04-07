@@ -1,6 +1,10 @@
 # build output
 dist
 
+# generated styles
+src/styles/base.css
+src/styles/utilities/
+
 # dependencies
 node_modules/
 
