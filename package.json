@@ -10,7 +10,7 @@
 		"css:format": "prettier --write ./src/styles/*",
 		"css:optimize": "npx postcss ./src/styles/* -r",
 		"css": "run-s css:generate css:format",
-		"lint:node": "npx eslint 'src/**/*.js' 'src/**/*.ts' 'lib/globalStyles/**/*.js' -c .eslintrc.node.cjs",
+		"lint:node": "npx eslint 'lib/**/*.js' 'lib/**/*.ts' -c .eslintrc.node.cjs",
 		"lint:svelte": "npx eslint 'src/**/*.svelte' -c .eslintrc.svelte.cjs",
 		"lint": "run-s lint:*",
 		"predev": "npm run css",

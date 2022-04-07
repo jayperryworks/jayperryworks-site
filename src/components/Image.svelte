@@ -1,7 +1,4 @@
 <script lang="ts">
-import test from '@lib/globalStyles/modules/borders.js';
-
-console.log(test);
 // Responsive image
 // - loads an array of source objects and converts to a srcset attribute
 export let sources: Array<{
