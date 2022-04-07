@@ -40,6 +40,9 @@ module.exports = {
 		quotes: [
 			'error',
 			'single',
+			{
+				avoidEscape: true,
+			}
 		],
 		semi: [
 			'error',

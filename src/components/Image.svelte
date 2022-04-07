@@ -1,4 +1,7 @@
 <script lang="ts">
+import test from '@lib/globalStyles/modules/borders.js';
+
+console.log(test);
 // Responsive image
 // - loads an array of source objects and converts to a srcset attribute
 export let sources: Array<{
@@ -14,17 +17,21 @@ export let cover = false;
 let className = '';
 export { className as class };
 
-$: src = sources[0].path;
-
-function srcset(sources) {
-	if (sources.length > 1) {
-		return sources.slice(1).map((source) => {
-			return `${source.path} ${source.width}w`;
-		}).join(', ');
-	}
-
-	return '';
+function srcsetString(images: Array<{
+	path: string;
+	width: number;
+	height: number;
+}>) {
+	return images.slice(1).map((source) => {
+		return `${source.path} ${source.width}w`;
+	}).join(', ');
 }
+
+$: src = sources[0].path;
+$: width = sources[0].width || '';
+$: height = sources[0].height || '';
+$: srcset = sources.length > 1 ? srcsetString(sources) : '';
+
 </script>
 
 <img
@@ -36,6 +43,8 @@ function srcset(sources) {
 	{src}
 	{srcset}
 	{alt}
+	{width}
+	{height}
 />
 
 <style>

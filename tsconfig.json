@@ -3,6 +3,9 @@
     "moduleResolution": "node",
 		"baseUrl": ".",
 		"paths": {
+			"@lib/*": [
+				"lib/*"
+			],
 			"@components/*": [
 				"src/components/*"
 			],
@@ -17,6 +20,6 @@
 			]
 		}
   },
-	"include": ["src/**/*", "scripts/**/*"],
+	"include": ["src/**/*", "lib/globalStyles/**/*"],
 	"exclude": ["node_modules", "_old/**/*"]
 }
