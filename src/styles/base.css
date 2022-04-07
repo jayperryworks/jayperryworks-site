@@ -1,0 +1,540 @@
+/* --- Global custom properties --- */
+:root {
+	/* --- Borders --- */
+
+	--border-radius: 0.2em;
+	--border-spine-width: 0.35rem;
+	--border-spine-width-small: 0.6rem;
+
+	/* --- Breakpoints --- */
+
+	--breakpoint-xsmall: 30em;
+
+	--breakpoint-small: 42em;
+
+	--breakpoint-medium: 62em;
+
+	--breakpoint-large: 75em;
+
+	--breakpoint-xlarge: 100em;
+
+	/* --- Color --- */
+
+	--color-primary-h: 0;
+	--color-primary-s: 0%;
+	--color-primary-l: 27%;
+
+	--color-primary: hsl(
+		var(--color-primary-h),
+		var(--color-primary-s),
+		var(--color-primary-l)
+	);
+
+	--color-secondary-h: 223;
+	--color-secondary-s: 7%;
+	--color-secondary-l: 65%;
+
+	--color-secondary: hsl(
+		var(--color-secondary-h),
+		var(--color-secondary-s),
+		var(--color-secondary-l)
+	);
+
+	--color-highlight-h: 223;
+	--color-highlight-s: 75%;
+	--color-highlight-l: 70%;
+
+	--color-highlight: hsl(
+		var(--color-highlight-h),
+		var(--color-highlight-s),
+		var(--color-highlight-l)
+	);
+
+	--color-bg-h: 0;
+	--color-bg-s: 0%;
+	--color-bg-l: 100%;
+
+	--color-bg: hsl(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l));
+
+	--color-island-h: 0;
+	--color-island-s: 0%;
+	--color-island-l: 100%;
+
+	--color-island: hsl(
+		var(--color-island-h),
+		var(--color-island-s),
+		var(--color-island-l)
+	);
+
+	--color-well-h: 223;
+	--color-well-s: 7%;
+	--color-well-l: 90%;
+
+	--color-well: hsl(
+		var(--color-well-h),
+		var(--color-well-s),
+		var(--color-well-l)
+	);
+
+	--color-border-h: 223;
+	--color-border-s: 7%;
+	--color-border-l: 78%;
+
+	--color-border: hsl(
+		var(--color-border-h),
+		var(--color-border-s),
+		var(--color-border-l)
+	);
+
+	--color-shadow-h: 223;
+	--color-shadow-s: 7%;
+	--color-shadow-l: 78%;
+	--color-shadow-a: 0.6;
+
+	--color-shadow: hsl(
+		var(--color-shadow-h),
+		var(--color-shadow-s),
+		var(--color-shadow-l),
+		0.6
+	);
+
+	/* --- Content width --- */
+
+	--content-width-narrow: 30rem;
+
+	--content-width-default: 40rem;
+
+	--content-width-wide: 64rem;
+
+	--content-width-xwide: 75rem;
+
+	--content-width-xxwide: 112rem;
+
+	/* --- Scale --- */
+
+	--scale-ratio: 1.2;
+
+	/* --- Spacing --- */
+
+	--space-xxnarrow: 0.23rem;
+
+	--space-xnarrow: 0.69rem;
+
+	--space-narrow: 1rem;
+
+	--space-medium: 1.73rem;
+
+	--space-wide: 2.99rem;
+
+	--space-xwide: 4.3rem;
+
+	/* --- Type --- */
+
+	--type-scale-alpha: clamp(2.07rem, calc(1rem + 5vw), 3.58rem);
+	--type-scale-beta: clamp(1.73rem, calc(1rem + 3vw), 2.99rem);
+	--type-scale-gamma: clamp(1.44rem, calc(1rem + 2vw), 2.07rem);
+	--type-scale-delta: clamp(1.2rem, calc(1rem + 1vw), 1.44rem);
+	--type-scale-epsilon: 1.2rem;
+
+	--type-scale-zeta: 1rem;
+	--type-font-display: "Publico Headline", "Publico", "Georgia", "Times",
+		"Times New Roman", serif;
+	--type-font-body: "Publico Text", "Publico", "Georgia", "Times",
+		"Times New Roman", serif;
+	--type-font-accent: "System", system-ui, -apple-system, BlinkMacSystemFont,
+		"Avenir Next", "Avenir", "Segoe UI", "Lucida Grande", "Helvetica Neue",
+		"Helvetica", "Fira Sans", "Roboto", "Noto", "Droid Sans", "Cantarell",
+		"Oxygen", "Ubuntu", "Franklin Gothic Medium", "Century Gothic",
+		"Liberation Sans", sans-serif;
+	--type-leading-xtight: 1.2;
+	--type-leading-tight: 1.3;
+	--type-leading-default: 1.8;
+}
+
+/* --- Base styles --- */
+
+/* --- Color --- */
+
+/* to be implemented later
+		@media screen and (prefers-color-scheme: dark) {
+			body {
+				
+		--color-primary-h: 0;
+		--color-primary-s: 0%;
+		--color-primary-l: 100%;
+		
+
+		--color-primary: hsl(
+			var(--color-primary-h),
+			var(--color-primary-s),
+			var(--color-primary-l)
+			
+		);
+	
+
+		--color-secondary-h: 223;
+		--color-secondary-s: 7%;
+		--color-secondary-l: 40%;
+		
+
+		--color-secondary: hsl(
+			var(--color-secondary-h),
+			var(--color-secondary-s),
+			var(--color-secondary-l)
+			
+		);
+	
+
+		--color-highlight-h: 223;
+		--color-highlight-s: 75%;
+		--color-highlight-l: 70%;
+		
+
+		--color-highlight: hsl(
+			var(--color-highlight-h),
+			var(--color-highlight-s),
+			var(--color-highlight-l)
+			
+		);
+	
+
+		--color-bg-h: 0;
+		--color-bg-s: 0%;
+		--color-bg-l: 27%;
+		
+
+		--color-bg: hsl(
+			var(--color-bg-h),
+			var(--color-bg-s),
+			var(--color-bg-l)
+			
+		);
+	
+
+		--color-island-h: 0;
+		--color-island-s: 0%;
+		--color-island-l: 35%;
+		
+
+		--color-island: hsl(
+			var(--color-island-h),
+			var(--color-island-s),
+			var(--color-island-l)
+			
+		);
+	
+
+		--color-well-h: 0;
+		--color-well-s: 0%;
+		--color-well-l: 17%;
+		
+
+		--color-well: hsl(
+			var(--color-well-h),
+			var(--color-well-s),
+			var(--color-well-l)
+			
+		);
+	
+
+		--color-border-h: 0;
+		--color-border-s: 0%;
+		--color-border-l: 20%;
+		
+
+		--color-border: hsl(
+			var(--color-border-h),
+			var(--color-border-s),
+			var(--color-border-l)
+			
+		);
+	
+
+		--color-shadow-h: 0;
+		--color-shadow-s: 0%;
+		--color-shadow-l: 0%;
+		--color-shadow-a: 0.4;
+
+		--color-shadow: hsl(
+			var(--color-shadow-h),
+			var(--color-shadow-s),
+			var(--color-shadow-l)
+			, 0.4
+		);
+	
+			}
+		}
+	*/
+
+body {
+	color: hsl(0, 0%, 27%);
+	color: var(--color-primary);
+
+	background-color: hsl(0, 0%, 100%);
+	background-color: var(--color-bg);
+}
+
+/* --- Reset --- */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+	margin: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role="list"],
+ol[role="list"] {
+	list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+	scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+html {
+	min-height: 100vh;
+}
+
+body {
+	line-height: 1.5;
+	margin: 0;
+	min-height: 100vh;
+	text-rendering: optimizeLegibility;
+	font-variant-ligatures: contextual;
+}
+
+/* Elements that don't have a class get default styles */
+a:not([class]) {
+	text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture,
+video {
+	max-width: 100%;
+}
+
+svg {
+	height: 100%;
+	width: 100%;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+	html:focus-within {
+		scroll-behavior: auto;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+/* --- Type --- */
+
+/* webfonts */
+
+@font-face {
+	font-display: swap;
+	font-family: "Publico Headline";
+	font-style: normal;
+	font-weight: normal;
+	src: url("/assets/fonts/PublicoHeadline-Roman-Web.woff") format("woff"),
+		url("/assets/fonts/PublicoHeadline-Roman-Web.ttf") format("ttf");
+}
+
+@font-face {
+	font-display: swap;
+	font-family: "Publico Text";
+	font-style: normal;
+	font-weight: normal;
+	src: url("/assets/fonts/PublicoText-Roman-Web.woff") format("woff"),
+		url("/assets/fonts/PublicoText-Roman-Web.ttf") format("ttf");
+}
+
+@font-face {
+	font-display: swap;
+	font-family: "Publico Text";
+	font-style: italic;
+	font-weight: normal;
+	src: url("/assets/fonts/PublicoText-Italic-Web.woff") format("woff"),
+		url("/assets/fonts/PublicoText-Italic-Web.ttf") format("ttf");
+}
+
+/* global type */
+
+html {
+	font-size: 100%;
+}
+
+@media screen and (min-width: 42em) {
+	html {
+		font-size: 105%;
+	}
+}
+
+@media screen and (min-width: 62em) {
+	html {
+		font-size: 110%;
+	}
+}
+
+@media screen and (min-width: 100em) {
+	html {
+		font-size: 120%;
+	}
+}
+
+body {
+	font-size: 1.2rem;
+	font-family: "Publico Text", "Publico", "Georgia", "Times", "Times New Roman",
+		serif;
+	line-height: 1.8;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: "Publico Headline", "Publico", "Georgia", "Times",
+		"Times New Roman", serif;
+	font-weight: normal;
+	display: block;
+	line-height: 1.3;
+	margin: 0;
+	max-width: none; /* reset default width of p elements */
+}
+
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+	border-bottom: none;
+	color: inherit;
+}
+
+h1 a:hover,
+h1 a:active,
+h2 a:hover,
+h2 a:active,
+h3 a:hover,
+h3 a:active,
+h4 a:hover,
+h4 a:active,
+h5 a:hover,
+h5 a:active,
+h6 a:hover,
+h6 a:active {
+	color: hsl(223, 75%, 70%);
+	color: var(--color-highlight);
+}
+
+h1 strong,
+h2 strong,
+h3 strong,
+h4 strong,
+h5 strong,
+h6 strong {
+	font-weight: normal;
+}
+
+h1 em,
+h2 em,
+h3 em,
+h4 em,
+h5 em,
+h6 em {
+	font-style: normal;
+}
+
+h1 {
+	font-size: 2.83rem;
+	font-size: clamp(2.07rem, calc(1rem + 5vw), 3.58rem);
+}
+
+h2 {
+	font-size: 2.36rem;
+	font-size: clamp(1.73rem, calc(1rem + 3vw), 2.99rem);
+}
+
+h3 {
+	font-size: 1.75rem;
+	font-size: clamp(1.44rem, calc(1rem + 2vw), 2.07rem);
+}
+
+h4 {
+	font-size: 1.32rem;
+	font-size: clamp(1.2rem, calc(1rem + 1vw), 1.44rem);
+}
+
+h5 {
+	font-size: 1.2rem;
+}
+
+h6 {
+	font-size: 1rem;
+}
+
+h1,
+h2 {
+	line-height: 1.2;
+}
+
+p {
+	margin-bottom: 0;
+	margin-top: 0;
+	max-width: 60ch;
+}
+
+a {
+	border-block-end: 1px dashed hsl(223, 7%, 78%);
+	border-block-end: 1px dashed var(--color-border);
+	transition: all 0.25s ease;
+	border-color: inherit;
+	color: inherit;
+	text-decoration: none;
+}
+
+strong {
+	font-weight: bold;
+}
+
+em {
+	font-style: italic;
+}

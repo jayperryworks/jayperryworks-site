@@ -1,0 +1,46 @@
+---
+// Style Imports
+import '@styles/utilities/spacing.css';
+
+// Icons
+import expand from '@icons/expand.svg?raw';
+
+// Component Imports
+import Block from '@components/Block.svelte';
+import Test from '@components/Test.svelte';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const body = [
+	{
+		type: 'figure',
+		sources: [{
+			path: 'https://via.placeholder.com/1200x800',
+			width: 1200,
+			height: 800
+		}],
+		alt: 'placeholder',
+		prominence: 'wide'
+	},
+	{
+		type: 'passage',
+		html: `
+			Lorem ipsum dolor sit amet
+			<button class="note">
+				${expand}
+				<span class="tooltip center">Adipiscig elit nonummy.</span>
+			</button>. Velit massa donec dapibus purus rhoncus ac blandit lacus curabitur justo iaculis cras. Quis sollicitudin cras bibendum incididunt tellus eleifend elementum eiusmod enim. Posuere in feugiat vel pretium integer condimentum
+			<button class="note">
+				${expand}
+				<span class="tooltip center">Auctor aliquet porta.</span>
+			</button>. Fames tempor elementum est tortor fermentum eget at purus gravida tempus nullam.
+		`,
+		prominence: 'default'
+	}
+];
+---
+<BaseLayout path="home">
+	<main class="padding-y-flow-wide padding-y-xwide padding-x-outside">
+		<Test client:visible />
+		{body.map(block => <Block {block} />)}
+	</main>
+</BaseLayout>

@@ -1,0 +1,28 @@
+---
+import '../styles/utilities/spacing.css';
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Block from '../components/Block.svelte';
+
+import * as prismic from '@prismicio/client';
+import * as prismicHelpers from '@prismicio/helpers';
+
+const endpoint: string = prismic.getEndpoint('jpw-api');
+const accessToken: string = import.meta.env.PRISMIC_TOKEN.toString();
+const client = prismic.createClient(endpoint, { accessToken });
+
+// YbDuIRUAADEAj-if
+
+const response = await client.getByID('YbDuIRUAADEAj-if');
+
+let { title, subtitle, body } = response.data;
+console.log(body)
+---
+<BaseLayout pageTitle="article" path="article">
+	<article class="padding-y-flow-wide padding-y-xwide padding-x-outside">
+  	<h1>{prismicHelpers.asText(title)}</h1>
+	</article>
+  <!-- <main class="padding-y-flow-wide padding-y-xwide">
+    {body.map(block => <Block {block} />)}
+  </main> -->
+</BaseLayout>
