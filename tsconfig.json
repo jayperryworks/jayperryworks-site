@@ -3,6 +3,9 @@
     "moduleResolution": "node",
 		"baseUrl": ".",
 		"paths": {
+			"@data/*": [
+				"data/*"
+			],
 			"@lib/*": [
 				"lib/*"
 			],

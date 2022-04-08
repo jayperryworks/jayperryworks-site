@@ -30,7 +30,7 @@ module.exports = {
 				ignoredNodes: [
 					'TemplateLiteral',
 					'TemplateLiteral > *',
-				]
+				],
 			}
 		],
 		'linebreak-style': [
@@ -42,11 +42,11 @@ module.exports = {
 			'single',
 			{
 				avoidEscape: true,
-			}
+			},
 		],
 		semi: [
 			'error',
 			'always',
 		],
-	}
+	},
 };
