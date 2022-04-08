@@ -1,6 +1,6 @@
 ---
 // Style Imports
-import '@styles/utilities/spacing.css';
+// import '@styles/utilities/spacing.css';
 
 // Icons
 import expand from '@icons/expand.svg?raw';
@@ -39,8 +39,19 @@ const body = [
 ];
 ---
 <BaseLayout path="home">
-	<main class="padding-y-flow-wide padding-y-xwide padding-x-outside">
+	<main>
 		<Test client:visible />
 		{body.map(block => <Block {block} />)}
 	</main>
 </BaseLayout>
+
+<style>
+	main {
+		padding-block: var(--space-xwide);
+		padding-inline: var(--space-outside);
+	}
+
+	main > :global(* + *) {
+		padding-block-start: var(--space-wide);
+	}
+</style>

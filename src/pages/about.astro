@@ -1,6 +1,4 @@
 ---
-import '../styles/utilities/spacing.css';
-
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Block from '../components/Block.svelte';
 
@@ -16,13 +14,27 @@ const client = prismic.createClient(endpoint, { accessToken });
 const response = await client.getByID('YbDuIRUAADEAj-if');
 
 let { title, subtitle, body } = response.data;
-console.log(body)
+console.log(body);
 ---
+
 <BaseLayout pageTitle="article" path="article">
-	<article class="padding-y-flow-wide padding-y-xwide padding-x-outside">
-  	<h1>{prismicHelpers.asText(title)}</h1>
+	<article>
+  	<header>
+			<h1>{prismicHelpers.asText(title)}</h1>
+		</header>
 	</article>
   <!-- <main class="padding-y-flow-wide padding-y-xwide">
     {body.map(block => <Block {block} />)}
   </main> -->
 </BaseLayout>
+
+<style>
+  article {
+    padding-block: var(--space-xwide);
+    padding-inline: var(--space-outside);
+  }
+
+	article > :global(* + *) {
+		padding-block-start: var(--space-wide);
+	}
+</style>
