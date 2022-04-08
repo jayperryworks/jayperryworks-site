@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+		"baseUrl": ".",
+		"paths": {
+			"@data/*": [
+				"data/*"
+			],
+			"@lib/*": [
+				"lib/*"
+			],
+			"@components/*": [
+				"src/components/*"
+			],
+			"@blocks/*": [
+				"src/components/blocks/*"
+			],
+			"@icons/*": [
+				"src/icons/*"
+			],
+			"@styles/*": [
+				"src/styles/*"
+			]
+		}
+  },
+	"include": ["src/**/*", "lib/globalStyles/**/*"],
+	"exclude": ["node_modules", "_old/**/*"]
+}

@@ -1,0 +1,16 @@
+title: Daylilly
+date: 2020-08-04T17:35:46.859Z
+series: Inventory
+format: Digital painting
+category: prints
+cover: /images/uploads/daylilly.jpg
+thumb: /images/uploads/daylilly-thumb.jpg
+editions:
+  - type: giclee
+    border: 1
+    name: small
+    width: 6
+    height: 6
+    price: 12
+    url: https://www.etsy.com/listing/835618840/daylily
+    photo: /images/uploads/daylily.jpg

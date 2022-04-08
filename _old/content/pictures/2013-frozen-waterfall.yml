@@ -1,0 +1,43 @@
+title: Frozen Waterfall
+date: 2013-12-26T05:00:00.000Z
+format: Tryptych on panels
+highlight: { h: 209, s: 40, l: 65 }
+width: 72
+height: 48
+category: prints
+tags:
+  - acrylic
+  - india ink
+cover: /images/uploads/work-2013-frozen_waterfall_r2.jpg
+thumb: /images/uploads/work-2013-frozen_waterfall-thumb.jpg
+intro: |-
+  My wife and I were on a weekend trip to the Laurel Highlands in Pennsylvania, visiting some Frank Lloyd Wright houses, and found ourselves rambling around in the snow in the surrounding hills. Just past a bend in the road, there was a short cliff with a spectacular waterfall– frozen solid.
+
+  This was originally a mural-size acrylic painting on three panels which took me 3 years to finish. Later, I had a high-resolution scan done and developed a print edition.
+editions:
+  - border: 1
+    name: large
+    type: giclee
+    width: 24
+    height: 16
+    photo: /images/uploads/work-2013-frozen_waterfall-24x16.jpg
+    price: 80
+    url: 'https://www.etsy.com/listing/161673713/'
+
+  - border: 1
+    name: medium
+    type: giclee
+    width: 18
+    height: 12
+    photo: /images/uploads/work-2013-frozen_waterfall-18x12.jpg
+    price: 50
+    url: 'https://www.etsy.com/listing/161673713/'
+
+  - border: 1
+    name: small
+    type: giclee
+    width: 12
+    height: 8
+    photo: /images/uploads/work-2013-frozen_waterfall-12x8.jpg
+    price: 30
+    url: 'https://www.etsy.com/listing/161673713/'

@@ -1,0 +1,60 @@
+title: Painting with data
+subtitle: Tabletop Whale's gorgeous visualization work
+cover:
+  alt: ''
+  credit: '"The Moon", by [Tabletop Whale](http://tabletopwhale.com/).'
+  image: /images/uploads/2020-blog-tabletop-whale.jpg
+shortPost: true
+body:
+  - markdown: >-
+      I love the work of [Tabletop Whale](http://tabletopwhale.com/), also known
+      as Eleanor Lutz. A multi-talented Ph.D. student in biology and also a
+      graphic designer, she uses publicly-available datasets to construct
+      beautiful maps, diagrams, and visualizations.
+
+
+      Her recent topographic maps of the Moon and Mars remind me of the kind of
+      hand-drawn maps you might find printed on the endpapers of old
+      science-fiction books, but they contain no speculation - no alien cities
+      or dragons. They show, instead, accurate and meticulous snapshots of
+      current human knowledge, assembled from thousands of data points and [a
+      lot of Python
+      code](https://github.com/eleanorlutz/moon_geology_atlas_of_space)[^1].
+
+
+      What especially strikes me about her work is that it depicts enormous
+      complexity and appears to omit no detail, but it's so visually coherent
+      and carefully crafted that you can understand it at a glance: "that's a
+      map of the Moon". But if you stop and look closer, you'll find that you
+      can stare for hours without exhausting its intricacies.
+
+
+      Each piece has a clear and simple visual language: a set of rules that
+      apply from the largest feature to the smallest detail. This repetition and
+      consistency makes it easy to learn how to "read" each piece quickly. The
+      design system extends to the lovely typography in her notes and legends at
+      the bottom of many of her compositions. Despite their density, the
+      consistent hierarchy, careful grid formatting, and lovely art-deco display
+      type make them as enjoyable to read as the rest of the maps are to look
+      at.
+
+
+      Being married to an engineer has given me a lot of opportunities to
+      appreciate the common ground between science, technology, and the visual
+      arts. I suppose that common ground could best be described as a sense of
+      wonder. Artists and scientists alike spend their time looking at things
+      really closely, and I suppose we are each inspired by the realizations
+      that follow: the vastness of the universe, its staggering complexity, its
+      frequent strangeness, and our own smallness in the midst of it all.
+
+
+      I feel the same sense of wonder when I pore over Tabletop Whale’s work,
+      all the more because it’s equal parts art and science. Each piece is
+      generated from data, but it amounts to quite a bit more than that: it adds
+      up to something that gets the imagination going.
+
+
+      [^1]: Her code is open-source and, often, she even includes in-depth
+      tutorials for reconstructing her visualizations.
+    type: passage
+    useInExcerpt: false

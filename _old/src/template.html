@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width,initial-scale=1.0'>
+
+	%sapper.base%
+
+	<link rel="stylesheet" href="/stylesheets/global.css">
+
+	<!-- favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#474747">
+  <meta name="theme-color" content="#fff">
+
+  <script>
+  	// Add a class to the html element to confirm JS is available
+		// -> used by the CSS for styling JS-dependent elements
+		document.documentElement.className = "js"
+		// Add a class if the browser/device supports touch
+		document.documentElement.className += (("ontouchstart" in document.documentElement) ? ' touch' : ' no-touch')
+  </script>
+
+	<!-- Sapper generates a <style> tag containing critical CSS
+	     for the current page. CSS for the rest of the app is
+	     lazily loaded when it precaches secondary pages -->
+	%sapper.styles%
+
+	<!-- This contains the contents of the <svelte:head> component, if
+	     the current page has one -->
+	%sapper.head%
+</head>
+<body>
+	<!-- The application will be rendered inside this element,
+	     because `src/client.js` references it -->
+	<div id='sapper'>%sapper.html%</div>
+
+	<!-- Sapper creates a <script> tag containing `src/client.js`
+	     and anything else it needs to hydrate the app and
+	     initialise the router -->
+	%sapper.scripts%
+</body>
+</html>

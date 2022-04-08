@@ -1,0 +1,45 @@
+title: A visit to the farm
+cover:
+  image: /images/uploads/2017-blog-farm-05.jpeg
+tags:
+  - photography
+body:
+  - type: passage
+    useInExcerpt: true
+    markdown: |-
+      When we visited my parents a few weeks back, we took my daughter Evelyn to a farm/petting zoo near my hometown. It was a lovely clear day and I followed her around with my camera as she “milked” a wooden “cow,” fed (real) goats, and stomped in some choice puddles.
+
+  - type: figure
+    prominence: large
+    image: /images/uploads/2017-blog-farm-04.jpeg
+    alt: Goats
+    resize: true
+
+  - type: figure
+    prominence: large
+    image: /images/uploads/2017-blog-farm-07.jpeg
+    resize: true
+    caption: |-
+      Human-sized hamster wheels!
+
+  - type: figure
+    prominence: large
+    image: /images/uploads/2017-blog-farm-03.jpeg
+    resize: true
+    caption: My wife, Jackie, chilling on a pile of old tires.
+
+  - type: gallery
+    prominence: large
+    resize: true
+    size: large
+    images:
+      - image: /images/uploads/2017-blog-farm-01.jpeg
+        alt: Hill
+      - image: /images/uploads/2017-blog-farm-06.jpeg
+        alt: Evie's favorite stop was an old shed filled with toy musical instruments.
+
+  - type: figure
+    prominence: large
+    image: /images/uploads/2017-blog-farm-02.jpeg
+    alt: Sign on the hill
+    resize: true
