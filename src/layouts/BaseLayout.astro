@@ -10,7 +10,7 @@ const { siteTitle = 'Jay Perry Works', pageTitle, path } = Astro.props;
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
-	<title>{siteTitle}{pageTitle && `| ${pageTitle}`}</title>
+	<title>{siteTitle}{pageTitle && ` | ${pageTitle}`}</title>
 </head>
 <body>
 	<MainNav segment={path} />

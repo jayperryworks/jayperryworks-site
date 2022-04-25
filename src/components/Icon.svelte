@@ -1,5 +1,5 @@
 <script>
-export let svg: string;
+export let svg;
 export let size = '';
 export let margin = '';
 export let align = 'middle';

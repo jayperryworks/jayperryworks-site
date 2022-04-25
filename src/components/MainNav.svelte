@@ -1,12 +1,12 @@
 <script>
-import menu from 'icons/menu.svg';
-import close from 'icons/close.svg';
+import menu from '@icons/menu.svg?raw';
+import close from '@icons/close.svg?raw';
 import Icon from './Icon.svelte';
 import LogoJP from './logos/LogoJP.svelte';
 import routes from '@data/routes.json';
 
-import '../styles/utilities/type.css';
-import '../styles/utilities/color.css';
+import '@styles/utilities/type.css';
+import '@styles/utilities/color.css';
 
 export let segment,
 	overlay = false;
