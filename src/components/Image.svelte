@@ -28,7 +28,6 @@ $: src = sources[0].path;
 $: width = sources[0].width || '';
 $: height = sources[0].height || '';
 $: srcset = sources.length > 1 ? srcsetString(sources) : '';
-
 </script>
 
 <img

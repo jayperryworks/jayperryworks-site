@@ -13,8 +13,43 @@ const client = prismic.createClient(endpoint, { accessToken });
 
 const response = await client.getByID('YbDuIRUAADEAj-if');
 
-let { title, subtitle, body } = response.data;
-console.log(body);
+let { title, body } = response.data;
+
+function figure ({ primary }, options = {}) {
+	const { sizes = [ 800, 1200, 2000 ] } = options;
+	const { image } = primary;
+	const aspect = image.dimensions.width / image.dimensions.height;
+	const sources = sizes.map((size) => {
+		return {
+			path: prismicHelpers.asImageSrc(image, {
+					width: size,
+					fit: 'max'
+				}),
+			width: size,
+			height: size / aspect
+		};
+	});
+
+	return {
+		type: 'figure',
+		sources,
+		alt: image.alt
+	};
+}
+
+const blockTypes = {
+	figure
+};
+
+const blockList = body.reduce((result, block) => {
+	const { slice_type } = block;
+	if (blockTypes[slice_type]) {
+		result.push(blockTypes[slice_type](block));
+	}
+	return result;
+}, []);
+
+console.log(blockList)
 ---
 
 <Layout pageTitle="article" path="article">
@@ -23,9 +58,9 @@ console.log(body);
 			<h1>{prismicHelpers.asText(title)}</h1>
 		</header>
 	</article>
-  <!-- <main class="padding-y-flow-wide padding-y-xwide">
-    {body.map(block => <Block {block} />)}
-  </main> -->
+  <main class="padding-y-flow-wide padding-y-xwide">
+    {blockList.map(block => <Block {block} />)}
+  </main>
 </Layout>
 
 <style>

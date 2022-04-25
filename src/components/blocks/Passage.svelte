@@ -82,7 +82,7 @@ onDestroy(()=> {
 
 
 	/* add an icon after external links */
-	@supports (mask: url('/images/icons/external-link.svg') no-repeat 50% 50%) {
+	@supports (mask: url('/icons/external-link.svg') no-repeat 50% 50%) {
 		.content :global(a[href^='http']::after) {
 			--size: 0.7em;
 
@@ -91,63 +91,12 @@ onDestroy(()=> {
 			display: inline-block;
 			height: var(--size);
 			margin: 0 0.1em 0 0.25em;
-			mask: url('/images/icons/external-link.svg') no-repeat 50% 50%;
+			mask: url('/icons/external-link.svg') no-repeat 50% 50%;
 			position: relative;
 			vertical-align: baseline;
 			width: var(--size);
 		}
 	}
-
-  /* horizontal rules
-    -> created for footnotes
-  */
-  .content > :global(hr) {
-    border: 0;
-    border-top: 1px solid var(--color-border);
-    height: 0;
-    margin: 1.2em 0;
-  }
-
-	.content > :global(blockquote) {
-		padding-left: 1.44em;
-		font-size: 0.8em;
-		font-size: var(--type-scale-zeta);
-		font-style: italic;
-	}
-
-  /* footnotes - DEPRECATED */
-	/* -> keeping this for now because there are still some markdown footnotes in old blog posts */
-  :global(.footnotes) {
-    color: var(--color-secondary);
-    font-size: var(--type-scale-zeta);
-  }
-
-  :global(.footnotes-list) {
-    padding-left: 1.2em;
-  }
-
-  :global(.footnotes li),
-  :global(.footnotes p) {
-    padding-left: 0;
-    color: var(--color-secondary);
-    font-family: var(--type-font-accent);
-    font-weight: 300;
-    font-size: var(--type-scale-zeta);
-    letter-spacing: 0.02em;
-  }
-
-  :global(.footnote) {
-    background-color: transparent;
-    border-color: inherit;
-    border-radius: var(--border-radius);
-    border: 1px solid var(--color-secondary);
-    color: inherit;
-    display: inline-block;
-    font-family: var(--type-font-accent);
-    line-height: 1;
-    margin-left: 0.25em;
-    padding: 0.25em 1em;
-  }
 
 	/* footnote popovers */
 	.content :global(.note) {
