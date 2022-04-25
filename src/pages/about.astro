@@ -11,7 +11,7 @@ const client = prismic.createClient(endpoint, { accessToken });
 
 // YbDuIRUAADEAj-if
 
-const response = await client.getByID('YbDuIRUAADEAj-if');
+const response = await client.getByUID('page', 'about');
 
 let { title, body } = response.data;
 
@@ -42,14 +42,10 @@ const blockTypes = {
 };
 
 const blockList = body.reduce((result, block) => {
-	const { slice_type } = block;
-	if (blockTypes[slice_type]) {
-		result.push(blockTypes[slice_type](block));
-	}
+	const { slice_type: type } = block;
+	if (blockTypes[type]) result.push(blockTypes[type](block));
 	return result;
 }, []);
-
-console.log(blockList)
 ---
 
 <Layout pageTitle="article" path="article">
