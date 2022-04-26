@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
 import '../../styles/components/tooltip.css';
 
 import { onDestroy, onMount } from 'svelte';
 
-export let html,
-	typeSize = 'epsilon';
+export let html: string;
+export let typeSize = 'epsilon';
 
 let className = '';
 export { className as class };
@@ -16,17 +16,17 @@ let notes;
 function alignNotes () {
 	if (notes) {
 		notes.forEach((note) => {
+			const MARGIN = 100;
 			const noteRect = note.getBoundingClientRect();
-			const margin = 100;
 
 			// change the note's alignment
 			// based on its proximity to the edge of the browser window
-			if (noteRect.left < margin) {
+			if (noteRect.left < MARGIN) {
 				note.classList.remove('align-center', 'align-start', 'align-end');
 				note.classList.add('align-start');
 			}
 
-			if ((browserWidth - noteRect.right) < margin) {
+			if ((browserWidth - noteRect.right) < MARGIN) {
 				note.classList.remove('align-center', 'align-start', 'align-end');
 				note.classList.add('align-end');
 			}
@@ -48,7 +48,7 @@ onMount(() => {
 	});
 });
 
-onDestroy(()=> {
+onDestroy(() => {
 	if (notes) {
 		notes.forEach((note) => {
 			note.removeEventListener('click');
@@ -65,25 +65,25 @@ onDestroy(()=> {
 />
 <div
 	bind:this="{contentElement}"
-	class="content type-scale-{typeSize} {className}"
+	class="prose type-scale-{typeSize} {className}"
 >
-  {@html html}
+	<slot>{@html html}</slot>
 </div>
 
 <style>
-  .content :global(* + *) {
+  .prose :global(* + *) {
     margin-top: 1em;
   }
 
   /* --- headings --- */
-  .content :global(* + :is(h1, h2, h3, h4, h5, h6)) {
+  .prose :global(* + :is(h1, h2, h3, h4, h5, h6)) {
     margin-top: 1.5em;
   }
 
 
 	/* add an icon after external links */
 	@supports (mask: url('/icons/external-link.svg') no-repeat 50% 50%) {
-		.content :global(a[href^='http']::after) {
+		.prose :global(a[href^='http']::after) {
 			--size: 0.7em;
 
 			background-color: currentColor;
@@ -99,7 +99,7 @@ onDestroy(()=> {
 	}
 
 	/* footnote popovers */
-	.content :global(.note) {
+	.prose :global(.note) {
 		--size: 0.8em;
 		--bg: hsl(var(--color-bg-h), var(--color-bg-s), calc(var(--color-bg-l) + 15%));
 		--border: var(--color-border);
@@ -119,12 +119,12 @@ onDestroy(()=> {
 		will-change: color;
 	}
 
-	.content :global(.note):hover,
-	.content :global(.note.show) {
+	.prose :global(.note):hover,
+	.prose :global(.note.show) {
 		background-color: var(--color-highlight);
 	}
 
-	.content :global(.note-icon) {
+	.prose :global(.note-icon) {
 		display: block;
 		height: var(--size);
 		line-height: var(--size);
@@ -137,7 +137,7 @@ onDestroy(()=> {
 		width: var(--size);
 	}
 
-	.content :global(.note-flyout) {
+	.prose :global(.note-flyout) {
 		background-color: var(--bg);
 		border-radius: 0.25em;
 		border: 1px solid var(--border);
@@ -159,8 +159,8 @@ onDestroy(()=> {
 		z-index: 4;
 	}
 
-	.content :global(.note-flyout)::before,
-	.content :global(.note-flyout)::after {
+	.prose :global(.note-flyout)::before,
+	.prose :global(.note-flyout)::after {
 		border-left: var(--pointer-size) solid transparent;
 		border-right: var(--pointer-size) solid transparent;
 		content: '';
@@ -170,53 +170,53 @@ onDestroy(()=> {
 		width: 0;
 	}
 
-	.content :global(.note-flyout)::before {
+	.prose :global(.note-flyout)::before {
 		border-top: var(--pointer-size) solid var(--border);
 		bottom: calc(var(--pointer-size) * -1);
 	}
 
-	.content :global(.note-flyout)::after {
+	.prose :global(.note-flyout)::after {
 		border-top: var(--pointer-size) solid var(--bg);
 		bottom: calc((var(--pointer-size) - 0.1em) * -1);
 	}
 
 	/* flyout alignment modifiers */
 	/* center */
-	.content :global(.note.align-center .note-flyout) {
+	.prose :global(.note.align-center .note-flyout) {
 		left: 50%;
 		text-align: center;
 		transform: translateX(-50%);
 	}
 
-	.content :global(.note.align-center .note-flyout)::before,
-	.content :global(.note.align-center .note-flyout)::after {
+	.prose :global(.note.align-center .note-flyout)::before,
+	.prose :global(.note.align-center .note-flyout)::after {
 		left: 50%;
 		transform: translateX(-50%);
 	}
 
 	/* start */
-	.content :global(.note.align-start .note-flyout) {
+	.prose :global(.note.align-start .note-flyout) {
 		left: calc(var(--pointer-margin) * -1);
 		text-align: left;
 	}
 
-	.content :global(.note.align-start .note-flyout)::before,
-	.content :global(.note.align-start .note-flyout)::after {
+	.prose :global(.note.align-start .note-flyout)::before,
+	.prose :global(.note.align-start .note-flyout)::after {
 		left: var(--pointer-margin);
 	}
 
 	/* end */
-	.content :global(.note.align-end .note-flyout) {
+	.prose :global(.note.align-end .note-flyout) {
 		right: calc(var(--pointer-margin) * -1);
 		text-align: right;
 	}
 
-	.content :global(.note.align-end .note-flyout)::before,
-	.content :global(.note.align-end .note-flyout)::after {
+	.prose :global(.note.align-end .note-flyout)::before,
+	.prose :global(.note.align-end .note-flyout)::after {
 		right: var(--pointer-margin);
 	}
 
-	.content :global(.note.show .note-flyout) {
+	.prose :global(.note.show .note-flyout) {
 		--show: 1;
 	}
 </style>

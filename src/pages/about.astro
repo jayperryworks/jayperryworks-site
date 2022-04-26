@@ -2,22 +2,23 @@
 import Layout from '../layouts/BaseLayout.astro';
 import Block from '../components/Block.svelte';
 
+import expand from '@icons/expand.svg?raw';
+
 import * as prismic from '@prismicio/client';
 import * as prismicHelpers from '@prismicio/helpers';
+import { camelCase } from 'change-case';
 
 const endpoint: string = prismic.getEndpoint('jpw-api');
 const accessToken: string = import.meta.env.PRISMIC_TOKEN.toString();
 const client = prismic.createClient(endpoint, { accessToken });
 
-// YbDuIRUAADEAj-if
-
 const response = await client.getByUID('page', 'about');
 
 let { title, body } = response.data;
 
-function figure ({ primary }, options = {}) {
+function figure(slice, options = {}) {
 	const { sizes = [ 800, 1200, 2000 ] } = options;
-	const { image } = primary;
+	const { image } = slice.primary;
 	const aspect = image.dimensions.width / image.dimensions.height;
 	const sources = sizes.map((size) => {
 		return {
@@ -32,13 +33,62 @@ function figure ({ primary }, options = {}) {
 
 	return {
 		type: 'figure',
+		alt: image.alt,
 		sources,
-		alt: image.alt
+		...sharedBlockFields(slice),
+	};
+}
+
+function htmlSerializer(type, element, content, children) {
+	if (element.data?.label === 'note') {
+		//  remove the parentheses and add a period so it reads as a sentence.
+		const label = children.toString().replace('(', '').replace(')', '').concat('.');
+		// capitalize the first letter
+		return `
+				<button class="note align-center">
+					<span class="note-icon">${expand}</span>
+					<span class="note-flyout">${sentenceCase(label)}</span>
+				</button>
+			`
+	}
+
+	return null
+}
+
+function getSliceWidth(prominence) {
+	const widths = {
+		Small: 'small',
+		Medium: 'medium',
+		Large: 'large'
+	}
+
+	return widths[prominence] || 'default'
+}
+
+function sharedBlockFields(slice) {
+	return {
+		includeInExcerpt: slice.primary.include_in_excerpt || false,
+		prominence: getSliceWidth(slice.primary.prominence),
+		type: camelCase(slice.slice_type),
+	}
+}
+
+function passage(slice) {
+	const {
+		markdown,
+		structured_text: prismicText,
+	} = slice.primary;
+
+	return {
+		html: prismicText ? prismicHelpers.asHTML(prismicText, null, htmlSerializer) : null,
+		markdown,
+		...sharedBlockFields(slice),
 	};
 }
 
 const blockTypes = {
-	figure
+	figure,
+	passage
 };
 
 const blockList = body.reduce((result, block) => {
