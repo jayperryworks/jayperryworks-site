@@ -79,9 +79,11 @@ function passage(slice) {
 		structured_text: prismicText,
 	} = slice.primary;
 
+	console.log(prismicHelpers.asText(markdown))
+
 	return {
-		html: prismicText ? prismicHelpers.asHTML(prismicText, null, htmlSerializer) : null,
-		markdown,
+		html: prismicText && prismicHelpers.asHTML(prismicText, null, htmlSerializer),
+		markdown: markdown && prismicHelpers.asText(markdown),
 		...sharedBlockFields(slice),
 	};
 }

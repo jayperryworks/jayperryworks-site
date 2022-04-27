@@ -16,11 +16,13 @@ export default defineConfig({
 		// port: 3000,             // The port to run the dev server on.
 	},
 	vite: {
-		plugins: [svgLoader({
-			svgoConfig: {
-				removeDimensions: true
-			}
-		})]
+		plugins: [
+			svgLoader({
+				svgoConfig: {
+					removeDimensions: true,
+				}
+			}),
+		]
 	},
-	integrations: [ svelte() ]
+	integrations: [ svelte() ],
 });
