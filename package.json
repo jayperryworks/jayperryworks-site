@@ -14,13 +14,13 @@
 		"lint:svelte": "npx eslint 'src/**/*.svelte' -c .eslintrc.svelte.cjs",
 		"lint": "run-s lint:*",
 		"predev": "npm run css",
-		"dev:astro": "astro dev --experimental-static-build",
+		"dev:astro": "astro dev",
 		"dev:css": "onchange './src/lib/globalStyles/**/*.js' './src/lib/design-tokens.js' -- run-s css:generate css:format",
 		"dev:lint": "onchange './src/**' './lib/globalStyles/**' -- npm run lint",
 		"dev": "run-p dev:*",
 		"start": "run-s dev",
 		"prebuild": "run-s lint css",
-		"build": "astro build --experimental-static-build",
+		"build": "astro build",
 		"preview": "astro preview"
 	},
 	"devDependencies": {

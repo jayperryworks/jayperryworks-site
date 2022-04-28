@@ -7,6 +7,7 @@ import expand from '@icons/expand.svg?raw';
 import * as prismic from '@prismicio/client';
 import * as prismicHelpers from '@prismicio/helpers';
 import { camelCase } from 'change-case';
+import renderMarkdown from '@lib/renderMarkdown.ts';
 
 const endpoint: string = prismic.getEndpoint('jpw-api');
 const accessToken: string = import.meta.env.PRISMIC_TOKEN.toString();
@@ -18,12 +19,13 @@ let { title, body } = response.data;
 
 function figure(slice, options = {}) {
 	const { sizes = [ 800, 1200, 2000 ] } = options;
-	const { image } = slice.primary;
+	const { image, caption, attribution } = slice.primary;
+
 	const aspect = image.dimensions.width / image.dimensions.height;
 	const sources = sizes.map((size) => {
 		return {
 			path: prismicHelpers.asImageSrc(image, {
-					width: size,
+				width: size,
 					fit: 'max'
 				}),
 			width: size,
@@ -34,6 +36,8 @@ function figure(slice, options = {}) {
 	return {
 		type: 'figure',
 		alt: image.alt,
+		caption: caption && renderMarkdown(prismicHelpers.asText(caption), { inline: false }),
+		attribution,
 		sources,
 		...sharedBlockFields(slice),
 	};
@@ -75,15 +79,15 @@ function sharedBlockFields(slice) {
 
 function passage(slice) {
 	const {
-		markdown,
 		structured_text: prismicText,
+		markdown,
 	} = slice.primary;
 
-	console.log(prismicHelpers.asText(markdown))
+	const renderedPrismicText = prismicHelpers.asHTML(prismicText, null, htmlSerializer);
+	const renderedMarkdown = markdown && renderMarkdown(prismicHelpers.asText(markdown));
 
-	return {
-		html: prismicText && prismicHelpers.asHTML(prismicText, null, htmlSerializer),
-		markdown: markdown && prismicHelpers.asText(markdown),
+return {
+		html: renderedPrismicText || renderedMarkdown,
 		...sharedBlockFields(slice),
 	};
 }
