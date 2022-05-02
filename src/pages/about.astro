@@ -1,4 +1,6 @@
 ---
+import '@styles/utilities/spacing.css';
+
 import Layout from '../layouts/BaseLayout.astro';
 import Block from '../components/Block.svelte';
 
@@ -83,7 +85,7 @@ function passage(slice) {
 		markdown,
 	} = slice.primary;
 
-	const renderedPrismicText = prismicHelpers.asHTML(prismicText, null, htmlSerializer);
+	const renderedPrismicText = prismicText && prismicHelpers.asHTML(prismicText, null, htmlSerializer);
 	const renderedMarkdown = markdown && renderMarkdown(prismicHelpers.asText(markdown));
 
 return {

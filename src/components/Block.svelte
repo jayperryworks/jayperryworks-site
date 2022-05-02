@@ -39,12 +39,14 @@ function getBlockClass(type) {
 	if (classes.includes(type)) {
 		return `block-${type}`;
 	}
+
+	return '';
 }
 </script>
 
 <ContentWrapper
 	width={getWidth(block.prominence)}
-	class="{getBlockClass()} {className}"
+	class="{getBlockClass(block.type)} {className}"
 >
 	<!-- passage -->
 	{#if block.type === 'passage'}
