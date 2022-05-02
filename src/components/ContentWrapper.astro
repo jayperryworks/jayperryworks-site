@@ -1,4 +1,4 @@
-<script lang="ts">
+---
 // Wrapper
 // -> a container that constrains the layout width, centers content on
 //    larger screens
@@ -7,20 +7,24 @@
 //    Instead, add padding to a parent container.
 import '@styles/utilities/contentWidth.css';
 
-export let width = 'default';
-export let centered = true;
-export let flexChild = false;
-
-let className = '';
-export { className as class };
-
-$: widthClass = width === 'default' ? 'content-width' : `content-width-${width}`;
-</script>
+const {
+	width = 'default',
+	centered = true,
+	flexChild = false,
+	className as class,
+} = Astro.props;
+---
 
 <div
-  class="wrapper {widthClass} {className}"
-  class:centered
-  class:flexChild
+	class:list={[
+		'wrapper',
+		width === 'default' ? 'content-width' : `content-width-${width}`,
+		className
+		{
+			centered,
+			flexChild
+		}
+	]}
 >
   <slot />
 </div>
@@ -31,16 +35,14 @@ $: widthClass = width === 'default' ? 'content-width' : `content-width-${width}`
   }
 
   .centered {
-    margin-left: auto;
-    margin-right: auto;
+    margin-inline: auto;
   }
 
   @supports (display: flex) and (align-self: center) {
     .flexChild {
       width: 100%;
       align-self: center;
-      margin-left: 0;
-      margin-right: 0;
+      margin-inline: 0;
     }
   }
 </style>
