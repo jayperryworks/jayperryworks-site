@@ -4,68 +4,60 @@ import '../../styles/components/tooltip.css';
 const {
 	html,
 	typeSize = 'epsilon',
-	className as class,
+	class: className,
 } = Astro.props;
+
+const classList = [
+	'prose',
+	`type-scale-${typeSize}`,
+	className,
+].join(' ')
 ---
 
-<div
-	class:list={[
-		'prose',
-		`type-scale-${typeSize}`,
-		className,
-	]}
->
+<div class={classList}>
 	<slot><Fragment set:html={html}></Fragment></slot>
 </div>
 
 <script>
-	let contentElement, browserWidth;
-	let notes;
+	let $notes;
+	let browserWidth = document.documentElement.clientWidth;
 
-	function alignNotes () {
-		if (notes) {
-			notes.forEach((note) => {
+	function alignNotes() {
+		if ($notes) {
+			$notes.forEach(($note) => {
 				const MARGIN = 100;
-				const noteRect = note.getBoundingClientRect();
+				const noteRect = $note.getBoundingClientRect();
 
 				// change the note's alignment
 				// based on its proximity to the edge of the browser window
 				if (noteRect.left < MARGIN) {
-					note.classList.remove('align-center', 'align-start', 'align-end');
-					note.classList.add('align-start');
+					$note.classList.remove('align-center', 'align-start', 'align-end');
+					$note.classList.add('align-start');
 				}
 
 				if ((browserWidth - noteRect.right) < MARGIN) {
-					note.classList.remove('align-center', 'align-start', 'align-end');
-					note.classList.add('align-end');
+					$note.classList.remove('align-center', 'align-start', 'align-end');
+					$note.classList.add('align-end');
 				}
 			});
 		}
 	}
 
-	// add click events to the tooltips the old fashioned way
-	// -> because the Svelte runtime can't handle injected strings
-	// https://usefulangle.com/post/190/javascript-window-width-height
-	onMount(() => {
-		notes = contentElement.querySelectorAll('.note');
+	document.addEventListener('DOMContentLoaded', () => {
+		const $prose = document.querySelector('.prose');
+		$notes = $prose.querySelectorAll('.note');
+
 		alignNotes();
 
-		notes.forEach((note) => {
-			note.addEventListener('click', (event) => {
+		$notes.forEach(($note) => {
+			$note.addEventListener('click', (event) => {
+				console.log('clikc')
 				event.target.classList.toggle('show');
 			});
 		});
 	});
 
-	onDestroy(() => {
-		if (notes) {
-			notes.forEach((note) => {
-				note.removeEventListener('click');
-			});
-
-			notes = null;
-		}
-	});
+	window.addEventListener('resize', alignNotes);
 </script>
 
 <style>

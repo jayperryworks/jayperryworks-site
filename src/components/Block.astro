@@ -1,17 +1,14 @@
 ---
 // block components
-import Passage from '@blocks/Passage.svelte';
-import Figure from '@blocks/Figure.svelte';
+import Passage from '@blocks/Passage.astro';
+// import Figure from '@blocks/Figure.svelte';
 
 // other components
 import ContentWrapper from '@components/ContentWrapper.astro';
 
-// typescript
-import { SvelteComponent } from 'svelte';
-
 const {
-	block
-	clasName as class
+	block,
+	class: className,
 } = Astro.props;
 
 function getWidth(prominence) {
@@ -31,6 +28,7 @@ function getBlockClass(type) {
 		type = 'passage';
 	}
 
+
 	const classes = [
 		'passage',
 		'heading',
@@ -40,19 +38,22 @@ function getBlockClass(type) {
 		return `block-${type}`;
 	}
 
-	return '';
+	// return '';
 }
 ---
 
 <ContentWrapper
 	width={getWidth(block.prominence)}
-	class="{getBlockClass(block.type)} {className}"
+	class:list={[
+		getBlockClass(block.type),
+		className,
+	]}
 >
 	<!-- passage -->
 	{block.type === 'passage' && <Passage {...block} />}
 
 	<!-- figure -->
-	{block.type === 'figure' && <Figure {...block} />}
+	<!-- {block.type === 'figure' && <Figure {...block} />} -->
 </ContentWrapper>
 
 <style>

@@ -1,8 +1,8 @@
 ---
 import '@styles/utilities/spacing.css';
 
-import Layout from '../layouts/BaseLayout.astro';
-import Block from '../components/Block.svelte';
+import Layout from '@layouts/BaseLayout.astro';
+import Block from '@components/Block.astro';
 
 import expand from '@icons/expand.svg?raw';
 
@@ -51,24 +51,24 @@ function htmlSerializer(type, element, content, children) {
 		const label = children.toString().replace('(', '').replace(')', '').concat('.');
 		// capitalize the first letter
 		return `
-				<button class="note align-center">
-					<span class="note-icon">${expand}</span>
-					<span class="note-flyout">${sentenceCase(label)}</span>
-				</button>
-			`
+			<button class="note align-center">
+				<span class="note-icon">${expand}</span>
+				<span class="note-flyout">${sentenceCase(label)}</span>
+			</button>
+		`;
 	}
 
-	return null
+	return null;
 }
 
 function getSliceWidth(prominence) {
 	const widths = {
 		Small: 'small',
 		Medium: 'medium',
-		Large: 'large'
+		Large: 'large',
 	}
 
-	return widths[prominence] || 'default'
+	return widths[prominence] || 'default';
 }
 
 function sharedBlockFields(slice) {
@@ -76,7 +76,7 @@ function sharedBlockFields(slice) {
 		includeInExcerpt: slice.primary.include_in_excerpt || false,
 		prominence: getSliceWidth(slice.primary.prominence),
 		type: camelCase(slice.slice_type),
-	}
+	};
 }
 
 function passage(slice) {

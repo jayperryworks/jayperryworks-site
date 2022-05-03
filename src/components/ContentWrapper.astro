@@ -11,20 +11,18 @@ const {
 	width = 'default',
 	centered = true,
 	flexChild = false,
-	className as class,
+	class: className,
 } = Astro.props;
 ---
 
 <div
-	class:list={[
+	class={[
 		'wrapper',
-		width === 'default' ? 'content-width' : `content-width-${width}`,
-		className
-		{
-			centered,
-			flexChild
-		}
-	]}
+		(width === 'default' ? 'content-width' : `content-width-${width}`),
+		(centered ? 'centered' : ''),
+		(flexChild ? 'flexChild' : ''),
+		className,
+	].join(' ')}
 >
   <slot />
 </div>
