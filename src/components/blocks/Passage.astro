@@ -1,21 +1,23 @@
 ---
-import '../../styles/components/tooltip.css';
+import '@styles/components/tooltip.css';
+import PrismicText from '@components/PrismicText.astro';
+import { Markdown } from 'astro/components';
 
 const {
 	html,
+	prismicText,
+	markdown,
 	typeSize = 'epsilon',
 	class: className,
 } = Astro.props;
-
-const classList = [
-	'prose',
-	`type-scale-${typeSize}`,
-	className,
-].join(' ');
 ---
 
 <div class={`prose | type-scale-${typeSize} | ${className}`}>
-	<slot><Fragment set:html={html}></Fragment></slot>
+	<slot>
+		{html && <Fragment set:html={html}></Fragment>}
+		{prismicText && <PrismicText content={prismicText} />}
+		{markdown && <Markdown content={markdown} />}
+	</slot>
 </div>
 
 <script>

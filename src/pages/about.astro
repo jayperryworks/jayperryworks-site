@@ -45,36 +45,15 @@ function figure(slice, options = {}) {
 	};
 }
 
-function htmlSerializer(type, element, content, children) {
-	if (element.data?.label === 'note') {
-		//  remove the parentheses and add a period so it reads as a sentence.
-		const label = children.toString().replace('(', '').replace(')', '').concat('.');
-		// capitalize the first letter
-		return `
-			<button class="note align-center">
-				<span class="note-icon">${expand}</span>
-				<span class="note-flyout">${sentenceCase(label)}</span>
-			</button>
-		`;
-	}
-
-	return null;
-}
-
-function getSliceWidth(prominence) {
-	const widths = {
-		Small: 'small',
-		Medium: 'medium',
-		Large: 'large',
-	}
-
-	return widths[prominence] || 'default';
-}
-
 function sharedBlockFields(slice) {
+	const {
+		include_in_excerpt: includeInExcerpt,
+		prominence,
+	} = slice.primary;
+
 	return {
-		includeInExcerpt: slice.primary.include_in_excerpt || false,
-		prominence: getSliceWidth(slice.primary.prominence),
+		includeInExcerpt,
+		prominence,
 		type: camelCase(slice.slice_type),
 	};
 }
@@ -85,11 +64,9 @@ function passage(slice) {
 		markdown,
 	} = slice.primary;
 
-	const renderedPrismicText = prismicText && prismicHelpers.asHTML(prismicText, null, htmlSerializer);
-	const renderedMarkdown = markdown && renderMarkdown(prismicHelpers.asText(markdown));
-
-return {
-		html: renderedPrismicText || renderedMarkdown,
+	return {
+		prismicText,
+		markdown: prismicHelpers.asText(markdown),
 		...sharedBlockFields(slice),
 	};
 }
