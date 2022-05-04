@@ -1,17 +1,19 @@
-<script lang="ts">
-export let svg: string;
-export let size = '';
-export let margin = '';
-export let align = 'middle';
-
-let className = '';
-export { className as class };
+---
+const {
+	svg,
+	size = '',
+	margin = '',
+	align = 'middle',
+	class: className,
+} = Astro.props;
 
 let marginClass = margin ? `space-${margin}` : '';
-</script>
+---
 
-<span class="icon {size} {marginClass} align-{align} {className}">
-  {@html svg}
+<span
+	class={`icon ${size} ${marginClass} align-${align} ${className}`}
+	set:html={svg}
+>
 </span>
 
 <style>

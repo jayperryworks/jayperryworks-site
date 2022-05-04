@@ -83,13 +83,16 @@ const blockList = body.reduce((result, block) => {
 }, []);
 ---
 
-<Layout pageTitle="article" path="article">
+<Layout
+	pageTitle="article"
+	path="article"
+>
 	<article>
   	<header>
 			<h1>{prismicHelpers.asText(title)}</h1>
 		</header>
 	</article>
-  <main class="padding-y-flow-wide padding-y-xwide">
+  <main>
     {blockList.map(block => <Block {block} />)}
   </main>
 </Layout>
@@ -100,7 +103,12 @@ const blockList = body.reduce((result, block) => {
     padding-inline: var(--space-outside);
   }
 
-	article > :global(* + *) {
+	article > :global(* + *),
+	main > :global(* + *) {
 		padding-block-start: var(--space-wide);
+	}
+
+	main {
+		padding-block: var(--space-wide);
 	}
 </style>

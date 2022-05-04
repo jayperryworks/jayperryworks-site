@@ -1,26 +1,43 @@
-<script>
+---
 import menu from '@icons/menu.svg?raw';
 import close from '@icons/close.svg?raw';
-import Icon from './Icon.svelte';
-import LogoJP from './logos/LogoJP.svelte';
+import Icon from './Icon.astro';
+import LogoJP from './logos/LogoJP.astro';
 import routes from '@data/routes.json';
 
 import '@styles/utilities/type.css';
 import '@styles/utilities/color.css';
 
-export let segment,
-	overlay = false;
+const {
+	segment,
+	overlay = false,
+} = Astro.props;
+---
 
-let navOpen = false;
-let navTransitioned = true;
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const $navButtonOpen = document.getElementById('nav-button-open');
+		const $navButtonClose = document.getElementById('nav-button-close');
+		const $navWrapper = document.getElementById('nav-wrapper');
 
-function handleButtonClick () {
-	navOpen = !navOpen;
-	navTransitioned = false;
-}
+		$navButtonOpen.addEventListener('click', () => {
+			console.log('hello')
+			$navWrapper.classList.remove('closed');
+			$navWrapper.classList.add('open');
+			$navButtonOpen.classList.add('hide');
+		});
+
+		$navButtonClose.addEventListener('click', () => {
+			$navWrapper.classList.remove('open');
+			$navWrapper.classList.add('closed');
+			$navButtonOpen.classList.remove('hide');
+		});
+	});
 </script>
 
-<nav class:overlay>
+<nav
+	class={overlay ? 'overlay' : ''}
+>
   <div class="bookend">
     <a
       class="logo"
@@ -32,40 +49,46 @@ function handleButtonClick () {
     <!-- nav -->
   	<div class="type-align-right">
       <button
-        on:click="{handleButtonClick}"
-        class:hide="{navOpen === true}"
-        class="nav-button | type-scale-epsilon type-font-accent type-weight-xlight"
+				class="nav-button | type-font-accent type-scale-epsilon type-weight-xlight"
+				id="nav-button-open"
       >
         Menu
-        <Icon svg="{menu}" margin="left" class="color-fg-primary" />
+        <Icon
+					svg={menu}
+					margin="left"
+					class="color-fg-primary"
+				/>
       </button>
       <div
-        class="nav"
-        class:open="{navOpen}"
-        class:closed="{navTransitioned && !navOpen}"
-        on:transitionend="{() => { navTransitioned = true; }}"
+        class="nav closed"
+				id="nav-wrapper"
       >
         <button
-          on:click="{handleButtonClick}"
           class="nav-button close type-scale-epsilon type-font-accent"
+					id="nav-button-close"
         >
-          <Icon svg="{close}" margin="right" />
+          <Icon
+						svg={close}
+						margin="right"
+					/>
           <span class="hide-visually">Close</span>
         </button>
         <ul class="nav-list">
-          {#each routes as item}
+					{routes.map((item) => <Fragment>
             <li>
               <a
-                class="nav-item type-font-accent type-link-undecorated type-weight-light"
-                class:current={segment === item.path || segment === item.slug}
-                class:small-only="{item.show === 'small'}"
-                rel={item.prefetch ? 'prefetch' : ''}
+                class={[
+									'nav-item',
+									'type-font-accent type-link-undecorated type-weight-light',
+									segment === item.path || segment === item.slug ? 'current' : '',
+									item.show === 'small' ? 'small-only' : '',
+								].join(' ')}
                 href={item.path}
+								set:html={item.label}
               >
-                {@html item.label}
               </a>
             </li>
-          {/each}
+					</Fragment>)}
         </ul>
       </div>
     </div>
