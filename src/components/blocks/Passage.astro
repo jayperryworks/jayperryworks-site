@@ -11,10 +11,10 @@ const classList = [
 	'prose',
 	`type-scale-${typeSize}`,
 	className,
-].join(' ')
+].join(' ');
 ---
 
-<div class={classList}>
+<div class={`prose | type-scale-${typeSize} | ${className}`}>
 	<slot><Fragment set:html={html}></Fragment></slot>
 </div>
 
