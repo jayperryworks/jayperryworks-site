@@ -7,6 +7,7 @@ import routes from '@data/routes.json';
 
 import '@styles/utilities/type.css';
 import '@styles/utilities/color.css';
+import '@styles/utilities/visibility.css';
 
 const {
 	segment,
@@ -17,21 +18,19 @@ const {
 <script>
 	document.addEventListener('DOMContentLoaded', () => {
 		const $navButtonOpen = document.getElementById('nav-button-open');
-		const $navButtonClose = document.getElementById('nav-button-close');
 		const $navWrapper = document.getElementById('nav-wrapper');
 
-		$navButtonOpen.addEventListener('click', () => {
-			console.log('hello')
+		function openNav() {
 			$navWrapper.classList.remove('closed');
 			$navWrapper.classList.add('open');
 			$navButtonOpen.classList.add('hide');
-		});
+		}
 
-		$navButtonClose.addEventListener('click', () => {
+		function closeNav() {
 			$navWrapper.classList.remove('open');
 			$navWrapper.classList.add('closed');
 			$navButtonOpen.classList.remove('hide');
-		});
+		}
 	});
 </script>
 
@@ -51,6 +50,7 @@ const {
       <button
 				class="nav-button | type-font-accent type-scale-epsilon type-weight-xlight"
 				id="nav-button-open"
+				onclick="openNav()"
       >
         Menu
         <Icon
@@ -66,6 +66,7 @@ const {
         <button
           class="nav-button close type-scale-epsilon type-font-accent"
 					id="nav-button-close"
+					onclick="closeNav()"
         >
           <Icon
 						svg={close}
