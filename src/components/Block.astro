@@ -1,0 +1,65 @@
+---
+// block components
+import Passage from '@blocks/Passage.svelte';
+import Figure from '@blocks/Figure.svelte';
+
+// other components
+import ContentWrapper from '@components/ContentWrapper.svelte';
+
+const {
+	block,
+	class: className,
+} = Astro.props;
+
+function getWidth(prominence) {
+	const widths = {
+		Small: 'narrow',
+		Medium: 'default',
+		Large: 'wide',
+	};
+
+	return widths[prominence] || 'default';
+}
+
+function getBlockClass(type) {
+	// a quote block behaves the same as a passage,
+	// so assign it the same class
+	if (type === 'quote') {
+		type = 'passage';
+	}
+
+
+	const classes = [
+		'passage',
+		'heading',
+	];
+
+	if (classes.includes(type)) {
+		return `block-${type}`;
+	}
+
+	return '';
+}
+---
+
+<ContentWrapper
+	width={getWidth(block.prominence)}
+	class={className}
+>
+	<!-- passage -->
+	{block.type === 'passage' && <Passage {...block} client:visible />}
+
+	<!-- figure -->
+	{block.type === 'figure' && <Figure {...block} />}
+</ContentWrapper>
+
+<style>
+	.blocks :global(.block-heading + .block-passage) {
+    padding-top: var(--space-narrow);
+  }
+
+  /* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
+  .blocks :global(.block-passage + .block-passage) {
+    padding-top: var(--space-medium);
+  }
+</style>

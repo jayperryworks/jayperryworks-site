@@ -38,6 +38,7 @@ function alignNotes () {
 // -> because the Svelte runtime can't handle injected strings
 // https://usefulangle.com/post/190/javascript-window-width-height
 onMount(() => {
+	console.log('hello');
 	notes = contentElement.querySelectorAll('.note');
 	alignNotes();
 
@@ -67,7 +68,7 @@ onDestroy(() => {
 	bind:this="{contentElement}"
 	class="prose type-scale-{typeSize} {className}"
 >
-	<slot>{@html html}</slot>
+	{@html html}
 </div>
 
 <style>
@@ -137,86 +138,7 @@ onDestroy(() => {
 		width: var(--size);
 	}
 
-	.prose :global(.note-flyout) {
-		background-color: var(--bg);
-		border-radius: 0.25em;
-		border: 1px solid var(--border);
-		bottom: calc(var(--size) + var(--pointer-size) + 1em);
-		box-shadow: 0 0.05rem 0.5rem var(--color-shadow);
-		color: var(--color-primary);
-		content: attr(title);
-		display: block;
-		font-family: var(--type-font-accent);
-		font-size: var(--type-scale-zeta);
-		line-height: var(--type-leading-tight);
-		max-width: 18rem;
-		min-width: 12rem;
-		opacity: var(--show);
-		padding: var(--space-xnarrow) var(--pointer-margin);
-		position: absolute;
-		transition: var(--transition-duration) opacity ease-in-out;
-		will-change: opacity;
-		z-index: 4;
-	}
-
-	.prose :global(.note-flyout)::before,
-	.prose :global(.note-flyout)::after {
-		border-left: var(--pointer-size) solid transparent;
-		border-right: var(--pointer-size) solid transparent;
-		content: '';
-		display: inline-block;
-		height: 0;
-		position: absolute;
-		width: 0;
-	}
-
-	.prose :global(.note-flyout)::before {
-		border-top: var(--pointer-size) solid var(--border);
-		bottom: calc(var(--pointer-size) * -1);
-	}
-
-	.prose :global(.note-flyout)::after {
-		border-top: var(--pointer-size) solid var(--bg);
-		bottom: calc((var(--pointer-size) - 0.1em) * -1);
-	}
-
-	/* flyout alignment modifiers */
-	/* center */
-	.prose :global(.note.align-center .note-flyout) {
-		left: 50%;
-		text-align: center;
-		transform: translateX(-50%);
-	}
-
-	.prose :global(.note.align-center .note-flyout)::before,
-	.prose :global(.note.align-center .note-flyout)::after {
-		left: 50%;
-		transform: translateX(-50%);
-	}
-
-	/* start */
-	.prose :global(.note.align-start .note-flyout) {
-		left: calc(var(--pointer-margin) * -1);
-		text-align: left;
-	}
-
-	.prose :global(.note.align-start .note-flyout)::before,
-	.prose :global(.note.align-start .note-flyout)::after {
-		left: var(--pointer-margin);
-	}
-
-	/* end */
-	.prose :global(.note.align-end .note-flyout) {
-		right: calc(var(--pointer-margin) * -1);
-		text-align: right;
-	}
-
-	.prose :global(.note.align-end .note-flyout)::before,
-	.prose :global(.note.align-end .note-flyout)::after {
-		right: var(--pointer-margin);
-	}
-
-	.prose :global(.note.show .note-flyout) {
+	.prose :global(.note.show .tooltip) {
 		--show: 1;
 	}
 </style>

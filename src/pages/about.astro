@@ -2,7 +2,7 @@
 import '@styles/utilities/spacing.css';
 
 import Layout from '../layouts/BaseLayout.astro';
-import Block from '../components/Block.svelte';
+import Block from '../components/Block.astro';
 
 import expand from '@icons/expand.svg?raw';
 
@@ -112,7 +112,7 @@ const blockList = body.reduce((result, block) => {
 			<h1>{prismicHelpers.asText(title)}</h1>
 		</header>
 	</article>
-  <main class="padding-y-flow-wide padding-y-xwide">
+  <main>
     {blockList.map(block => <Block {block} />)}
   </main>
 </Layout>
@@ -121,9 +121,14 @@ const blockList = body.reduce((result, block) => {
   article {
     padding-block: var(--space-xwide);
     padding-inline: var(--space-outside);
-  }
+	}
 
-	article > :global(* + *) {
+	article > :global(* + *),
+	main > :global(* + *) {
 		padding-block-start: var(--space-wide);
+	}
+
+	main {
+		padding-block: var(--space-xwide);
 	}
 </style>
