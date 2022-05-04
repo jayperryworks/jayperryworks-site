@@ -46,8 +46,7 @@ const {
 	}
 
 	document.addEventListener('DOMContentLoaded', () => {
-		const $prose = document.querySelector('.prose');
-		$notes = $prose.querySelectorAll('.note');
+		$notes = document.querySelectorAll('.note');
 
 		alignNotes();
 

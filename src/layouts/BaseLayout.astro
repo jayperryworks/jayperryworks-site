@@ -13,7 +13,7 @@ const { siteTitle = 'Jay Perry Works', pageTitle, path } = Astro.props;
 	<title>{siteTitle}{pageTitle && ` | ${pageTitle}`}</title>
 </head>
 <body>
-	<MainNav segment={path} />
+<MainNav segment={path} />
   <slot />
 </body>
 </html>
