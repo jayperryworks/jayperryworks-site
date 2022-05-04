@@ -13,12 +13,12 @@ const {
 
 function getWidth(prominence) {
 	const widths = {
-		small: 'narrow',
-		medium: 'default',
-		large: 'wide',
+		Small: 'narrow',
+		Medium: 'default',
+		Large: 'wide',
 	};
-	const index = Object.keys(widths).find((item) => item == prominence);
-	return widths[index] || 'default';
+	
+	return widths[prominence] || 'default';
 }
 
 function getBlockClass(type) {
