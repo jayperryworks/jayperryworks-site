@@ -1,15 +1,25 @@
 ---
 import '@styles/components/tooltip.css';
 import PrismicText from '@components/PrismicText.astro';
+import { RichTextField } from '@prismicio/types';
+import { TypeScale, Block } from '@lib/types';
 import { Markdown } from 'astro/components';
 
+export interface Props {
+	class?: string,
+	html?: string,
+	markdown?: string,
+	prismicText?: RichTextField,
+	typeSize?: TypeScale,
+}
+
 const {
-	html,
-	prismicText,
-	markdown,
-	typeSize = 'epsilon',
 	class: className,
-} = Astro.props;
+	html,
+	markdown,
+	prismicText,
+	typeSize = 'epsilon',
+} = Astro.props as Props;
 ---
 
 <div class={`prose | type-scale-${typeSize} | ${className}`}>

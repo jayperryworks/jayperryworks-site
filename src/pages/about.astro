@@ -19,6 +19,25 @@ const response = await client.getByUID('page', 'about');
 
 let { title, body } = response.data;
 
+function getBlockClass(type) {
+	// a quote block behaves the same as a passage,
+	// so assign it the same class
+	if (type === 'quote') {
+		type = 'passage';
+	}
+
+	const classes = [
+		'passage',
+		'heading',
+	];
+
+	if (classes.includes(type)) {
+		return `block-${type}`;
+	}
+
+	return '';
+}
+
 function figure(slice, options = {}) {
 	const { sizes = [ 800, 1200, 2000 ] } = options;
 	const { image, caption, attribution } = slice.primary;
@@ -38,8 +57,8 @@ function figure(slice, options = {}) {
 	return {
 		type: 'figure',
 		alt: image.alt,
-		caption: caption && renderMarkdown(prismicHelpers.asText(caption), { inline: false }),
-		attribution,
+		caption: caption && prismicHelpers.asText(caption),
+		attribution: attribution && prismicHelpers.asText(attribution),
 		sources,
 		...sharedBlockFields(slice),
 	};
@@ -93,7 +112,7 @@ const blockList = body.reduce((result, block) => {
 		</header>
 	</article>
   <main>
-    {blockList.map(block => <Block {block} />)}
+    {blockList.map(block => <Block class={getBlockClass(block.type)} {block} />)}
   </main>
 </Layout>
 
@@ -111,4 +130,13 @@ const blockList = body.reduce((result, block) => {
 	main {
 		padding-block: var(--space-wide);
 	}
+
+	main :global(.block-heading + .block-passage) {
+    padding-top: var(--space-narrow);
+  }
+
+  /* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
+  main :global(.block-passage + .block-passage) {
+    padding-top: var(--space-medium);
+  }
 </style>

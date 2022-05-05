@@ -2,28 +2,36 @@
 import '@styles/base.css';
 import MainNav from '@components/MainNav.astro';
 
+export interface Props {
+	pageTitle?: string,
+	path?: string,
+};
+
 const {
-	siteTitle = 'Jay Perry Works',
 	pageTitle,
-	path,
-	} = Astro.props;
+	path = 'home',
+	} = Astro.props as Props;
+
+const SITE_TITLE = 'Jay Perry Works';
 ---
 
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width">
-	<title>{siteTitle}{pageTitle && ` | ${pageTitle}`}</title>
-	<script>
-  	// Add a class to the html element to confirm JS is available
-		// -> used by the CSS for styling JS-dependent elements
-		document.documentElement.className = "js"
-		// Add a class if the browser/device supports touch
-		document.documentElement.className += (("ontouchstart" in document.documentElement) ? ' touch' : ' no-touch')
-  </script>
-</head>
-<body>
-<MainNav segment={path} />
-  <slot />
-</body>
+<html lang="en" class="no-js no-touch">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+		<title>{SITE_TITLE}{pageTitle && ` | ${pageTitle}`}</title>
+		<script>
+			// Add a class to the html element to confirm JS is available
+			// -> used by the CSS for styling JS-dependent elements
+			let featureClasses = ['js'];
+			// Add a class if the browser/device supports touch
+			if ("ontouchstart" in document.documentElement) featureClasses.push('touch');
+			document.documentElement.className = featureClasses;
+		</script>
+	</head>
+
+	<body>
+		<MainNav segment={path} />
+		<slot />
+	</body>
 </html>

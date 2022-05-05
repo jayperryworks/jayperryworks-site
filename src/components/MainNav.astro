@@ -9,10 +9,15 @@ import '@styles/utilities/type.css';
 import '@styles/utilities/color.css';
 import '@styles/utilities/visibility.css';
 
+export interface Props {
+	segment: string,
+	overlay?: boolean
+}
+
 const {
 	segment,
 	overlay = false,
-} = Astro.props;
+} = Astro.props as Props;
 ---
 
 <script>
@@ -85,7 +90,7 @@ const {
           <span class="hide-visually">Close</span>
         </button>
         <ul class="nav-list">
-					{routes.map((item) => <Fragment>
+					{routes.map((item) => (
             <li>
               <a
                 class={[
@@ -99,7 +104,7 @@ const {
               >
               </a>
             </li>
-					</Fragment>)}
+					))}
         </ul>
       </div>
     </div>

@@ -28,6 +28,7 @@
 		"@astrojs/svelte": "^0.0.2",
 		"@prismicio/client": "^6.4.1",
 		"@prismicio/helpers": "^2.2.1",
+		"@prismicio/types": "^0.1.27",
 		"@typescript-eslint/eslint-plugin": "^5.18.0",
 		"@typescript-eslint/parser": "^5.18.0",
 		"astro": "^0.26.0",
