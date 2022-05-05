@@ -5,7 +5,7 @@ export interface Block {
 	type: string,
 	includeInExcerpt?: boolean,
 	prominence?: Prominence,
-	// the arbitrary props for any given Block component
-	// e.g. a Passage with a prismicText prop, defined on the component
+	// the arbitrary props for any given Block component, defined on each component
+	// e.g. a Passage with a prismicText prop
 	[key: string]: unknown,
 }

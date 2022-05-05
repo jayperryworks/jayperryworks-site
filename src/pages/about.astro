@@ -39,27 +39,14 @@ function getBlockClass(type) {
 }
 
 function figure(slice, options = {}) {
-	const { sizes = [ 800, 1200, 2000 ] } = options;
 	const { image, caption, attribution } = slice.primary;
-
-	const aspect = image.dimensions.width / image.dimensions.height;
-	const sources = sizes.map((size) => {
-		return {
-			path: prismicHelpers.asImageSrc(image, {
-				width: size,
-					fit: 'max'
-				}),
-			width: size,
-			height: size / aspect
-		};
-	});
 
 	return {
 		type: 'figure',
 		alt: image.alt,
 		caption: caption && prismicHelpers.asText(caption),
 		attribution: attribution && prismicHelpers.asText(attribution),
-		sources,
+		source: image,
 		...sharedBlockFields(slice),
 	};
 }

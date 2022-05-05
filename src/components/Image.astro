@@ -1,0 +1,70 @@
+---
+// Responsive image
+// - loads a Prismic image source object and renders an img tag
+import * as prismicHelpers from '@prismicio/helpers';
+import { ImageFieldImage } from '@prismicio/types';
+
+export interface Props {
+	source: ImageFieldImage,
+	border?: boolean,
+	class?: string,
+	contain?: boolean,
+	cover?: boolean,
+	sizes?: Array<number>,
+}
+
+const {
+	source,
+	border = false,
+	class: className = '',
+	contain = false,
+	cover = false,
+	widths = [ 800, 1200, 2000, 2400 ],
+} = Astro.props as Props;
+
+const src = widths[0];
+const srcSet = prismicHelpers.asImageWidthSrcSet(source, {
+	fit: 'max',
+	widths: widths.shift(),
+});
+const alt = source.copyright ? `${source.alt} | ${source.copyright}` : source.alt;
+const width = source.dimensions.width;
+const height = source.dimensions.height;
+---
+
+<img
+	class={`${border ? 'border border-solid' : ''} ${className}`}
+	class:contain
+	class:cover
+	decoding="async"
+	loading="lazy"
+	{src}
+	{srcset}
+	{alt}
+	{width}
+	{height}
+/>
+
+<style>
+	img {
+		display: inline-block;
+		max-width: 100%;
+		object-fit: scale-down;
+		content-visibility: auto;
+	}
+
+	.contain,
+	.cover {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.contain {
+		object-fit: contain;
+	}
+
+	.cover {
+		object-fit: cover;
+	}
+</style>
