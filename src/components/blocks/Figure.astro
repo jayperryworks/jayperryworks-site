@@ -1,0 +1,49 @@
+---
+import Image from '@components/Image.astro';
+import Caption from '@components/Caption.svelte';
+
+import { ImageFieldImage } from '@prismicio/types';
+
+export interface Props {
+	source: ImageFieldImage,
+	caption: string,
+	attribution: string,
+	border: boolean,
+	cover: boolean,
+}
+
+const {
+	source,
+	caption,
+	attribution,
+	border = false,
+	cover = false,
+} = Astro.props as Props;
+---
+
+<figure class="type-align-center">
+	<slot>
+		<Image {source} {border} {cover} {alt}/>
+	</slot>
+
+	{#if caption || attribution}
+		<Caption
+			class="caption"
+			content={caption}
+			{attribution}
+		/>
+	{/if}
+</figure>
+
+<style>
+	figure {
+		margin: 0;
+		text-align: center;
+	}
+
+	figure :global(.caption) {
+		margin-block-start: auto;
+		padding-block-start: var(--space-xnarrow);
+		max-width: var(--content-width-default);
+	}
+</style>
