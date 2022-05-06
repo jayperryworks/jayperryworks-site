@@ -1,75 +1,23 @@
 ---
-import '@styles/components/tooltip.css';
-import PrismicText from '@components/PrismicText.astro';
-import { RichTextField } from '@prismicio/types';
-import { TypeScale, Block } from '@lib/types';
-import { Markdown } from 'astro/components';
+import { TypeScale, FormattedText } from '@lib/types';
+import RenderedText from '@components/RenderedText.astro';
 
 export interface Props {
+	text: FormattedText,
 	class?: string,
-	html?: string,
-	markdown?: string,
-	prismicText?: RichTextField,
 	typeSize?: TypeScale,
 }
 
 const {
-	class: className,
-	html,
-	markdown,
-	prismicText,
+	text,
+	class: className = '',
 	typeSize = 'epsilon',
 } = Astro.props as Props;
 ---
 
 <div class={`prose | type-scale-${typeSize} | ${className}`}>
-	<slot>
-		{html && <Fragment set:html={html}></Fragment>}
-		{prismicText && <PrismicText content={prismicText} />}
-		{markdown && <Markdown content={markdown} />}
-	</slot>
+	<slot><RenderedText {...text} /></slot>
 </div>
-
-<script>
-	let $notes;
-	let browserWidth = document.documentElement.clientWidth;
-
-	function alignNotes() {
-		if ($notes) {
-			$notes.forEach(($note) => {
-				const MARGIN = 100;
-				const noteRect = $note.getBoundingClientRect();
-
-				// change the note's alignment
-				// based on its proximity to the edge of the browser window
-				if (noteRect.left < MARGIN) {
-					$note.classList.remove('align-center', 'align-start', 'align-end');
-					$note.classList.add('align-start');
-				}
-
-				if ((browserWidth - noteRect.right) < MARGIN) {
-					$note.classList.remove('align-center', 'align-start', 'align-end');
-					$note.classList.add('align-end');
-				}
-			});
-		}
-	}
-
-	document.addEventListener('DOMContentLoaded', () => {
-		$notes = document.querySelectorAll('.note');
-
-		alignNotes();
-
-		$notes.forEach(($note) => {
-			$note.addEventListener('click', (event) => {
-				console.log('clikc')
-				event.target.classList.toggle('show');
-			});
-		});
-	});
-
-	window.addEventListener('resize', alignNotes);
-</script>
 
 <style>
   .prose :global(* + *) {
@@ -97,48 +45,5 @@ const {
 			vertical-align: baseline;
 			width: var(--size);
 		}
-	}
-
-	/* footnote popovers */
-	.prose :global(.note) {
-		--size: 0.8em;
-		--bg: hsl(var(--color-bg-h), var(--color-bg-s), calc(var(--color-bg-l) + 15%));
-		--border: var(--color-border);
-		--pointer-margin: var(--space-xnarrow);
-		--pointer-size: 0.6em;
-		--show: 0;
-		--transition-duration: 0.25s;
-
-		background-color: var(--color-secondary);
-		border-radius: 1000px;
-		border: 0;
-		color: var(--color-bg);
-		cursor: pointer;
-		padding: 0.25em;
-		position: relative;
-		transition: background-color 0.25s ease;
-		will-change: color;
-	}
-
-	.prose :global(.note):hover,
-	.prose :global(.note.show) {
-		background-color: var(--color-highlight);
-	}
-
-	.prose :global(.note-icon) {
-		display: block;
-		height: var(--size);
-		line-height: var(--size);
-		margin-left: 0.25em;
-		margin: 0;
-		max-height: 100%;
-		max-width: 100%;
-		pointer-events: none;
-		position: relative;
-		width: var(--size);
-	}
-
-	.prose :global(.note.show .tooltip) {
-		--show: 1;
 	}
 </style>

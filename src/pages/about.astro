@@ -38,19 +38,6 @@ function getBlockClass(type) {
 	return '';
 }
 
-function figure(slice, options = {}) {
-	const { image, caption, attribution } = slice.primary;
-
-	return {
-		type: 'figure',
-		alt: image.alt,
-		caption: caption && prismicHelpers.asText(caption),
-		attribution: attribution && prismicHelpers.asText(attribution),
-		source: image,
-		...sharedBlockFields(slice),
-	};
-}
-
 function sharedBlockFields(slice) {
 	const {
 		include_in_excerpt: includeInExcerpt,
@@ -64,6 +51,24 @@ function sharedBlockFields(slice) {
 	};
 }
 
+function figure(slice) {
+	const { image, caption, attribution } = slice.primary;
+
+	console.log(slice)
+
+	return {
+		type: 'figure',
+		source: image,
+		caption: caption && {
+			markdown: prismicHelpers.asText(caption)
+		},
+		attribution: attribution && {
+			markdown: prismicHelpers.asText(attribution)
+		},
+		...sharedBlockFields(slice),
+	};
+}
+
 function passage(slice) {
 	const {
 		structured_text: prismicText,
@@ -71,8 +76,10 @@ function passage(slice) {
 	} = slice.primary;
 
 	return {
-		prismicText,
-		markdown: prismicHelpers.asText(markdown),
+		text: {
+			prismicText,
+			markdown: prismicHelpers.asText(markdown)
+		},
 		...sharedBlockFields(slice),
 	};
 }
