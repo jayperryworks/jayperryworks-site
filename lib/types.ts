@@ -2,6 +2,7 @@ import { RichTextField } from '@prismicio/types';
 
 export type TypeScale = 'alpha' | 'beta' | 'gamma' | 'delta' | 'epsilon' | 'zeta';
 export type Prominence = 'Small' | 'Medium' | 'Large';
+export type ImageFit = 'default' | 'contain' | 'cover';
 
 export interface Block {
 	type: string,

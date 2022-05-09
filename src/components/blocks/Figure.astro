@@ -5,28 +5,32 @@ import Caption from '@blocks/FigureCaption.astro';
 
 // typescript
 import { ImageField } from '@prismicio/types';
-import { FormattedText } from '@lib/types.ts';
+import { FormattedText, ImageFit } from '@lib/types.ts';
 
 export interface Props {
 	source: ImageField,
-	caption?: FormattedText,
 	attribution?: FormattedText,
 	border?: boolean,
-	cover?: boolean,
+	caption?: FormattedText,
+	fit?: ImageFit,
 }
 
 const {
 	source,
-	caption,
+	border,
 	attribution,
-	border = false,
-	cover = false,
+	caption,
+	fit = 'default',
 } = Astro.props as Props;
 ---
 
 <figure>
 	<slot>
-		<Image {source} {border} {cover} />
+		<Image
+			{source}
+			{border}
+			{fit}
+		/>
 	</slot>
 
 	{(caption || attribution) && (

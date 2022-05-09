@@ -4,12 +4,13 @@
 // -> uses Prismic/Imgix's default auto formatting
 import * as prismicHelpers from '@prismicio/helpers';
 import { ImageField } from '@prismicio/types';
+import { ImageFit } from '@lib/types.ts';
 
 export interface Props {
 	source: ImageField,
 	border?: boolean,
 	class?: string,
-	fit?: 'default' | 'contain' | 'cover',
+	fit?: ImageFit,
 	contain?: boolean,
 	cover?: boolean,
 	widths?: Array<number>,
