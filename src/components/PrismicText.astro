@@ -1,0 +1,27 @@
+---
+import { sentenceCase } from '@lib/stringHelpers.ts';
+import * as prismicHelpers from '@prismicio/helpers';
+import expand from '@icons/expand.svg?raw';
+
+const {
+	content
+} = Astro.props;
+
+function htmlSerializer(type, element, content, children) {
+	if (element.data?.label === 'note') {
+		//  remove the parentheses and add a period so it reads as a sentence.
+		const label = children.toString().replace('(', '').replace(')', '').concat('.');
+		// capitalize the first letter
+		return `
+			<button class="note align-center">
+				<span class="note-icon">${expand}</span>
+				<span class="tooltip">${sentenceCase(label)}</span>
+			</button>
+		`;
+	}
+
+	return null;
+}
+---
+
+<Fragment set:html={prismicHelpers.asHTML(content, null, htmlSerializer)} />

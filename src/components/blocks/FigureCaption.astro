@@ -1,0 +1,44 @@
+---
+import RenderedText from "@components/RenderedText.astro";
+import { FormattedText } from "@lib/types";
+
+export interface Props {
+	text: FormattedText,
+	attribution?: FormattedText,
+	class?: string,
+}
+
+const {
+	text,
+	attribution,
+	class: className = ''
+} = Astro.props as Props;
+---
+
+<figcaption class={`type-scale-zeta type-font-accent type-weight-light ${className}`}>
+  <slot>
+		<RenderedText {...text} />
+
+		{attribution && (
+			<cite class="type-scale-zeta">
+				<RenderedText {...attribution} />
+			</cite>
+		)}
+	</slot>
+</figcaption>
+
+<style>
+	figcaption {
+		color: var(--color-secondary);
+		text-align: left;
+	}
+
+	figcaption > * + * {
+		padding-block-start: var(--xnarrow);
+	}
+
+	figcaption :global(p) {
+		max-width: none;
+    font-style: normal;
+	}
+</style>

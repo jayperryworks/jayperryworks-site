@@ -1,0 +1,56 @@
+---
+// child components
+import Image from '@components/Image.astro';
+import Caption from '@blocks/FigureCaption.astro';
+
+// typescript
+import { ImageField } from '@prismicio/types';
+import { FormattedText, ImageFit } from '@lib/types.ts';
+
+export interface Props {
+	source: ImageField,
+	attribution?: FormattedText,
+	border?: boolean,
+	caption?: FormattedText,
+	fit?: ImageFit,
+}
+
+const {
+	source,
+	border,
+	attribution,
+	caption,
+	fit = 'default',
+} = Astro.props as Props;
+---
+
+<figure>
+	<slot>
+		<Image
+			{source}
+			{border}
+			{fit}
+		/>
+	</slot>
+
+	{(caption || attribution) && (
+		<Caption class="caption" text={caption} {attribution} />
+	)}
+</figure>
+
+<style>
+	figure {
+		text-align: center;
+	}
+
+	figure :global(.caption) {
+		margin-block-start: auto;
+		margin-inline: auto;
+		padding-block-start: var(--space-xnarrow);
+		max-width: var(--content-width-default);
+	}
+
+	figure > :global(img) {
+		width: 100%;
+	}
+</style>

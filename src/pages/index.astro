@@ -10,15 +10,32 @@ import Block from '@components/Block.astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
 
 const body = [
+	// {
+	// 	type: 'figure',
+	// 	sources: [{
+	// 		path: 'https://via.placeholder.com/1200x800',
+	// 		width: 1200,
+	// 		height: 800
+	// 	}],
+	// 	alt: 'placeholder',
+	// 	prominence: 'wide'
+	// },
 	{
-		type: 'figure',
-		sources: [{
-			path: 'https://via.placeholder.com/1200x800',
-			width: 1200,
-			height: 800
-		}],
-		alt: 'placeholder',
-		prominence: 'wide'
+		type: 'passage',
+		html: `
+			<p>
+				Lorem ipsum dolor sit amet
+				<button class="note">
+					<span class="note-icon">${expand}</span>
+					<span class="tooltip center">Adipiscig elit nonummy.</span>
+				</button>. Velit massa donec dapibus purus rhoncus ac blandit lacus curabitur justo iaculis cras. Quis sollicitudin cras bibendum incididunt tellus eleifend elementum eiusmod enim. Posuere in feugiat vel pretium integer condimentum
+				<button class="note">
+					<span class="note-icon">${expand}</span>
+					<span class="tooltip center">Auctor aliquet porta.</span>
+				</button>. Fames tempor elementum est tortor fermentum eget at purus gravida tempus nullam.
+			</p>
+		`,
+		prominence: 'default'
 	},
 	{
 		type: 'passage',
@@ -36,7 +53,7 @@ const body = [
 			</p>
 		`,
 		prominence: 'default'
-	}
+	},
 ];
 ---
 <BaseLayout path="home">

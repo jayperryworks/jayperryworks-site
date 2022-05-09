@@ -19,63 +19,51 @@ const response = await client.getByUID('page', 'about');
 
 let { title, body } = response.data;
 
-function figure(slice, options = {}) {
-	const { sizes = [ 800, 1200, 2000 ] } = options;
-	const { image, caption, attribution } = slice.primary;
-
-	const aspect = image.dimensions.width / image.dimensions.height;
-	const sources = sizes.map((size) => {
-		return {
-			path: prismicHelpers.asImageSrc(image, {
-				width: size,
-					fit: 'max'
-				}),
-			width: size,
-			height: size / aspect
-		};
-	});
-
-	return {
-		type: 'figure',
-		alt: image.alt,
-		caption: caption && renderMarkdown(prismicHelpers.asText(caption), { inline: false }),
-		attribution,
-		sources,
-		...sharedBlockFields(slice),
-	};
-}
-
-function htmlSerializer(type, element, content, children) {
-	if (element.data?.label === 'note') {
-		//  remove the parentheses and add a period so it reads as a sentence.
-		const label = children.toString().replace('(', '').replace(')', '').concat('.');
-		// capitalize the first letter
-		return `
-			<button class="note align-center">
-				<span class="note-icon">${expand}</span>
-				<span class="note-flyout">${sentenceCase(label)}</span>
-			</button>
-		`;
+function getBlockClass(type) {
+	// a quote block behaves the same as a passage,
+	// so assign it the same class
+	if (type === 'quote') {
+		type = 'passage';
 	}
 
-	return null;
-}
+	const classes = [
+		'passage',
+		'heading',
+	];
 
-function getSliceWidth(prominence) {
-	const widths = {
-		Small: 'small',
-		Medium: 'medium',
-		Large: 'large',
+	if (classes.includes(type)) {
+		return `block-${type}`;
 	}
 
-	return widths[prominence] || 'default';
+	return '';
 }
 
 function sharedBlockFields(slice) {
+	const {
+		include_in_excerpt: includeInExcerpt,
+		prominence,
+	} = slice.primary;
+
 	return {
-		includeInExcerpt: slice.primary.include_in_excerpt || false,
-		prominence: getSliceWidth(slice.primary.prominence),
+		includeInExcerpt,
+		prominence,
 		type: camelCase(slice.slice_type),
+	};
+}
+
+function figure(slice) {
+	const { image, caption, attribution } = slice.primary;
+
+	return {
+		type: 'figure',
+		source: image,
+		caption: caption.length > 0 && {
+			markdown: prismicHelpers.asText(caption)
+		},
+		attribution: attribution && {
+			markdown: prismicHelpers.asText(attribution)
+		},
+		...sharedBlockFields(slice),
 	};
 }
 
@@ -85,11 +73,11 @@ function passage(slice) {
 		markdown,
 	} = slice.primary;
 
-	const renderedPrismicText = prismicText && prismicHelpers.asHTML(prismicText, null, htmlSerializer);
-	const renderedMarkdown = markdown && renderMarkdown(prismicHelpers.asText(markdown));
-
-return {
-		html: renderedPrismicText || renderedMarkdown,
+	return {
+		text: {
+			prismicText,
+			markdown: prismicHelpers.asText(markdown)
+		},
 		...sharedBlockFields(slice),
 	};
 }
@@ -106,14 +94,17 @@ const blockList = body.reduce((result, block) => {
 }, []);
 ---
 
-<Layout pageTitle="article" path="article">
+<Layout
+	pageTitle="article"
+	path="article"
+>
 	<article>
   	<header>
 			<h1>{prismicHelpers.asText(title)}</h1>
 		</header>
 	</article>
-  <main class="padding-y-flow-wide padding-y-xwide">
-    {blockList.map(block => <Block {block} />)}
+  <main>
+    {blockList.map(block => <Block class={getBlockClass(block.type)} {block} />)}
   </main>
 </Layout>
 
@@ -123,7 +114,21 @@ const blockList = body.reduce((result, block) => {
     padding-inline: var(--space-outside);
   }
 
-	article > :global(* + *) {
+	article > :global(* + *),
+	main > :global(* + *) {
 		padding-block-start: var(--space-wide);
 	}
+
+	main {
+		padding-block: var(--space-wide);
+	}
+
+	main :global(.block-heading + .block-passage) {
+    padding-top: var(--space-narrow);
+  }
+
+  /* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
+  main :global(.block-passage + .block-passage) {
+    padding-top: var(--space-medium);
+  }
 </style>
