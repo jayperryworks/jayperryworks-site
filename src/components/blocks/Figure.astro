@@ -24,7 +24,7 @@ const {
 } = Astro.props as Props;
 ---
 
-<figure class="type-align-center">
+<figure>
 	<slot>
 		<Image {source} {border} {cover} />
 	</slot>
@@ -41,7 +41,12 @@ const {
 
 	figure :global(.caption) {
 		margin-block-start: auto;
+		margin-inline: auto;
 		padding-block-start: var(--space-xnarrow);
 		max-width: var(--content-width-default);
+	}
+
+	figure > :global(img) {
+		width: 100%;
 	}
 </style>

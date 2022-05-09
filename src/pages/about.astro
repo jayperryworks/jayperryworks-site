@@ -54,12 +54,10 @@ function sharedBlockFields(slice) {
 function figure(slice) {
 	const { image, caption, attribution } = slice.primary;
 
-	console.log(slice)
-
 	return {
 		type: 'figure',
 		source: image,
-		caption: caption && {
+		caption: caption.length > 0 && {
 			markdown: prismicHelpers.asText(caption)
 		},
 		attribution: attribution && {

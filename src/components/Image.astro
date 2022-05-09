@@ -9,6 +9,7 @@ export interface Props {
 	source: ImageField,
 	border?: boolean,
 	class?: string,
+	fit?: 'default' | 'contain' | 'cover',
 	contain?: boolean,
 	cover?: boolean,
 	widths?: Array<number>,
@@ -18,31 +19,21 @@ const {
 	source,
 	border = false,
 	class: className = '',
-	contain = false,
-	cover = false,
-	widths = [ 800, 1200, 2000, 2400 ],
+	fit = 'default',
+	widths = [ 800, 1200, 2000 ],
 } = Astro.props as Props;
 
-const src = prismicHelpers.asImageSrc(source, {
+const { src, srcset } = prismicHelpers.asImageWidthSrcSet(source, {
 	fit: 'max',
-	width: widths[0],
+	widths,
 });
-
-console.log(widths.shift())
-
-const srcset = prismicHelpers.asImageWidthSrcSet(source, {
-	fit: 'max',
-	widths: widths.splice(0, 1),
-});
-
 const alt = source.alt;
 const width = widths[0];
 const height = (source.dimensions.height / source.dimensions.width) * widths[0];
 
 const classList = [
-	border && 'border border-solid',
-	contain && 'contain',
-	cover && 'cover',
+	border ? 'border border-solid' : '',
+	fit ? fit : '',
 	className,
 ].join(' ');
 ---
@@ -60,17 +51,16 @@ const classList = [
 
 <style>
 	img {
+		content-visibility: auto;
 		display: inline-block;
 		max-width: 100%;
-		object-fit: scale-down;
-		content-visibility: auto;
 	}
 
 	.contain,
 	.cover {
 		display: block;
-		width: 100%;
 		height: 100%;
+		width: 100%;
 	}
 
 	.contain {
