@@ -1,0 +1,106 @@
+---
+import { Block as BlockType } from '@lib/types.ts';
+import { camelCase } from 'change-case';
+import { Slice } from '@prismicio/types';
+import * as prismicHelpers from '@prismicio/helpers';
+
+// child components
+import Block from '@components/Block.astro';
+
+export interface Props {
+	body: Array<Slice>,
+}
+
+const {
+	body,
+} = Astro.props as Props;
+
+function getBlockClass(type) {
+	const classes = {
+		passage: 'block-passage',
+		quote: 'block-passage',
+		heading: 'block-heading',
+	};
+
+	if (classes[type]) {
+		return classes[type];
+	}
+
+	return '';
+}
+
+function sharedBlockFields(slice) {
+	const {
+		include_in_excerpt: includeInExcerpt,
+		prominence,
+	} = slice.primary;
+
+	return {
+		includeInExcerpt,
+		prominence,
+		type: camelCase(slice.slice_type),
+	};
+}
+
+// --- block types ---
+function figure(slice) {
+	const { image, caption, attribution } = slice.primary;
+
+	return {
+		type: 'figure',
+		source: image,
+		caption: caption.length > 0 && {
+			markdown: prismicHelpers.asText(caption)
+		},
+		attribution: attribution && {
+			markdown: prismicHelpers.asText(attribution)
+		},
+		...sharedBlockFields(slice),
+	};
+}
+
+function passage(slice) {
+	const {
+		structured_text: prismicText,
+		markdown,
+	} = slice.primary;
+
+	return {
+		text: {
+			prismicText,
+			markdown: prismicHelpers.asText(markdown)
+		},
+		...sharedBlockFields(slice),
+	};
+}
+
+const blockTypes = {
+	figure,
+	passage
+};
+
+const blockList = body.reduce((result: Array<BlockType>, block: BlockType) => {
+	const { slice_type: type } = block;
+	if (blockTypes[type]) result.push(blockTypes[type](block));
+	return result;
+}, []);
+---
+
+<div class="block-list">
+	{blockList.map((block) => <Block class={getBlockClass(block.type)} {block} />)}
+</div>
+
+<style>
+	.block-list > :global(* + *) {
+		padding-block-start: var(--space-wide);
+	}
+
+	.block-list :global(.block-heading + .block-passage) {
+    padding-top: var(--space-narrow);
+  }
+
+	/* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
+  .block-list :global(.block-passage + .block-passage) {
+    padding-top: var(--space-medium);
+  }
+</style>

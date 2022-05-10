@@ -6,9 +6,9 @@ import * as prismicHelpers from '@prismicio/helpers';
 import expand from '@icons/expand.svg?raw';
 
 export interface Props {
+	inline?: boolean,
 	markdown?: string,
 	prismicText?: RichTextField,
-	inline?: boolean,
 }
 
 const {
@@ -75,7 +75,6 @@ if (markdown) renderedText = renderMarkdown(markdown, { inline });
 
 		$notes.forEach(($note) => {
 			$note.addEventListener('click', (event) => {
-				console.log('clikc')
 				event.target.classList.toggle('show');
 			});
 		});

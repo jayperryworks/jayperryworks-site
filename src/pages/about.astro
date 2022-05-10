@@ -1,97 +1,13 @@
 ---
-import '@styles/utilities/spacing.css';
-
 import Layout from '@layouts/BaseLayout.astro';
-import Block from '@components/Block.astro';
+import BlockList from '@components/BlockList.astro';
 
-import expand from '@icons/expand.svg?raw';
-
-import * as prismic from '@prismicio/client';
+import prismic from '@lib/prismic.ts';
 import * as prismicHelpers from '@prismicio/helpers';
-import { camelCase } from 'change-case';
-import renderMarkdown from '@lib/renderMarkdown.ts';
 
-const endpoint: string = prismic.getEndpoint('jpw-api');
-const accessToken: string = import.meta.env.PRISMIC_TOKEN.toString();
-const client = prismic.createClient(endpoint, { accessToken });
-
-const response = await client.getByUID('page', 'about');
+const response = await prismic.getByUID('page', 'about');
 
 let { title, body } = response.data;
-
-function getBlockClass(type) {
-	// a quote block behaves the same as a passage,
-	// so assign it the same class
-	if (type === 'quote') {
-		type = 'passage';
-	}
-
-	const classes = [
-		'passage',
-		'heading',
-	];
-
-	if (classes.includes(type)) {
-		return `block-${type}`;
-	}
-
-	return '';
-}
-
-function sharedBlockFields(slice) {
-	const {
-		include_in_excerpt: includeInExcerpt,
-		prominence,
-	} = slice.primary;
-
-	return {
-		includeInExcerpt,
-		prominence,
-		type: camelCase(slice.slice_type),
-	};
-}
-
-function figure(slice) {
-	const { image, caption, attribution } = slice.primary;
-
-	return {
-		type: 'figure',
-		source: image,
-		caption: caption.length > 0 && {
-			markdown: prismicHelpers.asText(caption)
-		},
-		attribution: attribution && {
-			markdown: prismicHelpers.asText(attribution)
-		},
-		...sharedBlockFields(slice),
-	};
-}
-
-function passage(slice) {
-	const {
-		structured_text: prismicText,
-		markdown,
-	} = slice.primary;
-
-	return {
-		text: {
-			prismicText,
-			markdown: prismicHelpers.asText(markdown)
-		},
-		...sharedBlockFields(slice),
-	};
-}
-
-const blockTypes = {
-	figure,
-	passage
-};
-
-const blockList = body.reduce((result, block) => {
-	const { slice_type: type } = block;
-	if (blockTypes[type]) result.push(blockTypes[type](block));
-	return result;
-}, []);
 ---
 
 <Layout
@@ -104,7 +20,7 @@ const blockList = body.reduce((result, block) => {
 		</header>
 	</article>
   <main>
-    {blockList.map(block => <Block class={getBlockClass(block.type)} {block} />)}
+    <BlockList {body} />
   </main>
 </Layout>
 
@@ -114,21 +30,7 @@ const blockList = body.reduce((result, block) => {
     padding-inline: var(--space-outside);
   }
 
-	article > :global(* + *),
-	main > :global(* + *) {
-		padding-block-start: var(--space-wide);
-	}
-
 	main {
 		padding-block: var(--space-wide);
 	}
-
-	main :global(.block-heading + .block-passage) {
-    padding-top: var(--space-narrow);
-  }
-
-  /* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
-  main :global(.block-passage + .block-passage) {
-    padding-top: var(--space-medium);
-  }
 </style>
