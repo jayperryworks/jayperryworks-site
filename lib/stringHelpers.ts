@@ -1,7 +1,7 @@
 import { camelCase, paramCase } from 'change-case';
 
 // cheers to https://joshtronic.com/2016/02/14/how-to-capitalize-the-first-letter-in-a-string-in-javascript/
-function titleize(string: string): string {
+function titleCase(string: string): string {
 	return string.replace(/^\w/, (c) => c.toUpperCase());
 }
 
@@ -44,5 +44,5 @@ export {
 	camelCase,
 	paramCase,
 	sentenceCase,
-	titleize,
+	titleCase,
 };

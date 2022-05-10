@@ -79,15 +79,45 @@ const blockTypes = {
 	passage
 };
 
-const blockList = body.reduce((result: Array<BlockType>, block: BlockType) => {
-	const { slice_type: type } = block;
-	if (blockTypes[type]) result.push(blockTypes[type](block));
+const sectionList = body.reduce((result, slice) => {
+	const { slice_type: type, primary } = slice;
+
+	// if the block is a section, then add a new section to the array
+	if (type === 'sectionStart') {
+		result.push({
+			uid: primary.uid,
+			blocks: []
+		});
+		return result;
+	}
+
+	// if the first blocks are outside a section, then make a generic div
+	if (result.length === 0 && type !== 'sectionStart') {
+		result.push({ blocks: [] });
+	}
+
+	// add the block object to the last 'section' array item
+	// if it matches one of the available types
+	if (blockTypes[type]) {
+		const block = blockTypes[type](slice);
+		result[result.length - 1].blocks.push(block);
+	}
 	return result;
 }, []);
 ---
 
 <div class="block-list">
-	{blockList.map((block) => <Block class={getBlockClass(block.type)} {block} />)}
+	{sectionList.map(({ uid, blocks }) => (
+		uid ? (
+			<section id={uid}>
+				{blocks.map((block) => (
+					<Block class={getBlockClass(block.type)} {block} />
+				))}
+			</section>
+		) : blocks.map((block) => (
+			<Block class={getBlockClass(block.type)} {block} />
+		))
+	))}
 </div>
 
 <style>
