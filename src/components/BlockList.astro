@@ -15,7 +15,7 @@ const {
 	body,
 } = Astro.props as Props;
 
-function getBlockClass(type) {
+function getBlockClass(type: string): string {
 	const classes = {
 		passage: 'block-passage',
 		quote: 'block-passage',
@@ -29,7 +29,7 @@ function getBlockClass(type) {
 	return '';
 }
 
-function sharedBlockFields(slice) {
+function sharedBlockFields(slice: Slice): BlockType {
 	const {
 		include_in_excerpt: includeInExcerpt,
 		prominence,
@@ -43,7 +43,7 @@ function sharedBlockFields(slice) {
 }
 
 // --- block types ---
-function figure(slice) {
+function figure(slice: Slice): BlockType {
 	const { image, caption, attribution } = slice.primary;
 
 	return {
@@ -59,7 +59,7 @@ function figure(slice) {
 	};
 }
 
-function passage(slice) {
+function passage(slice: Slice): BlockType {
 	const {
 		structured_text: prismicText,
 		markdown,
@@ -79,8 +79,12 @@ const blockTypes = {
 	passage
 };
 
-const sectionList = body.reduce((result, slice) => {
-	const { slice_type: type, primary } = slice;
+// --- build an array of blocks, sorted into sections
+const sectionList = body.reduce((result: Array<BlockType>, slice: Slice) => {
+	const {
+		slice_type: type,
+		primary
+	} = slice;
 
 	// if the block is a section, then add a new section to the array
 	if (type === 'sectionStart') {
