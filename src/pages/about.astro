@@ -14,14 +14,14 @@ let { title, body } = response.data;
 	pageTitle="article"
 	path="article"
 >
-	<article>
-  	<header>
-			<h1>{prismicHelpers.asText(title)}</h1>
-		</header>
-	</article>
-  <main>
-    <BlockList {body} />
-  </main>
+	<main>
+		<article>
+			<header>
+				<h1>{prismicHelpers.asText(title)}</h1>
+			</header>
+			<BlockList {body} />
+		</article>
+	</main>
 </Layout>
 
 <style>

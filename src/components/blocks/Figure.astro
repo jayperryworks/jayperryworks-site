@@ -22,19 +22,28 @@ const {
 	caption,
 	fit = 'default',
 } = Astro.props as Props;
+
+const renderImage = !Astro.slots.has('default') && source || false;
+const renderCaption = caption || attribution || false;
 ---
 
 <figure>
 	<slot>
-		<Image
-			{source}
-			{border}
-			{fit}
-		/>
+		{renderImage && (
+			<Image
+				{border}
+				{fit}
+				{source}
+			/>
+		)}
 	</slot>
 
-	{(caption || attribution) && (
-		<Caption class="caption" text={caption} {attribution} />
+	{renderCaption && (
+		<Caption
+			class="caption"
+			text={caption}
+			{attribution}
+		/>
 	)}
 </figure>
 

@@ -2,6 +2,7 @@
 // block components
 import Passage from '@blocks/Passage.astro';
 import Figure from '@blocks/Figure.astro';
+import ImageGallery from '@blocks/ImageGallery.astro';
 
 // Typescript
 import { Block } from '@lib/types';
@@ -39,4 +40,7 @@ function getWidth(prominence) {
 
 	<!-- figure -->
 	{block.type === 'figure' && <Figure {...block} />}
+
+	<!-- image gallery -->
+	{block.type === 'imageGallery' && <ImageGallery {...block} />}
 </ContentWrapper>
