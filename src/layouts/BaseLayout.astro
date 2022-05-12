@@ -1,6 +1,7 @@
 ---
 import '@styles/base.css';
 import MainNav from '@components/MainNav.astro';
+import MainFooter from '@components/MainFooter.astro';
 
 export interface Props {
 	pageTitle?: string,
@@ -33,5 +34,6 @@ const SITE_TITLE = 'Jay Perry Works';
 	<body>
 		<MainNav segment={path} />
 		<slot />
+		<MainFooter />
 	</body>
 </html>

@@ -1,0 +1,48 @@
+---
+import prismic from '@lib/prismic.ts';
+import * as prismicHelpers from '@prismicio/helpers';
+import { format } from 'date-fns';
+
+import LogoJPW from '@components/logos/LogoJPW.astro';
+
+const response = await prismic.getSingle('social_channels');
+
+const { channel } = response.data;
+
+const socialChannelList = channel.map((item, index) => {
+	const { name, url } = item;
+	return `
+		${index === channel.length - 1 ? 'and' : ''}
+		<a href="${url}" target="_blank">${name}</a>
+	`.trim();
+}).join(', ');
+---
+
+<footer class="border-seam-top">
+	<p class="social">
+		Keep in touch. You can also find me on <Fragment set:html={socialChannelList} />.
+	</p>
+</footer>
+
+<style>
+	footer {
+		padding-inline: var(--space-outside);
+		flex-shrink: 0;
+	}
+
+	.social {
+		border-block-end: var(--border-default);
+		color: var(--color-secondary);
+		display: block;
+		font: var(--type-font-display);
+		font-size: var(--type-scale-gamma);
+		line-height: var(--type-leading-default);
+		padding-block: var(--space-wide);
+	}
+
+	.social > :global(a) {
+		color: var(--color-primary);
+		font: var(--type-font-display);
+		font-weight: normal;
+	}
+</style>
