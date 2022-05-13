@@ -16,7 +16,7 @@ let { title, body } = response.data;
 >
 	<article>
 		<header>
-			<h1>{prismicHelpers.asText(title)}</h1>
+			<h1 class="title">{prismicHelpers.asText(title)}</h1>
 		</header>
 		<BlockList {body} />
 	</article>
@@ -27,4 +27,9 @@ let { title, body } = response.data;
     padding-block: var(--space-xwide);
     padding-inline: var(--space-outside);
   }
+
+	.title {
+		text-align: center;
+		padding-block-end: var(--space-wide);
+	}
 </style>
