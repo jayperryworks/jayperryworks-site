@@ -1,0 +1,74 @@
+---
+// Responsive image
+// -> renders an img tag with srcset from a Prismic image data object
+// -> uses Prismic/Imgix's default auto formatting
+import * as prismicHelpers from '@prismicio/helpers';
+import { ImageField } from '@prismicio/types';
+import { ImageFit } from '@lib/types.ts';
+
+export interface Props {
+	source: ImageField,
+	border?: boolean,
+	class?: string,
+	fit?: ImageFit,
+	contain?: boolean,
+	cover?: boolean,
+	widths?: Array<number>,
+}
+
+const {
+	source,
+	border = false,
+	class: className = '',
+	fit = 'default',
+	widths = [ 800, 1200, 2000 ],
+} = Astro.props as Props;
+
+const { src, srcset } = prismicHelpers.asImageWidthSrcSet(source, {
+	fit: 'max',
+	widths,
+});
+const alt = source.alt;
+const width = widths[0];
+const height = (source.dimensions.height / source.dimensions.width) * widths[0];
+
+const classList = [
+	border ? 'border border-solid' : '',
+	fit ? fit : '',
+	className,
+].join(' ');
+---
+
+<img
+	class={classList}
+	decoding="async"
+	loading="lazy"
+	{alt}
+	{src}
+	{srcset}
+	{width}
+	{height}
+/>
+
+<style>
+	img {
+		content-visibility: auto;
+		display: inline-block;
+		max-width: 100%;
+	}
+
+	.contain,
+	.cover {
+		display: block;
+		height: 100%;
+		width: 100%;
+	}
+
+	.contain {
+		object-fit: contain;
+	}
+
+	.cover {
+		object-fit: cover;
+	}
+</style>

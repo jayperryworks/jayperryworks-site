@@ -1,27 +1,60 @@
-<script>
+---
 import menu from '@icons/menu.svg?raw';
 import close from '@icons/close.svg?raw';
-import Icon from './Icon.svelte';
-import LogoJP from './logos/LogoJP.svelte';
+import Icon from './Icon.astro';
+import LogoJP from './logos/LogoJP.astro';
 import routes from '@data/routes.json';
 
 import '@styles/utilities/type.css';
 import '@styles/utilities/color.css';
+import '@styles/utilities/visibility.css';
 
-export let segment,
-	overlay = false;
-
-let navOpen = false;
-let navTransitioned = true;
-
-function handleButtonClick () {
-	navOpen = !navOpen;
-	navTransitioned = false;
+export interface Props {
+	segment: string,
+	overlay?: boolean
 }
+
+const {
+	segment,
+	overlay = false,
+} = Astro.props as Props;
+---
+
+<script>
+  // namespace for this component's JS
+  let MainNav = {
+		// current state
+		open: false,
+	};
+
+	document.addEventListener('DOMContentLoaded', () => {
+		MainNav.$navButtonOpen = document.getElementById('nav-button-open');
+		MainNav.$navButtonClose = document.getElementById('nav-button-close');
+		MainNav.$navWrapper = document.getElementById('nav-wrapper');
+
+		MainNav.$navButtonOpen.onclick = () => {
+			MainNav.open = true;
+			MainNav.$navWrapper.classList.remove('closed');
+			MainNav.$navWrapper.classList.add('open');
+			MainNav.$navButtonOpen.classList.add('hide');
+		}
+
+		MainNav.$navButtonClose.onclick = () => {
+			MainNav.open = false;
+			MainNav.$navWrapper.classList.remove('open');
+			MainNav.$navButtonOpen.classList.remove('hide');
+		}
+
+		MainNav.$navWrapper.ontransitionend = () => {
+			if (!MainNav.open) {
+				MainNav.$navWrapper.classList.add('closed');
+			}
+		};
+	});
 </script>
 
-<nav class:overlay>
-  <div class="bookend">
+<header class={overlay ? 'overlay' : ''}>
+  <nav class="bookend">
     <a
       class="logo"
       href="/"
@@ -32,60 +65,59 @@ function handleButtonClick () {
     <!-- nav -->
   	<div class="type-align-right">
       <button
-        on:click="{handleButtonClick}"
-        class:hide="{navOpen === true}"
-        class="nav-button | type-scale-epsilon type-font-accent type-weight-xlight"
+				class="nav-button | type-font-accent type-scale-epsilon type-weight-xlight"
+				id="nav-button-open"
       >
         Menu
-        <Icon svg="{menu}" margin="left" class="color-fg-primary" />
+        <Icon
+					svg={menu}
+					margin="left"
+					class="color-fg-primary"
+				/>
       </button>
       <div
-        class="nav"
-        class:open="{navOpen}"
-        class:closed="{navTransitioned && !navOpen}"
-        on:transitionend="{() => { navTransitioned = true; }}"
+        class="nav closed"
+				id="nav-wrapper"
       >
         <button
-          on:click="{handleButtonClick}"
           class="nav-button close type-scale-epsilon type-font-accent"
+					id="nav-button-close"
         >
-          <Icon svg="{close}" margin="right" />
+          <Icon
+						svg={close}
+						margin="right"
+					/>
           <span class="hide-visually">Close</span>
         </button>
         <ul class="nav-list">
-          {#each routes as item}
+					{routes.map((item) => (
             <li>
               <a
-                class="nav-item type-font-accent type-link-undecorated type-weight-light"
-                class:current={segment === item.path || segment === item.slug}
-                class:small-only="{item.show === 'small'}"
-                rel={item.prefetch ? 'prefetch' : ''}
+                class={[
+									'nav-item',
+									'type-link-undecorated',
+									segment === item.path || segment === item.slug ? 'current' : '',
+									item.show === 'small' ? 'small-only' : '',
+								].join(' ')}
                 href={item.path}
+								set:html={item.label}
               >
-                {@html item.label}
               </a>
             </li>
-          {/each}
+					))}
         </ul>
       </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>
 
 <style>
-	nav {
+	/* --- layout --- */
+	header {
+    --transition: 0.25s;
+
 		padding-inline: var(--space-outside);
 	}
-
-  /* --- layout --- */
-  @supports (display:  flex) {
-    .bookend {
-      align-items: flex-start;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-    }
-  }
 
   .overlay {
     background-color: transparent;
@@ -95,6 +127,11 @@ function handleButtonClick () {
     top: 0;
     z-index: 4;
   }
+
+	nav {
+		display: flex;
+		justify-content: space-between;
+	}
 
   /* --- nav elements --- */
   .logo {
@@ -196,6 +233,8 @@ function handleButtonClick () {
     position: relative;
     transition: color 0.25s ease-in-out;
     will-change: color, font-size;
+		font-family: var(--type-font-accent);
+		font-weight: 300;
   }
 
   .nav-item.current::before {

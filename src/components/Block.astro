@@ -1,65 +1,47 @@
 ---
 // block components
-import Passage from '@blocks/Passage.svelte';
-import Figure from '@blocks/Figure.svelte';
+import Passage from '@blocks/Passage.astro';
+import Figure from '@blocks/Figure.astro';
+import ImageGallery from '@blocks/ImageGallery.astro';
+
+// Typescript
+import { Block } from '@lib/types';
 
 // other components
-import ContentWrapper from '@components/ContentWrapper.svelte';
+import ContentWrapper from '@components/ContentWrapper.astro';
+
+export interface Props {
+	block: Block,
+	class: string,
+}
 
 const {
 	block,
 	class: className,
-} = Astro.props;
+} = Astro.props as Props;
 
 function getWidth(prominence) {
 	const widths = {
 		Small: 'narrow',
 		Medium: 'default',
-		Large: 'wide',
+		Large: 'xwide',
+		XLarge: 'xxwide',
 	};
 
 	return widths[prominence] || 'default';
 }
-
-function getBlockClass(type) {
-	// a quote block behaves the same as a passage,
-	// so assign it the same class
-	if (type === 'quote') {
-		type = 'passage';
-	}
-
-
-	const classes = [
-		'passage',
-		'heading',
-	];
-
-	if (classes.includes(type)) {
-		return `block-${type}`;
-	}
-
-	return '';
-}
 ---
 
 <ContentWrapper
-	width={getWidth(block.prominence)}
 	class={className}
+	width={getWidth(block.prominence)}
 >
 	<!-- passage -->
-	{block.type === 'passage' && <Passage {...block} client:visible />}
+	{block.type === 'passage' && <Passage {...block} />}
 
 	<!-- figure -->
 	{block.type === 'figure' && <Figure {...block} />}
+
+	<!-- image gallery -->
+	{block.type === 'imageGallery' && <ImageGallery {...block} />}
 </ContentWrapper>
-
-<style>
-	.blocks :global(.block-heading + .block-passage) {
-    padding-top: var(--space-narrow);
-  }
-
-  /* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
-  .blocks :global(.block-passage + .block-passage) {
-    padding-top: var(--space-medium);
-  }
-</style>

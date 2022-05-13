@@ -1,120 +1,25 @@
 ---
-import '@styles/utilities/spacing.css';
+import Layout from '@layouts/BaseLayout.astro';
+import BlockList from '@components/BlockList.astro';
 
-import Layout from '../layouts/BaseLayout.astro';
-import Block from '../components/Block.astro';
-
-import expand from '@icons/expand.svg?raw';
-
-import * as prismic from '@prismicio/client';
+import prismic from '@lib/prismic.ts';
 import * as prismicHelpers from '@prismicio/helpers';
-import { camelCase } from 'change-case';
-import renderMarkdown from '@lib/renderMarkdown.ts';
 
-const endpoint: string = prismic.getEndpoint('jpw-api');
-const accessToken: string = import.meta.env.PRISMIC_TOKEN.toString();
-const client = prismic.createClient(endpoint, { accessToken });
-
-const response = await client.getByUID('page', 'about');
+const response = await prismic.getByUID('page', 'about');
 
 let { title, body } = response.data;
-
-function figure(slice, options = {}) {
-	const { sizes = [ 800, 1200, 2000 ] } = options;
-	const { image, caption, attribution } = slice.primary;
-
-	const aspect = image.dimensions.width / image.dimensions.height;
-	const sources = sizes.map((size) => {
-		return {
-			path: prismicHelpers.asImageSrc(image, {
-				width: size,
-					fit: 'max'
-				}),
-			width: size,
-			height: size / aspect
-		};
-	});
-
-	return {
-		type: 'figure',
-		alt: image.alt,
-		caption: caption && renderMarkdown(prismicHelpers.asText(caption), { inline: false }),
-		attribution,
-		sources,
-		...sharedBlockFields(slice),
-	};
-}
-
-function htmlSerializer(type, element, content, children) {
-	if (element.data?.label === 'note') {
-		//  remove the parentheses and add a period so it reads as a sentence.
-		const label = children.toString().replace('(', '').replace(')', '').concat('.');
-		// capitalize the first letter
-		return `
-				<button class="note align-center">
-					<span class="note-icon">${expand}</span>
-					<span class="note-flyout">${sentenceCase(label)}</span>
-				</button>
-			`
-	}
-
-	return null
-}
-
-function getSliceWidth(prominence) {
-	const widths = {
-		Small: 'small',
-		Medium: 'medium',
-		Large: 'large'
-	}
-
-	return widths[prominence] || 'default'
-}
-
-function sharedBlockFields(slice) {
-	return {
-		includeInExcerpt: slice.primary.include_in_excerpt || false,
-		prominence: getSliceWidth(slice.primary.prominence),
-		type: camelCase(slice.slice_type),
-	}
-}
-
-function passage(slice) {
-	const {
-		structured_text: prismicText,
-		markdown,
-	} = slice.primary;
-
-	const renderedPrismicText = prismicText && prismicHelpers.asHTML(prismicText, null, htmlSerializer);
-	const renderedMarkdown = markdown && renderMarkdown(prismicHelpers.asText(markdown));
-
-return {
-		html: renderedPrismicText || renderedMarkdown,
-		...sharedBlockFields(slice),
-	};
-}
-
-const blockTypes = {
-	figure,
-	passage
-};
-
-const blockList = body.reduce((result, block) => {
-	const { slice_type: type } = block;
-	if (blockTypes[type]) result.push(blockTypes[type](block));
-	return result;
-}, []);
 ---
 
-<Layout pageTitle="article" path="article">
+<Layout
+	pageTitle="article"
+	path="article"
+>
 	<article>
-  	<header>
-			<h1>{prismicHelpers.asText(title)}</h1>
+		<header>
+			<h1 class="title">{prismicHelpers.asText(title)}</h1>
 		</header>
+		<BlockList {body} />
 	</article>
-  <main>
-    {blockList.map(block => <Block {block} />)}
-  </main>
 </Layout>
 
 <style>
@@ -123,9 +28,9 @@ const blockList = body.reduce((result, block) => {
     padding-inline: var(--space-outside);
 	}
 
-	article > :global(* + *),
-	main > :global(* + *) {
-		padding-block-start: var(--space-wide);
+	.title {
+		text-align: center;
+		padding-block-end: var(--space-wide);
 	}
 
 	main {

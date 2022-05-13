@@ -1,0 +1,160 @@
+---
+import { Block as BlockType } from '@lib/types.ts';
+import { camelCase } from 'change-case';
+import { Slice } from '@prismicio/types';
+import * as prismicHelpers from '@prismicio/helpers';
+
+// child components
+import Block from '@components/Block.astro';
+
+export interface Props {
+	body: Array<Slice>,
+}
+
+const {
+	body,
+} = Astro.props as Props;
+
+function getBlockClass(type: string): string {
+	const classes = {
+		passage: 'block-passage',
+		quote: 'block-passage',
+		heading: 'block-heading',
+	};
+
+	if (classes[type]) {
+		return classes[type];
+	}
+
+	return '';
+}
+
+function sharedBlockFields(slice: Slice): BlockType {
+	const {
+		include_in_excerpt: includeInExcerpt,
+		prominence,
+	} = slice.primary;
+
+	return {
+		includeInExcerpt,
+		prominence,
+		type: camelCase(slice.slice_type),
+	};
+}
+
+// --- block types ---
+function figure(slice: Slice): BlockType {
+	const { image, caption, attribution } = slice.primary;
+
+	return {
+		source: image,
+		attribution: attribution && {
+			markdown: attribution,
+		},
+		caption: caption.length > 0 && {
+			markdown: prismicHelpers.asText(caption)
+		},
+		...sharedBlockFields(slice),
+	};
+}
+
+function imageGallery(slice: Slice): BlockType {
+	const {
+		attribution,
+		caption,
+		column_size: columnSize,
+	} = slice.primary;
+
+	return {
+		attribution: attribution && {
+			markdown: attribution
+		},
+		caption: caption.length > 0 && {
+			markdown: prismicHelpers.asText(caption)
+		},
+		columnSize,
+		images: slice.items.map((item) => item.image),
+		...sharedBlockFields(slice),
+	}
+}
+
+function passage(slice: Slice): BlockType {
+	const {
+		structured_text: prismicText,
+		markdown,
+	} = slice.primary;
+
+	return {
+		text: {
+			prismicText,
+			markdown: prismicHelpers.asText(markdown)
+		},
+		...sharedBlockFields(slice),
+	};
+}
+
+const blockTypes = {
+	figure,
+	passage,
+	'image_gallery': imageGallery,
+};
+
+// --- build an array of blocks, sorted into sections ---
+const sectionList = body.reduce((result: Array<BlockType>, slice: Slice) => {
+	const {
+		slice_type: type,
+		primary,
+	} = slice;
+
+	// if the block is a section, then add a new section to the array
+	if (type === 'sectionStart') {
+		result.push({
+			uid: primary.uid,
+			blocks: []
+		});
+		return result;
+	}
+
+	// if the first blocks are outside a section, then make a generic div
+	if (result.length === 0 && type !== 'sectionStart') {
+		result.push({ blocks: [] });
+	}
+
+	// add the block object to the last 'section' array item
+	// if it matches one of the available types
+	if (blockTypes[type]) {
+		const block = blockTypes[type](slice);
+		result[result.length - 1].blocks.push(block);
+	}
+	return result;
+}, []);
+---
+
+<div class="block-list">
+	{sectionList.map(({ uid, blocks }) => (
+		uid ? (
+			<section id={uid}>
+				{blocks.map((block) => (
+					<Block class={getBlockClass(block.type)} {block} />
+				))}
+			</section>
+		) : blocks.map((block) => (
+			<Block class={getBlockClass(block.type)} {block} />
+		))
+	))}
+</div>
+
+<style>
+	.block-list > :global(* + *) {
+		padding-block-start: var(--space-wide);
+	}
+
+	.block-list :global(.block-heading + .block-passage) {
+    padding-top: var(--space-narrow);
+  }
+
+	/* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
+  .block-list :global(.block-passage + .block-passage) {
+    padding-top: var(--space-medium);
+  }
+</style>
