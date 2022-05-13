@@ -1,0 +1,28 @@
+[
+	{
+		"label": "Home",
+		"path": "/",
+		"show": "small"
+	},
+	{
+		"label": "Patapsco essay",
+		"path": "longform/2022/patapsco/1",
+		"slug": "patapsco"
+	},
+	{
+		"label": "Prints &amp; paintings",
+		"path": "pictures"
+	},
+	{
+		"label": "Design",
+		"path": "design"
+	},
+	{
+		"label": "Blog",
+		"path": "blog"
+	},
+	{
+		"label": "About",
+		"path": "about"
+	}
+]

@@ -1,0 +1,129 @@
+---
+import '@styles/components/tooltip.css';
+import { RichTextField } from '@prismicio/types';
+import renderMarkdown from '@lib/renderMarkdown.ts';
+import * as prismicHelpers from '@prismicio/helpers';
+import expand from '@icons/expand.svg?raw';
+
+export interface Props {
+	inline?: boolean,
+	markdown?: string,
+	prismicText?: RichTextField,
+}
+
+const {
+	markdown,
+	prismicText,
+	inline = false,
+} = Astro.props as Props;
+
+// Customize the output of Prismic text
+function htmlSerializer(type, element, content, children) {
+	if (element.data?.label === 'note') {
+		//  remove the parentheses and add a period so it reads as a sentence.
+		const label = children.toString().replace('(', '').replace(')', '').concat('.');
+		// capitalize the first letter
+		return `
+			<button class="note align-center">
+				<span class="note-icon">${expand}</span>
+				<span class="tooltip">${sentenceCase(label)}</span>
+			</button>
+		`;
+	}
+
+	return null;
+}
+
+let renderedText;
+if (prismicText) {
+	renderedText = prismicHelpers.asHTML(prismicText, null, htmlSerializer);
+}
+if (markdown) renderedText = renderMarkdown(markdown, { inline });
+---
+
+<Fragment set:html={renderedText} />
+
+<script>
+	let $notes;
+	let browserWidth = document.documentElement.clientWidth;
+
+	function alignNotes() {
+		if ($notes) {
+			$notes.forEach(($note) => {
+				const MARGIN = 100;
+				const noteRect = $note.getBoundingClientRect();
+
+				// change the note's alignment
+				// based on its proximity to the edge of the browser window
+				if (noteRect.left < MARGIN) {
+					$note.classList.remove('align-center', 'align-start', 'align-end');
+					$note.classList.add('align-start');
+				}
+
+				if ((browserWidth - noteRect.right) < MARGIN) {
+					$note.classList.remove('align-center', 'align-start', 'align-end');
+					$note.classList.add('align-end');
+				}
+			});
+		}
+	}
+
+	document.addEventListener('DOMContentLoaded', () => {
+		$notes = document.querySelectorAll('.note');
+
+		alignNotes();
+
+		$notes.forEach(($note) => {
+			$note.addEventListener('click', (event) => {
+				event.target.classList.toggle('show');
+			});
+		});
+	});
+
+	window.addEventListener('resize', alignNotes);
+</script>
+
+<style is:global>
+	/* footnote popovers */
+	.note {
+		--size: 0.8em;
+		--bg: hsl(var(--color-bg-h), var(--color-bg-s), calc(var(--color-bg-l) + 15%));
+		--border: var(--color-border);
+		--pointer-margin: var(--space-xnarrow);
+		--pointer-size: 0.6em;
+		--show: 0;
+		--transition-duration: 0.25s;
+
+		background-color: var(--color-secondary);
+		border-radius: 1000px;
+		border: 0;
+		color: var(--color-bg);
+		cursor: pointer;
+		padding: 0.25em;
+		position: relative;
+		transition: background-color 0.25s ease;
+		will-change: color;
+	}
+
+	.note:hover,
+	.note.show {
+		background-color: var(--color-highlight);
+	}
+
+	.note-icon {
+		display: block;
+		height: var(--size);
+		line-height: var(--size);
+		margin-left: 0.25em;
+		margin: 0;
+		max-height: 100%;
+		max-width: 100%;
+		pointer-events: none;
+		position: relative;
+		width: var(--size);
+	}
+
+	.note.show .tooltip {
+		--show: 1;
+	}
+</style>

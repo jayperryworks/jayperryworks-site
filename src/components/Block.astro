@@ -1,0 +1,47 @@
+---
+// block components
+import Passage from '@blocks/Passage.astro';
+import Figure from '@blocks/Figure.astro';
+import ImageGallery from '@blocks/ImageGallery.astro';
+
+// Typescript
+import { Block } from '@lib/types';
+
+// other components
+import ContentWrapper from '@components/ContentWrapper.astro';
+
+export interface Props {
+	block: Block,
+	class: string,
+}
+
+const {
+	block,
+	class: className,
+} = Astro.props as Props;
+
+function getWidth(prominence) {
+	const widths = {
+		Small: 'narrow',
+		Medium: 'default',
+		Large: 'xwide',
+		XLarge: 'xxwide',
+	};
+
+	return widths[prominence] || 'default';
+}
+---
+
+<ContentWrapper
+	class={className}
+	width={getWidth(block.prominence)}
+>
+	<!-- passage -->
+	{block.type === 'passage' && <Passage {...block} />}
+
+	<!-- figure -->
+	{block.type === 'figure' && <Figure {...block} />}
+
+	<!-- image gallery -->
+	{block.type === 'imageGallery' && <ImageGallery {...block} />}
+</ContentWrapper>

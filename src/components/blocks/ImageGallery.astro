@@ -1,0 +1,58 @@
+---
+import Figure from '@blocks/Figure.astro';
+import Image from '@components/Image.astro';
+import Gallery from '@components/Gallery.astro';
+import { SpaceScale, FormattedText, ImageFit } from '@lib/types.ts';
+import { ImageField } from '@prismicio/types';
+
+export interface Props {
+	images: Array<ImageField>,
+	attribution?: FormattedText,
+	border?: boolean,
+	caption?: FormattedText,
+	columnSize?: 'small' | 'medium' | 'large',
+	fitImages?: ImageFit,
+	gutter?: SpaceScale,
+}
+
+const {
+	images,
+	attribution,
+	border = false,
+	caption,
+	columnSize = 'medium',
+	fitImages = 'default',
+	gutter = 'xnarrow',
+} = Astro.props as Props;
+---
+
+<Figure
+	{caption}
+	{attribution}
+>
+	<Gallery
+		size={columnSize}
+		{gutter}
+	>
+		{images.map((source) => (
+			<li>
+				<Image
+					{border}
+					{source}
+					fit={fitImages}
+				/>
+			</li>
+		))}
+	</Gallery>
+</Figure>
+
+<style>
+	li {
+		text-align: center;
+		font-size: 0;
+	}
+
+	li > :global(img) {
+		display: block;
+	}
+</style>

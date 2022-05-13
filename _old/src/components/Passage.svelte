@@ -88,7 +88,7 @@ onDestroy(()=> {
 			display: inline-block;
 			height: var(--size);
 			margin: 0 0.1em 0 0.25em;
-			mask: url('/images/icons/external-link.svg') no-repeat 50% 50%;
+			mask: url('icons/external-link.svg') no-repeat 50% 50%;
 			position: relative;
 			vertical-align: baseline;
 			width: var(--size);

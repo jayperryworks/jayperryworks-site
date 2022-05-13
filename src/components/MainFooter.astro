@@ -1,0 +1,107 @@
+---
+import '@styles/utilities/type.css';
+import '@styles/utilities/borders.css';
+
+import prismic from '@lib/prismic.ts';
+import * as prismicHelpers from '@prismicio/helpers';
+import { format } from 'date-fns';
+
+import LogoJPW from '@components/logos/LogoJPW.astro';
+
+const response = await prismic.getSingle('social_channels');
+
+const { channel } = response.data;
+
+const socialChannelList = channel.map((item, index) => {
+	const { name, link } = item;
+	const url = prismicHelpers.asLink(link);
+
+	return `
+		${index === channel.length - 1 ? 'and' : ''}
+		<a href="${url}" target="_blank">${name}</a>
+	`.trim();
+}).join(', ');
+---
+
+<footer class="border-seam-top">
+	<p class="social">
+		Keep in touch. You can also find me on <Fragment set:html={socialChannelList} />.
+	</p>
+	<div class="signoff">
+		<div class="bookend">
+			<a
+				class="logo type-link-undecorated"
+				href="/"
+			>
+				<LogoJPW />
+			</a>
+			<small class="copyright">
+				&copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
+			</small>
+		</div>
+	</div>
+</footer>
+
+<style>
+	footer {
+		padding-inline: var(--space-outside);
+		flex-shrink: 0;
+	}
+
+	.social {
+		border-block-end: var(--border-default);
+		color: var(--color-secondary);
+		display: block;
+		font-family: var(--type-font-display);
+		font-size: var(--type-scale-gamma);
+		line-height: var(--type-leading-default);
+		max-width: none;
+		padding-block: var(--space-wide);
+	}
+
+	.social > :global(a) {
+		color: var(--color-primary);
+		font-family: var(--type-font-display);
+		font-weight: normal;
+	}
+
+	.signoff {
+		padding-block: var(--space-medium);
+		overflow: hidden;
+	}
+
+	.bookend {
+		display: flex;
+		flex-flow: wrap;
+		gap: var(--space-narrow);
+	}
+
+	.gutter {
+		--gutter: var(--space-medium);
+
+		padding: calc(var(--gutter) / 2);
+		margin: calc(var(--gutter) * -1);
+	}
+
+	.gutter .gutter-item {
+		padding: calc(var(--gutter) / 2);
+	}
+
+	.logo,
+	.copyright {
+		display: inline-block;
+		vertical-align: top;
+	}
+
+	.copyright {
+		font-family: var(--type-font-accent);
+		font-weight: 200;
+		font-size: var(--type-scale-zeta);
+		color: var(--color-secondary);
+		align-items: center;
+	}
+
+	.logo {
+		width: 12rem;
+	}
+</style>
