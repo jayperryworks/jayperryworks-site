@@ -53,8 +53,8 @@ const {
 	});
 </script>
 
-<nav class={overlay ? 'overlay' : ''}>
-  <div class="bookend">
+<header class={overlay ? 'overlay' : ''}>
+  <nav class="bookend">
     <a
       class="logo"
       href="/"
@@ -95,7 +95,7 @@ const {
               <a
                 class={[
 									'nav-item',
-									'type-font-accent type-link-undecorated type-weight-light',
+									'type-link-undecorated',
 									segment === item.path || segment === item.slug ? 'current' : '',
 									item.show === 'small' ? 'small-only' : '',
 								].join(' ')}
@@ -108,17 +108,17 @@ const {
         </ul>
       </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>
 
 <style>
-	nav {
+	/* --- layout --- */
+	header {
     --transition: 0.25s;
 
 		padding-inline: var(--space-outside);
 	}
 
-  /* --- layout --- */
   .overlay {
     background-color: transparent;
     left: 0;
@@ -128,14 +128,10 @@ const {
     z-index: 4;
   }
 
-  @supports (display:  flex) {
-    .bookend {
-      align-items: flex-start;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-    }
-  }
+	nav {
+		display: flex;
+		justify-content: space-between;
+	}
 
   /* --- nav elements --- */
   .logo {
@@ -237,6 +233,8 @@ const {
     position: relative;
     transition: color 0.25s ease-in-out;
     will-change: color, font-size;
+		font-family: var(--type-font-accent);
+		font-weight: 300;
   }
 
   .nav-item.current::before {

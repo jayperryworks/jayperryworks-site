@@ -33,7 +33,21 @@ const SITE_TITLE = 'Jay Perry Works';
 
 	<body>
 		<MainNav segment={path} />
-		<slot />
+		<main>
+			<slot />
+		</main>
 		<MainFooter />
 	</body>
 </html>
+
+<style>
+	body {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+	}
+
+	main {
+		flex: 1;
+	}
+</style>

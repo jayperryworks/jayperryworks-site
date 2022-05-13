@@ -14,14 +14,12 @@ let { title, body } = response.data;
 	pageTitle="article"
 	path="article"
 >
-	<main>
-		<article>
-			<header>
-				<h1>{prismicHelpers.asText(title)}</h1>
-			</header>
-			<BlockList {body} />
-		</article>
-	</main>
+	<article>
+		<header>
+			<h1>{prismicHelpers.asText(title)}</h1>
+		</header>
+		<BlockList {body} />
+	</article>
 </Layout>
 
 <style>
@@ -29,8 +27,4 @@ let { title, body } = response.data;
     padding-block: var(--space-xwide);
     padding-inline: var(--space-outside);
   }
-
-	main {
-		padding-block: var(--space-wide);
-	}
 </style>
