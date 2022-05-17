@@ -1,0 +1,48 @@
+---
+import prismic from '@lib/prismic.ts';
+import prismicHelpers from '@prismicio/helpers';
+import { format } from 'date-fns';
+
+export async function getStaticPaths({ paginate }) {
+	const response = await prismic.getAllByType('blog_post');
+	const posts = await response;
+
+	return paginate(posts, { pageSize: 10 });
+}
+
+const {
+	page
+} = Astro.props;
+
+const { next, prev } = page.url;
+
+const postSummaryList = page.data.map(({ uid, tags, data }) => {
+	// find the slices in each post marked as "include in excerpt"
+	const summary = data.body.filter(({ primary }) => primary.include_in_excerpt);
+
+	return {
+		...data,
+		uid,
+		tags,
+		summary,
+		date: {
+			year: format(new Date(data.date), 'yyyy'),
+			month: format(new Date(data.date), 'MM'),
+			day: format(new Date(data.date), 'dd'),
+		},
+	}
+});
+
+---
+<ul>
+	{postSummaryList.map((post) => (
+		<li>
+			<h2>{prismicHelpers.asText(post.title)}</h2>
+		</li>
+	))}
+</ul>
+
+<nav>
+	{prev && <a href={prev}>Previous</a>}
+	{next && <a href={next}>Next</a>}
+</nav>
