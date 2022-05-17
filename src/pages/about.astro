@@ -7,7 +7,7 @@ import * as prismicHelpers from '@prismicio/helpers';
 
 const response = await prismic.getByUID('page', 'about');
 
-let { title, body } = response.data;
+const { title, body } = response.data;
 ---
 
 <Layout

@@ -2,8 +2,10 @@
 import Figure from '@blocks/Figure.astro';
 import Image from '@components/Image.astro';
 import Gallery from '@components/Gallery.astro';
-import { SpaceScale, FormattedText, ImageFit } from '@lib/types.ts';
-import { ImageField } from '@prismicio/types';
+
+// types
+import type { SpaceScale, FormattedText, ImageFit } from '@lib/types.ts';
+import type { ImageField } from '@prismicio/types';
 
 export interface Props {
 	images: Array<ImageField>,
