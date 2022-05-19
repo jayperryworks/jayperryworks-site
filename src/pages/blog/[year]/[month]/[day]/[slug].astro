@@ -1,14 +1,108 @@
 ---
 import prismic from '@lib/prismic.ts';
+import prismicHelpers from '@prismicio/helpers';
+import { format } from 'date-fns';
 
-export function getStaticPaths() {
+// types
+import type { Slice } from '@prismicio/types';
 
-	return [
-		{
+export interface Params {
+	year: string,
+	month: string,
+	day: string,
+	slug: string,
+}
+
+export interface Props {
+	tags: Array<string>,
+	title: string,
+	subtitle: string,
+	link: string,
+	series: string,
+	body: Array<Slice>,
+	prev: string,
+	next: string,
+}
+
+async function getNextPrevPath(post) {
+	const { data, uid } = post;
+
+	if (data) {
+		const year = format(new Date(data.date), 'yyyy');
+		const month = format(new Date(data.date), 'MM');
+		const day = format(new Date(data.date), 'dd');
+
+		return `/blog/${year}/${month}/${day}/${uid}`;
+	}
+
+	return;
+}
+
+export async function getStaticPaths({ paginate }) {
+	const response = await prismic.getAllByType('blog_post');
+	const posts = await response;
+
+	return posts.map(({ uid: slug, tags, data }, index) => {
+		const { date } = data;
+
+		// create urls for next and previous blog posts
+		const nav = [
+			posts[index - 1],
+			posts[index + 1],
+		].map((post) => {
+			if (post) {
+				const { data, uid } = post;
+				const year = format(new Date(data.date), 'yyyy');
+				const month = format(new Date(data.date), 'MM');
+				const day = format(new Date(data.date), 'dd');
+
+				return `/blog/${year}/${month}/${day}/${uid}`;
+			}
+		});
+
+		return {
 			params: {
-
+				year: format(new Date(date), 'yyyy'),
+				month: format(new Date(date), 'MM'),
+				day: format(new Date(date), 'dd'),
+				slug,
+			},
+			props: {
+				tags,
+				...data,
+				prev: nav[0],
+				next: nav[1],
 			}
 		}
-	]
+	});
 }
+
+const {
+	year,
+	month,
+	day,
+	slug,
+} = Astro.params as Params;
+
+const {
+	tags,
+	title,
+	subtitle,
+	link,
+	series,
+	body,
+	prev,
+	next,
+} = Astro.props as Props;
+
+console.log(prev, next)
 ---
+
+<header>
+	<h1>{prismicHelpers.asText(title)}</h1>
+</header>
+
+<nav>
+	{prev && <a href={prev}>Previous</a>}
+	{next && <a href={next}>Next</a>}
+</nav>

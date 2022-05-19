@@ -30,6 +30,7 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 			month: format(new Date(data.date), 'MM'),
 			day: format(new Date(data.date), 'dd'),
 		},
+		path: `/blog/${format(new Date(data.date), 'yyyy')}/${format(new Date(data.date), 'MM')}/${format(new Date(data.date), 'dd')}/${uid}`
 	}
 });
 
@@ -37,7 +38,7 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 <ul>
 	{postSummaryList.map((post) => (
 		<li>
-			<h2>{prismicHelpers.asText(post.title)}</h2>
+			<h2><a href={post.path}>{prismicHelpers.asText(post.title)}</a></h2>
 		</li>
 	))}
 </ul>
