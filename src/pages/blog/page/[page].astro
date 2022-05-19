@@ -4,8 +4,12 @@ import prismicHelpers from '@prismicio/helpers';
 import { format } from 'date-fns';
 
 export async function getStaticPaths({ paginate }) {
-	const response = await prismic.getAllByType('blog_post');
-	const posts = await response;
+	const posts = await prismic.getAllByType('blog_post', {
+		orderings: {
+			field: 'my.blog_post.date',
+			direction: 'desc',
+		},
+	});
 
 	return paginate(posts, { pageSize: 10 });
 }

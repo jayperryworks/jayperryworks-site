@@ -10,7 +10,7 @@ export interface Params {
 	year: string,
 	month: string,
 	day: string,
-	slug: string,
+	uid: string,
 }
 
 export interface Props {
@@ -24,25 +24,15 @@ export interface Props {
 	next: string,
 }
 
-async function getNextPrevPath(post) {
-	const { data, uid } = post;
-
-	if (data) {
-		const year = format(new Date(data.date), 'yyyy');
-		const month = format(new Date(data.date), 'MM');
-		const day = format(new Date(data.date), 'dd');
-
-		return `/blog/${year}/${month}/${day}/${uid}`;
-	}
-
-	return;
-}
-
 export async function getStaticPaths({ paginate }) {
-	const response = await prismic.getAllByType('blog_post');
-	const posts = await response;
+	const posts = await prismic.getAllByType('blog_post', {
+		orderings: {
+			field: 'my.blog_post.date',
+			direction: 'desc',
+		},
+	});
 
-	return posts.map(({ uid: slug, tags, data }, index) => {
+	return posts.map(({ uid, tags, data }, index) => {
 		const { date } = data;
 
 		// create urls for next and previous blog posts
@@ -65,7 +55,7 @@ export async function getStaticPaths({ paginate }) {
 				year: format(new Date(date), 'yyyy'),
 				month: format(new Date(date), 'MM'),
 				day: format(new Date(date), 'dd'),
-				slug,
+				uid,
 			},
 			props: {
 				tags,
@@ -81,7 +71,7 @@ const {
 	year,
 	month,
 	day,
-	slug,
+	uid,
 } = Astro.params as Params;
 
 const {
