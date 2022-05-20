@@ -1,9 +1,15 @@
 ---
+// assets
 import '@styles/components/tooltip.css';
-import { RichTextField } from '@prismicio/types';
+import expand from '@icons/expand.svg?raw';
+
+// utils
+import { sentenceCase } from '@lib/stringHelpers.ts';
 import renderMarkdown from '@lib/renderMarkdown.ts';
 import * as prismicHelpers from '@prismicio/helpers';
-import expand from '@icons/expand.svg?raw';
+
+// types
+import { RichTextField } from '@prismicio/types';
 
 export interface Props {
 	inline?: boolean,

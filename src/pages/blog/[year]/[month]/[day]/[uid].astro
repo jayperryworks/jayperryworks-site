@@ -1,7 +1,14 @@
 ---
+import '@styles/utilities/borders.css';
+// helpers
 import prismic from '@lib/prismic.ts';
 import prismicHelpers from '@prismicio/helpers';
 import { format } from 'date-fns';
+
+// components
+import Layout from '@layouts/BaseLayout.astro';
+import BlockList from '@components/BlockList.astro';
+import ContentWrapper from '@components/ContentWrapper.astro';
 
 // types
 import type { Slice } from '@prismicio/types';
@@ -78,6 +85,7 @@ const {
 	tags,
 	title,
 	subtitle,
+	date,
 	link,
 	series,
 	body,
@@ -88,11 +96,62 @@ const {
 console.log(prev, next)
 ---
 
-<header>
-	<h1>{prismicHelpers.asText(title)}</h1>
-</header>
+<Layout
+	pageTitle={prismicHelpers.asText(title)}
+	path="blog"
+>
+	<article>
+		<header>
+			<h1>{prismicHelpers.asText(title)}</h1>
+			{subtitle && (
+				<p class="subtitle">{prismicHelpers.asText(subtitle)}</p>
+			)}
+			<ContentWrapper class="date">
+				<time datetime={date}>
+					{format(new Date(date), 'MMMM dd, yyyy')}
+				</time>
+			</ContentWrapper>
+		</header>
+		<BlockList {body} />
+	</article>
 
-<nav>
-	{prev && <a href={prev}>Previous</a>}
-	{next && <a href={next}>Next</a>}
-</nav>
+	<nav class="border-seam-top">
+		{prev && <a href={prev}>Previous</a>}
+		{next && <a href={next}>Next</a>}
+	</nav>
+</Layout>
+
+<style>
+  article {
+    padding-block: var(--space-xwide);
+    padding-inline: var(--space-outside);
+	}
+
+	header {
+		text-align: center;
+		padding-block-end: var(--space-wide);
+	}
+
+	.subtitle {
+		font-family: var(--type-font-accent);
+		font-size: var(--type-scale-gamma);
+		font-weight: 100;
+		max-width: none;
+		color: var(--color-secondary);
+		padding-top: var(--space-xxnarrow);
+	}
+
+	header :global(.date) {
+		border-top: var(--border-default);
+		color: var(--color-secondary);
+		font-family: var(--type-font-accent);
+		font-weight: 200;
+		text-align: left;
+		margin-block-start: var(--space-narrow);
+		padding-block-start: var(--space-narrow);
+	}
+
+	nav {
+		padding-block-start: var(--space-xwide);
+	}
+</style>
