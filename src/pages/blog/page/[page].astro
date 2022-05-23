@@ -35,14 +35,14 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 			uid,
 			tags,
 			summary,
-			path: `/blog/${format(new Date(data.date), 'yyyy')}/${format(new Date(data.date), 'MM')}/${format(new Date(data.date), 'dd')}/${uid}`
+			path: `/blog/${format(new Date(data.date), 'yyyy')}/${format(new Date(data.date), 'MM')}/${format(new Date(data.date), 'dd')}/${uid}`,
 		};
 	}
 
 	throw new Error(`Post missing a summary: ${prismicHelpers.asText(data.title)}, ${data.date}`);
 });
-
 ---
+
 <Layout
 	path="blog"
 	pageTitle="Blog"
@@ -53,7 +53,6 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 				<article>
 					<h2><a href={post.path}>{prismicHelpers.asText(post.title)}</a></h2>
 					<time datetime={}>{format(new Date(post.date), 'MMMM dd, yyyy')}</time>
-					<BlockList body={post.summary} />
 				</article>
 			</li>
 		))}

@@ -6,23 +6,23 @@
 	},
 	{
 		"label": "Patapsco essay",
-		"path": "longform/2022/patapsco/1",
+		"path": "/longform/2022/patapsco/1",
 		"slug": "patapsco"
 	},
 	{
 		"label": "Prints &amp; paintings",
-		"path": "pictures"
+		"path": "/pictures"
 	},
 	{
 		"label": "Design",
-		"path": "design"
+		"path": "/design"
 	},
 	{
 		"label": "Blog",
-		"path": "blog/page/1"
+		"path": "/blog/page/1"
 	},
 	{
 		"label": "About",
-		"path": "about"
+		"path": "/about"
 	}
 ]
