@@ -1,14 +1,20 @@
 ---
+// styles & assets
 import '@styles/utilities/borders.css';
+import arrowLeft from '@icons/arrow-left.svg?raw';
+import arrowRight from '@icons/arrow-right.svg?raw';
+import externalLink from '@icons/external-link.svg?raw';
+
 // helpers
+import { format } from 'date-fns';
 import prismic from '@lib/prismic.ts';
 import prismicHelpers from '@prismicio/helpers';
-import { format } from 'date-fns';
 
 // components
-import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
-import ContentWrapper from '@components/ContentWrapper.astro';
+import Button from '@components/Button.astro';
+import Icon from '@components/Icon.astro';
+import Layout from '@layouts/BaseLayout.astro';
 
 // types
 import type { Slice, TitleField, LinkField, Tags } from '@prismicio/types';
@@ -54,7 +60,10 @@ export async function getStaticPaths({ paginate }) {
 				const month = format(new Date(data.date), 'MM');
 				const day = format(new Date(data.date), 'dd');
 
-				return `/blog/${year}/${month}/${day}/${uid}`;
+				return {
+					path: `/blog/${year}/${month}/${day}/${uid}`,
+					title: prismicHelpers.asText(data.title),
+				};
 			}
 		});
 
@@ -68,6 +77,7 @@ export async function getStaticPaths({ paginate }) {
 			props: {
 				tags,
 				...data,
+				link: prismicHelpers.asLink(data.link),
 				prev: nav[0],
 				next: nav[1],
 			}
@@ -93,8 +103,6 @@ const {
 	tags,
 	title,
 } = Astro.props as Props;
-
-console.log(prev, next)
 ---
 
 <Layout
@@ -111,12 +119,42 @@ console.log(prev, next)
 				{format(new Date(date), 'MMMM dd, yyyy')}
 			</time>
 		</header>
-		<BlockList {body} />
+
+		<BlockList {body} showLedeStyle="true" />
+
+		{link && (
+			<footer>
+				<Button
+					href={link}
+					iconRight={externalLink}
+				>
+					Direct link
+				</Button>
+			</footer>
+		)}
 	</article>
 
 	<nav class="border-seam-top">
-		{prev && <a href={prev}>Previous</a>}
-		{next && <a href={next}>Next</a>}
+		<ul>
+			{prev && (
+				<li class="nav-item">
+					<Icon svg={arrowLeft} size="large" />
+					<p>
+						<a href={prev.path} class="nav-label">Previous</a>
+						<a href={prev.path} class="nav-title" set:html={prev.title}></a>
+					</p>
+				</li>
+			)}
+			{next && (
+				<li class="nav-item">
+					<p>
+						<a href={next.path} class="nav-label">Next</a>
+						<a href={prev.path} class="nav-title" set:html={next.title}></a>
+					</p>
+					<Icon svg={arrowRight} size="large" />
+				</li>
+			)}
+		</ul>
 	</nav>
 </Layout>
 
@@ -127,16 +165,18 @@ console.log(prev, next)
 	}
 
 	header {
-		text-align: center;
+		margin-inline: auto;
+		max-width: var(--content-width-xwide);
 		padding-block-end: var(--space-wide);
+		text-align: center;
 	}
 
 	.subtitle {
+		color: var(--color-secondary);
 		font-family: var(--type-font-accent);
 		font-size: var(--type-scale-gamma);
 		font-weight: 100;
 		max-width: none;
-		color: var(--color-secondary);
 		padding-top: var(--space-xxnarrow);
 	}
 
@@ -149,6 +189,39 @@ console.log(prev, next)
 	}
 
 	nav {
-		padding-block-start: var(--space-xwide);
+		padding-block: var(--space-wide);
+		padding-inline: var(--space-outside);
+	}
+
+	nav ul {
+		display: flex;
+		gap: var(--space-narrow);
+		list-style: none;
+		padding-left: 0;
+	}
+
+	.nav-item {
+		display: flex;
+		align-items: center;
+		gap: var(--space-medium);
+	}
+
+	.nav-item:last-child {
+		margin-inline-start: auto;
+		text-align: right;
+	}
+
+	.nav-label {
+		font-family: var(--type-font-accent);
+		color: var(--color-secondary);
+		display: block;
+		border: 0;
+		font-weight: 200;
+	}
+
+	.nav-title {
+		font-size: var(--type-scale-delta);
+		display: block;
+		border: 0;
 	}
 </style>

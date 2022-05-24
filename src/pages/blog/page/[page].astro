@@ -1,6 +1,7 @@
 ---
 // styles & assets
 import '@styles/utilities/borders.css';
+import arrowLeft from '@icons/arrow-left.svg?raw';
 import arrowRight from '@icons/arrow-right.svg?raw';
 import externalLink from '@icons/external-link.svg?raw';
 
@@ -10,10 +11,10 @@ import prismicHelpers from '@prismicio/helpers';
 import { format } from 'date-fns';
 
 // components
-import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
-import ContentWrapper from '@components/ContentWrapper.astro';
 import Button from '@components/Button.astro';
+import Icon from '@components/Icon.astro';
+import Layout from '@layouts/BaseLayout.astro';
 
 export async function getStaticPaths({ paginate }): Promise<Function> {
 	const posts = await prismic.getAllByType('blog_post', {
@@ -101,8 +102,18 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 	</ul>
 
 	<nav class="border-seam-top">
-		{prev && <a href={prev}>Previous</a>}
-		{next && <a href={next}>Next</a>}
+		{prev && (
+			<a href={prev}>
+				<Icon svg={arrowLeft} margin="right" />
+				Newer posts
+			</a>
+		)}
+		{next && (
+			<a href={next}>
+				Older posts
+				<Icon svg={arrowRight} margin="left" />
+			</a>
+		)}
 	</nav>
 </Layout>
 
@@ -112,7 +123,7 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 		list-style: none;
 		display: block;
 		padding-inline-start: 0;
-		padding-block-start: var(--space-xwide);
+		padding-block: var(--space-xwide);
 	}
 
 	.post-list > li + li {
@@ -156,5 +167,32 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 		font-family: var(--type-font-accent);
 		font-weight: 200;
 		padding-block-start: var(--space-xnarrow);
+	}
+
+	nav {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-narrow);
+		padding-inline: var(--space-outside);
+		padding-block: var(--space-wide);
+		flex-wrap: wrap;
+	}
+
+	nav > a {
+		border: 0;
+		font-size: var(--type-scale-gamma);
+	}
+
+	@media screen and (min-width: 28em) {
+		nav {
+			flex-direction: row;
+			gap: var(--space-medium);
+		}
+
+		/* push the last nav link to the right */
+		/* -> use this instead of justify-content because it works with only one child */
+		nav > a:last-child {
+			margin-inline-start: auto;
+		}
 	}
 </style>

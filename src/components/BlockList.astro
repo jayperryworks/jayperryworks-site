@@ -11,10 +11,14 @@ import Block from '@components/Block.astro';
 
 export interface Props {
 	body: Array<Slice>,
+	showLedeStyle: boolean,
+	class: string,
 }
 
 const {
 	body,
+	showLedeStyle = false,
+	class: className = '',
 } = Astro.props as Props;
 
 function getBlockClass(type: string): string {
@@ -102,7 +106,7 @@ const blockTypes = {
 };
 
 // --- build an array of blocks, sorted into sections ---
-const sectionList = body.reduce((result: Array<BlockType>, slice: Slice) => {
+const sectionList = body.reduce((result: Array<BlockType>, slice: Slice, index: number) => {
 	const {
 		slice_type: type,
 		primary,
@@ -132,7 +136,11 @@ const sectionList = body.reduce((result: Array<BlockType>, slice: Slice) => {
 }, []);
 ---
 
-<div class="block-list">
+<div class={[
+	'block-list',
+	showLedeStyle ? 'lede' : '',
+	className,
+].join(' ')}>
 	{sectionList.map(({ uid, blocks }) => (
 		uid ? (
 			<section id={uid}>
@@ -159,4 +167,12 @@ const sectionList = body.reduce((result: Array<BlockType>, slice: Slice) => {
   .block-list :global(.block-passage + .block-passage) {
     padding-top: var(--space-medium);
   }
+
+	.lede :global(.block-passage p:first-child) {
+		font-size: var(--type-scale-delta);
+	}
+
+	.lede :global(.block-passage ~ .block-passage p:first-child) {
+		font-size: var(--type-scale-epsilon);
+	}
 </style>
