@@ -11,7 +11,7 @@ import BlockList from '@components/BlockList.astro';
 import ContentWrapper from '@components/ContentWrapper.astro';
 
 // types
-import type { Slice } from '@prismicio/types';
+import type { Slice, TitleField, LinkField, Tags } from '@prismicio/types';
 
 export interface Params {
 	year: string,
@@ -21,14 +21,15 @@ export interface Params {
 }
 
 export interface Props {
-	tags: Array<string>,
-	title: string,
-	subtitle: string,
-	link: string,
-	series: string,
 	body: Array<Slice>,
-	prev: string,
+	date: string,
+	link: LinkField,
 	next: string,
+	prev: string,
+	series: LinkField,
+	subtitle: TitleField,
+	tags: Tags,
+	title: TitleField,
 }
 
 export async function getStaticPaths({ paginate }) {
@@ -82,15 +83,15 @@ const {
 } = Astro.params as Params;
 
 const {
-	tags,
-	title,
-	subtitle,
+	body,
 	date,
 	link,
-	series,
-	body,
-	prev,
 	next,
+	prev,
+	series,
+	subtitle,
+	tags,
+	title,
 } = Astro.props as Props;
 
 console.log(prev, next)
@@ -106,11 +107,9 @@ console.log(prev, next)
 			{subtitle && (
 				<p class="subtitle">{prismicHelpers.asText(subtitle)}</p>
 			)}
-			<ContentWrapper class="date">
-				<time datetime={date}>
-					{format(new Date(date), 'MMMM dd, yyyy')}
-				</time>
-			</ContentWrapper>
+			<time datetime={date} class="date">
+				{format(new Date(date), 'MMMM dd, yyyy')}
+			</time>
 		</header>
 		<BlockList {body} />
 	</article>
@@ -141,13 +140,11 @@ console.log(prev, next)
 		padding-top: var(--space-xxnarrow);
 	}
 
-	header :global(.date) {
-		border-top: var(--border-default);
+	.date {
 		color: var(--color-secondary);
+		display: block;
 		font-family: var(--type-font-accent);
 		font-weight: 200;
-		text-align: left;
-		margin-block-start: var(--space-narrow);
 		padding-block-start: var(--space-narrow);
 	}
 
