@@ -29,7 +29,7 @@
 				"src/layouts/*"
 			],
 			"@icons/*": [
-				"src/icons/*"
+				"public/assets/icons/*"
 			],
 			"@styles/*": [
 				"src/styles/*"
