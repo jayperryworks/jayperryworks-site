@@ -22,9 +22,6 @@
 			"@components/*": [
 				"src/components/*"
 			],
-			"@blocks/*": [
-				"src/components/blocks/*"
-			],
 			"@layouts/*": [
 				"src/layouts/*"
 			],
