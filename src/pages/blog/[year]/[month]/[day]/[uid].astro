@@ -1,5 +1,6 @@
 ---
 // styles & assets
+import '@styles/components/bookend.css';
 import '@styles/utilities/borders.css';
 import arrowLeft from '@icons/arrow-left.svg?raw';
 import arrowRight from '@icons/arrow-right.svg?raw';
@@ -12,8 +13,8 @@ import prismicHelpers from '@prismicio/helpers';
 
 // components
 import BlockList from '@components/BlockList.astro';
-import Button from '@components/Button.astro';
-import Icon from '@components/Icon.astro';
+import Button from '@components/elements/Button.astro';
+import Icon from '@components/elements/Icon.astro';
 import Layout from '@layouts/BaseLayout.astro';
 
 // types
@@ -135,9 +136,9 @@ const {
 	</article>
 
 	<nav class="border-seam-top">
-		<ul>
+		<ul class="bookend justify-end">
 			{prev && (
-				<li class="nav-item">
+				<li class="bookend-item nav-item">
 					<Icon svg={arrowLeft} size="large" />
 					<p>
 						<a href={prev.path} class="nav-label">Previous</a>
@@ -146,7 +147,7 @@ const {
 				</li>
 			)}
 			{next && (
-				<li class="nav-item">
+				<li class="bookend-item nav-item">
 					<p>
 						<a href={next.path} class="nav-label">Next</a>
 						<a href={prev.path} class="nav-title" set:html={next.title}></a>
@@ -193,22 +194,10 @@ const {
 		padding-inline: var(--space-outside);
 	}
 
-	nav ul {
-		display: flex;
-		gap: var(--space-narrow);
-		list-style: none;
-		padding-left: 0;
-	}
-
 	.nav-item {
 		display: flex;
 		align-items: center;
 		gap: var(--space-medium);
-	}
-
-	.nav-item:last-child {
-		margin-inline-start: auto;
-		text-align: right;
 	}
 
 	.nav-label {
@@ -223,5 +212,6 @@ const {
 		font-size: var(--type-scale-delta);
 		display: block;
 		border: 0;
+		line-height: var(--type-leading-tight);
 	}
 </style>

@@ -1,6 +1,7 @@
 ---
 // styles & assets
 import '@styles/utilities/borders.css';
+import '@styles/components/bookend.css';
 import arrowLeft from '@icons/arrow-left.svg?raw';
 import arrowRight from '@icons/arrow-right.svg?raw';
 import externalLink from '@icons/external-link.svg?raw';
@@ -12,8 +13,9 @@ import { format } from 'date-fns';
 
 // components
 import BlockList from '@components/BlockList.astro';
-import Button from '@components/Button.astro';
-import Icon from '@components/Icon.astro';
+import Button from '@components/elements/Button.astro';
+import Icon from '@components/elements/Icon.astro';
+import NextPrevNav from '@components/navigation/NextPrevNav.astro';
 import Layout from '@layouts/BaseLayout.astro';
 
 export async function getStaticPaths({ paginate }): Promise<Function> {
@@ -36,8 +38,6 @@ const { next, prev } = page.url;
 const postSummaryList = page.data.map(({ uid, tags, data }) => {
 	// find the slices in each post marked as "include in excerpt"
 	const summary = data.body.filter(({ primary }) => primary.include_in_excerpt);
-
-	console.log(prismicHelpers.asLink(data.link))
 
 	if (summary.length > 0) {
 		return {
@@ -102,18 +102,30 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 	</ul>
 
 	<nav class="border-seam-top">
-		{prev && (
-			<a href={prev}>
-				<Icon svg={arrowLeft} margin="right" />
-				Newer posts
-			</a>
-		)}
-		{next && (
-			<a href={next}>
-				Older posts
-				<Icon svg={arrowRight} margin="left" />
-			</a>
-		)}
+		<ul class="bookend justify-end">
+			{prev && (
+				<li class="bookend-item">
+					<a
+						class="nav-link"
+						href={prev}
+					>
+						<Icon svg={arrowLeft} margin="right" />
+						Newer posts
+					</a>
+				</li>
+			)}
+			{next && (
+				<li class="bookend-item">
+					<a
+						class="nav-link"
+						href={next}
+					>
+						Older posts
+						<Icon svg={arrowRight} margin="left" />
+					</a>
+				</li>
+			)}
+		</ul>
 	</nav>
 </Layout>
 
@@ -170,29 +182,12 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 	}
 
 	nav {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-narrow);
-		padding-inline: var(--space-outside);
 		padding-block: var(--space-wide);
-		flex-wrap: wrap;
+		padding-inline: var(--space-outside);
 	}
 
-	nav > a {
+	.nav-link {
 		border: 0;
 		font-size: var(--type-scale-gamma);
-	}
-
-	@media screen and (min-width: 28em) {
-		nav {
-			flex-direction: row;
-			gap: var(--space-medium);
-		}
-
-		/* push the last nav link to the right */
-		/* -> use this instead of justify-content because it works with only one child */
-		nav > a:last-child {
-			margin-inline-start: auto;
-		}
 	}
 </style>
