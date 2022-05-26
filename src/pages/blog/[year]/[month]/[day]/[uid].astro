@@ -51,8 +51,10 @@ export async function getStaticPaths() {
  			direction: 'desc',
  		},
  	});
+
  	return posts.map(({ uid, tags, data }, index) => {
  		const { date } = data;
+
  		// create urls for next and previous blog posts
  		const nav = [
  			posts[index - 1],
@@ -63,12 +65,14 @@ export async function getStaticPaths() {
  				const year = format(new Date(data.date), 'yyyy');
  				const month = format(new Date(data.date), 'MM');
  				const day = format(new Date(data.date), 'dd');
+
  				return {
  					path: `/blog/${year}/${month}/${day}/${uid}`,
  					title: prismicHelpers.asText(data.title),
  				};
  			}
  		});
+
  		return {
  			params: {
  				year: format(new Date(date), 'yyyy'),
@@ -137,23 +141,19 @@ const {
 
 	<!-- pagination nav -->
 	<nav class="border-seam-top">
-		<ul class="bookend justify-end">
+		<ul class="bookend justify-end nav-list">
 			{prev && (
 				<li class="bookend-item nav-item">
-					<Icon svg={arrowLeft} size="large" />
-					<p>
-						<a href={prev.path} class="nav-label">Previous</a>
-						<a href={prev.path} class="nav-title" set:html={prev.title}></a>
-					</p>
+					<Icon svg={arrowLeft} size="large" class="nav-icon before" />
+					<a href={prev.path} class="nav-eyebrow">Previous</a>
+					<a href={prev.path} class="nav-title" set:html={prev.title}></a>
 				</li>
 			)}
 			{next && (
 				<li class="bookend-item nav-item">
-					<p>
-						<a href={next.path} class="nav-label">Next</a>
-						<a href={prev.path} class="nav-title" set:html={next.title}></a>
-					</p>
-					<Icon svg={arrowRight} size="large" />
+					<a href={next.path} class="nav-eyebrow">Next</a>
+					<a href={prev.path} class="nav-title" set:html={next.title}></a>
+					<Icon svg={arrowRight} size="large" class="nav-icon after" />
 				</li>
 			)}
 		</ul>
@@ -161,9 +161,9 @@ const {
 </Layout>
 
 <style>
-  article {
-    padding-block: var(--space-xwide);
-    padding-inline: var(--space-outside);
+	article {
+		padding-block: var(--space-xwide);
+		padding-inline: var(--space-outside);
 	}
 
 	header {
@@ -190,23 +190,46 @@ const {
 		padding-block-start: var(--space-narrow);
 	}
 
+	footer {
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+		padding-top: var(--space-wide);
+	}
+
 	nav {
 		padding-block: var(--space-wide);
 		padding-inline: var(--space-outside);
 	}
 
-	.nav-item {
-		display: flex;
-		align-items: center;
-		gap: var(--space-medium);
+	.nav-list {
+		text-align: center;
 	}
 
-	.nav-label {
+	.nav-item {
+		align-items: start;
+		gap: 0 var(--space-medium);
+		display: inline-grid;
+		grid-template-columns: 1.44em minmax(0, 1fr) 1.44em;
+		grid-template-rows: auto;
+		grid-template-areas:
+			'. eyebrow .'
+			'start title end';
+		justify-items: center;
+		transition: 0.25s color ease;
+		will-change: color;
+	}
+
+	.nav-item:hover {
+		color: var(--color-highlight);
+	}
+
+	.nav-eyebrow {
 		font-family: var(--type-font-accent);
 		color: var(--color-secondary);
 		display: block;
 		border: 0;
 		font-weight: 200;
+		grid-area: eyebrow;
 	}
 
 	.nav-title {
@@ -214,5 +237,18 @@ const {
 		display: block;
 		border: 0;
 		line-height: var(--type-leading-tight);
+		grid-area: title;
+	}
+
+	.nav-item :global(.nav-icon) {
+		margin: 0;
+	}
+
+	.nav-item :global(.nav-icon.before) {
+		grid-area: start;
+	}
+
+	.nav-item :global(.nav-icon.after) {
+		grid-area: end;
 	}
 </style>
