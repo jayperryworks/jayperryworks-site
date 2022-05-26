@@ -1,18 +1,19 @@
 ---
+// utils
 import { camelCase } from 'change-case';
 import * as prismicHelpers from '@prismicio/helpers';
+
+// components
+import Block from '@components/Block.astro';
 
 // types
 import type { Block as BlockType } from '@lib/types.ts';
 import type { Slice } from '@prismicio/types';
 
-// child components
-import Block from '@components/Block.astro';
-
 export interface Props {
-	body: Array<Slice>,
-	showLedeStyle?: boolean,
-	class?: string,
+	body: Array<Slice>;
+	showLedeStyle?: boolean;
+	class?: string;
 }
 
 const {
@@ -170,9 +171,11 @@ const sectionList = body.reduce((result: Array<BlockType>, slice: Slice, index: 
 
 	.lede :global(.block-passage p:first-child) {
 		font-size: var(--type-scale-delta);
+		font-family: var(--type-font-display);
 	}
 
 	.lede :global(.block-passage ~ .block-passage p:first-child) {
-		font-size: var(--type-scale-epsilon);
+		font-size: unset;
+		font-family: unset;
 	}
 </style>

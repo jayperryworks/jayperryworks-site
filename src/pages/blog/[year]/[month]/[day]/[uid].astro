@@ -1,8 +1,6 @@
 ---
 // styles & assets
-import '@styles/components/bookend.css';
 import '@styles/utilities/borders.css';
-import arrowLeft from '@icons/arrow-left.svg?raw';
 import arrowRight from '@icons/arrow-right.svg?raw';
 import externalLink from '@icons/external-link.svg?raw';
 
@@ -221,19 +219,20 @@ const {
 	}
 
 	.next-eyebrow {
-		font-family: var(--type-font-accent);
+		border: 0;
 		color: var(--color-secondary);
 		display: inline-block;
-		border: 0;
+		font-family: var(--type-font-accent);
 		font-weight: 200;
 		grid-area: eyebrow;
 	}
 
 	.next-title {
-		font-size: var(--type-scale-gamma);
-		line-height: var(--type-leading-tight);
-		grid-area: title;
 		display: block;
+		font-family: var(--type-font-display);
+		font-size: var(--type-scale-gamma);
+		grid-area: title;
+		line-height: var(--type-leading-tight);
 	}
 
 	.next :global(.next-icon) {
