@@ -15,7 +15,6 @@ import { format } from 'date-fns';
 import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
 import Icon from '@components/elements/Icon.astro';
-import NextPrevNav from '@components/navigation/NextPrevNav.astro';
 import Layout from '@layouts/BaseLayout.astro';
 
 export async function getStaticPaths({ paginate }): Promise<Function> {
@@ -102,9 +101,9 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 	</ul>
 
 	<nav class="border-seam-top">
-		<ul class="bookend justify-end">
+		<ul class="nav-list">
 			{prev && (
-				<li class="bookend-item nav-item">
+				<li class="nav-item">
 					<a
 						class="nav-link"
 						href={prev}
@@ -115,7 +114,7 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 				</li>
 			)}
 			{next && (
-				<li class="bookend-item nav-item">
+				<li class="nav-item">
 					<a
 						class="nav-link"
 						href={next}
@@ -186,6 +185,17 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 		padding-inline: var(--space-outside);
 	}
 
+	.nav-list {
+		--gap-vertical: var(--space-narrow);
+		--gap-horizontal: var(--space-wide);
+
+		display: flex;
+		flex-direction: column;
+		gap: var(--gap-vertical);
+		list-style: none;
+		padding-left: 0;
+	}
+
 	.nav-link {
 		border: 0;
 		font-size: var(--type-scale-gamma);
@@ -197,12 +207,14 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 	}
 
 	.nav-item {
+		display: block;
 		text-align: center;
 	}
 
 	.nav-label {
 		grid-area: label;
 		display: inline-block;
+		border-bottom: var(--border-link);
 	}
 
 	.nav-link :global(.nav-icon.before) {
@@ -211,5 +223,21 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 
 	.nav-link :global(.nav-icon.after) {
 		grid-area: end;
+	}
+
+	@media screen and (min-width: 32em) {
+		.nav-list {
+			align-items: flex-start;
+			flex-direction: row;
+			gap: var(--gap-horizontal);
+			justify-content: space-between;
+		}
+
+		/* push the last nav link to the right/end of line */
+		/* -> use this in addition to justify-content because it works with only one child */
+		.nav-item:last-child {
+			margin-inline-start: auto;
+			text-align: right;
+		}
 	}
 </style>

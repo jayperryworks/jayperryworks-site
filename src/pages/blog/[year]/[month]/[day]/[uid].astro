@@ -140,24 +140,19 @@ const {
 	</article>
 
 	<!-- pagination nav -->
-	<nav class="border-seam-top">
-		<ul class="bookend justify-end nav-list">
-			{prev && (
-				<li class="bookend-item nav-item">
-					<Icon svg={arrowLeft} size="large" class="nav-icon before" />
-					<a href={prev.path} class="nav-eyebrow">Previous</a>
-					<a href={prev.path} class="nav-title" set:html={prev.title}></a>
-				</li>
-			)}
-			{next && (
-				<li class="bookend-item nav-item">
-					<a href={next.path} class="nav-eyebrow">Next</a>
-					<a href={prev.path} class="nav-title" set:html={next.title}></a>
-					<Icon svg={arrowRight} size="large" class="nav-icon after" />
-				</li>
-			)}
-		</ul>
-	</nav>
+	{next && (
+		<nav>
+			<div class="nav-wrapper">
+				<p class="next">
+					<a href={next.path} class="next-eyebrow">Read next</a>
+					<span class="next-title">
+						<a href={next.path} set:html={next.title}></a>
+					</span>
+					<Icon svg={arrowRight} size="large" class="next-icon" />
+				</p>
+			</div>
+		</nav>
+	)}
 </Layout>
 
 <style>
@@ -197,58 +192,52 @@ const {
 	}
 
 	nav {
-		padding-block: var(--space-wide);
 		padding-inline: var(--space-outside);
 	}
 
-	.nav-list {
-		text-align: center;
+	.nav-wrapper {
+		border-top: var(--border-default);
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+		padding-block: var(--space-xwide);
 	}
 
-	.nav-item {
+	.next {
 		align-items: start;
-		gap: 0 var(--space-medium);
 		display: inline-grid;
-		grid-template-columns: 1.44em minmax(0, 1fr) 1.44em;
-		grid-template-rows: auto;
+		gap: 0 var(--space-medium);
 		grid-template-areas:
-			'. eyebrow .'
-			'start title end';
-		justify-items: center;
+			'eyebrow .'
+			'title icon';
+		grid-template-columns: minmax(0, 1fr) 1.44em;
+		grid-template-rows: auto;
+		justify-items: start;
 		transition: 0.25s color ease;
 		will-change: color;
 	}
 
-	.nav-item:hover {
+	.next:hover {
 		color: var(--color-highlight);
 	}
 
-	.nav-eyebrow {
+	.next-eyebrow {
 		font-family: var(--type-font-accent);
 		color: var(--color-secondary);
-		display: block;
+		display: inline-block;
 		border: 0;
 		font-weight: 200;
 		grid-area: eyebrow;
 	}
 
-	.nav-title {
-		font-size: var(--type-scale-delta);
-		display: block;
-		border: 0;
+	.next-title {
+		font-size: var(--type-scale-gamma);
 		line-height: var(--type-leading-tight);
 		grid-area: title;
+		display: block;
 	}
 
-	.nav-item :global(.nav-icon) {
+	.next :global(.next-icon) {
+		grid-area: icon;
 		margin: 0;
-	}
-
-	.nav-item :global(.nav-icon.before) {
-		grid-area: start;
-	}
-
-	.nav-item :global(.nav-icon.after) {
-		grid-area: end;
 	}
 </style>
