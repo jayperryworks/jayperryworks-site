@@ -20,70 +20,71 @@ import Layout from '@layouts/BaseLayout.astro';
 // types
 import type { Slice, TitleField, LinkField, Tags } from '@prismicio/types';
 
+export type PaginationLink = {
+	path: string;
+	title: TitleField;
+};
+
 export interface Params {
-	year: string,
-	month: string,
-	day: string,
-	uid: string,
+	year: string;
+	month: string;
+	day: string;
+	uid: string;
 }
 
 export interface Props {
-	body: Array<Slice>,
-	date: string,
-	link: LinkField,
-	next: string,
-	prev: string,
-	series: LinkField,
-	subtitle: TitleField,
-	tags: Tags,
-	title: TitleField,
+		body: Array<Slice>;
+		date: string;
+		link?: LinkField;
+		next?: PaginationLink;
+		prev?: PaginationLink;
+		series?: LinkField;
+		subtitle?: TitleField;
+		tags?: Tags;
+		title: TitleField;
 }
 
-export async function getStaticPaths({ paginate }) {
-	const posts = await prismic.getAllByType('blog_post', {
-		orderings: {
-			field: 'my.blog_post.date',
-			direction: 'desc',
-		},
-	});
-
-	return posts.map(({ uid, tags, data }, index) => {
-		const { date } = data;
-
-		// create urls for next and previous blog posts
-		const nav = [
-			posts[index - 1],
-			posts[index + 1],
-		].map((post) => {
-			if (post) {
-				const { data, uid } = post;
-				const year = format(new Date(data.date), 'yyyy');
-				const month = format(new Date(data.date), 'MM');
-				const day = format(new Date(data.date), 'dd');
-
-				return {
-					path: `/blog/${year}/${month}/${day}/${uid}`,
-					title: prismicHelpers.asText(data.title),
-				};
-			}
-		});
-
-		return {
-			params: {
-				year: format(new Date(date), 'yyyy'),
-				month: format(new Date(date), 'MM'),
-				day: format(new Date(date), 'dd'),
-				uid,
-			},
-			props: {
-				tags,
-				...data,
-				link: prismicHelpers.asLink(data.link),
-				prev: nav[0],
-				next: nav[1],
-			}
-		}
-	});
+export async function getStaticPaths() {
+ 	const posts = await prismic.getAllByType('blog_post', {
+ 		orderings: {
+ 			field: 'my.blog_post.date',
+ 			direction: 'desc',
+ 		},
+ 	});
+ 	return posts.map(({ uid, tags, data }, index) => {
+ 		const { date } = data;
+ 		// create urls for next and previous blog posts
+ 		const nav = [
+ 			posts[index - 1],
+ 			posts[index + 1],
+ 		].map((post) => {
+ 			if (post) {
+ 				const { data, uid } = post;
+ 				const year = format(new Date(data.date), 'yyyy');
+ 				const month = format(new Date(data.date), 'MM');
+ 				const day = format(new Date(data.date), 'dd');
+ 				return {
+ 					path: `/blog/${year}/${month}/${day}/${uid}`,
+ 					title: prismicHelpers.asText(data.title),
+ 				};
+ 			}
+ 		});
+ 		return {
+ 			params: {
+ 				year: format(new Date(date), 'yyyy'),
+ 				month: format(new Date(date), 'MM'),
+ 				day: format(new Date(date), 'dd'),
+ 				uid,
+ 			},
+ 			props: {
+ 				...data,
+ 				tags,
+ 				link: prismicHelpers.asLink(data.link),
+ 				prev: nav[0],
+ 				next: nav[1],
+ 			},
+ 		};
+ 	});
 }
 
 const {
@@ -92,7 +93,6 @@ const {
 	day,
 	uid,
 } = Astro.params as Params;
-
 const {
 	body,
 	date,
@@ -114,14 +114,14 @@ const {
 		<header>
 			<h1>{prismicHelpers.asText(title)}</h1>
 			{subtitle && (
-				<p class="subtitle">{prismicHelpers.asText(subtitle)}</p>
+				<p class="subtitle" set:html={prismicHelpers.asText(subtitle)}></p>
 			)}
 			<time datetime={date} class="date">
 				{format(new Date(date), 'MMMM dd, yyyy')}
 			</time>
 		</header>
 
-		<BlockList {body} showLedeStyle="true" />
+		<BlockList {body} showLedeStyle />
 
 		{link && (
 			<footer>
@@ -135,6 +135,7 @@ const {
 		)}
 	</article>
 
+	<!-- pagination nav -->
 	<nav class="border-seam-top">
 		<ul class="bookend justify-end">
 			{prev && (

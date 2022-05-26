@@ -104,24 +104,24 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 	<nav class="border-seam-top">
 		<ul class="bookend justify-end">
 			{prev && (
-				<li class="bookend-item">
+				<li class="bookend-item nav-item">
 					<a
 						class="nav-link"
 						href={prev}
 					>
-						<Icon svg={arrowLeft} margin="right" />
-						Newer posts
+						<Icon svg={arrowLeft} class="nav-icon before" />
+						<span class="nav-label">Newer posts</span>
 					</a>
 				</li>
 			)}
 			{next && (
-				<li class="bookend-item">
+				<li class="bookend-item nav-item">
 					<a
 						class="nav-link"
 						href={next}
 					>
-						Older posts
-						<Icon svg={arrowRight} margin="left" />
+						<span class="nav-label">Older posts</span>
+						<Icon svg={arrowRight} class="nav-icon after" />
 					</a>
 				</li>
 			)}
@@ -189,5 +189,27 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 	.nav-link {
 		border: 0;
 		font-size: var(--type-scale-gamma);
+		display: inline-grid;
+		grid-template-columns: [start] 1em [label] minmax(0, 1fr)  [end] 1em;
+		align-items: center;
+		justify-items: center;
+		gap: var(--space-xnarrow);
+	}
+
+	.nav-item {
+		text-align: center;
+	}
+
+	.nav-label {
+		grid-area: label;
+		display: inline-block;
+	}
+
+	.nav-link :global(.nav-icon.before) {
+		grid-area: start;
+	}
+
+	.nav-link :global(.nav-icon.after) {
+		grid-area: end;
 	}
 </style>
