@@ -2,31 +2,31 @@
 @import url('../tokens/color.css');
 
 /* --- display type (headings, etc.) --- */
-.type-display {
+.type-role-display {
 	font-family: var(--type-font-display);
 	font-weight: normal;
 	line-height: var(--type-leading-tight);
 	max-width: none; /* reset default width of p elements */
 }
 
-.type-display strong {
+.type-role-display strong {
 	font-weight: normal;
 }
 
-.type-display em {
+.type-role-display em {
 	font-style: normal;
 }
 
 /* --- accent type (subheadings, UI, etc.) --- */
-.type-accent {
+.type-role-accent {
 	color: var(--color-secondary);
 	font-family: var(--type-font-accent);
 	font-weight: 200;
 	line-height: var(--type-leading-tight);
 }
 
-.type-accent.type-scale-epsilon,
-.type-accent.type-scale-zeta {
+.type-role-accent.type-scale-epsilon,
+.type-role-accent.type-scale-zeta {
 	font-weight: 300;
 }
 
