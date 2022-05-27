@@ -1,24 +1,39 @@
 ---
-  import Icon from '@components/elements/Icon.astro';
+// styles
+import '@styles/tokens/color.css';
+import '@styles/tokens/type.css';
 
-  const {
-		href,
-    target = '',
-    role = '',
-    size = '',
-    iconLeft = '',
-    iconRight = '',
-		class: className = '',
-	} = Astro.props as Props;
+// components
+import Icon from '@components/elements/Icon.astro';
 
-	const classList = [
-		'button',
-		className,
-		iconLeft ? 'has-icon left' : '',
-		iconRight ? 'has-icon right' : '',
-		role,
-		size,
-	].join(' ');
+export interface Props {
+	href: string;
+	class?: string;
+	iconLeft?: string;
+	iconRight?: string;
+	role?: string;
+	size?: string;
+	target?: string;
+}
+
+const {
+	href,
+	class: className = '',
+	iconLeft = '',
+	iconRight = '',
+	role = '',
+	size = '',
+	target = '',
+} = Astro.props as Props;
+
+const classList = [
+	'button',
+	iconLeft ? 'has-icon left' : '',
+	iconRight ? 'has-icon right' : '',
+	role,
+	size,
+	className,
+].join(' ');
 ---
 
 <a
@@ -94,6 +109,7 @@
   .button:hover,
   .button:active {
     --color: var(--color-highlight);
+
     background-color: var(--color-island);
   }
 

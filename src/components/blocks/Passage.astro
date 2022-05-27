@@ -23,14 +23,14 @@ const {
 
 <div
 	class={`prose | ${className}`}
-	style={`--size: var(--type-scale-${typeSize});`}
+	style={`--type-size: var(--type-scale-${typeSize});`}
 >
 	<slot><RenderedText {...text} /></slot>
 </div>
 
 <style>
 	.prose {
-		font-size: var(--size);
+		font-size: var(--type-size);
 	}
 
   .prose :global(* + *) {

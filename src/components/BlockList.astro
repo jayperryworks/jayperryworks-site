@@ -1,4 +1,8 @@
 ---
+// assets
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+
 // utils
 import { camelCase } from 'change-case';
 import * as prismicHelpers from '@prismicio/helpers';
@@ -120,7 +124,6 @@ function aside(slice: Slice): BlockType {
 }
 
 function blockQuote(slice: Slice): BlockType {
-	console.log(slice.slice_type)
 	const {
 		structured_text: prismicText,
 		markdown,
