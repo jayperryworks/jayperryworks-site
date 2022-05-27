@@ -1,0 +1,60 @@
+@import url('../tokens/borders.css');
+@import url('../tokens/color.css');
+
+/* --- 'seam' border style */
+[class^='border-seam'] {
+	position: relative;
+}
+
+.border-seam-top {
+	border-block-start: var(--border-default);
+
+}
+
+.border-seam-top::before {
+	background-color: var(--color-primary);
+	content: '';
+	display: block;
+	height: var(--border-seam-height);
+	left: calc(var(--border-spine-width) * -1);
+	position: absolute;
+	top: calc((var(--border-seam-height / 2) * -1));
+	width: var(--border-spine-width);
+	z-index: 3;
+}
+
+.border-seam-bottom {
+	border-block-end: var(--border-default);
+}
+
+.border-seam-bottom::after {
+	background-color: var(--color-primary);
+	bottom: calc((var(--border-seam-height / 2) * -1));
+	content: '';
+	display: block;
+	height: var(--border-seam-height);
+	left: calc(var(--border-spine-width) * -1);
+	position: absolute;
+	width: var(--border-spine-width);
+	z-index: 3;
+}
+
+/* --- 'spine' border style */
+.border-spine {
+	--spine-color: var(--color-highlight);
+
+	padding-left: var(--border-spine-width);
+	position: relative;
+}
+
+.border-spine::before {
+	background-color: var(--spine-color);
+	bottom: 0;
+	content: '';
+	display: block;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: var(--border-spine-width);
+	z-index: 0;
+}

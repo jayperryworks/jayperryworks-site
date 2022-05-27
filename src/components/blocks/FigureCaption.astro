@@ -1,5 +1,13 @@
 ---
+// styles
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/color.css';
+import '@styles/utilities/type.css';
+
+// components
 import RenderedText from "@components/elements/RenderedText.astro";
+
+// types
 import { FormattedText } from "@lib/types";
 
 export interface Props {
@@ -15,7 +23,7 @@ const {
 } = Astro.props as Props;
 ---
 
-<figcaption class={`type-scale-zeta type-font-accent type-weight-light ${className}`}>
+<figcaption class={`type-accent type-scale-zeta ${className}`}>
   <slot>
 		<RenderedText {...text} />
 
@@ -29,16 +37,14 @@ const {
 
 <style>
 	figcaption {
-		color: var(--color-secondary);
 		text-align: left;
 	}
 
 	figcaption > * + * {
-		padding-block-start: var(--xnarrow);
+		padding-block-start: var(--space-xnarrow);
 	}
 
 	figcaption :global(p) {
-		max-width: none;
     font-style: normal;
 	}
 </style>

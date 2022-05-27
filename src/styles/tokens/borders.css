@@ -5,6 +5,9 @@
 	/* --- 'spine' border effect */
 	--border-spine-width: 0.35rem;
 
+	/* --- 'seam' border effect */
+	--border-seam-height: 0.5rem;
+
 	/* --- standard border styles */
 	--border-default: 1px dashed var(--color-border);
 	--border-link: 0.125em solid var(--color-highlight);

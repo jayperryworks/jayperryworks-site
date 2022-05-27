@@ -1,11 +1,19 @@
 ---
+export interface Props {
+	svg: string;
+	align?: 'middle' | 'baseline';
+	class?: string;
+	margin?: string;
+	size?: string;
+}
+
 const {
 	svg,
-	size = '',
-	margin = '',
 	align = 'middle',
-	class: className,
-} = Astro.props;
+	class: className = '',
+	margin = '',
+	size = '',
+} = Astro.props as Props;
 
 let marginClass = margin ? `space-${margin}` : '';
 ---
