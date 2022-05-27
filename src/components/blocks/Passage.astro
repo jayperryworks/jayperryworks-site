@@ -1,6 +1,6 @@
 ---
 // assets
-import '@styles/utilities/type.css';
+import '@styles/tokens/type.css';
 
 // components
 import RenderedText from '@components/elements/RenderedText.astro';
@@ -21,11 +21,18 @@ const {
 } = Astro.props as Props;
 ---
 
-<div class={`prose | type-scale-${typeSize} | ${className}`}>
+<div
+	class={`prose | ${className}`}
+	style={`--size: var(--type-scale-${typeSize});`}
+>
 	<slot><RenderedText {...text} /></slot>
 </div>
 
 <style>
+	.prose {
+		font-size: var(--size);
+	}
+
   .prose :global(* + *) {
     margin-top: 1em;
   }

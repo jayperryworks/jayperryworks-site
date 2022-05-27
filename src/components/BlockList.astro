@@ -22,11 +22,13 @@ const {
 	class: className = '',
 } = Astro.props as Props;
 
+// assign a class to certain block types to determine spacing between sibling blocks
 function getBlockClass(type: string): string {
 	const classes = {
 		passage: 'block-passage',
 		blockQuote: 'block-passage',
 		heading: 'block-heading',
+		aside: 'block-passage',
 	};
 
 	if (classes[type]) {
