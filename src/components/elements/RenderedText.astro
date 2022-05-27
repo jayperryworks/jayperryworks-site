@@ -41,6 +41,7 @@ function htmlSerializer(type, element, content, children) {
 }
 
 let renderedText;
+
 if (prismicText) {
 	renderedText = prismicHelpers.asHTML(prismicText, null, htmlSerializer);
 }

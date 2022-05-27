@@ -1,0 +1,30 @@
+---
+	// components
+	import RenderedText from '@components/elements/RenderedText.astro';
+
+	// types
+	import { RichTextField } from '@prismicio/types';
+
+	export interface Props {
+		markdown?: string;
+		prismicText?: RichTextField;
+		class?: string;
+	}
+
+	const {
+		markdown,
+		prismicText,
+		class: className = '',
+	} = Astro.props as Props;
+---
+
+<blockquote class={className}>
+	<RenderedText {markdown} {prismicText} />
+</blockquote>
+
+<style>
+	blockquote {
+		font-size: var(--type-scale-zeta);
+		font-style: italic;
+	}
+</style>
