@@ -1,4 +1,0 @@
-.shadow {
-	box-shadow: 0 0 0.5rem hsl(223, 7%, 78%, 0.6);
-	box-shadow: 0 0 0.5rem var(--color-shadow);
-}
