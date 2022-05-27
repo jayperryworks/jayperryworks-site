@@ -18,7 +18,7 @@
 	--color-secondary: hsl(
 		var(--color-secondary-h),
 		var(--color-secondary-s),
-		var(--color-secondary-l)
+		var(--color-secondary-l),
 	);
 
 	/* --- highlight --- */
@@ -29,7 +29,7 @@
 	--color-highlight: hsl(
 		var(--color-highlight-h),
 		var(--color-highlight-s),
-		var(--color-highlight-l)
+		var(--color-highlight-l),
 	);
 
 	/* --- background --- */
@@ -37,7 +37,11 @@
 	--color-bg-s: 0%;
 	--color-bg-l: 100%;
 
-	--color-bg: hsl(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l));
+	--color-bg: hsl(
+		var(--color-bg-h),
+		var(--color-bg-s),
+		var(--color-bg-l),
+	);
 
 	/* --- island --- */
 	--color-island-h: 0;
@@ -47,7 +51,7 @@
 	--color-island: hsl(
 		var(--color-island-h),
 		var(--color-island-s),
-		var(--color-island-l)
+		var(--color-island-l),
 	);
 
 	/* --- well --- */
@@ -58,7 +62,7 @@
 	--color-well: hsl(
 		var(--color-well-h),
 		var(--color-well-s),
-		var(--color-well-l)
+		var(--color-well-l),
 	);
 
 	/* --- borders --- */
@@ -69,7 +73,7 @@
 	--color-border: hsl(
 		var(--color-border-h),
 		var(--color-border-s),
-		var(--color-border-l)
+		var(--color-border-l),
 	);
 
 	/* --- shadows --- */
