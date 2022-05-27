@@ -1,13 +1,16 @@
 ---
-// styles & assets
+// styles
 import '@styles/tokens/borders.css';
 import '@styles/utilities/borders.css';
+import '@styles/utilities/type.css';
+
+// assets
 import arrowLeft from '@icons/arrow-left.svg?raw';
 import arrowRight from '@icons/arrow-right.svg?raw';
 import externalLink from '@icons/external-link.svg?raw';
 
 // helpers
-import prismic from '@lib/prismic.ts';
+import prismic from '@lib/prismic';
 import * as prismicHelpers from '@prismicio/helpers';
 import { format } from 'date-fns';
 
@@ -66,7 +69,14 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 					id={post.uid}
 				>
 					<header class="post-header">
-						<h2><a href={post.path}>{prismicHelpers.asText(post.title)}</a></h2>
+						<h2>
+							<a
+								href={post.path}
+								class="type-link-undecorated"
+							>
+								{prismicHelpers.asText(post.title)}
+							</a>
+						</h2>
 						<time
 							datetime={post.date}
 							class="date"
