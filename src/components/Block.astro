@@ -3,6 +3,8 @@
 import Passage from '@components/blocks/Passage.astro';
 import Figure from '@components/blocks/Figure.astro';
 import ImageGallery from '@components/blocks/ImageGallery.astro';
+import Aside from '@components/blocks/Aside.astro';
+import BlockQuote from '@components/blocks/BlockQuote.astro';
 
 // Typescript
 import type { Block } from '@lib/types';
@@ -24,19 +26,37 @@ const width = {
 	XLarge: 'xxwide',
 }[block.prominence];
 
-const style = `--block-width: var(--content-width-${width || 'default'}`;
+const style = `--block-width: var(--content-width-${width || 'default'})`;
 ---
 
 <div
 	class={['wrapper', className].join(' ')}
 	{style}
 >
-	<!-- passage -->
-	{block.type === 'passage' && <Passage {...block} />}
-	<!-- figure -->
-	{block.type === 'figure' && <Figure {...block} />}
-	<!-- image gallery -->
-	{block.type === 'imageGallery' && <ImageGallery {...block} />}
+	{block.type === 'passage' && (
+		<!-- passage -->
+		<Passage {...block} />
+	)}
+
+	{block.type === 'figure' && (
+		<!-- figure -->
+		<Figure {...block} />
+	)}
+
+	{block.type === 'imageGallery' && (
+		<!-- image gallery -->
+		<ImageGallery {...block} />
+	)}
+
+	{block.type === 'aside' && (
+		<!-- aside -->
+		<Aside {...block} />
+	)}
+
+	{block.type === 'blockQuote' && (
+		<!-- block quote -->
+		<BlockQuote {...block} />
+	)}
 </div>
 
 <style>

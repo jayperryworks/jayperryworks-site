@@ -1,40 +1,44 @@
 ---
 	// components
-	import RenderedText from '@components/elements/RenderedText.astro';
+	import Passage from '@components/blocks/Passage.astro';
 
 	// types
-	import { RichTextField, KeyTextField } from '@prismicio/types';
+	import { KeyTextField } from '@prismicio/types';
+	import type { FormattedText } from '@lib/types';
 
 	export interface Props {
+		text: FormattedText;
 		class?: string;
 		label?: KeyTextField;
-		markdown?: string;
-		prismicText?: RichTextField;
 	}
 
 	const {
+		text,
 		class: className = '',
 		label,
-		markdown,
-		prismicText,
 	} = Astro.props as Props;
+
+	console.log(text)
 ---
 
 <aside class={className}>
 	{label && <h2>{label}</h2>}
-	<RenderedText {markdown} {prismicText} />
+	<Passage {text} />
 </aside>
 
 <style>
 	h2 {
-		font-size: var(--type-scale-delta);
-		font-family: var(--type-font-accent);
+		border-block-start: var(--border-default);
 		color: var(--color-secondary);
-		font-weight: 200;
-		
+		font-family: var(--type-font-accent);
+		font-size: var(--type-scale-epsilon);
+		font-style: normal;
+		font-weight: 300;
+		padding-block: var(--space-narrow);
 	}
 
 	aside {
 		font-style: italic;
+		color: var(--color-secondary);
 	}
 </style>

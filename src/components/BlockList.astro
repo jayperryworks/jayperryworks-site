@@ -25,7 +25,7 @@ const {
 function getBlockClass(type: string): string {
 	const classes = {
 		passage: 'block-passage',
-		quote: 'block-passage',
+		blockQuote: 'block-passage',
 		heading: 'block-heading',
 	};
 
@@ -100,10 +100,47 @@ function passage(slice: Slice): BlockType {
 	};
 }
 
+function aside(slice: Slice): BlockType {
+	const {
+		structured_text: prismicText,
+		markdown,
+		label,
+	} = slice.primary;
+
+	return {
+		label,
+		text: {
+			prismicText,
+			markdown: prismicHelpers.asText(markdown)
+		},
+		...sharedBlockFields(slice),
+	};
+}
+
+function blockQuote(slice: Slice): BlockType {
+	console.log(slice.slice_type)
+	const {
+		structured_text: prismicText,
+		markdown,
+	} = slice.primary;
+
+	slice.slice_type = 'blockQuote';
+
+	return {
+		text: {
+			prismicText,
+			markdown: prismicHelpers.asText(markdown)
+		},
+		...sharedBlockFields(slice),
+	};
+}
+
 const blockTypes = {
 	figure,
 	passage,
 	'image_gallery': imageGallery,
+	aside,
+	'quote': blockQuote,
 };
 
 // --- build an array of blocks, sorted into sections ---

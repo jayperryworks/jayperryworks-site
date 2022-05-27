@@ -30,12 +30,6 @@ const {
     margin-top: 1em;
   }
 
-  /* --- headings --- */
-  .prose :global(* + :is(h1, h2, h3, h4, h5, h6)) {
-    margin-top: 1.5em;
-  }
-
-
 	/* add an icon after external links */
 	@supports (mask: url('/assets/icons/external-link.svg') no-repeat 50% 50%) {
 		.prose :global(a[href^='http']::after) {
