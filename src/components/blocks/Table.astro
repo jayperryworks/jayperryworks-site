@@ -17,16 +17,22 @@ const response = await fetch(
 	}
 );
 
-let table = [];
+let table = {
+	header: [],
+	body: [],
+};
 
 try {
 	const result = await response.text();
-	table = result.split('\n').reduce((result: Array<Array<string>>, row: string, index: SVGAnimatedNumber) => {
-		if (row) {
-			result.push(row.split(','));
-		}
-		return result;
-	}, []);
+	const rows = result.split('\n');
+
+	table.header = rows[0].split(',');
+	table.body = rows.splice(1, rows.length)
+		.filter((row) => row)
+		.map((row) => row.split(','));
+
+	if (footer) table.footer = rows[rows.length - 1].split(',');
+
 	console.log(table)
 } catch(error) {
 	throw new Error('Error receiving the CSV file', error);
@@ -35,13 +41,6 @@ try {
 
 <div class="wrapper">
 	<table>
-		{table.map((row, index) => (
-			<tr>
-				{row.map((cell) => (
-					<td>{cell}</td>
-				))}
-			</tr>
-		))}
 	</table>
 </div>
 
