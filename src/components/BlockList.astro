@@ -149,12 +149,28 @@ function blockQuote(slice: Slice): BlockType {
 	};
 }
 
+function table(slice: Slice): BlockType {
+	const {
+		csv_file: CSVFile,
+		key_columns: keyColumns,
+		footer,
+	} = slice.primary;
+
+	return {
+		CSVFile: prismicHelpers.asLink(CSVFile),
+		keyColumns,
+		footer,
+		...sharedBlockFields(slice),
+	};
+}
+
 const blockTypes = {
+	'image_gallery': imageGallery,
+	'quote': blockQuote,
+	aside,
 	figure,
 	passage,
-	'image_gallery': imageGallery,
-	aside,
-	'quote': blockQuote,
+	table,
 };
 
 // --- build an array of blocks, sorted into sections ---

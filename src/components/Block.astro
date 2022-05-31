@@ -8,6 +8,7 @@ import Figure from '@components/blocks/Figure.astro';
 import ImageGallery from '@components/blocks/ImageGallery.astro';
 import Aside from '@components/blocks/Aside.astro';
 import BlockQuote from '@components/blocks/BlockQuote.astro';
+import Table from '@components/blocks/Table.astro';
 
 // Typescript
 import type { Block } from '@lib/types';
@@ -28,13 +29,11 @@ const width = {
 	Large: 'xwide',
 	XLarge: 'xxwide',
 }[block.prominence];
-
-const style = `--block-width: var(--content-width-${width || 'default'})`;
 ---
 
 <div
 	class={['wrapper', className].join(' ')}
-	{style}
+	style={`--block-width: var(--content-width-${width || 'default'})`}
 >
 	{block.type === 'passage' && (
 		<!-- passage -->
@@ -59,6 +58,11 @@ const style = `--block-width: var(--content-width-${width || 'default'})`;
 	{block.type === 'blockQuote' && (
 		<!-- block quote -->
 		<BlockQuote {...block} />
+	)}
+
+	{block.type === 'table' && (
+		<!-- block quote -->
+		<Table {...block} />
 	)}
 </div>
 
