@@ -6,7 +6,7 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"lint:node": "npx eslint 'lib/**/*.js' 'lib/**/*.ts' -c .eslintrc.node.cjs",
+		"lint:node": "npx eslint 'lib/**/*.ts' -c .eslintrc.node.cjs",
 		"lint": "run-s lint:*",
 		"dev:astro": "astro dev",
 		"dev:lint": "onchange './src/**' './lib/**' -- npm run lint",

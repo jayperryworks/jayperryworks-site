@@ -42,6 +42,15 @@ function getBlockClass(type: string): string {
 	return '';
 }
 
+function getLedeClass(block: BlockType):string {
+	if (showLedeStyle) {
+		const firstPassage = sectionList[0].blocks.find((block: BlockType) => {
+			return block.type === 'passage';
+		});
+		return (block === firstPassage) ? 'lede' : '';
+	}
+}
+
 function sharedBlockFields(slice: Slice): BlockType {
 	const {
 		include_in_excerpt: includeInExcerpt,
@@ -149,7 +158,7 @@ const blockTypes = {
 };
 
 // --- build an array of blocks, sorted into sections ---
-const sectionList = body.reduce((result: Array<BlockType>, slice: Slice, index: number) => {
+const sectionList = body.reduce((result: Array<BlockType>, slice: Slice) => {
 	const {
 		slice_type: type,
 		primary,
@@ -164,7 +173,7 @@ const sectionList = body.reduce((result: Array<BlockType>, slice: Slice, index: 
 		return result;
 	}
 
-	// if the first blocks are outside a section, then make a generic div
+	// if the first blocks are outside a section, then make a generic/empty 'section'
 	if (result.length === 0 && type !== 'sectionStart') {
 		result.push({ blocks: [] });
 	}
@@ -181,18 +190,23 @@ const sectionList = body.reduce((result: Array<BlockType>, slice: Slice, index: 
 
 <div class={[
 	'block-list',
-	showLedeStyle ? 'lede' : '',
 	className,
 ].join(' ')}>
 	{sectionList.map(({ uid, blocks }) => (
 		uid ? (
 			<section id={uid}>
 				{blocks.map((block) => (
-					<Block class={getBlockClass(block.type)} {block} />
+					<Block class={[
+						getBlockClass(block.type),
+						getLedeClass(block),
+					].join(' ')} {block} />
 				))}
 			</section>
 		) : blocks.map((block) => (
-			<Block class={getBlockClass(block.type)} {block} />
+			<Block class={[
+				getBlockClass(block.type),
+				getLedeClass(block),
+			].join(' ')} {block} />
 		))
 	))}
 </div>
@@ -203,21 +217,16 @@ const sectionList = body.reduce((result: Array<BlockType>, slice: Slice, index: 
 	}
 
 	.block-list :global(.block-heading + .block-passage) {
-    padding-top: var(--space-narrow);
-  }
-
-	/* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
-  .block-list :global(.block-passage + .block-passage) {
-    padding-top: var(--space-medium);
-  }
-
-	.lede :global(.block-passage p:first-child) {
-		font-size: var(--type-scale-delta);
-		font-family: var(--type-font-display);
+		padding-top: var(--space-narrow);
 	}
 
-	.lede :global(.block-passage ~ .block-passage p:first-child) {
-		font-size: unset;
-		font-family: unset;
+	/* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
+	.block-list :global(.block-passage + .block-passage) {
+		padding-top: var(--space-medium);
+	}
+
+	.lede :global(p:first-child) {
+		font-size: var(--type-scale-delta);
+		font-family: var(--type-font-display);
 	}
 </style>
