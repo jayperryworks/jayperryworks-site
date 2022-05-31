@@ -1,7 +1,7 @@
 :root {
-	--content-width-narrow: 30rem;
-	--content-width-default: 40rem;
-	--content-width-wide: 64rem;
-	--content-width-xwide: 75rem;
-	--content-width-xxwide: 112rem;
+	--content-width-narrow: 50ch;
+	--content-width-default: 60ch;
+	--content-width-wide: 90ch;
+	--content-width-xwide: 110ch;
+	--content-width-xxwide: 160ch;
 }
