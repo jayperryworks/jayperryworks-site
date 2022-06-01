@@ -1,0 +1,38 @@
+---
+import prismicClient from '@lib/prismic';
+import * as prismicHelpers from '@prismicio/helpers';
+import * as prismic from '@prismicio/client';
+
+// const list = {
+// 	[tag]: [...posts],
+// }
+
+
+const tags = await prismicClient.getTags();
+const postsByTag = await prismicClient.getAllBySomeTags(tags, {
+	predicates: [
+		prismic.predicate.at('document.type', 'blog_post'),
+	],
+	orderings: {
+		field: 'my.blog_post.date',
+		direction: 'desc',
+	},
+});
+
+console.log(postsByTag)
+
+export async function getStaticPaths(): Promise<Object> {
+
+	// return {
+	// 	return {
+ 	// 		params: {
+ 	// 			tag,
+ 	// 		},
+ 	// 		props: {
+ 	// 			...data,
+ 	// 			link: prismicHelpers.asLink(data.link),
+ 	// 		},
+ 	// 	};
+	// };
+}
+---

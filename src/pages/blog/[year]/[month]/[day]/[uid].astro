@@ -10,7 +10,8 @@ import externalLink from '@icons/external-link.svg?raw';
 
 // helpers
 import { format } from 'date-fns';
-import prismic from '@lib/prismic.ts';
+import { sentenceCase } from '@lib/stringHelpers';
+import prismic from '@lib/prismic';
 import * as prismicHelpers from '@prismicio/helpers';
 
 // components
@@ -46,7 +47,7 @@ export interface Props {
 		title: TitleField;
 }
 
-export async function getStaticPaths() {
+export async function getStaticPaths(): Promise<Object> {
  	const posts = await prismic.getAllByType('blog_post', {
  		orderings: {
  			field: 'my.blog_post.date',
@@ -129,16 +130,22 @@ const {
 
 		<BlockList {body} showLedeStyle />
 
-		{link && (
-			<footer>
+		<footer>
+			{link && (
 				<Button
 					href={link}
 					iconRight={externalLink}
 				>
 					Direct link
 				</Button>
-			</footer>
-		)}
+			)}
+			<dl class="tag-list">
+				<dt class="type-role-display type-scale-delta">Filed under:</dt>
+				{tags.map((tag) => (
+					<dd><a href="">{sentenceCase(tag)}</a></dd>
+				))}
+			</dl>
+		</footer>
 	</article>
 
 	<!-- pagination nav -->
@@ -191,6 +198,24 @@ const {
 		margin-inline: auto;
 		max-width: var(--content-width-default);
 		padding-top: var(--space-wide);
+	}
+
+	.tag-list {
+		display: flex;
+		gap: var(--space-xnarrow);
+		flex-wrap: wrap;
+	}
+
+	.tag-list dt {
+		width: 100%;
+	}
+
+	.tag-list dd::after {
+		content: ', ';
+	}
+
+	.tag-list dd:last-child::after {
+		content: '';
 	}
 
 	nav {
