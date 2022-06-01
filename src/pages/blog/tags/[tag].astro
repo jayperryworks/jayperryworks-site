@@ -3,9 +3,15 @@ import prismicClient from '@lib/prismic';
 import * as prismicHelpers from '@prismicio/helpers';
 import * as prismic from '@prismicio/client';
 
+// maybe:
+// get all blog posts
+// get all tags
+// loop through tags list and get posts that have each tag
+// build object:
 // const list = {
 // 	[tag]: [...posts],
 // }
+// delete empty tags
 
 
 const tags = await prismicClient.getTags();
