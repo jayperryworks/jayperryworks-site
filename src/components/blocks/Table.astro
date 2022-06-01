@@ -34,7 +34,6 @@ try {
 		.map((row) => row.split(','));
 
 	if (footer) data.footer = rows[rows.length - 1].split(',');
-  console.log(data)
 } catch(error) {
 	throw new Error('Error receiving the CSV file', error);
 }
