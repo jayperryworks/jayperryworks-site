@@ -7,6 +7,7 @@ const {
 } = Astro.props;
 
 // https://stackoverflow.com/questions/64982528/is-is-possible-to-read-a-csv-file-with-javascript-fetch-api
+// https://blog.logrocket.com/complete-guide-csv-files-node-js/
 const response = await fetch(
 	CSVFile,
 	{
@@ -17,9 +18,9 @@ const response = await fetch(
 	}
 );
 
-let table = {
+let data = {
 	header: [],
-	body: [],
+	rows: [],
 	footer: [],
 };
 
@@ -27,13 +28,13 @@ try {
 	const result = await response.text();
 	const rows = result.split('\n');
 
-	table.header = rows[0].split(',');
-	table.body = rows.splice(1, rows.length)
+	data.header = rows[0].split(',');
+	data.rows = rows.splice(1, rows.length)
 		.filter((row) => row)
 		.map((row) => row.split(','));
 
-	if (footer) table.footer = rows[rows.length - 1].split(',');
-  console.log(table)
+	if (footer) data.footer = rows[rows.length - 1].split(',');
+  console.log(data)
 } catch(error) {
 	throw new Error('Error receiving the CSV file', error);
 }
@@ -41,27 +42,21 @@ try {
 
 <div class="wrapper">
 	<table class="type-role-accent type-scale-zeta">
-		{table.header && (
-			<thead>
-				<tr>
-					{table.header.map((cell) => <th>{cell}</th>)}
-				</tr>
-			</thead>
-		)}
-    <tbody>
-      {table.body.map((row) => (
-        <tr>
-          {row.map((cell, index) => (
-            keyColumns.includes(index + 1) ? <th>{cell}</th> : <td>{cell}</td>
-          ))}
-        </tr>
-      ))}
-    </tbody>
-		{table.footer && (
+		<thead>
+			<tr>{data.header.map((heading) => <th>{heading}</th>)}</tr>
+		</thead>
+		{data.rows.map((row) => (
+			<tr>
+				{row.map((cell, i) => (
+					keyColumns.includes(i + 1) ? <th>{cell}</th> : <td>{cell}</td>
+				))}
+			</tr>
+		))}
+		{data.footer && (
 			<tfoot>
 				<tr>
-					{table.footer.map((cell, index) => (
-            keyColumns.includes(index + 1) ? <th>{cell}</th> : <td>{cell}</td>
+					{data.footer.map((footer, j) => (
+            keyColumns.includes(j + 1) ? <th>{footer}</th> : <td>{footer}</td>
 					))}
 				</tr>
 			</tfoot>
@@ -71,7 +66,7 @@ try {
 
 <style>
 	.wrapper {
-    --min-width: 40rem;
+    --min-width: 50rem;
 
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
@@ -90,45 +85,42 @@ try {
     border-collapse: collapse;
     border-spacing: 0;
     min-width: var(--min-width);
+		color: var(--color-primary);
     width: 100%;
   }
 
+	td,
+	th {
+		padding: 0.5em 0.5em;
+		position: relative;
+		text-align: left;
+
+	}
+
+	td:last-child,
+	th:last-child {
+		text-align: right;
+	}
+
+	th {
+		color: var(--color-primary);
+		font-weight: bold;
+	}
+
   thead {
     border-bottom: 2px solid var(--color-primary);
-    color: var(--color-primary);
     text-align: left;
     vertical-align: bottom;
   }
 
-  thead > :global(th) {
+  thead th {
     padding-bottom: 0.5em;
+		color: var(--color-secondary);
+		font-weight: unset;
   }
 
   /* alternating row colors */
   tr:nth-child(even) {
     background-color: var(--color-well);
-  }
-
-  td,
-  th {
-    padding: 0.5em 0.5em;
-    position: relative;
-    text-align: left;
-
-  }
-
-  td:last-child,
-  th:last-child {
-    text-align: right;
-  }
-
-  th {
-    color: var(--color-secondary);
-    font-weight: normal;
-  }
-
-  tbody th {
-    color: var(--color-primary);
-    font-weight: bold;
   }
 </style>
