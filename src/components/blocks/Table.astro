@@ -20,6 +20,7 @@ const response = await fetch(
 let table = {
 	header: [],
 	body: [],
+	footer: [],
 };
 
 try {
@@ -32,27 +33,50 @@ try {
 		.map((row) => row.split(','));
 
 	if (footer) table.footer = rows[rows.length - 1].split(',');
-
-	console.log(table)
+  console.log(table)
 } catch(error) {
 	throw new Error('Error receiving the CSV file', error);
 }
 ---
 
 <div class="wrapper">
-	<table>
+	<table class="type-role-accent type-scale-zeta">
+		{table.header && (
+			<thead>
+				<tr>
+					{table.header.map((cell) => <th>{cell}</th>)}
+				</tr>
+			</thead>
+		)}
+    <tbody>
+      {table.body.map((row) => (
+        <tr>
+          {row.map((cell, index) => (
+            keyColumns.includes(index + 1) ? <th>{cell}</th> : <td>{cell}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+		{table.footer && (
+			<tfoot>
+				<tr>
+					{table.footer.map((cell, index) => (
+            keyColumns.includes(index + 1) ? <th>{cell}</th> : <td>{cell}</td>
+					))}
+				</tr>
+			</tfoot>
+		)}
 	</table>
 </div>
 
 <style>
 	.wrapper {
-    --min-width: 600px;
+    --min-width: 40rem;
 
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
     overflow-x: scroll;
     padding-bottom: var(--space-narrow);
-
   }
 
   @media screen and (min-width: 37.5em) {
@@ -65,8 +89,6 @@ try {
   table {
     border-collapse: collapse;
     border-spacing: 0;
-    font-family: var(--type-font-accent);
-    font-size: var(--type-scale-zeta);
     min-width: var(--min-width);
     width: 100%;
   }
@@ -74,8 +96,6 @@ try {
   thead {
     border-bottom: 2px solid var(--color-primary);
     color: var(--color-primary);
-    font-family: var(--type-font-accent);
-    font-size: var(--type-scale-eta);
     text-align: left;
     vertical-align: bottom;
   }
@@ -104,7 +124,6 @@ try {
 
   th {
     color: var(--color-secondary);
-    font-family: var(--type-font-accent);
     font-weight: normal;
   }
 
