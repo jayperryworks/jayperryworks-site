@@ -1,44 +1,80 @@
 ---
-import prismicClient from '@lib/prismic';
+// utils
+import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
-import * as prismic from '@prismicio/client';
+import prismic from '@lib/prismic';
 
-// maybe:
-// get all blog posts
-// get all tags
-// loop through tags list and get posts that have each tag
-// build object:
-// const list = {
-// 	[tag]: [...posts],
-// }
-// delete empty tags
+// types
+// import { Params } from 'astro';
 
-
-const tags = await prismicClient.getTags();
-const postsByTag = await prismicClient.getAllBySomeTags(tags, {
-	predicates: [
-		prismic.predicate.at('document.type', 'blog_post'),
-	],
-	orderings: {
-		field: 'my.blog_post.date',
-		direction: 'desc',
-	},
-});
-
-console.log(postsByTag)
-
-export async function getStaticPaths(): Promise<Object> {
-
-	// return {
-	// 	return {
- 	// 		params: {
- 	// 			tag,
- 	// 		},
- 	// 		props: {
- 	// 			...data,
- 	// 			link: prismicHelpers.asLink(data.link),
- 	// 		},
- 	// 	};
-	// };
+export interface Post {
+	title: string;
+	subtitle?: string;
+	path: string;
 }
+
+export interface Props {
+	posts: Array<Post>;
+}
+
+export async function getStaticPaths() {
+	const allPosts = await prismic.getAllByType('blog_post', {
+		orderings: {
+			field: 'my.blog_post.date',
+			direction: 'desc',
+		},
+	});
+
+	const tags = await prismic.getTags();
+
+	return tags.map((tag: string) => {
+		const posts = allPosts.filter(({ tags }) => tags.includes(tag));
+
+		if (posts) {
+			return {
+				params: {
+					tag,
+				},
+				props: {
+					posts: posts.map(({ data, uid }) => {
+						const date = new Date(data.date);
+						const year = format(date, 'yyyy');
+						const month = format(date, 'MM');
+						const day = format(date, 'dd');
+
+						return {
+							title: prismicHelpers.asText(data.title),
+							subtitle: prismicHelpers.asText(data.subtitle),
+							path: `/blog/${year}/${month}/${day}/${uid}`,
+						};
+					}),
+				},
+			};
+		}
+	});
+}
+
+const {
+	tag,
+} = Astro.params;
+
+const {
+	posts,
+} = Astro.props as Props;
 ---
+
+<h1>{tag}</h1>
+<ul>
+	{posts.map((post) => (
+		<li>
+			<article>
+				<h2><a href={post.path}>{post.title}</a></h2>
+				{post.subtitle && (
+					<p class="type-role-accent type-scale-epsilon">
+						<a href={post.path}>{post.subtitle}</a>
+					</p>
+				)}
+			</article>
+		</li>
+	))}
+</ul>

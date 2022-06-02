@@ -10,9 +10,10 @@ import externalLink from '@icons/external-link.svg?raw';
 
 // helpers
 import { format } from 'date-fns';
+import { blog as permalink } from '@lib/permalinks';
 import { sentenceCase } from '@lib/stringHelpers';
-import prismic from '@lib/prismic';
 import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
 
 // components
 import BlockList from '@components/BlockList.astro';
@@ -25,29 +26,22 @@ import type { Slice, TitleField, LinkField, Tags } from '@prismicio/types';
 
 export type PaginationLink = {
 	path: string;
-	title: TitleField;
+	title: string;
+	subtitle?: string;
 };
 
-export interface Params {
-	year: string;
-	month: string;
-	day: string;
-	uid: string;
-}
-
 export interface Props {
-		body: Array<Slice>;
-		date: string;
-		link?: LinkField;
-		next?: PaginationLink;
-		prev?: PaginationLink;
-		series?: LinkField;
-		subtitle?: TitleField;
-		tags?: Tags;
-		title: TitleField;
+	body: Array<Slice>;
+	date: string;
+	link?: LinkField;
+	next?: PaginationLink;
+	series?: LinkField;
+	subtitle?: TitleField;
+	tags?: Tags;
+	title: TitleField;
 }
 
-export async function getStaticPaths(): Promise<Object> {
+export async function getStaticPaths() {
  	const posts = await prismic.getAllByType('blog_post', {
  		orderings: {
  			field: 'my.blog_post.date',
@@ -57,24 +51,7 @@ export async function getStaticPaths(): Promise<Object> {
 
  	return posts.map(({ uid, tags, data }, index) => {
  		const { date } = data;
-
- 		// create urls for next and previous blog posts
- 		const nav = [
- 			posts[index - 1],
- 			posts[index + 1],
- 		].map((post) => {
- 			if (post) {
- 				const { data, uid } = post;
- 				const year = format(new Date(data.date), 'yyyy');
- 				const month = format(new Date(data.date), 'MM');
- 				const day = format(new Date(data.date), 'dd');
-
- 				return {
- 					path: `/blog/${year}/${month}/${day}/${uid}`,
- 					title: prismicHelpers.asText(data.title),
- 				};
- 			}
- 		});
+		 const nextPost = posts[index + 1];
 
  		return {
  			params: {
@@ -87,8 +64,11 @@ export async function getStaticPaths(): Promise<Object> {
  				...data,
  				tags,
  				link: prismicHelpers.asLink(data.link),
- 				prev: nav[0],
- 				next: nav[1],
+ 				next: nextPost && {
+					title: nextPost.data.title,
+					subtitle: nextPost.data.subtitle,
+					path: permalink(nextPost),
+				},
  			},
  		};
  	});
@@ -99,7 +79,8 @@ const {
 	month,
 	day,
 	uid,
-} = Astro.params as Params;
+} = Astro.params;
+
 const {
 	body,
 	date,
@@ -142,7 +123,7 @@ const {
 			<dl class="tag-list">
 				<dt class="type-role-display type-scale-delta">Filed under:</dt>
 				{tags.map((tag) => (
-					<dd><a href="">{sentenceCase(tag)}</a></dd>
+					<dd><a href={`/blog/tags/${tag}/`}>{sentenceCase(tag)}</a></dd>
 				))}
 			</dl>
 		</footer>

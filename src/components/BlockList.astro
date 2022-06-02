@@ -70,10 +70,10 @@ function figure(slice: Slice): BlockType {
 
 	return {
 		source: image,
-		attribution: attribution && {
-			markdown: attribution,
+		attribution: attribution?.length > 0 && {
+			markdown: prismicHelpers.asText(attribution),
 		},
-		caption: caption.length > 0 && {
+		caption: caption?.length > 0 && {
 			markdown: prismicHelpers.asText(caption)
 		},
 		...sharedBlockFields(slice),

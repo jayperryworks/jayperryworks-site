@@ -28,15 +28,16 @@ const {
 		<RenderedText {...text} />
 
 		{attribution && (
-			<cite class="type-scale-zeta">
-				<RenderedText {...attribution} />
+			<cite>
+				<RenderedText {...attribution} inline />
 			</cite>
 		)}
 	</slot>
 </figcaption>
 
 <style>
-	figcaption {
+	figcaption,
+	cite {
 		text-align: left;
 	}
 
@@ -46,5 +47,9 @@ const {
 
 	figcaption :global(p) {
     font-style: normal;
+	}
+
+	cite {
+		font-style: italic;
 	}
 </style>

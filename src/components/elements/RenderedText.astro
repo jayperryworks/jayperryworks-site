@@ -8,8 +8,8 @@ import '@styles/components/tooltip.css';
 import expand from '@icons/expand.svg?raw';
 
 // utils
-import { sentenceCase } from '@lib/stringHelpers.ts';
-import renderMarkdown from '@lib/renderMarkdown.ts';
+import { sentenceCase } from '@lib/stringHelpers';
+import renderMarkdown from '@lib/renderMarkdown';
 import * as prismicHelpers from '@prismicio/helpers';
 
 // types
@@ -28,7 +28,7 @@ const {
 } = Astro.props as Props;
 
 // Customize the output of Prismic text
-function htmlSerializer(type, element, content, children) {
+function htmlSerializer(type, element, content, children): string {
 	if (element.data?.label === 'note') {
 		//  remove the parentheses and add a period so it reads as a sentence.
 		const label = children.toString().replace('(', '').replace(')', '').concat('.');
