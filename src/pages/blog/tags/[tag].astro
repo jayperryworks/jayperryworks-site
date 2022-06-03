@@ -3,6 +3,11 @@
 import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
+import { blog as permalink } from '@lib/permalinks';
+import { sentenceCase } from '@lib/stringHelpers';
+
+// components
+import Layout from '@layouts/BaseLayout.astro';
 
 // types
 // import { Params } from 'astro';
@@ -11,6 +16,7 @@ export interface Post {
 	title: string;
 	subtitle?: string;
 	path: string;
+	date: string;
 }
 
 export interface Props {
@@ -18,6 +24,7 @@ export interface Props {
 }
 
 export async function getStaticPaths() {
+	// get all the blog posts from Prismic
 	const allPosts = await prismic.getAllByType('blog_post', {
 		orderings: {
 			field: 'my.blog_post.date',
@@ -25,33 +32,43 @@ export async function getStaticPaths() {
 		},
 	});
 
-	const tags = await prismic.getTags();
+	// create a list of unique tags used in the blog posts
+	const tags = allPosts.reduce((result, post) => {
+		post?.tags.forEach((tag) => {
+			if (!result.includes(tag)) result.push(tag);
+		})
+		return result;
+	}, []);
 
-	return tags.map((tag: string) => {
-		const posts = allPosts.filter(({ tags }) => tags.includes(tag));
+	return tags.reduce((result, tag) => {
+		// create an array of post objects for each tag
+		const posts = allPosts
+			.filter(({ tags }) => tags.includes(tag))
+			.map((post) => {
+				const { title, subtitle, date } = post.data;
+
+				// clean up post data to just what we need for the listings
+				return {
+					title: prismicHelpers.asText(title),
+					subtitle: prismicHelpers.asText(subtitle),
+					path: permalink(post),
+					date,
+				};
+			});
 
 		if (posts) {
-			return {
+			result.push({
 				params: {
 					tag,
 				},
 				props: {
-					posts: posts.map(({ data, uid }) => {
-						const date = new Date(data.date);
-						const year = format(date, 'yyyy');
-						const month = format(date, 'MM');
-						const day = format(date, 'dd');
-
-						return {
-							title: prismicHelpers.asText(data.title),
-							subtitle: prismicHelpers.asText(data.subtitle),
-							path: `/blog/${year}/${month}/${day}/${uid}`,
-						};
-					}),
+					posts,
 				},
-			};
+			});
 		}
-	});
+
+		return result;
+	}, []);
 }
 
 const {
@@ -63,18 +80,34 @@ const {
 } = Astro.props as Props;
 ---
 
-<h1>{tag}</h1>
-<ul>
-	{posts.map((post) => (
-		<li>
-			<article>
-				<h2><a href={post.path}>{post.title}</a></h2>
-				{post.subtitle && (
-					<p class="type-role-accent type-scale-epsilon">
-						<a href={post.path}>{post.subtitle}</a>
-					</p>
-				)}
-			</article>
-		</li>
-	))}
-</ul>
+<Layout
+	pageTitle={sentenceCase(tag)}
+	path="blog"
+>
+	<header>
+		<p class="type-role-accent type-scale-gamma">Posts filed under</p>
+		<h1>{sentenceCase(tag)}</h1>
+	</header>
+	<ul>
+		{posts.map((post) => (
+			<li>
+				<article>
+					<time
+						class="type-role-accent type-scale-zeta"
+						datetime={post.date}
+					>
+						{format(new Date(post.date), 'MMMM dd, yyyy')}
+					</time>
+					<h2 class="type-role-display type-scale-gamma">
+						<a class="type-link-undecorated" href={post.path}>{post.title}</a>
+					</h2>
+					{post.subtitle && (
+						<p class="type-role-accent type-scale-delta">
+							<a class="type-link-undecorated" href={post.path}>{post.subtitle}</a>
+						</p>
+					)}
+				</article>
+			</li>
+		))}
+	</ul>
+</Layout>
