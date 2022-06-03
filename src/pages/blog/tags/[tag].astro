@@ -1,4 +1,7 @@
 ---
+// styles
+import '@styles/tokens/contentWidth.css';
+
 // utils
 import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
@@ -84,30 +87,62 @@ const {
 	pageTitle={sentenceCase(tag)}
 	path="blog"
 >
-	<header>
-		<p class="type-role-accent type-scale-gamma">Posts filed under</p>
-		<h1>{sentenceCase(tag)}</h1>
-	</header>
-	<ul>
-		{posts.map((post) => (
-			<li>
-				<article>
-					<time
-						class="type-role-accent type-scale-zeta"
-						datetime={post.date}
-					>
-						{format(new Date(post.date), 'MMMM dd, yyyy')}
-					</time>
-					<h2 class="type-role-display type-scale-gamma">
-						<a class="type-link-undecorated" href={post.path}>{post.title}</a>
-					</h2>
-					{post.subtitle && (
-						<p class="type-role-accent type-scale-delta">
-							<a class="type-link-undecorated" href={post.path}>{post.subtitle}</a>
-						</p>
-					)}
-				</article>
-			</li>
-		))}
-	</ul>
+	<div class="wrapper">
+		<header>
+			<p class="type-role-accent type-scale-gamma">Posts filed under</p>
+			<h1>{sentenceCase(tag)}</h1>
+		</header>
+		<ul class="post-list">
+			{posts.map((post) => (
+				<li class="post">
+					<article>
+						<time
+							class="type-role-accent type-scale-zeta"
+							datetime={post.date}
+						>
+							{format(new Date(post.date), 'MMMM dd, yyyy')}
+						</time>
+						<h2 class="type-role-display type-scale-gamma">
+							<a class="type-link-undecorated" href={post.path}>{post.title}</a>
+						</h2>
+						{post.subtitle && (
+							<p class="type-role-accent type-scale-delta">
+								<a class="type-link-undecorated" href={post.path}>{post.subtitle}</a>
+							</p>
+						)}
+					</article>
+				</li>
+			))}
+		</ul>
+	</div>
 </Layout>
+
+<style>
+	.wrapper {
+		padding: var(--space-outside) var(--space-xwide);
+	}
+
+	header,
+	.post-list {
+		max-width: var(--content-width-default);
+		margin-inline: auto;
+	}
+
+	header {
+		padding-block-end: var(--space-medium);
+	}
+
+	.post-list {
+		list-style: none;
+	}
+
+	.post {
+		display: block;
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+	}
+
+	.post + .post {
+		padding-block-start: var(--space-medium);
+	}
+</style>

@@ -5,6 +5,7 @@ import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 import '@styles/utilities/borders.css';
+import '@styles/utilities/type.css';
 import arrowRight from '@icons/arrow-right.svg?raw';
 import externalLink from '@icons/external-link.svg?raw';
 
@@ -86,7 +87,6 @@ const {
 	date,
 	link,
 	next,
-	prev,
 	series,
 	subtitle,
 	tags,
@@ -111,44 +111,47 @@ const {
 
 		<BlockList {body} showLedeStyle />
 
-		<footer>
-			{link && (
+		{link && (
+			<footer class="link">
 				<Button
 					href={link}
 					iconRight={externalLink}
 				>
 					Direct link
 				</Button>
-			)}
-			<dl class="tag-list">
-				<dt class="type-role-display type-scale-delta">Filed under:</dt>
-				{tags.map((tag) => (
-					<dd><a href={`/blog/tags/${tag}/`}>{sentenceCase(tag)}</a></dd>
-				))}
-			</dl>
-		</footer>
+			</footer>
+		)}
 	</article>
 
 	<!-- pagination nav -->
 	{next && (
 		<nav>
-			<div class="nav-wrapper">
+			<section class="nav-wrapper tags">
+				<h2 class="type-role-accent type-scale-epsilon">Filed&nbsp;under:</h2>
+				<ul class="tag-list type-role-accent">
+					{tags.map((tag) => (
+						<li>
+							<a href={`/blog/tags/${tag}/`}>{sentenceCase(tag)}</a>
+						</li>
+					))}
+				</ul>
+			</section>
+			<section class="nav-wrapper">
 				<p class="next">
-					<a href={next.path} class="next-eyebrow">Read next</a>
+					<a href={next.path} class="next-eyebrow">Next post:</a>
 					<span class="next-title">
-						<a href={next.path} set:html={next.title}></a>
+						<a href={next.path}>{prismicHelpers.asText(next.title)}</a>
 					</span>
 					<Icon svg={arrowRight} size="large" class="next-icon" />
 				</p>
-			</div>
+			</section>
 		</nav>
 	)}
 </Layout>
 
 <style>
 	article {
-		padding-block: var(--space-xwide);
-		padding-inline: var(--space-outside);
+		padding: var(--space-xwide) var(--space-outside);
 	}
 
 	header {
@@ -175,39 +178,76 @@ const {
 		padding-block-start: var(--space-narrow);
 	}
 
-	footer {
+	.link {
 		margin-inline: auto;
 		max-width: var(--content-width-default);
 		padding-top: var(--space-wide);
 	}
 
-	.tag-list {
+	footer {
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+		padding-top: var(--space-xwide);
+	}
+
+	.tags {
 		display: flex;
-		gap: var(--space-xnarrow);
+		align-items: baseline;
+		gap: 0.25em;
 		flex-wrap: wrap;
 	}
 
-	.tag-list dt {
-		width: 100%;
+	@media screen and (min-width: 30em) {
+		.tags {
+			gap: var(--space-xnarrow);
+			flex-wrap: nowrap;
+		}
 	}
 
-	.tag-list dd::after {
+	.tag-list {
+		list-style: none;
+		padding-inline-start: 0;
+		padding-block-start: var(--space-xxnarrow);
+		margin: 0;
+		display: flex;
+		gap: 0.5em;
+		flex-wrap: wrap;
+		align-items: baseline;
+	}
+
+
+	.tag-list li {
+		font-size: 0; /* kill whitespace margins */
+	}
+
+	.tag-list li::after {
 		content: ', ';
+		margin-inline-start: 0.1em;
+		font-size: var(--type-scale-epsilon);
 	}
 
-	.tag-list dd:last-child::after {
+	.tag-list li:last-child::after {
 		content: '';
 	}
 
+	.tag-list a {
+		font-size: var(--type-scale-epsilon);
+	}
+
 	nav {
+		padding-block-end: var(--space-xwide);
 		padding-inline: var(--space-outside);
 	}
 
 	.nav-wrapper {
-		border-top: var(--border-default);
 		margin-inline: auto;
 		max-width: var(--content-width-default);
-		padding-block: var(--space-xwide);
+		border-top: var(--border-default);
+		padding-block-start: var(--space-wide);
+	}
+
+	.nav-wrapper + .nav-wrapper {
+		margin-block-start: var(--space-wide);
 	}
 
 	.next {
