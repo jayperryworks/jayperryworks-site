@@ -11,22 +11,28 @@ import { sentenceCase } from '@lib/stringHelpers';
 
 // components
 import Layout from '@layouts/BaseLayout.astro';
+import ReadNextLink from '@components/elements/ReadNextLink.astro';
 
 // types
-// import { Params } from 'astro';
-
-export interface Post {
-	title: string;
-	subtitle?: string;
-	path: string;
-	date: string;
-}
+export type Post = {
+	title: string,
+	subtitle?: string,
+	path: string,
+	date: string,
+};
 
 export interface Props {
 	posts: Array<Post>;
 }
 
-export async function getStaticPaths() {
+export type StaticPath = {
+	params: {
+		tag: string,
+	},
+	props: Props,
+};
+
+export async function getStaticPaths(): Promise<StaticPath[]> {
 	// get all the blog posts from Prismic
 	const allPosts = await prismic.getAllByType('blog_post', {
 		orderings: {
@@ -100,13 +106,13 @@ const {
 							class="type-role-accent type-scale-zeta"
 							datetime={post.date}
 						>
-							{format(new Date(post.date), 'MMMM dd, yyyy')}
+							{format(new Date(post.date), 'yyyy.MM.dd')}
 						</time>
 						<h2 class="type-role-display type-scale-gamma">
 							<a class="type-link-undecorated" href={post.path}>{post.title}</a>
 						</h2>
 						{post.subtitle && (
-							<p class="type-role-accent type-scale-delta">
+							<p class="subtitle | type-role-accent type-scale-delta">
 								<a class="type-link-undecorated" href={post.path}>{post.subtitle}</a>
 							</p>
 						)}
@@ -114,6 +120,13 @@ const {
 				</li>
 			))}
 		</ul>
+		<nav>
+			<ReadNextLink
+				eyebrow="More blog posts:"
+				title="Archive"
+				link="/blog/page/1"
+			/>
+		</nav>
 	</div>
 </Layout>
 
@@ -123,7 +136,8 @@ const {
 	}
 
 	header,
-	.post-list {
+	.post-list,
+	nav {
 		max-width: var(--content-width-default);
 		margin-inline: auto;
 	}
@@ -134,6 +148,13 @@ const {
 
 	.post-list {
 		list-style: none;
+		padding-inline-start: 0;
+	}
+
+	nav {
+		border-top: var(--border-default);
+		padding-block: var(--space-xwide);
+		margin-block-start: var(--space-xwide);
 	}
 
 	.post {
@@ -143,6 +164,11 @@ const {
 	}
 
 	.post + .post {
-		padding-block-start: var(--space-medium);
+		padding-block-start: var(--space-wide);
+	}
+
+	.subtitle {
+		/* nudge the subtitle down slightly so date-title-subtitle spacing is optically even */
+		padding-block-start: 0.15em;
 	}
 </style>

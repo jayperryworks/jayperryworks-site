@@ -25,10 +25,17 @@
 	line-height: var(--type-leading-tight);
 }
 
-.type-role-accent.type-scale-zeta,
-.type-role-accent .type-scale-zeta {
+:is(.type-scale-alpha, .type-scale-beta, .type-scale-gamma) .type-role-accent,
+:is(.type-scale-alpha, .type-scale-beta, .type-scale-gamma).type-role-accent {
+	font-weight: 100;
+}
+
+:is(.type-scale-zeta) .type-role-accent,
+:is(.type-scale-zeta).type-role-accent {
 	font-weight: 300;
 }
+
+/* body type is the default, so no utils needed for this role */
 
 /* --- scale --- */
 /* -> pair with 'role' utilities above to set the correct weight and leading */

@@ -19,16 +19,16 @@ import prismic from '@lib/prismic';
 // components
 import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
-import Icon from '@components/elements/Icon.astro';
 import Layout from '@layouts/BaseLayout.astro';
+import ReadNextLink from '@components/elements/ReadNextLink.astro';
 
 // types
 import type { Slice, TitleField, LinkField, Tags } from '@prismicio/types';
 
 export type PaginationLink = {
 	path: string;
-	title: string;
-	subtitle?: string;
+	title: TitleField;
+	subtitle?: TitleField;
 };
 
 export interface Props {
@@ -102,7 +102,10 @@ const {
 		<header>
 			<h1>{prismicHelpers.asText(title)}</h1>
 			{subtitle && (
-				<p class="subtitle" set:html={prismicHelpers.asText(subtitle)}></p>
+				<p
+					class="subtitle type-role-accent type-scale-gamma"
+					set:html={prismicHelpers.asText(subtitle)}
+				></p>
 			)}
 			<time datetime={date} class="date">
 				{format(new Date(date), 'MMMM dd, yyyy')}
@@ -137,13 +140,10 @@ const {
 				</ul>
 			</section>
 			<section class="nav-wrapper">
-				<p class="next">
-					<a href={next.path} class="next-eyebrow">Next post:</a>
-					<span class="next-title">
-						<a href={next.path}>{prismicHelpers.asText(next.title)}</a>
-					</span>
-					<Icon svg={arrowRight} size="large" class="next-icon" />
-				</p>
+				<ReadNextLink
+					eyebrow="Next post:"
+					title={prismicHelpers.asText(next.title)}
+				/>
 			</section>
 		</nav>
 	)}
@@ -162,10 +162,6 @@ const {
 	}
 
 	.subtitle {
-		color: var(--color-secondary);
-		font-family: var(--type-font-accent);
-		font-size: var(--type-scale-gamma);
-		font-weight: 100;
 		max-width: none;
 		padding-top: var(--space-xxnarrow);
 	}
@@ -175,7 +171,7 @@ const {
 		display: block;
 		font-family: var(--type-font-accent);
 		font-weight: 200;
-		padding-block-start: var(--space-narrow);
+		padding-block-start: var(--space-medium);
 	}
 
 	.link {
@@ -248,45 +244,5 @@ const {
 
 	.nav-wrapper + .nav-wrapper {
 		margin-block-start: var(--space-wide);
-	}
-
-	.next {
-		align-items: start;
-		display: inline-grid;
-		gap: 0 var(--space-medium);
-		grid-template-areas:
-			'eyebrow .'
-			'title icon';
-		grid-template-columns: minmax(0, 1fr) 1.44em;
-		grid-template-rows: auto;
-		justify-items: start;
-		transition: 0.25s color ease;
-		will-change: color;
-	}
-
-	.next:hover {
-		color: var(--color-highlight);
-	}
-
-	.next-eyebrow {
-		border: 0;
-		color: var(--color-secondary);
-		display: inline-block;
-		font-family: var(--type-font-accent);
-		font-weight: 200;
-		grid-area: eyebrow;
-	}
-
-	.next-title {
-		display: block;
-		font-family: var(--type-font-display);
-		font-size: var(--type-scale-gamma);
-		grid-area: title;
-		line-height: var(--type-leading-tight);
-	}
-
-	.next :global(.next-icon) {
-		grid-area: icon;
-		margin: 0;
 	}
 </style>
