@@ -6,7 +6,6 @@ import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 import '@styles/utilities/borders.css';
 import '@styles/utilities/type.css';
-import arrowRight from '@icons/arrow-right.svg?raw';
 import externalLink from '@icons/external-link.svg?raw';
 
 // helpers
@@ -19,6 +18,7 @@ import prismic from '@lib/prismic';
 // components
 import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
+import Heading from '@components/blocks/Heading.astro';
 import Layout from '@layouts/BaseLayout.astro';
 import ReadNextLink from '@components/elements/ReadNextLink.astro';
 
@@ -100,12 +100,14 @@ const {
 >
 	<article>
 		<header>
-			<h1>{prismicHelpers.asText(title)}</h1>
+			<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
 			{subtitle && (
-				<p
-					class="subtitle type-role-accent type-scale-gamma"
-					set:html={prismicHelpers.asText(subtitle)}
-				></p>
+				<Heading
+					class="subtitle"
+					subheading
+				>
+					{prismicHelpers.asText(subtitle)}
+				</Heading>
 			)}
 			<time datetime={date} class="date">
 				{format(new Date(date), 'MMMM dd, yyyy')}
@@ -161,8 +163,7 @@ const {
 		text-align: center;
 	}
 
-	.subtitle {
-		max-width: none;
+	header :global(.subtitle) {
 		padding-top: var(--space-xxnarrow);
 	}
 

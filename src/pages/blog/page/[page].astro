@@ -17,6 +17,7 @@ import { format } from 'date-fns';
 // components
 import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
+import Heading from '@components/blocks/Heading.astro';
 import Icon from '@components/elements/Icon.astro';
 import Layout from '@layouts/BaseLayout.astro';
 
@@ -69,14 +70,17 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 					id={post.uid}
 				>
 					<header class="post-header">
-						<h2>
+						<Heading level={2}>
 							<a
 								href={post.path}
 								class="type-link-undecorated"
-							>
+								>
 								{prismicHelpers.asText(post.title)}
 							</a>
-						</h2>
+						</Heading>
+						{post.subtitle && (
+							<Heading subheading level={3}>{prismicHelpers.asText(post.subtitle)}</Heading>
+						)}
 						<time
 							datetime={post.date}
 							class="date"
@@ -161,6 +165,10 @@ const postSummaryList = page.data.map(({ uid, tags, data }) => {
 		max-width: var(--content-width-xwide);
 		padding-block-end: var(--space-wide);
 		text-align: center;
+	}
+
+	.post-header > time {
+		padding-top: var(--space-medium);
 	}
 
 	.post-link {

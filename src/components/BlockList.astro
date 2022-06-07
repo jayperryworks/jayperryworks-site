@@ -64,6 +64,17 @@ function sharedBlockFields(slice: Slice): BlockType {
 	};
 }
 
+function heading(slice: Slice): BlockType {
+	const { title1: title, level, subheading } = slice.primary;
+
+	return {
+		title: prismicHelpers.asText(title),
+		level: level || 2,
+		subheading,
+		...sharedBlockFields(slice),
+	};
+}
+
 // --- block types ---
 function figure(slice: Slice): BlockType {
 	const { image, caption, attribution } = slice.primary;
@@ -169,6 +180,7 @@ const blockTypes = {
 	'quote': blockQuote,
 	aside,
 	figure,
+	heading,
 	passage,
 	table,
 };

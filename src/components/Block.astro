@@ -3,11 +3,12 @@
 import '@styles/tokens/contentWidth.css';
 
 // block components
-import Passage from '@components/blocks/Passage.astro';
-import Figure from '@components/blocks/Figure.astro';
-import ImageGallery from '@components/blocks/ImageGallery.astro';
 import Aside from '@components/blocks/Aside.astro';
 import BlockQuote from '@components/blocks/BlockQuote.astro';
+import Figure from '@components/blocks/Figure.astro';
+import Heading from '@components/blocks/Heading.astro';
+import ImageGallery from '@components/blocks/ImageGallery.astro';
+import Passage from '@components/blocks/Passage.astro';
 import Table from '@components/blocks/Table.astro';
 
 // Typescript
@@ -29,12 +30,19 @@ const width = {
 	Large: 'xwide',
 	XLarge: 'xxwide',
 }[block.prominence];
+
+console.log(block.type === 'heading' && block.title)
 ---
 
 <div
 	class={['wrapper', className].join(' ')}
 	style={`--block-width: var(--content-width-${width || 'default'})`}
 >
+	{block.type === 'heading' && (
+		<!-- heading -->
+		<Heading {...block}>{block.title}</Heading>
+	)}
+
 	{block.type === 'passage' && (
 		<!-- passage -->
 		<Passage {...block} />

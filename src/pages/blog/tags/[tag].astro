@@ -10,6 +10,7 @@ import { blog as permalink } from '@lib/permalinks';
 import { sentenceCase } from '@lib/stringHelpers';
 
 // components
+import Heading from '@components/blocks/Heading.astro';
 import Layout from '@layouts/BaseLayout.astro';
 import ReadNextLink from '@components/elements/ReadNextLink.astro';
 
@@ -95,8 +96,8 @@ const {
 >
 	<div class="wrapper">
 		<header>
-			<p class="type-role-accent type-scale-gamma">Posts filed under</p>
-			<h1>{sentenceCase(tag)}</h1>
+			<Heading subheading level={3}>Posts filed under</Heading>
+			<Heading level={1}>{sentenceCase(tag)}</Heading>
 		</header>
 		<ul class="post-list">
 			{posts.map((post) => (
@@ -108,13 +109,17 @@ const {
 						>
 							{format(new Date(post.date), 'yyyy.MM.dd')}
 						</time>
-						<h2 class="type-role-display type-scale-gamma">
+						<Heading level={3}>
 							<a class="type-link-undecorated" href={post.path}>{post.title}</a>
-						</h2>
+						</Heading>
 						{post.subtitle && (
-							<p class="subtitle | type-role-accent type-scale-delta">
+							<Heading
+								subheading
+								level={4}
+								class="subtitle"
+							>
 								<a class="type-link-undecorated" href={post.path}>{post.subtitle}</a>
-							</p>
+							</Heading>
 						)}
 					</article>
 				</li>
