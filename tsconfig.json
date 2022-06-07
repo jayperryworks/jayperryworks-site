@@ -22,14 +22,11 @@
 			"@components/*": [
 				"src/components/*"
 			],
-			"@blocks/*": [
-				"src/components/blocks/*"
-			],
 			"@layouts/*": [
 				"src/layouts/*"
 			],
 			"@icons/*": [
-				"src/icons/*"
+				"public/assets/icons/*"
 			],
 			"@styles/*": [
 				"src/styles/*"

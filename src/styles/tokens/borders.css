@@ -1,0 +1,21 @@
+:root {
+	/* --- default corner radius */
+	--border-radius: 0.2em;
+
+	/* --- 'spine' border effect */
+	--border-spine-width: 0.35rem;
+
+	/* --- 'seam' border effect */
+	--border-seam-height: 0.5rem;
+
+	/* --- standard border styles */
+	--border-default: 1px dashed var(--color-border);
+	--border-link: 0.125em solid var(--color-highlight);
+}
+
+/* --- make the spine wider on larger screens --- */
+@media screen and (min-width: 42em) {
+	:root {
+		--border-spine-width: 0.6rem;
+	}
+}

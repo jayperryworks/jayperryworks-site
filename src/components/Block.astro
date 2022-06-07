@@ -1,18 +1,22 @@
 ---
+// assets
+import '@styles/tokens/contentWidth.css';
+
 // block components
-import Passage from '@blocks/Passage.astro';
-import Figure from '@blocks/Figure.astro';
-import ImageGallery from '@blocks/ImageGallery.astro';
+import Aside from '@components/blocks/Aside.astro';
+import BlockQuote from '@components/blocks/BlockQuote.astro';
+import Figure from '@components/blocks/Figure.astro';
+import Heading from '@components/blocks/Heading.astro';
+import ImageGallery from '@components/blocks/ImageGallery.astro';
+import Passage from '@components/blocks/Passage.astro';
+import Table from '@components/blocks/Table.astro';
 
 // Typescript
-import { Block } from '@lib/types';
-
-// other components
-import ContentWrapper from '@components/ContentWrapper.astro';
+import type { Block } from '@lib/types';
 
 export interface Props {
-	block: Block,
-	class: string,
+	block: Block;
+	class?: string;
 }
 
 const {
@@ -20,28 +24,57 @@ const {
 	class: className,
 } = Astro.props as Props;
 
-function getWidth(prominence) {
-	const widths = {
-		Small: 'narrow',
-		Medium: 'default',
-		Large: 'xwide',
-		XLarge: 'xxwide',
-	};
-
-	return widths[prominence] || 'default';
-}
+const width = {
+	Small: 'narrow',
+	Medium: 'default',
+	Large: 'xwide',
+	XLarge: 'xxwide',
+}[block.prominence];
 ---
 
-<ContentWrapper
-	class={className}
-	width={getWidth(block.prominence)}
+<div
+	class={['wrapper', className].join(' ')}
+	style={`--block-width: var(--content-width-${width || 'default'})`}
 >
-	<!-- passage -->
-	{block.type === 'passage' && <Passage {...block} />}
+	{block.type === 'heading' && (
+		<!-- heading -->
+		<Heading {...block}>{block.title}</Heading>
+	)}
 
-	<!-- figure -->
-	{block.type === 'figure' && <Figure {...block} />}
+	{block.type === 'passage' && (
+		<!-- passage -->
+		<Passage {...block} />
+	)}
 
-	<!-- image gallery -->
-	{block.type === 'imageGallery' && <ImageGallery {...block} />}
-</ContentWrapper>
+	{block.type === 'figure' && (
+		<!-- figure -->
+		<Figure {...block} />
+	)}
+
+	{block.type === 'imageGallery' && (
+		<!-- image gallery -->
+		<ImageGallery {...block} />
+	)}
+
+	{block.type === 'aside' && (
+		<!-- aside -->
+		<Aside {...block} />
+	)}
+
+	{block.type === 'blockQuote' && (
+		<!-- block quote -->
+		<BlockQuote {...block} />
+	)}
+
+	{block.type === 'table' && (
+		<!-- block quote -->
+		<Table {...block} />
+	)}
+</div>
+
+<style>
+	.wrapper {
+		max-width: var(--block-width);
+		margin-inline: auto;
+	}
+</style>

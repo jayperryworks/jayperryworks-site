@@ -1,0 +1,77 @@
+@import url('../tokens/type.css');
+@import url('../tokens/color.css');
+
+/* --- display type (headings, etc.) --- */
+.type-role-display {
+	font-family: var(--type-font-display);
+	font-weight: normal;
+	line-height: var(--type-leading-tight);
+	max-width: none; /* reset default width of p elements */
+}
+
+.type-role-display strong {
+	font-weight: normal;
+}
+
+.type-role-display em {
+	font-style: normal;
+}
+
+/* --- accent type (subheadings, UI, etc.) --- */
+.type-role-accent {
+	color: var(--color-secondary);
+	font-family: var(--type-font-accent);
+	font-weight: 200;
+	line-height: var(--type-leading-tight);
+}
+
+:is(.type-scale-alpha, .type-scale-beta, .type-scale-gamma) .type-role-accent,
+:is(.type-scale-alpha, .type-scale-beta, .type-scale-gamma).type-role-accent {
+	font-weight: 100;
+}
+
+:is(.type-scale-zeta) .type-role-accent,
+:is(.type-scale-zeta).type-role-accent {
+	font-weight: 300;
+}
+
+/* body type is the default, so no utils needed for this role */
+
+/* --- scale --- */
+/* -> pair with 'role' utilities above to set the correct weight and leading */
+.type-scale-alpha {
+	font-size: var(--type-scale-alpha);
+	line-height: var(--type-leading-xtight);
+}
+
+.type-scale-beta {
+	font-size: var(--type-scale-beta);
+	line-height: var(--type-leading-xtight);
+}
+
+.type-scale-gamma {
+	font-size: var(--type-scale-gamma);
+}
+
+.type-scale-delta {
+	font-size: var(--type-scale-delta);
+}
+
+.type-scale-epsilon {
+	font-size: var(--type-scale-epsilon);
+}
+
+.type-scale-zeta {
+	font-size: var(--type-scale-zeta);
+}
+
+/* --- links --- */
+.type-link-undecorated {
+	border-bottom: none;
+	color: inherit;
+}
+
+.type-link-undecorated:hover,
+.type-link-undecorated:active {
+	color: var(--color-highlight);
+}

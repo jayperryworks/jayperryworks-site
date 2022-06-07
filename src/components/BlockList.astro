@@ -1,25 +1,38 @@
 ---
-import { Block as BlockType } from '@lib/types.ts';
+// assets
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+
+// utils
 import { camelCase } from 'change-case';
-import { Slice } from '@prismicio/types';
 import * as prismicHelpers from '@prismicio/helpers';
 
-// child components
+// components
 import Block from '@components/Block.astro';
 
+// types
+import type { Block as BlockType } from '@lib/types.ts';
+import type { Slice } from '@prismicio/types';
+
 export interface Props {
-	body: Array<Slice>,
+	body: Array<Slice>;
+	showLedeStyle?: boolean;
+	class?: string;
 }
 
 const {
 	body,
+	showLedeStyle = false,
+	class: className = '',
 } = Astro.props as Props;
 
+// assign a class to certain block types to determine spacing between sibling blocks
 function getBlockClass(type: string): string {
 	const classes = {
 		passage: 'block-passage',
-		quote: 'block-passage',
+		blockQuote: 'block-passage',
 		heading: 'block-heading',
+		aside: 'block-passage',
 	};
 
 	if (classes[type]) {
@@ -27,6 +40,15 @@ function getBlockClass(type: string): string {
 	}
 
 	return '';
+}
+
+function getLedeClass(block: BlockType):string {
+	if (showLedeStyle) {
+		const firstPassage = sectionList[0].blocks.find((block: BlockType) => {
+			return block.type === 'passage';
+		});
+		return (block === firstPassage) ? 'lede' : '';
+	}
 }
 
 function sharedBlockFields(slice: Slice): BlockType {
@@ -42,16 +64,27 @@ function sharedBlockFields(slice: Slice): BlockType {
 	};
 }
 
+function heading(slice: Slice): BlockType {
+	const { title1: title, level, subheading } = slice.primary;
+
+	return {
+		title: prismicHelpers.asText(title),
+		level: level || 2,
+		subheading,
+		...sharedBlockFields(slice),
+	};
+}
+
 // --- block types ---
 function figure(slice: Slice): BlockType {
 	const { image, caption, attribution } = slice.primary;
 
 	return {
 		source: image,
-		attribution: attribution && {
-			markdown: attribution,
+		attribution: attribution?.length > 0 && {
+			markdown: prismicHelpers.asText(attribution),
 		},
-		caption: caption.length > 0 && {
+		caption: caption?.length > 0 && {
 			markdown: prismicHelpers.asText(caption)
 		},
 		...sharedBlockFields(slice),
@@ -93,10 +126,63 @@ function passage(slice: Slice): BlockType {
 	};
 }
 
+function aside(slice: Slice): BlockType {
+	const {
+		structured_text: prismicText,
+		markdown,
+		label,
+	} = slice.primary;
+
+	return {
+		label,
+		text: {
+			prismicText,
+			markdown: prismicHelpers.asText(markdown)
+		},
+		...sharedBlockFields(slice),
+	};
+}
+
+function blockQuote(slice: Slice): BlockType {
+	const {
+		structured_text: prismicText,
+		markdown,
+	} = slice.primary;
+
+	slice.slice_type = 'blockQuote';
+
+	return {
+		text: {
+			prismicText,
+			markdown: prismicHelpers.asText(markdown)
+		},
+		...sharedBlockFields(slice),
+	};
+}
+
+function table(slice: Slice): BlockType {
+	const {
+		csv_file: CSVFile,
+		key_columns: keyColumns,
+		footer,
+	} = slice.primary;
+
+	return {
+		CSVFile: prismicHelpers.asLink(CSVFile),
+		keyColumns,
+		footer,
+		...sharedBlockFields(slice),
+	};
+}
+
 const blockTypes = {
-	figure,
-	passage,
 	'image_gallery': imageGallery,
+	'quote': blockQuote,
+	aside,
+	figure,
+	heading,
+	passage,
+	table,
 };
 
 // --- build an array of blocks, sorted into sections ---
@@ -115,7 +201,7 @@ const sectionList = body.reduce((result: Array<BlockType>, slice: Slice) => {
 		return result;
 	}
 
-	// if the first blocks are outside a section, then make a generic div
+	// if the first blocks are outside a section, then make a generic/empty 'section'
 	if (result.length === 0 && type !== 'sectionStart') {
 		result.push({ blocks: [] });
 	}
@@ -130,16 +216,25 @@ const sectionList = body.reduce((result: Array<BlockType>, slice: Slice) => {
 }, []);
 ---
 
-<div class="block-list">
+<div class={[
+	'block-list',
+	className,
+].join(' ')}>
 	{sectionList.map(({ uid, blocks }) => (
 		uid ? (
 			<section id={uid}>
 				{blocks.map((block) => (
-					<Block class={getBlockClass(block.type)} {block} />
+					<Block class={[
+						getBlockClass(block.type),
+						getLedeClass(block),
+					].join(' ')} {block} />
 				))}
 			</section>
 		) : blocks.map((block) => (
-			<Block class={getBlockClass(block.type)} {block} />
+			<Block class={[
+				getBlockClass(block.type),
+				getLedeClass(block),
+			].join(' ')} {block} />
 		))
 	))}
 </div>
@@ -150,11 +245,16 @@ const sectionList = body.reduce((result: Array<BlockType>, slice: Slice) => {
 	}
 
 	.block-list :global(.block-heading + .block-passage) {
-    padding-top: var(--space-narrow);
-  }
+		padding-top: var(--space-narrow);
+	}
 
 	/* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
-  .block-list :global(.block-passage + .block-passage) {
-    padding-top: var(--space-medium);
-  }
+	.block-list :global(.block-passage + .block-passage) {
+		padding-top: var(--space-medium);
+	}
+
+	.lede :global(p:first-child) {
+		font-size: var(--type-scale-delta);
+		font-family: var(--type-font-display);
+	}
 </style>

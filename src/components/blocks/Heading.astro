@@ -1,0 +1,38 @@
+---
+// Render a heading tag with the correct markup and classes
+
+// styles
+import '@styles/utilities/type.css';
+
+// types
+export interface Props {
+	class?: string,
+	level?: number,
+	subheading?: boolean,
+}
+
+const {
+	class: className = '',
+	level = 2,
+	subheading = false,
+} = Astro.props as Props;
+
+const levels = ['alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta'];
+
+let html = '';
+const tag = !subheading ? `h${level}` : 'p';
+const classList = [
+	subheading ? `type-role-accent type-scale-${levels[level - 1]}` : '',
+	className,
+].join(' ');
+
+if (Astro.slots.has('default')) {
+	html = `
+		<${tag} class="${classList}">
+			${await Astro.slots.render('default')}
+		</${tag}>
+	`;
+}
+---
+
+<Fragment set:html={html}></Fragment>

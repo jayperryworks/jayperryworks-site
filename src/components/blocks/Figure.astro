@@ -1,18 +1,22 @@
 ---
+// styles
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/contentWidth.css';
+
 // child components
-import Image from '@components/Image.astro';
-import Caption from '@blocks/FigureCaption.astro';
+import Image from '@components/elements/Image.astro';
+import Caption from '@components/blocks/FigureCaption.astro';
 
 // typescript
-import { ImageField } from '@prismicio/types';
-import { FormattedText, ImageFit } from '@lib/types.ts';
+import type { ImageField } from '@prismicio/types';
+import type { FormattedText, ImageFit } from '@lib/types';
 
 export interface Props {
-	source: ImageField,
-	attribution?: FormattedText,
-	border?: boolean,
-	caption?: FormattedText,
-	fit?: ImageFit,
+	source: ImageField;
+	attribution?: FormattedText;
+	border?: boolean;
+	caption?: FormattedText;
+	fit?: ImageFit;
 }
 
 const {
@@ -59,7 +63,7 @@ const renderCaption = caption || attribution || false;
 		max-width: var(--content-width-default);
 	}
 
-	figure > :global(img) {
+	figure :global(img) {
 		width: 100%;
 	}
 </style>

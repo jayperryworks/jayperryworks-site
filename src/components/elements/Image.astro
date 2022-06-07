@@ -3,17 +3,19 @@
 // -> renders an img tag with srcset from a Prismic image data object
 // -> uses Prismic/Imgix's default auto formatting
 import * as prismicHelpers from '@prismicio/helpers';
-import { ImageField } from '@prismicio/types';
-import { ImageFit } from '@lib/types.ts';
+
+// types
+import type { ImageField } from '@prismicio/types';
+import type { ImageFit } from '@lib/types';
 
 export interface Props {
-	source: ImageField,
-	border?: boolean,
-	class?: string,
-	fit?: ImageFit,
-	contain?: boolean,
-	cover?: boolean,
-	widths?: Array<number>,
+	source: ImageField;
+	border?: boolean;
+	class?: string;
+	fit?: ImageFit;
+	contain?: boolean;
+	cover?: boolean;
+	widths?: Array<number>;
 }
 
 const {

@@ -1,0 +1,125 @@
+---
+
+const {
+	CSVFile,
+	keyColumns,
+	footer = false,
+} = Astro.props;
+
+// https://stackoverflow.com/questions/64982528/is-is-possible-to-read-a-csv-file-with-javascript-fetch-api
+// https://blog.logrocket.com/complete-guide-csv-files-node-js/
+const response = await fetch(
+	CSVFile,
+	{
+		method: 'get',
+		headers: {
+			'content-type': 'text/csv;charset=UTF-8',
+		},
+	}
+);
+
+let data = {
+	header: [],
+	rows: [],
+	footer: [],
+};
+
+try {
+	const result = await response.text();
+	const rows = result.split('\n');
+
+	data.header = rows[0].split(',');
+	data.rows = rows.splice(1, rows.length)
+		.filter((row) => row)
+		.map((row) => row.split(','));
+
+	if (footer) data.footer = rows[rows.length - 1].split(',');
+} catch(error) {
+	throw new Error('Error receiving the CSV file', error);
+}
+---
+
+<div class="wrapper">
+	<table class="type-role-accent type-scale-zeta">
+		<thead>
+			<tr>{data.header.map((heading) => <th>{heading}</th>)}</tr>
+		</thead>
+		{data.rows.map((row) => (
+			<tr>
+				{row.map((cell, i) => (
+					keyColumns.includes(i + 1) ? <th>{cell}</th> : <td>{cell}</td>
+				))}
+			</tr>
+		))}
+		{data.footer && (
+			<tfoot>
+				<tr>
+					{data.footer.map((footer, j) => (
+            keyColumns.includes(j + 1) ? <th>{footer}</th> : <td>{footer}</td>
+					))}
+				</tr>
+			</tfoot>
+		)}
+	</table>
+</div>
+
+<style>
+	.wrapper {
+    --min-width: 50rem;
+
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    overflow-x: scroll;
+    padding-bottom: var(--space-narrow);
+  }
+
+  @media screen and (min-width: 37.5em) {
+    .wrapper {
+      border: 0;
+      padding: 0;
+    }
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    min-width: var(--min-width);
+		color: var(--color-primary);
+    width: 100%;
+  }
+
+	td,
+	th {
+		padding: 0.5em 0.5em;
+		position: relative;
+		text-align: left;
+
+	}
+
+	td:last-child,
+	th:last-child {
+		text-align: right;
+	}
+
+	th {
+		color: var(--color-primary);
+		font-weight: bold;
+	}
+
+  thead {
+    border-bottom: 2px solid var(--color-primary);
+    text-align: left;
+    vertical-align: bottom;
+  }
+
+  thead th {
+    padding-bottom: 0.5em;
+		color: var(--color-secondary);
+		font-weight: unset;
+  }
+
+  /* alternating row colors */
+  tr:nth-child(even) {
+    background-color: var(--color-well);
+  }
+</style>

@@ -1,17 +1,21 @@
 ---
+// assets
+import '@styles/tokens/color.css';
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+import '@styles/utilities/type.css';
 import menu from '@icons/menu.svg?raw';
 import close from '@icons/close.svg?raw';
-import Icon from './Icon.astro';
-import LogoJP from './logos/LogoJP.astro';
+
+// components
+import Icon from '@components/elements/Icon.astro';
+import LogoJP from '@components/logos/LogoJP.astro';
 import routes from '@data/routes.json';
 
-import '@styles/utilities/type.css';
-import '@styles/utilities/color.css';
-import '@styles/utilities/visibility.css';
 
 export interface Props {
-	segment: string,
-	overlay?: boolean
+	segment: string;
+	overlay?: boolean;
 }
 
 const {
@@ -54,7 +58,7 @@ const {
 </script>
 
 <header class={overlay ? 'overlay' : ''}>
-  <nav class="bookend">
+  <nav>
     <a
       class="logo"
       href="/"
@@ -65,14 +69,13 @@ const {
     <!-- nav -->
   	<div class="type-align-right">
       <button
-				class="nav-button | type-font-accent type-scale-epsilon type-weight-xlight"
+				class="nav-button | type-role-accent type-scale-epsilon"
 				id="nav-button-open"
       >
         Menu
         <Icon
 					svg={menu}
 					margin="left"
-					class="color-fg-primary"
 				/>
       </button>
       <div
@@ -80,7 +83,7 @@ const {
 				id="nav-wrapper"
       >
         <button
-          class="nav-button close type-scale-epsilon type-font-accent"
+          class="nav-button close type-scale-epsilon type-role-accent"
 					id="nav-button-close"
         >
           <Icon
@@ -112,6 +115,27 @@ const {
 </header>
 
 <style>
+	/* --- helpers --- */
+	.hide-visually {
+		border: 0;
+		clip: rect(1px, 1px, 1px, 1px);
+		clip-path: inset(100%);
+		height: 1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+	}
+
+	.show-visually {
+		clip: auto;
+		clip-path: none;
+		height: auto;
+		overflow: visible;
+		position: static;
+		width: auto;
+	}
+
 	/* --- layout --- */
 	header {
     --transition: 0.25s;

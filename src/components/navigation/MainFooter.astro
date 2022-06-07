@@ -1,4 +1,8 @@
 ---
+import '@styles/tokens/color.css';
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+import '@styles/tokens/borders.css';
 import '@styles/utilities/type.css';
 import '@styles/utilities/borders.css';
 
@@ -24,7 +28,7 @@ const socialChannelList = channel.map((item, index) => {
 ---
 
 <footer class="border-seam-top">
-	<p class="social">
+	<p class="social type-role-display type-scale-gamma">
 		Keep in touch. You can also find me on <Fragment set:html={socialChannelList} />.
 	</p>
 	<div class="signoff">
@@ -35,7 +39,7 @@ const socialChannelList = channel.map((item, index) => {
 			>
 				<LogoJPW />
 			</a>
-			<small class="copyright">
+			<small class="copyright | type-role-accent type-scale-zeta">
 				&copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
 			</small>
 		</div>
@@ -52,8 +56,6 @@ const socialChannelList = channel.map((item, index) => {
 		border-block-end: var(--border-default);
 		color: var(--color-secondary);
 		display: block;
-		font-family: var(--type-font-display);
-		font-size: var(--type-scale-gamma);
 		line-height: var(--type-leading-default);
 		max-width: none;
 		padding-block: var(--space-wide);
@@ -76,17 +78,6 @@ const socialChannelList = channel.map((item, index) => {
 		gap: var(--space-narrow);
 	}
 
-	.gutter {
-		--gutter: var(--space-medium);
-
-		padding: calc(var(--gutter) / 2);
-		margin: calc(var(--gutter) * -1);
-	}
-
-	.gutter .gutter-item {
-		padding: calc(var(--gutter) / 2);
-	}
-
 	.logo,
 	.copyright {
 		display: inline-block;
@@ -94,9 +85,6 @@ const socialChannelList = channel.map((item, index) => {
 	}
 
 	.copyright {
-		font-family: var(--type-font-accent);
-		font-weight: 200;
-		font-size: var(--type-scale-zeta);
 		color: var(--color-secondary);
 		align-items: center;
 	}

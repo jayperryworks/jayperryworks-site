@@ -1,0 +1,27 @@
+---
+// components
+import Passage from '@components/blocks/Passage.astro';
+
+// types
+import type { FormattedText } from '@lib/types';
+
+export interface Props {
+	text: FormattedText;
+	class?: string;
+}
+
+const {
+	text,
+	class: className = '',
+} = Astro.props as Props;
+---
+
+<blockquote class={className}>
+	<Passage {text} typeSize="zeta" />
+</blockquote>
+
+<style>
+	blockquote {
+		font-style: italic;
+	}
+</style>

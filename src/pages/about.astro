@@ -1,23 +1,26 @@
 ---
+// assets
+import '@styles/tokens/spacing.css';
+
+// helpers
+import prismic from '@lib/prismic';
+import * as prismicHelpers from '@prismicio/helpers';
+
+// components
 import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
 
-import prismic from '@lib/prismic.ts';
-import * as prismicHelpers from '@prismicio/helpers';
-
 const response = await prismic.getByUID('page', 'about');
 
-let { title, body } = response.data;
+const { title, body } = response.data;
 ---
 
 <Layout
-	pageTitle="article"
-	path="article"
+	pageTitle="about"
+	path="about"
 >
 	<article>
-		<header>
-			<h1 class="title">{prismicHelpers.asText(title)}</h1>
-		</header>
+		<h1 class="title">{prismicHelpers.asText(title)}</h1>
 		<BlockList {body} />
 	</article>
 </Layout>
@@ -31,9 +34,5 @@ let { title, body } = response.data;
 	.title {
 		text-align: center;
 		padding-block-end: var(--space-wide);
-	}
-
-	main {
-		padding-block: var(--space-xwide);
 	}
 </style>

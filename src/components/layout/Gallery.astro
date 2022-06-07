@@ -1,13 +1,16 @@
 ---
-import { SpaceScale, GallerySize } from '@lib/types.ts';
+import '@styles/tokens/contentWidth.css';
+
+// types
+import type { SpaceScale, GallerySize } from '@lib/types';
 
 export interface Props {
-	alignContentHorizontally?: boolean,
-	alignContentVertically?: boolean,
-	constrainContent?: boolean,
-	gutter?: SpaceScale,
-	size?: GallerySize,
-	useFlexBox?: boolean,
+	alignContentHorizontally?: boolean;
+	alignContentVertically?: boolean;
+	constrainContent?: boolean;
+	gutter?: SpaceScale;
+	size?: GallerySize;
+	useFlexBox?: boolean;
 }
 
 const {
@@ -97,22 +100,11 @@ const classList = [
     padding: calc(var(--gutter) / 2);
     position: relative;
     vertical-align: top;
-
-    /* fallback fluid sizing method using a calc() hack
-      -> allows grid to be somewhat responsive without media queries
-      -> mainly for IE and old browsers
-      -> https://www.sitepoint.com/responsive-css-patterns-without-media-queries/
-    */
-    max-width: var(--max-percentage);
-    min-width: var(--min-percentage);
-    width: calc((var(--breakpoint) - 100%) * 1000);
   }
 
   @supports (display: grid) {
     .gallery :global(li) {
-      min-width: auto;
       padding: 0;
-      width: auto;
     }
 
     .gallery.constrain-content :global(li) {
