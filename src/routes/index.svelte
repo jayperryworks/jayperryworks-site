@@ -286,7 +286,7 @@
 					class="toc-number type-scale-gamma type-font-accent type-link-undecorated type-weight-xlight | color-fg-secondary | padding-bottom-narrow"
 					href={blog.cta.link}
 				>
-					02
+					04
 				</a>
 				<h2 class="type-scale-alpha">
 					<a href="{blog.cta.link}">{blog.heading}</a>
