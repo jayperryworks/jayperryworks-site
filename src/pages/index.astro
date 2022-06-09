@@ -1,11 +1,24 @@
 ---
 // assets
 import '@styles/tokens/spacing.css';
-import expand from '@icons/expand.svg?raw';
+
+// helpers
+import prismic from '@lib/prismic';
+import prismicHelpers from '@prismicio/helpers';
 
 // components
-import BaseLayout from '@layouts/BaseLayout.astro';
----
-<BaseLayout path="home">
+import Layout from '@layouts/BaseLayout.astro';
+import BlockList from '@components/BlockList.astro';
 
-</BaseLayout>
+const response = await prismic.getSingle('homepage');
+
+const {
+	headline,
+	intro,
+	intro_link:
+	introLink, body
+} = response.data;
+---
+<Layout path="home">
+	<Fragment set:html={prismicHelpers.asHTML(headline)}></Fragment>
+</Layout>
