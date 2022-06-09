@@ -11,11 +11,11 @@ import * as prismicHelpers from '@prismicio/helpers';
 import Block from '@components/Block.astro';
 
 // types
-import type { Block as BlockType } from '@lib/types.ts';
+import type { Block as BlockType } from '@lib/types';
 import type { Slice } from '@prismicio/types';
 
 export interface Props {
-	body: Array<Slice>;
+	body: Slice[];
 	showLedeStyle?: boolean;
 	class?: string;
 }
@@ -42,6 +42,8 @@ function getBlockClass(type: string): string {
 	return '';
 }
 
+// if the page body has a 'lede' (intro) paragraph,
+// add a 'lede' class to the first passage that appears in the list of blocks
 function getLedeClass(block: BlockType):string {
 	if (showLedeStyle) {
 		const firstPassage = sectionList[0].blocks.find((block: BlockType) => {
@@ -58,7 +60,7 @@ function sharedBlockFields(slice: Slice): BlockType {
 	} = slice.primary;
 
 	return {
-		includeInExcerpt,
+		includeInExcerpt: Boolean(includeInExcerpt),
 		prominence,
 		type: camelCase(slice.slice_type),
 	};
@@ -175,6 +177,7 @@ function table(slice: Slice): BlockType {
 	};
 }
 
+// functions for each block type
 const blockTypes = {
 	'image_gallery': imageGallery,
 	'quote': blockQuote,
@@ -196,7 +199,7 @@ const sectionList = body.reduce((result: Array<BlockType>, slice: Slice) => {
 	if (type === 'sectionStart') {
 		result.push({
 			uid: primary.uid,
-			blocks: []
+			blocks: [],
 		});
 		return result;
 	}
@@ -214,12 +217,14 @@ const sectionList = body.reduce((result: Array<BlockType>, slice: Slice) => {
 	}
 	return result;
 }, []);
+
+const classList = [
+	'block-list',
+	className
+].join(' ');
 ---
 
-<div class={[
-	'block-list',
-	className,
-].join(' ')}>
+<div class={classList}>
 	{sectionList.map(({ uid, blocks }) => (
 		uid ? (
 			<section id={uid}>

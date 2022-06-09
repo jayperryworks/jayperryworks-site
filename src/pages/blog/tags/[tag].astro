@@ -15,23 +15,23 @@ import Layout from '@layouts/BaseLayout.astro';
 import ReadNextLink from '@components/elements/ReadNextLink.astro';
 
 // types
-export type Post = {
+type Post = {
 	title: string,
 	subtitle?: string,
 	path: string,
 	date: string,
 };
 
-export interface Props {
-	posts: Array<Post>;
-}
-
-export type StaticPath = {
+type StaticPath = {
 	params: {
 		tag: string,
 	},
 	props: Props,
 };
+
+export interface Props {
+	posts: Array<Post>;
+}
 
 export async function getStaticPaths(): Promise<StaticPath[]> {
 	// get all the blog posts from Prismic

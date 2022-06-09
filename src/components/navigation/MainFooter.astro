@@ -1,4 +1,5 @@
 ---
+// styles
 import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
@@ -6,23 +7,32 @@ import '@styles/tokens/borders.css';
 import '@styles/utilities/type.css';
 import '@styles/utilities/borders.css';
 
-import prismic from '@lib/prismic.ts';
-import * as prismicHelpers from '@prismicio/helpers';
+// helpers
 import { format } from 'date-fns';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
 
+// components
 import LogoJPW from '@components/logos/LogoJPW.astro';
 
-const response = await prismic.getSingle('social_channels');
+// types
+import { LinkField } from '@prismicio/types';
 
+type Item = {
+	name: string,
+	link: LinkField,
+};
+
+const response = await prismic.getSingle('social_channels');
 const { channel } = response.data;
 
-const socialChannelList = channel.map((item, index) => {
+
+const socialChannelList = channel.map((item: Item, index: number): string => {
 	const { name, link } = item;
-	const url = prismicHelpers.asLink(link);
 
 	return `
 		${index === channel.length - 1 ? 'and' : ''}
-		<a href="${url}" target="_blank">${name}</a>
+		<a href="${prismicHelpers.asLink(link)}" target="_blank">${name}</a>
 	`.trim();
 }).join(', ');
 ---
