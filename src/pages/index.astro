@@ -4,7 +4,8 @@ import '@styles/tokens/spacing.css';
 
 // helpers
 import prismic from '@lib/prismic';
-import prismicHelpers from '@prismicio/helpers';
+import * as prismicHelpers from '@prismicio/helpers';
+import linkResolver from '@lib/linkResolver';
 
 // components
 import Button from '@components/elements/Button.astro';
@@ -13,7 +14,7 @@ import Layout from '@layouts/BaseLayout.astro';
 import RenderedText from '@components/elements/RenderedText.astro';
 
 // fetch content
-const response = await prismic.getSingle('homepage');
+const response = await prismic.getSingle('homepage', { 'fetchLinks': 'date' });
 
 const {
 	headline,
@@ -22,14 +23,9 @@ const {
 	body,
 } = response.data;
 
-function linkResolver(doc): string {
-	if (doc.type === 'page' && doc.uid) return `/${doc.uid}/`;
-	if (doc.type === 'design_index') return `/design/`;
-}
-
 const toc = body.map(({ slice_type: type, primary, items }) => ({
 	type,
-	title: prismicHelpers.asText(primary.title1),
+	title: prismicHelpers.asText(primary.title || primary.title1),
 	subtitle: prismicHelpers.asText(primary.subtitle),
 	cta: {
 		link: primary.call_to_action_link,
@@ -43,13 +39,15 @@ const toc = body.map(({ slice_type: type, primary, items }) => ({
 		images: items,
 	}
 }));
+
+console.log('intro link', introLink)
 ---
 
 <Layout path="home">
 	<header>
 		<Fragment set:html={prismicHelpers.asHTML(headline)}></Fragment>
 		<Fragment set:html={prismicHelpers.asHTML(intro)}></Fragment>
-		<Button href={prismicHelpers.asLink(introLink, linkResolver)}>A bit more about me</Button>
+		<Button href={prismicHelpers.asLink(introLink)}>A bit more about me</Button>
 	</header>
 	{toc.map((item) => (
 		<article>
@@ -58,7 +56,9 @@ const toc = body.map(({ slice_type: type, primary, items }) => ({
 				<Heading subheading level={3}>{item.subtitle}</Heading>
 			)}
 			<RenderedText {...item.description} />
-			<Button href={prismicHelpers.asLink(item.cta.link, linkResolver)}>{item.cta.label}</Button>
+			<Button href={prismicHelpers.asLink(item.cta.link)}>
+				{item.cta.label}
+			</Button>
 		</article>
 	))}
 </Layout>
