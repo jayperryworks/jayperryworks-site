@@ -95,22 +95,46 @@ export function longform({ data, uid }: PrismicDocument): string {
 export async function linkResolver(doc): Promise<string> {
 	const { id, type } = doc;
 
-	const types = {
-		homepage,
-		longform,
-		page,
-		picture,
-		blog_post: blogPost,
-		design_project: designProject,
-		index_page: indexPage,
+	// describe each content type
+	// -> needsData: boolean - does the route require document data, e.g. a date field?
+	// -> getter: function - the getter function, defined above, returns a url string
+	const contentTypes = {
+		homepage: {
+			needsData: false,
+			getter: homepage,
+		},
+		longform: {
+			needsData: true,
+			getter: longform,
+		},
+		page: {
+			needsData: false,
+			getter: page,
+		},
+		picture: {
+			needsData: true,
+			getter: picture,
+		},
+		blog_post: {
+			needsData: true,
+			getter: blogPost,
+		},
+		design_project: {
+			needsData: true,
+			getter: designProject,
+		},
+		index_page: {
+			needsData: false,
+			getter: indexPage,
+		},
 	};
 
 	// if there is no data prop on the document object, fetch that doc from Prismic
-	if (!doc.data) {
+	if (contentTypes[type].needsData && !doc.data) {
 		const response = await prismic.getByID(id);
 		const { data } = response;
-		return types[type]({ ...doc, data });
+		return contentTypes[type].getter({ ...doc, data });
 	}
 
-	return types[type](doc);
+	return contentTypes[type].getter(doc);
 }
