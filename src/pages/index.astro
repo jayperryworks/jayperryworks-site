@@ -2,10 +2,10 @@
 // assets
 import '@styles/tokens/spacing.css';
 
-// helpers
-import prismic from '@lib/prismic';
+// utils
+import { linkResolver } from '@lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
-import linkResolver from '@lib/linkResolver';
+import prismic from '@lib/prismic';
 
 // components
 import Button from '@components/elements/Button.astro';
@@ -14,40 +14,46 @@ import Layout from '@layouts/BaseLayout.astro';
 import RenderedText from '@components/elements/RenderedText.astro';
 
 // fetch content
-const response = await prismic.getSingle('homepage', { 'fetchLinks': 'date' });
+const response = await prismic.getSingle('homepage');
 
 const {
 	headline,
 	intro,
-	intro_link: introLink,
 	body,
 } = response.data;
 
-const toc = body.map(({ slice_type: type, primary, items }) => ({
-	type,
-	title: prismicHelpers.asText(primary.title || primary.title1),
-	subtitle: prismicHelpers.asText(primary.subtitle),
-	cta: {
-		link: primary.call_to_action_link,
-		label: primary.call_to_action_label,
-	},
-	description: {
-		prismicText: primary.description
-	},
-	coverImages: {
-		gutter: primary.cover_images_gutter,
-		images: items,
-	}
-}));
+let introLink = await prismicHelpers.asLink(response.data.intro_link, linkResolver);
 
-console.log('intro link', introLink)
+const toc = await Promise.all(
+	body.map(async ({ slice_type: type, primary, items }) => {
+		const link = primary.call_to_action_link
+			&& await prismicHelpers.asLink(primary.call_to_action_link, linkResolver);
+
+		return {
+			type,
+			title: prismicHelpers.asText(primary.title || primary.title1),
+			subtitle: prismicHelpers.asText(primary.subtitle),
+			cta: {
+				link,
+				label: primary.call_to_action_label,
+			},
+			description: {
+				prismicText: primary.description
+			},
+			coverImages: {
+				gutter: primary.cover_images_gutter,
+				images: items,
+			}
+		};
+	})
+);
 ---
 
 <Layout path="home">
 	<header>
 		<Fragment set:html={prismicHelpers.asHTML(headline)}></Fragment>
 		<Fragment set:html={prismicHelpers.asHTML(intro)}></Fragment>
-		<Button href={prismicHelpers.asLink(introLink)}>A bit more about me</Button>
+		<Button href={introLink}>A bit more about me</Button>
 	</header>
 	{toc.map((item) => (
 		<article>
@@ -56,7 +62,7 @@ console.log('intro link', introLink)
 				<Heading subheading level={3}>{item.subtitle}</Heading>
 			)}
 			<RenderedText {...item.description} />
-			<Button href={prismicHelpers.asLink(item.cta.link)}>
+			<Button href={item.cta.link}>
 				{item.cta.label}
 			</Button>
 		</article>
