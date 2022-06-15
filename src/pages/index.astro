@@ -14,10 +14,11 @@ import prismic from '@lib/prismic';
 
 // components
 import Button from '@components/elements/Button.astro';
-import Icon from '@components/elements/Icon.astro';
 import Heading from '@components/blocks/Heading.astro';
-import Passage from '@components/blocks/Passage.astro';
+import Icon from '@components/elements/Icon.astro';
+import Image from '@components/elements/Image.astro';
 import Layout from '@layouts/BaseLayout.astro';
+import Passage from '@components/blocks/Passage.astro';
 
 // fetch content
 const response = await prismic.getSingle('homepage');
@@ -48,7 +49,11 @@ const toc = await Promise.all(
 			},
 			coverImages: {
 				gutter: primary.cover_images_gutter,
-				images: items,
+				images: items.map((item) => ({
+					source: item.cover_image,
+					device: item.device,
+					relativeSize: item.relative_size,
+				})),
 			}
 		};
 	})
@@ -56,6 +61,7 @@ const toc = await Promise.all(
 ---
 
 <Layout path="home" headerOverlay>
+
 	<!-- intro -->
 	<header class="panel">
 		<div class="fill-vertical">
@@ -64,7 +70,7 @@ const toc = await Promise.all(
 				<Passage
 					text={{ prismicText: intro }}
 					typeSize="delta"
-					class="type-role-display intro-blurb"
+					class="blurb"
 				/>
 				<Button
 					class="intro-cta"
@@ -90,18 +96,35 @@ const toc = await Promise.all(
 		</div>
 	</header>
 
+	<!-- TOC panels -->
 	<section id="toc">
-		<!-- TOC panels -->
-		{toc.map((item) => (
+		{toc.map((item, index) => (
 			<article class="panel border-seam-top">
-				<Heading level={2}>{item.title}</Heading>
-				{item.subtitle && (
-					<Heading subheading level={3}>{item.subtitle}</Heading>
-				)}
-				<Passage text={item.description} />
-				<Button href={item.cta.link}>
-					{item.cta.label}
-				</Button>
+				<div class="wrapper flex">
+					{/* https://bobbyhadz.com/blog/javascript-pad-number-with-leading-zeros */}
+					<Heading level={3} subheading>{String(index + 1).padStart(2, '0')}</Heading>
+					<Heading level={2}>{item.title}</Heading>
+					{item.subtitle && (
+						<Heading subheading level={3}>{item.subtitle}</Heading>
+					)}
+					<Passage
+						class="blurb"
+						text={item.description}
+					/>
+					<Button
+						href={item.cta.link}
+						iconRight={arrowRight}
+					>
+						{item.cta.label}
+					</Button>
+					{item.coverImages?.images?.length > 0 && (
+						<figure>
+							{item.coverImages.images.map(({ source }) => (
+								source && <Image {source} />
+							))}
+						</figure>
+					)}
+				</div>
 			</article>
 		))}
 	</section>
@@ -112,6 +135,8 @@ const toc = await Promise.all(
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		align-items: start;
+		gap: var(--space-medium);
 		min-height: 100vh;
 		padding-inline: var(--space-outside);
 	}
@@ -124,7 +149,9 @@ const toc = await Promise.all(
 		padding-top: var(--space-medium);
 	}
 
-	.intro :global(.intro-blurb) {
+	.panel :global(.blurb) {
+		font-family: var(--type-font-display);
+		font-size: var(--type-scale-delta);
 		line-height: var(--type-leading-default);
 	}
 
@@ -142,6 +169,11 @@ const toc = await Promise.all(
 	.wrapper {
 		margin-inline: auto;
 		max-width: var(--content-width-xwide);
+	}
+
+	.wrapper.flex {
+		max-width: unset;
+		width: var(--content-width-xwide);
 	}
 
 	.fill-vertical {
