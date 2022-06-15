@@ -7,10 +7,12 @@ import MainFooter from '@components/navigation/MainFooter.astro';
 export interface Props {
 	pageTitle?: string;
 	path?: string;
+	headerOverlay?: boolean;
 };
 
 const {
 	pageTitle,
+	headerOverlay = false,
 	path = 'home',
 	} = Astro.props as Props;
 
@@ -33,7 +35,7 @@ const SITE_TITLE = 'Jay Perry Works';
 	</head>
 
 	<body>
-		<MainNav segment={path} />
+		<MainNav segment={path} overlay={headerOverlay} />
 		<main>
 			<slot />
 		</main>

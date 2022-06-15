@@ -1,6 +1,11 @@
 ---
 // assets
+import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
+import '@styles/utilities/borders.css';
+import '@styles/utilities/type.css';
+import arrowDown from '@icons/arrow-down.svg?raw';
+import arrowRight from '@icons/arrow-right.svg?raw';
 
 // utils
 import { linkResolver } from '@lib/routes';
@@ -9,9 +14,10 @@ import prismic from '@lib/prismic';
 
 // components
 import Button from '@components/elements/Button.astro';
+import Icon from '@components/elements/Icon.astro';
 import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
 import Layout from '@layouts/BaseLayout.astro';
-import RenderedText from '@components/elements/RenderedText.astro';
 
 // fetch content
 const response = await prismic.getSingle('homepage');
@@ -49,22 +55,99 @@ const toc = await Promise.all(
 );
 ---
 
-<Layout path="home">
-	<header>
-		<Fragment set:html={prismicHelpers.asHTML(headline)}></Fragment>
-		<Fragment set:html={prismicHelpers.asHTML(intro)}></Fragment>
-		<Button href={introLink}>A bit more about me</Button>
+<Layout path="home" headerOverlay>
+	<!-- intro -->
+	<header class="panel">
+		<div class="fill-vertical">
+			<div class="intro wrapper">
+				<Heading level={1}>{prismicHelpers.asText(headline)}</Heading>
+				<Passage
+					text={{ prismicText: intro }}
+					typeSize="delta"
+					class="type-role-display intro-blurb"
+				/>
+				<Button
+					class="intro-cta"
+					href={introLink}
+					iconRight={arrowRight}
+				>
+					A bit more about me
+				</Button>
+			</div>
+		</div>
+		<div class="toc-link">
+			<a
+				class="type-role-accent type-scale-epsilon type-link-undecorated"
+				href="#toc"
+			>
+				<Icon
+					align="baseline"
+					margin="right"
+					svg={arrowDown}
+				/>
+				Table of contents
+			</a>
+		</div>
 	</header>
-	{toc.map((item) => (
-		<article>
-			<Heading level={2}>{item.title}</Heading>
-			{item.subtitle && (
-				<Heading subheading level={3}>{item.subtitle}</Heading>
-			)}
-			<RenderedText {...item.description} />
-			<Button href={item.cta.link}>
-				{item.cta.label}
-			</Button>
-		</article>
-	))}
+
+	<section id="toc">
+		<!-- TOC panels -->
+		{toc.map((item) => (
+			<article class="panel border-seam-top">
+				<Heading level={2}>{item.title}</Heading>
+				{item.subtitle && (
+					<Heading subheading level={3}>{item.subtitle}</Heading>
+				)}
+				<Passage text={item.description} />
+				<Button href={item.cta.link}>
+					{item.cta.label}
+				</Button>
+			</article>
+		))}
+	</section>
 </Layout>
+
+<style>
+	.panel {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		min-height: 100vh;
+		padding-inline: var(--space-outside);
+	}
+
+	header {
+		padding-top: var(--space-wide);
+	}
+
+	.intro > :global(* + *) {
+		padding-top: var(--space-medium);
+	}
+
+	.intro :global(.intro-blurb) {
+		line-height: var(--type-leading-default);
+	}
+
+	.intro :global(.intro-cta) {
+		margin-top: var(--space-wide);
+	}
+
+	.toc-link {
+		margin-top: auto;
+		margin-inline: auto;
+		width: var(--content-width-xwide);
+		padding-block-end: var(--space-narrow);
+	}
+
+	.wrapper {
+		margin-inline: auto;
+		max-width: var(--content-width-xwide);
+	}
+
+	.fill-vertical {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		justify-content: center;
+	}
+</style>

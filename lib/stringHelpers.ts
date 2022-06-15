@@ -14,7 +14,7 @@ function sentenceCase(string: string): string {
 // -> ['first', 'Second'] => First and second
 // -> ['first', 'Second', 'THIRD'] => First, second, and third
 type arrayToSentenceOptions = {
-	period?: boolean;
+	period?: boolean; // add a period at the end
 };
 
 function arrayToSentence(
@@ -39,10 +39,16 @@ function arrayToSentence(
 	}, []).join(array.length > 2 ? ', ' : ' ');
 }
 
+function removeWidows(string: string): string {
+	const lastIndex = string.lastIndexOf(' ');
+	return `${string.substring(0, lastIndex)}&nbsp${string.substring(lastIndex + 1)}`;
+}
+
 export {
 	arrayToSentence,
 	camelCase,
 	paramCase,
 	sentenceCase,
 	titleCase,
+	removeWidows,
 };

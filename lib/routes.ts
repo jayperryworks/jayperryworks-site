@@ -103,13 +103,21 @@ export async function linkResolver(doc): Promise<string> {
 			needsData: false,
 			getter: homepage,
 		},
+		page: {
+			needsData: false,
+			getter: page,
+		},
+		index_page: {
+			needsData: false,
+			getter: indexPage,
+		},
 		longform: {
 			needsData: true,
 			getter: longform,
 		},
-		page: {
-			needsData: false,
-			getter: page,
+		design_project: {
+			needsData: true,
+			getter: designProject,
 		},
 		picture: {
 			needsData: true,
@@ -118,14 +126,6 @@ export async function linkResolver(doc): Promise<string> {
 		blog_post: {
 			needsData: true,
 			getter: blogPost,
-		},
-		design_project: {
-			needsData: true,
-			getter: designProject,
-		},
-		index_page: {
-			needsData: false,
-			getter: indexPage,
 		},
 	};
 
