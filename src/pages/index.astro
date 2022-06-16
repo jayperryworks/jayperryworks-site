@@ -99,26 +99,28 @@ const toc = await Promise.all(
 	<!-- TOC panels -->
 	<section id="toc">
 		{toc.map((item, index) => (
-			<article class="panel border-seam-top">
-				<div class="wrapper flex">
+			<article class="toc-item | panel | border-seam-top">
+				<div class="wrapper flex | billboard">
 					{/* https://bobbyhadz.com/blog/javascript-pad-number-with-leading-zeros */}
-					<Heading level={3} subheading>{String(index + 1).padStart(2, '0')}</Heading>
-					<Heading level={2}>{item.title}</Heading>
-					{item.subtitle && (
-						<Heading subheading level={3}>{item.subtitle}</Heading>
-					)}
-					<Passage
-						class="blurb"
-						text={item.description}
-					/>
-					<Button
-						href={item.cta.link}
-						iconRight={arrowRight}
-					>
+					<div class="billboard-item content">
+						<Heading level={3} subheading>{String(index + 1).padStart(2, '0')}</Heading>
+						<Heading level={2}>{item.title}</Heading>
+						{item.subtitle && (
+							<Heading subheading level={3}>{item.subtitle}</Heading>
+						)}
+						<Passage
+							class="blurb"
+							text={item.description}
+						/>
+						<Button
+							href={item.cta.link}
+							iconRight={arrowRight}
+						>
 						{item.cta.label}
 					</Button>
+					</div>
 					{item.coverImages?.images?.length > 0 && (
-						<figure>
+						<figure class="billboard-item figure">
 							{item.coverImages.images.map(({ source }) => (
 								source && <Image {source} />
 							))}
@@ -155,6 +157,10 @@ const toc = await Promise.all(
 		line-height: var(--type-leading-default);
 	}
 
+	.toc-item {
+		padding-block: var(--space-wide);
+	}
+
 	.intro :global(.intro-cta) {
 		margin-top: var(--space-wide);
 	}
@@ -172,8 +178,8 @@ const toc = await Promise.all(
 	}
 
 	.wrapper.flex {
-		max-width: unset;
-		width: var(--content-width-xwide);
+		max-width: var(--content-width-xwide);
+		width: 100%;
 	}
 
 	.fill-vertical {
@@ -181,5 +187,27 @@ const toc = await Promise.all(
 		flex-direction: column;
 		flex: 1;
 		justify-content: center;
+	}
+
+	.billboard {
+		display: flex;
+		flex-wrap: wrap;
+		flex: 1;
+		align-items: center;
+		overflow: hidden;
+	}
+
+	.billboard-item {
+		display: flex;
+		flex-direction: column;
+		align-items: start;
+	}
+
+	.billboard-item.content {
+		flex: 0 1 40ch;
+	}
+
+	.billboard-item.figure {
+		flex: 1 1 20rem;
 	}
 </style>
