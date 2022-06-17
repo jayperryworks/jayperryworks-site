@@ -48,7 +48,7 @@ export {
 	arrayToSentence,
 	camelCase,
 	paramCase,
+	removeWidows,
 	sentenceCase,
 	titleCase,
-	removeWidows,
 };

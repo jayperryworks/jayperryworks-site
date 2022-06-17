@@ -8,7 +8,7 @@ import arrowDown from '@icons/arrow-down.svg?raw';
 import arrowRight from '@icons/arrow-right.svg?raw';
 
 // utils
-import { linkResolver } from '@lib/routes';
+import { linkResolver, blogPost } from '@lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
@@ -19,6 +19,22 @@ import Icon from '@components/elements/Icon.astro';
 import Image from '@components/elements/Image.astro';
 import Layout from '@layouts/BaseLayout.astro';
 import Passage from '@components/blocks/Passage.astro';
+
+// types
+import { RichTextField, Slice } from '@prismicio/types';
+
+interface TOCItem {
+	type: string;
+	title: string,
+	subtitle: string,
+	cta: {
+		link: string;
+		label: string;
+	};
+	description: {
+		prismicText: RichTextField;
+	};
+}
 
 // fetch content
 const response = await prismic.getSingle('homepage');
@@ -36,6 +52,26 @@ const toc = await Promise.all(
 		const link = primary.call_to_action_link
 			&& await prismicHelpers.asLink(primary.call_to_action_link, linkResolver);
 
+		const coverImages = (type === 'billboard') && {
+			gutter: primary.cover_images_gutter,
+			images: items.map((item) => ({
+				source: item.cover_image,
+				device: item.device,
+				relativeSize: item.relative_size,
+			})),
+		};
+
+		const feedData = primary.content_source && await prismic.getByType('blog_post', {
+			pageSize: 8,
+		});
+
+		const feedItems = feedData?.results.length > 0 && feedData.results.map(({ uid, data }) => ({
+			date: data.date,
+			path: blogPost({ uid, data }),
+			subtitle: data.subtitle && prismicHelpers.asText(data.subtitle),
+			title: prismicHelpers.asText(data.title),
+			}));
+
 		return {
 			type,
 			title: prismicHelpers.asText(primary.title || primary.title1),
@@ -47,14 +83,8 @@ const toc = await Promise.all(
 			description: {
 				prismicText: primary.description
 			},
-			coverImages: {
-				gutter: primary.cover_images_gutter,
-				images: items.map((item) => ({
-					source: item.cover_image,
-					device: item.device,
-					relativeSize: item.relative_size,
-				})),
-			}
+			feedItems,
+			coverImages,
 		};
 	})
 );
@@ -116,15 +146,27 @@ const toc = await Promise.all(
 							href={item.cta.link}
 							iconRight={arrowRight}
 						>
-						{item.cta.label}
-					</Button>
+							{item.cta.label}
+						</Button>
 					</div>
-					{item.coverImages?.images?.length > 0 && (
-						<figure class="billboard-item figure">
-							{item.coverImages.images.map(({ source }) => (
-								source && <Image {source} />
+					{item.type === 'billboard'
+						&& item.coverImages?.images?.length > 0
+						&& (
+							<figure class="billboard-item figure">
+								{item.coverImages.images.map(({ source }) => (
+									source && <Image {source} />
+								))}
+							</figure>
+						)
+					}
+					{item.type === 'feed' && (
+						<ul>
+							{item.feedItems.map((listing) => (
+								<li>
+									<h3><a href={listing.path}>{listing.title}</a></h3>
+								</li>
 							))}
-						</figure>
+						</ul>
 					)}
 				</div>
 			</article>
