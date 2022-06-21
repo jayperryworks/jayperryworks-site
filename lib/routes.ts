@@ -1,16 +1,14 @@
 // types
-import { PrismicDocument } from '@prismicio/types';
+import { PrismicDocument, DateField } from '@prismicio/types';
 
 // utils
 import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from './prismic.ts';
 
-import { DateOrTimestampField } from '@prismicio/types';
-
 // create a url string from a date object, e.g. year/month/day
 function getDateParams(
-	value: DateOrTimestampField,
+	value: DateField,
 	periods: Array<'year' | 'month' | 'day'>,
 ): string {
 	const date = prismicHelpers.asDate(value);
