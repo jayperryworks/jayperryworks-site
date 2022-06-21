@@ -6,8 +6,13 @@ import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from './prismic.ts';
 
+import { DateOrTimestampField } from '@prismicio/types';
+
 // create a url string from a date object, e.g. year/month/day
-function getDateParams(value, periods: Array<'year' | 'month' | 'day'>): string {
+function getDateParams(
+	value: DateOrTimestampField,
+	periods: Array<'year' | 'month' | 'day'>,
+): string {
 	const date = prismicHelpers.asDate(value);
 
 	const formats = {
@@ -17,45 +22,12 @@ function getDateParams(value, periods: Array<'year' | 'month' | 'day'>): string 
 	};
 
 	return periods
-		.map((period) => {
+		.map((period): string => {
 			if (!formats[period]) throw new Error(`Time period '${period}' was not found.`);
 			return format(date, formats[period]);
 		})
 		.join('/');
 }
-
-export const mainNav = [
-	{
-		label: 'Home',
-		path: '/',
-		show: 'small',
-	},
-	{
-		label: 'Patapsco essay',
-		path: '/longform/2022/patapsco/1',
-		slug: 'patapsco',
-	},
-	{
-		label: 'Prints &amp; paintings',
-		path: '/pictures',
-		slug: 'pictures',
-	},
-	{
-		label: 'Design',
-		path: '/design',
-		slug: 'design',
-	},
-	{
-		label: 'Blog',
-		path: '/blog/page/1',
-		slug: 'blog',
-	},
-	{
-		label: 'About',
-		path: '/about',
-		slug: 'about',
-	},
-];
 
 // --- main pages
 export function homepage() {
@@ -92,7 +64,7 @@ export function longform({ data, uid }: PrismicDocument): string {
 }
 
 // --- link resolver for Prismic
-export async function linkResolver(doc): Promise<string> {
+export async function linkResolver(doc: PrismicDocument): Promise<string> {
 	const { id, type } = doc;
 
 	// describe each content type

@@ -7,16 +7,35 @@ import '@styles/utilities/type.css';
 import menu from '@icons/menu.svg?raw';
 import close from '@icons/close.svg?raw';
 
+// utils
+import prismic from '@lib/prismic';
+import prismicHelpers from '@prismicio/helpers';
+import { linkResolver } from '@lib/routes';
+
 // components
 import Icon from '@components/elements/Icon.astro';
 import LogoJP from '@components/logos/LogoJP.astro';
-import { mainNav as routes } from '@lib/routes';
 
-
+// types
 export interface Props {
 	segment: string;
 	overlay?: boolean;
 }
+
+type mainNavLink = {
+	label: string,
+	link: string,
+};
+
+const response = await prismic.getSingle('main_nav');
+const routes = await Promise.all(
+	response.data.nav_item.map(
+		async ({ label, link }): Promise<mainNavLink> => ({
+			label,
+			link: await prismicHelpers.asLink(link, linkResolver),
+		})
+	)
+);
 
 const {
 	segment,
@@ -93,18 +112,17 @@ const {
           <span class="hide-visually">Close</span>
         </button>
         <ul class="nav-list">
-					{routes.map((item) => (
+					{routes.map(({ label, link }) => (
             <li>
               <a
                 class={[
 									'nav-item',
 									'type-link-undecorated',
-									segment === item.path || segment === item.slug ? 'current' : '',
-									item.show === 'small' ? 'small-only' : '',
+									segment === link.uid ? 'current' : '',
 								].join(' ')}
-                href={item.path}
-								set:html={item.label}
+                href={link}
               >
+								{label}
               </a>
             </li>
 					))}
