@@ -1,6 +1,7 @@
 ---
 // assets
 import '@styles/tokens/type.css';
+import '@styles/utilities/type.css';
 
 // components
 import RenderedText from '@components/elements/RenderedText.astro';
@@ -12,25 +13,31 @@ export interface Props {
 	text: FormattedText;
 	class?: string;
 	typeSize?: TypeScale;
+	typeFace?: 'body' | 'display' | 'accent';
 }
 
 const {
 	text,
 	class: className = '',
 	typeSize = 'epsilon',
+	typeFace = 'body',
 } = Astro.props as Props;
+
+const classList = [
+	'prose',
+	typeFace !== 'body' ? `type-role-${typeFace}` : '',
+	`type-scale-${typeSize}`,
+	className
+].join(' ');
 ---
 
-<div
-	class={`prose | ${className}`}
-	style={`--type-size: var(--type-scale-${typeSize});`}
->
+<div class={classList}>
 	<slot><RenderedText {...text} /></slot>
 </div>
 
 <style>
 	.prose {
-		font-size: var(--type-size);
+		line-height: var(--type-leading-default);
 	}
 
   .prose :global(* + *) {

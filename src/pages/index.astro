@@ -8,25 +8,27 @@ import arrowDown from '@icons/arrow-down.svg?raw';
 import arrowRight from '@icons/arrow-right.svg?raw';
 
 // utils
+import { format } from 'date-fns';
 import { linkResolver, blogPost } from '@lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
 // components
-import Button from '@components/elements/Button.astro';
+import Layout from '@layouts/BaseLayout.astro';
+import Gallery from '@components/layout/Gallery.astro';
 import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
+import Button from '@components/elements/Button.astro';
 import Icon from '@components/elements/Icon.astro';
 import Image from '@components/elements/Image.astro';
-import Layout from '@layouts/BaseLayout.astro';
-import Passage from '@components/blocks/Passage.astro';
 
 // types
-import { RichTextField, Slice } from '@prismicio/types';
+import { RichTextField } from '@prismicio/types';
 
 interface TOCItem {
 	type: string;
-	title: string,
-	subtitle: string,
+	title: string;
+	subtitle: string;
 	cta: {
 		link: string;
 		label: string;
@@ -62,6 +64,10 @@ const toc = await Promise.all(
 		};
 
 		const feedData = primary.content_source && await prismic.getByType('blog_post', {
+			orderings: {
+				field: 'my.blog_post.date',
+				direction: 'desc',
+			},
 			pageSize: 8,
 		});
 
@@ -93,25 +99,24 @@ const toc = await Promise.all(
 <Layout path="home" headerOverlay>
 
 	<!-- intro -->
-	<header class="panel">
-		<div class="fill-vertical">
-			<div class="intro wrapper">
+	<header>
+		<div class="wrapper intro">
+			<div class="blurb">
 				<Heading level={1}>{prismicHelpers.asText(headline)}</Heading>
 				<Passage
 					text={{ prismicText: intro }}
 					typeSize="delta"
+					typeFace="display"
 					class="blurb"
 				/>
 				<Button
-					class="intro-cta"
+					class="blurb-cta"
 					href={introLink}
 					iconRight={arrowRight}
 				>
 					A bit more about me
 				</Button>
 			</div>
-		</div>
-		<div class="toc-link">
 			<a
 				class="type-role-accent type-scale-epsilon type-link-undecorated"
 				href="#toc"
@@ -129,20 +134,22 @@ const toc = await Promise.all(
 	<!-- TOC panels -->
 	<section id="toc">
 		{toc.map((item, index) => (
-			<article class="toc-item | panel | border-seam-top">
-				<div class="wrapper flex | billboard">
-					{/* https://bobbyhadz.com/blog/javascript-pad-number-with-leading-zeros */}
-					<div class="billboard-item content">
+			<article class="toc-item | border-seam-top">
+				<div class={`wrapper flex | ${item.type}`}>
+					<div class="blurb">
+						{/* https://bobbyhadz.com/blog/javascript-pad-number-with-leading-zeros */}
 						<Heading level={3} subheading>{String(index + 1).padStart(2, '0')}</Heading>
-						<Heading level={2}>{item.title}</Heading>
+						<Heading level={1}><a href={item.cta.link}>{item.title}</a></Heading>
 						{item.subtitle && (
 							<Heading subheading level={3}>{item.subtitle}</Heading>
 						)}
 						<Passage
-							class="blurb"
+							typeSize="delta"
+							typeFace="display"
 							text={item.description}
 						/>
 						<Button
+							class="blurb-cta"
 							href={item.cta.link}
 							iconRight={arrowRight}
 						>
@@ -152,21 +159,22 @@ const toc = await Promise.all(
 					{item.type === 'billboard'
 						&& item.coverImages?.images?.length > 0
 						&& (
-							<figure class="billboard-item figure">
+							<figure class="billboard-figure">
 								{item.coverImages.images.map(({ source }) => (
-									source && <Image {source} />
+									source && <Image {source} contain />
 								))}
 							</figure>
 						)
 					}
 					{item.type === 'feed' && (
-						<ul>
+						<Gallery gutter="wide" class="feed-list">
 							{item.feedItems.map((listing) => (
-								<li>
-									<h3><a href={listing.path}>{listing.title}</a></h3>
+								<li class="feed-item">
+									<Heading level={5} subheading>{format(new Date(listing.date), 'yy.MM')}</Heading>
+									<Heading level={3}><a href={listing.path}>{listing.title}</a></Heading>
 								</li>
 							))}
-						</ul>
+						</Gallery>
 					)}
 				</div>
 			</article>
@@ -175,81 +183,70 @@ const toc = await Promise.all(
 </Layout>
 
 <style>
-	.panel {
+	header {
 		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: start;
-		gap: var(--space-medium);
 		min-height: 100vh;
+		padding-block-end: var(--space-narrow);
+		padding-block-start: var(--space-wide);
 		padding-inline: var(--space-outside);
 	}
 
-	header {
-		padding-top: var(--space-wide);
-	}
-
-	.intro > :global(* + *) {
-		padding-top: var(--space-medium);
-	}
-
-	.panel :global(.blurb) {
-		font-family: var(--type-font-display);
-		font-size: var(--type-scale-delta);
-		line-height: var(--type-leading-default);
-	}
-
-	.toc-item {
-		padding-block: var(--space-wide);
-	}
-
-	.intro :global(.intro-cta) {
-		margin-top: var(--space-wide);
-	}
-
-	.toc-link {
-		margin-top: auto;
-		margin-inline: auto;
-		width: var(--content-width-xwide);
-		padding-block-end: var(--space-narrow);
+	header > .intro {
+		align-items: center;
+		display: grid;
+		flex: 1;
+		gap: var(--space-medium);
+		grid-template-rows: 1fr auto;
 	}
 
 	.wrapper {
 		margin-inline: auto;
-		max-width: var(--content-width-xwide);
-	}
-
-	.wrapper.flex {
-		max-width: var(--content-width-xwide);
+		max-width: var(--content-width-xxwide);
 		width: 100%;
 	}
 
-	.fill-vertical {
+	.blurb > :global(* + *) {
+		padding-top: var(--space-medium);
+	}
+
+	.blurb :global(.blurb-cta) {
+		margin-top: var(--space-wide);
+	}
+
+	.toc-item {
+		min-height: 100vh;
+		padding-inline: var(--space-outside);
+		padding-block: var(--space-wide);
 		display: flex;
 		flex-direction: column;
+	}
+
+	.billboard {
+		display: grid;
+		flex: 1;
+		grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+		gap: var(--space-xwide);
+		align-items: center;
+	}
+
+	.billboard-figure {
+		justify-self: center;
+	}
+
+	.billboard-figure > :global(img) {
+		max-height: 70vh;
+	}
+
+	.feed {
 		flex: 1;
 		justify-content: center;
 	}
 
-	.billboard {
-		display: flex;
-		flex-wrap: wrap;
-		flex: 1;
-		align-items: center;
-		overflow: hidden;
+	.feed :global(.feed-list) {
+		padding-top: var(--space-xwide);
 	}
 
-	.billboard-item {
-		display: flex;
-		flex-direction: column;
-		align-items: start;
-	}
-
-	.billboard-item.content {
-		flex: 0 1 40ch;
-	}
-
-	.billboard-item.figure {
-		flex: 1 1 20rem;
+	.feed-item > :global(* + *) {
+		padding-top: var(--space-xnarrow);
 	}
 </style>
