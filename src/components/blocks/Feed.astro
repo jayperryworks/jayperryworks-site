@@ -6,6 +6,9 @@ import arrowRight from '@icons/arrow-right.svg?raw';
 
 // utils
 import { format } from 'date-fns';
+import { blogPost } from '@lib/routes';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
 
 // components
 import Button from '@components/elements/Button.astro';
@@ -24,7 +27,7 @@ export interface Props {
 	description?: {
 		prismicText: RichTextField
 	},
-	feedItems: Array<any>,
+	source: 'blog_post' | 'picture' | 'longform',
 	number?: number,
 	subtitle?: string,
 	title?: string,
@@ -33,11 +36,31 @@ export interface Props {
 const {
 	cta,
 	description,
-	feedItems,
+	source,
 	number,
 	subtitle,
 	title,
 } = Astro.props as Props;
+
+let feedItems;
+const pageSize = 8;
+
+if (source === 'blog_post') {
+	const feedData = await prismic.getByType('blog_post', {
+		orderings: {
+			field: 'my.blog_post.date',
+			direction: 'desc',
+		},
+		pageSize,
+	});
+
+	feedItems = feedData?.results.length > 0 && feedData.results.map(({ uid, data }) => ({
+		date: data.date,
+		path: blogPost({ uid, data }),
+		subtitle: data.subtitle && prismicHelpers.asText(data.subtitle),
+		title: prismicHelpers.asText(data.title),
+	}));
+}
 ---
 
 <article>

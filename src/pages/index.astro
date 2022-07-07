@@ -8,7 +8,7 @@ import arrowDown from '@icons/arrow-down.svg?raw';
 import arrowRight from '@icons/arrow-right.svg?raw';
 
 // utils
-import { linkResolver, blogPost } from '@lib/routes';
+import { linkResolver } from '@lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
@@ -20,22 +20,6 @@ import Button from '@components/elements/Button.astro';
 import Icon from '@components/elements/Icon.astro';
 import Billboard from '@components/blocks/Billboard.astro';
 import Feed from '@components/blocks/Feed.astro';
-
-// types
-import { RichTextField, Query } from '@prismicio/types';
-
-interface TOCItem {
-	type: string;
-	title: string;
-	subtitle: string;
-	cta: {
-		link: string;
-		label: string;
-	};
-	description: {
-		prismicText: RichTextField;
-	};
-}
 
 // fetch content
 const response = await prismic.getSingle('homepage');
@@ -62,25 +46,6 @@ const toc = await Promise.all(
 			})),
 		};
 
-		let feedData: Query;
-		let pageSize = 8;
-		if (primary.content_source === 'blog_post') {
-			feedData = await prismic.getByType('blog_post', {
-				orderings: {
-					field: 'my.blog_post.date',
-					direction: 'desc',
-				},
-				pageSize,
-			});
-		}
-
-		const feedItems = feedData?.results.length > 0 && feedData.results.map(({ uid, data }) => ({
-			date: data.date,
-			path: blogPost({ uid, data }),
-			subtitle: data.subtitle && prismicHelpers.asText(data.subtitle),
-			title: prismicHelpers.asText(data.title),
-			}));
-
 		return {
 			type,
 			title: prismicHelpers.asText(primary.title || primary.title1),
@@ -92,7 +57,7 @@ const toc = await Promise.all(
 			description: {
 				prismicText: primary.description
 			},
-			feedItems,
+			source: primary.content_source,
 			coverImages: coverImages.images,
 		};
 	})
