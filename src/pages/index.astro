@@ -8,22 +8,21 @@ import arrowDown from '@icons/arrow-down.svg?raw';
 import arrowRight from '@icons/arrow-right.svg?raw';
 
 // utils
-import { format } from 'date-fns';
 import { linkResolver, blogPost } from '@lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
 // components
 import Layout from '@layouts/BaseLayout.astro';
-import Gallery from '@components/layout/Gallery.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
 import Button from '@components/elements/Button.astro';
 import Icon from '@components/elements/Icon.astro';
-import Image from '@components/elements/Image.astro';
+import Billboard from '@components/blocks/Billboard.astro';
+import Feed from '@components/blocks/Feed.astro';
 
 // types
-import { RichTextField } from '@prismicio/types';
+import { RichTextField, Query } from '@prismicio/types';
 
 interface TOCItem {
 	type: string;
@@ -63,13 +62,17 @@ const toc = await Promise.all(
 			})),
 		};
 
-		const feedData = primary.content_source && await prismic.getByType('blog_post', {
-			orderings: {
-				field: 'my.blog_post.date',
-				direction: 'desc',
-			},
-			pageSize: 8,
-		});
+		let feedData: Query;
+		let pageSize = 8;
+		if (primary.content_source === 'blog_post') {
+			feedData = await prismic.getByType('blog_post', {
+				orderings: {
+					field: 'my.blog_post.date',
+					direction: 'desc',
+				},
+				pageSize,
+			});
+		}
 
 		const feedItems = feedData?.results.length > 0 && feedData.results.map(({ uid, data }) => ({
 			date: data.date,
@@ -90,14 +93,13 @@ const toc = await Promise.all(
 				prismicText: primary.description
 			},
 			feedItems,
-			coverImages,
+			coverImages: coverImages.images,
 		};
 	})
 );
 ---
 
 <Layout path="home" headerOverlay>
-
 	<!-- intro -->
 	<header>
 		<div class="wrapper intro">
@@ -132,54 +134,16 @@ const toc = await Promise.all(
 	</header>
 
 	<!-- TOC panels -->
-	<section id="toc">
+	<ul class="toc" id="toc">
 		{toc.map((item, index) => (
-			<article class="toc-item | border-seam-top">
-				<div class={`wrapper flex | ${item.type}`}>
-					<div class="blurb">
-						{/* https://bobbyhadz.com/blog/javascript-pad-number-with-leading-zeros */}
-						<Heading level={3} subheading>{String(index + 1).padStart(2, '0')}</Heading>
-						<Heading level={1}><a href={item.cta.link}>{item.title}</a></Heading>
-						{item.subtitle && (
-							<Heading subheading level={3}>{item.subtitle}</Heading>
-						)}
-						<Passage
-							typeSize="delta"
-							typeFace="display"
-							text={item.description}
-						/>
-						<Button
-							class="blurb-cta"
-							href={item.cta.link}
-							iconRight={arrowRight}
-						>
-							{item.cta.label}
-						</Button>
-					</div>
-					{item.type === 'billboard'
-						&& item.coverImages?.images?.length > 0
-						&& (
-							<figure class="billboard-figure">
-								{item.coverImages.images.map(({ source }) => (
-									source && <Image {source} contain />
-								))}
-							</figure>
-						)
-					}
-					{item.type === 'feed' && (
-						<Gallery gutter="wide" class="feed-list">
-							{item.feedItems.map((listing) => (
-								<li class="feed-item">
-									<Heading level={5} subheading>{format(new Date(listing.date), 'yy.MM')}</Heading>
-									<Heading level={3}><a href={listing.path}>{listing.title}</a></Heading>
-								</li>
-							))}
-						</Gallery>
-					)}
+			<li class="toc-item | border-seam-top">
+				<div class="toc-wrapper">
+					{item.type === 'billboard' && <Billboard number={index + 1} {...item} />}
+					{item.type === 'feed' && <Feed number={index + 1} {...item} />}
 				</div>
-			</article>
+			</li>
 		))}
-	</section>
+	</ul>
 </Layout>
 
 <style>
@@ -191,7 +155,7 @@ const toc = await Promise.all(
 		padding-inline: var(--space-outside);
 	}
 
-	header > .intro {
+	.intro {
 		align-items: center;
 		display: grid;
 		flex: 1;
@@ -199,54 +163,38 @@ const toc = await Promise.all(
 		grid-template-rows: 1fr auto;
 	}
 
-	.wrapper {
+	.intro,
+	.toc-wrapper {
 		margin-inline: auto;
 		max-width: var(--content-width-xxwide);
-		width: 100%;
 	}
 
+
 	.blurb > :global(* + *) {
-		padding-top: var(--space-medium);
+		padding-block-start: var(--space-medium);
 	}
 
 	.blurb :global(.blurb-cta) {
-		margin-top: var(--space-wide);
+		margin-block-start: var(--space-wide);
+	}
+
+	.toc {
+		list-style: none;
+		padding-left: 0;
 	}
 
 	.toc-item {
-		min-height: 100vh;
-		padding-inline: var(--space-outside);
-		padding-block: var(--space-wide);
 		display: flex;
 		flex-direction: column;
+		min-height: 100vh;
+		padding-block: var(--space-wide);
+		padding-inline: var(--space-outside);
 	}
 
-	.billboard {
-		display: grid;
+	.toc-wrapper {
+		width: 100%;
 		flex: 1;
-		grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
-		gap: var(--space-xwide);
-		align-items: center;
-	}
-
-	.billboard-figure {
-		justify-self: center;
-	}
-
-	.billboard-figure > :global(img) {
-		max-height: 70vh;
-	}
-
-	.feed {
-		flex: 1;
-		justify-content: center;
-	}
-
-	.feed :global(.feed-list) {
-		padding-top: var(--space-xwide);
-	}
-
-	.feed-item > :global(* + *) {
-		padding-top: var(--space-xnarrow);
+		display: flex;
+		flex-direction: column;
 	}
 </style>

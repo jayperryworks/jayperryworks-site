@@ -1,0 +1,134 @@
+---
+// assets
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+import arrowRight from '@icons/arrow-right.svg?raw';
+
+// utils
+import { format } from 'date-fns';
+
+// components
+import Button from '@components/elements/Button.astro';
+import Gallery from '@components/layout/Gallery.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
+
+// types
+import { RichTextField } from '@prismicio/types';
+
+export interface Props {
+	cta?: {
+		link: string,
+		label: string,
+	},
+	description?: {
+		prismicText: RichTextField
+	},
+	feedItems: Array<any>,
+	number?: number,
+	subtitle?: string,
+	title?: string,
+}
+
+const {
+	cta,
+	description,
+	feedItems,
+	number,
+	subtitle,
+	title,
+} = Astro.props as Props;
+---
+
+<article>
+	<header>
+		{number && (
+			<Heading
+			level={3}
+			subheading
+			>
+				{/* https://bobbyhadz.com/blog/javascript-pad-number-with-leading-zeros */}
+				{String(number).padStart(2, '0')}
+			</Heading>
+		)}
+		<Heading level={1}>
+			<a
+				class="type-link-undecorated"
+				href={cta.link}
+			>
+				{title}
+			</a>
+		</Heading>
+		{subtitle && (
+			<Heading
+				class="subtitle"
+				level={3}
+				subheading
+			>
+				{subtitle}
+			</Heading>
+		)}
+		{description && (
+			<Passage
+				typeSize="delta"
+				typeFace="display"
+				text={description}
+			/>
+		)}
+	</header>
+
+	<Gallery gutter="wide">
+		{feedItems.map((listing) => (
+			<li class="item">
+				<Heading level={5} subheading>{format(new Date(listing.date), 'yy.MM')}</Heading>
+				<Heading level={3}>
+					<a
+						class="type-link-undecorated"
+						href={listing.path}
+					>
+						{listing.title}
+					</a>
+				</Heading>
+			</li>
+		))}
+	</Gallery>
+
+	<footer class="cta">
+		<Button
+			href={cta.link}
+			iconRight={arrowRight}
+		>
+			{cta.label}
+		</Button>
+	</footer>
+</article>
+
+<style>
+	article {
+		flex: 1;
+		justify-content: center;
+		display: flex;
+		flex-direction: column;
+	}
+
+	footer {
+		margin-block-start: auto;
+		padding-block-start: var(--space-wide);
+	}
+
+	header {
+		padding-block-end: var(--space-xwide);
+	}
+
+	header > :global(.subtitle) {
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	header > :global(* + *) {
+		padding-block-start: var(--space-medium);
+	}
+
+	.item > :global(* + *) {
+		padding-block-start: var(--space-xnarrow);
+	}
+</style>
