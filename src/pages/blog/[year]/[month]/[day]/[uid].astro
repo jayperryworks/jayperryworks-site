@@ -10,7 +10,7 @@ import externalLink from '@icons/external-link.svg?raw';
 
 // helpers
 import { format } from 'date-fns';
-import { blog as permalink } from '@lib/permalinks';
+import { blogPost as permalink } from '@lib/routes';
 import { sentenceCase } from '@lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
@@ -23,7 +23,7 @@ import Layout from '@layouts/BaseLayout.astro';
 import ReadNextLink from '@components/elements/ReadNextLink.astro';
 
 // types
-import type { Slice, TitleField, LinkField, Tags } from '@prismicio/types';
+import type { Slice, TitleField, LinkField, Tags, DateField } from '@prismicio/types';
 
 export type PaginationLink = {
 	path: string;
@@ -33,7 +33,7 @@ export type PaginationLink = {
 
 export interface Props {
 	body: Array<Slice>;
-	date: string;
+	date: DateField;
 	link?: LinkField;
 	next?: PaginationLink;
 	series?: LinkField;
@@ -51,14 +51,14 @@ export async function getStaticPaths() {
  	});
 
  	return posts.map(({ uid, tags, data }, index) => {
- 		const { date } = data;
-		 const nextPost = posts[index + 1];
+		const date = prismicHelpers.asDate(data.date);
+		const nextPost = posts[index + 1];
 
  		return {
  			params: {
- 				year: format(new Date(date), 'yyyy'),
- 				month: format(new Date(date), 'MM'),
- 				day: format(new Date(date), 'dd'),
+ 				year: format(date, 'yyyy'),
+ 				month: format(date, 'MM'),
+ 				day: format(date, 'dd'),
  				uid,
  			},
  			props: {
@@ -110,7 +110,7 @@ const {
 				</Heading>
 			)}
 			<time datetime={date} class="date">
-				{format(new Date(date), 'MMMM dd, yyyy')}
+				{format(prismicHelpers.asDate(date), 'MMMM dd, yyyy')}
 			</time>
 		</header>
 

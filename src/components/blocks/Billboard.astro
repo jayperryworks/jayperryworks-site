@@ -1,0 +1,125 @@
+---
+// A teaser that displays a blurb and cover image, links to other content
+
+// assets
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+import arrowRight from '@icons/arrow-right.svg?raw';
+
+// components
+import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
+import Image from '@components/elements/Image.astro';
+import Button from '@components/elements/Button.astro';
+
+// types
+import {
+	RichTextField,
+	ImageField,
+} from '@prismicio/types';
+
+export interface Props {
+	coverImages?: ImageField[],
+	cta?: {
+		link: string,
+		label: string,
+	},
+	description?: {
+		prismicText: RichTextField
+	},
+	number?: number,
+	subtitle?: string,
+	title?: string,
+}
+
+const {
+	coverImages,
+	cta,
+	description,
+	number,
+	subtitle,
+	title,
+} = Astro.props as Props;
+---
+
+<article>
+	<header>
+		{number && (
+			<Heading
+			level={3}
+			subheading
+			>
+				{/* https://bobbyhadz.com/blog/javascript-pad-number-with-leading-zeros */}
+				{String(number).padStart(2, '0')}
+			</Heading>
+		)}
+		<Heading level={1}>
+			<a
+				class="type-link-undecorated"
+				href={cta.link}
+			>
+				{title}
+			</a>
+		</Heading>
+		{subtitle && (
+			<Heading
+				class="subtitle"
+				level={3}
+				subheading
+			>
+				{subtitle}
+			</Heading>
+		)}
+		{description && (
+			<Passage
+				typeSize="delta"
+				typeFace="display"
+				text={description}
+			/>
+		)}
+		<Button
+			class="cta"
+			href={cta.link}
+			iconRight={arrowRight}
+		>
+			{cta.label || 'Read more'}
+		</Button>
+	</header>
+	{coverImages.length > 0 && (
+		<figure class="cover">
+			{coverImages.map(({ source }) => (
+				source && <Image {source} contain />
+			))}
+		</figure>
+	)}
+</article>
+
+<style>
+	header > :global(* + *) {
+		padding-top: var(--space-medium);
+	}
+
+	header > :global(.subtitle) {
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	header > :global(.cta) {
+		margin-top: var(--space-wide);
+	}
+
+	article {
+		display: grid;
+		flex: 1;
+		grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+		gap: var(--space-xwide);
+		align-items: center;
+	}
+
+	.cover {
+		justify-self: center;
+	}
+
+	.cover > :global(img) {
+		max-height: 60vh;
+	}
+</style>

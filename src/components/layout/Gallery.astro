@@ -1,5 +1,6 @@
 ---
 import '@styles/tokens/contentWidth.css';
+import '@styles/tokens/spacing.css';
 
 // types
 import type { SpaceScale, GallerySize } from '@lib/types';
@@ -45,9 +46,6 @@ const classList = [
   .gallery {
     /* default values, can be modified via inline styles on a parent */
     --min-width: 300px;
-    --breakpoint: 600px;
-    --min-percentage: 33.33333%;
-    --max-percentage: 100%;
 
     display: block;
     font-size: 0;
@@ -61,8 +59,7 @@ const classList = [
   @supports (display: grid) and (display: flex) {
     .gallery {
       display: grid;
-      grid-column-gap: var(--gutter);
-      grid-row-gap: var(--gutter);
+      gap: var(--gutter);
       grid-template-columns: 1fr;
       margin: 0;
     }
@@ -76,14 +73,10 @@ const classList = [
 
   .small {
     --min-width: 180px;
-    --breakpoint: 480px;
-    --min-percentage: 25%;
   }
 
   .large {
     --min-width: 500px;
-    --breakpoint: 1200px;
-    --min-percentage: 25%;
     grid-template-columns: 1fr;
   }
 

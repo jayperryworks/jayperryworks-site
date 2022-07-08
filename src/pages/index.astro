@@ -1,11 +1,165 @@
 ---
 // assets
+import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
-import expand from '@icons/expand.svg?raw';
+import '@styles/utilities/borders.css';
+import '@styles/utilities/type.css';
+import arrowDown from '@icons/arrow-down.svg?raw';
+import arrowRight from '@icons/arrow-right.svg?raw';
+
+// utils
+import { linkResolver } from '@lib/routes';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
 
 // components
-import BaseLayout from '@layouts/BaseLayout.astro';
----
-<BaseLayout path="home">
+import Layout from '@layouts/BaseLayout.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
+import Button from '@components/elements/Button.astro';
+import Icon from '@components/elements/Icon.astro';
+import Billboard from '@components/blocks/Billboard.astro';
+import Feed from '@components/blocks/Feed.astro';
 
-</BaseLayout>
+// fetch content
+const response = await prismic.getSingle('homepage');
+
+const {
+	headline,
+	intro,
+	body,
+} = response.data;
+
+let introLink = await prismicHelpers.asLink(response.data.intro_link, linkResolver);
+
+const toc = await Promise.all(
+	body.map(async ({ slice_type: type, primary, items }) => {
+		const link = primary.call_to_action_link
+			&& await prismicHelpers.asLink(primary.call_to_action_link, linkResolver);
+
+		const coverImages = (type === 'billboard') && {
+			gutter: primary.cover_images_gutter,
+			images: items.map((item) => ({
+				source: item.cover_image,
+				device: item.device,
+				relativeSize: item.relative_size,
+			})),
+		};
+
+		return {
+			type,
+			title: prismicHelpers.asText(primary.title || primary.title1),
+			subtitle: prismicHelpers.asText(primary.subtitle),
+			cta: {
+				link,
+				label: primary.call_to_action_label,
+			},
+			description: {
+				prismicText: primary.description
+			},
+			source: primary.content_source,
+			coverImages: coverImages.images,
+		};
+	})
+);
+---
+
+<Layout path="home" headerOverlay>
+	<!-- intro -->
+	<header>
+		<div class="wrapper intro">
+			<div class="blurb">
+				<Heading level={1}>{prismicHelpers.asText(headline)}</Heading>
+				<Passage
+					text={{ prismicText: intro }}
+					typeSize="delta"
+					typeFace="display"
+					class="blurb"
+				/>
+				<Button
+					class="blurb-cta"
+					href={introLink}
+					iconRight={arrowRight}
+				>
+					A bit more about me
+				</Button>
+			</div>
+			<a
+				class="type-role-accent type-scale-epsilon type-link-undecorated"
+				href="#toc"
+			>
+				<Icon
+					align="baseline"
+					margin="right"
+					svg={arrowDown}
+				/>
+				Table of contents
+			</a>
+		</div>
+	</header>
+
+	<!-- TOC panels -->
+	<ul class="toc" id="toc">
+		{toc.map((item, index) => (
+			<li class="toc-item | border-seam-top">
+				<div class="toc-wrapper">
+					{item.type === 'billboard' && <Billboard number={index + 1} {...item} />}
+					{item.type === 'feed' && <Feed number={index + 1} {...item} />}
+				</div>
+			</li>
+		))}
+	</ul>
+</Layout>
+
+<style>
+	header {
+		display: flex;
+		min-height: 100vh;
+		padding-block-end: var(--space-narrow);
+		padding-block-start: var(--space-wide);
+		padding-inline: var(--space-outside);
+	}
+
+	.intro {
+		align-items: center;
+		display: grid;
+		flex: 1;
+		gap: var(--space-medium);
+		grid-template-rows: 1fr auto;
+	}
+
+	.intro,
+	.toc-wrapper {
+		margin-inline: auto;
+		max-width: var(--content-width-xxwide);
+	}
+
+
+	.blurb > :global(* + *) {
+		padding-block-start: var(--space-medium);
+	}
+
+	.blurb :global(.blurb-cta) {
+		margin-block-start: var(--space-wide);
+	}
+
+	.toc {
+		list-style: none;
+		padding-left: 0;
+	}
+
+	.toc-item {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		padding-block: var(--space-wide);
+		padding-inline: var(--space-outside);
+	}
+
+	.toc-wrapper {
+		width: 100%;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+</style>

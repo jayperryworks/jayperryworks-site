@@ -26,9 +26,11 @@ const classList = [
 	className,
 ].join(' ');
 
+// if the default slot has a value, render a heading tag around it
+// -> render h[level] by default, and p.level if subheading is true
 if (Astro.slots.has('default')) {
 	html = `
-		<${tag} class="${classList}">
+		<${tag} class="heading ${classList}">
 			${await Astro.slots.render('default')}
 		</${tag}>
 	`;

@@ -7,10 +7,12 @@ import MainFooter from '@components/navigation/MainFooter.astro';
 export interface Props {
 	pageTitle?: string;
 	path?: string;
+	headerOverlay?: boolean;
 };
 
 const {
 	pageTitle,
+	headerOverlay = false,
 	path = 'home',
 	} = Astro.props as Props;
 
@@ -19,8 +21,8 @@ const SITE_TITLE = 'Jay Perry Works';
 
 <html lang="en" class="no-js no-touch">
 	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width">
+		<meta charset='utf-8'>
+		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
 		<title>{SITE_TITLE}{pageTitle && ` | ${pageTitle}`}</title>
 		<script>
 			// Add a class to the html element to confirm JS is available
@@ -33,7 +35,7 @@ const SITE_TITLE = 'Jay Perry Works';
 	</head>
 
 	<body>
-		<MainNav segment={path} />
+		<MainNav segment={path} overlay={headerOverlay} />
 		<main>
 			<slot />
 		</main>
