@@ -10,7 +10,7 @@
     },
 		{
 			name: "Instagram",
-			url: "https://www.instagram.com/jayperryworks/"
+			url: "https://www.instagram.com/jay.perry.works/"
 		},
     {
       name: "Github",
