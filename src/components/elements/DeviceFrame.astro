@@ -1,0 +1,94 @@
+---
+	// Add a frame around content that looks like a mobile device
+	// -> Phone, Tablet (horizontal and vertical)
+	import Image from '@components/elements/Image.astro';
+
+	// types
+	import type { Device } from '@lib/types';
+	import type { ImageField } from '@prismicio/types';
+
+	export interface Props {
+		image: ImageField,
+		type?: Device,
+		class?: string,
+	};
+
+	const {
+		image,
+		class: className = '',
+		type = 'Tablet (horizontal)',
+	} = Astro.props as Props;
+
+	const ratios = {
+		'phone': '1/2',
+		'tablet-horizontal': '4/3',
+		'tablet-portrait': '3/4',
+	}
+
+	const classList = [
+		'bezel',
+		type,
+		className,
+	].join(' ');
+---
+
+<div class={classList}>
+	<Image
+		aspectRatio={ratios[type]}
+		fit="cover"
+		position="y-start center"
+		source={image}
+	/>
+</div>
+
+<style>
+	/*
+		- only display the device frame if aspect-ratio supported
+		- otherwise it will look super wonky
+		- default/fallback is showing the image by itself
+	*/
+	@supports (aspect-ratio: 1/2) {
+		.bezel {
+			--bezel-radius: 4.5% / 6%;
+			--bezel-width-x: 5%;
+			--bezel-width-y: 5%;
+			--screen-radius:  0.75% / 1%;
+
+			background-color: var(--color-bg);
+			border-radius: var(--bezel-radius);
+			border: 1px solid var(--color-border);
+			display: block;
+			overflow: hidden;
+			position: relative;
+			padding: var(--bezel-width-y) var(--bezel-width-x);
+		}
+
+		@media screen and (min-width: 40em) {
+			.bezel {
+				border-width: 2px;
+			}
+		}
+
+		.bezel :global(img) {
+			border-radius: var(--screen-radius);
+			border: 1px solid var(--color-border);
+			object-fit: cover;
+			object-position: top center;
+		}
+
+		.bezel.tablet-portrait {
+			--bezel-radius: 6% / 4.5%;
+		}
+
+		.bezel.tablet-portrait {
+			--screen-radius: 1% / 0.75%;
+		}
+
+		.bezel.phone {
+			--bezel-radius: 10% / 5%;
+			--bezel-width-x: 3.5%;
+			--bezel-width-y: 11%;
+			--screen-radius: 2% / 1%;
+		}
+	}
+</style>

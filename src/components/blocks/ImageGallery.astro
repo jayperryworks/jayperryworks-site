@@ -24,6 +24,7 @@ const {
 	attribution,
 	border = false,
 	caption,
+	class: className = '',
 	columnSize = 'medium',
 	fitImages = 'default',
 	gutter = 'xnarrow',
@@ -33,6 +34,7 @@ const {
 <Figure
 	{caption}
 	{attribution}
+	class={className}
 >
 	<Gallery
 		size={columnSize}

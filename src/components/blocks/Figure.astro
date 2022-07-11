@@ -9,13 +9,19 @@ import Caption from '@components/blocks/FigureCaption.astro';
 
 // typescript
 import type { ImageField } from '@prismicio/types';
-import type { FormattedText, ImageFit } from '@lib/types';
+
+import type {
+	Device,
+	FormattedText,
+	ImageFit,
+} from '@lib/types';
 
 export interface Props {
 	source: ImageField;
 	attribution?: FormattedText;
 	border?: boolean;
 	caption?: FormattedText;
+	device?: Device;
 	fit?: ImageFit;
 	class?: string;
 }
@@ -25,6 +31,7 @@ const {
 	attribution,
 	border,
 	caption,
+	device,
 	class: className,
 	fit = 'default',
 } = Astro.props as Props;

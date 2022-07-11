@@ -2,6 +2,11 @@
 // Responsive image
 // -> renders an img tag with srcset from a Prismic image data object
 // -> uses Prismic/Imgix's default auto formatting
+
+// assets
+import '@styles/utilities/borders.css';
+
+// utilities
 import * as prismicHelpers from '@prismicio/helpers';
 
 // types
@@ -10,19 +15,23 @@ import type { ImageFit } from '@lib/types';
 
 export interface Props {
 	source: ImageField;
+	aspectRatio?: string;
 	border?: boolean;
 	class?: string;
 	fit?: ImageFit;
 	contain?: boolean;
 	cover?: boolean;
 	widths?: Array<number>;
+	position?: string;
 }
 
 const {
 	source,
+	aspectRatio,
 	border = false,
 	class: className = '',
-	fit = 'default',
+	fit,
+	position,
 	widths = [ 800, 1200, 2000 ],
 } = Astro.props as Props;
 
@@ -36,8 +45,13 @@ const height = (source.dimensions.height / source.dimensions.width) * widths[0];
 
 const classList = [
 	border ? 'border border-solid' : '',
-	fit ? fit : '',
 	className,
+	fit ? fit : '',
+].join(' ');
+
+const style = [
+	aspectRatio ? `--aspect-ratio: ${aspectRatio};` : '',
+	position ? `--object-position: ${position};` : '',
 ].join(' ');
 ---
 
@@ -50,13 +64,16 @@ const classList = [
 	{srcset}
 	{width}
 	{height}
+	{style}
 />
 
 <style>
 	img {
+		aspect-ratio: var(--aspect-ratio, auto);
 		content-visibility: auto;
 		display: inline-block;
 		max-width: 100%;
+		object-position: var(--position, 50% 50%);
 	}
 
 	.contain,
