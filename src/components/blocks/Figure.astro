@@ -17,13 +17,15 @@ export interface Props {
 	border?: boolean;
 	caption?: FormattedText;
 	fit?: ImageFit;
+	class?: string;
 }
 
 const {
 	source,
-	border,
 	attribution,
+	border,
 	caption,
+	class: className,
 	fit = 'default',
 } = Astro.props as Props;
 
@@ -31,7 +33,7 @@ const renderImage = !Astro.slots.has('default') && source || false;
 const renderCaption = caption || attribution || false;
 ---
 
-<figure>
+<figure class={className}>
 	<slot>
 		{renderImage && (
 			<Image

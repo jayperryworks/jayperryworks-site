@@ -42,7 +42,7 @@ const {
 	title,
 } = Astro.props as Props;
 
-let feedItems;
+let feedItems = [];
 const pageSize = 8;
 
 if (source === 'blog_post') {
@@ -54,12 +54,18 @@ if (source === 'blog_post') {
 		pageSize,
 	});
 
-	feedItems = feedData?.results.length > 0 && feedData.results.map(({ uid, data }) => ({
-		date: data.date,
-		path: blogPost({ uid, data }),
-		subtitle: data.subtitle && prismicHelpers.asText(data.subtitle),
-		title: prismicHelpers.asText(data.title),
-	}));
+	if (feedData?.results.length > 0) {
+		feedItems = feedData.results.map((item) => {
+			const { date, title, subtitle } = item.data;
+
+			return {
+				date,
+				path: blogPost(item),
+				subtitle: subtitle && prismicHelpers.asText(subtitle),
+				title: prismicHelpers.asText(title),
+			};
+		});
+	}
 }
 ---
 

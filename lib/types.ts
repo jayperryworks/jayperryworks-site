@@ -6,6 +6,7 @@ export type ColorRoles = 'primary' | 'secondary' | 'highlight' | 'bg' | 'island'
 export type Prominence = 'Small' | 'Medium' | 'Large';
 export type GallerySize = 'small' | 'medium' | 'large';
 export type ImageFit = 'default' | 'contain' | 'cover';
+export type Device = 'None' | 'Phone' | 'Tablet (horizontal)' | 'Tablet (vertical)';
 
 export interface Block {
 	type: string;

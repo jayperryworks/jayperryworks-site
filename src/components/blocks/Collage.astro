@@ -1,0 +1,125 @@
+---
+	// Display images or other content in a tight grid arrangement that acts like a self-contained composition
+	// -> layout does not change with screen sizes, but some images are hidden if their priority is lower than 1
+
+	// components
+	import Figure from '@components/blocks/Figure.astro';
+	import Image from '@components/elements/Image.astro';
+
+	// types
+	import type { SpaceScale, FormattedText, ImageFit, Device } from '@lib/types';
+	import type { ImageField } from '@prismicio/types';
+
+	type ItemSize = 'Default' | 'Large' | 'XLarge';
+	type ItemPriority = '1' | '2' | '3';
+
+	type Item = {
+		image: ImageField,
+		device: Device,
+		priority: ItemPriority,
+		relative_size: ItemSize,
+	};
+
+	export interface Props {
+		images: Item[];
+		attribution?: FormattedText;
+		border?: boolean;
+		caption?: FormattedText;
+		class?: string;
+		fitImages?: ImageFit;
+		gutter?: SpaceScale;
+	}
+
+	let {
+		images,
+		attribution,
+		border = false,
+		caption,
+		class: className = '',
+		fitImages = 'default',
+		gutter = 'medium',
+	} = Astro.props as Props;
+
+	// generate classes for each collage item
+	function getItemeClassList(item: Item): string {
+		const { relative_size: size, priority } = item;
+
+		const sizeClasses = {
+			Default: '',
+			Large: 'wide',
+			XLarge: 'xide'
+		};
+
+		return [
+			`priority:${priority}`,
+			sizeClasses[size || 'Default'],
+		].join(' ');
+	}
+---
+
+<Figure
+	{attribution}
+	{caption}
+	class={className}
+	style={`--gutter: var(--space-${gutter})`}
+>
+	<ul class="collage">
+		{images.map((source) => (
+			<li class={getItemeClassList(source)}>
+				<Image
+					{border}
+					{source}
+					fit={fitImages}
+				/>
+			</li>
+		))}
+	</ul>
+</Figure>
+
+<style>
+	/* container */
+	.collage {
+		align-items: center;
+		display: grid;
+		gap: var(--space-narrow);
+		grid-auto-flow: dense;
+		grid-template-columns: repeat(auto-fit, minmax(3rem, 1fr));
+		justify-content: center;
+	}
+
+	@media screen and (min-width: 30em) {
+		.collage {
+			gap: var(--gutter);
+		}
+	}
+
+	/* items */
+	.priority\:2,
+	.priority\:3, {
+		display: none;
+	}
+
+	.xwide {
+		grid-column: span 2;
+	}
+
+	@media screen and (min-width: 40em) {
+		.priority\:2 {
+			display: block;
+		}
+
+		.wide {
+			grid-column: span 2;
+		}
+
+		.xwide {
+			grid-column: span 5;
+		}
+	}
+
+	@media screen and (min-width: 64em) {
+		.priority\:3 {
+			display: block;
+		}
+	}
+</style>
