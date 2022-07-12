@@ -1,60 +1,61 @@
 ---
-	// Display images or other content in a tight grid arrangement that acts like a self-contained composition
-	// -> layout does not change with screen sizes, but some images are hidden if their priority is lower than 1
+// Display images or other content in a tight grid arrangement that acts like a self-contained composition
+// -> layout does not change with screen sizes, but some images are hidden if their priority is lower than 1
 
-	// components
-	import Figure from '@components/blocks/Figure.astro';
-	import Image from '@components/elements/Image.astro';
+// components
+import Device from '@components/elements/Device.astro';
+import Image from '@components/elements/Image.astro';
+import Figure from '@components/blocks/Figure.astro';
 
-	// types
-	import type { SpaceScale, FormattedText, ImageFit, Device } from '@lib/types';
-	import type { ImageField } from '@prismicio/types';
+// types
+import type { SpaceScale, FormattedText, ImageFit, Device } from '@lib/types';
+import type { ImageField } from '@prismicio/types';
 
-	type ItemSize = 'Default' | 'Large' | 'XLarge';
-	type ItemPriority = '1' | '2' | '3';
+type ItemSize = 'Default' | 'Large' | 'XLarge';
+type ItemPriority = '1' | '2' | '3';
 
-	type Item = {
-		image: ImageField,
-		device: Device,
-		priority: ItemPriority,
-		relative_size: ItemSize,
+type CollageItem = {
+	image: ImageField,
+	device: Device,
+	priority: ItemPriority,
+	relative_size: ItemSize,
+};
+
+export interface Props {
+	images: CollageItem[];
+	attribution?: FormattedText;
+	border?: boolean;
+	caption?: FormattedText;
+	class?: string;
+	fitImages?: ImageFit;
+	gutter?: SpaceScale;
+}
+
+let {
+	images,
+	attribution,
+	border = false,
+	caption,
+	class: className = '',
+	fitImages = 'default',
+	gutter = 'medium',
+} = Astro.props as Props;
+
+// generate classes for each collage item
+function getItemClassList(item: CollageItem): string {
+	const { relative_size: size, priority } = item;
+
+	const sizeClasses = {
+		Default: '',
+		Large: 'wide',
+		XLarge: 'xide'
 	};
 
-	export interface Props {
-		images: Item[];
-		attribution?: FormattedText;
-		border?: boolean;
-		caption?: FormattedText;
-		class?: string;
-		fitImages?: ImageFit;
-		gutter?: SpaceScale;
-	}
-
-	let {
-		images,
-		attribution,
-		border = false,
-		caption,
-		class: className = '',
-		fitImages = 'default',
-		gutter = 'medium',
-	} = Astro.props as Props;
-
-	// generate classes for each collage item
-	function getItemeClassList(item: Item): string {
-		const { relative_size: size, priority } = item;
-
-		const sizeClasses = {
-			Default: '',
-			Large: 'wide',
-			XLarge: 'xide'
-		};
-
-		return [
-			`priority:${priority}`,
-			sizeClasses[size || 'Default'],
-		].join(' ');
-	}
+	return [
+		`priority:${priority}`,
+		sizeClasses[size || 'Default'],
+	].join(' ');
+}
 ---
 
 <Figure
@@ -65,12 +66,19 @@
 >
 	<ul class="collage">
 		{images.map((source) => (
-			<li class={getItemeClassList(source)}>
-				<Image
-					{border}
-					{source}
-					fit={fitImages}
-				/>
+			<li class={getItemClassList(source)}>
+				{source?.device !== 'None' && (
+					<DeviceFrame
+						type={source.device}
+						{source}
+					/>
+				) || (
+					<Image
+						fit={fitImages}
+						{border}
+						{source}
+					/>
+				)}
 			</li>
 		))}
 	</ul>

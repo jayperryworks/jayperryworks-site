@@ -108,7 +108,10 @@ function imageGallery(slice: Slice): BlockType {
 			markdown: prismicHelpers.asText(caption)
 		},
 		columnSize,
-		images: slice.items.map((item) => item.image),
+		images: slice.items.map((item) => ({
+			device: item.device || 'None',
+			...item.image,
+		})),
 		...sharedBlockFields(slice),
 	}
 }
@@ -180,7 +183,7 @@ function table(slice: Slice): BlockType {
 // functions for each block type
 const blockTypes = {
 	'image_gallery': imageGallery,
-	'quote': blockQuote,
+	quote: blockQuote,
 	aside,
 	figure,
 	heading,
@@ -189,7 +192,7 @@ const blockTypes = {
 };
 
 // --- build an array of blocks, sorted into sections ---
-const sectionList = body.reduce((result: Array<BlockType>, slice: Slice) => {
+const sectionList = body.reduce((result: Array<any>, slice: Slice) => {
 	const {
 		slice_type: type,
 		primary,

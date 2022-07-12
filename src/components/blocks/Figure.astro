@@ -5,6 +5,7 @@ import '@styles/tokens/contentWidth.css';
 
 // child components
 import Image from '@components/elements/Image.astro';
+import DeviceFrame from '@components/elements/DeviceFrame.astro';
 import Caption from '@components/blocks/FigureCaption.astro';
 
 // typescript
@@ -31,27 +32,30 @@ const {
 	attribution,
 	border,
 	caption,
-	device,
+	device = 'None',
 	class: className,
 	fit = 'default',
 } = Astro.props as Props;
-
-const renderImage = !Astro.slots.has('default') && source || false;
-const renderCaption = caption || attribution || false;
 ---
 
 <figure class={className}>
 	<slot>
-		{renderImage && (
+		{source && (
 			<Image
 				{border}
 				{fit}
 				{source}
 			/>
 		)}
+		{source && device !== 'None' && (
+			<DeviceFrame
+				type={device}
+				{source}
+			/>
+		)}
 	</slot>
 
-	{renderCaption && (
+	{(caption || attribution) && (
 		<Caption
 			class="caption"
 			text={caption}

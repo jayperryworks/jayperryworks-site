@@ -8,13 +8,13 @@
 	import type { ImageField } from '@prismicio/types';
 
 	export interface Props {
-		image: ImageField,
+		source: ImageField,
 		type?: Device,
 		class?: string,
 	};
 
 	const {
-		image,
+		source,
 		class: className = '',
 		type = 'Tablet (horizontal)',
 	} = Astro.props as Props;
@@ -37,7 +37,7 @@
 		aspectRatio={ratios[type]}
 		fit="cover"
 		position="y-start center"
-		source={image}
+		{source}
 	/>
 </div>
 
