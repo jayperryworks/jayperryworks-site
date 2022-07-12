@@ -8,7 +8,7 @@ import arrowRight from '@icons/arrow-right.svg?raw';
 
 // components
 import Button from '@components/elements/Button.astro';
-import Image from '@components/elements/Image.astro';
+import Figure from '@components/blocks/Figure.astro';
 import Collage from '@components/blocks/Collage.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
@@ -89,14 +89,17 @@ console.log(coverImages || 'null')
 			{cta.label || 'Read more'}
 		</Button>
 	</header>
-	{coverImages.length > 0 && (
-		<figure class="cover">
-			{coverImages.length > 1
-				? <Collage images={coverImages} />
-				: <Image source={coverImages[0].source} contain />
+			{coverImages?.length > 1
+				? <Collage
+						class="cover"
+						images={coverImages}
+					/>
+				: <Figure
+						class="cover"
+						fit="contain"
+						source={coverImages[0].source}
+					/>
 			}
-		</figure>
-	)}
 </article>
 
 <style>
@@ -120,11 +123,11 @@ console.log(coverImages || 'null')
 		align-items: center;
 	}
 
-	.cover {
+	article :global(.cover) {
 		justify-self: center;
 	}
 
-	.cover > :global(img) {
+	article :global(.cover) > :global(img) {
 		max-height: 60vh;
 	}
 </style>

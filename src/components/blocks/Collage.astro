@@ -31,7 +31,7 @@ export interface Props {
 	gutter?: SpaceScale;
 }
 
-let {
+const {
 	images,
 	attribution,
 	border = false,
@@ -69,19 +69,17 @@ function getItemClassList(
 	<ul class="collage">
 		{images.map(({ source, relativeSize, device, priority }) => (
 			<li class={getItemClassList(relativeSize, priority)}>
-				{device !== 'None' ? (
-					<DeviceFrame
-						source={source}
-						type={device}
-
-					/>
-				) : (
-					<Image
-						fit={fitImages}
-						source={source}
-						{border}
-					/>
-				)}
+				{device !== 'None'
+					? <DeviceFrame
+							source={source}
+							type={device}
+						/>
+					: <Image
+							fit={fitImages}
+							source={source}
+							{border}
+						/>
+				}
 			</li>
 		))}
 	</ul>
