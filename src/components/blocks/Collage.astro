@@ -3,7 +3,7 @@
 // -> layout does not change with screen sizes, but some images are hidden if their priority is lower than 1
 
 // components
-import Device from '@components/elements/Device.astro';
+import DeviceFrame from '@components/elements/DeviceFrame.astro';
 import Image from '@components/elements/Image.astro';
 import Figure from '@components/blocks/Figure.astro';
 
@@ -11,14 +11,14 @@ import Figure from '@components/blocks/Figure.astro';
 import type { SpaceScale, FormattedText, ImageFit, Device } from '@lib/types';
 import type { ImageField } from '@prismicio/types';
 
-type ItemSize = 'Default' | 'Large' | 'XLarge';
-type ItemPriority = '1' | '2' | '3';
+export type CollageItemSize = 'Default' | 'Large' | 'XLarge';
+export type CollageItemPriority = '1' | '2' | '3';
 
-type CollageItem = {
-	image: ImageField,
-	device: Device,
-	priority: ItemPriority,
-	relative_size: ItemSize,
+export type CollageItem = {
+	source: ImageField,
+	device?: Device,
+	priority?: CollageItemPriority,
+	relativeSize?: CollageItemSize,
 };
 
 export interface Props {
@@ -42,8 +42,10 @@ let {
 } = Astro.props as Props;
 
 // generate classes for each collage item
-function getItemClassList(item: CollageItem): string {
-	const { relative_size: size, priority } = item;
+function getItemClassList(
+	relativeSize: CollageItemSize,
+	priority: CollageItemPriority = '1'
+): string {
 
 	const sizeClasses = {
 		Default: '',
@@ -53,7 +55,7 @@ function getItemClassList(item: CollageItem): string {
 
 	return [
 		`priority:${priority}`,
-		sizeClasses[size || 'Default'],
+		sizeClasses[relativeSize || 'Default'],
 	].join(' ');
 }
 ---
@@ -65,18 +67,19 @@ function getItemClassList(item: CollageItem): string {
 	style={`--gutter: var(--space-${gutter})`}
 >
 	<ul class="collage">
-		{images.map((source) => (
-			<li class={getItemClassList(source)}>
-				{source?.device !== 'None' && (
+		{images.map(({ source, relativeSize, device, priority }) => (
+			<li class={getItemClassList(relativeSize, priority)}>
+				{device !== 'None' ? (
 					<DeviceFrame
-						type={source.device}
-						{source}
+						source={source}
+						type={device}
+
 					/>
-				) || (
+				) : (
 					<Image
 						fit={fitImages}
+						source={source}
 						{border}
-						{source}
 					/>
 				)}
 			</li>

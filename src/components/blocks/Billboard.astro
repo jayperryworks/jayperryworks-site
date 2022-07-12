@@ -7,19 +7,21 @@ import '@styles/tokens/type.css';
 import arrowRight from '@icons/arrow-right.svg?raw';
 
 // components
+import Button from '@components/elements/Button.astro';
+import Image from '@components/elements/Image.astro';
+import Collage from '@components/blocks/Collage.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
-import Image from '@components/elements/Image.astro';
-import Button from '@components/elements/Button.astro';
 
 // types
-import {
+import type {
 	RichTextField,
-	ImageField,
 } from '@prismicio/types';
 
+import type { CollageItem } from '@components/blocks/Collage.astro';
+
 export interface Props {
-	coverImages?: ImageField[],
+	coverImages?: CollageItem[],
 	cta?: {
 		link: string,
 		label: string,
@@ -40,6 +42,8 @@ const {
 	subtitle,
 	title,
 } = Astro.props as Props;
+
+console.log(coverImages || 'null')
 ---
 
 <article>
@@ -87,9 +91,10 @@ const {
 	</header>
 	{coverImages.length > 0 && (
 		<figure class="cover">
-			{coverImages.map(({ source }) => (
-				source && <Image {source} contain />
-			))}
+			{coverImages.length > 1
+				? <Collage images={coverImages} />
+				: <Image source={coverImages[0].source} contain />
+			}
 		</figure>
 	)}
 </article>
