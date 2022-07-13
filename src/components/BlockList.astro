@@ -109,8 +109,31 @@ function imageGallery(slice: Slice): BlockType {
 		},
 		columnSize,
 		images: slice.items.map((item) => ({
-			device: item.device || 'None',
 			...item.image,
+			device: item.device || 'None',
+		})),
+		...sharedBlockFields(slice),
+	}
+}
+
+function collage(slice: Slice): BlockType {
+	const {
+		caption,
+		attribution,
+		gutter,
+	} = slice.primary;
+
+	return {
+		attribution: attribution && {
+			markdown: attribution
+		},
+		caption: caption.length > 0 && {
+			markdown: prismicHelpers.asText(caption)
+		},
+		images: slice.items.map((item) => ({
+			...item,
+			device: item.device || 'None',
+			relativeSize: item.relative_size,
 		})),
 		...sharedBlockFields(slice),
 	}
@@ -185,6 +208,7 @@ const blockTypes = {
 	'image_gallery': imageGallery,
 	quote: blockQuote,
 	aside,
+	collage,
 	figure,
 	heading,
 	passage,

@@ -14,10 +14,7 @@ import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
 
 // types
-import type {
-	RichTextField,
-} from '@prismicio/types';
-
+import type { RichTextField } from '@prismicio/types';
 import type { CollageItem } from '@components/blocks/Collage.astro';
 
 export interface Props {
@@ -42,8 +39,6 @@ const {
 	subtitle,
 	title,
 } = Astro.props as Props;
-
-console.log(coverImages || 'null')
 ---
 
 <article>

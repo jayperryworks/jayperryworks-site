@@ -4,6 +4,7 @@ import '@styles/tokens/contentWidth.css';
 
 // block components
 import Aside from '@components/blocks/Aside.astro';
+import Collage from '@components/blocks/Collage.astro';
 import BlockQuote from '@components/blocks/BlockQuote.astro';
 import Figure from '@components/blocks/Figure.astro';
 import Heading from '@components/blocks/Heading.astro';
@@ -54,6 +55,11 @@ const width = {
 	{block.type === 'imageGallery' && (
 		<!-- image gallery -->
 		<ImageGallery {...block} />
+	)}
+
+	{block.type === 'collage' && (
+		<!-- image gallery -->
+		<Collage {...block} />
 	)}
 
 	{block.type === 'aside' && (
