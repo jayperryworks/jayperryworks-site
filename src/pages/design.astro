@@ -1,4 +1,39 @@
 ---
+import '@styles/tokens/contentWidth.css';
+import '@styles/tokens/spacing.css';
+import '@styles/utilities/borders.css';
+import '@styles/utilities/type.css';
 
+// utils
+import { linkResolver } from '@lib/routes';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+
+// components
+import Layout from '@layouts/BaseLayout.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
+import Button from '@components/elements/Button.astro';
+import Icon from '@components/elements/Icon.astro';
+import Billboard from '@components/blocks/Billboard.astro';
+import Feed from '@components/blocks/Feed.astro';
+
+// fetch content
+const response = await prismic.getByUID('index_page', 'design');
+
+const {
+	title,
+	subtitle,
+	short_title: shortTitle,
+	body,
+} = response.data;
 ---
 
+<Layout pageTitle={shortTitle} path="design">
+	<header>
+		<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
+		{subtitle && (
+			<Heading level={3} subheading>{prismicHelpers.asText(subtitle)}</Heading>
+		)}
+	</header>
+</Layout>
