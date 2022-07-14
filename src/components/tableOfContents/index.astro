@@ -1,0 +1,87 @@
+---
+// components
+import Billboard from "@components/tableOfContents/Billboard.astro";
+import Feed from "@components/tableOfContents/Feed.astro";
+
+// types
+import type { BillboardCoverImages } from "@components/tableOfContents/Billboard.astro";
+import type { FeedSource } from "@components/tableOfContents/Feed.astro";
+import type { FormattedText } from "@lib/types";
+
+export type TableOfContentsItem = {
+	type: 'billboard' | 'feed';
+	title: string,
+	cta: {
+		link: string,
+		label: string,
+	},
+	coverImages?: BillboardCoverImages,
+	description?: FormattedText,
+	source?: FeedSource,
+	subtitle?: string,
+};
+
+export interface Props {
+	items: TableOfContentsItem[];
+	id?: string,
+	showNumbers?: boolean;
+}
+
+const {
+	id,
+	items,
+	showNumbers = false,
+} = Astro.props as Props;
+
+function number(index): number | null {
+	if (showNumbers) {
+		return index + 1;
+	}
+	return null;
+}
+---
+
+<ul {id}>
+	{items.map((item: TableOfContentsItem, index: number) => (
+		<li class="border-seam-top">
+			<div class="wrapper">
+				{item.type === 'billboard' && (
+					<Billboard
+						number={number(index)}
+						{...item}
+					/>
+				)}
+				{item.type === 'feed' && (
+					<Feed
+						number={number(index)}
+						{...item}
+					/>
+				)}
+			</div>
+		</li>
+	))}
+</ul>
+
+<style>
+	ul {
+		list-style: none;
+		padding-left: 0;
+	}
+
+	li {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		padding-block: var(--space-wide);
+		padding-inline: var(--space-outside);
+	}
+
+	.wrapper {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		margin-inline: auto;
+		max-width: var(--content-width-xxwide);
+		width: 100%;
+	}
+</style>

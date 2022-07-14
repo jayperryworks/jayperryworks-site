@@ -41,17 +41,18 @@ const {
 <figure class={className}>
 	<slot>
 		{source && (
-			<Image
-				{border}
-				{fit}
-				{source}
-			/>
-		)}
-		{source && device !== 'None' && (
-			<DeviceFrame
-				type={device}
-				{source}
-			/>
+			device !== 'None'
+			? <DeviceFrame
+					class="image"
+					type={device}
+					{source}
+				/>
+			: <Image
+					class="image"
+					{border}
+					{fit}
+					{source}
+				/>
 		)}
 	</slot>
 
@@ -69,7 +70,7 @@ const {
 		text-align: center;
 	}
 
-	figure :global(.caption) {
+	figure :global(.image) {
 		margin-block-start: auto;
 		margin-inline: auto;
 		padding-block-start: var(--space-xnarrow);

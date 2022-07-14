@@ -13,13 +13,12 @@ import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
 // components
-import Layout from '@layouts/BaseLayout.astro';
-import Heading from '@components/blocks/Heading.astro';
-import Passage from '@components/blocks/Passage.astro';
 import Button from '@components/elements/Button.astro';
 import Icon from '@components/elements/Icon.astro';
-import Billboard from '@components/blocks/Billboard.astro';
-import Feed from '@components/blocks/Feed.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
+import Layout from '@layouts/BaseLayout.astro';
+import TableOfContents from '@components/tableOfContents/index.astro';
 
 // fetch content
 const response = await prismic.getSingle('homepage');
@@ -99,16 +98,7 @@ const toc = await Promise.all(
 	</header>
 
 	<!-- TOC panels -->
-	<ul class="toc" id="toc">
-		{toc.map((item, index) => (
-			<li class="toc-item | border-seam-top">
-				<div class="toc-wrapper">
-					{item.type === 'billboard' && <Billboard number={index + 1} {...item} />}
-					{item.type === 'feed' && <Feed number={index + 1} {...item} />}
-				</div>
-			</li>
-		))}
-	</ul>
+	<TableOfContents items={toc} showNumbers />
 </Layout>
 
 <style>
@@ -126,10 +116,6 @@ const toc = await Promise.all(
 		flex: 1;
 		gap: var(--space-medium);
 		grid-template-rows: 1fr auto;
-	}
-
-	.intro,
-	.toc-wrapper {
 		margin-inline: auto;
 		max-width: var(--content-width-xxwide);
 	}
@@ -141,25 +127,5 @@ const toc = await Promise.all(
 
 	.blurb :global(.blurb-cta) {
 		margin-block-start: var(--space-wide);
-	}
-
-	.toc {
-		list-style: none;
-		padding-left: 0;
-	}
-
-	.toc-item {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-		padding-block: var(--space-wide);
-		padding-inline: var(--space-outside);
-	}
-
-	.toc-wrapper {
-		width: 100%;
-		flex: 1;
-		display: flex;
-		flex-direction: column;
 	}
 </style>

@@ -46,20 +46,19 @@ const {
 		size={columnSize}
 		{gutter}
 	>
-		{images.map((source) => (
+		{images.map((image) => (
 			<li>
-				{source?.device !== 'None' && (
-					<DeviceFrame
-						type={source.device}
-						{source}
-					/>
-				) || (
-					<Image
-						fit={fitImages}
-						{border}
-						{source}
-					/>
-				)}
+				{image?.device !== 'None'
+					? <DeviceFrame
+							type={image.device}
+							{image}
+						/>
+					: <Image
+							fit={fitImages}
+							{border}
+							{image}
+						/>
+				}
 			</li>
 		))}
 	</Gallery>

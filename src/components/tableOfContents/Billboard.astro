@@ -12,23 +12,26 @@ import Figure from '@components/blocks/Figure.astro';
 import Collage from '@components/blocks/Collage.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
+import Number from '@components/tableOfContents/Number.astro';
 
 // types
 import type { RichTextField } from '@prismicio/types';
 import type { CollageItem } from '@components/blocks/Collage.astro';
 
+export type BillboardCoverImages = CollageItem[];
+
 export interface Props {
-	coverImages?: CollageItem[],
-	cta?: {
+	title: string,
+	cta: {
 		link: string,
 		label: string,
 	},
+	coverImages?: BillboardCoverImages,
 	description?: {
 		prismicText: RichTextField
 	},
 	number?: number,
 	subtitle?: string,
-	title?: string,
 }
 
 const {
@@ -43,15 +46,7 @@ const {
 
 <article>
 	<header>
-		{number && (
-			<Heading
-			level={3}
-			subheading
-			>
-				{/* https://bobbyhadz.com/blog/javascript-pad-number-with-leading-zeros */}
-				{String(number).padStart(2, '0')}
-			</Heading>
-		)}
+		{number && <Number {number} />}
 		<Heading level={1}>
 			<a
 				class="type-link-undecorated"
