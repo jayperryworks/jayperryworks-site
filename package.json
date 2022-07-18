@@ -84,7 +84,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "sapper": "^0.29.1",
     "serialize-javascript": ">=3.1.0",
-    "svelte": "^3.32.3",
+    "svelte": "^3.49.0",
     "svelte-preprocess": "^3.9.12",
     "svelte-sitemap": "^2.3.0"
   }
