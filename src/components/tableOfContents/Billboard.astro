@@ -79,17 +79,17 @@ const {
 			{cta.label || 'Read more'}
 		</Button>
 	</header>
-			{coverImages?.length > 1
-				? <Collage
-						class="cover"
-						images={coverImages}
-					/>
-				: <Figure
-						class="cover"
-						fit="contain"
-						source={coverImages[0].source}
-					/>
-			}
+	{coverImages?.length > 1
+		? <Collage
+				class="cover"
+				images={coverImages}
+			/>
+		: <Figure
+				class="cover"
+				fit="contain"
+				source={coverImages[0].source}
+			/>
+	}
 </article>
 
 <style>

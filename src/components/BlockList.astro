@@ -29,10 +29,10 @@ const {
 // assign a class to certain block types to determine spacing between sibling blocks
 function getBlockClass(type: string): string {
 	const classes = {
-		passage: 'block-passage',
-		blockQuote: 'block-passage',
-		heading: 'block-heading',
-		aside: 'block-passage',
+		passage: 'text',
+		blockQuote: 'text',
+		heading: 'heading',
+		aside: 'text',
 	};
 
 	if (classes[type]) {
@@ -253,21 +253,21 @@ const classList = [
 
 <div class={classList}>
 	{sectionList.map(({ uid, blocks }) => (
-		uid ? (
-			<section id={uid}>
-				{blocks.map((block) => (
-					<Block class={[
-						getBlockClass(block.type),
-						getLedeClass(block),
-					].join(' ')} {block} />
-				))}
-			</section>
-		) : blocks.map((block) => (
-			<Block class={[
-				getBlockClass(block.type),
-				getLedeClass(block),
-			].join(' ')} {block} />
-		))
+		uid
+			? <section id={uid}>
+					{blocks.map((block) => (
+						<Block class={[
+							getBlockClass(block.type),
+							getLedeClass(block),
+						].join(' ')} {block} />
+					))}
+				</section>
+			: blocks.map((block) => (
+				<Block class={[
+					getBlockClass(block.type),
+					getLedeClass(block),
+				].join(' ')} {block} />
+			))
 	))}
 </div>
 
@@ -276,12 +276,12 @@ const classList = [
 		padding-block-start: var(--space-wide);
 	}
 
-	.block-list :global(.block-heading + .block-passage) {
+	.block-list :global(.heading + .text) {
 		padding-top: var(--space-narrow);
 	}
 
 	/* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
-	.block-list :global(.block-passage + .block-passage) {
+	.block-list :global(.text + .text) {
 		padding-top: var(--space-medium);
 	}
 

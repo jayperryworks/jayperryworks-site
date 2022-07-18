@@ -18,69 +18,95 @@ import type { Block } from '@lib/types';
 export interface Props {
 	block: Block;
 	class?: string;
+	displayMode?: string;
 }
 
 const {
 	block,
 	class: className,
+	displayMode = 'flow',
 } = Astro.props as Props;
 
-const width = {
-	Small: 'narrow',
-	Medium: 'default',
-	Large: 'xwide',
-	XLarge: 'xxwide',
-}[block.prominence];
+function getWidth(prominence) {
+	const widths = {
+		Small: 'narrow',
+		Medium: 'default',
+		Large: 'xwide',
+		XLarge: 'xxwide',
+	};
+
+	return widths[prominence] || 'default';
+}
+
+const style = `--block-width: var(--content-width-${getWidth(block.prominence)});`;
 ---
 
-<div
-	class={['wrapper', className].join(' ')}
-	style={`--block-width: var(--content-width-${width || 'default'})`}
->
-	{block.type === 'heading' && (
-		<!-- heading -->
-		<Heading {...block}>{block.title}</Heading>
-	)}
+<div class={['block', displayMode, className].join(' ')}>
+	<div class="wrapper" {style}>
+		{block.type === 'heading' && (
+			<!-- heading -->
+			<Heading {...block}>{block.title}</Heading>
+		)}
 
-	{block.type === 'passage' && (
-		<!-- passage -->
-		<Passage {...block} />
-	)}
+		{block.type === 'passage' && (
+			<!-- passage -->
+			<Passage {...block} />
+		)}
 
-	{block.type === 'figure' && (
-		<!-- figure -->
-		<Figure {...block} />
-	)}
+		{block.type === 'figure' && (
+			<!-- figure -->
+			<Figure {...block} />
+		)}
 
-	{block.type === 'imageGallery' && (
-		<!-- image gallery -->
-		<ImageGallery {...block} />
-	)}
+		{block.type === 'imageGallery' && (
+			<!-- image gallery -->
+			<ImageGallery {...block} />
+		)}
 
-	{block.type === 'collage' && (
-		<!-- image gallery -->
-		<Collage {...block} />
-	)}
+		{block.type === 'collage' && (
+			<!-- image gallery -->
+			<Collage {...block} />
+		)}
 
-	{block.type === 'aside' && (
-		<!-- aside -->
-		<Aside {...block} />
-	)}
+		{block.type === 'aside' && (
+			<!-- aside -->
+			<Aside {...block} />
+		)}
 
-	{block.type === 'blockQuote' && (
-		<!-- block quote -->
-		<BlockQuote {...block} />
-	)}
+		{block.type === 'blockQuote' && (
+			<!-- block quote -->
+			<BlockQuote {...block} />
+		)}
 
-	{block.type === 'table' && (
-		<!-- block quote -->
-		<Table {...block} />
-	)}
+		{block.type === 'table' && (
+			<!-- block quote -->
+			<Table {...block} />
+		)}
+	</div>
 </div>
 
 <style>
+	.block.flow {
+		padding-inline: var(--space-outside);
+	}
+
+	.block.slide {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		padding-block: var(--space-wide);
+		padding-inline: var(--space-outside);
+	}
+
 	.wrapper {
 		max-width: var(--block-width);
 		margin-inline: auto;
+	}
+
+	.slide .wrapper {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		width: 100%;
 	}
 </style>
