@@ -31,11 +31,7 @@ const {
 
 let introLink = await prismicHelpers.asLink(response.data.intro_link, linkResolver);
 
-const toc = await Promise.all(
-	body.map(async ({ slice_type: type, primary, items }) => {
-		const link = primary.call_to_action_link
-			&& await prismicHelpers.asLink(primary.call_to_action_link, linkResolver);
-
+const toc = body.map(({ slice_type: type, primary, items }) => {
 		const coverImages = (type === 'billboard') && {
 			gutter: primary.cover_images_gutter,
 			images: items.map((item) => ({
@@ -50,7 +46,7 @@ const toc = await Promise.all(
 			title: prismicHelpers.asText(primary.title || primary.title1),
 			subtitle: prismicHelpers.asText(primary.subtitle),
 			cta: {
-				link,
+				link: primary.call_to_action_link,
 				label: primary.call_to_action_label,
 			},
 			description: {
@@ -59,8 +55,7 @@ const toc = await Promise.all(
 			source: primary.content_source,
 			coverImages: coverImages.images,
 		};
-	})
-);
+	});
 ---
 
 <Layout path="home" headerOverlay>

@@ -6,6 +6,10 @@ import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 import arrowRight from '@icons/arrow-right.svg?raw';
 
+// utils
+import { linkResolver } from '@lib/routes';
+import * as prismicHelpers from '@prismicio/helpers';
+
 // components
 import Button from '@components/elements/Button.astro';
 import Figure from '@components/blocks/Figure.astro';
@@ -42,6 +46,9 @@ const {
 	subtitle,
 	title,
 } = Astro.props as Props;
+
+const { link, label } = cta;
+const resolvedLink = link && await prismicHelpers.asLink(link, linkResolver);
 ---
 
 <article>
@@ -50,7 +57,7 @@ const {
 		<Heading level={1}>
 			<a
 				class="type-link-undecorated"
-				href={cta.link}
+				href={resolvedLink}
 			>
 				{title}
 			</a>
@@ -73,10 +80,10 @@ const {
 		)}
 		<Button
 			class="cta"
-			href={cta.link}
+			href={resolvedLink}
 			iconRight={arrowRight}
 		>
-			{cta.label || 'Read more'}
+			{label || 'Read more'}
 		</Button>
 	</header>
 	{coverImages?.length > 1

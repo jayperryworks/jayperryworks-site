@@ -5,8 +5,8 @@ import '@styles/tokens/type.css';
 import arrowRight from '@icons/arrow-right.svg?raw';
 
 // utils
+import { blogPost, linkResolver } from '@lib/routes';
 import { format } from 'date-fns';
-import { blogPost } from '@lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
@@ -45,6 +45,9 @@ const {
 	title,
 } = Astro.props as Props;
 
+const { link, label } = cta;
+const resolvedLink = link && await prismicHelpers.asLink(link, linkResolver);
+
 let feedItems = [];
 const pageSize = 8;
 
@@ -78,7 +81,7 @@ if (source === 'blog_post') {
 		<Heading level={1}>
 			<a
 				class="type-link-undecorated"
-				href={cta.link}
+				href={resolvedLink}
 			>
 				{title}
 			</a>
@@ -119,10 +122,10 @@ if (source === 'blog_post') {
 
 	<footer>
 		<Button
-			href={cta.link}
+			href={resolvedLink}
 			iconRight={arrowRight}
 		>
-			{cta.label}
+			{label}
 		</Button>
 	</footer>
 </article>
