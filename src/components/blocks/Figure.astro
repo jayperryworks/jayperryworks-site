@@ -70,14 +70,14 @@ const {
 		text-align: center;
 	}
 
-	figure :global(.image) {
+	figure :global(img) {
+		width: 100%;
+	}
+
+	figure :global(.caption) {
 		margin-block-start: auto;
 		margin-inline: auto;
 		padding-block-start: var(--space-xnarrow);
 		max-width: var(--content-width-default);
-	}
-
-	figure :global(img) {
-		width: 100%;
 	}
 </style>
