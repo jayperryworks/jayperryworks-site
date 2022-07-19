@@ -55,13 +55,15 @@ function getLedeClass(block: BlockType):string {
 
 function sharedBlockFields(slice: Slice): BlockType {
 	const {
-		include_in_excerpt: includeInExcerpt,
 		prominence,
+		display_mode: displayMode = 'flow',
+		include_in_excerpt: includeInExcerpt,
 	} = slice.primary;
 
 	return {
+		displayMode,
+		prominence: prominence as BlockType["prominence"],
 		includeInExcerpt: Boolean(includeInExcerpt),
-		prominence,
 		type: camelCase(slice.slice_type),
 	};
 }
@@ -116,6 +118,48 @@ function imageGallery(slice: Slice): BlockType {
 	}
 }
 
+function billboard(slice: Slice): BlockType {
+	const {
+		cover_images_gutter: gutter,
+		title1,
+		subtitle,
+		call_to_action_label: label,
+		call_to_action_link: link,
+		description: prismicText,
+	} = slice.primary;
+
+	const images = slice.items.map((item) => {
+		const {
+			device = 'None',
+			priority = '1',
+			relative_size: relativeSize,
+			cover_image: source,
+		} = item;
+
+		return {
+			device,
+			priority,
+			relativeSize,
+			source,
+		}
+	});
+
+	return {
+		...sharedBlockFields(slice),
+		images,
+		cta: {
+			link,
+			label,
+		},
+		description: {
+			prismicText,
+		},
+		displayMode: 'slide',
+		subtitle: prismicHelpers.asText(subtitle),
+		title: prismicHelpers.asText(title1),
+	}
+}
+
 function collage(slice: Slice): BlockType {
 	const {
 		caption,
@@ -123,19 +167,32 @@ function collage(slice: Slice): BlockType {
 		gutter,
 	} = slice.primary;
 
+	const images = slice.items.map((item) => {
+		const {
+			device = 'None',
+			priority = '1',
+			relative_size: relativeSize,
+			image: source,
+		} = item;
+
+		return {
+			device,
+			priority,
+			relativeSize,
+			source,
+		}
+	});
+
 	return {
+		...sharedBlockFields(slice),
+		gutter,
+		images,
 		attribution: attribution && {
 			markdown: attribution
 		},
 		caption: caption.length > 0 && {
 			markdown: prismicHelpers.asText(caption)
 		},
-		images: slice.items.map((item) => ({
-			...item,
-			device: item.device || 'None',
-			relativeSize: item.relative_size,
-		})),
-		...sharedBlockFields(slice),
 	}
 }
 
@@ -203,12 +260,40 @@ function table(slice: Slice): BlockType {
 	};
 }
 
+function feed(slice: Slice): BlockType {
+	const {
+		title1,
+		subtitle,
+		call_to_action_label: label,
+		call_to_action_link: link,
+		description: prismicText,
+		content_source: source,
+	} = slice.primary;
+
+	return {
+		...sharedBlockFields(slice),
+		cta: {
+			link,
+			label,
+		},
+		description: {
+			prismicText,
+		},
+		displayMode: 'slide',
+		subtitle: prismicHelpers.asText(subtitle),
+		title: prismicHelpers.asText(title1),
+		source,
+	}
+}
+
 // functions for each block type
 const blockTypes = {
 	'image_gallery': imageGallery,
 	quote: blockQuote,
 	aside,
+	billboard,
 	collage,
+	feed,
 	figure,
 	heading,
 	passage,

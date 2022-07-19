@@ -4,8 +4,10 @@ import '@styles/tokens/contentWidth.css';
 
 // block components
 import Aside from '@components/blocks/Aside.astro';
-import Collage from '@components/blocks/Collage.astro';
+import Billboard from '@components/blocks/Billboard.astro';
 import BlockQuote from '@components/blocks/BlockQuote.astro';
+import Collage from '@components/blocks/Collage.astro';
+import Feed from '@components/blocks/Feed.astro';
 import Figure from '@components/blocks/Figure.astro';
 import Heading from '@components/blocks/Heading.astro';
 import ImageGallery from '@components/blocks/ImageGallery.astro';
@@ -43,34 +45,14 @@ const style = `--block-width: var(--content-width-${getWidth(block.prominence)})
 
 <div class={['block', displayMode, className].join(' ')}>
 	<div class="wrapper" {style}>
-		{block.type === 'heading' && (
-			<!-- heading -->
-			<Heading {...block}>{block.title}</Heading>
-		)}
-
-		{block.type === 'passage' && (
-			<!-- passage -->
-			<Passage {...block} />
-		)}
-
-		{block.type === 'figure' && (
-			<!-- figure -->
-			<Figure {...block} />
-		)}
-
-		{block.type === 'imageGallery' && (
-			<!-- image gallery -->
-			<ImageGallery {...block} />
-		)}
-
-		{block.type === 'collage' && (
-			<!-- image gallery -->
-			<Collage {...block} />
-		)}
-
 		{block.type === 'aside' && (
 			<!-- aside -->
 			<Aside {...block} />
+		)}
+
+		{block.type === 'billboard' && (
+			<!-- billboard -->
+			<Billboard {...block} />
 		)}
 
 		{block.type === 'blockQuote' && (
@@ -78,8 +60,38 @@ const style = `--block-width: var(--content-width-${getWidth(block.prominence)})
 			<BlockQuote {...block} />
 		)}
 
+		{block.type === 'collage' && (
+			<!-- image gallery -->
+			<Collage {...block} />
+		)}
+
+		{block.type === 'feed' && (
+			<!-- feed -->
+			<Feed {...block} />
+		)}
+
+		{block.type === 'figure' && (
+			<!-- figure -->
+			<Figure {...block} />
+		)}
+
+		{block.type === 'heading' && (
+			<!-- heading -->
+			<Heading {...block}>{block.title}</Heading>
+		)}
+
+		{block.type === 'imageGallery' && (
+			<!-- image gallery -->
+			<ImageGallery {...block} />
+		)}
+
+		{block.type === 'passage' && (
+			<!-- passage -->
+			<Passage {...block} />
+		)}
+
 		{block.type === 'table' && (
-			<!-- block quote -->
+			<!-- table -->
 			<Table {...block} />
 		)}
 	</div>

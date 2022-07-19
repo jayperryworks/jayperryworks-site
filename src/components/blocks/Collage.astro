@@ -64,20 +64,22 @@ function getItemClassList(
 	{attribution}
 	{caption}
 	class={className}
-	style={`--gutter: var(--space-${gutter})`}
 >
-	<ul class="collage">
+	<ul
+		class="collage"
+		style={`--gutter: var(--space-${gutter});`}
+	>
 		{images.map(({ source, relativeSize, device, priority }) => (
 			<li class={getItemClassList(relativeSize, priority)}>
 				{device !== 'None'
 					? <DeviceFrame
-							source={source}
 							type={device}
+							{source}
 						/>
 					: <Image
 							fit={fitImages}
-							source={source}
 							{border}
+							{source}
 						/>
 				}
 			</li>
