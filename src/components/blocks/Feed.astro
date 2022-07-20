@@ -30,7 +30,7 @@ export interface Props {
 	description?: {
 		prismicText: RichTextField,
 	};
-	source: FeedSource;
+	contentSource: FeedSource;
 	number?: number;
 	subtitle?: string;
 	title?: string;
@@ -39,7 +39,7 @@ export interface Props {
 const {
 	cta,
 	description,
-	source,
+	contentSource,
 	number,
 	subtitle,
 	title,
@@ -51,7 +51,7 @@ const resolvedLink = link && await prismicHelpers.asLink(link, linkResolver);
 let feedItems = [];
 const pageSize = 8;
 
-if (source === 'blog_post') {
+if (contentSource === 'blog_post') {
 	const feedData = await prismic.getByType('blog_post', {
 		orderings: {
 			field: 'my.blog_post.date',

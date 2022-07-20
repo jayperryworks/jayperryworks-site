@@ -12,7 +12,7 @@ import Block from '@components/Block.astro';
 
 // types
 import type { Block as BlockType } from '@lib/types';
-import type { Slice } from '@prismicio/types';
+import type { Slice, ImageField } from '@prismicio/types';
 
 export interface Props {
 	body: Slice[];
@@ -120,7 +120,7 @@ function imageGallery(slice: Slice): BlockType {
 
 function billboard(slice: Slice): BlockType {
 	const {
-		cover_images_gutter: gutter,
+		cover_images_gutter: imagesGutter,
 		title1,
 		subtitle,
 		call_to_action_label: label,
@@ -128,7 +128,7 @@ function billboard(slice: Slice): BlockType {
 		description: prismicText,
 	} = slice.primary;
 
-	const images = slice.items.map((item) => {
+	const images = slice.items.reduce((result, item) => {
 		const {
 			device = 'None',
 			priority = '1',
@@ -136,17 +136,21 @@ function billboard(slice: Slice): BlockType {
 			cover_image: source,
 		} = item;
 
-		return {
+		if ((source as ImageField).url === '') return result;
+
+		result.push({
 			device,
 			priority,
 			relativeSize,
 			source,
-		}
-	});
+		});
+		return result;
+	}, []);
 
 	return {
 		...sharedBlockFields(slice),
 		images,
+		imagesGutter,
 		cta: {
 			link,
 			label,
@@ -262,12 +266,12 @@ function table(slice: Slice): BlockType {
 
 function feed(slice: Slice): BlockType {
 	const {
-		title1,
+		title,
 		subtitle,
 		call_to_action_label: label,
 		call_to_action_link: link,
 		description: prismicText,
-		content_source: source,
+		content_source: contentSource,
 	} = slice.primary;
 
 	return {
@@ -276,13 +280,13 @@ function feed(slice: Slice): BlockType {
 			link,
 			label,
 		},
+		contentSource,
 		description: {
 			prismicText,
 		},
 		displayMode: 'slide',
 		subtitle: prismicHelpers.asText(subtitle),
-		title: prismicHelpers.asText(title1),
-		source,
+		title: prismicHelpers.asText(title),
 	}
 }
 

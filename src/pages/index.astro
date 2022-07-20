@@ -17,8 +17,12 @@ import Button from '@components/elements/Button.astro';
 import Icon from '@components/elements/Icon.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
+import Billboard from '@components/blocks/Billboard.astro';
+import Feed from '@components/blocks/Feed.astro';
 import Layout from '@layouts/BaseLayout.astro';
-import TableOfContents from '@components/tableOfContents/index.astro';
+
+// types
+import type { ImageField } from '@prismicio/types';
 
 // fetch content
 const response = await prismic.getSingle('homepage');
@@ -32,28 +36,48 @@ const {
 let introLink = await prismicHelpers.asLink(response.data.intro_link, linkResolver);
 
 const toc = body.map(({ slice_type: type, primary, items }) => {
-		const coverImages = (type === 'billboard') && {
-			gutter: primary.cover_images_gutter,
-			images: items.map((item) => ({
-				source: item.cover_image,
-				device: item.device,
-				relativeSize: item.relative_size,
-			})),
-		};
+		const {
+			call_to_action_label: label,
+			call_to_action_link: link,
+			cover_images_gutter: imagesGutter,
+			description: prismicText,
+			subtitle,
+			title,
+			title1,
+		} = primary;
+
+		const images = (type === 'billboard') && items.reduce((result, item) => {
+		const {
+			device = 'None',
+			priority = '1',
+			relative_size: relativeSize,
+			cover_image: source,
+		} = item;
+
+		if ((source as ImageField).url === '') return result;
+
+		result.push({
+			device,
+			priority,
+			relativeSize,
+			source,
+		});
+		return result;
+	}, []);
 
 		return {
 			type,
-			title: prismicHelpers.asText(primary.title || primary.title1),
-			subtitle: prismicHelpers.asText(primary.subtitle),
+			images,
+			imagesGutter,
+			title: prismicHelpers.asText(title || title1),
+			subtitle: prismicHelpers.asText(subtitle),
 			cta: {
-				link: primary.call_to_action_link,
-				label: primary.call_to_action_label,
+				link,
+				label,
 			},
 			description: {
-				prismicText: primary.description
+				prismicText,
 			},
-			source: primary.content_source,
-			coverImages: coverImages.images,
 		};
 	});
 ---
@@ -61,7 +85,7 @@ const toc = body.map(({ slice_type: type, primary, items }) => {
 <Layout path="home" headerOverlay>
 	<!-- intro -->
 	<header>
-		<div class="wrapper intro">
+		<div class="intro">
 			<div class="blurb">
 				<Heading level={1}>{prismicHelpers.asText(headline)}</Heading>
 				<Passage
@@ -93,7 +117,29 @@ const toc = body.map(({ slice_type: type, primary, items }) => {
 	</header>
 
 	<!-- TOC panels -->
-	<TableOfContents items={toc} showNumbers />
+	<ul
+		class="toc"
+		id="toc"
+	>
+		{toc.map((item, index) => (
+			<li class="border-seam-top">
+				<div class="wrapper">
+					{item.type === 'billboard' && (
+						<Billboard
+							number={index + 1}
+							{...item}
+						/>
+					)}
+					{item.type === 'feed' && (
+						<Feed
+							number={index + 1}
+							{...item}
+						/>
+					)}
+				</div>
+			</li>
+		))}
+	</ul>
 </Layout>
 
 <style>
@@ -122,5 +168,27 @@ const toc = body.map(({ slice_type: type, primary, items }) => {
 
 	.blurb :global(.blurb-cta) {
 		margin-block-start: var(--space-wide);
+	}
+
+	.toc {
+		list-style: none;
+		padding-left: 0;
+	}
+
+	.toc > li {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		padding-block: var(--space-wide);
+		padding-inline: var(--space-outside);
+	}
+
+	.wrapper {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		margin-inline: auto;
+		max-width: var(--content-width-xxwide);
+		width: 100%;
 	}
 </style>
