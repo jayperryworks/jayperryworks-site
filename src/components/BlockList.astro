@@ -3,16 +3,15 @@
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 
-// utils
-import { camelCase } from 'change-case';
-import * as prismicHelpers from '@prismicio/helpers';
-
 // components
 import Block from '@components/Block.astro';
 
+// utils
+import blockTypes from '@lib/blocks';
+
 // types
 import type { Block as BlockType } from '@lib/types';
-import type { Slice, ImageField } from '@prismicio/types';
+import type { Slice } from '@prismicio/types';
 
 export interface Props {
 	body: Slice[];
@@ -27,7 +26,7 @@ const {
 } = Astro.props as Props;
 
 // assign a class to certain block types to determine spacing between sibling blocks
-function getBlockClass(type: string): string {
+function getBlockClass(type: string, displayMode: string = 'inline'): string {
 	const classes = {
 		passage: 'text',
 		blockQuote: 'text',
@@ -36,10 +35,10 @@ function getBlockClass(type: string): string {
 	};
 
 	if (classes[type]) {
-		return classes[type];
+		return `${classes[type]} ${displayMode}`;
 	}
 
-	return '';
+	return displayMode;
 }
 
 // if the page body has a 'lede' (intro) paragraph,
@@ -52,257 +51,6 @@ function getLedeClass(block: BlockType):string {
 		return (block === firstPassage) ? 'lede' : '';
 	}
 }
-
-function sharedBlockFields(slice: Slice): BlockType {
-	const {
-		prominence,
-		display_mode: displayMode = 'flow',
-		include_in_excerpt: includeInExcerpt,
-	} = slice.primary;
-
-	return {
-		displayMode,
-		prominence: prominence as BlockType["prominence"],
-		includeInExcerpt: Boolean(includeInExcerpt),
-		type: camelCase(slice.slice_type),
-	};
-}
-
-function heading(slice: Slice): BlockType {
-	const { title1: title, level, subheading } = slice.primary;
-
-	return {
-		title: prismicHelpers.asText(title),
-		level: level || 2,
-		subheading,
-		...sharedBlockFields(slice),
-	};
-}
-
-// --- block types ---
-function figure(slice: Slice): BlockType {
-	const { image, caption, attribution } = slice.primary;
-
-	return {
-		source: image,
-		attribution: attribution?.length > 0 && {
-			markdown: prismicHelpers.asText(attribution),
-		},
-		caption: caption?.length > 0 && {
-			markdown: prismicHelpers.asText(caption)
-		},
-		...sharedBlockFields(slice),
-	};
-}
-
-function imageGallery(slice: Slice): BlockType {
-	const {
-		attribution,
-		caption,
-		column_size: columnSize,
-	} = slice.primary;
-
-	return {
-		attribution: attribution && {
-			markdown: attribution
-		},
-		caption: caption.length > 0 && {
-			markdown: prismicHelpers.asText(caption)
-		},
-		columnSize,
-		images: slice.items.map((item) => ({
-			...item.image,
-			device: item.device || 'None',
-		})),
-		...sharedBlockFields(slice),
-	}
-}
-
-function billboard(slice: Slice): BlockType {
-	const {
-		cover_images_gutter: imagesGutter,
-		title1,
-		subtitle,
-		call_to_action_label: label,
-		call_to_action_link: link,
-		description: prismicText,
-	} = slice.primary;
-
-	const images = slice.items.reduce((result, item) => {
-		const {
-			device = 'None',
-			priority = '1',
-			relative_size: relativeSize,
-			cover_image: source,
-		} = item;
-
-		if ((source as ImageField).url === '') return result;
-
-		result.push({
-			device,
-			priority,
-			relativeSize,
-			source,
-		});
-		return result;
-	}, []);
-
-	return {
-		...sharedBlockFields(slice),
-		images,
-		imagesGutter,
-		cta: {
-			link,
-			label,
-		},
-		description: {
-			prismicText,
-		},
-		displayMode: 'slide',
-		subtitle: prismicHelpers.asText(subtitle),
-		title: prismicHelpers.asText(title1),
-	}
-}
-
-function collage(slice: Slice): BlockType {
-	const {
-		caption,
-		attribution,
-		gutter,
-	} = slice.primary;
-
-	const images = slice.items.map((item) => {
-		const {
-			device = 'None',
-			priority = '1',
-			relative_size: relativeSize,
-			image: source,
-		} = item;
-
-		return {
-			device,
-			priority,
-			relativeSize,
-			source,
-		}
-	});
-
-	return {
-		...sharedBlockFields(slice),
-		gutter,
-		images,
-		attribution: attribution && {
-			markdown: attribution
-		},
-		caption: caption.length > 0 && {
-			markdown: prismicHelpers.asText(caption)
-		},
-	}
-}
-
-function passage(slice: Slice): BlockType {
-	const {
-		structured_text: prismicText,
-		markdown,
-	} = slice.primary;
-
-	return {
-		text: {
-			prismicText,
-			markdown: prismicHelpers.asText(markdown)
-		},
-		...sharedBlockFields(slice),
-	};
-}
-
-function aside(slice: Slice): BlockType {
-	const {
-		structured_text: prismicText,
-		markdown,
-		label,
-	} = slice.primary;
-
-	return {
-		label,
-		text: {
-			prismicText,
-			markdown: prismicHelpers.asText(markdown)
-		},
-		...sharedBlockFields(slice),
-	};
-}
-
-function blockQuote(slice: Slice): BlockType {
-	const {
-		structured_text: prismicText,
-		markdown,
-	} = slice.primary;
-
-	slice.slice_type = 'blockQuote';
-
-	return {
-		text: {
-			prismicText,
-			markdown: prismicHelpers.asText(markdown)
-		},
-		...sharedBlockFields(slice),
-	};
-}
-
-function table(slice: Slice): BlockType {
-	const {
-		csv_file: CSVFile,
-		key_columns: keyColumns,
-		footer,
-	} = slice.primary;
-
-	return {
-		CSVFile: prismicHelpers.asLink(CSVFile),
-		keyColumns,
-		footer,
-		...sharedBlockFields(slice),
-	};
-}
-
-function feed(slice: Slice): BlockType {
-	const {
-		title,
-		subtitle,
-		call_to_action_label: label,
-		call_to_action_link: link,
-		description: prismicText,
-		content_source: contentSource,
-	} = slice.primary;
-
-	return {
-		...sharedBlockFields(slice),
-		cta: {
-			link,
-			label,
-		},
-		contentSource,
-		description: {
-			prismicText,
-		},
-		displayMode: 'slide',
-		subtitle: prismicHelpers.asText(subtitle),
-		title: prismicHelpers.asText(title),
-	}
-}
-
-// functions for each block type
-const blockTypes = {
-	'image_gallery': imageGallery,
-	quote: blockQuote,
-	aside,
-	billboard,
-	collage,
-	feed,
-	figure,
-	heading,
-	passage,
-	table,
-};
 
 // --- build an array of blocks, sorted into sections ---
 const sectionList = body.reduce((result: Array<any>, slice: Slice) => {
@@ -336,7 +84,7 @@ const sectionList = body.reduce((result: Array<any>, slice: Slice) => {
 
 const classList = [
 	'block-list',
-	className
+	className,
 ].join(' ');
 ---
 
@@ -346,7 +94,7 @@ const classList = [
 			? <section id={uid}>
 					{blocks.map((block) => (
 						<Block class={[
-							getBlockClass(block.type),
+							getBlockClass(block.type, block.displayMode),
 							getLedeClass(block),
 						].join(' ')} {block} />
 					))}
@@ -365,15 +113,22 @@ const classList = [
 		padding-block-start: var(--space-wide);
 	}
 
+	/* --- spacing between blocks with different display modes --- */
+	.block-list > :global(.inline + .slide) {
+		margin-block-start: var(--space-xwide);
+	}
+
+	/* --- spacing between different types of blocks --- */
 	.block-list :global(.heading + .text) {
-		padding-top: var(--space-narrow);
+		padding-block-start: var(--space-narrow);
 	}
 
 	/* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
 	.block-list :global(.text + .text) {
-		padding-top: var(--space-medium);
+		padding-block-start: var(--space-medium);
 	}
 
+	/* --- 'lede' (intro copy) styling --- */
 	.lede :global(p:first-child) {
 		font-size: var(--type-scale-delta);
 		font-family: var(--type-font-display);

@@ -39,6 +39,7 @@ const toc = body.map(({ slice_type: type, primary, items }) => {
 		const {
 			call_to_action_label: label,
 			call_to_action_link: link,
+			content_source: contentSource,
 			cover_images_gutter: imagesGutter,
 			description: prismicText,
 			subtitle,
@@ -66,6 +67,7 @@ const toc = body.map(({ slice_type: type, primary, items }) => {
 	}, []);
 
 		return {
+			contentSource,
 			type,
 			images,
 			imagesGutter,
