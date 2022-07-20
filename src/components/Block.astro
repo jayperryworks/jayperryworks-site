@@ -20,13 +20,11 @@ import type { Block } from '@lib/types';
 export interface Props {
 	block: Block;
 	class?: string;
-	displayMode?: string;
 }
 
 const {
 	block,
 	class: className,
-	displayMode = 'flow',
 } = Astro.props as Props;
 
 function getWidth(prominence) {
@@ -41,9 +39,13 @@ function getWidth(prominence) {
 }
 
 const style = `--block-width: var(--content-width-${getWidth(block.prominence)});`;
+
+const displayModeClass = block.displayMode === 'slide'
+	? 'slide border-seam-top'
+	: '';
 ---
 
-<div class={['block', displayMode, className].join(' ')}>
+<div class={['block', displayModeClass, className].join(' ')}>
 	<div class="wrapper" {style}>
 		{block.type === 'aside' && (
 			<!-- aside -->
@@ -119,6 +121,8 @@ const style = `--block-width: var(--content-width-${getWidth(block.prominence)})
 		display: flex;
 		flex-direction: column;
 		flex: 1;
+		margin-inline: auto;
+		max-width: var(--content-width-xxwide);
 		width: 100%;
 	}
 </style>
