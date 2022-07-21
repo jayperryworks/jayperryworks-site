@@ -38,10 +38,10 @@ let introLink = await prismicHelpers.asLink(response.data.intro_link, linkResolv
 const toc = body.map(({ slice_type: type, primary, items }) => {
 		const {
 			call_to_action_label: label,
-			call_to_action_link: link,
 			content_source: contentSource,
 			cover_images_gutter: imagesGutter,
 			description: prismicText,
+			link,
 			subtitle,
 			title,
 			title1,

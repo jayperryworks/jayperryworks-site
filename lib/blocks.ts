@@ -45,7 +45,7 @@ function billboard(slice: Slice): BlockType {
 		title1,
 		subtitle,
 		call_to_action_label: label,
-		call_to_action_link: link,
+		link,
 		description: prismicText,
 	} = slice.primary;
 

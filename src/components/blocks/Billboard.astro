@@ -19,13 +19,13 @@ import Passage from '@components/blocks/Passage.astro';
 import Number from '@components/tableOfContents/Number.astro';
 
 // types
-import type { RichTextField } from '@prismicio/types';
+import type { RichTextField, LinkField } from '@prismicio/types';
 import type { CollageItem } from '@components/blocks/Collage.astro';
 
 export interface Props {
 	title: string,
 	cta: {
-		link: string,
+		link: LinkField,
 		label: string,
 	},
 	images?: CollageItem[],
