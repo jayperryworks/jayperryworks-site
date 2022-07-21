@@ -17,12 +17,14 @@ export interface Props {
 	body: Slice[];
 	showLedeStyle?: boolean;
 	class?: string;
+	numbered?: boolean;
 }
 
 const {
 	body,
-	showLedeStyle = false,
 	class: className = '',
+	numbered = false,
+	showLedeStyle = false,
 } = Astro.props as Props;
 
 // assign a class to certain block types to determine spacing between sibling blocks
@@ -63,6 +65,7 @@ const sectionList = body.reduce((result: Array<any>, slice: Slice) => {
 	if (type === 'sectionStart') {
 		result.push({
 			uid: primary.uid,
+			numbered: (primary.numbered || false),
 			blocks: [],
 		});
 		return result;
@@ -76,8 +79,11 @@ const sectionList = body.reduce((result: Array<any>, slice: Slice) => {
 	// add the block object to the last 'section' array item
 	// if it matches one of the available types
 	if (blockTypes[type]) {
+		const section = result[result.length - 1];
 		const block = blockTypes[type](slice);
-		result[result.length - 1].blocks.push(block);
+		// if the blocklist or section is marked as numbered, add a number prop to the block
+		block.number = (numbered || section.numbered) && (section.blocks.length + 1);
+		section.blocks.push(block);
 	}
 	return result;
 }, []);
@@ -93,17 +99,23 @@ const classList = [
 		uid
 			? <section id={uid}>
 					{blocks.map((block) => (
-						<Block class={[
-							getBlockClass(block.type, block.displayMode),
-							getLedeClass(block),
-						].join(' ')} {block} />
+						<Block
+							class={[
+								getBlockClass(block.type, block.displayMode),
+								getLedeClass(block),
+							].join(' ')}
+							{block}
+						/>
 					))}
 				</section>
 			: blocks.map((block) => (
-				<Block class={[
-					getBlockClass(block.type),
-					getLedeClass(block),
-				].join(' ')} {block} />
+				<Block
+					class={[
+						getBlockClass(block.type, block.displayMode),
+						getLedeClass(block),
+					].join(' ')}
+					{block}
+				/>
 			))
 	))}
 </div>

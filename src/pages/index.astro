@@ -13,16 +13,12 @@ import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
 // components
+import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
-import Icon from '@components/elements/Icon.astro';
 import Heading from '@components/blocks/Heading.astro';
-import Passage from '@components/blocks/Passage.astro';
-import Billboard from '@components/blocks/Billboard.astro';
-import Feed from '@components/blocks/Feed.astro';
+import Icon from '@components/elements/Icon.astro';
 import Layout from '@layouts/BaseLayout.astro';
-
-// types
-import type { ImageField } from '@prismicio/types';
+import Passage from '@components/blocks/Passage.astro';
 
 // fetch content
 const response = await prismic.getSingle('homepage');
@@ -34,54 +30,6 @@ const {
 } = response.data;
 
 let introLink = await prismicHelpers.asLink(response.data.intro_link, linkResolver);
-
-const toc = body.map(({ slice_type: type, primary, items }) => {
-		const {
-			call_to_action_label: label,
-			content_source: contentSource,
-			cover_images_gutter: imagesGutter,
-			description: prismicText,
-			link,
-			subtitle,
-			title,
-			title1,
-		} = primary;
-
-		const images = (type === 'billboard') && items.reduce((result, item) => {
-		const {
-			device = 'None',
-			priority = '1',
-			relative_size: relativeSize,
-			cover_image: source,
-		} = item;
-
-		if ((source as ImageField).url === '') return result;
-
-		result.push({
-			device,
-			priority,
-			relativeSize,
-			source,
-		});
-		return result;
-	}, []);
-
-		return {
-			contentSource,
-			type,
-			images,
-			imagesGutter,
-			title: prismicHelpers.asText(title || title1),
-			subtitle: prismicHelpers.asText(subtitle),
-			cta: {
-				link,
-				label,
-			},
-			description: {
-				prismicText,
-			},
-		};
-	});
 ---
 
 <Layout path="home" headerOverlay>
@@ -119,29 +67,7 @@ const toc = body.map(({ slice_type: type, primary, items }) => {
 	</header>
 
 	<!-- TOC panels -->
-	<ul
-		class="toc"
-		id="toc"
-	>
-		{toc.map((item, index) => (
-			<li class="border-seam-top">
-				<div class="wrapper">
-					{item.type === 'billboard' && (
-						<Billboard
-							number={index + 1}
-							{...item}
-						/>
-					)}
-					{item.type === 'feed' && (
-						<Feed
-							number={index + 1}
-							{...item}
-						/>
-					)}
-				</div>
-			</li>
-		))}
-	</ul>
+	<BlockList {body} numbered />
 </Layout>
 
 <style>
