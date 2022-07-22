@@ -26,10 +26,11 @@ const response = await prismic.getSingle('homepage');
 const {
 	headline,
 	intro,
+	intro_link: link,
 	body,
 } = response.data;
 
-let introLink = await prismicHelpers.asLink(response.data.intro_link, linkResolver);
+const introLink = await prismicHelpers.asLink(link, linkResolver);
 ---
 
 <Layout path="home" headerOverlay>
