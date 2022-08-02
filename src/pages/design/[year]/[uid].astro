@@ -2,6 +2,7 @@
 // assets
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/contentWidth.css';
+import '@styles/utilities/borders.css';
 
 // components
 import BlockList from '@components/BlockList.astro';
@@ -10,7 +11,6 @@ import Layout from '@layouts/BaseLayout.astro';
 import ReadNextLink from '@components/elements/ReadNextLink.astro';
 
 // utilities
-import { format } from 'date-fns';
 import { designProject as permalink } from '@lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
@@ -89,25 +89,50 @@ const {
 	<article>
 		<header>
 			<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
+			{client && (
+				<Heading subheading level={3}>{client}</Heading>
+			)}
 		</header>
 
 		<BlockList {body} showLedeStyle />
 	</article>
 
 	{next && (
-		<nav>
-			<ReadNextLink
-				eyebrow="Next case study:"
-				title={next.title && prismicHelpers.asText(next.title)}
-			/>
+		<nav class="border-seam-top">
+			<div class="nav-wrapper">
+				<ReadNextLink
+					eyebrow="Next case study:"
+					title={next.title && prismicHelpers.asText(next.title)}
+				/>
+			</div>
 		</nav>
 	)}
 </Layout>
 
 <style>
+	article {
+		padding-block-end: var(--space-xwide);
+	}
+
 	header {
 		max-width: var(--content-width-xwide);
 		margin-inline: auto;
+		padding-block-start: var(--space-wide);
+		padding-block-end: var(--space-xwide);
+		text-align: center;
+	}
+
+	header > * + * {
+		padding-block-start: var(--space-xxnarrow);
+	}
+
+	nav {
 		padding-block: var(--space-xwide);
+		padding-inline: var(--space-outside);
+	}
+
+	.nav-wrapper {
+		margin-inline: auto;
+		max-width: var(--content-width-default);
 	}
 </style>
