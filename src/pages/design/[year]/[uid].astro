@@ -1,0 +1,82 @@
+---
+// components
+import BlockList from '@components/BlockList.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Layout from '@layouts/BaseLayout.astro';
+import ReadNextLink from '@components/elements/ReadNextLink.astro';
+
+// utilities
+import { format } from 'date-fns';
+import { designProject as permalink } from '@lib/routes';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+
+// types
+import type { Slice, TitleField, LinkField, Tags, DateField, RelationField } from '@prismicio/types';
+
+export interface Props {
+	agency: string;
+	body: Slice[];
+	client: string;
+	role: string;
+	startDate: DateField;
+	title: TitleField;
+	collaborators?: RelationField[];
+	contributors?: RelationField[];
+	endDate?: DateField;
+	subtitle?: TitleField;
+}
+
+export async function getStaticPaths() {
+	const projects = await prismic.getAllByType('design_project', {
+		orderings: {
+ 			field: 'my.design_project.start_date',
+ 			direction: 'desc',
+ 		},
+	});
+
+	return projects.map(({ uid, data }, index) => {
+		const startDate = prismicHelpers.asDate(data.start_date);
+		const endDate = prismicHelpers.asDate(data.end_date);
+		const nextPost = projects[index + 1];
+
+		return {
+			params: {
+				year: format(startDate, 'yyyy'),
+				uid,
+			},
+			props: {
+				...data,
+				startDate,
+				endDate,
+				next: nextPost && {
+					title: nextPost.data.title,
+					subtitle: nextPost.data.subtitle,
+					path: permalink(nextPost),
+				},
+			},
+		};
+	});
+}
+
+const {
+	agency,
+	body,
+	client,
+	role,
+	startDate,
+	title,
+	collaborators,
+	contributors,
+	endDate,
+	subtitle,
+} = Astro.props as Props;
+---
+
+<Layout
+	pageTitle={prismicHelpers.asText(title)}
+	path="design"
+>
+	<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
+</Layout>
+
