@@ -12,18 +12,23 @@ import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
 // types
-import type { Slice, TitleField, LinkField, Tags, DateField, RelationField } from '@prismicio/types';
+import type {
+	NumberField,
+	RelationField,
+	Slice,
+	TitleField,
+} from '@prismicio/types';
 
 export interface Props {
 	agency: string;
 	body: Slice[];
 	client: string;
 	role: string;
-	startDate: DateField;
+	startDate: NumberField;
 	title: TitleField;
 	collaborators?: RelationField[];
 	contributors?: RelationField[];
-	endDate?: DateField;
+	endDate?: NumberField;
 	subtitle?: TitleField;
 }
 
@@ -36,19 +41,15 @@ export async function getStaticPaths() {
 	});
 
 	return projects.map(({ uid, data }, index) => {
-		const startDate = prismicHelpers.asDate(data.start_date);
-		const endDate = prismicHelpers.asDate(data.end_date);
 		const nextPost = projects[index + 1];
 
 		return {
 			params: {
-				year: format(startDate, 'yyyy'),
+				year: data.start_date.toString(),
 				uid,
 			},
 			props: {
 				...data,
-				startDate,
-				endDate,
 				next: nextPost && {
 					title: nextPost.data.title,
 					subtitle: nextPost.data.subtitle,
