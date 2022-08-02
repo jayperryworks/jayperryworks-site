@@ -3,12 +3,12 @@ import markdown from 'markdown-it';
 import footnotes from 'markdown-it-footnote';
 
 export default function render(
-	content,
+	content: string,
 	{
 		inline = false,
 		html = false,
 	} = {},
-) {
+): string {
 	// markdown-it options
 	const renderOptions = {
 		typographer: true,

@@ -27,6 +27,8 @@ const {
 	inline = false,
 } = Astro.props as Props;
 
+console.log('markdown:', markdown)
+
 // Customize the output of Prismic text
 function htmlSerializer(type, element, content, children): string {
 	if (element.data?.label === 'note') {
@@ -49,7 +51,9 @@ let renderedText;
 if (prismicText) {
 	renderedText = prismicHelpers.asHTML(prismicText, null, htmlSerializer);
 }
-if (markdown) renderedText = renderMarkdown(markdown, { inline });
+if (markdown) {
+	renderedText = renderMarkdown(markdown, { inline });
+}
 ---
 
 <Fragment set:html={renderedText} />

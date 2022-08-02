@@ -23,13 +23,15 @@ import Layout from '@layouts/BaseLayout.astro';
 import ReadNextLink from '@components/elements/ReadNextLink.astro';
 
 // types
-import type { Slice, TitleField, LinkField, Tags, DateField } from '@prismicio/types';
+import type {
+	Slice,
+	TitleField,
+	LinkField,
+	Tags,
+	DateField
+} from '@prismicio/types';
 
-export type PaginationLink = {
-	path: string;
-	title: TitleField;
-	subtitle?: TitleField;
-};
+import type { PaginationLink } from '@lib/types';
 
 export interface Props {
 	body: Array<Slice>;

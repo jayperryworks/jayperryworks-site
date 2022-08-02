@@ -1,4 +1,7 @@
-import { RichTextField } from '@prismicio/types';
+import {
+	RichTextField,
+	TitleField,
+} from '@prismicio/types';
 
 export type TypeScale = 'alpha' | 'beta' | 'gamma' | 'delta' | 'epsilon' | 'zeta';
 export type SpaceScale = 'xxnarrow' | 'xnarrow' | 'narrow' | 'medium' | 'wide' | 'xwide';
@@ -7,6 +10,12 @@ export type Prominence = 'Small' | 'Medium' | 'Large';
 export type GallerySize = 'small' | 'medium' | 'large';
 export type ImageFit = 'default' | 'contain' | 'cover';
 export type Device = 'None' | 'Phone' | 'Tablet (horizontal)' | 'Tablet (vertical)';
+
+export type PaginationLink = {
+	path: string;
+	title: TitleField;
+	subtitle?: TitleField;
+};
 
 export interface Block {
 	type: string;
