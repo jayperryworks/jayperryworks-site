@@ -27,8 +27,6 @@ const {
 	inline = false,
 } = Astro.props as Props;
 
-console.log('markdown:', markdown)
-
 // Customize the output of Prismic text
 function htmlSerializer(type, element, content, children): string {
 	if (element.data?.label === 'note') {

@@ -6,6 +6,7 @@ import * as prismicHelpers from '@prismicio/helpers';
 import type { Block as BlockType } from '@lib/types';
 import type { Slice, ImageField, RichTextField } from '@prismicio/types';
 
+// --- block fields ---
 function sharedBlockFields(slice: Slice): BlockType {
 	const {
 		prominence,
@@ -21,6 +22,14 @@ function sharedBlockFields(slice: Slice): BlockType {
 	};
 }
 
+function markdownText(text: RichTextField): string {
+	if (text?.length > 0) {
+		return prismicHelpers.asText(text);
+	}
+
+	return undefined;
+}
+
 // --- block types ---
 function aside(slice: Slice): BlockType {
 	const {
@@ -33,7 +42,7 @@ function aside(slice: Slice): BlockType {
 		label,
 		text: {
 			prismicText,
-			markdown: prismicHelpers.asText(markdown),
+			markdown: markdownText(markdown as RichTextField),
 		},
 		...sharedBlockFields(slice),
 	};
@@ -94,7 +103,7 @@ function blockQuote(slice: Slice): BlockType {
 	return {
 		text: {
 			prismicText,
-			markdown: prismicHelpers.asText(markdown),
+			markdown: markdownText(markdown as RichTextField),
 		},
 		...sharedBlockFields(slice),
 	};
@@ -127,12 +136,8 @@ function collage(slice: Slice): BlockType {
 		...sharedBlockFields(slice),
 		gutter,
 		images,
-		attribution: attribution && {
-			markdown: attribution,
-		},
-		caption: (caption as RichTextField).length > 0 && {
-			markdown: prismicHelpers.asText(caption),
-		},
+		attribution: markdownText(attribution as RichTextField),
+		caption: markdownText(caption as RichTextField),
 	};
 }
 
@@ -167,12 +172,8 @@ function figure(slice: Slice): BlockType {
 
 	return {
 		source: image,
-		attribution: attribution?.length > 0 && {
-			markdown: prismicHelpers.asText(attribution),
-		},
-		caption: caption?.length > 0 && {
-			markdown: prismicHelpers.asText(caption),
-		},
+		attribution: markdownText(attribution as RichTextField),
+		caption: markdownText(caption as RichTextField),
 		...sharedBlockFields(slice),
 	};
 }
@@ -181,7 +182,7 @@ function heading(slice: Slice): BlockType {
 	const { title1: title, level, subheading } = slice.primary;
 
 	return {
-		title: prismicHelpers.asText(title),
+		title: prismicHelpers.asText(title as RichTextField),
 		level: level || 2,
 		subheading,
 		...sharedBlockFields(slice),
@@ -196,12 +197,8 @@ function imageGallery(slice: Slice): BlockType {
 	} = slice.primary;
 
 	return {
-		attribution: attribution && {
-			markdown: attribution,
-		},
-		caption: caption.length > 0 && {
-			markdown: prismicHelpers.asText(caption),
-		},
+		attribution: markdownText(attribution as RichTextField),
+		caption: markdownText(caption as RichTextField),
 		columnSize,
 		images: slice.items.map((item) => ({
 			...item.image,
@@ -220,7 +217,7 @@ function passage(slice: Slice): BlockType {
 	return {
 		text: {
 			prismicText,
-			markdown: prismicHelpers.asText(markdown),
+			markdown: markdownText(markdown as RichTextField),
 		},
 		...sharedBlockFields(slice),
 	};

@@ -94,12 +94,14 @@ const {
 		<BlockList {body} showLedeStyle />
 	</article>
 
-	<nav>
-		<ReadNextLink
-			eyebrow="Next case study:"
-			title={prismicHelpers.asText(next.title)}
-		/>
-	</nav>
+	{next && (
+		<nav>
+			<ReadNextLink
+				eyebrow="Next case study:"
+				title={next.title && prismicHelpers.asText(next.title)}
+			/>
+		</nav>
+	)}
 </Layout>
 
 <style>
