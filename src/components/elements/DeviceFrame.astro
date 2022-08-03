@@ -1,6 +1,11 @@
 ---
 	// Add a frame around content that looks like a mobile device
 	// -> Phone, Tablet (horizontal and vertical)
+
+	// assets
+	import '@styles/tokens/color.css';
+
+	// components
 	import Image from '@components/elements/Image.astro';
 
 	// types
@@ -61,6 +66,7 @@
 			overflow: hidden;
 			position: relative;
 			padding: var(--bezel-width-y) var(--bezel-width-x);
+			box-shadow: 0 0.125em 0.25em var(--color-shadow);
 		}
 
 		@media screen and (min-width: 40em) {

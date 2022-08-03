@@ -3,8 +3,16 @@ import { camelCase } from 'change-case';
 import * as prismicHelpers from '@prismicio/helpers';
 
 // types
-import type { Block as BlockType } from '@lib/types';
-import type { Slice, ImageField, RichTextField } from '@prismicio/types';
+import type {
+	Block as BlockType,
+	Device,
+} from '@lib/types';
+
+import type {
+	Slice,
+	ImageField,
+	RichTextField,
+} from '@prismicio/types';
 
 // --- block fields ---
 function sharedBlockFields(slice: Slice): BlockType {
@@ -25,6 +33,14 @@ function sharedBlockFields(slice: Slice): BlockType {
 function markdownText(text: RichTextField): string {
 	if (text?.length > 0) {
 		return prismicHelpers.asText(text);
+	}
+
+	return undefined;
+}
+
+function gutterSize(size: string): string {
+	if (size) {
+		return size.toLowerCase();
 	}
 
 	return undefined;
@@ -134,10 +150,10 @@ function collage(slice: Slice): BlockType {
 
 	return {
 		...sharedBlockFields(slice),
-		gutter,
 		images,
 		attribution: markdownText(attribution as RichTextField),
 		caption: markdownText(caption as RichTextField),
+		gutter: gutterSize(gutter as string),
 	};
 }
 
@@ -168,12 +184,18 @@ function feed(slice: Slice): BlockType {
 }
 
 function figure(slice: Slice): BlockType {
-	const { image, caption, attribution } = slice.primary;
+	const {
+		image,
+		caption,
+		attribution,
+		device = 'None',
+	} = slice.primary;
 
 	return {
 		source: image,
 		attribution: markdownText(attribution as RichTextField),
 		caption: markdownText(caption as RichTextField),
+		device: device as Device,
 		...sharedBlockFields(slice),
 	};
 }
@@ -194,12 +216,14 @@ function imageGallery(slice: Slice): BlockType {
 		attribution,
 		caption,
 		column_size: columnSize,
+		gutter,
 	} = slice.primary;
 
 	return {
 		attribution: markdownText(attribution as RichTextField),
 		caption: markdownText(caption as RichTextField),
 		columnSize,
+		gutter: gutterSize(gutter as string),
 		images: slice.items.map((item) => ({
 			...item.image,
 			device: item.device || 'None',
