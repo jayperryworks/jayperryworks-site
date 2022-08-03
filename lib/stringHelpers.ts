@@ -18,18 +18,22 @@ type arrayToSentenceOptions = {
 };
 
 function arrayToSentence(
-	array: Array<string>,
+	array: string[],
 	{ period = true }: arrayToSentenceOptions,
 ): string {
 	// Adjust the case for each string
-	return array.reduce((result: Array<string>, string: string, index: number) => {
+	return array.reduce((
+		result: string[],
+		string: string,
+		index: number,
+	) => {
 		if (index === 0) {
 			result.push(sentenceCase(string));
 			return result;
 		}
 
 		if (index === array.length - 1) {
-			// and prepend 'and' to the last item
+			// prepend 'and' to the last item
 			result.push(`and ${string.toLowerCase()}${period ? '.' : ''}`);
 			return result;
 		}
@@ -39,9 +43,10 @@ function arrayToSentence(
 	}, []).join(array.length > 2 ? ', ' : ' ');
 }
 
+// add a non-breaking space between the last two words of a string
 function removeWidows(string: string): string {
 	const lastIndex = string.lastIndexOf(' ');
-	return `${string.substring(0, lastIndex)}&nbsp${string.substring(lastIndex + 1)}`;
+	return `${string.substring(0, lastIndex)}&nbsp;${string.substring(lastIndex + 1)}`;
 }
 
 export {

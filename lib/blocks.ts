@@ -9,12 +9,42 @@ import type {
 } from '@lib/types';
 
 import type {
-	Slice,
 	ImageField,
+	LinkField,
 	RichTextField,
+	SelectField,
+	Slice,
+	TitleField,
 } from '@prismicio/types';
 
+import { removeWidows } from './stringHelpers.ts';
+
 // --- block fields ---
+function headingText(text: TitleField): string {
+	if (prismicHelpers.isFilled.title(text)) {
+		return removeWidows(prismicHelpers.asText(text));
+	}
+
+	return undefined;
+}
+
+function gutterSize(size: SelectField): string {
+	if (prismicHelpers.isFilled.select(size)) {
+		console.log('gutter', size);
+		return size.toLowerCase();
+	}
+
+	return undefined;
+}
+
+function markdownText(text: RichTextField): string {
+	if (prismicHelpers.isFilled.richText(text)) {
+		return prismicHelpers.asText(text);
+	}
+
+	return undefined;
+}
+
 function sharedBlockFields(slice: Slice): BlockType {
 	const {
 		prominence,
@@ -28,22 +58,6 @@ function sharedBlockFields(slice: Slice): BlockType {
 		includeInExcerpt: Boolean(includeInExcerpt),
 		type: camelCase(slice.slice_type),
 	};
-}
-
-function markdownText(text: RichTextField): string {
-	if (text?.length > 0) {
-		return prismicHelpers.asText(text);
-	}
-
-	return undefined;
-}
-
-function gutterSize(size: string): string {
-	if (size) {
-		return size.toLowerCase();
-	}
-
-	return undefined;
 }
 
 // --- block types ---
@@ -105,8 +119,8 @@ function billboard(slice: Slice): BlockType {
 			prismicText,
 		},
 		displayMode: 'slide',
-		subtitle: prismicHelpers.asText(subtitle),
-		title: prismicHelpers.asText(title1),
+		subtitle: headingText(subtitle as TitleField),
+		title: headingText(title1 as TitleField),
 	};
 }
 
@@ -153,7 +167,7 @@ function collage(slice: Slice): BlockType {
 		images,
 		attribution: markdownText(attribution as RichTextField),
 		caption: markdownText(caption as RichTextField),
-		gutter: gutterSize(gutter as string),
+		gutter: gutterSize(gutter as SelectField),
 	};
 }
 
@@ -178,8 +192,8 @@ function feed(slice: Slice): BlockType {
 			prismicText,
 		},
 		displayMode: 'slide',
-		subtitle: prismicHelpers.asText(subtitle),
-		title: prismicHelpers.asText(title),
+		subtitle: headingText(subtitle as TitleField),
+		title: headingText(title as TitleField),
 	};
 }
 
@@ -201,13 +215,17 @@ function figure(slice: Slice): BlockType {
 }
 
 function heading(slice: Slice): BlockType {
-	const { title1: title, level, subheading } = slice.primary;
+	const {
+		level,
+		subheading,
+		title1,
+	} = slice.primary;
 
 	return {
-		title: prismicHelpers.asText(title as RichTextField),
-		level: level || 2,
-		subheading,
 		...sharedBlockFields(slice),
+		level: level || 2,
+		subheading: headingText(subheading as TitleField),
+		title: headingText(title1 as TitleField),
 	};
 }
 
@@ -255,7 +273,7 @@ function table(slice: Slice): BlockType {
 	} = slice.primary;
 
 	return {
-		CSVFile: prismicHelpers.asLink(CSVFile),
+		CSVFile: prismicHelpers.asLink(CSVFile as LinkField),
 		keyColumns,
 		footer,
 		...sharedBlockFields(slice),
