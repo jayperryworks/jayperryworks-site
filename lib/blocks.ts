@@ -17,12 +17,12 @@ import type {
 	TitleField,
 } from '@prismicio/types';
 
-import { removeWidows } from './stringHelpers.ts';
-
 // --- block fields ---
 function headingText(text: TitleField): string {
 	if (prismicHelpers.isFilled.title(text)) {
-		return removeWidows(prismicHelpers.asText(text));
+		// TODO: would like to use removeWidows() here but can't figure out how to get it to render as HTML instead of being escaped.
+		// maybe the solution is asHTML() with a custom serializer that adds &nbsp;
+		return prismicHelpers.asText(text);
 	}
 
 	return undefined;
@@ -30,7 +30,6 @@ function headingText(text: TitleField): string {
 
 function gutterSize(size: SelectField): string {
 	if (prismicHelpers.isFilled.select(size)) {
-		console.log('gutter', size);
 		return size.toLowerCase();
 	}
 

@@ -45,8 +45,15 @@ function arrayToSentence(
 
 // add a non-breaking space between the last two words of a string
 function removeWidows(string: string): string {
-	const lastIndex = string.lastIndexOf(' ');
-	return `${string.substring(0, lastIndex)}&nbsp;${string.substring(lastIndex + 1)}`;
+	const words = string.split(' ');
+
+	if (words.length > 2) {
+		return words.reduce((result, word, index) => (
+			result + (index < words.length - 1 ? ' ' : '&nbsp;') + word
+		));
+	}
+
+	return string;
 }
 
 export {
