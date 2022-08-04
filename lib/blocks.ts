@@ -20,11 +20,7 @@ import type {
 // --- block fields ---
 function headingText(text: TitleField): string {
 	if (prismicHelpers.isFilled.title(text)) {
-		/* eslint-disable max-len */
-		// TODO: would like to use removeWidows() here but can't figure out how to get it to render as HTML instead of being escaped.
-		// maybe the solution is asHTML() with a custom serializer that adds &nbsp;
 		return prismicHelpers.asText(text);
-		/* eslint-enable max-len */
 	}
 
 	return undefined;
@@ -120,7 +116,7 @@ function billboard(slice: Slice): BlockType {
 			prismicText,
 		},
 		displayMode: 'slide',
-		subtitle: headingText(subtitle as TitleField),
+		subtitle: subtitle as TitleField,
 		title: headingText(title1 as TitleField),
 	};
 }
@@ -217,16 +213,16 @@ function figure(slice: Slice): BlockType {
 
 function heading(slice: Slice): BlockType {
 	const {
-		level,
+		level = 2,
 		subheading,
 		title1: text,
 	} = slice.primary;
 
 	return {
 		...sharedBlockFields(slice),
+		level,
+		subheading,
 		text,
-		level: level || 2,
-		subheading: headingText(subheading as TitleField),
 	};
 }
 
@@ -244,7 +240,7 @@ function imageGallery(slice: Slice): BlockType {
 		columnSize,
 		gutter: gutterSize(gutter as string),
 		images: slice.items.map((item) => ({
-			...item.image,
+			...item.image as ImageField,
 			device: item.device || 'None',
 		})),
 		...sharedBlockFields(slice),

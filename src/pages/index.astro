@@ -38,7 +38,10 @@ const introLink = await prismicHelpers.asLink(link, linkResolver);
 	<header>
 		<div class="intro">
 			<div class="blurb">
-				<Heading level={1}>{prismicHelpers.asText(headline)}</Heading>
+				<Heading
+					level={1}
+					text={headline}
+				/>
 				<Passage
 					text={{ prismicText: intro }}
 					typeSize="delta"

@@ -9,6 +9,7 @@ import * as prismicHelpers from '@prismicio/helpers';
 // components
 import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
+import Heading from '@components/blocks/Heading.astro';
 
 const response = await prismic.getByUID('page', 'about');
 
@@ -20,7 +21,11 @@ const { title, body } = response.data;
 	path="about"
 >
 	<article>
-		<h1 class="title">{prismicHelpers.asText(title)}</h1>
+		<Heading
+			level={1}
+			class="title"
+			text={title}
+		/>
 		<BlockList {body} showLedeStyle />
 	</article>
 </Layout>
