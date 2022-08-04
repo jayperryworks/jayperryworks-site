@@ -20,9 +20,11 @@ import type {
 // --- block fields ---
 function headingText(text: TitleField): string {
 	if (prismicHelpers.isFilled.title(text)) {
+		/* eslint-disable max-len */
 		// TODO: would like to use removeWidows() here but can't figure out how to get it to render as HTML instead of being escaped.
 		// maybe the solution is asHTML() with a custom serializer that adds &nbsp;
 		return prismicHelpers.asText(text);
+		/* eslint-enable max-len */
 	}
 
 	return undefined;
@@ -217,14 +219,14 @@ function heading(slice: Slice): BlockType {
 	const {
 		level,
 		subheading,
-		title1,
+		title1: text,
 	} = slice.primary;
 
 	return {
 		...sharedBlockFields(slice),
+		text,
 		level: level || 2,
 		subheading: headingText(subheading as TitleField),
-		title: headingText(title1 as TitleField),
 	};
 }
 

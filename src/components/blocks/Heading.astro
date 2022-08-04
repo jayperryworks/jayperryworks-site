@@ -4,18 +4,24 @@
 // styles
 import '@styles/utilities/type.css';
 import { removeWidows } from '@lib/stringHelpers';
+import * as prismicHelpers from '@prismicio/helpers';
+import { linkResolver } from '@lib/routes';
 
 // types
+import { TitleField } from '@prismicio/types';
+
 export interface Props {
 	class?: string,
 	level?: number,
 	subheading?: boolean,
+	text?: TitleField,
 }
 
 const {
 	class: className = '',
 	level = 2,
 	subheading = false,
+	text,
 } = Astro.props as Props;
 
 const levels = ['alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta'];
@@ -27,6 +33,21 @@ const classList = [
 	className,
 ].join(' ');
 
+function htmlSerializer(type, element, content, children): string {
+	if (type.includes('heading')) {
+		console.log(removeWidows(element.text));
+		return `
+			<${tag} class="heading ${classList}">
+				${removeWidows(element.text)}
+			</${tag}>
+		`;
+	}
+}
+
+if (text) {
+	html = prismicHelpers.asHTML(text, null, htmlSerializer);
+}
+
 // if the default slot has a value, render a heading tag around it
 // -> render h[level] by default, and p.level if subheading is true
 if (Astro.slots.has('default')) {
@@ -36,6 +57,7 @@ if (Astro.slots.has('default')) {
 		</${tag}>
 	`;
 }
+
 ---
 
 <Fragment set:html={html}></Fragment>

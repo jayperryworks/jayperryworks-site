@@ -47,8 +47,12 @@ function arrayToSentence(
 function removeWidows(string: string): string {
 	const words = string.split(' ');
 
-	if (words.length > 2) {
-		return words.reduce((result, word, index) => (
+	if (words.length > 3) {
+		return words.reduce((
+			result: string,
+			word: string,
+			index: number,
+		): string => (
 			result + (index < words.length - 1 ? ' ' : '&nbsp;') + word
 		));
 	}
