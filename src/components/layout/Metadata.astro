@@ -1,0 +1,104 @@
+---
+// types
+import { SpaceScale } from '@lib/types';
+
+export type DataItem = {
+	label: string,
+	value: string[],
+};
+
+export interface Props {
+	data: DataItem[],
+	class?: string,
+	columnWidth?: number,
+	gutter?: SpaceScale,
+}
+
+const {
+	data,
+	class: className,
+	columnWidth = 18,
+	gutter = 'narrow',
+} = Astro.props as Props;
+---
+
+<dl
+	class={className}
+	style={`
+		--gutter: var(--space-${gutter});
+		--col-size: ${columnWidth}rem;
+	`}
+>
+  {data.map((item) => (
+	  <div class="group">
+			<dt class="item label | type-font-accent type-weight-light">
+				{item.label}
+			</dt>
+			{item.value.map((valueItem) => (
+				<dd class="item | type-font-accent type-weight-light">
+					{valueItem}
+				</dd>
+			))}
+		</div>
+	))}
+</dl>
+
+<style>
+	dl {
+	  --type-size: var(--type-scale-zeta);
+	  list-style: none;
+	  display: block;
+	}
+
+	.group {
+	  display: block;
+	  vertical-align: top;
+	}
+
+	.group + .group {
+		margin-top: 1em;
+		margin-top: var(--gutter);
+	}
+
+	.item {
+	  display: block;
+	  margin-left: 0; /* reset dt/dd default indent */
+		font-size: var(--type-size);
+	}
+
+	/* trick from https://codepen.io/ShadowShahriar/pen/LYyvVjo */
+	.item.series {
+		--separator: ',';
+		display: inline;
+		padding: 0;
+		margin: 0;
+	}
+
+	.item.series > span::after {
+		white-space: nowrap;
+		content: var(--separator) ' ';
+		font-size: var(--type-size);
+	}
+
+	.item.series:last-of-type > span::after {
+		content: '';
+	}
+
+	.label::after {
+	  content: ':';
+	}
+
+	@supports (display: grid) {
+		@media screen and (min-width: 25em) {
+			dl {
+			  display: grid;
+			  grid-template-columns: repeat(auto-fit, minmax(var(--col-size), 1fr));
+			  grid-gap: var(--gutter);
+			}
+
+		  .group + .group {
+		    margin-top: 0;
+		  }
+		}
+	}
+</style>
