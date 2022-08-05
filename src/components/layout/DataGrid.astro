@@ -1,4 +1,13 @@
 ---
+// Data Grid component
+// Present data (key-value pairs or short strings) in a flowing grid layout
+
+// assets
+import '@styles/tokens/color.css';
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+import '@styles/utilities/type.css';
+
 // types
 import { SpaceScale } from '@lib/types';
 
@@ -31,12 +40,12 @@ const {
 >
   {data.map((item) => (
 	  <div class="group">
-			<dt class="item label | type-font-accent type-weight-light">
-				{item.label}
+			<dt class="item label">
+				<span class="type-font-accent type-weight-light">{item.label}</span>
 			</dt>
 			{item.value.map((valueItem) => (
-				<dd class="item | type-font-accent type-weight-light">
-					{valueItem}
+				<dd class={['item', item.value.length > 1 && 'series'].join(' ')}>
+					<span class="type-font-accent type-weight-light">{valueItem}</span>
 				</dd>
 			))}
 		</div>
@@ -52,7 +61,6 @@ const {
 
 	.group {
 	  display: block;
-	  vertical-align: top;
 	}
 
 	.group + .group {
@@ -84,21 +92,23 @@ const {
 		content: '';
 	}
 
-	.label::after {
+	.item.label {
+		color: var(--color-secondary);
+	}
+
+	.item.label::after {
 	  content: ':';
 	}
 
-	@supports (display: grid) {
-		@media screen and (min-width: 25em) {
-			dl {
-			  display: grid;
-			  grid-template-columns: repeat(auto-fit, minmax(var(--col-size), 1fr));
-			  grid-gap: var(--gutter);
-			}
+	@media screen and (min-width: 25em) {
+		dl {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(var(--col-size), 1fr));
+			grid-gap: var(--gutter);
+		}
 
-		  .group + .group {
-		    margin-top: 0;
-		  }
+		.group + .group {
+			margin-top: 0;
 		}
 	}
 </style>
