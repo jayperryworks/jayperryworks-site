@@ -8,6 +8,8 @@ import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 import '@styles/utilities/type.css';
 
+import { titleCase } from '@lib/stringHelpers';
+
 // types
 import { SpaceScale } from '@lib/types';
 
@@ -43,9 +45,9 @@ const {
 			<dt class="item label">
 				<span class="type-font-accent type-weight-light">{item.label}</span>
 			</dt>
-			{item.value.map((valueItem) => (
+			{item.value.map((valueItem, index) => (
 				<dd class={['item', item.value.length > 1 && 'series'].join(' ')}>
-					<span class="type-font-accent type-weight-light">{valueItem}</span>
+					<span class="type-font-accent type-weight-light">{index === 0 ? (titleCase(valueItem)) : valueItem.toLowerCase()}</span>
 				</dd>
 			))}
 		</div>
