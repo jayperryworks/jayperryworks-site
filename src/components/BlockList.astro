@@ -28,7 +28,7 @@ const {
 } = Astro.props as Props;
 
 // assign a class to certain block types to determine spacing between sibling blocks
-function getBlockClass(type: string, displayMode: string = 'inline'): string {
+function getBlockClass(type: string, displayMode: string = 'flow'): string {
 	const classes = {
 		passage: 'text',
 		blockQuote: 'text',
@@ -126,7 +126,7 @@ const classList = [
 	}
 
 	/* --- spacing between blocks with different display modes --- */
-	.block-list > :global(.inline + .slide) {
+	.block-list > :global(.flow + .slide) {
 		margin-block-start: var(--space-xwide);
 	}
 

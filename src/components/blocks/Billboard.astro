@@ -19,8 +19,9 @@ import Passage from '@components/blocks/Passage.astro';
 import Number from '@components/elements/Number.astro';
 
 // types
-import type { RichTextField, LinkField } from '@prismicio/types';
+import { removeWidows } from '@lib/stringHelpers';
 import type { CollageItem } from '@components/blocks/Collage.astro';
+import type { RichTextField, LinkField } from '@prismicio/types';
 
 export interface Props {
 	title: string,
@@ -52,23 +53,31 @@ const resolvedLink = link && await prismicHelpers.asLink(link, linkResolver);
 <article>
 	<header>
 		{number && <Number {number} />}
+
 		<Heading level={1}>
 			<a
 				class="type-link-undecorated"
 				href={resolvedLink}
 			>
-				{title}
+				{removeWidows(title)}
 			</a>
 		</Heading>
+
 		{subtitle && (
 			<Heading
-				class="subtitle"
-				level={3}
-				subheading
+			class="subtitle"
+			level={3}
+			subheading
 			>
-				{subtitle}
+				<a
+					class="type-link-undecorated"
+					href={resolvedLink}
+				>
+					{subtitle}
+				</a>
 			</Heading>
 		)}
+
 		{description && (
 			<Passage
 				typeSize="delta"
@@ -76,6 +85,7 @@ const resolvedLink = link && await prismicHelpers.asLink(link, linkResolver);
 				text={description}
 			/>
 		)}
+
 		<Button
 			class="cta"
 			href={resolvedLink}
@@ -83,7 +93,9 @@ const resolvedLink = link && await prismicHelpers.asLink(link, linkResolver);
 		>
 			{label || 'Read more'}
 		</Button>
+
 	</header>
+
 	{images?.length > 1
 		? <Collage
 				class="cover"

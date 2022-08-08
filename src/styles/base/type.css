@@ -115,6 +115,7 @@ p {
 a {
 	border-bottom: var(--border-link);
 	color: inherit;
+	cursor: pointer;
 	text-decoration: none;
 	transition: color 0.25s ease;
 	will-change: color;
