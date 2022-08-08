@@ -116,7 +116,7 @@ function billboard(slice: Slice): BlockType {
 			prismicText,
 		},
 		displayMode: 'slide',
-		subtitle: subtitle as TitleField,
+		subtitle: headingText(subtitle as TitleField),
 		title: headingText(title1 as TitleField),
 	};
 }
@@ -213,14 +213,14 @@ function figure(slice: Slice): BlockType {
 
 function heading(slice: Slice): BlockType {
 	const {
-		level = 2,
+		level,
 		subheading,
 		title1: text,
 	} = slice.primary;
 
 	return {
 		...sharedBlockFields(slice),
-		level,
+		level: level || 2,
 		subheading,
 		text,
 	};

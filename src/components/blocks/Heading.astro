@@ -5,7 +5,6 @@
 import '@styles/utilities/type.css';
 import { removeWidows } from '@lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
-import { linkResolver } from '@lib/routes';
 
 // types
 import { TitleField } from '@prismicio/types';
@@ -24,10 +23,18 @@ const {
 	text,
 } = Astro.props as Props;
 
-const levels = ['alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta'];
+const levels = [
+	'alpha',
+	'beta',
+	'gamma',
+	'delta',
+	'epsilon',
+	'zeta',
+];
 
 let html = '';
 const tag = !subheading ? `h${level}` : 'p';
+
 const classList = [
 	'heading',
 	subheading ? `type-role-accent type-scale-${levels[level - 1]}` : '',
