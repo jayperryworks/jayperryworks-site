@@ -11,7 +11,7 @@ import '@styles/utilities/type.css';
 import { titleCase } from '@lib/stringHelpers';
 
 // types
-import { SpaceScale } from '@lib/types';
+import { SpaceScale, TypeScale } from '@lib/types';
 
 export type DataItem = {
 	label: string,
@@ -23,14 +23,21 @@ export interface Props {
 	class?: string,
 	columnWidth?: number,
 	gutter?: SpaceScale,
+	typeSize?: TypeScale,
 }
 
 const {
 	data,
 	class: className,
 	columnWidth = 18,
-	gutter = 'narrow',
+	gutter = 'medium',
+	typeSize = 'zeta',
 } = Astro.props as Props;
+
+const itemClassList = [
+	'type-role-accent',
+	`type-scale-${typeSize}`,
+].join(' ');
 ---
 
 <dl
@@ -43,11 +50,13 @@ const {
   {data.map((item) => (
 	  <div class="group">
 			<dt class="item label">
-				<span class="type-font-accent type-weight-light">{item.label}</span>
+				<span class={itemClassList}>{item.label}</span>
 			</dt>
 			{item.value.map((valueItem, index) => (
 				<dd class={['item', item.value.length > 1 && 'series'].join(' ')}>
-					<span class="type-font-accent type-weight-light">{index === 0 ? (titleCase(valueItem)) : valueItem.toLowerCase()}</span>
+					<span class={itemClassList}>
+						{index === 0 ? (titleCase(valueItem)) : valueItem.toLowerCase()}
+					</span>
 				</dd>
 			))}
 		</div>
@@ -56,24 +65,22 @@ const {
 
 <style>
 	dl {
-	  --type-size: var(--type-scale-zeta);
 	  list-style: none;
 	  display: block;
 	}
 
-	.group {
-	  display: block;
-	}
-
 	.group + .group {
-		margin-top: 1em;
 		margin-top: var(--gutter);
 	}
 
 	.item {
 	  display: block;
 	  margin-left: 0; /* reset dt/dd default indent */
-		font-size: var(--type-size);
+		line-height: var(--type-leading-tight);
+	}
+
+	.item > span {
+		color: var(--color-primary);
 	}
 
 	/* trick from https://codepen.io/ShadowShahriar/pen/LYyvVjo */
@@ -95,13 +102,15 @@ const {
 	}
 
 	.item.label {
+		padding-block-end: var(--space-xxnarrow);
+	}
+
+	.item.label > span {
 		color: var(--color-secondary);
+
 	}
 
-	.item.label::after {
-	  content: ':';
-	}
-
+	/* use grid display inside a media query to prevent sidescrolling on small mobile screens */
 	@media screen and (min-width: 25em) {
 		dl {
 			display: grid;

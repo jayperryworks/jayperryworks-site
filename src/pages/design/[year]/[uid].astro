@@ -40,12 +40,26 @@ export interface Props {
 	subtitle?: TitleField;
 }
 
+const graphQuery = `
+	{
+		design_project {
+			...design_projectFields
+			collaborators {
+				...on collaborator {
+					name
+				}
+			}
+		}
+	}
+`;
+
 export async function getStaticPaths() {
 	const projects = await prismic.getAllByType('design_project', {
 		orderings: {
  			field: 'my.design_project.start_date',
  			direction: 'desc',
  		},
+		graphQuery,
 	});
 
 	return projects.map(({ uid, data }, index) => {
@@ -79,10 +93,7 @@ const {
 	contributions,
 	endDate,
 	next,
-	subtitle,
 } = Astro.props as Props;
-
-console.log(collaborators)
 
 const credits = [
 	{
