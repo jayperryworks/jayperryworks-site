@@ -13,11 +13,13 @@ import ReadNextLink from '@components/elements/ReadNextLink.astro';
 
 // utilities
 import { designProject as permalink } from '@lib/routes';
+import { sentenceCase } from '@lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
 // types
 import type {
+	GroupField,
 	NumberField,
 	RelationField,
 	Slice,
@@ -25,6 +27,10 @@ import type {
 } from '@prismicio/types';
 
 import type { PaginationLink } from '@lib/types';
+
+export type Contribution = {
+	task: string,
+};
 
 export interface Props {
 	agency: string;
@@ -34,24 +40,11 @@ export interface Props {
 	startDate: NumberField;
 	title: TitleField;
 	collaborators?: RelationField[];
-	contributors?: RelationField[];
+	contributions?: GroupField;
 	endDate?: NumberField;
 	next?: PaginationLink;
 	subtitle?: TitleField;
 }
-
-const graphQuery = `
-	{
-		design_project {
-			...design_projectFields
-			collaborators {
-				...on collaborator {
-					name
-				}
-			}
-		}
-	}
-`;
 
 export async function getStaticPaths() {
 	const projects = await prismic.getAllByType('design_project', {
@@ -59,19 +52,43 @@ export async function getStaticPaths() {
  			field: 'my.design_project.start_date',
  			direction: 'desc',
  		},
-		graphQuery,
+		graphQuery: `
+			{
+				design_project {
+					...design_projectFields
+					collaborators {
+						collaborator {
+							...on collaborator {
+								name
+							}
+						}
+					}
+				}
+			}
+		`,
 	});
 
 	return projects.map(({ uid, data }, index) => {
 		const nextPost = projects[index + 1];
 
+		const {
+			start_date: startDate,
+			end_date: endDate,
+			collaborators
+		} = data;
+
 		return {
 			params: {
-				year: data.start_date.toString(),
+				year: startDate.toString(),
 				uid,
 			},
 			props: {
 				...data,
+				startDate,
+				endDate,
+				collaborators: collaborators.map(
+					({ collaborator }) => collaborator.data.name
+				),
 				next: nextPost && {
 					title: nextPost.data.title,
 					subtitle: nextPost.data.subtitle,
@@ -110,13 +127,17 @@ const credits = [
 	},
 	{
 		label: 'Contributions',
-		value: [ ...contributions.map(item => item.task) ],
+		value: [ ...contributions.map(
+			(item: Contribution, index: number): string => index === 0
+				? sentenceCase(item.task)
+				: item.task
+		) ],
 	},
-	// {
-	// 	label: 'Collaborators',
-	// 	// need to resolve these links
-	// 	value: [ ...collaborators ],
-	// },
+	{
+		label: 'Collaborators',
+		// need to resolve these links
+		value: collaborators,
+	},
 ];
 ---
 

@@ -55,7 +55,7 @@ const itemClassList = [
 			{item.value.map((valueItem, index) => (
 				<dd class={['item', item.value.length > 1 && 'series'].join(' ')}>
 					<span class={itemClassList}>
-						{index === 0 ? (titleCase(valueItem)) : valueItem.toLowerCase()}
+						{valueItem}
 					</span>
 				</dd>
 			))}
