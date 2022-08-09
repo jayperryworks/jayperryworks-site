@@ -127,11 +127,11 @@ const credits = [
 	},
 	{
 		label: 'Contributions',
-		value: [ ...contributions.map(
-			(item: Contribution, index: number): string => index === 0
-				? sentenceCase(item.task)
-				: item.task
-		) ],
+		value: contributions.map(
+			(item: Contribution, index: number): string => (
+				index === 0 ? sentenceCase(item.task) : item.task
+			)
+		),
 	},
 	{
 		label: 'Collaborators',
