@@ -49,7 +49,9 @@ let renderedText;
 if (prismicText) {
 	renderedText = prismicHelpers.asHTML(prismicText, null, htmlSerializer);
 }
-if (markdown) renderedText = renderMarkdown(markdown, { inline });
+if (markdown) {
+	renderedText = renderMarkdown(markdown, { inline });
+}
 ---
 
 <Fragment set:html={renderedText} />

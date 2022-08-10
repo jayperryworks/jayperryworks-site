@@ -1,18 +1,25 @@
 ---
 // components
-import Figure from '@components/blocks/Figure.astro';
+import DeviceFrame from '@components/elements/DeviceFrame.astro';
 import Image from '@components/elements/Image.astro';
+import Figure from '@components/blocks/Figure.astro';
 import Gallery from '@components/layout/Gallery.astro';
 
 // types
-import type { SpaceScale, FormattedText, ImageFit } from '@lib/types';
+import type { SpaceScale, FormattedText, ImageFit, Device } from '@lib/types';
 import type { ImageField } from '@prismicio/types';
 
+export type ImageGalleryItem = {
+	image: ImageField,
+	device: Device,
+};
+
 export interface Props {
-	images: Array<ImageField>;
+	images: ImageGalleryItem[];
 	attribution?: FormattedText;
 	border?: boolean;
 	caption?: FormattedText;
+	class?: string;
 	columnSize?: 'small' | 'medium' | 'large';
 	fitImages?: ImageFit;
 	gutter?: SpaceScale;
@@ -23,6 +30,7 @@ const {
 	attribution,
 	border = false,
 	caption,
+	class: className = '',
 	columnSize = 'medium',
 	fitImages = 'default',
 	gutter = 'xnarrow',
@@ -30,6 +38,7 @@ const {
 ---
 
 <Figure
+	class={className}
 	{caption}
 	{attribution}
 >
@@ -37,13 +46,19 @@ const {
 		size={columnSize}
 		{gutter}
 	>
-		{images.map((source) => (
+		{images.map((image) => (
 			<li>
-				<Image
-					{border}
-					{source}
-					fit={fitImages}
-				/>
+				{image?.device !== 'None'
+					? <DeviceFrame
+							type={image.device}
+							source={image}
+						/>
+					: <Image
+							fit={fitImages}
+							source={image}
+							{border}
+						/>
+				}
 			</li>
 		))}
 	</Gallery>

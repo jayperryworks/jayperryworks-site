@@ -1,0 +1,125 @@
+---
+// Data Grid component
+// Present data (key-value pairs or short strings) in a flowing grid layout
+
+// assets
+import '@styles/tokens/color.css';
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+import '@styles/utilities/type.css';
+
+// types
+import { SpaceScale, TypeScale } from '@lib/types';
+
+export type DataItem = {
+	label: string,
+	value: string[],
+};
+
+export interface Props {
+	data: DataItem[],
+	class?: string,
+	columnWidth?: number,
+	gutter?: SpaceScale,
+	typeSize?: TypeScale,
+}
+
+const {
+	data,
+	class: className,
+	columnWidth = 18,
+	gutter = 'medium',
+	typeSize = 'zeta',
+} = Astro.props as Props;
+
+const itemClassList = [
+	'type-role-accent',
+	`type-scale-${typeSize}`,
+].join(' ');
+---
+
+<dl
+	class={className}
+	style={`
+		--gutter: var(--space-${gutter});
+		--col-size: ${columnWidth}rem;
+	`}
+>
+  {data.map((item) => (
+	  <div class="group">
+			<dt class="item label">
+				<span class={itemClassList}>{item.label}</span>
+			</dt>
+			{item.value.map((valueItem) => (
+				<dd class={['item', item.value.length > 1 && 'series'].join(' ')}>
+					<span class={itemClassList}>{valueItem}</span>
+				</dd>
+			))}
+		</div>
+	))}
+</dl>
+
+<style>
+	dl {
+	  list-style: none;
+	  display: block;
+	}
+
+	.group + .group {
+		margin-top: var(--gutter);
+	}
+
+	.item {
+		line-height: var(--type-leading-tight);
+	  display: block;
+	  margin-left: 0; /* reset dt/dd default indent */
+	}
+
+	.item > span {
+		color: var(--color-primary);
+	}
+
+	/* trick from https://codepen.io/ShadowShahriar/pen/LYyvVjo */
+	.item.series {
+		--separator: ',';
+		display: inline;
+		padding: 0;
+		margin: 0;
+	}
+
+	.item.series > span::after {
+		content: var(--separator) ' ';
+		font-size: var(--type-size);
+		white-space: nowrap;
+	}
+
+	/* .item.series:last-of-type > span::before {
+		content: 'and ';
+	} */
+
+	.item.series:last-of-type > span::after {
+		content: '';
+	}
+
+	.item.label {
+		padding-block-end: var(--space-xxnarrow);
+	}
+
+	.item.label > span {
+		color: var(--color-secondary);
+
+	}
+
+	/* use grid display inside a media query to prevent sidescrolling on small mobile screens */
+	@media screen and (min-width: 25em) {
+		dl {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(var(--col-size), 1fr));
+			grid-gap: var(--gutter);
+		}
+
+		.group + .group {
+			margin-top: 0;
+		}
+	}
+</style>

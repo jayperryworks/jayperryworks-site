@@ -5,44 +5,58 @@ import '@styles/tokens/contentWidth.css';
 
 // child components
 import Image from '@components/elements/Image.astro';
+import DeviceFrame from '@components/elements/DeviceFrame.astro';
 import Caption from '@components/blocks/FigureCaption.astro';
 
 // typescript
 import type { ImageField } from '@prismicio/types';
-import type { FormattedText, ImageFit } from '@lib/types';
+
+import type {
+	Device,
+	FormattedText,
+	ImageFit,
+} from '@lib/types';
 
 export interface Props {
 	source: ImageField;
 	attribution?: FormattedText;
 	border?: boolean;
 	caption?: FormattedText;
+	device?: Device;
 	fit?: ImageFit;
+	class?: string;
 }
 
 const {
 	source,
-	border,
 	attribution,
+	border,
 	caption,
+	device = 'None',
+	class: className,
 	fit = 'default',
 } = Astro.props as Props;
-
-const renderImage = !Astro.slots.has('default') && source || false;
-const renderCaption = caption || attribution || false;
 ---
 
-<figure>
+<figure class={className}>
 	<slot>
-		{renderImage && (
-			<Image
-				{border}
-				{fit}
-				{source}
-			/>
+		{source && (
+			device !== 'None'
+			? <DeviceFrame
+					class="image"
+					type={device}
+					{source}
+				/>
+			: <Image
+					class="image"
+					{border}
+					{fit}
+					{source}
+				/>
 		)}
 	</slot>
 
-	{renderCaption && (
+	{(caption || attribution) && (
 		<Caption
 			class="caption"
 			text={caption}
@@ -56,14 +70,14 @@ const renderCaption = caption || attribution || false;
 		text-align: center;
 	}
 
+	figure :global(img) {
+		width: 100%;
+	}
+
 	figure :global(.caption) {
 		margin-block-start: auto;
 		margin-inline: auto;
 		padding-block-start: var(--space-xnarrow);
 		max-width: var(--content-width-default);
-	}
-
-	figure :global(img) {
-		width: 100%;
 	}
 </style>

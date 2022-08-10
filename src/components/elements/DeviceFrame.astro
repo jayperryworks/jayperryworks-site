@@ -1,0 +1,110 @@
+---
+	// Add a frame around content that looks like a mobile device
+	// -> Phone, Tablet (horizontal and vertical)
+
+	// assets
+	import '@styles/tokens/color.css';
+
+	// components
+	import Image from '@components/elements/Image.astro';
+
+	// types
+	import type { Device } from '@lib/types';
+	import type { ImageField } from '@prismicio/types';
+
+	export interface Props {
+		class?: string,
+		source: ImageField,
+		type?: Device,
+	};
+
+	const {
+		source,
+		class: className = '',
+		type = 'Tablet (landscape)',
+	} = Astro.props as Props;
+
+	const types = {
+		Phone: {
+			className: 'phone',
+			ratio: '1/2',
+		},
+		'Tablet (landscape)': {
+			className: 'tablet-landscape',
+			ratio: '4/3',
+		},
+		'Tablet (portrait)': {
+			className: 'tablet-portrait',
+			ratio: '3/4',
+		},
+	};
+
+	const classList = [
+		'bezel',
+		types[type]?.className || '',
+		className,
+	].join(' ');
+---
+
+<div class={classList}>
+	<Image
+		aspectRatio={types[type]?.ratio}
+		fit="cover"
+		position="y-start center"
+		{source}
+	/>
+</div>
+
+<style>
+	/*
+		- only display the device frame if aspect-ratio supported
+		- otherwise it will look super wonky
+		- default/fallback is showing the image by itself
+	*/
+	@supports (aspect-ratio: 1/2) {
+		.bezel {
+			/* use percentage units for the bezel and corners, so they scale fluidly with the image and aspect ratio */
+			--bezel-radius: 4.5% / 6%;
+			--bezel-width-x: 5%;
+			--bezel-width-y: 5%;
+			--screen-radius:  0.75% / 1%;
+
+			background-color: var(--color-bg);
+			border-radius: var(--bezel-radius);
+			border: 1px solid var(--color-border);
+			display: block;
+			overflow: hidden;
+			position: relative;
+			padding: var(--bezel-width-y) var(--bezel-width-x);
+			box-shadow: 0 0.125em 0.25em var(--color-shadow);
+		}
+
+		@media screen and (min-width: 40em) {
+			.bezel {
+				border-width: 2px;
+			}
+		}
+
+		.bezel :global(img) {
+			border-radius: var(--screen-radius);
+			border: 1px solid var(--color-border);
+			object-fit: cover;
+			object-position: top center;
+		}
+
+		.bezel.tablet-portrait {
+			--bezel-radius: 6% / 4.5%;
+		}
+
+		.bezel.tablet-portrait {
+			--screen-radius: 1% / 0.75%;
+		}
+
+		.bezel.phone {
+			--bezel-radius: 10% / 5%;
+			--bezel-width-x: 3.5%;
+			--bezel-width-y: 11%;
+			--screen-radius: 2% / 1%;
+		}
+	}
+</style>

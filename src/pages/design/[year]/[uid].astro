@@ -1,0 +1,219 @@
+---
+// assets
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/contentWidth.css';
+import '@styles/utilities/borders.css';
+
+// components
+import BlockList from '@components/BlockList.astro';
+import DataGrid from '@components/layout/DataGrid.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Layout from '@layouts/BaseLayout.astro';
+import ReadNextLink from '@components/elements/ReadNextLink.astro';
+
+// utilities
+import { designProject as permalink } from '@lib/routes';
+import { sentenceCase } from '@lib/stringHelpers';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+
+// types
+import type {
+	GroupField,
+	NumberField,
+	RelationField,
+	Slice,
+	TitleField,
+} from '@prismicio/types';
+
+import type { PaginationLink } from '@lib/types';
+
+export type Contribution = {
+	task: string,
+};
+
+export interface Props {
+	agency: string;
+	body: Slice[];
+	client: string;
+	role: string;
+	startDate: NumberField;
+	title: TitleField;
+	collaborators?: RelationField[];
+	contributions?: GroupField;
+	endDate?: NumberField;
+	next?: PaginationLink;
+	subtitle?: TitleField;
+}
+
+export async function getStaticPaths() {
+	const projects = await prismic.getAllByType('design_project', {
+		orderings: {
+ 			field: 'my.design_project.start_date',
+ 			direction: 'desc',
+ 		},
+		graphQuery: `
+			{
+				design_project {
+					...design_projectFields
+					collaborators {
+						collaborator {
+							...on collaborator {
+								name
+							}
+						}
+					}
+				}
+			}
+		`,
+	});
+
+	return projects.map(({ uid, data }, index) => {
+		const nextPost = projects[index + 1];
+
+		const {
+			start_date: startDate,
+			end_date: endDate,
+			collaborators
+		} = data;
+
+		return {
+			params: {
+				year: startDate.toString(),
+				uid,
+			},
+			props: {
+				...data,
+				startDate,
+				endDate,
+				collaborators: collaborators.map(
+					({ collaborator }) => collaborator.data.name
+				),
+				next: nextPost && {
+					title: nextPost.data.title,
+					subtitle: nextPost.data.subtitle,
+					path: permalink(nextPost),
+				},
+			},
+		};
+	});
+}
+
+const {
+	agency,
+	body,
+	client,
+	role,
+	startDate,
+	title,
+	collaborators,
+	contributions,
+	endDate,
+	next,
+} = Astro.props as Props;
+
+const credits = [
+	{
+		label: 'Date',
+		value: [ `${startDate} - ${endDate || 'present'}` ],
+	},
+	{
+		label: 'Agency',
+		value: [ agency ],
+	},
+	{
+		label: 'Role',
+		value: [ role ],
+	},
+	{
+		label: 'Contributions',
+		value: contributions.map(
+			(item: Contribution, index: number): string => (
+				index === 0 ? sentenceCase(item.task) : item.task
+			)
+		),
+	},
+	{
+		label: 'Collaborators',
+		// need to resolve these links
+		value: collaborators,
+	},
+];
+---
+
+<Layout
+	pageTitle={prismicHelpers.asText(title)}
+	path="design"
+>
+	<article>
+		<header>
+			<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
+			{client && (
+				<Heading subheading level={3}>{client}</Heading>
+			)}
+		</header>
+
+		<BlockList {body} showLedeStyle />
+
+		<aside class="border-seam-top credits">
+			<div class="credits-wrapper">
+				<Heading level={2} class="credits-heading">Credits</Heading>
+				<DataGrid data={credits} />
+			</div>
+		</aside>
+	</article>
+
+	{next && (
+		<nav class="border-seam-top">
+			<div class="nav-wrapper">
+				<ReadNextLink
+					eyebrow="Next case study:"
+					title={next.title && prismicHelpers.asText(next.title)}
+				/>
+			</div>
+		</nav>
+	)}
+</Layout>
+
+<style>
+	article {
+		padding-block-end: var(--space-xwide);
+	}
+
+	header {
+		max-width: var(--content-width-xwide);
+		margin-inline: auto;
+		padding-block-start: var(--space-wide);
+		padding-block-end: var(--space-xwide);
+		text-align: center;
+	}
+
+	header > * + * {
+		padding-block-start: var(--space-xxnarrow);
+	}
+
+	.credits {
+		padding: var(--space-xwide) var(--space-outside);
+		margin-block-start: var(--space-xwide);
+	}
+
+	.credits-heading {
+		text-align: center;
+		padding-block-end: var(--space-wide);
+	}
+
+	.credits-wrapper {
+		max-width: var(--content-width-wide);
+		margin-inline: auto;
+	}
+
+	nav {
+		padding-block: var(--space-xwide);
+		padding-inline: var(--space-outside);
+	}
+
+	.nav-wrapper {
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+	}
+</style>

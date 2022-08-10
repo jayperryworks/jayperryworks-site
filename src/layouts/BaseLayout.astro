@@ -16,14 +16,15 @@ const {
 	path = 'home',
 	} = Astro.props as Props;
 
-const SITE_TITLE = 'Jay Perry Works';
+const SITE_TITLE = 'Jay Perry';
+const title = pageTitle ? `${SITE_TITLE} | ${pageTitle}` : SITE_TITLE;
 ---
 
 <html lang="en" class="no-js no-touch">
 	<head>
 		<meta charset='utf-8'>
 		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
-		<title>{SITE_TITLE}{pageTitle && ` | ${pageTitle}`}</title>
+		<title>{title}</title>
 		<script>
 			// Add a class to the html element to confirm JS is available
 			// -> used by the CSS for styling JS-dependent elements

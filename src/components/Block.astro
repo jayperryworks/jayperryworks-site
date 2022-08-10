@@ -4,7 +4,10 @@ import '@styles/tokens/contentWidth.css';
 
 // block components
 import Aside from '@components/blocks/Aside.astro';
+import Billboard from '@components/blocks/Billboard.astro';
 import BlockQuote from '@components/blocks/BlockQuote.astro';
+import Collage from '@components/blocks/Collage.astro';
+import Feed from '@components/blocks/Feed.astro';
 import Figure from '@components/blocks/Figure.astro';
 import Heading from '@components/blocks/Heading.astro';
 import ImageGallery from '@components/blocks/ImageGallery.astro';
@@ -24,57 +27,102 @@ const {
 	class: className,
 } = Astro.props as Props;
 
-const width = {
-	Small: 'narrow',
-	Medium: 'default',
-	Large: 'xwide',
-	XLarge: 'xxwide',
-}[block.prominence];
+function getWidth(prominence) {
+	const widths = {
+		Small: 'narrow',
+		Medium: 'default',
+		Large: 'xwide',
+		XLarge: 'xxwide',
+	};
+
+	return widths[prominence] || 'default';
+}
+
+const style = `--block-width: var(--content-width-${getWidth(block.prominence)});`;
+
+const displayModeClass = block.displayMode === 'slide'
+	? 'slide border-seam-top'
+	: '';
 ---
 
-<div
-	class={['wrapper', className].join(' ')}
-	style={`--block-width: var(--content-width-${width || 'default'})`}
->
-	{block.type === 'heading' && (
-		<!-- heading -->
-		<Heading {...block}>{block.title}</Heading>
-	)}
+<div class={['block', displayModeClass, className].join(' ')}>
+	<div class="wrapper" {style}>
+		{block.type === 'aside' && (
+			<!-- aside -->
+			<Aside {...block} />
+		)}
 
-	{block.type === 'passage' && (
-		<!-- passage -->
-		<Passage {...block} />
-	)}
+		{block.type === 'billboard' && (
+			<!-- billboard -->
+			<Billboard {...block} />
+		)}
 
-	{block.type === 'figure' && (
-		<!-- figure -->
-		<Figure {...block} />
-	)}
+		{block.type === 'blockQuote' && (
+			<!-- block quote -->
+			<BlockQuote {...block} />
+		)}
 
-	{block.type === 'imageGallery' && (
-		<!-- image gallery -->
-		<ImageGallery {...block} />
-	)}
+		{block.type === 'collage' && (
+			<!-- image gallery -->
+			<Collage {...block} />
+		)}
 
-	{block.type === 'aside' && (
-		<!-- aside -->
-		<Aside {...block} />
-	)}
+		{block.type === 'feed' && (
+			<!-- feed -->
+			<Feed {...block} />
+		)}
 
-	{block.type === 'blockQuote' && (
-		<!-- block quote -->
-		<BlockQuote {...block} />
-	)}
+		{block.type === 'figure' && (
+			<!-- figure -->
+			<Figure {...block} />
+		)}
 
-	{block.type === 'table' && (
-		<!-- block quote -->
-		<Table {...block} />
-	)}
+		{block.type === 'heading' && (
+			<!-- heading -->
+			<Heading {...block} />
+		)}
+
+		{block.type === 'imageGallery' && (
+			<!-- image gallery -->
+			<ImageGallery {...block} />
+		)}
+
+		{block.type === 'passage' && (
+			<!-- passage -->
+			<Passage {...block} />
+		)}
+
+		{block.type === 'table' && (
+			<!-- table -->
+			<Table {...block} />
+		)}
+	</div>
 </div>
 
 <style>
+	.block.flow {
+		padding-inline: var(--space-outside);
+	}
+
+	.block.slide {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		padding-block: var(--space-wide);
+		padding-inline: var(--space-outside);
+	}
+
 	.wrapper {
 		max-width: var(--block-width);
 		margin-inline: auto;
+	}
+
+	.slide .wrapper {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		margin-inline: auto;
+		max-width: var(--content-width-xxwide);
+		width: 100%;
 	}
 </style>
