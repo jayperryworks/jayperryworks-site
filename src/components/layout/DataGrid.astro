@@ -50,7 +50,7 @@ const itemClassList = [
 			<dt class="item label">
 				<span class={itemClassList}>{item.label}</span>
 			</dt>
-			{item.value.map((valueItem, index) => (
+			{item.value.map((valueItem) => (
 				<dd class={['item', item.value.length > 1 && 'series'].join(' ')}>
 					<span class={itemClassList}>
 						{valueItem}
@@ -72,9 +72,9 @@ const itemClassList = [
 	}
 
 	.item {
+		line-height: var(--type-leading-tight);
 	  display: block;
 	  margin-left: 0; /* reset dt/dd default indent */
-		line-height: var(--type-leading-tight);
 	}
 
 	.item > span {
@@ -90,9 +90,13 @@ const itemClassList = [
 	}
 
 	.item.series > span::after {
-		white-space: nowrap;
 		content: var(--separator) ' ';
 		font-size: var(--type-size);
+		white-space: nowrap;
+	}
+
+	.item.series:last-of-type > span::before {
+		content: 'and ';
 	}
 
 	.item.series:last-of-type > span::after {
