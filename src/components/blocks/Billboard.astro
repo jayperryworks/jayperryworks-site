@@ -58,8 +58,8 @@ const resolvedLink = link && await prismicHelpers.asLink(link, linkResolver);
 			<a
 				class="type-link-undecorated"
 				href={resolvedLink}
+				set:html={removeWidows(title)}
 			>
-				{removeWidows(title)}
 			</a>
 		</Heading>
 
@@ -72,19 +72,17 @@ const resolvedLink = link && await prismicHelpers.asLink(link, linkResolver);
 				<a
 					class="type-link-undecorated"
 					href={resolvedLink}
+					set:html={removeWidows(subtitle)}
 				>
-					{subtitle}
 				</a>
 			</Heading>
 		)}
 
-		{description && (
-			<Passage
-				typeSize="delta"
-				typeFace="display"
-				text={description}
-			/>
-		)}
+		<Passage
+			typeSize="delta"
+			typeFace="display"
+			text={description}
+		/>
 
 		<Button
 			class="cta"
