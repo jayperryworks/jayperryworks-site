@@ -53,7 +53,7 @@ export function picture({ data, uid }: PrismicDocument): string {
 
 // --- design
 export function designProject({ data, uid }: PrismicDocument): string {
-	return `/design/${getDateParams(data.date, ['year'])}/${uid}/`;
+	return `/design/${data.start_date}/${uid}/`;
 }
 
 // --- longform
@@ -70,32 +70,32 @@ export async function linkResolver(doc: PrismicDocument): Promise<string> {
 	// -> getter: function - the getter function, defined above, returns a url string
 	const contentTypes = {
 		homepage: {
-			needsData: false,
 			getter: homepage,
+			needsData: false,
 		},
 		page: {
-			needsData: false,
 			getter: page,
+			needsData: false,
 		},
 		index_page: {
-			needsData: false,
 			getter: indexPage,
+			needsData: false,
 		},
 		longform: {
-			needsData: true,
 			getter: longform,
+			needsData: true,
 		},
 		design_project: {
-			needsData: true,
 			getter: designProject,
+			needsData: true,
 		},
 		picture: {
-			needsData: true,
 			getter: picture,
+			needsData: true,
 		},
 		blog_post: {
-			needsData: true,
 			getter: blogPost,
+			needsData: true,
 		},
 	};
 

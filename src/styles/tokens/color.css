@@ -1,6 +1,6 @@
 :root {
 	/* --- primary --- */
-	--color-primary-h: 0;
+	--color-primary-h: 0deg;
 	--color-primary-s: 0%;
 	--color-primary-l: 27%;
 
@@ -9,7 +9,7 @@
 	);
 
 	/* --- secondary --- */
-	--color-secondary-h: 223;
+	--color-secondary-h: 223deg;
 	--color-secondary-s: 7%;
 	--color-secondary-l: 65%;
 
@@ -18,7 +18,7 @@
 	);
 
 	/* --- highlight --- */
-	--color-highlight-h: 223;
+	--color-highlight-h: 223deg;
 	--color-highlight-s: 75%;
 	--color-highlight-l: 70%;
 
@@ -43,7 +43,7 @@
 	);
 
 	/* --- well --- */
-	--color-well-h: 223;
+	--color-well-h: 223deg;
 	--color-well-s: 7%;
 	--color-well-l: 90%;
 
@@ -52,7 +52,7 @@
 	);
 
 	/* --- borders --- */
-	--color-border-h: 223;
+	--color-border-h: 223deg;
 	--color-border-s: 7%;
 	--color-border-l: 78%;
 
@@ -61,7 +61,7 @@
 	);
 
 	/* --- shadows --- */
-	--color-shadow-h: 223;
+	--color-shadow-h: 223deg;
 	--color-shadow-s: 7%;
 	--color-shadow-l: 78%;
 	--color-shadow-a: 0.6;

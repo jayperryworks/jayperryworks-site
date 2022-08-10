@@ -157,14 +157,11 @@ const postList = page.data.map(({ uid, tags, data }) => {
 		padding-block-start: var(--space-xwide);
 	}
 
-	.post {
-		padding-inline: var(--space-outside);
-	}
-
 	.post-header {
 		margin-inline: auto;
 		max-width: var(--content-width-xwide);
 		padding-block-end: var(--space-wide);
+		padding-inline: var(--space-outside);
 		text-align: center;
 	}
 
@@ -189,6 +186,7 @@ const postList = page.data.map(({ uid, tags, data }) => {
 		margin-inline: auto;
 		max-width: var(--content-width-default);
 		padding-block-start: var(--space-wide);
+		padding-inline: var(--space-outside);
 	}
 
 	.date {

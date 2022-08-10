@@ -31,9 +31,11 @@ const classList = [
 ].join(' ');
 ---
 
-<div class={classList}>
-	<slot><RenderedText {...text} /></slot>
-</div>
+{text?.['prismicText' || 'markdown']?.length > 0 && (
+	<div class={classList}>
+		<slot><RenderedText {...text} /></slot>
+	</div>
+)}
 
 <style>
 	.prose {

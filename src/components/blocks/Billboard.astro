@@ -6,92 +6,105 @@ import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 import arrowRight from '@icons/arrow-right.svg?raw';
 
+// utils
+import { linkResolver } from '@lib/routes';
+import * as prismicHelpers from '@prismicio/helpers';
+
 // components
+import Button from '@components/elements/Button.astro';
+import Figure from '@components/blocks/Figure.astro';
+import Collage from '@components/blocks/Collage.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
-import Image from '@components/elements/Image.astro';
-import Button from '@components/elements/Button.astro';
+import Number from '@components/elements/Number.astro';
 
 // types
-import {
-	RichTextField,
-	ImageField,
-} from '@prismicio/types';
+import { removeWidows } from '@lib/stringHelpers';
+import type { CollageItem } from '@components/blocks/Collage.astro';
+import type { RichTextField, LinkField } from '@prismicio/types';
 
 export interface Props {
-	coverImages?: ImageField[],
-	cta?: {
-		link: string,
+	title: string,
+	cta: {
+		link: LinkField,
 		label: string,
 	},
+	images?: CollageItem[],
 	description?: {
 		prismicText: RichTextField
 	},
 	number?: number,
 	subtitle?: string,
-	title?: string,
 }
 
 const {
-	coverImages,
+	images,
 	cta,
 	description,
 	number,
 	subtitle,
 	title,
 } = Astro.props as Props;
+
+const { link, label } = cta;
+const resolvedLink = link && await prismicHelpers.asLink(link, linkResolver);
 ---
 
 <article>
 	<header>
-		{number && (
-			<Heading
-			level={3}
-			subheading
-			>
-				{/* https://bobbyhadz.com/blog/javascript-pad-number-with-leading-zeros */}
-				{String(number).padStart(2, '0')}
-			</Heading>
-		)}
+		{number && <Number {number} />}
+
 		<Heading level={1}>
 			<a
 				class="type-link-undecorated"
-				href={cta.link}
+				href={resolvedLink}
+				set:html={removeWidows(title)}
 			>
-				{title}
 			</a>
 		</Heading>
+
 		{subtitle && (
 			<Heading
-				class="subtitle"
-				level={3}
-				subheading
+			class="subtitle"
+			level={3}
+			subheading
 			>
-				{subtitle}
+				<a
+					class="type-link-undecorated"
+					href={resolvedLink}
+					set:html={removeWidows(subtitle)}
+				>
+				</a>
 			</Heading>
 		)}
-		{description && (
-			<Passage
-				typeSize="delta"
-				typeFace="display"
-				text={description}
-			/>
-		)}
+
+		<Passage
+			typeSize="delta"
+			typeFace="display"
+			text={description}
+		/>
+
 		<Button
 			class="cta"
-			href={cta.link}
+			href={resolvedLink}
 			iconRight={arrowRight}
 		>
-			{cta.label || 'Read more'}
+			{label || 'Read more'}
 		</Button>
+
 	</header>
-	{coverImages.length > 0 && (
-		<figure class="cover">
-			{coverImages.map(({ source }) => (
-				source && <Image {source} contain />
-			))}
-		</figure>
-	)}
+
+	{images?.length > 1
+		? <Collage
+				class="cover"
+				{images}
+			/>
+		: <Figure
+				class="cover"
+				fit="contain"
+				{...images[0]}
+			/>
+	}
 </article>
 
 <style>
@@ -115,11 +128,11 @@ const {
 		align-items: center;
 	}
 
-	.cover {
+	article :global(.cover) {
 		justify-self: center;
 	}
 
-	.cover > :global(img) {
+	article :global(.cover) > :global(img) {
 		max-height: 60vh;
 	}
 </style>

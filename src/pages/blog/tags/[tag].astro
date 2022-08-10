@@ -15,14 +15,14 @@ import Layout from '@layouts/BaseLayout.astro';
 import ReadNextLink from '@components/elements/ReadNextLink.astro';
 
 // types
-type Post = {
+export type Post = {
 	title: string,
 	subtitle?: string,
 	path: string,
 	date: string,
 };
 
-type StaticPath = {
+export type StaticPath = {
 	params: {
 		tag: string,
 	},

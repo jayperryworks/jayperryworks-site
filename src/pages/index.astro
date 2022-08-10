@@ -13,13 +13,12 @@ import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
 // components
-import Layout from '@layouts/BaseLayout.astro';
-import Heading from '@components/blocks/Heading.astro';
-import Passage from '@components/blocks/Passage.astro';
+import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
+import Heading from '@components/blocks/Heading.astro';
 import Icon from '@components/elements/Icon.astro';
-import Billboard from '@components/blocks/Billboard.astro';
-import Feed from '@components/blocks/Feed.astro';
+import Layout from '@layouts/BaseLayout.astro';
+import Passage from '@components/blocks/Passage.astro';
 
 // fetch content
 const response = await prismic.getSingle('homepage');
@@ -27,49 +26,22 @@ const response = await prismic.getSingle('homepage');
 const {
 	headline,
 	intro,
+	intro_link: link,
 	body,
 } = response.data;
 
-let introLink = await prismicHelpers.asLink(response.data.intro_link, linkResolver);
-
-const toc = await Promise.all(
-	body.map(async ({ slice_type: type, primary, items }) => {
-		const link = primary.call_to_action_link
-			&& await prismicHelpers.asLink(primary.call_to_action_link, linkResolver);
-
-		const coverImages = (type === 'billboard') && {
-			gutter: primary.cover_images_gutter,
-			images: items.map((item) => ({
-				source: item.cover_image,
-				device: item.device,
-				relativeSize: item.relative_size,
-			})),
-		};
-
-		return {
-			type,
-			title: prismicHelpers.asText(primary.title || primary.title1),
-			subtitle: prismicHelpers.asText(primary.subtitle),
-			cta: {
-				link,
-				label: primary.call_to_action_label,
-			},
-			description: {
-				prismicText: primary.description
-			},
-			source: primary.content_source,
-			coverImages: coverImages.images,
-		};
-	})
-);
+const introLink = await prismicHelpers.asLink(link, linkResolver);
 ---
 
 <Layout path="home" headerOverlay>
 	<!-- intro -->
 	<header>
-		<div class="wrapper intro">
+		<div class="intro">
 			<div class="blurb">
-				<Heading level={1}>{prismicHelpers.asText(headline)}</Heading>
+				<Heading
+					level={1}
+					text={headline}
+				/>
 				<Passage
 					text={{ prismicText: intro }}
 					typeSize="delta"
@@ -99,16 +71,7 @@ const toc = await Promise.all(
 	</header>
 
 	<!-- TOC panels -->
-	<ul class="toc" id="toc">
-		{toc.map((item, index) => (
-			<li class="toc-item | border-seam-top">
-				<div class="toc-wrapper">
-					{item.type === 'billboard' && <Billboard number={index + 1} {...item} />}
-					{item.type === 'feed' && <Feed number={index + 1} {...item} />}
-				</div>
-			</li>
-		))}
-	</ul>
+	<BlockList {body} numbered />
 </Layout>
 
 <style>
@@ -126,10 +89,6 @@ const toc = await Promise.all(
 		flex: 1;
 		gap: var(--space-medium);
 		grid-template-rows: 1fr auto;
-	}
-
-	.intro,
-	.toc-wrapper {
 		margin-inline: auto;
 		max-width: var(--content-width-xxwide);
 	}
@@ -148,7 +107,7 @@ const toc = await Promise.all(
 		padding-left: 0;
 	}
 
-	.toc-item {
+	.toc > li {
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
@@ -156,10 +115,12 @@ const toc = await Promise.all(
 		padding-inline: var(--space-outside);
 	}
 
-	.toc-wrapper {
-		width: 100%;
-		flex: 1;
+	.wrapper {
 		display: flex;
 		flex-direction: column;
+		flex: 1;
+		margin-inline: auto;
+		max-width: var(--content-width-xxwide);
+		width: 100%;
 	}
 </style>
