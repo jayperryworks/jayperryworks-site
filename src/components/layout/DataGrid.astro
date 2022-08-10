@@ -52,9 +52,7 @@ const itemClassList = [
 			</dt>
 			{item.value.map((valueItem) => (
 				<dd class={['item', item.value.length > 1 && 'series'].join(' ')}>
-					<span class={itemClassList}>
-						{valueItem}
-					</span>
+					<span class={itemClassList}>{valueItem}</span>
 				</dd>
 			))}
 		</div>
@@ -95,9 +93,9 @@ const itemClassList = [
 		white-space: nowrap;
 	}
 
-	.item.series:last-of-type > span::before {
+	/* .item.series:last-of-type > span::before {
 		content: 'and ';
-	}
+	} */
 
 	.item.series:last-of-type > span::after {
 		content: '';
