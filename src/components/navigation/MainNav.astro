@@ -41,6 +41,8 @@ const {
 	segment,
 	overlay = false,
 } = Astro.props as Props;
+
+console.log(segment, routes.map((r) => r.link));
 ---
 
 <script>
@@ -118,7 +120,7 @@ const {
                 class={[
 									'nav-item',
 									'type-link-undecorated',
-									segment === link.uid ? 'current' : '',
+									link.includes(segment) ? 'current' : '',
 								].join(' ')}
                 href={link}
               >
