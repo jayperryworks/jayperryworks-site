@@ -117,24 +117,27 @@ picturesBySeries.push({
 </Layout>
 
 <style>
-	:global(.title) {
-		margin-inline: auto;
-		max-width: var(--content-width-xxwide);
-		padding: var(--space-xwide) var(--space-outside) var(--space-wide);
-	}
-
+	:global(.title),
 	.series {
 		margin-inline: auto;
 		max-width: var(--content-width-xxwide);
-		padding-block-end: var(--space-xwide);
 		padding-inline: var(--space-outside);
+	}
+
+	:global(.title) {
+		padding-block-end: var(--space-wide);
+		padding-block-start: var(--space-xwide);
+	}
+
+	.series {
+		padding-block-end: var(--space-xwide);
 	}
 
 	.series > * + * {
 		padding-block-start: var(--space-medium);
 	}
 
-	.series-title {
+	.series .series-title {
 		color: var(--color-primary);
 		font-weight: 100;
 	}
