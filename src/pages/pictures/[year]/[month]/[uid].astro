@@ -1,0 +1,71 @@
+---
+// utilities
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+import { format } from 'date-fns';
+import { picture as permalink } from '@lib/routes';
+
+export async function getStaticPaths() {
+ 	const pictures = await prismic.getAllByType('picture', {
+		orderings: {
+			field: 'my.picture.date_completed',
+			direction: 'desc',
+		},
+		graphQuery: `
+			{
+				picture {
+					...pictureFields
+					series {
+						...on picture_series {
+							...picture_seriesFields
+						}
+					}
+					media {
+						medium {
+							...on picture_medium {
+								...picture_mediumFields
+							}
+						}
+					}
+					substrate {
+						...on picture_substrate {
+							name
+						}
+					}
+					editions {
+						...editionsFields
+						size {
+							...on print_size {
+								...print_sizeFields
+							}
+						}
+					}
+				}
+			}
+		`,
+	});
+
+	console.log(pictures[0].data)
+
+ 	return pictures.map(({ uid, data }, index) => {
+		const date = prismicHelpers.asDate(data.date_completed);
+		const nextPicture = pictures[index + 1];
+
+ 		return {
+ 			params: {
+ 				year: format(date, 'yyyy'),
+ 				month: format(date, 'MM'),
+ 				uid,
+ 			},
+ 			props: {
+ 				...data,
+ 				next: nextPicture && {
+					title: nextPicture.data.title,
+					subtitle: nextPicture.data.subtitle,
+					path: permalink(nextPicture),
+				},
+ 			},
+ 		};
+ 	});
+}
+---
