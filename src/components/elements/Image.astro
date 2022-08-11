@@ -4,7 +4,7 @@
 // -> uses Prismic/Imgix's default auto formatting
 
 // assets
-import '@styles/utilities/borders.css';
+import '@styles/tokens/borders.css';
 
 // utilities
 import * as prismicHelpers from '@prismicio/helpers';
@@ -44,7 +44,7 @@ const width = widths[0];
 const height = (source.dimensions.height / source.dimensions.width) * widths[0];
 
 const classList = [
-	border ? 'border border-solid' : '',
+	border ? 'border' : '',
 	className,
 	fit ? fit : '',
 ].join(' ');
@@ -74,6 +74,10 @@ const style = [
 		display: inline-block;
 		max-width: 100%;
 		object-position: var(--position, 50% 50%);
+	}
+
+	.border {
+		border: var(--border-default-width) solid var(--color-border);
 	}
 
 	.contain,

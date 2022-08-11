@@ -1,0 +1,141 @@
+---
+// assets
+import '@styles/tokens/color.css';
+import '@styles/tokens/contentWidth.css';
+import '@styles/tokens/spacing.css';
+import '@styles/utilities/type.css';
+
+// utils
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+import { picture as permalink } from '@lib/routes';
+
+// components
+import Gallery from '@components/layout/Gallery.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Image from '@components/elements/Image.astro';
+import Layout from '@layouts/BaseLayout.astro';
+import { removeWidows } from '@lib/stringHelpers';
+
+const pageData = await prismic.getByUID('index_page', 'pictures');
+
+const {
+	title,
+} = pageData.data;
+
+const picturesData = await prismic.getAllByType('picture', {
+	orderings: {
+		field: 'my.picture.date_completed',
+		direction: 'desc',
+	},
+	graphQuery: `
+		{
+			picture {
+				uid
+				date_completed
+				series {
+					...on picture_series {
+						uid
+						title
+						date_started
+					}
+				}
+				cover
+				title
+			}
+		}
+	`,
+});
+
+const seriesList = picturesData
+	.reduce((result, picture) => {
+		const { data: series } = picture.data.series;
+
+		if (!series) return result;
+
+		const { uid, title, date_started: startDate } = series;
+
+		if (result.find((s) => s.uid === uid)) return result;
+
+		result.push({ startDate, title, uid, });
+		return result;
+	}, [])
+	.sort((a, b) => {
+		if (a.startDate > b.startDate) return -1;
+		return 1;
+	});
+
+let picturesBySeries = seriesList.map((group) => ({
+	...group,
+	pictures: picturesData.filter((p) => p.data.series.uid === group.uid),
+}));
+
+picturesBySeries.push({
+	pictures: picturesData.filter((p) => !p.data.series.data),
+})
+---
+
+<Layout pageTitle="Prints & paintings" path="pictures">
+	<Heading
+		class="title"
+		level={1}
+		text={title}
+	/>
+
+	{picturesBySeries.map((series) => (
+		<section
+			class="series"
+			id={series.uid || 'other-work'}
+		>
+			<Heading level={2} class="type-role-accent type-scale-gamma">
+				{series.title
+					? <Fragment>
+							<strong class="series-title">{prismicHelpers.asText(series.title)}</strong> series
+						</Fragment>
+					: <Fragment>Other recent work</Fragment>
+				}
+			</Heading>
+
+			<Gallery>
+				{series.pictures.map((picture) => (
+						<li>
+							<a
+								class="type-link-undecorated"
+								href={permalink(picture)}
+							>
+								<Image
+									border
+									source={picture.data.cover}
+								/>
+							</a>
+						</li>
+					)
+				)}
+			</Gallery>
+		</section>
+	))}
+</Layout>
+
+<style>
+	:global(.title) {
+		margin-inline: auto;
+		max-width: var(--content-width-xxwide);
+		padding: var(--space-xwide) var(--space-outside) var(--space-wide);
+	}
+
+	.series {
+		margin-inline: auto;
+		max-width: var(--content-width-xxwide);
+		padding-block-end: var(--space-xwide);
+		padding-inline: var(--space-outside);
+	}
+
+	.series > * + * {
+		padding-block-start: var(--space-medium);
+	}
+
+	.series-title {
+		color: var(--color-primary);
+		font-weight: 100;
+	}
+</style>

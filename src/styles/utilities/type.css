@@ -25,6 +25,10 @@
 	line-height: var(--type-leading-tight);
 }
 
+.type-role-accent strong {
+	font-weight: 500;
+}
+
 :is(.type-scale-alpha, .type-scale-beta, .type-scale-gamma) .type-role-accent,
 :is(.type-scale-alpha, .type-scale-beta, .type-scale-gamma).type-role-accent {
 	font-weight: 100;
@@ -67,7 +71,7 @@
 
 /* --- links --- */
 .type-link-undecorated {
-	border-bottom: none;
+	text-decoration: none;
 	color: inherit;
 }
 

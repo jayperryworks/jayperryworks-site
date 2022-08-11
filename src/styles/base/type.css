@@ -113,10 +113,13 @@ p {
 }
 
 a {
-	border-bottom: var(--border-link);
 	color: inherit;
 	cursor: pointer;
-	text-decoration: none;
+	text-decoration-color: var(--color-highlight);
+	text-decoration-style: underline;
+	text-decoration-thickness: 0.125em;
+	text-underline-offset: 0.08em;
+	text-underline-position: under;
 	transition: color 0.25s ease;
 	will-change: color;
 }
