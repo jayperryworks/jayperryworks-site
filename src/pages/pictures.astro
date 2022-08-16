@@ -65,13 +65,20 @@ const seriesList = picturesData
 		return 1;
 	});
 
-let picturesBySeries = seriesList.map((group) => ({
-	...group,
-	pictures: picturesData.filter((p) => p.data.series.uid === group.uid),
-}));
+let picturesBySeries = seriesList.map((group) => {
+	const pictures = picturesData.filter((p) => p.data.series.uid === group.uid);
+	const { width, height } = pictures[0].data.cover.dimensions;
+
+	return {
+		...group,
+		pictures,
+		aspectRatio: `${width} / ${height}`,
+	};
+});
 
 picturesBySeries.push({
 	pictures: picturesData.filter((p) => !p.data.series.data),
+	aspectRatio: '3 / 2',
 })
 ---
 
@@ -104,6 +111,8 @@ picturesBySeries.push({
 								href={permalink(picture)}
 							>
 								<Image
+									aspectRatio={series.aspectRatio}
+									cover
 									border
 									source={picture.data.cover}
 								/>
@@ -140,5 +149,10 @@ picturesBySeries.push({
 	.series .series-title {
 		color: var(--color-primary);
 		font-weight: 100;
+	}
+
+	li > a,
+	li :global(img) {
+		display: block;
 	}
 </style>
