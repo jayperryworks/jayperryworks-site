@@ -46,7 +46,7 @@ export function blogPost({ data, uid }: PrismicDocument): string {
 
 // --- pictures
 export function picture({ data, uid }: PrismicDocument): string {
-	return `/pictures/${getDateParams(data.date_completed, ['year'])}/${uid}/`;
+	return `/pictures/${getDateParams(data.date_completed, ['year', 'month'])}/${uid}/`;
 }
 
 // --- design

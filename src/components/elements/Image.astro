@@ -33,8 +33,6 @@ const {
 	widths = [ 800, 1200, 2000 ],
 } = Astro.props as Props;
 
-console.log(aspectRatio);
-
 const { src, srcset } = prismicHelpers.asImageWidthSrcSet(source, {
 	fit: 'max',
 	widths,

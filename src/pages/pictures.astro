@@ -105,21 +105,20 @@ picturesBySeries.push({
 
 			<Gallery>
 				{series.pictures.map((picture) => (
-						<li>
-							<a
-								class="type-link-undecorated"
-								href={permalink(picture)}
-							>
-								<Image
-									aspectRatio={series.aspectRatio}
-									border
-									fit="cover"
-									source={picture.data.cover}
-								/>
-							</a>
-						</li>
-					)
-				)}
+					<li>
+						<a
+							class="type-link-undecorated"
+							href={permalink(picture)}
+						>
+							<Image
+								aspectRatio={series.aspectRatio}
+								border
+								fit="cover"
+								source={picture.data.cover}
+							/>
+						</a>
+					</li>
+				))}
 			</Gallery>
 		</section>
 	))}

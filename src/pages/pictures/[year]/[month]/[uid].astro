@@ -1,9 +1,24 @@
 ---
+// assets
+import '@styles/tokens/color.css';
+import '@styles/tokens/type.css';
+import '@styles/utilities/borders.css';
+import '@styles/utilities/type.css';
+
 // utilities
-import * as prismicHelpers from '@prismicio/helpers';
-import prismic from '@lib/prismic';
 import { format } from 'date-fns';
 import { picture as permalink } from '@lib/routes';
+import { arrayToSentence, removeWidows } from '@lib/stringHelpers';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+
+// components
+import BlockList from '@components/BlockList.astro';
+import Figure from '@components/blocks/Figure.astro';
+import Gallery from '@components/layout/Gallery.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Image from '@components/elements/Image.astro';
+import Layout from '@layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
  	const pictures = await prismic.getAllByType('picture', {
@@ -45,6 +60,8 @@ export async function getStaticPaths() {
 		`,
 	});
 
+	//console.log(pictures[0].data);
+
  	return pictures.map(({ uid, data }, index) => {
 		const date = prismicHelpers.asDate(data.date_completed);
 		const nextPicture = pictures[index + 1];
@@ -66,4 +83,71 @@ export async function getStaticPaths() {
  		};
  	});
 }
+
+const {
+	title,
+	orientation,
+	width,
+	height,
+	substrate,
+	media,
+	date_completed,
+	series,
+	editions,
+	cover,
+	body,
+} = Astro.props;
+
+const date = prismicHelpers.asDate(date_completed);
+
+function createMediaString() {
+	const mediaList = arrayToSentence(media.map(({ medium }) => (medium.data.name)));
+	const separator = '&nbsp;&bull;&nbsp;';
+
+	if (width && height) return mediaList + separator + `${width} x ${height}`;
+	return mediaList;
+}
 ---
+
+<Layout path="pictures">
+	<header>
+		<Figure source={cover} fit="cover" />
+		<div class="info">
+			<Heading level={1} text={title} />
+			<time datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
+			{prismicHelpers.isFilled.group(media)
+				&& prismicHelpers.isFilled.link(substrate)
+				&& <p set:html={createMediaString()}></p>
+			}
+		</div>
+	</header>
+
+	<BlockList {body} />
+
+	<!-- editions -->
+	<section class="editions | border-seam-top">
+		<Heading level={2}>{removeWidows('Available editions')}</Heading>
+		<Gallery
+			size="large"
+			gutter="wide"
+		>
+			{editions.map((edition) => (
+				<li>
+					<Heading level={3}>{removeWidows(`${edition.name} print`)}</Heading>
+					<Image source={edition.image} />
+				</li>
+			))}
+		</Gallery>
+	</section>
+</Layout>
+
+<style>
+	header {
+		margin-block-end: var(--space-wide);
+	}
+
+	.editions {
+		padding: var(--space-wide) var(--space-outside);
+		margin-block-start: var(--space-wide);
+	}
+</style>
