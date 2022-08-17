@@ -94,6 +94,7 @@ export async function getStaticPaths() {
 			return {
 				etsyLink,
 				image,
+				limit,
 				name,
 				info: [
 					{
@@ -112,7 +113,8 @@ export async function getStaticPaths() {
 			};
 		});
 
-		const nextPicture = pictures[index + 1];
+		const seriesUID = data.series?.data?.uid;
+		const navLinks = pictures.filter((pic) => pic.data.series?.data?.uid === seriesUID && pic.uid !== uid);
 
  		return {
  			params: {
@@ -123,31 +125,27 @@ export async function getStaticPaths() {
  			props: {
  				...data,
 				editions,
- 				next: nextPicture && {
-					title: nextPicture.data.title,
-					subtitle: nextPicture.data.subtitle,
-					path: permalink(nextPicture),
-				},
+				navLinks,
  			},
  		};
  	});
 }
 
 const {
-	title,
-	orientation,
-	width,
-	height,
-	substrate,
-	media,
-	date_completed,
-	series,
-	editions,
-	cover,
 	body,
+	cover,
+	date_completed: dateCompleted,
+	editions,
+	height,
+	media,
+	navLinks,
+	series,
+	substrate,
+	title,
+	width,
 } = Astro.props;
 
-const date = prismicHelpers.asDate(date_completed);
+const date = prismicHelpers.asDate(dateCompleted);
 
 function createMediaString() {
 	// convert the list of media to a sentence
@@ -202,6 +200,22 @@ function createMediaString() {
 			))}
 		</Gallery>
 	</section>
+
+	<nav class="border-seam-top">
+		{prismicHelpers.isFilled.link(series)
+			? <Heading level={2}>
+					More work from the <strong>{prismicHelpers.asText(series.data.title)}</strong>&nbsp;series
+				</Heading>
+			: <Heading level={2}>More work</Heading>
+		}
+		<Gallery>
+			{navLinks.map((picture) => (
+				<li>
+					<Heading level={3}>{prismicHelpers.asText(picture.data.title)}</Heading>
+				</li>
+			))}
+		</Gallery>
+	</nav>
 </Layout>
 
 <style>
@@ -209,7 +223,8 @@ function createMediaString() {
 		margin-block-end: var(--space-wide);
 	}
 
-	.editions {
+	.editions,
+	nav {
 		padding: var(--space-wide) var(--space-outside);
 		margin-block-start: var(--space-wide);
 	}
