@@ -6,9 +6,9 @@ import '@styles/utilities/borders.css';
 import '@styles/utilities/type.css';
 
 // utilities
+import { arrayToSentence, removeWidows, sentenceCase } from '@lib/stringHelpers';
 import { format } from 'date-fns';
 import { picture as permalink } from '@lib/routes';
-import { arrayToSentence, removeWidows } from '@lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
@@ -32,7 +32,8 @@ export async function getStaticPaths() {
 					...pictureFields
 					series {
 						...on picture_series {
-							...picture_seriesFields
+							uid
+							title
 						}
 					}
 					media {
@@ -52,6 +53,11 @@ export async function getStaticPaths() {
 						size {
 							...on print_size {
 								...print_sizeFields
+								print_type {
+									...on print_type {
+										...print_typeFields
+									}
+								}
 							}
 						}
 					}
@@ -60,10 +66,52 @@ export async function getStaticPaths() {
 		`,
 	});
 
-	//console.log(pictures[0].data);
+	//console.log(pictures[0].data.series);
 
  	return pictures.map(({ uid, data }, index) => {
 		const date = prismicHelpers.asDate(data.date_completed);
+
+		const editions = data.editions.map((edition) => {
+			const {
+				etsy_link: etsyLink,
+				image,
+				limit,
+				name,
+				size,
+			} = edition;
+
+			const {
+				border,
+				short_side: shortSide,
+				long_side: longSide,
+				print_type: printType,
+			} = size.data;
+
+			const dimensions = data.orientation === 'horizontal'
+				? [ longSide, shortSide ]
+				: [ shortSide, longSide ];
+
+			return {
+				etsyLink,
+				image,
+				name,
+				info: [
+					{
+						label: 'Type',
+						value: prismicHelpers.asText(printType.data.name),
+					},
+					{
+						label: 'Size',
+						value: dimensions.map(side => `${side}"`).join(' x '),
+					},
+					{
+						label: 'Paper size',
+						value: dimensions.map(side => `${side + (border * 2)}"`).join(' x '),
+					},
+				],
+			};
+		});
+
 		const nextPicture = pictures[index + 1];
 
  		return {
@@ -74,6 +122,7 @@ export async function getStaticPaths() {
  			},
  			props: {
  				...data,
+				editions,
  				next: nextPicture && {
 					title: nextPicture.data.title,
 					subtitle: nextPicture.data.subtitle,
@@ -143,6 +192,12 @@ function createMediaString() {
 				<li>
 					<Heading level={3}>{removeWidows(`${edition.name} print`)}</Heading>
 					<Image source={edition.image} />
+					<dl>
+						{edition.info.map(({ label, value }) => (
+							<dt>{label}</dt>
+							<dd>{value}</dd>
+						))}
+					</dl>
 				</li>
 			))}
 		</Gallery>
