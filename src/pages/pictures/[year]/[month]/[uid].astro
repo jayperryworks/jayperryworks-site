@@ -101,11 +101,22 @@ const {
 const date = prismicHelpers.asDate(date_completed);
 
 function createMediaString() {
-	const mediaList = arrayToSentence(media.map(({ medium }) => (medium.data.name)));
-	const separator = '&nbsp;&bull;&nbsp;';
+	// convert the list of media to a sentence
+	let string = arrayToSentence(
+		media.map(({ medium }) => (medium.data.name)),
+		{ period: false }
+	);
 
-	if (width && height) return mediaList + separator + `${width} x ${height}`;
-	return mediaList;
+	// add the substrate as a suffix
+	if (prismicHelpers.isFilled.link(substrate)) {
+		string += ` on ${substrate.data.name.toLowerCase()}`;
+	}
+
+	if (width && height) {
+		string += `&nbsp;&bull;&nbsp;${width} x ${height}`;
+	}
+
+	return string;
 }
 ---
 
@@ -115,10 +126,7 @@ function createMediaString() {
 		<div class="info">
 			<Heading level={1} text={title} />
 			<time datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
-			{prismicHelpers.isFilled.group(media)
-				&& prismicHelpers.isFilled.link(substrate)
-				&& <p set:html={createMediaString()}></p>
-			}
+			{prismicHelpers.isFilled.group(media) && <p set:html={createMediaString()}></p>}
 		</div>
 	</header>
 
