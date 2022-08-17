@@ -66,8 +66,6 @@ export async function getStaticPaths() {
 		`,
 	});
 
-	//console.log(pictures[0].data.series);
-
  	return pictures.map(({ uid, data }, index) => {
 		const date = prismicHelpers.asDate(data.date_completed);
 
