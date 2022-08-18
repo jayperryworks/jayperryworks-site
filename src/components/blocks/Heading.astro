@@ -10,6 +10,7 @@ import * as prismicHelpers from '@prismicio/helpers';
 import { TitleField } from '@prismicio/types';
 
 export interface Props {
+	align?: 'left' | 'center' | 'right',
 	class?: string,
 	level?: number,
 	subheading?: boolean,
@@ -17,6 +18,7 @@ export interface Props {
 }
 
 const {
+	align = 'left',
 	class: className = '',
 	level = 2,
 	subheading = false,
@@ -32,45 +34,32 @@ const levels = [
 	'zeta',
 ];
 
-let html = '';
-const tag = !subheading ? `h${level}` : 'p';
+const El = !subheading ? `h${level}` : 'p';
 
 const classList = [
 	'heading',
 	subheading ? `type-role-accent type-scale-${levels[level - 1]}` : '',
+	align !== 'left' ? `align-${align}` : '',
 	className,
 ].join(' ');
-
-function htmlSerializer(type, element, content, children): string {
-	if (type.includes('heading')) {
-		return `
-			<${tag} class="${classList}">
-				${removeWidows(element.text)}
-			</${tag}>
-		`;
-	}
-}
-
-if (text) {
-	html = prismicHelpers.asHTML(text, null, htmlSerializer);
-}
-
-// if the default slot has a value, render a heading tag around it
-// -> render h[level] by default, and p.level if subheading is true
-if (Astro.slots.has('default')) {
-	html = `
-		<${tag} class="${classList}">
-			${await Astro.slots.render('default')}
-		</${tag}>
-	`;
-}
-
 ---
 
-<Fragment set:html={html}></Fragment>
+<El class={classList}>
+	<slot>
+		{text && <Fragment set:html={removeWidows(prismicHelpers.asText(text))} />}
+	</slot>
+</El>
 
 <style>
 	p {
 		max-width: none;
+	}
+
+	.align-center {
+		text-align: center;
+	}
+
+	.align-right {
+		text-align: right;
 	}
 </style>

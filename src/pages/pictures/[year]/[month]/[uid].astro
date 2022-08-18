@@ -1,9 +1,11 @@
 ---
 // assets
 import '@styles/tokens/color.css';
+import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/type.css';
 import '@styles/utilities/borders.css';
 import '@styles/utilities/type.css';
+import arrowRight from '@icons/arrow-right.svg?raw';
 
 // utilities
 import { arrayToSentence, removeWidows } from '@lib/stringHelpers';
@@ -19,6 +21,7 @@ import Heading from '@components/blocks/Heading.astro';
 import DataGrid from '@components/layout/DataGrid.astro';
 import Gallery from '@components/layout/Gallery.astro';
 import PictureGallery from '@components/navigation/PictureGallery.astro';
+import Button from '@components/elements/Button.astro';
 
 // layout
 import Layout from '@layouts/BaseLayout.astro';
@@ -194,22 +197,39 @@ function createMediaString() {
 	<BlockList {body} />
 
 	<!-- editions -->
-	<section class="editions | border-seam-top">
-
-		<Heading level={2}>{removeWidows('Available editions')}</Heading>
+	<section class="border-seam-top">
+		<Heading level={2} align="center">
+			Available editions
+		</Heading>
 		<Gallery
 			size="large"
 			gutter="wide"
 		>
 			{editions.map((edition) => (
-				<li class="edition-item">
-					<Heading level={3}>{removeWidows(`${edition.name} ${edition.type.toLowerCase()} print`)}</Heading>
-					<Image source={edition.image} />
-					<DataGrid
-						data={edition.info}
-						gutter="narrow"
-						columnWidth={6}
-					/>
+				<li>
+					<figure class="edition">
+						<div class="edition-image">
+							<Image source={edition.image} />
+						</div>
+						<figcaption class="edition-info">
+							<Heading level={3} class="edition-title">
+								<strong>{edition.name}</strong><span> {edition.type.toLowerCase()}&nbsp;print</span>
+							</Heading>
+							<DataGrid
+								data={edition.info}
+								gutter="narrow"
+								columnWidth={8}
+							/>
+							<div class="edition-cta">
+								<Button
+									href={prismicHelpers.asLink(edition.etsyLink)}
+									iconRight={arrowRight}
+								>
+									Buy on <strong>Etsy</strong>
+								</Button>
+							</div>
+						</figcaption>
+					</figure>
 				</li>
 			))}
 		</Gallery>
@@ -234,17 +254,49 @@ function createMediaString() {
 		margin-block-end: var(--space-wide);
 	}
 
-	.editions,
+	section,
 	nav {
 		padding: var(--space-wide) var(--space-outside);
 		margin-block-start: var(--space-wide);
 	}
 
-	nav > :global(* + *) {
+	:is(nav, section) > :global(* + *) {
 		padding-block-start: var(--space-medium);
 	}
 
-	.editions-item > :global(* + *) {
-		padding-block-start: var(--space-narrow);
+	.edition {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: var(--space-narrow);
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+	}
+
+	.edition :global(.edition-title) {
+		color: var(--color-secondary);
+	}
+
+	.edition :global(.edition-title) > strong {
+		color: var(--color-primary);
+	}
+
+	.edition-image {
+		flex: 1 1 31rem;
+	}
+
+	.edition-image :global(img) {
+		display: block;
+	}
+
+	.edition-info {
+		display: flex;
+		flex-direction: column;
+		flex: 1 1 12rem;
+		gap: var(--space-narrow);
+	}
+
+	.edition-cta {
+		margin-block-start: auto;
 	}
 </style>
