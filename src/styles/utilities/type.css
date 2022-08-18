@@ -26,7 +26,8 @@
 }
 
 .type-role-accent strong {
-	font-weight: 500;
+	font-weight: 700;
+	letter-spacing: -0.02em;
 }
 
 :is(.type-scale-alpha, .type-scale-beta, .type-scale-gamma) .type-role-accent,

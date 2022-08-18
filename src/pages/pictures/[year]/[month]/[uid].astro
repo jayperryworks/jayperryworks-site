@@ -6,19 +6,25 @@ import '@styles/utilities/borders.css';
 import '@styles/utilities/type.css';
 
 // utilities
-import { arrayToSentence, removeWidows, sentenceCase } from '@lib/stringHelpers';
+import { arrayToSentence, removeWidows } from '@lib/stringHelpers';
 import { format } from 'date-fns';
-import { picture as permalink } from '@lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
 // components
 import BlockList from '@components/BlockList.astro';
-import Figure from '@components/blocks/Figure.astro';
-import Gallery from '@components/layout/Gallery.astro';
-import Heading from '@components/blocks/Heading.astro';
 import Image from '@components/elements/Image.astro';
+import Figure from '@components/blocks/Figure.astro';
+import Heading from '@components/blocks/Heading.astro';
+import DataGrid from '@components/layout/DataGrid.astro';
+import Gallery from '@components/layout/Gallery.astro';
+import PictureGallery from '@components/navigation/PictureGallery.astro';
+
+// layout
 import Layout from '@layouts/BaseLayout.astro';
+
+// types
+import { PrismicDocumentWithUID } from '@prismicio/types';
 
 export async function getStaticPaths() {
  	const pictures = await prismic.getAllByType('picture', {
@@ -94,6 +100,7 @@ export async function getStaticPaths() {
 				image,
 				limit,
 				name,
+				type: prismicHelpers.asText(printType.data.name),
 				info: [
 					{
 						label: 'Type',
@@ -112,7 +119,16 @@ export async function getStaticPaths() {
 		});
 
 		const seriesUID = data.series?.data?.uid;
-		const navLinks = pictures.filter((pic) => pic.data.series?.data?.uid === seriesUID && pic.uid !== uid);
+		const seriesPictures = pictures.filter((pic) => (
+				pic.data.series?.data?.uid === seriesUID && pic.uid !== uid
+			));
+		const { width, height } = seriesPictures[0].data.cover.dimensions;
+
+		const nav = {
+			title: data.series?.data?.title || undefined,
+			aspectRatio: `${width} / ${height}`,
+			pictures: seriesPictures,
+		};
 
  		return {
  			params: {
@@ -123,7 +139,7 @@ export async function getStaticPaths() {
  			props: {
  				...data,
 				editions,
-				navLinks,
+				nav,
  			},
  		};
  	});
@@ -136,7 +152,7 @@ const {
 	editions,
 	height,
 	media,
-	navLinks,
+	nav,
 	series,
 	substrate,
 	title,
@@ -179,40 +195,37 @@ function createMediaString() {
 
 	<!-- editions -->
 	<section class="editions | border-seam-top">
+
 		<Heading level={2}>{removeWidows('Available editions')}</Heading>
 		<Gallery
 			size="large"
 			gutter="wide"
 		>
 			{editions.map((edition) => (
-				<li>
-					<Heading level={3}>{removeWidows(`${edition.name} print`)}</Heading>
+				<li class="edition-item">
+					<Heading level={3}>{removeWidows(`${edition.name} ${edition.type.toLowerCase()} print`)}</Heading>
 					<Image source={edition.image} />
-					<dl>
-						{edition.info.map(({ label, value }) => (
-							<dt>{label}</dt>
-							<dd>{value}</dd>
-						))}
-					</dl>
+					<DataGrid
+						data={edition.info}
+						gutter="narrow"
+						columnWidth={6}
+					/>
 				</li>
 			))}
 		</Gallery>
 	</section>
 
-	<nav class="border-seam-top">
+	<nav class="border-seam-top | footer-nav">
 		{prismicHelpers.isFilled.link(series)
-			? <Heading level={2}>
-					More work from the <strong>{prismicHelpers.asText(series.data.title)}</strong>&nbsp;series
+			? <Heading level={3} class="type-role-accent">
+					More work from the <strong>{prismicHelpers.asText(nav.title)}</strong>&nbsp;series
 				</Heading>
-			: <Heading level={2}>More work</Heading>
+			: <Heading level={3} class="type-role-accent">More work</Heading>
 		}
-		<Gallery>
-			{navLinks.map((picture) => (
-				<li>
-					<Heading level={3}>{prismicHelpers.asText(picture.data.title)}</Heading>
-				</li>
-			))}
-		</Gallery>
+		<PictureGallery
+			aspectRatio={nav.aspectRatio}
+			list={nav.pictures as PrismicDocumentWithUID[]}
+		/>
 	</nav>
 </Layout>
 
@@ -225,5 +238,13 @@ function createMediaString() {
 	nav {
 		padding: var(--space-wide) var(--space-outside);
 		margin-block-start: var(--space-wide);
+	}
+
+	nav > :global(* + *) {
+		padding-block-start: var(--space-medium);
+	}
+
+	.editions-item > :global(* + *) {
+		padding-block-start: var(--space-narrow);
 	}
 </style>

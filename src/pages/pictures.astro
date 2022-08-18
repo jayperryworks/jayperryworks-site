@@ -11,11 +11,10 @@ import prismic from '@lib/prismic';
 import { picture as permalink } from '@lib/routes';
 
 // components
-import Gallery from '@components/layout/Gallery.astro';
 import Heading from '@components/blocks/Heading.astro';
-import Image from '@components/elements/Image.astro';
 import Layout from '@layouts/BaseLayout.astro';
-import { removeWidows } from '@lib/stringHelpers';
+import PictureGallery from '@components/navigation/PictureGallery.astro';
+import { PrismicDocumentWithUID } from '@prismicio/types';
 
 const pageData = await prismic.getByUID('index_page', 'pictures');
 
@@ -103,23 +102,7 @@ picturesBySeries.push({
 				}
 			</Heading>
 
-			<Gallery>
-				{series.pictures.map((picture) => (
-					<li>
-						<a
-							class="type-link-undecorated"
-							href={permalink(picture)}
-						>
-							<Image
-								aspectRatio={series.aspectRatio}
-								border
-								fit="cover"
-								source={picture.data.cover}
-							/>
-						</a>
-					</li>
-				))}
-			</Gallery>
+			<PictureGallery list={series.pictures as PrismicDocumentWithUID[]} />
 		</section>
 	))}
 </Layout>
@@ -141,17 +124,12 @@ picturesBySeries.push({
 		padding-block-end: var(--space-xwide);
 	}
 
-	.series > * + * {
+	.series > :global(* + *) {
 		padding-block-start: var(--space-medium);
 	}
 
 	.series .series-title {
 		color: var(--color-primary);
 		font-weight: 100;
-	}
-
-	li > a,
-	li :global(img) {
-		display: block;
 	}
 </style>

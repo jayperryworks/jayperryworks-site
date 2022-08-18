@@ -12,9 +12,9 @@ export type ImageFit = 'default' | 'contain' | 'cover';
 export type Device = 'None' | 'Phone' | 'Tablet (horizontal)' | 'Tablet (vertical)';
 
 export type PaginationLink = {
-	path: string;
-	title: TitleField;
-	subtitle?: TitleField;
+	path: string,
+	title: TitleField,
+	subtitle?: TitleField,
 };
 
 export interface Block {

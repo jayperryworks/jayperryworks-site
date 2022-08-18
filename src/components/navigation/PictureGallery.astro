@@ -1,0 +1,49 @@
+---
+// utilities
+import { picture as permalink } from '@lib/routes';
+
+// components
+import Image from '@components/elements/Image.astro';
+import Gallery from '@components/layout/Gallery.astro';
+
+// types
+import { GallerySize } from '@lib/types';
+import { PrismicDocumentWithUID } from '@prismicio/types';
+
+export interface Props {
+	list: PrismicDocumentWithUID[];
+	aspectRatio?: string;
+	columnSize?: GallerySize;
+}
+
+const {
+	list,
+	aspectRatio = '3 / 2',
+	columnSize = 'medium',
+} = Astro.props as Props;
+---
+
+<Gallery size={columnSize}>
+	{list.map((picture: PrismicDocumentWithUID) => (
+		<li>
+			<a
+				class="type-link-undecorated"
+				href={permalink(picture)}
+			>
+				<Image
+					{aspectRatio}
+					border
+					fit="cover"
+					source={picture.data.cover}
+				/>
+			</a>
+		</li>
+	))}
+</Gallery>
+
+<style>
+	li > a,
+	li :global(img) {
+		display: block;
+	}
+</style>
