@@ -6,15 +6,18 @@ import '@styles/tokens/type.css';
 import '@styles/utilities/borders.css';
 import '@styles/utilities/type.css';
 import arrowRight from '@icons/arrow-right.svg?raw';
+import index from '@icons/index.svg?raw';
 
 // utilities
-import { arrayToSentence, removeWidows } from '@lib/stringHelpers';
+import { arrayToSentence } from '@lib/stringHelpers';
 import { format } from 'date-fns';
+import { indexPage } from '@lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
 // components
 import BlockList from '@components/BlockList.astro';
+import Icon from '@components/elements/Icon.astro';
 import Image from '@components/elements/Image.astro';
 import Figure from '@components/blocks/Figure.astro';
 import Heading from '@components/blocks/Heading.astro';
@@ -27,7 +30,7 @@ import Button from '@components/elements/Button.astro';
 import Layout from '@layouts/BaseLayout.astro';
 
 // types
-import { PrismicDocumentWithUID } from '@prismicio/types';
+import { PrismicDocumentWithUID, PrismicDocument } from '@prismicio/types';
 
 export async function getStaticPaths() {
  	const pictures = await prismic.getAllByType('picture', {
@@ -185,7 +188,7 @@ function createMediaString() {
 ---
 
 <Layout path="pictures">
-	<header>
+	<header class="cover">
 		<Figure source={cover} fit="cover" />
 		<div class="info">
 			<Heading level={1} text={title} />
@@ -235,13 +238,22 @@ function createMediaString() {
 		</Gallery>
 	</section>
 
-	<nav class="border-seam-top | footer-nav">
-		{prismicHelpers.isFilled.link(series)
-			? <Heading level={3} class="type-role-accent">
-					More work from the <strong>{prismicHelpers.asText(nav.title)}</strong>&nbsp;series
-				</Heading>
-			: <Heading level={3} class="type-role-accent">More work</Heading>
-		}
+	<nav class="border-seam-top">
+		<header class="nav-header">
+			{prismicHelpers.isFilled.link(series)
+				? <Heading level={3} class="nav-header-title | type-role-accent">
+						More work from the <strong>{prismicHelpers.asText(nav.title)}</strong>&nbsp;series
+					</Heading>
+				: <Heading level={3} class="nav-header-title | type-role-accent">More work</Heading>
+			}
+			<a
+				class="nav-back-link | type-role-accent type-scale-epsilon type-link-undecorated"
+				href={indexPage({ uid: 'pictures' } as PrismicDocument)}
+			>
+				See all
+				<Icon svg={index} margin="left" />
+			</a>
+		</header>
 		<PictureGallery
 			aspectRatio={nav.aspectRatio}
 			list={nav.pictures as PrismicDocumentWithUID[]}
@@ -250,7 +262,7 @@ function createMediaString() {
 </Layout>
 
 <style>
-	header {
+	.cover {
 		margin-block-end: var(--space-wide);
 	}
 
@@ -298,5 +310,25 @@ function createMediaString() {
 
 	.edition-cta {
 		margin-block-start: auto;
+	}
+
+	.nav-header {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: baseline;
+		flex-wrap: wrap;
+	}
+
+	.nav-header > :global(.nav-header-title) {
+		flex: 1 1 700px;
+	}
+
+	.nav-back-link {
+		display: inline-block;
+	}
+
+	.nav-back-link > :global(*) {
+		vertical-align: bottom;
 	}
 </style>
