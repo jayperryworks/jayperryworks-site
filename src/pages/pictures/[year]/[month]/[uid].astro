@@ -19,7 +19,6 @@ import prismic from '@lib/prismic';
 import BlockList from '@components/BlockList.astro';
 import Icon from '@components/elements/Icon.astro';
 import Image from '@components/elements/Image.astro';
-import Figure from '@components/blocks/Figure.astro';
 import Heading from '@components/blocks/Heading.astro';
 import DataGrid from '@components/layout/DataGrid.astro';
 import Gallery from '@components/layout/Gallery.astro';
@@ -189,8 +188,12 @@ function createMediaString() {
 
 <Layout path="pictures">
 	<header class="cover">
-		<Figure source={cover} fit="cover" />
-		<div class="info">
+		<Image
+			class="cover-image"
+			source={cover}
+			fit="cover"
+		/>
+		<div class="cover-info">
 			<Heading level={1} text={title} />
 			<time datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
 			{prismicHelpers.isFilled.group(media) && <p set:html={createMediaString()}></p>}
@@ -240,7 +243,7 @@ function createMediaString() {
 
 	<nav class="border-seam-top">
 		<header class="nav-header">
-			{prismicHelpers.isFilled.link(series)
+			{nav.title
 				? <Heading level={3} class="nav-header-title | type-role-accent">
 						More work from the <strong>{prismicHelpers.asText(nav.title)}</strong>&nbsp;series
 					</Heading>
@@ -264,6 +267,16 @@ function createMediaString() {
 <style>
 	.cover {
 		margin-block-end: var(--space-wide);
+		padding: var(--space-wide) var(--space-outside);
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: 60vh 1fr;
+		grid-template-areas: 'image' 'info';
+	}
+
+	.cover :global(.cover-image) {
+		width: 100%;
+		height: 100%;
 	}
 
 	section,
