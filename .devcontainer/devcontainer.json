@@ -19,10 +19,10 @@
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
 				"dbaeumer.vscode-eslint",
-				"AndrsDC.base16-themes",
 				"agutierrezr.emmet-keybindings",
 				"astro-build.astro-vscode",
-				"ue.alphabetical-sorter"
+				"ue.alphabetical-sorter",
+				"janisdd.vscode-edit-csv"
 			]
 		}
 	},
