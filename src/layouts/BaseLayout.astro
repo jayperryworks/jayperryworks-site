@@ -31,7 +31,7 @@ const title = pageTitle ? `${SITE_TITLE} | ${pageTitle}` : SITE_TITLE;
 			let featureClasses = ['js'];
 			// Add a class if the browser/device supports touch
 			if ("ontouchstart" in document.documentElement) featureClasses.push('touch');
-			document.documentElement.className = featureClasses;
+			document.documentElement.className = featureClasses.join(' ');
 		</script>
 	</head>
 

@@ -29,7 +29,7 @@ import Button from '@components/elements/Button.astro';
 import Layout from '@layouts/BaseLayout.astro';
 
 // types
-import { PrismicDocumentWithUID, PrismicDocument } from '@prismicio/types';
+import { PrismicDocument, PrismicDocumentWithUID } from '@prismicio/types';
 
 export async function getStaticPaths() {
  	const pictures = await prismic.getAllByType('picture', {
@@ -77,7 +77,7 @@ export async function getStaticPaths() {
 		`,
 	});
 
- 	return pictures.map(({ uid, data }, index) => {
+ 	return pictures.map(({ uid, data }) => {
 		const date = prismicHelpers.asDate(data.date_completed);
 
 		const editions = data.editions.map((edition) => {
@@ -186,15 +186,15 @@ function createMediaString() {
 }
 ---
 
-<Layout path="pictures">
+<Layout path="pictures" headerOverlay>
 	<header class="cover">
 		<Image
 			class="cover-image"
 			source={cover}
-			fit="cover"
+			fit="contain"
 		/>
-		<div class="cover-info">
-			<Heading level={1} text={title} />
+		<div class="cover-info | type-scale-epsilon type-role-accent">
+			<Heading level={1} text={title} class="cover-title | type-scale-epsilon type-role-accent" />
 			<time datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
 			{prismicHelpers.isFilled.group(media) && <p set:html={createMediaString()}></p>}
 		</div>
@@ -266,12 +266,14 @@ function createMediaString() {
 
 <style>
 	.cover {
-		margin-block-end: var(--space-wide);
-		padding: var(--space-wide) var(--space-outside);
+		/* margin-block-end: var(--space-wide); */
+		padding: var(--space-xwide) var(--space-outside);
 		display: grid;
 		grid-template-columns: 1fr;
-		grid-template-rows: 60vh 1fr;
+		grid-template-rows: 1fr auto;
 		grid-template-areas: 'image' 'info';
+		gap: var(--space-wide);
+		max-height: 100vh;
 	}
 
 	.cover :global(.cover-image) {
@@ -279,10 +281,29 @@ function createMediaString() {
 		height: 100%;
 	}
 
+	.cover-info {
+		--gap: var(--space-xnarrow);
+		display: flex;
+		gap: var(--gap);
+		align-items: baseline;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+
+	.cover-info > :global(* + *)::before {
+		content: '\2022';
+		display: inline-block;
+		padding-inline-end: var(--gap);
+	}
+
+	.cover-title {
+		color: var(--color-primary);
+	}
+
 	section,
 	nav {
-		padding: var(--space-wide) var(--space-outside);
-		margin-block-start: var(--space-wide);
+		padding: var(--space-xwide) var(--space-outside);
+		margin-block-start: var(--space-xwide);
 	}
 
 	:is(nav, section) > :global(* + *) {
