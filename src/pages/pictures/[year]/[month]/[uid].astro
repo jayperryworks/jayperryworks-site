@@ -17,19 +17,27 @@ import prismic from '@lib/prismic';
 
 // components
 import BlockList from '@components/BlockList.astro';
-import Icon from '@components/elements/Icon.astro';
+import Button from '@components/elements/Button.astro';
 import Image from '@components/elements/Image.astro';
 import Heading from '@components/blocks/Heading.astro';
 import DataGrid from '@components/layout/DataGrid.astro';
 import Gallery from '@components/layout/Gallery.astro';
 import PictureGallery from '@components/navigation/PictureGallery.astro';
-import Button from '@components/elements/Button.astro';
 
 // layout
 import Layout from '@layouts/BaseLayout.astro';
 
 // types
-import { PrismicDocument, PrismicDocumentWithUID } from '@prismicio/types';
+import {
+	DateField,
+	GroupField,
+	ImageField,
+	LinkField,
+	PrismicDocument,
+	PrismicDocumentWithUID,
+	SliceZone,
+	TitleField,
+} from '@prismicio/types';
 
 export async function getStaticPaths() {
  	const pictures = await prismic.getAllByType('picture', {
@@ -145,24 +153,58 @@ export async function getStaticPaths() {
  				...data,
 				editions,
 				nav,
+				// TODO: remove this once edition slices are deleted
+				body: data.body.filter(({ slice_type }) => slice_type !== 'edition'),
  			},
  		};
  	});
 }
 
+export type EditionInfo = {
+	label: string,
+	value: string,
+};
+
+export type Edition = {
+	etsyLink: LinkField,
+	image: ImageField,
+	limit: number,
+	name: string,
+	type: TitleField,
+	info: EditionInfo[],
+};
+
+export type Nav = {
+	title?: TitleField,
+	aspectRatio?: string,
+	pictures: PrismicDocumentWithUID[],
+};
+
+export interface Props {
+	cover: ImageField;
+	date_completed: DateField;
+	nav: Nav;
+	body: SliceZone;
+	title: TitleField;
+	editions?: Edition[];
+	height?: number;
+	media?: GroupField;
+	substrate?: LinkField;
+	width?: number;
+}
+
 const {
-	body,
 	cover,
 	date_completed: dateCompleted,
+	nav,
+	body,
+	title,
 	editions,
 	height,
 	media,
-	nav,
-	series,
 	substrate,
-	title,
 	width,
-} = Astro.props;
+} = Astro.props as Props;
 
 const date = prismicHelpers.asDate(dateCompleted);
 
@@ -188,11 +230,7 @@ function createMediaString() {
 
 <Layout path="pictures" headerOverlay>
 	<header class="cover">
-		<Image
-			class="cover-image"
-			source={cover}
-			fit="contain"
-		/>
+		<Image source={cover} fit="contain" />
 		<div class="cover-info | type-scale-epsilon type-role-accent">
 			<Heading level={1} text={title} class="cover-title | type-scale-epsilon type-role-accent" />
 			<time class="cover-subtitle" datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
@@ -200,10 +238,15 @@ function createMediaString() {
 		</div>
 	</header>
 
-	<BlockList {body} />
+	{prismicHelpers.isFilled.sliceZone(body) && (
+		<section class="wrapper | border-seam-top" id="backstory">
+			<Heading level={1} align="center">Backstory</Heading>
+			<BlockList {body} showLedeStyle />
+		</section>
+	)}
 
 	<!-- editions -->
-	<section class="border-seam-top">
+	<section class="wrapper | border-seam-top" id="editions">
 		<Heading level={2} align="center">
 			Available editions
 		</Heading>
@@ -241,21 +284,20 @@ function createMediaString() {
 		</Gallery>
 	</section>
 
-	<nav class="border-seam-top">
+	<nav class="wrapper | border-seam-top">
 		<header class="nav-header">
 			{nav.title
-				? <Heading level={2} class="nav-header-title | type-scale-gamma">
+				? <Heading level={2} class="nav-header-title">
 						More from the <strong>{prismicHelpers.asText(nav.title)}</strong>&nbsp;series
 					</Heading>
-				: <Heading level={2} class="type-scale-gamma">More work</Heading>
+				: <Heading level={2} class="">More work</Heading>
 			}
-			<a
-				class="nav-back-link | type-role-accent type-scale-epsilon type-link-undecorated"
+			<Button
 				href={indexPage({ uid: 'pictures' } as PrismicDocument)}
+				iconRight={index}
 			>
 				See all
-				<Icon svg={index} margin="left" />
-			</a>
+			</Button>
 		</header>
 		<PictureGallery
 			aspectRatio={nav.aspectRatio}
@@ -266,7 +308,6 @@ function createMediaString() {
 
 <style>
 	.cover {
-		/* margin-block-end: var(--space-wide); */
 		padding: var(--space-xwide) var(--space-outside) var(--space-wide);
 		display: grid;
 		grid-template-columns: 1fr;
@@ -274,11 +315,6 @@ function createMediaString() {
 		grid-template-areas: 'image' 'info';
 		gap: var(--space-wide);
 		max-height: 100vh;
-	}
-
-	.cover .cover-image {
-		width: 100%;
-		height: 100%;
 	}
 
 	.cover-info {
@@ -327,13 +363,11 @@ function createMediaString() {
 		}
 	}
 
-
-	section,
-	nav {
+	.wrapper {
 		padding: var(--space-xwide) var(--space-outside);
 	}
 
-	:is(nav, section) > :global(* + *) {
+	.wrapper > :global(* + *) {
 		padding-block-start: var(--space-wide);
 	}
 
@@ -343,7 +377,7 @@ function createMediaString() {
 		flex-wrap: wrap;
 		gap: var(--space-medium);
 		margin-inline: auto;
-		max-width: var(--content-width-default);
+		max-width: var(--content-width-wide);
 	}
 
 	.edition-title {
@@ -355,7 +389,9 @@ function createMediaString() {
 	}
 
 	.edition-image {
-		flex: 1 1 31rem;
+		flex-grow: 1;
+		flex-shrink: 1;
+		flex-basis: 31rem;
 	}
 
 	.edition-image :global(img) {
@@ -363,23 +399,25 @@ function createMediaString() {
 	}
 
 	.edition-info {
-		display: flex;
-		flex-direction: column;
+		--gap: var(--space-narrow);
 		flex-grow: 1;
 		flex-shrink: 1;
 		flex-basis: 12rem;
-		gap: var(--space-narrow);
+	}
+
+	.edition-info > dl {
+		padding-block-start: var(--space-narrow);
 	}
 
 	.edition-cta {
-		margin-block-start: auto;
+		padding-block-start: var(--space-medium);
 	}
 
 	.nav-header {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		align-items: baseline;
+		align-items: center;
 		flex-wrap: wrap;
 		gap: var(--space-xnarrow);
 	}

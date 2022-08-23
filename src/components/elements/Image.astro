@@ -45,7 +45,7 @@ const height = (source.dimensions.height / source.dimensions.width) * widths[0];
 const classList = [
 	border ? 'border' : '',
 	className,
-	fit ? fit : '',
+	fit ? `fit ${fit}` : '',
 ].join(' ');
 
 const style = [
@@ -79,18 +79,18 @@ const style = [
 		border: var(--border-default-width) solid var(--color-border);
 	}
 
-	.contain,
-	.cover {
+	.fit,
+	[width][height].fit {
 		display: block;
 		height: 100%;
 		width: 100%;
 	}
 
-	.contain {
+	.fit.contain {
 		object-fit: contain;
 	}
 
-	.cover {
+	.fit.cover {
 		object-fit: cover;
 	}
 </style>
