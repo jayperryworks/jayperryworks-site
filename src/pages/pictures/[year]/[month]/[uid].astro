@@ -195,8 +195,8 @@ function createMediaString() {
 		/>
 		<div class="cover-info | type-scale-epsilon type-role-accent">
 			<Heading level={1} text={title} class="cover-title | type-scale-epsilon type-role-accent" />
-			<time datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
-			{prismicHelpers.isFilled.group(media) && <p set:html={createMediaString()}></p>}
+			<time class="cover-subtitle" datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
+			{prismicHelpers.isFilled.group(media) && <p class="cover-subtitle" set:html={createMediaString()}></p>}
 		</div>
 	</header>
 
@@ -244,10 +244,10 @@ function createMediaString() {
 	<nav class="border-seam-top">
 		<header class="nav-header">
 			{nav.title
-				? <Heading level={3} class="nav-header-title | type-role-accent">
-						More work from the <strong>{prismicHelpers.asText(nav.title)}</strong>&nbsp;series
+				? <Heading level={2} class="nav-header-title | type-scale-gamma">
+						More from the <strong>{prismicHelpers.asText(nav.title)}</strong>&nbsp;series
 					</Heading>
-				: <Heading level={3} class="nav-header-title | type-role-accent">More work</Heading>
+				: <Heading level={2} class="type-scale-gamma">More work</Heading>
 			}
 			<a
 				class="nav-back-link | type-role-accent type-scale-epsilon type-link-undecorated"
@@ -267,7 +267,7 @@ function createMediaString() {
 <style>
 	.cover {
 		/* margin-block-end: var(--space-wide); */
-		padding: var(--space-xwide) var(--space-outside);
+		padding: var(--space-xwide) var(--space-outside) var(--space-wide);
 		display: grid;
 		grid-template-columns: 1fr;
 		grid-template-rows: 1fr auto;
@@ -276,13 +276,14 @@ function createMediaString() {
 		max-height: 100vh;
 	}
 
-	.cover :global(.cover-image) {
+	.cover .cover-image {
 		width: 100%;
 		height: 100%;
 	}
 
 	.cover-info {
 		--gap: var(--space-xnarrow);
+		--modifier: calc(20rem - 100%);
 		display: flex;
 		gap: var(--gap);
 		align-items: baseline;
@@ -290,40 +291,66 @@ function createMediaString() {
 		flex-wrap: wrap;
 	}
 
-	.cover-info > :global(* + *)::before {
-		content: '\2022';
-		display: inline-block;
-		padding-inline-end: var(--gap);
-	}
-
 	.cover-title {
 		color: var(--color-primary);
 	}
 
+	.cover-title,
+	.cover-subtitle {
+		text-align: center;
+		width: 100%;
+	}
+
+	@media screen and (min-width: 30em) {
+		.cover-subtitle {
+			width: auto;
+		}
+
+		.cover-subtitle + .cover-subtitle::before {
+			content: '\2022'; /* bullet */
+			display: inline-block;
+			padding-inline-end: var(--gap);
+			font-weight: bold;
+		}
+	}
+
+	@media screen and (min-width: 55em) {
+		.cover-title {
+			width: auto;
+		}
+
+		.cover-info > * + *::before {
+			content: '\2022'; /* bullet */
+			display: inline-block;
+			padding-inline-end: var(--gap);
+			font-weight: bold;
+		}
+	}
+
+
 	section,
 	nav {
 		padding: var(--space-xwide) var(--space-outside);
-		margin-block-start: var(--space-xwide);
 	}
 
 	:is(nav, section) > :global(* + *) {
-		padding-block-start: var(--space-medium);
+		padding-block-start: var(--space-wide);
 	}
 
 	.edition {
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
-		gap: var(--space-narrow);
+		gap: var(--space-medium);
 		margin-inline: auto;
 		max-width: var(--content-width-default);
 	}
 
-	.edition :global(.edition-title) {
+	.edition-title {
 		color: var(--color-secondary);
 	}
 
-	.edition :global(.edition-title) > strong {
+	.edition-title > strong {
 		color: var(--color-primary);
 	}
 
@@ -338,7 +365,9 @@ function createMediaString() {
 	.edition-info {
 		display: flex;
 		flex-direction: column;
-		flex: 1 1 12rem;
+		flex-grow: 1;
+		flex-shrink: 1;
+		flex-basis: 12rem;
 		gap: var(--space-narrow);
 	}
 
@@ -352,10 +381,16 @@ function createMediaString() {
 		justify-content: space-between;
 		align-items: baseline;
 		flex-wrap: wrap;
+		gap: var(--space-xnarrow);
 	}
 
-	.nav-header > :global(.nav-header-title) {
-		flex: 1 1 700px;
+	.nav-header-title {
+		flex: 1 1 44rem;
+		color: var(--color-secondary);
+	}
+
+	.nav-header-title > strong {
+		color: var(--color-primary);
 	}
 
 	.nav-back-link {

@@ -102,7 +102,10 @@ picturesBySeries.push({
 				}
 			</Heading>
 
-			<PictureGallery list={series.pictures as PrismicDocumentWithUID[]} />
+			<PictureGallery
+				list={series.pictures as PrismicDocumentWithUID[]}
+				aspectRatio={series.aspectRatio}
+			/>
 		</section>
 	))}
 </Layout>
