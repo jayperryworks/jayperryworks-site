@@ -22,7 +22,9 @@
 				"agutierrezr.emmet-keybindings",
 				"astro-build.astro-vscode",
 				"ue.alphabetical-sorter",
-				"janisdd.vscode-edit-csv"
+				"janisdd.vscode-edit-csv",
+				"EditorConfig.EditorConfig",
+				"ms-vscode-remote.remote-containers"
 			]
 		}
 	},
