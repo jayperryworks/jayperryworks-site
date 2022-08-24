@@ -1,0 +1,97 @@
+---
+// utilities
+import prismic from '@lib/prismic';
+import * as prismicHelpers from '@prismicio/helpers';
+import { format } from 'date-fns';
+
+// components
+import Layout from '@layouts/BaseLayout.astro';
+import Heading from '@components/blocks/Heading.astro';
+
+// Using 'nested pagination' to generate 'chapter' pages for each longform project
+// -> https://docs.astro.build/en/core-concepts/routing/#nested-pagination
+export async function getStaticPaths({ paginate }) {
+	// query all longform projects
+	// -> use graphQuery to fetch linked Chapter data for each project
+	const projectsResponse = await prismic.getAllByType('longform', {
+		orderings: {
+			field: 'my.longform.date',
+			direction: 'desc',
+		},
+		graphQuery: `
+			{
+				longform {
+					...longformFields
+					chapters {
+						chapter {
+							...on longform_chapter {
+								...longform_chapterFields
+							}
+						}
+					}
+				}
+			}
+		`,
+	});
+
+	// loop over each project and create a massaged list of chapters to be paginated
+	return projectsResponse.map(({ uid, data }) => {
+		const year = format(prismicHelpers.asDate(data.date), 'yyyy');
+		const chapters = data.chapters.map(({ chapter }) => {
+			const {
+				title,
+				subtitle,
+				highlight_color: highlight,
+				primary_foreground_color: primary,
+				secondary_foreground_color: secondary,
+				background_color: bg,
+				body,
+			} = chapter.data;
+
+			return {
+				title,
+				subtitle,
+				body,
+				project: {
+					uid,
+					title: data.title,
+					chapterLabel: data.chapter_label,
+				},
+				theme: {
+					bg,
+					highlight,
+					primary,
+					secondary,
+				},
+			};
+		});
+
+		// one chapter per page under the given project params (patH)
+		return paginate(chapters, {
+			pageSize: 1,
+			params: { year, uid },
+		})
+
+	});
+}
+
+const {
+	url,
+	data,
+	currentPage,
+} = Astro.props.page;
+
+const {
+	title,
+	subtitle,
+	body,
+	project,
+	theme,
+} = data[0];
+---
+
+<Layout>
+	<Heading level={1} text={project.title} />
+	<Heading level={3} subheading>{`${project.chapterLabel} ${currentPage}`}</Heading>
+	<Heading level={2} text={title} />
+</Layout>
