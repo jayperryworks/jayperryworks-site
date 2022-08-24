@@ -231,7 +231,9 @@ function createMediaString() {
 <Layout path="pictures" headerOverlay>
 	<!-- cover -->
 	<header class="cover">
-		<Image source={cover} fit="contain" />
+		<div class="cover-image">
+			<Image source={cover} fit="contain" />
+		</div>
 		<div class="cover-info | type-scale-epsilon type-role-accent">
 			<Heading level={1} text={title} class="cover-title | type-scale-epsilon type-role-accent" />
 			<time class="cover-subtitle" datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
@@ -316,7 +318,13 @@ function createMediaString() {
 		grid-template-rows: 1fr auto;
 		grid-template-areas: 'image' 'info';
 		gap: var(--space-wide);
-		max-height: 100vh;
+		/* max-height: 100vh; */
+		height: 100vh;
+		position: relative;
+	}
+
+	.cover-image {
+		overflow: hidden;
 	}
 
 	.cover-info {
