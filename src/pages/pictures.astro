@@ -1,0 +1,138 @@
+---
+// assets
+import '@styles/tokens/color.css';
+import '@styles/tokens/contentWidth.css';
+import '@styles/tokens/spacing.css';
+import '@styles/utilities/type.css';
+
+// utils
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+import { picture as permalink } from '@lib/routes';
+
+// components
+import Heading from '@components/blocks/Heading.astro';
+import Layout from '@layouts/BaseLayout.astro';
+import PictureGallery from '@components/navigation/PictureGallery.astro';
+import { PrismicDocumentWithUID } from '@prismicio/types';
+
+const pageData = await prismic.getByUID('index_page', 'pictures');
+
+const {
+	title,
+} = pageData.data;
+
+const picturesData = await prismic.getAllByType('picture', {
+	orderings: {
+		field: 'my.picture.date_completed',
+		direction: 'desc',
+	},
+	graphQuery: `
+		{
+			picture {
+				uid
+				date_completed
+				series {
+					...on picture_series {
+						uid
+						title
+						date_started
+					}
+				}
+				cover
+				title
+			}
+		}
+	`,
+});
+
+const seriesList = picturesData
+	.reduce((result, picture) => {
+		const { data: series } = picture.data.series;
+
+		if (!series) return result;
+
+		const { uid, title, date_started: startDate } = series;
+
+		if (result.find((s) => s.uid === uid)) return result;
+
+		result.push({ startDate, title, uid, });
+		return result;
+	}, [])
+	.sort((a, b) => {
+		if (a.startDate > b.startDate) return -1;
+		return 1;
+	});
+
+let picturesBySeries = seriesList.map((group) => {
+	const pictures = picturesData.filter((p) => p.data.series.uid === group.uid);
+	const { width, height } = pictures[0].data.cover.dimensions;
+
+	return {
+		...group,
+		pictures,
+		aspectRatio: `${width} / ${height}`,
+	};
+});
+
+picturesBySeries.push({
+	pictures: picturesData.filter((p) => !p.data.series.data),
+	aspectRatio: '3 / 2',
+})
+---
+
+<Layout pageTitle="Prints & paintings" path="pictures">
+	<Heading
+		class="title"
+		level={1}
+		text={title}
+	/>
+
+	{picturesBySeries.map((series) => (
+		<section
+			class="series"
+			id={series.uid || 'other-work'}
+		>
+			<Heading level={2} class="type-role-accent type-scale-gamma">
+				{series.title
+					? <Fragment>
+							<strong class="series-title">{prismicHelpers.asText(series.title)}</strong> series
+						</Fragment>
+					: <Fragment>Other recent work</Fragment>
+				}
+			</Heading>
+
+			<PictureGallery
+				list={series.pictures as PrismicDocumentWithUID[]}
+				aspectRatio={series.aspectRatio}
+			/>
+		</section>
+	))}
+</Layout>
+
+<style>
+	:global(.title),
+	.series {
+		margin-inline: auto;
+		max-width: var(--content-width-xxwide);
+		padding-inline: var(--space-outside);
+	}
+
+	:global(.title) {
+		padding-block-end: var(--space-wide);
+		padding-block-start: var(--space-xwide);
+	}
+
+	.series {
+		padding-block-end: var(--space-xwide);
+	}
+
+	.series > :global(* + *) {
+		padding-block-start: var(--space-medium);
+	}
+
+	.series .series-title {
+		color: var(--color-primary);
+		font-weight: 100;
+	}
+</style>

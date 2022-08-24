@@ -13,7 +13,7 @@ import { SpaceScale, TypeScale } from '@lib/types';
 
 export type DataItem = {
 	label: string,
-	value: string[],
+	value: string[] | string,
 };
 
 export interface Props {
@@ -50,11 +50,16 @@ const itemClassList = [
 			<dt class="item label">
 				<span class={itemClassList}>{item.label}</span>
 			</dt>
-			{item.value.map((valueItem) => (
-				<dd class={['item', item.value.length > 1 && 'series'].join(' ')}>
-					<span class={itemClassList}>{valueItem}</span>
-				</dd>
-			))}
+			{Array.isArray(item.value)
+				? item.value.map((valueItem) => (
+						<dd class={['item', item.value.length > 1 && 'series'].join(' ')}>
+							<span class={itemClassList}>{valueItem}</span>
+						</dd>
+					))
+				: <dd class="item">
+						<span class={itemClassList}>{item.value}</span>
+					</dd>
+				}
 		</div>
 	))}
 </dl>

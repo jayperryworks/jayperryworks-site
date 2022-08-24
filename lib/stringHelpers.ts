@@ -19,7 +19,7 @@ type arrayToSentenceOptions = {
 
 function arrayToSentence(
 	array: string[],
-	{ period = true }: arrayToSentenceOptions,
+	{ period = true }: arrayToSentenceOptions = {},
 ): string {
 	// Adjust the case for each string
 	return array.reduce((

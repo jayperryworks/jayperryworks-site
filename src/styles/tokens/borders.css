@@ -1,3 +1,5 @@
+@import './color.css';
+
 :root {
 	/* --- default corner radius */
 	--border-radius: 0.2em;
@@ -9,8 +11,10 @@
 	--border-seam-height: 0.5rem;
 
 	/* --- standard border styles */
-	--border-default: 1px dashed var(--color-border);
-	--border-link: 0.125em solid var(--color-highlight);
+	--border-default-width: 1px;
+
+	--border-default: var(--border-default-width) dashed var(--color-border);
+	--border-solid: var(--border-default-width) dashed var(--color-border);
 }
 
 /* --- make the spine wider on larger screens --- */

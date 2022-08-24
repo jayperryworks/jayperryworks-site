@@ -19,12 +19,10 @@ function getDateParams(
 		day: 'dd',
 	};
 
-	return periods
-		.map((period): string => {
-			if (!formats[period]) throw new Error(`Time period '${period}' was not found.`);
-			return format(date, formats[period]);
-		})
-		.join('/');
+	return periods.map((period: string): string => {
+		if (!formats[period]) throw new Error(`Time period '${period}' was not found.`);
+		return format(date, formats[period]);
+	}).join('/');
 }
 
 // --- main pages
@@ -48,7 +46,7 @@ export function blogPost({ data, uid }: PrismicDocument): string {
 
 // --- pictures
 export function picture({ data, uid }: PrismicDocument): string {
-	return `/pictures/${getDateParams(data.date, ['year'])}/${uid}/`;
+	return `/pictures/${getDateParams(data.date_completed, ['year', 'month'])}/${uid}/`;
 }
 
 // --- design
