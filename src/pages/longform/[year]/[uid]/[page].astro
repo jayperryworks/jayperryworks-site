@@ -110,6 +110,8 @@ const {
 	theme,
 } = data[0];
 
+console.log(url.next)
+
 function sequenceNavItemAlign(index: number): Align {
 	if (index === 0) return 'start';
 	if (index === lastPage - 1) return 'end';
@@ -117,34 +119,41 @@ function sequenceNavItemAlign(index: number): Align {
 }
 
 let sequenceNavItems = project.chapterList.map((title, index) => ({
-	title,
-	complete: currentPage > index + 1,
-	current: currentPage === index + 1,
-	href: `/longform/${year}/${uid}/${index + 1}/`,
-	tooltipAlign: sequenceNavItemAlign(index),
-}));
+		title,
+		complete: currentPage > index + 1,
+		current: currentPage === index + 1,
+		href: `/longform/${year}/${uid}/${index + 1}/`,
+		tooltipAlign: sequenceNavItemAlign(index),
+	}));
+
+console.log(sequenceNavItems)
 ---
 
 <Layout>
 	<article>
+
+		<!-- titling -->
 		<header>
-			<!-- project title -->
-			<Heading level={1} text={project.title} />
-			{project.subtitle && <Heading level={1} subheading text={project.subtitle} />}
+			<div class="wrapper">
 
-			<!-- sequence nav -->
-			<div class="header-nav">
-				<SequenceNav>
-					{sequenceNavItems.map((item) => (
-						<SequenceNavItem {...item}>{prismicHelpers.asText(item.title)}</SequenceNavItem>
-					))}
-				</SequenceNav>
+				<!-- project title -->
+				<Heading level={1} text={project.title} />
+				{project.subtitle && <Heading level={1} subheading text={project.subtitle} />}
+
+				<!-- sequence nav -->
+				<div class="header-nav">
+					<SequenceNav>
+						{sequenceNavItems.map((item) => (
+							<SequenceNavItem {...item}>{prismicHelpers.asText(item.title)}</SequenceNavItem>
+						))}
+					</SequenceNav>
+				</div>
+
+				<!-- chapter title -->
+				<Heading level={3} subheading>{`${project.chapterLabel} ${currentPage}`}</Heading>
+				<Heading level={2} class="header-chapter" text={title} />
+				{subtitle && <Heading level={3} class="header-chapter" subheading text={subtitle} />}
 			</div>
-
-			<!-- chapter title -->
-			<Heading level={3} subheading>{`${project.chapterLabel} ${currentPage}`}</Heading>
-			<Heading level={2} class="header-chapter" text={title} />
-			{subtitle && <Heading level={3} class="header-chapter" subheading text={subtitle} />}
 		</header>
 
 		<!-- body -->
@@ -152,15 +161,40 @@ let sequenceNavItems = project.chapterList.map((title, index) => ({
 	</article>
 
 	<!-- sequence nav -->
-	<nav></nav>
+	<nav class="footer-nav">
+		<div class="wrapper">
+			<SequenceNav>
+				{sequenceNavItems.map((item) => (
+					<SequenceNavItem {...item} next={item.href === url.next}>
+						{prismicHelpers.asText(item.title)}
+					</SequenceNavItem>
+				))}
+			</SequenceNav>
+		</div>
+	</nav>
 </Layout>
 
 <style>
+	article {
+		padding-block: var(--space-xwide);
+	}
+
+	article > * + * {
+		padding-block-start: var(--space-xwide);
+	}
+
 	header {
 		text-align: center;
-		padding: var(--space-xwide) var(--space-outside);
-		max-width: var(--content-width-wide);
+	}
+
+	header,
+	.footer-nav {
+		padding-inline: var(--space-outside);
+	}
+
+	.wrapper {
 		margin-inline: auto;
+		max-width: var(--content-width-wide);
 	}
 
 	.header-nav {
@@ -169,5 +203,9 @@ let sequenceNavItems = project.chapterList.map((title, index) => ({
 
 	.header-chapter {
 		padding-block-start: var(--space-xxnarrow);
+	}
+
+	.footer-nav {
+		padding-block-end: var(--space-xwide);
 	}
 </style>

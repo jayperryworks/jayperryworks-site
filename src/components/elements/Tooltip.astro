@@ -25,7 +25,6 @@
 
 <span
 	class={classList}
-	style={`--show: ${show ? 1 : 0}`}
 >
 	<slot></slot>
 </span>
@@ -58,6 +57,10 @@
 		transition: var(--transition-duration) opacity ease-in-out;
 		will-change: opacity;
 		z-index: 4;
+	}
+
+	span.show {
+		--show: 1;
 	}
 
 	span.align-start {
