@@ -1,4 +1,8 @@
 ---
+// assets
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/contentWidth.css';
+
 // utilities
 import prismic from '@lib/prismic';
 import * as prismicHelpers from '@prismicio/helpers';
@@ -8,6 +12,11 @@ import { format } from 'date-fns';
 import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
 import Heading from '@components/blocks/Heading.astro';
+import SequenceNav from '@components/navigation/SequenceNav.astro';
+import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
+
+// types
+import { Align } from '@lib/types';
 
 // Using 'nested pagination' to generate 'chapter' pages for each longform project
 // -> https://docs.astro.build/en/core-concepts/routing/#nested-pagination
@@ -50,6 +59,7 @@ export async function getStaticPaths({ paginate }) {
 			} = chapter.data;
 
 			return {
+				uid,
 				title,
 				subtitle,
 				body,
@@ -58,6 +68,7 @@ export async function getStaticPaths({ paginate }) {
 					title: data.title,
 					subtitle: data.subtitle,
 					chapterLabel: data.chapter_label,
+					chapterList: data.chapters.map(({ chapter }) => chapter.data.title),
 				},
 				theme: {
 					bg,
@@ -67,6 +78,8 @@ export async function getStaticPaths({ paginate }) {
 				},
 			};
 		});
+
+		// const chapterNavList = chapters.map(({ title, uid }) => ({ title, uid, data, }));
 
 		// one chapter per page under the given project params (patH)
 		return paginate(chapters, {
@@ -78,9 +91,15 @@ export async function getStaticPaths({ paginate }) {
 }
 
 const {
+	year,
+	uid,
+} = Astro.params;
+
+const {
 	url,
 	data,
 	currentPage,
+	lastPage,
 } = Astro.props.page;
 
 const {
@@ -90,6 +109,20 @@ const {
 	project,
 	theme,
 } = data[0];
+
+function sequenceNavItemAlign(index: number): Align {
+	if (index === 0) return 'start';
+	if (index === lastPage - 1) return 'end';
+	return 'center';
+}
+
+let sequenceNavItems = project.chapterList.map((title, index) => ({
+	title,
+	complete: currentPage > index + 1,
+	current: currentPage === index + 1,
+	href: `/longform/${year}/${uid}/${index + 1}/`,
+	tooltipAlign: sequenceNavItemAlign(index),
+}));
 ---
 
 <Layout>
@@ -97,13 +130,21 @@ const {
 		<header>
 			<!-- project title -->
 			<Heading level={1} text={project.title} />
-			{project.subtitle && <Heading level={1} text={project.subtitle} />}
+			{project.subtitle && <Heading level={1} subheading text={project.subtitle} />}
 
 			<!-- sequence nav -->
+			<div class="header-nav">
+				<SequenceNav>
+					{sequenceNavItems.map((item) => (
+						<SequenceNavItem {...item}>{prismicHelpers.asText(item.title)}</SequenceNavItem>
+					))}
+				</SequenceNav>
+			</div>
 
 			<!-- chapter title -->
 			<Heading level={3} subheading>{`${project.chapterLabel} ${currentPage}`}</Heading>
-			<Heading level={2} text={title} />
+			<Heading level={2} class="header-chapter" text={title} />
+			{subtitle && <Heading level={3} class="header-chapter" subheading text={subtitle} />}
 		</header>
 
 		<!-- body -->
@@ -118,5 +159,15 @@ const {
 	header {
 		text-align: center;
 		padding: var(--space-xwide) var(--space-outside);
+		max-width: var(--content-width-wide);
+		margin-inline: auto;
+	}
+
+	.header-nav {
+		padding-block: var(--space-wide);
+	}
+
+	.header-chapter {
+		padding-block-start: var(--space-xxnarrow);
 	}
 </style>

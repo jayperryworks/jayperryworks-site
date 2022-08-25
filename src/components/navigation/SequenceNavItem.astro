@@ -1,0 +1,114 @@
+---
+// components
+import Tooltip from '@components/elements/Tooltip.astro';
+
+
+// types
+import type { Align } from '@lib/types';
+
+export interface Props {
+	href: string;
+	complete?: boolean;
+	current?: boolean;
+	next?: boolean;
+	tooltipAlign?: Align;
+}
+
+const {
+	complete = false,
+	current = false,
+	next = false,
+	href,
+	tooltipAlign = 'center',
+} = Astro.props as Props;
+
+const classList = [
+	complete ? 'complete' : '',
+	current ? 'current' : '',
+	next ? 'next' : '',
+].join(' ');
+---
+
+<li>
+	<a class={classList} {href}>
+		<Tooltip class="tooltip" align={tooltipAlign}>
+			<slot></slot>
+		</Tooltip>
+	</a>
+</li>
+
+<style>
+	a {
+		--dot-size: 1.2em;
+		--transition-duration: 0.25s;
+
+		background-color: var(--color-bg);
+		border-radius: 10000px;
+		border: 2px solid var(--color-primary);
+		cursor: pointer;
+		display: block;
+		height: var(--dot-size);
+		position: relative;
+		width: var(--dot-size);
+	}
+
+	/* highlight dot */
+	a::before {
+		--margin: 0.2em;
+
+		border-radius: 10000px;
+		bottom: var(--margin);
+		content: '';
+		left: var(--margin);
+		opacity: 0;
+		position: absolute;
+		right: var(--margin);
+		top: var(--margin);
+		transition-duration: var(--transition-duration);
+		transition-property: opacity, background-color;
+		transition-timing-function: ease-in-out;
+		will-change: opacity, background-color;
+		z-index: 1;
+	}
+
+
+	a.current::before {
+		background-color: var(--color-highlight);
+		opacity: 1;
+	}
+
+	a.next::before {
+		background-color: var(--color-highlight);
+		animation: bhref 1s ease infinite alternate;
+	}
+
+	a.complete {
+		border-color: var(--color-secondary);
+	}
+
+	a.complete::before {
+		background-color: var(--color-secondary);
+		opacity: 1;
+	}
+
+	a:hover::before {
+		background-color: var(--color-primary);
+		opacity: 1;
+		animation: none;
+	}
+
+	@keyframes bhref {
+		from {
+			opacity: 0;
+		}
+
+		to {
+			opacity: 1;
+		}
+	}
+
+	/* reveal the tooltip when a a is hovered */
+	a:hover .tooltip {
+		--show: 1;
+	}
+</style>
