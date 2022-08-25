@@ -16,7 +16,13 @@ import SequenceNav from '@components/navigation/SequenceNav.astro';
 import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
 
 // types
-import { Align } from '@lib/types';
+import type { Align } from '@lib/types';
+import type { TitleField } from '@prismicio/types';
+import type { Props as SequenceNavItemProps } from '@components/navigation/SequenceNavItem.astro';
+
+export interface SequenceNavItemData extends SequenceNavItemProps {
+	title: TitleField;
+}
 
 // Using 'nested pagination' to generate 'chapter' pages for each longform project
 // -> https://docs.astro.build/en/core-concepts/routing/#nested-pagination
@@ -110,23 +116,22 @@ const {
 	theme,
 } = data[0];
 
-console.log(url.next)
-
 function sequenceNavItemAlign(index: number): Align {
 	if (index === 0) return 'start';
 	if (index === lastPage - 1) return 'end';
 	return 'center';
 }
 
-let sequenceNavItems = project.chapterList.map((title, index) => ({
+// list of chapter links for the SequenceNav at the top and bottom of the page
+const sequenceNavItems = project.chapterList.map(
+	(title: TitleField, index: number): SequenceNavItemData => ({
 		title,
+		href: `/longform/${year}/${uid}/${index + 1}/`,
 		complete: currentPage > index + 1,
 		current: currentPage === index + 1,
-		href: `/longform/${year}/${uid}/${index + 1}/`,
 		tooltipAlign: sequenceNavItemAlign(index),
-	}));
-
-console.log(sequenceNavItems)
+	})
+);
 ---
 
 <Layout>

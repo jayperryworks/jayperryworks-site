@@ -2,7 +2,6 @@
 // components
 import Tooltip from '@components/elements/Tooltip.astro';
 
-
 // types
 import type { Align } from '@lib/types';
 
@@ -79,7 +78,7 @@ const classList = [
 
 	a.next::before {
 		background-color: var(--color-highlight);
-		animation: bhref 1s ease infinite alternate;
+		animation: next 0.75s ease infinite alternate;
 	}
 
 	a.complete {
@@ -97,7 +96,7 @@ const classList = [
 		animation: none;
 	}
 
-	@keyframes bhref {
+	@keyframes next {
 		from {
 			opacity: 0;
 		}
