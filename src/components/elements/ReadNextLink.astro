@@ -8,11 +8,16 @@ import arrowRight from '@icons/arrow-right.svg?raw';
 // components
 import Icon from '@components/elements/Icon.astro';
 
+// types
+import { Align } from '@lib/types';
+
 export interface Props {
 	link: string;
 	title: string;
 	eyebrow?: string;
 	icon?: string;
+	align?: Align;
+	class?: string;
 }
 
 const {
@@ -20,47 +25,66 @@ const {
 	eyebrow,
 	title,
 	icon = arrowRight,
+	align = 'start',
+	class: className = '',
 } = Astro.props as Props;
+
+const classList = [
+	'next',
+	`align-${align}`,
+].join(' ');
 ---
 
-<p class="next">
+<p class={classList}>
 	{eyebrow && (
-		<a
-			class="eyebrow | type-role-accent"
-			href={link}
-		>
-			{eyebrow}
-		</a>
+		<span class="eyebrow | type-role-accent type-scale-epsilon">
+			<slot name="eyebrow"></slot>
+		</span>
 	)}
-	<span class="title | type-role-display type-scale-gamma">
-		<a href={link}>{title}</a>
-	</span>
+	<a
+		class="title | type-role-display type-scale-gamma type-link-undecorated"
+		href={link}
+	>
+		<slot name="title"></slot>
+	</a>
 	<Icon svg={icon} size="large" class="icon" />
 </p>
 
 <style>
 	.next {
-		align-items: start;
-		display: inline-grid;
-		gap: 0 var(--space-medium);
+		--gap: var(--space-xxnarrow) var(--space-medium);
+
+		align-items: center;
+		gap: var(--gap);
 		grid-template-areas:
 			'eyebrow .'
 			'title icon';
-		grid-template-columns: minmax(0, 1fr) 1.44em;
-		grid-template-rows: auto;
-		justify-items: start;
 		transition: 0.25s color ease;
 		will-change: color;
 	}
 
-	.next:hover {
+	.next.align-left {
+		display: inline-grid;
+		grid-template-columns: minmax(0, 1fr) 1.44em;
+		grid-template-rows: auto;
+		justify-items: start;
+	}
+
+	.next.align-right {
+		display: grid;
+		grid-template-columns: auto auto;
+		grid-template-rows: auto auto;
+		justify-items: end;
+		text-align: end;
+	}
+
+	.next:hover :is(.title, .icon),
+	.next:active :is(.title, .icon) {
 		color: var(--color-highlight);
 	}
 
 	.eyebrow {
-		border: 0;
 		display: inline-block;
-		font-weight: 200;
 		grid-area: eyebrow;
 	}
 
@@ -69,7 +93,7 @@ const {
 		grid-area: title;
 	}
 
-	.next :global(.icon) {
+	.icon {
 		grid-area: icon;
 		margin: 0;
 	}

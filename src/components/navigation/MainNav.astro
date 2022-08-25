@@ -188,8 +188,8 @@ const {
     box-shadow: none;
     cursor: pointer;
     display: inline-block;
-    margin-top: 1em;
-    margin-top: var(--space-narrow);
+    margin-block-start: 1em;
+    margin-block-start: var(--space-narrow);
     outline: none;
     padding: 0;
     transition: color 0.25s ease-in-out;
@@ -202,8 +202,8 @@ const {
   }
 
   .nav-button.close {
-    margin-right: 1.5em;
-    margin-right: var(--space-medium);
+    margin-inline-end: 1.5em;
+    margin-inline-end: var(--space-medium);
     position: absolute;
     right: 0;
     top: 0;
@@ -262,11 +262,11 @@ const {
 
   .nav-list > li {
     display: block;
-    margin-top: 0;
+    margin-block-start: 0;
   }
 
   .nav-list > li + li {
-    padding-top: var(--space-narrow);
+    padding-block-start: var(--space-narrow);
   }
 
   .nav-item {
@@ -318,8 +318,8 @@ const {
 
     .nav-item {
       font-size: var(--type-scale-zeta);
-      padding-top: 0.8em;
-      padding-top: var(--space-xnarrow);
+      padding-block-start: 0.8em;
+      padding-block-start: var(--space-xnarrow);
     }
 
     .nav-item:hover,
@@ -347,10 +347,10 @@ const {
     }
 
     .nav-list > li + li {
-      margin-left: 1em;
-      margin-left: var(--space-narrow);
-      margin-top:  0;
-      padding-top: 0;
+      margin-inline-start: 1em;
+      margin-inline-start: var(--space-narrow);
+      margin-block-start:  0;
+      padding-block-start: 0;
     }
   }
 </style>

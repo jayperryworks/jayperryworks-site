@@ -92,22 +92,24 @@ const postList = page.data.map(({ uid, tags, data }) => {
 					<BlockList body={post.summary} />
 					{(post.readMore || post.link) && (
 						<footer class="post-footer">
-							{post.readMore && (
-								<Button
-									href={post.path}
-									iconRight={arrowRight}
-								>
-									Read more
-								</Button>
-							)}
-							{post.link && (
-								<Button
-									href={post.link}
-									iconRight={externalLink}
-								>
-									Direct link
-								</Button>
-							)}
+							<div class="post-buttons | wrapper">
+								{post.readMore && (
+									<Button
+										href={post.path}
+										iconRight={arrowRight}
+									>
+										Read more
+									</Button>
+								)}
+								{post.link && (
+									<Button
+										href={post.link}
+										iconRight={externalLink}
+									>
+										Direct link
+									</Button>
+								)}
+							</div>
 						</footer>
 					)}
 				</article>
@@ -166,7 +168,7 @@ const postList = page.data.map(({ uid, tags, data }) => {
 	}
 
 	.post-header > time {
-		padding-top: var(--space-medium);
+		padding-block-start: var(--space-medium);
 	}
 
 	.post-link {
@@ -179,14 +181,20 @@ const postList = page.data.map(({ uid, tags, data }) => {
 	}
 
 	.post-footer {
+		padding-block-start: var(--space-wide);
+		padding-inline: var(--space-outside);
+	}
+
+	.post-buttons {
 		display: flex;
 		flex-wrap: wrap;
 		gap: var(--space-narrow);
 		justify-content: space-between;
-		margin-inline: auto;
+	}
+
+	.wrapper {
 		max-width: var(--content-width-default);
-		padding-block-start: var(--space-wide);
-		padding-inline: var(--space-outside);
+		margin-inline: auto;
 	}
 
 	.date {
@@ -210,7 +218,7 @@ const postList = page.data.map(({ uid, tags, data }) => {
 		flex-direction: column;
 		gap: var(--gap-vertical);
 		list-style: none;
-		padding-left: 0;
+		padding-inline-start: 0;
 	}
 
 	.nav-link {

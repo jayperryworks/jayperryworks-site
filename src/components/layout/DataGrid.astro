@@ -71,13 +71,13 @@ const itemClassList = [
 	}
 
 	.group + .group {
-		margin-top: var(--gutter);
+		margin-block-start: var(--gutter);
 	}
 
 	.item {
 		line-height: var(--type-leading-tight);
 	  display: block;
-	  margin-left: 0; /* reset dt/dd default indent */
+	  margin-inline-start: 0; /* reset dt/dd default indent */
 	}
 
 	.item > span {
@@ -124,7 +124,7 @@ const itemClassList = [
 		}
 
 		.group + .group {
-			margin-top: 0;
+			margin-block-start: 0;
 		}
 	}
 </style>

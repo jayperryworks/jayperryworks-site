@@ -83,7 +83,7 @@ const classList = [
     font-size: 1rem; /* fallback reset */
     font-size: var(--font-size);
     font-weight: 300;
-    margin-bottom: var(--shadow-spread);
+    margin-block-end: var(--shadow-spread);
     padding: var(--padding-y) var(--padding-x) calc(var(--padding-y) - var(--baseline-compensation));
     position: relative;
 		text-decoration: none;
@@ -135,11 +135,11 @@ const classList = [
 
   /* --- icons --- */
   .button.has-icon.left {
-    padding-left: calc(var(--padding-x) + var(--icon-padding));
+    padding-inline-start: calc(var(--padding-x) + var(--icon-padding));
   }
 
   .button.has-icon.right {
-    padding-right: calc(var(--padding-x) + var(--icon-padding));
+    padding-inline-end: calc(var(--padding-x) + var(--icon-padding));
   }
 
   .button :global(.icon) {

@@ -43,7 +43,7 @@
 .border-spine {
 	--spine-color: var(--color-highlight);
 
-	padding-left: var(--border-spine-width);
+	padding-inline-start: var(--border-spine-width);
 	position: relative;
 }
 
