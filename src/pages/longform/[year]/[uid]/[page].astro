@@ -2,7 +2,6 @@
 // assets
 import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
-import arrowRight from '@icons/arrow-right.svg?raw';
 
 // utilities
 import { format } from 'date-fns';
@@ -14,6 +13,7 @@ import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
 import Icon from '@components/elements/Icon.astro';
 import Heading from '@components/blocks/Heading.astro';
+import ReadNextLink from '@components/navigation/ReadNextLink.astro';
 import SequenceNav from '@components/navigation/SequenceNav.astro';
 import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
 
@@ -182,35 +182,23 @@ const nextChapter = {
 				))}
 			</SequenceNav>
 
-			{!url.next
-				? (
-						<p class="next | wrapper">
-							<a
-								class="next-label | type-role-accent type-scale-gamma type-link-undecorated"
-								href={nextChapter.href}
-							>
-								{project.chapterLabel} {currentPage + 1}
-							</a>
-							<a
-								class="next-title | type-role-display type-scale-beta type-link-undecorated"
-								href={nextChapter.href}
-							>
-								{prismicHelpers.asText(nextChapter.title)}
-							</a>
-							<a
-								class="next-icon | type-link-undecorated"
-								href={nextChapter.href}
-							>
-								<Icon svg={arrowRight} size="large" />
-							</a>
-						</p>
-				)
-				: (
-					<aside class="signoff type-role-body type-scale-gamma">
-						The end
-					</aside>
-				)
-			}
+			<div class="next">
+				{url.next
+					? <ReadNextLink
+							align="end"
+							class="next"
+							eyebrowSize="gamma"
+							link={nextChapter.href}
+							titleSize="beta"
+						>
+							<Fragment slot="eyebrow">{`${project.chapterLabel} ${currentPage + 1}`}</Fragment>
+							<Fragment slot="title">{prismicHelpers.asText(nextChapter.title)}</Fragment>
+						</ReadNextLink>
+					: <aside class="end | type-role-body type-scale-gamma">
+							The end
+						</aside>
+				}
+			</div>
 		</div>
 	</nav>
 </Layout>
@@ -256,35 +244,12 @@ const nextChapter = {
 		padding-block-end: var(--space-xwide);
 	}
 
-	.next {
-		align-items: center;
-		display: grid;
-		gap: var(--space-xxnarrow) var(--space-medium);
-		grid-template-areas:
-			'label .'
-			'title icon';
-		grid-template-columns: auto auto;
-		grid-template-rows: auto auto;
-		justify-content: end;
+	.next{
 		padding-block-start: var(--space-wide);
-		text-align: right;
 	}
 
-	.next-label {
-		grid-area: label;
-	}
-
-	.next-title {
-		grid-area: title;
-	}
-
-	.next-icon {
-		grid-area: icon;
-	}
-
-	.signoff {
+	.end {
 		text-align: center;
-		padding-block-start: var(--space-wide);
 		font-style: italic;
 		color: var(--color-secondary);
 	}
