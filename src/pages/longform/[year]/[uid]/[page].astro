@@ -1,16 +1,18 @@
 ---
 // assets
-import '@styles/tokens/spacing.css';
 import '@styles/tokens/contentWidth.css';
+import '@styles/tokens/spacing.css';
+import arrowRight from '@icons/arrow-right.svg?raw';
 
 // utilities
-import prismic from '@lib/prismic';
-import * as prismicHelpers from '@prismicio/helpers';
 import { format } from 'date-fns';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
 
 // components
 import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
+import Icon from '@components/elements/Icon.astro';
 import Heading from '@components/blocks/Heading.astro';
 import SequenceNav from '@components/navigation/SequenceNav.astro';
 import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
@@ -85,9 +87,7 @@ export async function getStaticPaths({ paginate }) {
 			};
 		});
 
-		// const chapterNavList = chapters.map(({ title, uid }) => ({ title, uid, data, }));
-
-		// one chapter per page under the given project params (patH)
+		// one chapter per page under the given project params
 		return paginate(chapters, {
 			pageSize: 1,
 			params: { year, uid },
@@ -132,6 +132,12 @@ const sequenceNavItems = project.chapterList.map(
 		tooltipAlign: sequenceNavItemAlign(index),
 	})
 );
+
+const nextChapter = {
+	title: project.chapterList[currentPage],
+	number: currentPage + 1,
+	href: project.chapterList[currentPage].href,
+}
 ---
 
 <Layout>
@@ -139,14 +145,14 @@ const sequenceNavItems = project.chapterList.map(
 
 		<!-- titling -->
 		<header>
-			<div class="wrapper">
+			<div class="wrapper wide">
 
 				<!-- project title -->
 				<Heading level={1} text={project.title} />
 				{project.subtitle && <Heading level={1} subheading text={project.subtitle} />}
 
 				<!-- sequence nav -->
-				<div class="header-nav">
+				<div class="header-nav | wrapper">
 					<SequenceNav>
 						{sequenceNavItems.map((item) => (
 							<SequenceNavItem {...item}>{prismicHelpers.asText(item.title)}</SequenceNavItem>
@@ -175,6 +181,36 @@ const sequenceNavItems = project.chapterList.map(
 					</SequenceNavItem>
 				))}
 			</SequenceNav>
+
+			{!url.next
+				? (
+						<p class="next | wrapper">
+							<a
+								class="next-label | type-role-accent type-scale-gamma type-link-undecorated"
+								href={nextChapter.href}
+							>
+								{project.chapterLabel} {currentPage + 1}
+							</a>
+							<a
+								class="next-title | type-role-display type-scale-beta type-link-undecorated"
+								href={nextChapter.href}
+							>
+								{prismicHelpers.asText(nextChapter.title)}
+							</a>
+							<a
+								class="next-icon | type-link-undecorated"
+								href={nextChapter.href}
+							>
+								<Icon svg={arrowRight} size="large" />
+							</a>
+						</p>
+				)
+				: (
+					<aside class="signoff type-role-body type-scale-gamma">
+						The end
+					</aside>
+				)
+			}
 		</div>
 	</nav>
 </Layout>
@@ -199,11 +235,17 @@ const sequenceNavItems = project.chapterList.map(
 
 	.wrapper {
 		margin-inline: auto;
+		max-width: var(--content-width-default);
+	}
+
+	.wrapper.wide {
 		max-width: var(--content-width-wide);
 	}
 
 	.header-nav {
 		padding-block: var(--space-wide);
+		margin-inline: auto;
+		max-width: var(--content-width-default);
 	}
 
 	.header-chapter {
@@ -212,5 +254,38 @@ const sequenceNavItems = project.chapterList.map(
 
 	.footer-nav {
 		padding-block-end: var(--space-xwide);
+	}
+
+	.next {
+		align-items: center;
+		display: grid;
+		gap: var(--space-xxnarrow) var(--space-medium);
+		grid-template-areas:
+			'label .'
+			'title icon';
+		grid-template-columns: auto auto;
+		grid-template-rows: auto auto;
+		justify-content: end;
+		padding-block-start: var(--space-wide);
+		text-align: right;
+	}
+
+	.next-label {
+		grid-area: label;
+	}
+
+	.next-title {
+		grid-area: title;
+	}
+
+	.next-icon {
+		grid-area: icon;
+	}
+
+	.signoff {
+		text-align: center;
+		padding-block-start: var(--space-wide);
+		font-style: italic;
+		color: var(--color-secondary);
 	}
 </style>
