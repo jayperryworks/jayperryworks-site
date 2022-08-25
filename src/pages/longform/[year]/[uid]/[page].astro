@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 
 // components
 import Layout from '@layouts/BaseLayout.astro';
+import BlockList from '@components/BlockList.astro';
 import Heading from '@components/blocks/Heading.astro';
 
 // Using 'nested pagination' to generate 'chapter' pages for each longform project
@@ -55,6 +56,7 @@ export async function getStaticPaths({ paginate }) {
 				project: {
 					uid,
 					title: data.title,
+					subtitle: data.subtitle,
 					chapterLabel: data.chapter_label,
 				},
 				theme: {
@@ -91,7 +93,30 @@ const {
 ---
 
 <Layout>
-	<Heading level={1} text={project.title} />
-	<Heading level={3} subheading>{`${project.chapterLabel} ${currentPage}`}</Heading>
-	<Heading level={2} text={title} />
+	<article>
+		<header>
+			<!-- project title -->
+			<Heading level={1} text={project.title} />
+			{project.subtitle && <Heading level={1} text={project.subtitle} />}
+
+			<!-- sequence nav -->
+
+			<!-- chapter title -->
+			<Heading level={3} subheading>{`${project.chapterLabel} ${currentPage}`}</Heading>
+			<Heading level={2} text={title} />
+		</header>
+
+		<!-- body -->
+		<BlockList {body} showLedeStyle />
+	</article>
+
+	<!-- sequence nav -->
+	<nav></nav>
 </Layout>
+
+<style>
+	header {
+		text-align: center;
+		padding: var(--space-xwide) var(--space-outside);
+	}
+</style>
