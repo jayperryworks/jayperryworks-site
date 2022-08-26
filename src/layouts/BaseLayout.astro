@@ -1,23 +1,62 @@
 ---
+// assets
 import '@styles/base/reset.css';
 import '@styles/base/type.css';
+
+// utilities
+import { convertHexToHSL } from '@lib/colorHelpers';
+
+// components
 import MainNav from '@components/navigation/MainNav.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
+
+// types
+import { HexColor } from '@lib/types';
+
+export type Theme = {
+	bg?: HexColor;
+	border?: HexColor;
+	highlight?: HexColor;
+	primary?: HexColor;
+	secondary?: HexColor;
+	shadow?: HexColor;
+};
 
 export interface Props {
 	pageTitle?: string;
 	path?: string;
 	headerOverlay?: boolean;
+	theme?: Theme;
 };
 
 const {
 	pageTitle,
 	headerOverlay = false,
 	path = 'home',
-	} = Astro.props as Props;
+	theme,
+} = Astro.props as Props;
 
 const SITE_TITLE = 'Jay Perry';
 const title = pageTitle ? `${SITE_TITLE} | ${pageTitle}` : SITE_TITLE;
+
+const roles = [
+	'bg',
+	'border',
+	'highlight',
+	'primary',
+	'secondary',
+	'shadow',
+];
+
+const pageTheme = theme
+	? roles.reduce((result, role) => {
+		if (theme[role]) {
+			result[`color-${role}`] = convertHexToHSL(theme[role]);
+			return result;
+		}
+		return result;
+	}, {})
+	: null;
 ---
 
 <html lang="en" class="no-js no-touch">
@@ -40,18 +79,19 @@ const title = pageTitle ? `${SITE_TITLE} | ${pageTitle}` : SITE_TITLE;
 		<main>
 			<slot />
 		</main>
-		<MainFooter />
+		<MainFooter class="footer" />
 	</body>
 </html>
 
+<style define:vars={pageTheme} is:global></style>
+
 <style>
 	body {
-		display: flex;
+		background-color: var(--color-bg);
+		color: var(--color-primary);
+		display: grid;
 		flex-direction: column;
+		grid-template-rows: auto 1fr auto;
 		min-height: 100vh;
-	}
-
-	main {
-		flex: 1;
 	}
 </style>

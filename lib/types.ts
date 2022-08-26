@@ -3,10 +3,20 @@ import {
 	TitleField,
 } from '@prismicio/types';
 
-export type Align = 'start' | 'center' | 'end';
-export type TypeScale = 'alpha' | 'beta' | 'gamma' | 'delta' | 'epsilon' | 'zeta';
-export type SpaceScale = 'xxnarrow' | 'xnarrow' | 'narrow' | 'medium' | 'wide' | 'xwide';
+// color
 export type ColorRoles = 'primary' | 'secondary' | 'highlight' | 'bg' | 'island' | 'well' | 'border' | 'shadow';
+
+export type CSSVariable = `var(--${string})`;
+export type CSSHue = `${number | string}deg` | CSSVariable;
+export type CSSPercentage = `${number | string}%` | CSSVariable;
+
+export type HexColor = `#${number}` | CSSVariable;
+export type HSLColor = `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage})`
+	| `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage} / ${number | string})`;
+
+// layout and UI
+export type Align = 'start' | 'center' | 'end';
+export type SpaceScale = 'xxnarrow' | 'xnarrow' | 'narrow' | 'medium' | 'wide' | 'xwide';
 export type Prominence = 'Small' | 'Medium' | 'Large';
 export type GallerySize = 'small' | 'medium' | 'large';
 export type ImageFit = 'default' | 'contain' | 'cover';
@@ -26,6 +36,9 @@ export interface Block {
 	// e.g. a Passage with a prismicText prop
 	[key: string]: unknown;
 }
+
+// type
+export type TypeScale = 'alpha' | 'beta' | 'gamma' | 'delta' | 'epsilon' | 'zeta';
 
 export interface FormattedText {
 	prismicText?: RichTextField;
