@@ -2,20 +2,17 @@
 import convertColor from 'color-convert';
 
 // types
-import { HexColor, CSSVariable, HSLColor } from './types.ts';
-
-type HSLColorData = {
-	h: number,
-	s: number,
-	l: number,
-};
+import {
+	CSSVariable,
+	HexColor,
+	HSLColor,
+} from './types.ts';
 
 export function convertHexToHSL(hex: HexColor): HSLColor {
-	// convert the color from a hex to hsl (array)...
+	// convert the color from a hex to an array of hsl values...
 	const hsl = convertColor.hex.hsl(hex);
 
-	// ...and then to an object, so we can use each for CSS variables
-	// -> e.g. --color-highlight-h
+	// ...and then to CSS (string), with or without alpha channel
 	if (hsl.length > 3) {
 		return `hsl(${hsl[0]}deg ${hsl[1]}% ${hsl[2]}% / ${hsl[3]})`;
 	}

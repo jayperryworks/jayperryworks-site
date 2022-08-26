@@ -48,6 +48,7 @@ const roles = [
 	'shadow',
 ];
 
+// if a theme has been passed in, replace the default color tokens with the theme values
 const pageTheme = theme
 	? roles.reduce((result, role) => {
 		if (theme[role]) {
@@ -83,6 +84,7 @@ const pageTheme = theme
 	</body>
 </html>
 
+<!-- set the page theme as root custom properties to override the default tokens -->
 <style define:vars={pageTheme} is:global></style>
 
 <style>

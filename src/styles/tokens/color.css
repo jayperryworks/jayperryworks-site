@@ -67,8 +67,7 @@
 	--color-shadow-a: 0.6;
 
 	--color-shadow: hsl(
-		var(--color-shadow-h) var(--color-shadow-s) var(--color-shadow-l) /
-			var(--color-shadow-a)
+		var(--color-shadow-h) var(--color-shadow-s) var(--color-shadow-l) / var(--color-shadow-a)
 	);
 }
 
