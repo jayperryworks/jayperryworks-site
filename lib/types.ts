@@ -17,19 +17,13 @@ export type HSLColor = `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage})`
 type HSLChannel = 'h' | 's' | 'l' | 'a';
 
 // an object with HSL color data, used for generating theme values
-export type HSLObject = {
-	[key in HSLChannel]?: number;
-};
+export type HSLObject = Record<HSLChannel, number>;
 
 // a page theme with literal CSS values
-export type Theme = {
-	[key in ColorRoles]?: HexColor | HSLColor | CSSVariable;
-};
+export type Theme = Record<ColorRoles, HexColor | HSLColor | CSSVariable>;
 
 // a page theme with HSLObject data
-export type ThemeData = {
-	[key in ColorRoles]?: HSLObject;
-};
+export type ThemeData = Record<ColorRoles, HSLObject>;
 
 // layout and UI
 export type Align = 'start' | 'center' | 'end';

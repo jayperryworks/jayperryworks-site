@@ -9,22 +9,13 @@ import MainNav from '@components/navigation/MainNav.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
 
 // types
-import { HexColor, ColorRoles, HSLColor } from '@lib/types';
-
-export type Theme = {
-	bg?: HexColor | HSLColor;
-	border?: HexColor | HSLColor;
-	highlight?: HexColor | HSLColor;
-	primary?: HexColor | HSLColor;
-	secondary?: HexColor | HSLColor;
-	shadow?: HexColor | HSLColor;
-};
+import { ColorRoles, Theme } from '@lib/types';
 
 export interface Props {
 	pageTitle?: string;
 	path?: string;
 	headerOverlay?: boolean;
-	theme?: Theme;
+	theme?: Partial<Theme>;
 };
 
 const {

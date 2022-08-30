@@ -22,7 +22,7 @@ export function convertHexToHSL(hex: HexColor): HSLColor {
 	return `hsl(${hsl[0]}deg ${hsl[1]}% ${hsl[2]}%)`;
 }
 
-export function convertHexToHSLObject(hex: HexColor): HSLObject {
+export function convertHexToHSLObject(hex: HexColor): Partial<HSLObject> {
 	// convert the color from a hex to hsl (array)...
 	const hsl = convertColor.hex.hsl(hex);
 

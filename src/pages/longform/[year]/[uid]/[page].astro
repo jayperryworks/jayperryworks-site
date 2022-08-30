@@ -118,10 +118,10 @@ const {
 } = data[0];
 
 // build a theme for this page based on the data from Prismic
-function generatePageTheme(): Theme {
+function generatePageTheme(): Partial<Theme> {
 	if (theme?.bg) {
 		// convert the theme values to objects
-		let generatedTheme: ThemeData = Object.keys(theme).reduce((result, role) => {
+		let generatedTheme: Partial<ThemeData> = Object.keys(theme).reduce((result, role) => {
 			if (theme[role]) {
 				result[role] = convertHexToHSLObject(theme[role]);
 			}
@@ -145,7 +145,7 @@ function generatePageTheme(): Theme {
 			}
 		});
 
-		return Object.keys(generatedTheme).reduce((result, role): Theme => {
+		return Object.keys(generatedTheme).reduce((result, role): Partial<Theme> => {
 			result[role] = convertHSLObjectToHSL(generatedTheme[role]);
 			return result;
 		}, {});
