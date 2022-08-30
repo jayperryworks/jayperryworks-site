@@ -4,23 +4,20 @@ import '@styles/base/reset.css';
 import '@styles/base/type.css';
 import '@styles/tokens/color.css';
 
-// utilities
-import { convertHexToHSL } from '@lib/colorHelpers';
-
 // components
 import MainNav from '@components/navigation/MainNav.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
 
 // types
-import { HexColor } from '@lib/types';
+import { HexColor, ColorRoles, HSLColor } from '@lib/types';
 
 export type Theme = {
-	bg?: HexColor;
-	border?: HexColor;
-	highlight?: HexColor;
-	primary?: HexColor;
-	secondary?: HexColor;
-	shadow?: HexColor;
+	bg?: HexColor | HSLColor;
+	border?: HexColor | HSLColor;
+	highlight?: HexColor | HSLColor;
+	primary?: HexColor | HSLColor;
+	secondary?: HexColor | HSLColor;
+	shadow?: HexColor | HSLColor;
 };
 
 export interface Props {
@@ -40,22 +37,10 @@ const {
 const SITE_TITLE = 'Jay Perry';
 const title = pageTitle ? `${SITE_TITLE} | ${pageTitle}` : SITE_TITLE;
 
-const roles = [
-	'bg',
-	'border',
-	'highlight',
-	'primary',
-	'secondary',
-	'shadow',
-];
-
 // if a theme has been passed in, replace the default color tokens with the theme values
-const pageTheme = theme
-	? roles.reduce((result, role) => {
-		if (theme[role]) {
-			result[`color-${role}`] = convertHexToHSL(theme[role]);
-			return result;
-		}
+const themeTokens = theme
+	? Object.keys(theme).reduce((result, role: ColorRoles) => {
+		if (theme[role]) result[`color-${role}`] = theme[role];
 		return result;
 	}, {})
 	: null;
@@ -86,7 +71,7 @@ const pageTheme = theme
 </html>
 
 <!-- set the page theme as root custom properties to override the default tokens -->
-<style define:vars={pageTheme} is:global></style>
+<style define:vars={themeTokens} is:global></style>
 
 <style>
 	body {

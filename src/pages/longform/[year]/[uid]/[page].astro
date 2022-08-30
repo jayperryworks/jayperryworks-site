@@ -6,6 +6,7 @@ import '@styles/tokens/spacing.css';
 // utilities
 import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
+import convertColor from 'color-convert';
 import prismic from '@lib/prismic';
 
 // components
@@ -18,9 +19,10 @@ import SequenceNav from '@components/navigation/SequenceNav.astro';
 import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
 
 // types
-import type { Align } from '@lib/types';
+import type { Align, HSLColor, HSLObject, Theme, ThemeData } from '@lib/types';
 import type { TitleField } from '@prismicio/types';
 import type { Props as SequenceNavItemProps } from '@components/navigation/SequenceNavItem.astro';
+import { convertHexToHSLObject, convertHSLObjectToHSL } from '@lib/colorHelpers';
 
 export interface SequenceNavItemData extends SequenceNavItemProps {
 	title: TitleField;
@@ -116,6 +118,45 @@ const {
 	theme,
 } = data[0];
 
+// build a theme for this page based on the data from Prismic
+function generatePageTheme(): Theme {
+	let generatedTheme: ThemeData = {};
+
+	if (theme?.bg) {
+		// convert the theme values to objects
+		generatedTheme = Object.keys(theme).reduce((result, role) => {
+			if (theme[role]) {
+				result[role] = convertHexToHSLObject(theme[role]);
+			}
+			return result;
+		}, {});
+
+		// if these colors aren't specified in the Prismic data, derive each from the bg color
+		const themeFallbacks = {
+			primary: 25,
+			secondary: 45,
+			border: (generatedTheme?.bg?.l - 20) || 40,
+			shadow: (generatedTheme?.bg?.l - 10) || 10
+		};
+
+		Object.keys(themeFallbacks).forEach((role) => {
+			if (!generatedTheme[role]) {
+				generatedTheme[role] = {
+					...generatedTheme.bg,
+					l: themeFallbacks[role],
+				}
+			}
+		});
+
+		return Object.keys(generatedTheme).reduce((result, role): Theme => {
+			result[role] = convertHSLObjectToHSL(generatedTheme[role]);
+			return result;
+		}, {});
+	}
+
+	return {};
+}
+
 function sequenceNavItemAlign(index: number): Align {
 	if (index === 0) return 'start';
 	if (index === lastPage - 1) return 'end';
@@ -140,7 +181,7 @@ const nextChapter = {
 }
 ---
 
-<Layout {theme}>
+<Layout theme={generatePageTheme()}>
 	<article>
 
 		<!-- titling -->

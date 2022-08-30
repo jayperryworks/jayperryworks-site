@@ -10,9 +10,38 @@ export type CSSVariable = `var(--${string})`;
 export type CSSHue = `${number | string}deg` | CSSVariable;
 export type CSSPercentage = `${number | string}%` | CSSVariable;
 
-export type HexColor = `#${number}` | CSSVariable;
+export type HexColor = `#${number}`;
 export type HSLColor = `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage})`
 	| `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage} / ${number | string})`;
+// an object with HSL color data, used for generating theme values
+export type HSLObject = {
+	h: number,
+	s: number,
+	l: number,
+	a?: number,
+};
+
+export interface Theme {
+	bg?: HexColor | HSLColor | CSSVariable;
+	border?: HexColor | HSLColor | CSSVariable;
+	highlight?: HexColor | HSLColor | CSSVariable;
+	island?: HexColor | HSLColor | CSSVariable;
+	primary?: HexColor | HSLColor | CSSVariable;
+	secondary?: HexColor | HSLColor | CSSVariable;
+	shadow?: HexColor | HSLColor | CSSVariable;
+	well?: HexColor | HSLColor | CSSVariable;
+}
+
+export interface ThemeData {
+	bg?: HSLObject;
+	border?: HSLObject;
+	highlight?: HSLObject;
+	island?: HSLObject;
+	primary?: HSLObject;
+	secondary?: HSLObject;
+	shadow?: HSLObject;
+	well?: HSLObject;
+}
 
 // layout and UI
 export type Align = 'start' | 'center' | 'end';
