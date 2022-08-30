@@ -6,9 +6,9 @@ import {
 	CSSVariable,
 	HexColor,
 	HSLColor,
+	HSLChannel,
+	HSLObject,
 } from './types.ts';
-
-type HSLChannel = 'h' | 's' | 'l' | 'a' | 'all';
 
 export function convertHexToHSL(hex: HexColor): HSLColor {
 	// convert the color from a hex to an array of hsl values...
@@ -43,7 +43,7 @@ export function convertHSLObjectToHSL(object: HSLObject): HSLColor {
 	return `hsl(${object.h}deg ${object.s}% ${object.l}%)`;
 }
 
-export function getColorToken(role: string, channel: HSLChannel = 'all'): CSSVariable {
+export function getColorToken(role: string, channel: HSLChannel | 'all' = 'all'): CSSVariable {
 	if (channel !== 'all') return `var(--color-${role}-${channel})`;
 	return `var(--color-${role});`;
 }

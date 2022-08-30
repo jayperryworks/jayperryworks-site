@@ -13,35 +13,23 @@ export type CSSPercentage = `${number | string}%` | CSSVariable;
 export type HexColor = `#${number}`;
 export type HSLColor = `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage})`
 	| `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage} / ${number | string})`;
+
+type HSLChannel = 'h' | 's' | 'l' | 'a';
+
 // an object with HSL color data, used for generating theme values
 export type HSLObject = {
-	h: number,
-	s: number,
-	l: number,
-	a?: number,
+	[key in HSLChannel]?: number;
 };
 
-export interface Theme {
-	bg?: HexColor | HSLColor | CSSVariable;
-	border?: HexColor | HSLColor | CSSVariable;
-	highlight?: HexColor | HSLColor | CSSVariable;
-	island?: HexColor | HSLColor | CSSVariable;
-	primary?: HexColor | HSLColor | CSSVariable;
-	secondary?: HexColor | HSLColor | CSSVariable;
-	shadow?: HexColor | HSLColor | CSSVariable;
-	well?: HexColor | HSLColor | CSSVariable;
-}
+// a page theme with literal CSS values
+export type Theme = {
+	[key in ColorRoles]?: HexColor | HSLColor | CSSVariable;
+};
 
-export interface ThemeData {
-	bg?: HSLObject;
-	border?: HSLObject;
-	highlight?: HSLObject;
-	island?: HSLObject;
-	primary?: HSLObject;
-	secondary?: HSLObject;
-	shadow?: HSLObject;
-	well?: HSLObject;
-}
+// a page theme with HSLObject data
+export type ThemeData = {
+	[key in ColorRoles]?: HSLObject;
+};
 
 // layout and UI
 export type Align = 'start' | 'center' | 'end';
