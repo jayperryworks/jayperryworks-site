@@ -2,13 +2,12 @@
 @import url('../tokens/color.css');
 
 /* --- 'seam' border style */
-[class^='border-seam'] {
+[class*='border-seam'] {
 	position: relative;
 }
 
 .border-seam-top {
 	border-block-start: var(--border-default);
-
 }
 
 .border-seam-top::before {
@@ -18,7 +17,7 @@
 	height: var(--border-seam-height);
 	left: calc(var(--border-spine-width) * -1);
 	position: absolute;
-	top: calc((var(--border-seam-height / 2) * -1));
+	top: calc((var(--border-seam-height) / 2) * -1);
 	width: var(--border-spine-width);
 	z-index: 3;
 }

@@ -2,6 +2,7 @@
 // assets
 import '@styles/base/reset.css';
 import '@styles/base/type.css';
+import '@styles/tokens/borders.css';
 import '@styles/tokens/color.css';
 
 // components
@@ -9,7 +10,7 @@ import MainNav from '@components/navigation/MainNav.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
 
 // types
-import { ColorRoles, Theme } from '@lib/types';
+import { ColorRoles, Theme, HexColor, HSLColor, CSSVariable } from '@lib/types';
 
 export interface Props {
 	pageTitle?: string;
@@ -17,6 +18,8 @@ export interface Props {
 	headerOverlay?: boolean;
 	theme?: Partial<Theme>;
 };
+
+export type PageTheme = Record<`color-${ColorRoles}`, HexColor | HSLColor | CSSVariable>
 
 const {
 	pageTitle,
@@ -29,12 +32,14 @@ const SITE_TITLE = 'Jay Perry';
 const title = pageTitle ? `${SITE_TITLE} | ${pageTitle}` : SITE_TITLE;
 
 // if a theme has been passed in, replace the default color tokens with the theme values
-const themeTokens = theme
-	? Object.keys(theme).reduce((result, role: ColorRoles) => {
+let themeTokens = null;
+
+if (theme) {
+	themeTokens = Object.keys(theme).reduce((result, role: ColorRoles): Partial<PageTheme> => {
 		if (theme[role]) result[`color-${role}`] = theme[role];
 		return result;
-	}, {})
-	: null;
+	}, {});
+}
 ---
 
 <html lang="en" class="no-js no-touch">
@@ -66,11 +71,16 @@ const themeTokens = theme
 
 <style>
 	body {
+		--spine-color: var(--color-highlight);
+
 		background-color: var(--color-bg);
 		color: var(--color-primary);
 		display: grid;
-		flex-direction: column;
 		grid-template-rows: auto 1fr auto;
 		min-height: 100vh;
+		position: relative;
+		border-left: var(--border-spine-width) solid var(--spine-color);
+		will-change: border-left-color;
+		transition: border-left-color 0.25s ease;
 	}
 </style>

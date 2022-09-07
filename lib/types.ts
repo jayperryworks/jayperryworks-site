@@ -3,7 +3,7 @@ import {
 	TitleField,
 } from '@prismicio/types';
 
-// color
+// --- color ---
 export type ColorRoles = 'primary' | 'secondary' | 'highlight' | 'bg' | 'island' | 'well' | 'border' | 'shadow';
 
 export type CSSVariable = `var(--${string})`;
@@ -25,7 +25,7 @@ export type Theme = Record<ColorRoles, HexColor | HSLColor | CSSVariable>;
 // a page theme with HSLObject data
 export type ThemeData = Record<ColorRoles, HSLObject>;
 
-// layout and UI
+// --- layout and UI ---
 export type Align = 'start' | 'center' | 'end';
 export type SpaceScale = 'xxnarrow' | 'xnarrow' | 'narrow' | 'medium' | 'wide' | 'xwide';
 export type Prominence = 'Small' | 'Medium' | 'Large';
@@ -48,7 +48,7 @@ export interface Block {
 	[key: string]: unknown;
 }
 
-// type
+// --- type ---
 export type TypeScale = 'alpha' | 'beta' | 'gamma' | 'delta' | 'epsilon' | 'zeta';
 
 export interface FormattedText {
