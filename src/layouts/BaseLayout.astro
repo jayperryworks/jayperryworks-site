@@ -10,7 +10,13 @@ import MainNav from '@components/navigation/MainNav.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
 
 // types
-import { ColorRoles, Theme, HexColor, HSLColor, CSSVariable } from '@lib/types';
+import type {
+	ColorRoles,
+	CSSVariable,
+	HexColor,
+	HSLColor,
+	Theme,
+} from '@lib/types';
 
 export interface Props {
 	pageTitle?: string;
@@ -19,8 +25,9 @@ export interface Props {
 	theme?: Partial<Theme>;
 };
 
-export type PageTheme = Record<`color-${ColorRoles}`, HexColor | HSLColor | CSSVariable>
+export type ThemeTokens = Record<`color-${ColorRoles}`, HexColor | HSLColor | CSSVariable>;
 
+// props and data
 const {
 	pageTitle,
 	headerOverlay = false,
@@ -32,14 +39,15 @@ const SITE_TITLE = 'Jay Perry';
 const title = pageTitle ? `${SITE_TITLE} | ${pageTitle}` : SITE_TITLE;
 
 // if a theme has been passed in, replace the default color tokens with the theme values
-let themeTokens = null;
-
-if (theme) {
-	themeTokens = Object.keys(theme).reduce((result, role: ColorRoles): Partial<PageTheme> => {
-		if (theme[role]) result[`color-${role}`] = theme[role];
-		return result;
-	}, {});
+function themeReducer(
+	result: Partial<ThemeTokens>,
+	role: ColorRoles
+): Partial<ThemeTokens> {
+	if (theme[role]) result[`color-${role}`] = theme[role];
+	return result;
 }
+
+const themeTokens = theme ? Object.keys(theme).reduce(themeReducer, {}) : null;
 ---
 
 <html lang="en" class="no-js no-touch">
@@ -74,13 +82,13 @@ if (theme) {
 		--spine-color: var(--color-highlight);
 
 		background-color: var(--color-bg);
+		border-left: var(--border-spine-width) solid var(--spine-color);
 		color: var(--color-primary);
 		display: grid;
 		grid-template-rows: auto 1fr auto;
 		min-height: 100vh;
 		position: relative;
-		border-left: var(--border-spine-width) solid var(--spine-color);
-		will-change: border-left-color;
 		transition: border-left-color 0.25s ease;
+		will-change: border-left-color;
 	}
 </style>
