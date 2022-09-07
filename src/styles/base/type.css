@@ -115,7 +115,7 @@ p {
 a {
 	--underline-w: 0.125em;
 	--underline-offset: 0.08em;
-	
+
 	border-bottom: var(--underline-w) solid var(--color-highlight);
 	color: inherit;
 	cursor: pointer;
@@ -123,7 +123,7 @@ a {
 	will-change: color;
 }
 
-@supports (text-decoration-style: underline) {
+@supports (text-decoration-thickness: 1px) {
 	a {
 		border-bottom: 0;
 		text-decoration-color: var(--color-highlight);
