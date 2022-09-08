@@ -1,5 +1,9 @@
 // types
-import { PrismicDocument, DateField } from '@prismicio/types';
+import {
+	DateField,
+	PrismicDocument,
+	PrismicDocumentWithUID,
+} from '@prismicio/types';
 
 // utils
 import { format } from 'date-fns';
@@ -34,28 +38,28 @@ export function page({ uid }: PrismicDocument) {
 	return `/${uid}/`;
 }
 
-export function indexPage({ uid }: PrismicDocument) {
+export function indexPage({ uid }: PrismicDocumentWithUID) {
 	if (uid === 'blog') return '/blog/page/1';
 	return `/${uid}/`;
 }
 
 // --- blog
-export function blogPost({ data, uid }: PrismicDocument): string {
+export function blogPost({ data, uid }: PrismicDocumentWithUID): string {
 	return `/blog/${getDateParams(data.date, ['year', 'month', 'day'])}/${uid}/`;
 }
 
 // --- pictures
-export function picture({ data, uid }: PrismicDocument): string {
+export function picture({ data, uid }: PrismicDocumentWithUID): string {
 	return `/pictures/${getDateParams(data.date_completed, ['year', 'month'])}/${uid}/`;
 }
 
 // --- design
-export function designProject({ data, uid }: PrismicDocument): string {
+export function designProject({ data, uid }: PrismicDocumentWithUID): string {
 	return `/design/${data.start_date}/${uid}/`;
 }
 
 // --- longform
-export function longform({ data, uid }: PrismicDocument): string {
+export function longform({ data, uid }: PrismicDocumentWithUID): string {
 	return `/longform/${getDateParams(data.date, ['year'])}/${uid}/1`;
 }
 

@@ -16,11 +16,11 @@ import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
 // components
+import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
 import Heading from '@components/blocks/Heading.astro';
-import Layout from '@layouts/BaseLayout.astro';
-import ReadNextLink from '@components/elements/ReadNextLink.astro';
+import ReadNextLink from '@components/navigation/ReadNextLink.astro';
 
 // types
 import type {
@@ -144,10 +144,10 @@ const {
 				</ul>
 			</section>
 			<section class="nav-wrapper">
-				<ReadNextLink
-					eyebrow="Next post:"
-					title={prismicHelpers.asText(next.title)}
-				/>
+				<ReadNextLink link={next.path}>
+					<Fragment slot="eyebrow">Next post:</Fragment>
+					<Fragment slot="title">{prismicHelpers.asText(next.title)}</Fragment>
+				</ReadNextLink>
 			</section>
 		</nav>
 	)}
@@ -167,7 +167,7 @@ const {
 	}
 
 	header :global(.subtitle) {
-		padding-top: var(--space-xxnarrow);
+		padding-block-start: var(--space-xxnarrow);
 	}
 
 	.date {
@@ -181,13 +181,13 @@ const {
 	.link {
 		margin-inline: auto;
 		max-width: var(--content-width-default);
-		padding-top: var(--space-wide);
+		padding-block-start: var(--space-wide);
 	}
 
 	footer {
 		margin-inline: auto;
 		max-width: var(--content-width-default);
-		padding-top: var(--space-xwide);
+		padding-block-start: var(--space-xwide);
 	}
 
 	.tags {

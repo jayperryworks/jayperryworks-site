@@ -1,23 +1,53 @@
 ---
+// assets
 import '@styles/base/reset.css';
 import '@styles/base/type.css';
+import '@styles/tokens/borders.css';
+import '@styles/tokens/color.css';
+
+// components
 import MainNav from '@components/navigation/MainNav.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
+
+// types
+import type {
+	ColorRoles,
+	CSSVariable,
+	HexColor,
+	HSLColor,
+	Theme,
+} from '@lib/types';
 
 export interface Props {
 	pageTitle?: string;
 	path?: string;
 	headerOverlay?: boolean;
+	theme?: Partial<Theme>;
 };
 
+export type ThemeTokens = Partial<Record<`color-${ColorRoles}`, HexColor | HSLColor | CSSVariable>>;
+
+// props and data
 const {
 	pageTitle,
 	headerOverlay = false,
 	path = 'home',
-	} = Astro.props as Props;
+	theme,
+} = Astro.props as Props;
 
 const SITE_TITLE = 'Jay Perry';
 const title = pageTitle ? `${SITE_TITLE} | ${pageTitle}` : SITE_TITLE;
+
+// if a theme has been passed in, replace the default color tokens with the theme values
+function themeReducer(
+	result: ThemeTokens,
+	role: ColorRoles
+): ThemeTokens {
+	if (theme[role]) result[`color-${role}`] = theme[role];
+	return result;
+}
+
+const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer, {}) : null;
 ---
 
 <html lang="en" class="no-js no-touch">
@@ -40,18 +70,25 @@ const title = pageTitle ? `${SITE_TITLE} | ${pageTitle}` : SITE_TITLE;
 		<main>
 			<slot />
 		</main>
-		<MainFooter />
+		<MainFooter class="footer" />
 	</body>
 </html>
 
+<!-- set the page theme as root custom properties to override the default tokens -->
+<style define:vars={themeTokens} is:global></style>
+
 <style>
 	body {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-	}
+		--spine-color: var(--color-highlight);
 
-	main {
-		flex: 1;
+		background-color: var(--color-bg);
+		border-left: var(--border-spine-width) solid var(--spine-color);
+		color: var(--color-primary);
+		display: grid;
+		grid-template-rows: auto 1fr auto;
+		min-height: 100vh;
+		position: relative;
+		transition: border-left-color 0.25s ease;
+		will-change: border-left-color;
 	}
 </style>

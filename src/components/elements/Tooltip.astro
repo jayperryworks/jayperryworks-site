@@ -1,0 +1,44 @@
+---
+// assets
+import '@styles/components/tooltip.css';
+
+// types
+import type { Align } from '@lib/types';
+
+export interface Props {
+	align?: Align;
+	class?: string;
+	show?: boolean;
+}
+
+// props & data
+const {
+	align = 'center',
+	class:className = '',
+	// The tooltip is hidden by default.
+	// -> It can be shown by either passing in "true" on this prop...
+	// -> or, set the `--show` CSS variable to 1.
+	show = false,
+} = Astro.props as Props;
+
+const classList = [
+	'tooltip',
+	`align-${align}`,
+	show ? 'show' : '',
+	className,
+].join(' ');
+---
+
+<span
+	class={classList}
+>
+	<slot></slot>
+</span>
+
+<style>
+	/* Be sure to add position: relative to the parent element */
+	.tooltip {
+		--max-width: 16rem;
+		--min-width: 8rem;
+	}
+</style>

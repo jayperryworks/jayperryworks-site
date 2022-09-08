@@ -113,15 +113,25 @@ p {
 }
 
 a {
+	--underline-w: 0.125em;
+	--underline-offset: 0.08em;
+
+	border-bottom: var(--underline-w) solid var(--color-highlight);
 	color: inherit;
 	cursor: pointer;
-	text-decoration-color: var(--color-highlight);
-	text-decoration-style: underline;
-	text-decoration-thickness: 0.125em;
-	text-underline-offset: 0.08em;
-	text-underline-position: under;
 	transition: color 0.25s ease;
 	will-change: color;
+}
+
+@supports (text-decoration-thickness: 1px) {
+	a {
+		border-bottom: 0;
+		text-decoration-color: var(--color-highlight);
+		text-decoration-style: underline;
+		text-decoration-thickness: var(--underline-w);
+		text-underline-offset: var(--underline-offset);
+		text-underline-position: under;
+	}
 }
 
 a:hover,

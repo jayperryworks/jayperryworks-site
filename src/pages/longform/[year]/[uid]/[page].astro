@@ -1,0 +1,294 @@
+---
+// assets
+import '@styles/tokens/contentWidth.css';
+import '@styles/tokens/spacing.css';
+
+// utilities
+import { convertHexToHSLObject, convertHSLObjectToHSL } from '@lib/colorHelpers';
+import { format } from 'date-fns';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+
+// components
+import Layout from '@layouts/BaseLayout.astro';
+import BlockList from '@components/BlockList.astro';
+import Heading from '@components/blocks/Heading.astro';
+import ReadNextLink from '@components/navigation/ReadNextLink.astro';
+import SequenceNav from '@components/navigation/SequenceNav.astro';
+import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
+
+// types
+import type { Align, Theme, ThemeData } from '@lib/types';
+import type { Props as SequenceNavItemProps } from '@components/navigation/SequenceNavItem.astro';
+import type { TitleField } from '@prismicio/types';
+
+export interface SequenceNavItemData extends SequenceNavItemProps {
+	title: TitleField;
+}
+
+// Using 'nested pagination' to generate 'chapter' pages for each longform project
+// -> https://docs.astro.build/en/core-concepts/routing/#nested-pagination
+export async function getStaticPaths({ paginate }) {
+	// query all longform projects
+	// -> use graphQuery to fetch linked Chapter data for each project
+	const projectsResponse = await prismic.getAllByType('longform', {
+		orderings: {
+			field: 'my.longform.date',
+			direction: 'desc',
+		},
+		graphQuery: `
+			{
+				longform {
+					...longformFields
+					chapters {
+						chapter {
+							...on longform_chapter {
+								...longform_chapterFields
+							}
+						}
+					}
+				}
+			}
+		`,
+	});
+
+	// loop over each project and create a massaged list of chapters to be paginated
+	return projectsResponse.map(({ uid, data }) => {
+		const year = format(prismicHelpers.asDate(data.date), 'yyyy');
+		const chapters = data.chapters.map(({ chapter }) => {
+			const {
+				title,
+				subtitle,
+				highlight_color: highlight,
+				primary_foreground_color: primary,
+				secondary_foreground_color: secondary,
+				background_color: bg,
+				body,
+			} = chapter.data;
+
+			return {
+				uid,
+				title,
+				subtitle,
+				body,
+				project: {
+					uid,
+					title: data.title,
+					subtitle: data.subtitle,
+					chapterLabel: data.chapter_label,
+					chapterList: data.chapters.map(({ chapter }) => chapter.data.title),
+				},
+				theme: {
+					bg,
+					highlight,
+					primary,
+					secondary,
+				},
+			};
+		});
+
+		// one chapter per page under the given project params
+		return paginate(chapters, {
+			pageSize: 1,
+			params: { year, uid },
+		})
+
+	});
+}
+
+const {
+	year,
+	uid,
+} = Astro.params;
+
+const {
+	url,
+	data,
+	currentPage,
+	lastPage,
+} = Astro.props.page;
+
+const {
+	title,
+	subtitle,
+	body,
+	project,
+	theme,
+} = data[0];
+
+// build a theme for this page based on the data from Prismic
+function generatePageTheme(): Partial<Theme> {
+	if (theme?.bg) {
+		// convert the theme values to objects
+		let generatedTheme: Partial<ThemeData> = Object.keys(theme).reduce((result, role) => {
+			if (theme[role]) {
+				result[role] = convertHexToHSLObject(theme[role]);
+			}
+			return result;
+		}, {});
+
+		// if these colors aren't specified in the Prismic data, derive each from the bg color
+		const themeFallbacks = {
+			primary: 25,
+			secondary: 35,
+			border: (generatedTheme?.bg?.l - 20) || 40,
+			shadow: (generatedTheme?.bg?.l - 10) || 10
+		};
+
+		Object.keys(themeFallbacks).forEach((role) => {
+			if (!generatedTheme[role]) {
+				generatedTheme[role] = {
+					...generatedTheme.bg,
+					l: themeFallbacks[role],
+				}
+			}
+		});
+
+		return Object.keys(generatedTheme).reduce((result, role): Partial<Theme> => {
+			result[role] = convertHSLObjectToHSL(generatedTheme[role]);
+			return result;
+		}, {});
+	}
+
+	return {};
+}
+
+function sequenceNavItemAlign(index: number): Align {
+	if (index === 0) return 'start';
+	if (index === lastPage - 1) return 'end';
+	return 'center';
+}
+
+// list of chapter links for the SequenceNav at the top and bottom of the page
+const sequenceNavItems = project.chapterList.map(
+	(title: TitleField, index: number): SequenceNavItemData => ({
+		title,
+		href: `/longform/${year}/${uid}/${index + 1}/`,
+		complete: currentPage > index + 1,
+		current: currentPage === index + 1,
+		tooltipAlign: sequenceNavItemAlign(index),
+	})
+);
+
+console.log(url.next)
+const nextChapter = project.chapterList[currentPage] ? {
+	title: project.chapterList[currentPage],
+	number: currentPage + 1,
+	href: project?.chapterList[currentPage]?.href,
+} : null;
+---
+
+<Layout path={uid} theme={generatePageTheme()}>
+	<article>
+
+		<!-- titling -->
+		<header>
+			<div class="wrapper wide">
+
+				<!-- project title -->
+				<Heading level={1} text={project.title} />
+				{project.subtitle && <Heading level={1} subheading text={project.subtitle} />}
+
+				<!-- sequence nav -->
+				<div class="header-nav | wrapper">
+					<SequenceNav>
+						{sequenceNavItems.map((item) => (
+							<SequenceNavItem {...item}>{prismicHelpers.asText(item.title)}</SequenceNavItem>
+						))}
+					</SequenceNav>
+				</div>
+
+				<!-- chapter title -->
+				<Heading level={3} subheading>{`${project.chapterLabel} ${currentPage}`}</Heading>
+				<Heading level={2} class="header-chapter" text={title} />
+				{subtitle && <Heading level={3} class="header-chapter" subheading text={subtitle} />}
+			</div>
+		</header>
+
+		<!-- body -->
+		<BlockList {body} showLedeStyle />
+	</article>
+
+	<!-- sequence nav -->
+	<nav class="footer-nav">
+		<div class="wrapper">
+			<SequenceNav>
+				{sequenceNavItems.map((item) => (
+					<SequenceNavItem {...item} next={item.href === url.next}>
+						{prismicHelpers.asText(item.title)}
+					</SequenceNavItem>
+				))}
+			</SequenceNav>
+
+			<div class="next">
+				{nextChapter
+					? <ReadNextLink
+							align="end"
+							class="next"
+							eyebrowSize="gamma"
+							link={nextChapter.href}
+							titleSize="beta"
+						>
+							<Fragment slot="eyebrow">{`${project.chapterLabel} ${currentPage + 1}`}</Fragment>
+							<Fragment slot="title">{prismicHelpers.asText(nextChapter.title)}</Fragment>
+						</ReadNextLink>
+					: <aside class="end | type-role-body type-scale-gamma">
+							The end
+						</aside>
+				}
+			</div>
+		</div>
+	</nav>
+</Layout>
+
+<style>
+	article {
+		padding-block: var(--space-xwide);
+	}
+
+	article > * + * {
+		padding-block-start: var(--space-xwide);
+	}
+
+	header {
+		text-align: center;
+	}
+
+	header,
+	.footer-nav {
+		padding-inline: var(--space-outside);
+	}
+
+	.wrapper {
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+	}
+
+	.wrapper.wide {
+		max-width: var(--content-width-wide);
+	}
+
+	.header-nav {
+		padding-block: var(--space-wide);
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+	}
+
+	.header-chapter {
+		padding-block-start: var(--space-xxnarrow);
+	}
+
+	.footer-nav {
+		padding-block-end: var(--space-xwide);
+	}
+
+	.next {
+		padding-block-start: var(--space-wide);
+	}
+
+	.end {
+		text-align: center;
+		font-style: italic;
+		color: var(--color-secondary);
+	}
+</style>
