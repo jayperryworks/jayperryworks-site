@@ -12,14 +12,13 @@ import prismic from '@lib/prismic';
 // components
 import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
-import Icon from '@components/elements/Icon.astro';
 import Heading from '@components/blocks/Heading.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
 import SequenceNav from '@components/navigation/SequenceNav.astro';
 import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
 
 // types
-import type { Align, HSLObject, Theme, ThemeData } from '@lib/types';
+import type { Align, Theme, ThemeData } from '@lib/types';
 import type { Props as SequenceNavItemProps } from '@components/navigation/SequenceNavItem.astro';
 import type { TitleField } from '@prismicio/types';
 
@@ -131,7 +130,7 @@ function generatePageTheme(): Partial<Theme> {
 		// if these colors aren't specified in the Prismic data, derive each from the bg color
 		const themeFallbacks = {
 			primary: 25,
-			secondary: 45,
+			secondary: 35,
 			border: (generatedTheme?.bg?.l - 20) || 40,
 			shadow: (generatedTheme?.bg?.l - 10) || 10
 		};
@@ -171,11 +170,12 @@ const sequenceNavItems = project.chapterList.map(
 	})
 );
 
-const nextChapter = {
+console.log(url.next)
+const nextChapter = project.chapterList[currentPage] ? {
 	title: project.chapterList[currentPage],
 	number: currentPage + 1,
-	href: project.chapterList[currentPage].href,
-}
+	href: project?.chapterList[currentPage]?.href,
+} : null;
 ---
 
 <Layout path={uid} theme={generatePageTheme()}>
@@ -221,7 +221,7 @@ const nextChapter = {
 			</SequenceNav>
 
 			<div class="next">
-				{url.next
+				{nextChapter
 					? <ReadNextLink
 							align="end"
 							class="next"
@@ -282,7 +282,7 @@ const nextChapter = {
 		padding-block-end: var(--space-xwide);
 	}
 
-	.next{
+	.next {
 		padding-block-start: var(--space-wide);
 	}
 
