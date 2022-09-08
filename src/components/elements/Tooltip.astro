@@ -1,26 +1,32 @@
 ---
-	import type { Align } from '@lib/types';
+// assets
+import '@styles/components/tooltip.css';
 
-	export interface Props {
-		align?: Align;
-		class?: string;
-		show?: boolean;
-	}
+// types
+import type { Align } from '@lib/types';
 
-	const {
-		align = 'center',
-		class:className = '',
-		// The tooltip is hidden by default.
-		// -> It can be shown by either passing in "true" on this prop...
-		// -> or, set the `--show` CSS variable to 1.
-		show = false,
-	} = Astro.props as Props;
+export interface Props {
+	align?: Align;
+	class?: string;
+	show?: boolean;
+}
 
-	const classList = [
-		`align-${align}`,
-		show ? 'show' : '',
-		className,
-	].join(' ');
+// props & data
+const {
+	align = 'center',
+	class:className = '',
+	// The tooltip is hidden by default.
+	// -> It can be shown by either passing in "true" on this prop...
+	// -> or, set the `--show` CSS variable to 1.
+	show = false,
+} = Astro.props as Props;
+
+const classList = [
+	'tooltip',
+	`align-${align}`,
+	show ? 'show' : '',
+	className,
+].join(' ');
 ---
 
 <span
@@ -31,116 +37,8 @@
 
 <style>
 	/* Be sure to add position: relative to the parent element */
-	span {
-		--bg: hsl(var(--color-bg-h), var(--color-bg-s), calc(var(--color-bg-l) + 15%));
-		--border: var(--color-border);
+	.tooltip {
 		--max-width: 16rem;
 		--min-width: 8rem;
-		--pointer-margin: var(--space-xnarrow);
-		--pointer-size: 0.6em;
-		--show: 0;
-		--transition-duration: 0.25s;
-
-		background-color: var(--bg);
-		border-radius: 0.25em;
-		border: 1px solid var(--border);
-		bottom: calc(var(--dot-size) + var(--pointer-size) + 1em);
-		box-shadow: 0 0.05rem 0.5rem var(--color-shadow);
-		color: var(--color-primary);
-		content: attr(title);
-		display: block;
-		font-family: var(--type-font-accent);
-		font-size: var(--type-scale-zeta);
-		line-height: var(--type-leading-tight);
-		max-width: var(--max-width);
-		min-width: var(--min-width);
-		opacity: var(--show);
-		padding: var(--space-xnarrow) var(--pointer-margin);
-		position: absolute;
-		transition: var(--transition-duration) opacity ease-in-out;
-		will-change: opacity;
-		z-index: 4;
-	}
-
-	span.show {
-		--show: 1;
-	}
-
-	span.align-start {
-		left: calc(var(--pointer-margin) * -1);
-		text-align: left;
-	}
-
-	span.align-end {
-		right: calc(var(--pointer-margin) * -1);
-		text-align: right;
-	}
-
-	span.align-center {
-		left: 50%;
-		text-align: center;
-		transform: translateX(-50%);
-	}
-
-	span::before,
-	span::after {
-		border-left: var(--pointer-size) solid transparent;
-		border-right: var(--pointer-size) solid transparent;
-		content: '';
-		display: inline-block;
-		height: 0;
-		position: absolute;
-		width: 0;
-	}
-
-	span::before {
-		border-top: var(--pointer-size) solid var(--border);
-		bottom: calc(var(--pointer-size) * -1);
-	}
-
-	span::after {
-		border-top: var(--pointer-size) solid var(--bg);
-		bottom: calc((var(--pointer-size) - 0.1em) * -1);
-	}
-
-	span.start::before,
-	span.start::after {
-		left: var(--pointer-margin);
-	}
-
-	span.end::before,
-	span.end::after {
-		right: var(--pointer-margin);
-	}
-
-	span.center::before,
-	span.center::after {
-		left: 50%;
-		transform: translateX(-50%);
-	}
-
-	@media screen and (min-width: 45em) {
-		/* widen spacing a little on larger screens, where there's more outside room */
-		span {
-			--pointer-margin: var(--space-narrow);
-		}
-	}
-
-	@media screen and (min-width: 55em) {
-		/* move all tooltips to be centered on large screens */
-		span.start,
-		span.end {
-			left: 50%;
-			text-align: center;
-			transform: translateX(-50%);
-		}
-
-		span.start::before,
-		span.end::before,
-		span.start::after,
-		span.end::after {
-			left: 50%;
-			transform: translateX(-50%);
-		}
 	}
 </style>

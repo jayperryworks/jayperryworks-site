@@ -38,64 +38,29 @@ function getWidth(prominence) {
 	return widths[prominence] || 'default';
 }
 
-const style = `--block-width: var(--content-width-${getWidth(block.prominence)});`;
+const displayModeClass = block.displayMode === 'slide' ? 'slide border-seam-top' : '';
 
-const displayModeClass = block.displayMode === 'slide'
-	? 'slide border-seam-top'
-	: '';
+const blocks = {
+	aside: Aside,
+	billboard: Billboard,
+	blockQuote: BlockQuote,
+	collage: Collage,
+	feed: Feed,
+	figure: Figure,
+	heading: Heading,
+	imageGallery: ImageGallery,
+	passage: Passage,
+	table: Table,
+};
+
+const Component = blocks[block.type];
+const classList = ['block', displayModeClass, className].join(' ');
+const style = `--block-width: var(--content-width-${getWidth(block.prominence)});`;
 ---
 
-<div class={['block', displayModeClass, className].join(' ')}>
+<div class={classList}>
 	<div class="wrapper" {style}>
-		{block.type === 'aside' && (
-			<!-- aside -->
-			<Aside {...block} />
-		)}
-
-		{block.type === 'billboard' && (
-			<!-- billboard -->
-			<Billboard {...block} />
-		)}
-
-		{block.type === 'blockQuote' && (
-			<!-- block quote -->
-			<BlockQuote {...block} />
-		)}
-
-		{block.type === 'collage' && (
-			<!-- image gallery -->
-			<Collage {...block} />
-		)}
-
-		{block.type === 'feed' && (
-			<!-- feed -->
-			<Feed {...block} />
-		)}
-
-		{block.type === 'figure' && (
-			<!-- figure -->
-			<Figure {...block} />
-		)}
-
-		{block.type === 'heading' && (
-			<!-- heading -->
-			<Heading {...block} />
-		)}
-
-		{block.type === 'imageGallery' && (
-			<!-- image gallery -->
-			<ImageGallery {...block} />
-		)}
-
-		{block.type === 'passage' && (
-			<!-- passage -->
-			<Passage {...block} />
-		)}
-
-		{block.type === 'table' && (
-			<!-- table -->
-			<Table {...block} />
-		)}
+		<Component {...block} />
 	</div>
 </div>
 

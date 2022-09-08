@@ -34,9 +34,9 @@ function htmlSerializer(type, element, content, children): string {
 		const label = children.toString().replace('(', '').replace(')', '').concat('.');
 		// capitalize the first letter
 		return `
-			<button class="note align-center">
+			<button class="note">
 				<span class="note-icon">${expand}</span>
-				<span class="tooltip">${sentenceCase(label)}</span>
+				<span class="tooltip align-center">${sentenceCase(label)}</span>
 			</button>
 		`;
 	}
@@ -58,25 +58,31 @@ if (markdown) {
 
 <script>
 	let $notes;
-	let browserWidth = document.documentElement.clientWidth;
 
 	function alignNotes() {
 		if ($notes) {
+			let browserWidth = document.documentElement.clientWidth;
+
 			$notes.forEach(($note) => {
 				const MARGIN = 100;
 				const noteRect = $note.getBoundingClientRect();
+				const $tooltip = $note.querySelector('.tooltip');
+
+				$tooltip.classList.remove('align-start', 'align-center', 'align-end');
 
 				// change the note's alignment
 				// based on its proximity to the edge of the browser window
 				if (noteRect.left < MARGIN) {
-					$note.classList.remove('align-center', 'align-start', 'align-end');
-					$note.classList.add('align-start');
+					$tooltip.classList.add('align-start');
+					return;
 				}
 
 				if ((browserWidth - noteRect.right) < MARGIN) {
-					$note.classList.remove('align-center', 'align-start', 'align-end');
-					$note.classList.add('align-end');
+					$tooltip.classList.add('align-end');
+					return;
 				}
+
+				$tooltip.classList.add('align-center');
 			});
 		}
 	}

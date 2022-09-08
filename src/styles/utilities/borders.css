@@ -2,7 +2,7 @@
 @import url('../tokens/color.css');
 
 /* --- 'seam' border style */
-[class*='border-seam'] {
+[class~='border-seam'] {
 	position: relative;
 }
 
