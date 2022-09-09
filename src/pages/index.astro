@@ -38,10 +38,7 @@ const introLink = prismicHelpers.asLink(link, linkResolver);
 		const $tocButton = document.getElementById('toc-link');
 		const $tocSection = document.querySelector($tocButton.getAttribute('href'));
 
-		console.log($tocButton);
-		console.log($tocSection);
-
-		$tocButton.addEventListener('click', () => {
+		$tocButton.addEventListener('pointerdown', () => {
 			$tocSection.scrollIntoView({
 				behavior: 'smooth',
 				block: 'start',
