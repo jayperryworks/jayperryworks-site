@@ -13,7 +13,6 @@ import {
 // utils
 import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
-import prismic from './prismic.ts';
 
 // link/relationship data to fetch from Prismic to resolve page routes
 // -> use in the config on the original query, e.g. prismic.getByUID(... { fetchLinks })
