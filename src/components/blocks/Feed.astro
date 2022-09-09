@@ -46,7 +46,7 @@ const {
 } = Astro.props as Props;
 
 const { link, label } = cta;
-const resolvedLink = link && await prismicHelpers.asLink(link, linkResolver);
+const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 
 let feedItems = [];
 const pageSize = 8;

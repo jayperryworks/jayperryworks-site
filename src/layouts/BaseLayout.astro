@@ -47,7 +47,7 @@ function themeReducer(
 	return result;
 }
 
-const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer, {}) : null;
+const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer, {}) : {};
 ---
 
 <html lang="en" class="no-js no-touch">

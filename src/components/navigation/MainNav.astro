@@ -10,7 +10,7 @@ import close from '@icons/close.svg?raw';
 // utils
 import prismic from '@lib/prismic';
 import * as prismicHelpers from '@prismicio/helpers';
-import { linkResolver } from '@lib/routes';
+import { linkResolver, fetchLinks } from '@lib/routes';
 
 // components
 import Icon from '@components/elements/Icon.astro';
@@ -27,14 +27,12 @@ type mainNavLink = {
 	link: string,
 };
 
-const response = await prismic.getSingle('main_nav');
-const routes = await Promise.all(
-	response.data.nav_item.map(
-		async ({ label, link }): Promise<mainNavLink> => ({
-			label,
-			link: await prismicHelpers.asLink(link, linkResolver),
-		})
-	)
+const response = await prismic.getSingle('main_nav', { fetchLinks });
+const routes = response.data.nav_item.map(
+	({ label, link }): mainNavLink => ({
+		label,
+		link: prismicHelpers.asLink(link, linkResolver),
+	})
 );
 
 const {
@@ -55,14 +53,14 @@ const {
 		MainNav.$navButtonClose = document.getElementById('nav-button-close');
 		MainNav.$navWrapper = document.getElementById('nav-wrapper');
 
-		MainNav.$navButtonOpen.onclick = () => {
+		MainNav.$navButtonOpen.onpointerdown = () => {
 			MainNav.open = true;
 			MainNav.$navWrapper.classList.remove('closed');
 			MainNav.$navWrapper.classList.add('open');
 			MainNav.$navButtonOpen.classList.add('hide');
 		}
 
-		MainNav.$navButtonClose.onclick = () => {
+		MainNav.$navButtonClose.onpointerdown = () => {
 			MainNav.open = false;
 			MainNav.$navWrapper.classList.remove('open');
 			MainNav.$navButtonOpen.classList.remove('hide');

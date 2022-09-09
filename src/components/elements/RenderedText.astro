@@ -8,9 +8,10 @@ import '@styles/components/tooltip.css';
 import expand from '@icons/expand.svg?raw';
 
 // utils
+import { linkResolver } from '@lib/routes';
 import { sentenceCase } from '@lib/stringHelpers';
-import renderMarkdown from '@lib/renderMarkdown';
 import * as prismicHelpers from '@prismicio/helpers';
+import renderMarkdown from '@lib/renderMarkdown';
 
 // types
 import { RichTextField } from '@prismicio/types';
@@ -47,7 +48,8 @@ function htmlSerializer(type, element, content, children): string {
 let renderedText;
 
 if (prismicText) {
-	renderedText = prismicHelpers.asHTML(prismicText, null, htmlSerializer);
+	// console.log(prismicText[0].spans.map((link) => linkResolver))
+	renderedText = prismicHelpers.asHTML(prismicText, linkResolver, htmlSerializer);
 }
 if (markdown) {
 	renderedText = renderMarkdown(markdown, { inline });
