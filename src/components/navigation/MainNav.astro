@@ -10,7 +10,7 @@ import close from '@icons/close.svg?raw';
 // utils
 import prismic from '@lib/prismic';
 import * as prismicHelpers from '@prismicio/helpers';
-import { linkResolverSync, fetchLinks } from '@lib/routes';
+import { linkResolver, fetchLinks } from '@lib/routes';
 
 // components
 import Icon from '@components/elements/Icon.astro';
@@ -31,7 +31,7 @@ const response = await prismic.getSingle('main_nav', { fetchLinks });
 const routes = response.data.nav_item.map(
 	({ label, link }): mainNavLink => ({
 		label,
-		link: prismicHelpers.asLink(link, linkResolverSync),
+		link: prismicHelpers.asLink(link, linkResolver),
 	})
 );
 

@@ -10,7 +10,7 @@ import externalLink from '@icons/external-link.svg?raw';
 
 // helpers
 import { format } from 'date-fns';
-import { blogPost as permalink } from '@lib/routes';
+import { blogPost as permalink, fetchLinks } from '@lib/routes';
 import { sentenceCase } from '@lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
@@ -46,6 +46,7 @@ export interface Props {
 
 export async function getStaticPaths() {
  	const posts = await prismic.getAllByType('blog_post', {
+		fetchLinks,
  		orderings: {
  			field: 'my.blog_post.date',
  			direction: 'desc',

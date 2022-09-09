@@ -10,7 +10,7 @@ import arrowRight from '@icons/arrow-right.svg?raw';
 // utils
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
-import { linkResolverSync, fetchLinks } from '@lib/routes';
+import { linkResolver, fetchLinks } from '@lib/routes';
 
 // components
 import BlockList from '@components/BlockList.astro';
@@ -30,7 +30,7 @@ const {
 	body,
 } = response.data;
 
-const introLink = prismicHelpers.asLink(link, linkResolverSync);
+const introLink = prismicHelpers.asLink(link, linkResolver);
 ---
 
 <Layout path="home" headerOverlay>

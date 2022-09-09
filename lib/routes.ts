@@ -82,7 +82,7 @@ export function longform({ data, uid }: Partial<PrismicDocumentWithUID>): string
 }
 
 // --- link resolver for Prismic ---
-export function linkResolverSync(doc: Partial<PrismicDocument>): string {
+export function linkResolver(doc: Partial<PrismicDocument>): string {
 	const { type } = doc;
 
 	const contentTypes = {
@@ -96,53 +96,4 @@ export function linkResolverSync(doc: Partial<PrismicDocument>): string {
 	};
 
 	return contentTypes[type](doc) || null;
-}
-
-// DEPRECATED: async version of linkResolver that fetches custom data as needed
-// -> use fetchLinks in the original query to reduce round trips and async headaches
-export async function linkResolver(doc: Partial<PrismicDocument>): Promise<string> {
-	const { id, type } = doc;
-
-	// describe each content type
-	// -> needsData: boolean - does the route require document data, e.g. a date field?
-	// -> getter: function - the getter function, defined above, returns a url string
-	const contentTypes = {
-		homepage: {
-			getter: homepage,
-			needsData: false,
-		},
-		page: {
-			getter: page,
-			needsData: false,
-		},
-		index_page: {
-			getter: indexPage,
-			needsData: false,
-		},
-		longform: {
-			getter: longform,
-			needsData: true,
-		},
-		design_project: {
-			getter: designProject,
-			needsData: true,
-		},
-		picture: {
-			getter: picture,
-			needsData: true,
-		},
-		blog_post: {
-			getter: blogPost,
-			needsData: true,
-		},
-	};
-
-	// if there is no data prop on the document object, fetch that doc from Prismic
-	if (contentTypes[type].needsData && !doc.data) {
-		const response = await prismic.getByID(id);
-		const { data } = response;
-		return contentTypes[type].getter({ ...doc, data });
-	}
-
-	return contentTypes[type].getter(doc);
 }

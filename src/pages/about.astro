@@ -4,14 +4,14 @@ import '@styles/tokens/spacing.css';
 
 // helpers
 import prismic from '@lib/prismic';
-import * as prismicHelpers from '@prismicio/helpers';
+import { fetchLinks } from '@lib/routes';
 
 // components
 import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
 import Heading from '@components/blocks/Heading.astro';
 
-const response = await prismic.getByUID('page', 'about');
+const response = await prismic.getByUID('page', 'about', { fetchLinks });
 
 const { title, body } = response.data;
 ---

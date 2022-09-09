@@ -8,7 +8,7 @@ import '@styles/components/tooltip.css';
 import expand from '@icons/expand.svg?raw';
 
 // utils
-import { linkResolverSync } from '@lib/routes';
+import { linkResolver } from '@lib/routes';
 import { sentenceCase } from '@lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
 import renderMarkdown from '@lib/renderMarkdown';
@@ -49,7 +49,7 @@ let renderedText;
 
 if (prismicText) {
 	// console.log(prismicText[0].spans.map((link) => linkResolver))
-	renderedText = prismicHelpers.asHTML(prismicText, linkResolverSync, htmlSerializer);
+	renderedText = prismicHelpers.asHTML(prismicText, linkResolver, htmlSerializer);
 }
 if (markdown) {
 	renderedText = renderMarkdown(markdown, { inline });
