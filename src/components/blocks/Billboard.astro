@@ -123,8 +123,8 @@ const resolvedLink = link && await prismicHelpers.asLink(link, linkResolver);
 	article {
 		display: grid;
 		flex: 1;
-		grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
-		gap: var(--space-xwide);
+		grid-template-rows: repeat(auto-fit, minmax(auto, 1fr));
+		gap: var(--space-medium);
 		align-items: center;
 	}
 
@@ -134,5 +134,12 @@ const resolvedLink = link && await prismicHelpers.asLink(link, linkResolver);
 
 	article :global(.cover) > :global(img) {
 		max-height: 60vh;
+	}
+
+	@media screen and (min-width: 42em) {
+		article {
+			grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
+			gap: var(--space-medium);
+		}
 	}
 </style>

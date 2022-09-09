@@ -53,14 +53,14 @@ const {
 		MainNav.$navButtonClose = document.getElementById('nav-button-close');
 		MainNav.$navWrapper = document.getElementById('nav-wrapper');
 
-		MainNav.$navButtonOpen.onclick = () => {
+		MainNav.$navButtonOpen.onpointerdown = () => {
 			MainNav.open = true;
 			MainNav.$navWrapper.classList.remove('closed');
 			MainNav.$navWrapper.classList.add('open');
 			MainNav.$navButtonOpen.classList.add('hide');
 		}
 
-		MainNav.$navButtonClose.onclick = () => {
+		MainNav.$navButtonClose.onpointerdown = () => {
 			MainNav.open = false;
 			MainNav.$navWrapper.classList.remove('open');
 			MainNav.$navButtonOpen.classList.remove('hide');
