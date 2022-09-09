@@ -23,30 +23,30 @@ const pictures = await prismic.getAllByType('picture', {
 		direction: 'desc',
 	},
 	graphQuery: `
-			{
-				picture {
-					...pictureFields
-					series {
-						...on picture_series {
-							uid
-							title
-						}
+		{
+			picture {
+				...pictureFields
+				series {
+					...on picture_series {
+						uid
+						title
 					}
-					media {
-						medium {
-							...on picture_medium {
-								...picture_mediumFields
-							}
-						}
-					}
-					substrate {
-						...on picture_substrate {
-							name
+				}
+				media {
+					medium {
+						...on picture_medium {
+							...picture_mediumFields
 						}
 					}
 				}
+				substrate {
+					...on picture_substrate {
+						name
+					}
+				}
 			}
-		`,
+		}
+	`,
 });
 
 export const get = () => rss({
