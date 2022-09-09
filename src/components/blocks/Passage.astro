@@ -1,0 +1,64 @@
+---
+// assets
+import '@styles/tokens/type.css';
+import '@styles/utilities/type.css';
+
+// components
+import RenderedText from '@components/elements/RenderedText.astro';
+
+// types
+import type { TypeScale, FormattedText } from '@lib/types';
+
+export interface Props {
+	text: FormattedText;
+	class?: string;
+	typeSize?: TypeScale;
+	typeFace?: 'body' | 'display' | 'accent';
+}
+
+const {
+	text,
+	class: className = '',
+	typeSize = 'epsilon',
+	typeFace = 'body',
+} = Astro.props as Props;
+
+const classList = [
+	'prose',
+	typeFace !== 'body' ? `type-role-${typeFace}` : '',
+	`type-scale-${typeSize}`,
+	className
+].join(' ');
+---
+
+<div class={classList}>
+	<slot><RenderedText {...text} /></slot>
+</div>
+
+<style>
+	.prose > :global(*) {
+		line-height: var(--type-leading-default);
+	}
+
+  .prose > :global(* + *) {
+    margin-block-start: 1em;
+  }
+
+	/* add an icon after external links */
+	@supports (mask: url('/assets/icons/external-link.svg') no-repeat 50% 50%) {
+		.prose :global(a[href^='http']::after) {
+			--size: 0.7em;
+
+			background-color: currentColor;
+			content: '';
+			display: inline-block;
+			height: var(--size);
+			line-height: var(--type-leading-default);
+			margin: 0 0.1em 0 0.25em;
+			mask: url('/assets/icons/external-link.svg') no-repeat 50% 50%;
+			position: relative;
+			vertical-align: baseline;
+			width: var(--size);
+		}
+	}
+</style>

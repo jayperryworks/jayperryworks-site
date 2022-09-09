@@ -1,0 +1,161 @@
+---
+// assets
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+import arrowRight from '@icons/arrow-right.svg?raw';
+
+// utils
+import { blogPost, linkResolver } from '@lib/routes';
+import { format } from 'date-fns';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+
+// components
+import Button from '@components/elements/Button.astro';
+import Gallery from '@components/layout/Gallery.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
+import Number from '@components/elements/Number.astro';
+
+// types
+import type { RichTextField } from '@prismicio/types';
+
+export type FeedSource = 'blog_post' | 'picture' | 'longform';
+
+export interface Props {
+	cta?: {
+		link: string,
+		label: string,
+	};
+	description?: {
+		prismicText: RichTextField,
+	};
+	contentSource: FeedSource;
+	number?: number;
+	subtitle?: string;
+	title?: string;
+}
+
+const {
+	cta,
+	description,
+	contentSource,
+	number,
+	subtitle,
+	title,
+} = Astro.props as Props;
+
+const { link, label } = cta;
+const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
+
+let feedItems = [];
+const pageSize = 8;
+
+if (contentSource === 'blog_post') {
+	const feedData = await prismic.getByType('blog_post', {
+		orderings: {
+			field: 'my.blog_post.date',
+			direction: 'desc',
+		},
+		pageSize,
+	});
+
+	if (feedData?.results.length > 0) {
+		feedItems = feedData.results.map((item) => {
+			const { date, title, subtitle } = item.data;
+
+			return {
+				date,
+				path: blogPost(item),
+				subtitle: subtitle && prismicHelpers.asText(subtitle),
+				title: prismicHelpers.asText(title),
+			};
+		});
+	}
+}
+---
+
+<article>
+	<header>
+		{number && <Number {number} />}
+		<Heading level={1}>
+			<a
+				class="type-link-undecorated"
+				href={resolvedLink}
+			>
+				{title}
+			</a>
+		</Heading>
+		{subtitle && (
+			<Heading
+				class="subtitle"
+				level={3}
+				subheading
+			>
+				{subtitle}
+			</Heading>
+		)}
+		{description && (
+			<Passage
+				typeSize="delta"
+				typeFace="display"
+				text={description}
+			/>
+		)}
+	</header>
+
+	<Gallery gutter="wide">
+		{feedItems.map((listing) => (
+			<li class="item">
+				<Heading level={5} subheading>{format(new Date(listing.date), 'yy.MM')}</Heading>
+				<Heading level={3}>
+					<a
+						class="type-link-undecorated"
+						href={listing.path}
+					>
+						{listing.title}
+					</a>
+				</Heading>
+			</li>
+		))}
+	</Gallery>
+
+	<footer>
+		<Button
+			href={resolvedLink}
+			iconRight={arrowRight}
+		>
+			{label}
+		</Button>
+	</footer>
+</article>
+
+<style>
+	article {
+		flex: 1;
+		justify-content: center;
+		display: flex;
+		flex-direction: column;
+	}
+
+	footer {
+		margin-block-start: auto;
+		padding-block-start: var(--space-xwide);
+	}
+
+	header {
+		padding-block-end: var(--space-wide);
+	}
+
+	header > :global(.subtitle) {
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	header > :global(* + *) {
+		padding-block-start: var(--space-medium);
+	}
+
+	.item > :global(* + *) {
+		padding-block-start: var(--space-xnarrow);
+	}
+</style>

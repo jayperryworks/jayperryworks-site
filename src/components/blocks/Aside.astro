@@ -1,0 +1,48 @@
+---
+	// styles
+	import '@styles/tokens/borders.css';
+	import '@styles/tokens/spacing.css';
+	import '@styles/tokens/type.css';
+	import '@styles/tokens/color.css';
+
+	// components
+	import Passage from '@components/blocks/Passage.astro';
+
+	// types
+	import { KeyTextField } from '@prismicio/types';
+	import type { FormattedText } from '@lib/types';
+
+	export interface Props {
+		text: FormattedText;
+		class?: string;
+		label?: KeyTextField;
+	}
+
+	const {
+		text,
+		class: className = '',
+		label,
+	} = Astro.props as Props;
+---
+
+<aside class={className}>
+	{label && <h2>{label}</h2>}
+	<Passage {text} />
+</aside>
+
+<style>
+	h2 {
+		border-block-start: var(--border-default);
+		color: var(--color-secondary);
+		font-family: var(--type-font-accent);
+		font-size: var(--type-scale-epsilon);
+		font-style: normal;
+		font-weight: 300;
+		padding-block: var(--space-narrow);
+	}
+
+	aside {
+		font-style: italic;
+		color: var(--color-secondary);
+	}
+</style>

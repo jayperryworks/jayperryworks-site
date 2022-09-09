@@ -1,0 +1,254 @@
+---
+// styles & assets
+import '@styles/tokens/color.css';
+import '@styles/tokens/contentWidth.css';
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+import '@styles/utilities/borders.css';
+import '@styles/utilities/type.css';
+import externalLink from '@icons/external-link.svg?raw';
+
+// helpers
+import { format } from 'date-fns';
+import { blogPost as permalink, fetchLinks } from '@lib/routes';
+import { sentenceCase } from '@lib/stringHelpers';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+
+// components
+import Layout from '@layouts/BaseLayout.astro';
+import BlockList from '@components/BlockList.astro';
+import Button from '@components/elements/Button.astro';
+import Heading from '@components/blocks/Heading.astro';
+import ReadNextLink from '@components/navigation/ReadNextLink.astro';
+
+// types
+import type {
+	Slice,
+	TitleField,
+	LinkField,
+	Tags,
+	DateField
+} from '@prismicio/types';
+
+import type { PaginationLink } from '@lib/types';
+
+export interface Props {
+	body: Array<Slice>;
+	date: DateField;
+	link?: LinkField;
+	next?: PaginationLink;
+	series?: LinkField;
+	subtitle?: TitleField;
+	tags?: Tags;
+	title: TitleField;
+}
+
+export async function getStaticPaths() {
+ 	const posts = await prismic.getAllByType('blog_post', {
+		fetchLinks,
+ 		orderings: {
+ 			field: 'my.blog_post.date',
+ 			direction: 'desc',
+ 		},
+ 	});
+
+ 	return posts.map(({ uid, tags, data }, index) => {
+		const date = prismicHelpers.asDate(data.date);
+		const nextPost = posts[index + 1];
+
+ 		return {
+ 			params: {
+ 				year: format(date, 'yyyy'),
+ 				month: format(date, 'MM'),
+ 				day: format(date, 'dd'),
+ 				uid,
+ 			},
+ 			props: {
+ 				...data,
+ 				tags,
+ 				link: prismicHelpers.asLink(data.link),
+ 				next: nextPost && {
+					title: nextPost.data.title,
+					subtitle: nextPost.data.subtitle,
+					path: permalink(nextPost),
+				},
+ 			},
+ 		};
+ 	});
+}
+
+const {
+	year,
+	month,
+	day,
+	uid,
+} = Astro.params;
+
+const {
+	body,
+	date,
+	link,
+	next,
+	series,
+	subtitle,
+	tags,
+	title,
+} = Astro.props as Props;
+---
+
+<Layout
+	pageTitle={prismicHelpers.asText(title)}
+	path="blog"
+>
+	<article>
+		<header>
+			<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
+			{subtitle && (
+				<Heading
+					class="subtitle"
+					subheading
+				>
+					{prismicHelpers.asText(subtitle)}
+				</Heading>
+			)}
+			<time datetime={date} class="date">
+				{format(prismicHelpers.asDate(date), 'MMMM dd, yyyy')}
+			</time>
+		</header>
+
+		<BlockList {body} showLedeStyle />
+
+		{link && (
+			<footer class="link">
+				<Button
+					href={link}
+					iconRight={externalLink}
+					target="_blank"
+				>
+					Direct link
+				</Button>
+			</footer>
+		)}
+	</article>
+
+	<!-- pagination nav -->
+	{next && (
+		<nav>
+			<section class="nav-wrapper tags">
+				<h2 class="type-role-accent type-scale-epsilon">Filed&nbsp;under:</h2>
+				<ul class="tag-list type-role-accent">
+					{tags.map((tag) => (
+						<li>
+							<a href={`/blog/tags/${tag}/`}>{sentenceCase(tag)}</a>
+						</li>
+					))}
+				</ul>
+			</section>
+			<section class="nav-wrapper">
+				<ReadNextLink link={next.path}>
+					<Fragment slot="eyebrow">Next post:</Fragment>
+					<Fragment slot="title">{prismicHelpers.asText(next.title)}</Fragment>
+				</ReadNextLink>
+			</section>
+		</nav>
+	)}
+</Layout>
+
+<style>
+	article {
+		padding-block: var(--space-xwide);
+	}
+
+	header {
+		padding-inline: var(--space-outside);
+		margin-inline: auto;
+		max-width: var(--content-width-xwide);
+		padding-block-end: var(--space-wide);
+		text-align: center;
+	}
+
+	header :global(.subtitle) {
+		padding-block-start: var(--space-xxnarrow);
+	}
+
+	.date {
+		color: var(--color-secondary);
+		display: block;
+		font-family: var(--type-font-accent);
+		font-weight: 200;
+		padding-block-start: var(--space-medium);
+	}
+
+	.link {
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+		padding-block-start: var(--space-wide);
+	}
+
+	footer {
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+		padding-block-start: var(--space-xwide);
+	}
+
+	.tags {
+		display: flex;
+		align-items: baseline;
+		gap: 0.25em;
+		flex-wrap: wrap;
+	}
+
+	@media screen and (min-width: 30em) {
+		.tags {
+			gap: var(--space-xnarrow);
+			flex-wrap: nowrap;
+		}
+	}
+
+	.tag-list {
+		list-style: none;
+		padding-inline-start: 0;
+		padding-block-start: var(--space-xxnarrow);
+		margin: 0;
+		display: flex;
+		gap: 0.5em;
+		flex-wrap: wrap;
+		align-items: baseline;
+	}
+
+
+	.tag-list li {
+		font-size: 0; /* kill whitespace margins */
+	}
+
+	.tag-list li::after {
+		content: ', ';
+		margin-inline-start: 0.1em;
+		font-size: var(--type-scale-epsilon);
+	}
+
+	.tag-list li:last-child::after {
+		content: '';
+	}
+
+	.tag-list a {
+		font-size: var(--type-scale-epsilon);
+	}
+
+	nav {
+		padding-block-end: var(--space-xwide);
+		padding-inline: var(--space-outside);
+	}
+
+	.nav-wrapper {
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+		border-top: var(--border-default);
+		padding-block-start: var(--space-wide);
+	}
+
+	.nav-wrapper + .nav-wrapper {
+		margin-block-start: var(--space-wide);
+	}
+</style>

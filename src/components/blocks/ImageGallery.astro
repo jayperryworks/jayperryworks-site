@@ -1,0 +1,76 @@
+---
+// components
+import DeviceFrame from '@components/elements/DeviceFrame.astro';
+import Image from '@components/elements/Image.astro';
+import Figure from '@components/blocks/Figure.astro';
+import Gallery from '@components/layout/Gallery.astro';
+
+// types
+import type { SpaceScale, FormattedText, ImageFit, Device } from '@lib/types';
+import type { ImageField } from '@prismicio/types';
+
+export type ImageGalleryItem = {
+	image: ImageField,
+	device: Device,
+};
+
+export interface Props {
+	images: ImageGalleryItem[];
+	attribution?: FormattedText;
+	border?: boolean;
+	caption?: FormattedText;
+	class?: string;
+	columnSize?: 'small' | 'medium' | 'large';
+	fitImages?: ImageFit;
+	gutter?: SpaceScale;
+}
+
+const {
+	images,
+	attribution,
+	border = false,
+	caption,
+	class: className = '',
+	columnSize = 'medium',
+	fitImages = 'default',
+	gutter = 'xnarrow',
+} = Astro.props as Props;
+---
+
+<Figure
+	class={className}
+	{caption}
+	{attribution}
+>
+	<Gallery
+		size={columnSize}
+		{gutter}
+	>
+		{images.map((image) => (
+			<li>
+				{image?.device !== 'None'
+					? <DeviceFrame
+							type={image.device}
+							source={image}
+						/>
+					: <Image
+							fit={fitImages}
+							source={image}
+							{border}
+						/>
+				}
+			</li>
+		))}
+	</Gallery>
+</Figure>
+
+<style>
+	li {
+		text-align: center;
+		font-size: 0;
+	}
+
+	li > :global(img) {
+		display: block;
+	}
+</style>

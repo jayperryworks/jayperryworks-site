@@ -1,0 +1,354 @@
+---
+// assets
+import '@styles/tokens/color.css';
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+import '@styles/utilities/type.css';
+import menu from '@icons/menu.svg?raw';
+import close from '@icons/close.svg?raw';
+
+// utils
+import prismic from '@lib/prismic';
+import * as prismicHelpers from '@prismicio/helpers';
+import { linkResolver, fetchLinks } from '@lib/routes';
+
+// components
+import Icon from '@components/elements/Icon.astro';
+import LogoJP from '@components/logos/LogoJP.astro';
+
+// types
+export interface Props {
+	segment: string;
+	overlay?: boolean;
+}
+
+type mainNavLink = {
+	label: string,
+	link: string,
+};
+
+const response = await prismic.getSingle('main_nav', { fetchLinks });
+const routes = response.data.nav_item.map(
+	({ label, link }): mainNavLink => ({
+		label,
+		link: prismicHelpers.asLink(link, linkResolver),
+	})
+);
+
+const {
+	segment,
+	overlay = false,
+} = Astro.props as Props;
+---
+
+<script>
+  // namespace for this component's JS
+  let MainNav = {
+		// current state
+		open: false,
+	};
+
+	document.addEventListener('DOMContentLoaded', () => {
+		MainNav.$navButtonOpen = document.getElementById('nav-button-open');
+		MainNav.$navButtonClose = document.getElementById('nav-button-close');
+		MainNav.$navWrapper = document.getElementById('nav-wrapper');
+
+		MainNav.$navButtonOpen.onpointerdown = () => {
+			MainNav.open = true;
+			MainNav.$navWrapper.classList.remove('closed');
+			MainNav.$navWrapper.classList.add('open');
+			MainNav.$navButtonOpen.classList.add('hide');
+		}
+
+		MainNav.$navButtonClose.onpointerdown = () => {
+			MainNav.open = false;
+			MainNav.$navWrapper.classList.remove('open');
+			MainNav.$navButtonOpen.classList.remove('hide');
+		}
+
+		MainNav.$navWrapper.ontransitionend = () => {
+			if (!MainNav.open) {
+				MainNav.$navWrapper.classList.add('closed');
+			}
+		};
+	});
+</script>
+
+<header class={overlay ? 'overlay' : ''}>
+  <nav>
+    <a
+      class="logo"
+      href="/"
+    >
+      <LogoJP />
+    </a>
+
+    <!-- nav -->
+  	<div class="type-align-right">
+      <button
+				class="nav-button | type-role-accent type-scale-epsilon"
+				id="nav-button-open"
+      >
+        Menu
+        <Icon
+					svg={menu}
+					margin="left"
+				/>
+      </button>
+      <div
+        class="nav closed"
+				id="nav-wrapper"
+      >
+        <button
+          class="nav-button close type-scale-epsilon type-role-accent"
+					id="nav-button-close"
+        >
+          <Icon
+						svg={close}
+						margin="right"
+					/>
+          <span class="hide-visually">Close</span>
+        </button>
+        <ul class="nav-list">
+					{routes.map(({ label, link }) => (
+            <li>
+              <a
+                class={[
+									'nav-item',
+									'type-link-undecorated',
+									link.includes(segment) ? 'current' : '',
+								].join(' ')}
+                href={link}
+              >
+								{label}
+              </a>
+            </li>
+					))}
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+	/* --- helpers --- */
+	.hide-visually {
+		border: 0;
+		clip: rect(1px, 1px, 1px, 1px);
+		clip-path: inset(100%);
+		height: 1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+	}
+
+	.show-visually {
+		clip: auto;
+		clip-path: none;
+		height: auto;
+		overflow: visible;
+		position: static;
+		width: auto;
+	}
+
+	/* --- layout --- */
+	header {
+    --transition: 0.25s;
+
+		padding-inline: var(--space-outside);
+	}
+
+  .overlay {
+    background-color: transparent;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 4;
+  }
+
+	nav {
+		display: flex;
+		justify-content: space-between;
+	}
+
+  /* --- nav elements --- */
+  .logo {
+    border: none;
+    display: block;
+    max-width: 2.5rem;
+  }
+
+  .nav-button {
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-block-start: 1em;
+    margin-block-start: var(--space-narrow);
+    outline: none;
+    padding: 0;
+    transition: color 0.25s ease-in-out;
+    will-change: color;
+  }
+
+  .nav-button:hover,
+  .nav-button:active {
+    color: var(--color-highlight);
+  }
+
+  .nav-button.close {
+    margin-inline-end: 1.5em;
+    margin-inline-end: var(--space-medium);
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  /* --- small-screen nav --- */
+  :global(.js) .nav {
+    background-color: hsl(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95);
+    bottom: 0;
+    display: block;
+    left: 0;
+    opacity: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    transition: opacity 0.25s ease;
+    will-change: opacity;
+    z-index: 4;
+  }
+
+  @supports (display: flex) {
+    :global(.js) .nav {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  /* closed (visually hidden) state */
+  :global(.js) .nav.closed {
+    border: 0;
+    clip-path: inset(100%);
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  /* open (transitioned) state */
+  :global(.js) .nav.open {
+    opacity: 1;
+  }
+
+  .nav-list {
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+  }
+
+  :global(.js) .nav-list {
+    display: block;
+  }
+
+  .nav-list > li {
+    display: block;
+    margin-block-start: 0;
+  }
+
+  .nav-list > li + li {
+    padding-block-start: var(--space-narrow);
+  }
+
+  .nav-item {
+    display: inline-block;
+    font-size: var(--type-scale-delta);
+    position: relative;
+    transition: color 0.25s ease-in-out;
+    will-change: color, font-size;
+		font-family: var(--type-font-accent);
+		font-weight: 300;
+  }
+
+  .nav-item.current::before {
+    --size: 0.5em;
+    background-color: var(--color-highlight);
+    border-radius: 1000px;
+    content: '';
+    display: block;
+    height: var(--size);
+    left: calc(var(--space-medium) * -1);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--size);
+  }
+
+  /* --- large-screen nav --- */
+  @media screen and (min-width: 36em) {
+    .nav-button {
+      display: none;
+    }
+
+    .nav,
+    :global(.js) .nav {
+      background-color: transparent;
+      display: inline-block;
+      opacity: 1;
+      position: relative;
+    }
+
+    :global(.js) .nav.closed {
+      clip-path: none;
+      clip: auto;
+      height: auto;
+      overflow: visible;
+      position: static;
+      width: auto;
+    }
+
+    .nav-item {
+      font-size: var(--type-scale-zeta);
+      padding-block-start: 0.8em;
+      padding-block-start: var(--space-xnarrow);
+    }
+
+    .nav-item:hover,
+    .nav-item:active {
+      color: var(--color-highlight);
+    }
+
+    .nav-item.current::before {
+      background-color: var(--color-highlight);
+      height: 0.125em;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transform: none;
+      width: auto;
+    }
+
+    .nav-item.small-only {
+      display: none;
+    }
+
+    .nav-list > li {
+      display: inline-block;
+    }
+
+    .nav-list > li + li {
+      margin-inline-start: 1em;
+      margin-inline-start: var(--space-narrow);
+      margin-block-start:  0;
+      padding-block-start: 0;
+    }
+  }
+</style>

@@ -1,0 +1,106 @@
+---
+// styles
+import '@styles/tokens/color.css';
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+import '@styles/tokens/borders.css';
+import '@styles/utilities/type.css';
+import '@styles/utilities/borders.css';
+
+// helpers
+import { format } from 'date-fns';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+
+// components
+import LogoJPW from '@components/logos/LogoJPW.astro';
+
+// types
+import { LinkField } from '@prismicio/types';
+
+type Item = {
+	name: string,
+	link: LinkField,
+};
+
+const response = await prismic.getSingle('social_channels');
+const { channel } = response.data;
+
+
+const socialChannelList = channel.map((item: Item, index: number): string => {
+	const { name, link } = item;
+
+	return `
+		${index === channel.length - 1 ? 'and' : ''}
+		<a href="${prismicHelpers.asLink(link)}" target="_blank">${name}</a>
+	`.trim();
+}).join(', ');
+---
+
+<footer class="border-seam-top">
+	<p class="social type-role-display type-scale-gamma">
+		Keep in touch. You can also find me on <Fragment set:html={socialChannelList} />.
+	</p>
+	<div class="signoff">
+		<div class="bookend">
+			<a
+				class="logo type-link-undecorated"
+				href="/"
+			>
+				<LogoJPW />
+			</a>
+			<small class="copyright | type-role-accent type-scale-zeta">
+				&copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
+			</small>
+		</div>
+	</div>
+</footer>
+
+<style>
+	footer {
+		position: relative;
+		padding-inline: var(--space-outside);
+		flex-shrink: 0;
+	}
+
+	.social {
+		border-block-end: var(--border-default);
+		color: var(--color-secondary);
+		display: block;
+		line-height: var(--type-leading-default);
+		max-width: none;
+		padding-block: var(--space-wide);
+	}
+
+	.social > :global(a) {
+		color: var(--color-primary);
+		font-family: var(--type-font-display);
+		font-weight: normal;
+	}
+
+	.signoff {
+		padding-block: var(--space-medium);
+		overflow: hidden;
+	}
+
+	.bookend {
+		display: flex;
+		flex-flow: wrap;
+		gap: var(--space-narrow);
+	}
+
+	.logo,
+	.copyright {
+		display: inline-block;
+		vertical-align: top;
+	}
+
+	.copyright {
+		color: var(--color-secondary);
+		align-items: center;
+	}
+
+	.logo {
+		width: 12rem;
+	}
+</style>

@@ -1,0 +1,93 @@
+---
+// assets
+import '@styles/tokens/contentWidth.css';
+
+// block components
+import Aside from '@components/blocks/Aside.astro';
+import Billboard from '@components/blocks/Billboard.astro';
+import BlockQuote from '@components/blocks/BlockQuote.astro';
+import Collage from '@components/blocks/Collage.astro';
+import Feed from '@components/blocks/Feed.astro';
+import Figure from '@components/blocks/Figure.astro';
+import Heading from '@components/blocks/Heading.astro';
+import ImageGallery from '@components/blocks/ImageGallery.astro';
+import Passage from '@components/blocks/Passage.astro';
+import Table from '@components/blocks/Table.astro';
+
+// Typescript
+import type { Block } from '@lib/types';
+
+export interface Props {
+	block: Block;
+	class?: string;
+}
+
+const {
+	block,
+	class: className,
+} = Astro.props as Props;
+
+function getWidth(prominence) {
+	const widths = {
+		Small: 'narrow',
+		Medium: 'default',
+		Large: 'xwide',
+		XLarge: 'xxwide',
+	};
+
+	return widths[prominence] || 'default';
+}
+
+const displayModeClass = block.displayMode === 'slide' ? 'slide border-seam-top' : '';
+
+const blocks = {
+	aside: Aside,
+	billboard: Billboard,
+	quote: BlockQuote,
+	collage: Collage,
+	feed: Feed,
+	figure: Figure,
+	heading: Heading,
+	imageGallery: ImageGallery,
+	passage: Passage,
+	table: Table,
+};
+
+const Component = blocks[block.type];
+const classList = ['block', displayModeClass, className].join(' ');
+const style = `--block-width: var(--content-width-${getWidth(block.prominence)});`;
+---
+
+<div class={classList}>
+	<div class="wrapper" {style}>
+		<Component {...block} />
+	</div>
+</div>
+
+<style>
+	.block.flow {
+		padding-inline: var(--space-outside);
+	}
+
+	.block.slide {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		padding-block: var(--space-wide);
+		padding-inline: var(--space-outside);
+	}
+
+	.wrapper {
+		max-width: var(--block-width);
+		margin-inline: auto;
+	}
+
+	.slide .wrapper {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		margin-inline: auto;
+		max-width: var(--content-width-xxwide);
+		width: 100%;
+	}
+</style>

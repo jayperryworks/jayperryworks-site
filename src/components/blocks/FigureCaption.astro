@@ -1,0 +1,55 @@
+---
+// styles
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/color.css';
+import '@styles/utilities/type.css';
+
+// components
+import RenderedText from "@components/elements/RenderedText.astro";
+
+// types
+import { FormattedText } from "@lib/types";
+
+export interface Props {
+	text: FormattedText;
+	attribution?: FormattedText;
+	class?: string;
+}
+
+const {
+	text,
+	attribution,
+	class: className = ''
+} = Astro.props as Props;
+---
+
+<figcaption class={`type-role-accent type-scale-zeta ${className}`}>
+  <slot>
+		<RenderedText {...text} />
+
+		{attribution && (
+			<cite>
+				<RenderedText {...attribution} inline />
+			</cite>
+		)}
+	</slot>
+</figcaption>
+
+<style>
+	figcaption,
+	cite {
+		text-align: left;
+	}
+
+	figcaption > * + * {
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	figcaption :global(p) {
+    font-style: normal;
+	}
+
+	cite {
+		font-style: italic;
+	}
+</style>

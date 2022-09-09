@@ -1,0 +1,146 @@
+---
+// A teaser that displays a blurb and cover image, links to other content
+
+// assets
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+import arrowRight from '@icons/arrow-right.svg?raw';
+
+// utils
+import { linkResolver } from '@lib/routes';
+import * as prismicHelpers from '@prismicio/helpers';
+
+// components
+import Button from '@components/elements/Button.astro';
+import Figure from '@components/blocks/Figure.astro';
+import Collage from '@components/blocks/Collage.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
+import Number from '@components/elements/Number.astro';
+
+// types
+import { removeWidows } from '@lib/stringHelpers';
+import type { CollageItem } from '@components/blocks/Collage.astro';
+import type { RichTextField, LinkField } from '@prismicio/types';
+
+export interface Props {
+	title: string,
+	cta: {
+		link: LinkField,
+		label: string,
+	},
+	images?: CollageItem[],
+	description?: {
+		prismicText: RichTextField
+	},
+	number?: number,
+	subtitle?: string,
+}
+
+const {
+	images,
+	cta,
+	description,
+	number,
+	subtitle,
+	title,
+} = Astro.props as Props;
+
+const { link, label } = cta;
+const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
+---
+
+<article>
+	<header>
+		{number && <Number {number} />}
+
+		<Heading level={1}>
+			<a
+				class="type-link-undecorated"
+				href={resolvedLink}
+				set:html={removeWidows(title)}
+			>
+			</a>
+		</Heading>
+
+		{subtitle && (
+			<Heading
+			class="subtitle"
+			level={3}
+			subheading
+			>
+				<a
+					class="type-link-undecorated"
+					href={resolvedLink}
+					set:html={removeWidows(subtitle)}
+				>
+				</a>
+			</Heading>
+		)}
+
+		<Passage
+			typeSize="delta"
+			typeFace="display"
+			text={description}
+		/>
+
+		<Button
+			class="cta"
+			href={resolvedLink}
+			iconRight={arrowRight}
+		>
+			{label || 'Read more'}
+		</Button>
+
+	</header>
+
+	{images?.length > 1
+		? <Collage
+				class="cover"
+				{images}
+			/>
+		: <Figure
+				class="cover"
+				fit="contain"
+				{...images[0]}
+			/>
+	}
+</article>
+
+<style>
+	header > :global(* + *) {
+		padding-block-start: var(--space-medium);
+	}
+
+	header > :global(.subtitle) {
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	header > :global(.cta) {
+		margin-block-start: var(--space-wide);
+	}
+
+	article {
+		display: grid;
+		flex: 1;
+		grid-template-rows: repeat(auto-fit, minmax(auto, 1fr));
+		gap: var(--space-medium);
+		align-items: center;
+	}
+
+	article :global(.cover) {
+		justify-self: center;
+		width: 100%;
+	}
+
+	article :global(.cover) > :global(img) {
+		max-height: 60vh;
+	}
+
+	@media screen and (min-width: 42em) {
+		article {
+			grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
+			gap: var(--space-wide);
+		}
+	}
+</style>

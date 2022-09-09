@@ -1,0 +1,142 @@
+---
+// Display images or other content in a tight grid arrangement that acts like a self-contained composition
+// -> layout does not change with screen sizes, but some images are hidden if their priority is lower than 1
+
+// components
+import DeviceFrame from '@components/elements/DeviceFrame.astro';
+import Image from '@components/elements/Image.astro';
+import Figure from '@components/blocks/Figure.astro';
+
+// types
+import type { SpaceScale, FormattedText, ImageFit, Device } from '@lib/types';
+import type { ImageField } from '@prismicio/types';
+
+export type CollageItemSize = 'Default' | 'Large' | 'XLarge';
+export type CollageItemPriority = '1' | '2' | '3';
+
+export type CollageItem = {
+	source: ImageField,
+	device?: Device,
+	priority?: CollageItemPriority,
+	relativeSize?: CollageItemSize,
+};
+
+export interface Props {
+	images: CollageItem[];
+	attribution?: FormattedText;
+	border?: boolean;
+	caption?: FormattedText;
+	class?: string;
+	fitImages?: ImageFit;
+	gutter?: SpaceScale;
+}
+
+const {
+	images,
+	attribution,
+	border = false,
+	caption,
+	class: className = '',
+	fitImages = 'default',
+	gutter = 'medium',
+} = Astro.props as Props;
+
+// generate classes for each collage item
+function getItemClassList(
+	relativeSize: CollageItemSize,
+	priority: CollageItemPriority = '1'
+): string {
+
+	const sizeClasses = {
+		Default: '',
+		Large: 'wide',
+		XLarge: 'xwide',
+	};
+
+	return [
+		`priority:${priority}`,
+		sizeClasses[relativeSize || 'Default'],
+	].join(' ');
+}
+---
+
+<Figure
+	{attribution}
+	{caption}
+	class={className}
+>
+	<ul
+		class="collage"
+		style={`--gutter: var(--space-${gutter});`}
+	>
+		{images.map(({ source, relativeSize, device, priority }) => (
+			<li class={getItemClassList(relativeSize, priority)}>
+				{device !== 'None'
+					? <DeviceFrame
+							type={device}
+							{source}
+						/>
+					: <Image
+							fit={fitImages}
+							{border}
+							{source}
+						/>
+				}
+			</li>
+		))}
+	</ul>
+</Figure>
+
+<style>
+	/* container */
+	.collage {
+		align-items: center;
+		display: grid;
+		gap: var(--space-narrow);
+		grid-auto-flow: dense;
+		grid-template-columns: repeat(auto-fit, minmax(3rem, 1fr));
+		justify-content: center;
+		list-style: none;
+		padding-inline-start: 0;
+	}
+
+	@media screen and (min-width: 30em) {
+		.collage {
+			gap: var(--gutter);
+		}
+	}
+
+	li + li {
+		margin-top: 0;
+	}
+
+	/* items */
+	.priority\:2,
+	.priority\:3, {
+		display: none;
+	}
+
+	.xwide {
+		grid-column: span 2;
+	}
+
+	@media screen and (min-width: 40em) {
+		.priority\:2 {
+			display: block;
+		}
+
+		.wide {
+			grid-column: span 2;
+		}
+
+		.xwide {
+			grid-column: span 5;
+		}
+	}
+
+	@media screen and (min-width: 64em) {
+		.priority\:3 {
+			display: block;
+		}
+	}
+</style>

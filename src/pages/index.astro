@@ -1,0 +1,145 @@
+---
+// assets
+import '@styles/tokens/contentWidth.css';
+import '@styles/tokens/spacing.css';
+import '@styles/utilities/borders.css';
+import '@styles/utilities/type.css';
+import arrowDown from '@icons/arrow-down.svg?raw';
+import arrowRight from '@icons/arrow-right.svg?raw';
+
+// utils
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+import { linkResolver, fetchLinks } from '@lib/routes';
+
+// components
+import BlockList from '@components/BlockList.astro';
+import Button from '@components/elements/Button.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Icon from '@components/elements/Icon.astro';
+import Layout from '@layouts/BaseLayout.astro';
+import Passage from '@components/blocks/Passage.astro';
+
+// fetch content
+const response = await prismic.getSingle('homepage', { fetchLinks });
+
+const {
+	headline,
+	intro,
+	intro_link: link,
+	body,
+} = response.data;
+
+const introLink = prismicHelpers.asLink(link, linkResolver);
+---
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const $tocButton = document.getElementById('toc-link');
+		const $tocSection = document.querySelector($tocButton.getAttribute('href'));
+
+		$tocButton.addEventListener('pointerdown', () => {
+			$tocSection.scrollIntoView({
+				behavior: 'smooth',
+				block: 'start',
+			});
+
+			return false;
+		});
+	});
+</script>
+
+<Layout path="home" headerOverlay>
+	<!-- intro -->
+	<header>
+		<div class="intro">
+			<div class="blurb">
+				<Heading
+					level={1}
+					text={headline}
+				/>
+				<Passage
+					text={{ prismicText: intro }}
+					typeSize="delta"
+					typeFace="display"
+					class="blurb"
+				/>
+				<Button
+					class="blurb-cta"
+					href={introLink}
+					iconRight={arrowRight}
+				>
+					A bit more about me
+				</Button>
+			</div>
+			<a
+				class="type-role-accent type-scale-epsilon type-link-undecorated"
+				href="#toc"
+				id="toc-link"
+			>
+				<Icon
+					align="baseline"
+					margin="right"
+					svg={arrowDown}
+				/>
+				Table of contents
+			</a>
+		</div>
+	</header>
+
+	<!-- TOC panels -->
+	<div id="toc">
+		<BlockList {body} numbered />
+	</div>
+</Layout>
+
+<style>
+	header {
+		display: flex;
+		min-height: 100vh;
+		padding-block-end: var(--space-narrow);
+		padding-block-start: var(--space-wide);
+		padding-inline: var(--space-outside);
+	}
+
+	.intro {
+		align-items: center;
+		display: grid;
+		flex: 1;
+		gap: var(--space-medium);
+		grid-template-rows: 1fr auto;
+		margin-inline: auto;
+		max-width: var(--content-width-xxwide);
+	}
+
+
+	.blurb > :global(* + *) {
+		padding-block-start: var(--space-medium);
+	}
+
+	.blurb :global(.blurb-cta) {
+		margin-block-start: var(--space-wide);
+	}
+
+	.toc {
+		list-style: none;
+		padding-inline-start: 0;
+	}
+
+	.toc > li {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		padding-block: var(--space-wide);
+		padding-inline: var(--space-outside);
+	}
+
+	.wrapper {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		margin-inline: auto;
+		max-width: var(--content-width-xxwide);
+		width: 100%;
+	}
+</style>

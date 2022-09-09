@@ -1,0 +1,162 @@
+---
+// styles
+import '@styles/tokens/color.css';
+import '@styles/tokens/type.css';
+
+// components
+import Icon from '@components/elements/Icon.astro';
+
+export interface Props {
+	href: string;
+	class?: string;
+	iconLeft?: string;
+	iconRight?: string;
+	role?: string;
+	size?: string;
+	target?: string;
+}
+
+const {
+	href,
+	class: className = '',
+	iconLeft = '',
+	iconRight = '',
+	role = '',
+	size = '',
+	target = '',
+} = Astro.props as Props;
+
+const classList = [
+	'button',
+	iconLeft ? 'has-icon left' : '',
+	iconRight ? 'has-icon right' : '',
+	role,
+	size,
+	className,
+].join(' ');
+---
+
+<a
+  {href}
+  {target}
+  class={classList}
+>
+  {iconLeft && (
+    <Icon
+      svg={iconLeft}
+      size={size}
+      class="icon left"
+    />
+	)}
+
+  <slot></slot>
+
+	{iconRight && (
+    <Icon
+      svg={iconRight}
+      size={size}
+      class="icon right"
+    />
+	)}
+</a>
+
+<style>
+  .button {
+    --color: var(--color-primary);
+    --font-size: var(--type-scale-epsilon);
+    --icon-padding: 1em;
+    --icon-offset: 0.5em;
+    --padding-x: 1.2em;
+    --padding-y: 0.57em;
+    --shadow-spread: 5px;
+    --baseline-compensation: 0.05em;
+
+    background-color: transparent;
+    border-radius: 0.2em;
+    border: 1px solid currentColor;
+    border: 1px solid var(--color);
+    color: currentColor;
+    color: var(--color);
+    cursor: pointer;
+    display: inline-block;
+    font-family: var(--type-font-accent);
+    font-size: 1rem; /* fallback reset */
+    font-size: var(--font-size);
+    font-weight: 300;
+    margin-block-end: var(--shadow-spread);
+    padding: var(--padding-y) var(--padding-x) calc(var(--padding-y) - var(--baseline-compensation));
+    position: relative;
+		text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  /* pre-render a box shadow on a pseudo element, but hide it */
+  .button::after {
+    border-radius: 0.2em;
+    bottom: 0;
+    box-shadow: 0 2px var(--shadow-spread) var(--color-shadow);
+    content: '';
+    display: block;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: opacity 0.25s ease-in-out;
+    will-change: opacity;
+    z-index: -1;
+  }
+
+  .button:hover,
+  .button:active {
+    --color: var(--color-highlight);
+
+    background-color: var(--color-island);
+  }
+
+  /* show the pseudo element to smoothly animate the shadow */
+  .button:hover::after {
+    opacity: 1;
+  }
+
+  .button :global(sup) {
+    font-size: 0.6em;
+  }
+
+  .button :global(strong) {
+    font-weight: bold;
+  }
+
+  /* --- sizes --- */
+  .small {
+    --font-size: var(--type-scale-zeta);
+    --icon-padding: 1.4em;
+  }
+
+  /* --- icons --- */
+  .button.has-icon.left {
+    padding-inline-start: calc(var(--padding-x) + var(--icon-padding));
+  }
+
+  .button.has-icon.right {
+    padding-inline-end: calc(var(--padding-x) + var(--icon-padding));
+  }
+
+  .button :global(.icon) {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-30%);
+  }
+
+  .button.small :global(.icon) {
+    transform: translateY(-40%);
+  }
+
+  .button :global(.icon.left) {
+    left: calc(var(--padding-x) - var(--icon-offset));
+  }
+
+  .button :global(.icon.right) {
+    right: calc(var(--padding-x) - var(--icon-offset));
+  }
+</style>

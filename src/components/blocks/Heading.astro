@@ -1,0 +1,65 @@
+---
+// Render a heading tag with the correct markup and classes
+
+// styles
+import '@styles/utilities/type.css';
+import { removeWidows } from '@lib/stringHelpers';
+import * as prismicHelpers from '@prismicio/helpers';
+
+// types
+import { TitleField } from '@prismicio/types';
+
+export interface Props {
+	align?: 'left' | 'center' | 'right',
+	class?: string,
+	level?: number,
+	subheading?: boolean,
+	text?: TitleField,
+}
+
+const {
+	align = 'left',
+	class: className = '',
+	level = 2,
+	subheading = false,
+	text,
+} = Astro.props as Props;
+
+const levels = [
+	'alpha',
+	'beta',
+	'gamma',
+	'delta',
+	'epsilon',
+	'zeta',
+];
+
+const El = !subheading ? `h${level}` : 'p';
+
+const classList = [
+	'heading',
+	subheading ? `type-role-accent type-scale-${levels[level - 1]}` : '',
+	align !== 'left' ? `align-${align}` : '',
+	className,
+].join(' ');
+---
+
+<El class={classList}>
+	<slot>
+		{text && <Fragment set:html={removeWidows(prismicHelpers.asText(text))} />}
+	</slot>
+</El>
+
+<style>
+	p {
+		max-width: none;
+	}
+
+	.align-center {
+		text-align: center;
+	}
+
+	.align-right {
+		text-align: right;
+	}
+</style>

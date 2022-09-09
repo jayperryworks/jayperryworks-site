@@ -1,0 +1,43 @@
+---
+// assets
+import '@styles/tokens/spacing.css';
+
+// helpers
+import prismic from '@lib/prismic';
+import { fetchLinks } from '@lib/routes';
+
+// components
+import Layout from '@layouts/BaseLayout.astro';
+import BlockList from '@components/BlockList.astro';
+import Heading from '@components/blocks/Heading.astro';
+
+const response = await prismic.getByUID('page', 'about', { fetchLinks });
+
+const { title, body } = response.data;
+---
+
+<Layout
+	pageTitle="about"
+	path="about"
+>
+	<article>
+		<Heading
+			level={1}
+			class="title"
+			text={title}
+		/>
+		<BlockList {body} showLedeStyle />
+	</article>
+</Layout>
+
+<style>
+  article {
+    padding-block: var(--space-xwide);
+	}
+
+	.title {
+		padding-block-end: var(--space-wide);
+		padding-inline: var(--space-outside);
+		text-align: center;
+	}
+</style>

@@ -1,0 +1,51 @@
+---
+import '@styles/tokens/contentWidth.css';
+import '@styles/tokens/spacing.css';
+import '@styles/utilities/borders.css';
+import '@styles/utilities/type.css';
+
+// utils
+import { fetchLinks } from '@lib/routes';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+
+// components
+import Layout from '@layouts/BaseLayout.astro';
+import Heading from '@components/blocks/Heading.astro';
+import BlockList from '@components/BlockList.astro';
+
+// fetch content
+const response = await prismic.getByUID('index_page', 'design', { fetchLinks });
+
+const {
+	title,
+	subtitle,
+	short_title: shortTitle,
+	body,
+} = response.data;
+---
+
+<Layout pageTitle={shortTitle} path="design">
+	<article>
+		<header>
+			<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
+			{subtitle && (
+				<Heading level={3} subheading>{prismicHelpers.asText(subtitle)}</Heading>
+			)}
+		</header>
+
+		<BlockList {body} showLedeStyle />
+	</article>
+</Layout>
+
+<style>
+	article {
+		padding-block: var(--space-xwide);
+	}
+
+	header {
+		padding-block-end: var(--space-wide);
+		padding-inline: var(--space-outside);
+		text-align: center;
+	}
+</style>

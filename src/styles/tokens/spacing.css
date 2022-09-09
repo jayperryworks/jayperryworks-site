@@ -1,0 +1,24 @@
+:root {
+	--space-xxnarrow: 0.23rem;
+	--space-xnarrow: 0.69rem;
+	--space-narrow: 1rem;
+	--space-medium: 1.73rem;
+	--space-wide: 2.99rem;
+	--space-xwide: 6.19rem;
+
+	/* outside spacing */
+	--space-outside: var(--space-narrow);
+}
+
+/* --- outside spacing on larger screens --- */
+@media screen and (min-width: 42em) {
+	:root {
+		--space-outside: var(--space-medium);
+	}
+}
+
+@media screen and (min-width: 62em) {
+	:root {
+		--space-outside: var(--space-wide);
+	}
+}
