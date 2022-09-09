@@ -1,3 +1,8 @@
+// Routes
+// -> global resolvers for page routes on this site
+// -> transforms Prismic data into front-end page routes using their Link Resolver
+// -> docs: https://prismic.io/docs/technologies/link-resolver-route-resolver#link-resolver
+
 // types
 import {
 	DateField,
@@ -41,10 +46,12 @@ export function getDateParams(
 }
 
 // --- main pages
+// -> export each route as an individual function so it can be called individually as needed
 export function homepage(): string {
 	return '/';
 }
 
+// top-level pages
 export function page({ uid }: Partial<PrismicDocumentWithUID>): string {
 	return `/${uid}/`;
 }
@@ -54,27 +61,27 @@ export function indexPage({ uid }: Partial<PrismicDocumentWithUID>): string {
 	return `/${uid}/`;
 }
 
-// --- blog
+// blog posts
 export function blogPost({ data, uid }: Partial<PrismicDocumentWithUID>): string {
 	return `/blog/${getDateParams(data.date, ['year', 'month', 'day'])}/${uid}/`;
 }
 
-// --- pictures
+// pictures
 export function picture({ data, uid }: Partial<PrismicDocumentWithUID>): string {
 	return `/pictures/${getDateParams(data.date_completed, ['year', 'month'])}/${uid}/`;
 }
 
-// --- design
+// design
 export function designProject({ data, uid }: Partial<PrismicDocumentWithUID>): string {
 	return `/design/${data.start_date}/${uid}/`;
 }
 
-// --- longform
+// longform
 export function longform({ data, uid }: Partial<PrismicDocumentWithUID>): string {
 	return `/longform/${getDateParams(data.date, ['year'])}/${uid}/1/`;
 }
 
-// --- link resolver for Prismic
+// --- link resolver for Prismic ---
 export function linkResolverSync(doc: Partial<PrismicDocument>): string {
 	const { type } = doc;
 
