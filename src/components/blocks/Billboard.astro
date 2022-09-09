@@ -47,7 +47,7 @@ const {
 } = Astro.props as Props;
 
 const { link, label } = cta;
-const resolvedLink = link && await prismicHelpers.asLink(link, linkResolver);
+const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 ---
 
 <article>
@@ -130,6 +130,7 @@ const resolvedLink = link && await prismicHelpers.asLink(link, linkResolver);
 
 	article :global(.cover) {
 		justify-self: center;
+		width: 100%;
 	}
 
 	article :global(.cover) > :global(img) {
@@ -139,7 +140,7 @@ const resolvedLink = link && await prismicHelpers.asLink(link, linkResolver);
 	@media screen and (min-width: 42em) {
 		article {
 			grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
-			gap: var(--space-medium);
+			gap: var(--space-wide);
 		}
 	}
 </style>
