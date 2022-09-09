@@ -47,8 +47,7 @@ function htmlSerializer(type, element, content, children): string {
 
 let renderedText;
 
-if (prismicText) {
-	// console.log(prismicText[0].spans.map((link) => linkResolver))
+if (prismicText?.length > 0) {
 	renderedText = prismicHelpers.asHTML(prismicText, linkResolver, htmlSerializer);
 }
 if (markdown) {
