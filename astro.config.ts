@@ -15,8 +15,11 @@ export default defineConfig({
 	},
 	integrations: [
 		compress({
-			css: false,
 			svg: false,
+			html: {
+				removeComments: true,
+				removeEmptyAttributes: true,
+			},
 		}),
 		sitemap(),
 	]
