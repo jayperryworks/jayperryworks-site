@@ -15,14 +15,16 @@ const {
 	size = '',
 } = Astro.props as Props;
 
-let marginClass = margin ? `space-${margin}` : '';
+const classList = [
+	'icon',
+	size,
+	margin ? `space-${margin}` : '',
+	`align-${align}`,
+	className,
+].join(' ');
 ---
 
-<span
-	class={`icon ${size} ${marginClass} align-${align} ${className}`}
-	set:html={svg}
->
-</span>
+<span class={classList} set:html={svg}></span>
 
 <style>
   .icon {

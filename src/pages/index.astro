@@ -8,9 +8,9 @@ import arrowDown from '@icons/arrow-down.svg?raw';
 import arrowRight from '@icons/arrow-right.svg?raw';
 
 // utils
-import { linkResolver } from '@lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
+import { linkResolverSync, fetchLinks } from '@lib/routes';
 
 // components
 import BlockList from '@components/BlockList.astro';
@@ -21,7 +21,7 @@ import Layout from '@layouts/BaseLayout.astro';
 import Passage from '@components/blocks/Passage.astro';
 
 // fetch content
-const response = await prismic.getSingle('homepage');
+const response = await prismic.getSingle('homepage', { fetchLinks });
 
 const {
 	headline,
@@ -30,7 +30,7 @@ const {
 	body,
 } = response.data;
 
-const introLink = await prismicHelpers.asLink(link, linkResolver);
+const introLink = prismicHelpers.asLink(link, linkResolverSync);
 ---
 
 <Layout path="home" headerOverlay>

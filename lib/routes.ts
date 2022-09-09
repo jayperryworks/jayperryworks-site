@@ -10,8 +10,17 @@ import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from './prismic.ts';
 
+// link/relationship data to fetch from Prismic to resolve page routes
+// -> use in the config on the original query, e.g. prismic.getByUID(... { fetchLinks })
+export const fetchLinks = [
+	'blog_post.date',
+	'design_project.start_date',
+	'longform.date',
+	'picture.date_completed',
+];
+
 // create a url string from a date object, e.g. year/month/day
-function getDateParams(
+export function getDateParams(
 	value: DateField,
 	periods: Array<'year' | 'month' | 'day'>,
 ): string {
@@ -23,48 +32,68 @@ function getDateParams(
 		day: 'dd',
 	};
 
-	return periods.map((period: string): string => {
+	const formatString = periods.map((period: string): string[] => {
 		if (!formats[period]) throw new Error(`Time period '${period}' was not found.`);
-		return format(date, formats[period]);
+		return formats[period];
 	}).join('/');
+
+	return format(date, formatString);
 }
 
 // --- main pages
-export function homepage() {
+export function homepage(): string {
 	return '/';
 }
 
-export function page({ uid }: PrismicDocument) {
+export function page({ uid }: Partial<PrismicDocumentWithUID>): string {
 	return `/${uid}/`;
 }
 
-export function indexPage({ uid }: PrismicDocumentWithUID) {
-	if (uid === 'blog') return '/blog/page/1';
+export function indexPage({ uid }: Partial<PrismicDocumentWithUID>): string {
+	if (uid === 'blog') return '/blog/page/1/';
 	return `/${uid}/`;
 }
 
 // --- blog
-export function blogPost({ data, uid }: PrismicDocumentWithUID): string {
+export function blogPost({ data, uid }: Partial<PrismicDocumentWithUID>): string {
 	return `/blog/${getDateParams(data.date, ['year', 'month', 'day'])}/${uid}/`;
 }
 
 // --- pictures
-export function picture({ data, uid }: PrismicDocumentWithUID): string {
+export function picture({ data, uid }: Partial<PrismicDocumentWithUID>): string {
 	return `/pictures/${getDateParams(data.date_completed, ['year', 'month'])}/${uid}/`;
 }
 
 // --- design
-export function designProject({ data, uid }: PrismicDocumentWithUID): string {
+export function designProject({ data, uid }: Partial<PrismicDocumentWithUID>): string {
 	return `/design/${data.start_date}/${uid}/`;
 }
 
 // --- longform
-export function longform({ data, uid }: PrismicDocumentWithUID): string {
-	return `/longform/${getDateParams(data.date, ['year'])}/${uid}/1`;
+export function longform({ data, uid }: Partial<PrismicDocumentWithUID>): string {
+	return `/longform/${getDateParams(data.date, ['year'])}/${uid}/1/`;
 }
 
 // --- link resolver for Prismic
-export async function linkResolver(doc: PrismicDocument): Promise<string> {
+export function linkResolverSync(doc: Partial<PrismicDocument>): string {
+	const { type } = doc;
+
+	const contentTypes = {
+		homepage,
+		longform,
+		page,
+		picture,
+		blog_post: blogPost,
+		design_project: designProject,
+		index_page: indexPage,
+	};
+
+	return contentTypes[type](doc) || null;
+}
+
+// DEPRECATED: async version of linkResolver that fetches custom data as needed
+// -> use fetchLinks in the original query to reduce round trips and async headaches
+export async function linkResolver(doc: Partial<PrismicDocument>): Promise<string> {
 	const { id, type } = doc;
 
 	// describe each content type
