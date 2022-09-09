@@ -39,7 +39,7 @@ export function convertHexToHSLObject(hex: HexColor): Partial<HSLObject> {
 }
 
 export function convertHSLObjectToHSL(object: HSLObject): HSLColor {
-	if (object.a) return `hsl(${object.h}deg ${object.s}% ${object.l}% / ${object.a})`;
+	if (object?.a < 1) return `hsl(${object.h}deg ${object.s}% ${object.l}% / ${object.a})`;
 	return `hsl(${object.h}deg ${object.s}% ${object.l}%)`;
 }
 
