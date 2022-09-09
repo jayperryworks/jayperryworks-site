@@ -14,7 +14,10 @@ export default defineConfig({
 		})]
 	},
 	integrations: [
-		compress(),
+		compress({
+			css: false,
+			svg: false,
+		}),
 		sitemap(),
 	]
 });
