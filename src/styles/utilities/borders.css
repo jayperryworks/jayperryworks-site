@@ -37,23 +37,3 @@
 	width: var(--border-spine-width);
 	z-index: 3;
 }
-
-/* --- 'spine' border style */
-.border-spine {
-	--spine-color: var(--color-highlight);
-
-	padding-inline-start: var(--border-spine-width);
-	position: relative;
-}
-
-.border-spine::before {
-	background-color: var(--spine-color);
-	bottom: 0;
-	content: '';
-	display: block;
-	left: 0;
-	position: fixed;
-	top: 0;
-	width: var(--border-spine-width);
-	z-index: 0;
-}
