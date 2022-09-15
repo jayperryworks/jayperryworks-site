@@ -112,10 +112,6 @@ p {
 	max-width: 60ch;
 }
 
-li + li {
-	margin-top: 1em;
-}
-
 a {
 	--underline-w: 0.125em;
 	--underline-offset: 0.08em;

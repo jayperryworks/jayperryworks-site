@@ -44,6 +44,10 @@ const classList = [
     margin-block-start: 1em;
   }
 
+	.prose :global(li + li) {
+		margin-block-start: 1em;
+	}
+
 	/* add an icon after external links */
 	@supports (mask: url('/assets/icons/external-link.svg') no-repeat 50% 50%) {
 		.prose :global(a[href^='http']::after) {
