@@ -54,7 +54,7 @@ function getItemClassList(
 	};
 
 	return [
-		`priority:${priority}`,
+		`priority-${priority}`,
 		sizeClasses[relativeSize || 'Default'],
 	].join(' ');
 }
@@ -106,9 +106,13 @@ function getItemClassList(
 		}
 	}
 
+	li + li {
+		margin-top: 0;
+	}
+
 	/* items */
-	.priority\:2,
-	.priority\:3, {
+	.priority-2,
+	.priority-3 {
 		display: none;
 	}
 
@@ -117,7 +121,7 @@ function getItemClassList(
 	}
 
 	@media screen and (min-width: 40em) {
-		.priority\:2 {
+		.priority-2 {
 			display: block;
 		}
 
@@ -131,7 +135,7 @@ function getItemClassList(
 	}
 
 	@media screen and (min-width: 64em) {
-		.priority\:3 {
+		.priority-3 {
 			display: block;
 		}
 	}

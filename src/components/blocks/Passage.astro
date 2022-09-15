@@ -31,18 +31,16 @@ const classList = [
 ].join(' ');
 ---
 
-{text?.['prismicText' || 'markdown']?.length > 0 && (
-	<div class={classList}>
-		<slot><RenderedText {...text} /></slot>
-	</div>
-)}
+<div class={classList}>
+	<slot><RenderedText {...text} /></slot>
+</div>
 
 <style>
-	.prose {
+	.prose > :global(*) {
 		line-height: var(--type-leading-default);
 	}
 
-  .prose :global(* + *) {
+  .prose > :global(* + *) {
     margin-block-start: 1em;
   }
 
@@ -55,6 +53,7 @@ const classList = [
 			content: '';
 			display: inline-block;
 			height: var(--size);
+			line-height: var(--type-leading-default);
 			margin: 0 0.1em 0 0.25em;
 			mask: url('/assets/icons/external-link.svg') no-repeat 50% 50%;
 			position: relative;

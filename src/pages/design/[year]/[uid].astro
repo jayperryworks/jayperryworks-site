@@ -115,7 +115,7 @@ const {
 const credits = [
 	{
 		label: 'Date',
-		value: [ `${startDate} - ${endDate || 'present'}` ],
+		value: startDate === endDate ? startDate : [ `${startDate} - ${endDate || 'present'}` ],
 	},
 	{
 		label: 'Agency',
@@ -167,9 +167,13 @@ const credits = [
 		<nav class="border-seam-top">
 			<div class="nav-wrapper">
 				<ReadNextLink
-					eyebrow="Next case study:"
-					title={next.title && prismicHelpers.asText(next.title)}
-				/>
+					align="end"
+					link={next.path}
+					titleSize="beta"
+				>
+					<Fragment slot="eyebrow">Next case study:</Fragment>
+					<Fragment slot="title">{prismicHelpers.asText(next.title)}</Fragment>
+				</ReadNextLink>
 			</div>
 		</nav>
 	)}
@@ -214,6 +218,9 @@ const credits = [
 
 	.nav-wrapper {
 		margin-inline: auto;
-		max-width: var(--content-width-default);
+		max-width: var(--content-width-wide);
+		display: flex;
+		flex-direction: row;
+		justify-content: end;
 	}
 </style>

@@ -14,7 +14,13 @@ export default defineConfig({
 		})]
 	},
 	integrations: [
-		compress(),
+		compress({
+			svg: false,
+			html: {
+				removeComments: true,
+				removeEmptyAttributes: true,
+			},
+		}),
 		sitemap(),
 	]
 });
