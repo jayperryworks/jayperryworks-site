@@ -61,7 +61,7 @@ function pictureMediaString({ data }): string {
 
 	// convert the list of media to a sentence
 	string += arrayToSentence(
-		media.map(({ medium }) => (medium.data.name)),
+		media.map(({ medium }) => (medium.data.name.toLowerCase())),
 		{
 			period: false,
 			capitalize: false,

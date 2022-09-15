@@ -35,17 +35,17 @@ function arrayToSentence(
 		index: number,
 	) => {
 		if (index === 0) {
-			result.push(capitalize ? sentenceCase(string) : string.toLowerCase());
+			result.push(capitalize ? sentenceCase(string) : string);
 			return result;
 		}
 
 		if (index === array.length - 1) {
 			// prepend 'and' to the last item
-			result.push(`and ${string.toLowerCase()}${period ? '.' : ''}`);
+			result.push(`and ${string}${period ? '.' : ''}`);
 			return result;
 		}
 
-		result.push(string.toLowerCase());
+		result.push(string);
 		return result;
 	}, []).join(array.length > 2 ? ', ' : ' ');
 }
