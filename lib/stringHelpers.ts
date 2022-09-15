@@ -15,12 +15,19 @@ function sentenceCase(string: string): string {
 // -> ['first', 'Second', 'THIRD'] => First, second, and third
 type arrayToSentenceOptions = {
 	period?: boolean; // add a period at the end
+	capitalize?: boolean;
 };
 
 function arrayToSentence(
 	array: string[],
-	{ period = true }: arrayToSentenceOptions = {},
+	options: arrayToSentenceOptions = {},
 ): string {
+	// default values for options argument
+	const {
+		period = true,
+		capitalize = true,
+	} = options;
+
 	// Adjust the case for each string
 	return array.reduce((
 		result: string[],
@@ -28,7 +35,7 @@ function arrayToSentence(
 		index: number,
 	) => {
 		if (index === 0) {
-			result.push(sentenceCase(string));
+			result.push(capitalize ? sentenceCase(string) : string.toLowerCase());
 			return result;
 		}
 
