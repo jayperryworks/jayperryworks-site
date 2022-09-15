@@ -115,7 +115,7 @@ const {
 const credits = [
 	{
 		label: 'Date',
-		value: [ `${startDate} - ${endDate || 'present'}` ],
+		value: startDate === endDate ? startDate : [ `${startDate} - ${endDate || 'present'}` ],
 	},
 	{
 		label: 'Agency',
