@@ -72,5 +72,11 @@
 
 /* --- links --- */
 .type-link-undecorated {
-	text-decoration: none;
+	border-bottom: unset;
+}
+
+@supports (text-decoration-thickness: 1px) {
+	.type-link-undecorated {
+		text-decoration: none;
+	}
 }

@@ -1,4 +1,7 @@
 ---
+// assets
+import '@styles/utilities/type.css';
+
 // components
 import Tooltip from '@components/elements/Tooltip.astro';
 
@@ -29,7 +32,7 @@ const classList = [
 ---
 
 <li>
-	<a class={classList} {href}>
+	<a class={classList} href={href}>
 		<Tooltip class="tooltip" align={tooltipAlign}>
 			<slot></slot>
 		</Tooltip>
@@ -42,7 +45,8 @@ const classList = [
 		margin-top: 0;
 	}
 
-	a {
+	/* use a more specific selector here to make sure we override the base 'a' styles */
+	li > a {
 		--dot-size: 1.2em;
 		--transition-duration: 0.25s;
 
@@ -54,10 +58,11 @@ const classList = [
 		height: var(--dot-size);
 		position: relative;
 		width: var(--dot-size);
+		text-decoration: none;
 	}
 
 	/* highlight dot */
-	a::before {
+	li > a::before {
 		--margin: 0.2em;
 
 		border-radius: 10000px;
@@ -95,7 +100,7 @@ const classList = [
 		opacity: 1;
 	}
 
-	a:hover::before {
+	li > a:hover::before {
 		background-color: var(--color-primary);
 		opacity: 1;
 		animation: none;
@@ -112,7 +117,7 @@ const classList = [
 	}
 
 	/* reveal the tooltip when a a is hovered */
-	a:hover .tooltip {
+	li > a:hover .tooltip {
 		--show: 1;
 	}
 </style>
