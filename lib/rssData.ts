@@ -76,29 +76,6 @@ function pictureDescription({ data, tags }: Partial<PrismicDocumentWithUID>): st
 	return strings.join(' ');
 }
 
-export async function getBlogFeed(): Promise<FeedItem[]> {
-	const posts = await prismic.getAllByType('blog_post', {
-		fetchLinks,
-		orderings: {
-			field: 'my.blog_post.date',
-			direction: 'desc',
-		},
-	});
-
-	return posts.map(({ uid, data }: Partial<PrismicDocumentWithUID>) => {
-		let description;
-		if (data.description) description = prismicHelpers.asText(data.description);
-		if (data.subtitle) description = prismicHelpers.asText(data.subtitle);
-
-		return {
-			link: `${import.meta.env.SITE}${blogPost({ data, uid })}`,
-			title: prismicHelpers.asText(data.title),
-			pubDate: prismicHelpers.asDate(data.date),
-			description,
-		};
-	});
-}
-
 export async function getPicturesFeed(): Promise<FeedItem[]> {
 	const pictures = await prismic.getAllByType('picture', {
 		orderings: {
@@ -138,6 +115,29 @@ export async function getPicturesFeed(): Promise<FeedItem[]> {
 		pubDate: prismicHelpers.asDate(data.date_completed),
 		description: pictureDescription({ data, tags }),
 	}));
+}
+
+export async function getBlogFeed(): Promise<FeedItem[]> {
+	const posts = await prismic.getAllByType('blog_post', {
+		fetchLinks,
+		orderings: {
+			field: 'my.blog_post.date',
+			direction: 'desc',
+		},
+	});
+
+	return posts.map(({ uid, data }: Partial<PrismicDocumentWithUID>) => {
+		let description;
+		if (data.description) description = prismicHelpers.asText(data.description);
+		if (data.subtitle) description = prismicHelpers.asText(data.subtitle);
+
+		return {
+			link: `${import.meta.env.SITE}${blogPost({ data, uid })}`,
+			title: prismicHelpers.asText(data.title),
+			pubDate: prismicHelpers.asDate(data.date),
+			description,
+		};
+	});
 }
 
 export const title = 'Jay Perry';
