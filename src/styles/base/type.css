@@ -112,10 +112,6 @@ p {
 	max-width: 60ch;
 }
 
-li + li {
-	margin-top: 1em;
-}
-
 a {
 	--underline-w: 0.125em;
 	--underline-offset: 0.08em;
@@ -127,11 +123,11 @@ a {
 	will-change: color;
 }
 
-@supports (text-decoration-thickness: 1px) {
+@supports (text-decoration-thickness: var(--underline-w)) {
 	a {
 		border-bottom: 0;
 		text-decoration-color: var(--color-highlight);
-		text-decoration-style: underline;
+		text-decoration-style: solid;
 		text-decoration-thickness: var(--underline-w);
 		text-underline-offset: var(--underline-offset);
 		text-underline-position: under;
