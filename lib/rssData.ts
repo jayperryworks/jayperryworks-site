@@ -18,6 +18,12 @@ type FeedItem = {
 	description?: string,
 };
 
+function getBlogDescription({ data }: Partial<PrismicDocument>): string {
+	if (prismicHelpers.isFilled.keyText(data.description)) return data.description;
+	if (prismicHelpers.isFilled.title(data.subtitle)) return prismicHelpers.asText(data.subtitle);
+	return undefined;
+}
+
 function pictureMediaString({ data }: Partial<PrismicDocument>): string {
 	const {
 		height,
@@ -126,18 +132,12 @@ export async function getBlogFeed(): Promise<FeedItem[]> {
 		},
 	});
 
-	return posts.map(({ uid, data }: Partial<PrismicDocumentWithUID>) => {
-		let description;
-		if (data.description) description = prismicHelpers.asText(data.description);
-		if (data.subtitle) description = prismicHelpers.asText(data.subtitle);
-
-		return {
-			link: `${import.meta.env.SITE}${blogPost({ data, uid })}`,
-			title: prismicHelpers.asText(data.title),
-			pubDate: prismicHelpers.asDate(data.date),
-			description,
-		};
-	});
+	return posts.map(({ uid, data }: Partial<PrismicDocumentWithUID>) => ({
+		description: getBlogDescription({ data }),
+		link: `${import.meta.env.SITE}${blogPost({ data, uid })}`,
+		pubDate: prismicHelpers.asDate(data.date),
+		title: prismicHelpers.asText(data.title),
+	}));
 }
 
 export const title = 'Jay Perry';
