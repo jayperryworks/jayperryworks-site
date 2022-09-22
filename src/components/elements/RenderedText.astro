@@ -2,10 +2,6 @@
 // styles
 import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
-import '@styles/components/tooltip.css';
-
-// assets
-import expand from '@icons/expand.svg?raw';
 
 // utils
 import { linkResolver } from '@lib/routes';
@@ -28,17 +24,38 @@ const {
 	inline = false,
 } = Astro.props as Props;
 
+let sidenoteCount = 0;
+
 // Customize the output of Prismic text
 function htmlSerializer(type, element, content, children): string {
 	if (element.data?.label === 'note') {
 		//  remove the parentheses and add a period so it reads as a sentence.
-		const label = children.toString().replace('(', '').replace(')', '').concat('.');
-		// capitalize the first letter
+		const label = children.toString().replace('(', '').replace(')', '');
+
+		// add to sidenote count so each gets a unique number
+		sidenoteCount += 1;
+
 		return `
-			<button class="note">
-				<span class="note-icon">${expand}</span>
-				<span class="tooltip align-center">${sentenceCase(label)}</span>
-			</button>
+			<span class="sidenote">
+				<input
+					class="sidenote-input"
+					id="sidenote-${sidenoteCount}"
+					type="checkbox"
+				>
+					<label
+						aria-label="Show the sidenote"
+						class="sidenote-label"
+						for="${sidenoteCount}"
+						tabindex="0"
+					>${sidenoteCount}</label>
+				</input>
+				<small
+					class="sidenote-content"
+					id="${sidenoteCount}"
+				>
+					<span class="sidenote-parenthesis">(Note: </span>${sentenceCase(label)}<span class="sidenote-parenthesis">)</span>
+				</small>
+			</span>
 		`;
 	}
 
@@ -47,7 +64,7 @@ function htmlSerializer(type, element, content, children): string {
 
 let renderedText;
 
-if (prismicText?.length > 0) {
+if (prismicHelpers.isFilled.richText(prismicText)) {
 	renderedText = prismicHelpers.asHTML(prismicText, linkResolver, htmlSerializer);
 }
 if (markdown) {
@@ -57,55 +74,11 @@ if (markdown) {
 
 <Fragment set:html={renderedText} />
 
-<script>
-	let $notes;
-
-	function alignNotes() {
-		if ($notes) {
-			let browserWidth = document.documentElement.clientWidth;
-
-			$notes.forEach(($note) => {
-				const MARGIN = 100;
-				const noteRect = $note.getBoundingClientRect();
-				const $tooltip = $note.querySelector('.tooltip');
-
-				$tooltip.classList.remove('align-start', 'align-center', 'align-end');
-
-				// change the note's alignment
-				// based on its proximity to the edge of the browser window
-				if (noteRect.left < MARGIN) {
-					$tooltip.classList.add('align-start');
-					return;
-				}
-
-				if ((browserWidth - noteRect.right) < MARGIN) {
-					$tooltip.classList.add('align-end');
-					return;
-				}
-
-				$tooltip.classList.add('align-center');
-			});
-		}
-	}
-
-	document.addEventListener('DOMContentLoaded', () => {
-		$notes = document.querySelectorAll('.note');
-
-		alignNotes();
-
-		$notes.forEach(($note) => {
-			$note.addEventListener('click', (event) => {
-				event.target.classList.toggle('show');
-			});
-		});
-	});
-
-	window.addEventListener('resize', alignNotes);
-</script>
-
 <style is:global>
-	/* footnote popovers */
-	.note {
+	/* sidenotes */
+	/* -> https://www.kooslooijesteijn.net/blog/sidenotes-without-js */
+	/* -> https://github.com/kslstn/sidenotes/blob/main/style.css */
+	.sidenote {
 		--size: 0.8em;
 		--bg: hsl(var(--color-bg-h), var(--color-bg-s), calc(var(--color-bg-l) + 15%));
 		--border: var(--color-border);
@@ -113,37 +86,51 @@ if (markdown) {
 		--pointer-size: 0.6em;
 		--show: 0;
 		--transition-duration: 0.25s;
+	}
 
-		background-color: var(--color-secondary);
+	.sidenote-input {
+		display: none;
+	}
+
+	.sidenote-label {
+		/* background-color: var(--color-secondary); */
 		border-radius: 1000px;
-		border: 0;
-		color: var(--color-bg);
+		border: 1px solid var(--color-primary);
+		color: var(--color-primary);
 		cursor: pointer;
-		padding: 0.25em;
+		display: inline-block;
+		font-family: var(--type-font-accent);
+		font-size: 0.6em;
+		line-height: inherit;
 		position: relative;
-		transition: background-color 0.25s ease;
-		will-change: color;
+		text-align: center;
+		transition: color 0.25s ease, border-color 0.25s ease;
+		vertical-align: top;
+		padding-inline: 0.5rem;
 	}
 
-	.note:hover,
-	.note.show {
-		background-color: var(--color-highlight);
+	.sidenote-label:hover,
+	.sidenote-input:checked .sidenote-label {
+		border-color: var(--color-highlight);
+		color: var(--color-highlight);
 	}
 
-	.note-icon {
-		display: block;
-		height: var(--size);
-		line-height: var(--size);
-		margin-inline-start: 0.25em;
-		margin: 0;
-		max-height: 100%;
-		max-width: 100%;
-		pointer-events: none;
-		position: relative;
-		width: var(--size);
+	.sidenote-parenthesis {
+		position: absolute;
+		left: -999999px;
+		top: auto;
 	}
 
-	.note.show .tooltip {
+	.sidenote-content::before {
+		display: inline-block;
+		content: attr(id) ".";
+		color: var(--color-highlight);
+		font-family: var(--type-font-accent);
+		font-weight: bold;
+		margin-right: 0.25em;
+	}
+
+	.sidenote-input:checked .sidenote-content {
 		--show: 1;
 	}
 </style>
