@@ -50,7 +50,9 @@ const classList = [
 
 	/* add an icon after external links */
 	@supports (mask: url('/assets/icons/external-link.svg') no-repeat 50% 50%) {
-		.prose :global(a[href^='http']::after) {
+		/* display an 'external link' icon on any anchor with an absolute url */
+		/* -> except for full urls pointing to my own domain (jayperry.works, jayperryworks.com) */
+		.prose :global(a[href^='http']:not([href*='jayperry'])::after) {
 			--size: 0.7em;
 
 			background-color: currentColor;
