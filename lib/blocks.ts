@@ -204,8 +204,12 @@ function figure(slice: Slice): BlockType {
 
 	return {
 		source: image,
-		attribution: markdownText(attribution as RichTextField),
-		caption: markdownText(caption as RichTextField),
+		attribution: {
+			markdown: markdownText(attribution as RichTextField),
+		},
+		caption: {
+			markdown: markdownText(caption as RichTextField),
+		},
 		device: device as Device,
 		...sharedBlockFields(slice),
 	};
