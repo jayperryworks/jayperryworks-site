@@ -30,7 +30,9 @@ let sidenoteCount = 0;
 function htmlSerializer(type, element, content, children): string {
 	if (element.data?.label === 'note') {
 		//  remove the parentheses and add a period so it reads as a sentence.
-		const label = children.toString().replace('(', '').replace(')', '');
+		let label = children.toString().replace('(', '').replace(')', '');
+
+		if (label.charAt(label.length - 1) !== '.') label = label.concat('.');
 
 		// add to sidenote count so each gets a unique number
 		sidenoteCount += 1;
@@ -38,14 +40,15 @@ function htmlSerializer(type, element, content, children): string {
 		return `
 			<span class="sidenote">
 				<input
+					aria-label="Show the sidenote"
 					class="sidenote-input"
-					id="sidenote-${sidenoteCount}"
+					id="sidenote-input-${sidenoteCount}"
 					type="checkbox"
 				>
 					<label
-						aria-label="Show the sidenote"
+						aria-describedby="${sidenoteCount}"
 						class="sidenote-label"
-						for="${sidenoteCount}"
+						for="sidenote-input-${sidenoteCount}"
 						tabindex="0"
 					>${sidenoteCount}</label>
 				</input>
@@ -93,7 +96,6 @@ if (markdown) {
 	}
 
 	.sidenote-label {
-		/* background-color: var(--color-secondary); */
 		border-radius: 1000px;
 		border: 1px solid var(--color-primary);
 		color: var(--color-primary);
@@ -102,19 +104,20 @@ if (markdown) {
 		font-family: var(--type-font-accent);
 		font-size: 0.6em;
 		line-height: inherit;
+		padding-inline: 0.5rem;
 		position: relative;
 		text-align: center;
 		transition: color 0.25s ease, border-color 0.25s ease;
 		vertical-align: top;
-		padding-inline: 0.5rem;
 	}
 
 	.sidenote-label:hover,
 	.sidenote-input:checked .sidenote-label {
-		border-color: var(--color-highlight);
+		border-color: var(--color-highlight) !important;
 		color: var(--color-highlight);
 	}
 
+	.sidenote-content,
 	.sidenote-parenthesis {
 		position: absolute;
 		left: -999999px;
@@ -122,15 +125,25 @@ if (markdown) {
 	}
 
 	.sidenote-content::before {
-		display: inline-block;
-		content: attr(id) ".";
 		color: var(--color-highlight);
+		content: attr(id) ".";
+		display: inline-block;
 		font-family: var(--type-font-accent);
-		font-weight: bold;
-		margin-right: 0.25em;
+		margin-block-start: -0.05em; /* nudge up a little to align with body text */
 	}
 
-	.sidenote-input:checked .sidenote-content {
-		--show: 1;
+	.sidenote-input:checked ~ .sidenote-content {
+		align-items: start;
+		background-color: var(--color-well);
+		border-radius: 0.2em;
+		display: flex;
+		float: left;
+		gap: var(--space-xnarrow);
+		left: auto;
+		line-height: var(--type-leading-default);
+		margin-block: var(--space-narrow);
+		min-width: 100%;
+		padding: var(--space-narrow) var(--space-medium);
+		position: relative;
 	}
 </style>
