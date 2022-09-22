@@ -5,70 +5,34 @@ import '@styles/tokens/spacing.css';
 
 // utils
 import { linkResolver } from '@lib/routes';
-import { sentenceCase } from '@lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
 import renderMarkdown from '@lib/renderMarkdown';
 
 // types
-import { RichTextField } from '@prismicio/types';
+import type { RichTextField } from '@prismicio/types';
 
 export interface Props {
+	htmlSerializer?: Function;
 	inline?: boolean;
 	markdown?: string;
 	prismicText?: RichTextField;
 }
 
 const {
+	htmlSerializer = null,
+	inline = false,
 	markdown,
 	prismicText,
-	inline = false,
 } = Astro.props as Props;
 
-let sidenoteCount = 0;
-
-// Customize the output of Prismic text
-function htmlSerializer(type, element, content, children): string {
-	if (element.data?.label === 'note') {
-		//  remove the parentheses and add a period so it reads as a sentence.
-		let label = children.toString().replace('(', '').replace(')', '');
-
-		if (label.charAt(label.length - 1) !== '.') label = label.concat('.');
-
-		// add to sidenote count so each gets a unique number
-		sidenoteCount += 1;
-
-		return `
-			<span class="sidenote">
-				<input
-					aria-label="Show the sidenote"
-					class="sidenote-input"
-					id="sidenote-input-${sidenoteCount}"
-					type="checkbox"
-				>
-					<label
-						aria-describedby="${sidenoteCount}"
-						class="sidenote-label"
-						for="sidenote-input-${sidenoteCount}"
-						tabindex="0"
-					>${sidenoteCount}</label>
-				</input>
-				<small
-					class="sidenote-content"
-					id="${sidenoteCount}"
-				>
-					<span class="sidenote-parenthesis">(Note: </span>${sentenceCase(label)}<span class="sidenote-parenthesis">)</span>
-				</small>
-			</span>
-		`;
-	}
-
-	return null;
-}
-
-let renderedText;
+let renderedText: string;
 
 if (prismicHelpers.isFilled.richText(prismicText)) {
-	renderedText = prismicHelpers.asHTML(prismicText, linkResolver, htmlSerializer);
+	renderedText = prismicHelpers.asHTML(
+		prismicText,
+		linkResolver,
+		htmlSerializer as prismicHelpers.HTMLFunctionSerializer,
+	);
 }
 if (markdown) {
 	renderedText = renderMarkdown(markdown, { inline });
@@ -76,74 +40,3 @@ if (markdown) {
 ---
 
 <Fragment set:html={renderedText} />
-
-<style is:global>
-	/* sidenotes */
-	/* -> https://www.kooslooijesteijn.net/blog/sidenotes-without-js */
-	/* -> https://github.com/kslstn/sidenotes/blob/main/style.css */
-	.sidenote {
-		--size: 0.8em;
-		--bg: hsl(var(--color-bg-h), var(--color-bg-s), calc(var(--color-bg-l) + 15%));
-		--border: var(--color-border);
-		--pointer-margin: var(--space-xnarrow);
-		--pointer-size: 0.6em;
-		--show: 0;
-		--transition-duration: 0.25s;
-	}
-
-	.sidenote-input {
-		display: none;
-	}
-
-	.sidenote-label {
-		border-radius: 1000px;
-		border: 1px solid var(--color-primary);
-		color: var(--color-primary);
-		cursor: pointer;
-		display: inline-block;
-		font-family: var(--type-font-accent);
-		font-size: 0.6em;
-		line-height: inherit;
-		padding-inline: 0.5rem;
-		position: relative;
-		text-align: center;
-		transition: color 0.25s ease, border-color 0.25s ease;
-		vertical-align: top;
-	}
-
-	.sidenote-label:hover,
-	.sidenote-input:checked .sidenote-label {
-		border-color: var(--color-highlight) !important;
-		color: var(--color-highlight);
-	}
-
-	.sidenote-content,
-	.sidenote-parenthesis {
-		position: absolute;
-		left: -999999px;
-		top: auto;
-	}
-
-	.sidenote-content::before {
-		color: var(--color-highlight);
-		content: attr(id) ".";
-		display: inline-block;
-		font-family: var(--type-font-accent);
-		margin-block-start: -0.05em; /* nudge up a little to align with body text */
-	}
-
-	.sidenote-input:checked ~ .sidenote-content {
-		align-items: start;
-		background-color: var(--color-well);
-		border-radius: 0.2em;
-		display: flex;
-		float: left;
-		gap: var(--space-xnarrow);
-		left: auto;
-		line-height: var(--type-leading-default);
-		margin-block: var(--space-narrow);
-		min-width: 100%;
-		padding: var(--space-narrow) var(--space-medium);
-		position: relative;
-	}
-</style>
