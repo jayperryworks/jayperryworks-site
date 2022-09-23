@@ -174,8 +174,10 @@ const sequenceNavItems = project.chapterList.map(
 const nextChapter = project.chapterList[currentPage] ? {
 	title: project.chapterList[currentPage],
 	number: currentPage + 1,
-	href: project?.chapterList[currentPage]?.href,
+	href: url.next,
 } : null;
+
+console.log(Astro.props.page)
 ---
 
 <Layout path={uid} theme={generatePageTheme()}>
