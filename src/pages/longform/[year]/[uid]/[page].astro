@@ -132,7 +132,8 @@ function generatePageTheme(): Partial<Theme> {
 			primary: 25,
 			secondary: 35,
 			border: (generatedTheme?.bg?.l - 20) || 40,
-			shadow: (generatedTheme?.bg?.l - 10) || 10
+			shadow: (generatedTheme?.bg?.l - 10) || 10,
+			well: (generatedTheme?.bg?.l - 5) || 60,
 		};
 
 		Object.keys(themeFallbacks).forEach((role) => {
@@ -173,7 +174,7 @@ const sequenceNavItems = project.chapterList.map(
 const nextChapter = project.chapterList[currentPage] ? {
 	title: project.chapterList[currentPage],
 	number: currentPage + 1,
-	href: project?.chapterList[currentPage]?.href,
+	href: url.next,
 } : null;
 ---
 

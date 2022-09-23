@@ -2,53 +2,37 @@
 // styles
 import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
-import '@styles/components/tooltip.css';
-
-// assets
-import expand from '@icons/expand.svg?raw';
 
 // utils
 import { linkResolver } from '@lib/routes';
-import { sentenceCase } from '@lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
 import renderMarkdown from '@lib/renderMarkdown';
 
 // types
-import { RichTextField } from '@prismicio/types';
+import type { RichTextField } from '@prismicio/types';
 
 export interface Props {
+	htmlSerializer?: Function;
 	inline?: boolean;
 	markdown?: string;
 	prismicText?: RichTextField;
 }
 
 const {
+	htmlSerializer = null,
+	inline = false,
 	markdown,
 	prismicText,
-	inline = false,
 } = Astro.props as Props;
 
-// Customize the output of Prismic text
-function htmlSerializer(type, element, content, children): string {
-	if (element.data?.label === 'note') {
-		//  remove the parentheses and add a period so it reads as a sentence.
-		const label = children.toString().replace('(', '').replace(')', '').concat('.');
-		// capitalize the first letter
-		return `
-			<button class="note">
-				<span class="note-icon">${expand}</span>
-				<span class="tooltip align-center">${sentenceCase(label)}</span>
-			</button>
-		`;
-	}
+let renderedText: string;
 
-	return null;
-}
-
-let renderedText;
-
-if (prismicText?.length > 0) {
-	renderedText = prismicHelpers.asHTML(prismicText, linkResolver, htmlSerializer);
+if (prismicHelpers.isFilled.richText(prismicText)) {
+	renderedText = prismicHelpers.asHTML(
+		prismicText,
+		linkResolver,
+		htmlSerializer as prismicHelpers.HTMLFunctionSerializer,
+	);
 }
 if (markdown) {
 	renderedText = renderMarkdown(markdown, { inline });
@@ -56,94 +40,3 @@ if (markdown) {
 ---
 
 <Fragment set:html={renderedText} />
-
-<script>
-	let $notes;
-
-	function alignNotes() {
-		if ($notes) {
-			let browserWidth = document.documentElement.clientWidth;
-
-			$notes.forEach(($note) => {
-				const MARGIN = 100;
-				const noteRect = $note.getBoundingClientRect();
-				const $tooltip = $note.querySelector('.tooltip');
-
-				$tooltip.classList.remove('align-start', 'align-center', 'align-end');
-
-				// change the note's alignment
-				// based on its proximity to the edge of the browser window
-				if (noteRect.left < MARGIN) {
-					$tooltip.classList.add('align-start');
-					return;
-				}
-
-				if ((browserWidth - noteRect.right) < MARGIN) {
-					$tooltip.classList.add('align-end');
-					return;
-				}
-
-				$tooltip.classList.add('align-center');
-			});
-		}
-	}
-
-	document.addEventListener('DOMContentLoaded', () => {
-		$notes = document.querySelectorAll('.note');
-
-		alignNotes();
-
-		$notes.forEach(($note) => {
-			$note.addEventListener('click', (event) => {
-				event.target.classList.toggle('show');
-			});
-		});
-	});
-
-	window.addEventListener('resize', alignNotes);
-</script>
-
-<style is:global>
-	/* footnote popovers */
-	.note {
-		--size: 0.8em;
-		--bg: hsl(var(--color-bg-h), var(--color-bg-s), calc(var(--color-bg-l) + 15%));
-		--border: var(--color-border);
-		--pointer-margin: var(--space-xnarrow);
-		--pointer-size: 0.6em;
-		--show: 0;
-		--transition-duration: 0.25s;
-
-		background-color: var(--color-secondary);
-		border-radius: 1000px;
-		border: 0;
-		color: var(--color-bg);
-		cursor: pointer;
-		padding: 0.25em;
-		position: relative;
-		transition: background-color 0.25s ease;
-		will-change: color;
-	}
-
-	.note:hover,
-	.note.show {
-		background-color: var(--color-highlight);
-	}
-
-	.note-icon {
-		display: block;
-		height: var(--size);
-		line-height: var(--size);
-		margin-inline-start: 0.25em;
-		margin: 0;
-		max-height: 100%;
-		max-width: 100%;
-		pointer-events: none;
-		position: relative;
-		width: var(--size);
-	}
-
-	.note.show .tooltip {
-		--show: 1;
-	}
-</style>

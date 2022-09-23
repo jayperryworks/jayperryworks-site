@@ -45,7 +45,7 @@
 	/* --- well --- */
 	--color-well-h: 223deg;
 	--color-well-s: 7%;
-	--color-well-l: 90%;
+	--color-well-l: 95%;
 
 	--color-well: hsl(
 		var(--color-well-h) var(--color-well-s) var(--color-well-l)

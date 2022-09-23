@@ -1,12 +1,15 @@
 ---
-// assets
+// --- assets
 import '@styles/tokens/type.css';
 import '@styles/utilities/type.css';
 
-// components
+// --- utils
+import { sentenceCase } from '@lib/stringHelpers';
+
+// --- components
 import RenderedText from '@components/elements/RenderedText.astro';
 
-// types
+// --- types
 import type { TypeScale, FormattedText } from '@lib/types';
 
 export interface Props {
@@ -16,6 +19,7 @@ export interface Props {
 	typeFace?: 'body' | 'display' | 'accent';
 }
 
+// --- props and state
 const {
 	text,
 	class: className = '',
@@ -23,19 +27,70 @@ const {
 	typeFace = 'body',
 } = Astro.props as Props;
 
+
 const classList = [
 	'prose',
 	typeFace !== 'body' ? `type-role-${typeFace}` : '',
 	`type-scale-${typeSize}`,
 	className
 ].join(' ');
+
+let sidenoteCount = 0;
+
+// --- functions
+// render special elements from Prismic text
+function htmlSerializer(type, element, content, children): string {
+	if (element.data?.label === 'note') {
+		// remove the fallback parentheses around the label text.
+		let label = children.toString().replace('(', '').replace(')', '');
+
+		// add a period at the end of the label text, if there isn't one.
+		if (label.charAt(label.length - 1) !== '.') label = label.concat('.');
+
+		// add to sidenote count so each gets a unique number
+		sidenoteCount += 1;
+
+		return `
+			<span class="sidenote">
+				<input
+					aria-label="Show the sidenote"
+					class="sidenote-input"
+					id="sidenote-input-${sidenoteCount}"
+					type="checkbox"
+				>
+					<label
+						aria-describedby="${sidenoteCount}"
+						class="sidenote-label"
+						for="sidenote-input-${sidenoteCount}"
+						tabindex="0"
+					>${sidenoteCount}</label>
+				</input>
+				<small
+					class="sidenote-content ${sidenoteCount % 2 === 0 ? 'left' : 'right'}"
+					id="${sidenoteCount}"
+				>
+					<span class="sidenote-parenthesis">(Note: </span>
+					<span class="sidenote-text">${sentenceCase(label)}</span>
+					<span class="sidenote-parenthesis">)</span>
+				</small>
+			</span>
+		`;
+	}
+
+	return null;
+}
 ---
 
 <div class={classList}>
-	<slot><RenderedText {...text} /></slot>
+	<slot><RenderedText {...text} {htmlSerializer} /></slot>
 </div>
 
 <style>
+	.prose {
+		overflow: visible;
+		position: relative;
+	}
+
 	.prose > :global(*) {
 		line-height: var(--type-leading-default);
 	}
@@ -50,7 +105,9 @@ const classList = [
 
 	/* add an icon after external links */
 	@supports (mask: url('/assets/icons/external-link.svg') no-repeat 50% 50%) {
-		.prose :global(a[href^='http']::after) {
+		/* display an 'external link' icon on any anchor with an absolute url */
+		/* -> except for full urls pointing to my own domain (jayperry.works, jayperryworks.com) */
+		.prose :global(a[href^='http']:not([href*='jayperry'])::after) {
 			--size: 0.7em;
 
 			background-color: currentColor;
@@ -63,6 +120,116 @@ const classList = [
 			position: relative;
 			vertical-align: baseline;
 			width: var(--size);
+		}
+	}
+
+	/* sidenotes */
+	/* -> Based on Koos Looijesteijn's excellent 'Semantic sidenotes' */
+	/* -> https://www.kooslooijesteijn.net/blog/sidenotes-without-js */
+	/* -> https://github.com/kslstn/sidenotes/blob/main/style.css */
+	.prose :global(.sidenote) {
+		--label-color: var(--color-primary);
+		--label-color-active: var(--color-highlight);
+		display: inline;
+	}
+
+	.prose :global(.sidenote-input) {
+		display: none;
+	}
+
+	.prose :global(.sidenote-label) {
+		border-radius: 1000px;
+		border: 1px solid var(--label-color);
+		color: var(--label-color);
+		cursor: pointer;
+		display: inline-block;
+		font-family: var(--type-font-accent);
+		font-size: 0.6em;
+		line-height: inherit;
+		padding-inline: 0.5rem;
+		position: relative;
+		text-align: center;
+		transition: color 0.25s ease, border-color 0.25s ease;
+		vertical-align: top;
+	}
+
+	.prose :global(.sidenote-label:hover),
+	.prose :global(.sidenote-input:checked ~ .sidenote-label) {
+		border-color: var(--label-color-active);
+		color: var(--label-color-active);
+	}
+
+	.prose :global(.sidenote-content),
+	.prose :global(.sidenote-parenthesis) {
+		position: absolute;
+		left: -999999px;
+		top: auto;
+	}
+
+	.prose :global(.sidenote-content) {
+		align-items: start;
+		border-radius: 0.2em;
+		display: flex;
+		font-family: var(--type-font-accent);
+		gap: var(--space-xnarrow);
+	}
+
+	.prose :global(.sidenote-content::before) {
+		color: var(--label-color-active);
+		content: attr(id) ".";
+	}
+
+	.prose :global(.sidenote-input:checked ~ .sidenote-content) {
+		background-color: var(--color-well);
+		float: left;
+		left: auto;
+		margin-block: var(--space-narrow);
+		min-width: 100%;
+		overflow: hidden;
+		padding: var(--space-narrow);
+		position: relative;
+	}
+
+	.prose :global(.sidenote-text) {
+		flex: 1;
+	}
+
+	@media screen and (min-width: 115em) {
+		.prose :global(.sidenote) {
+			--width: 30ch;
+			--margin: var(--space-medium);
+		}
+
+		.prose :global(.sidenote-label) {
+			cursor: default;
+			border: none;
+			padding: 0;
+			color: var(--label-color-active);
+			font-weight: bold;
+		}
+
+		.prose :global(.sidenote-content),
+		.prose :global(.sidenote-input:checked ~ .sidenote-content) {
+			background-color: unset;
+			border-radius: 0;
+			color: var(--color-secondary);
+			float: none;
+			margin-block: calc(-1 * var(--type-leading-default) * 1.15rem) 0;
+			min-width: auto;
+			padding: 0;
+			position: absolute;
+			width: var(--width);
+		}
+
+		.prose :global(.sidenote-content.right) {
+			left: unset;
+			right: 0;
+			margin-inline-end: calc(-1 * (var(--width) + var(--margin)));
+		}
+
+		.prose :global(.sidenote-content.left) {
+			left: 0;
+			margin-inline-start: calc(-1 * (var(--width) + var(--margin)));
 		}
 	}
 </style>
