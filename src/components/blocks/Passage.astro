@@ -202,22 +202,23 @@ function htmlSerializer(type, element, content, children): string {
 
 		.prose :global(.sidenote-label) {
 			cursor: default;
+			border: none;
+			padding: 0;
+			color: var(--label-color-active);
+			font-weight: bold;
 		}
 
-		.prose :global(.sidenote-label:hover),
-		.prose :global(.sidenote-input:checked ~ .sidenote-label) {
-			border-color: var(--label-color);
-			color: var(--label-color);
-		}
-
-		.prose :global(.sidenote-content) {
+		.prose :global(.sidenote-content),
+		.prose :global(.sidenote-input:checked ~ .sidenote-content) {
 			background-color: unset;
 			border-radius: 0;
+			color: var(--color-secondary);
+			float: none;
+			margin-block: calc(-1 * var(--type-leading-default) * 1.15rem) 0;
+			min-width: auto;
 			padding: 0;
 			position: absolute;
 			width: var(--width);
-			color: var(--color-secondary);
-			margin-block-start: calc(-1 * var(--type-leading-default) * 1.15rem);
 		}
 
 		.prose :global(.sidenote-content.right) {
