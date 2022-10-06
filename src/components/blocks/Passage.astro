@@ -40,43 +40,52 @@ let sidenoteCount = 0;
 // --- functions
 // render special elements from Prismic text
 function htmlSerializer(type, element, content, children): string {
-	if (element.data?.label === 'note') {
-		// remove the fallback parentheses around the label text.
-		let note = children.toString().replace('(', '').replace(')', '').trim();
+	// custom labels
+	if (element.data) {
+		const { label } = element.data;
 
-		// add a period at the end of the note text, if there isn't one.
-		console.log('hello')
-		console.log(note.slice(-1))
-		if (note.slice(-1) !== '.') note = note.concat('.');
+		if (label === 'note') {
+			// remove the fallback parentheses around the label text.
+			let note = children.toString().replace('(', '').replace(')', '').trim();
 
-		// add to sidenote count so each gets a unique number
-		sidenoteCount += 1;
+			// add a period at the end of the note text, if there isn't one.
+			if (note.slice(-1) !== '.') note = note.concat('.');
 
-		return `
-			<span class="sidenote">
-				<input
-					aria-label="Show the sidenote"
-					class="sidenote-input"
-					id="sidenote-input-${sidenoteCount}"
-					type="checkbox"
-				>
-					<label
-						aria-describedby="${sidenoteCount}"
-						class="sidenote-label"
-						for="sidenote-input-${sidenoteCount}"
-						tabindex="0"
-					>${sidenoteCount}</label>
-				</input>
-				<small
-					class="sidenote-content ${sidenoteCount % 2 === 0 ? 'left' : 'right'}"
-					id="${sidenoteCount}"
-				>
-					<span class="sidenote-parenthesis">(Note: </span>
-					<span class="sidenote-text">${sentenceCase(note)}</span>
-					<span class="sidenote-parenthesis">)</span>
-				</small>
-			</span>
-		`;
+			// add to sidenote count so each gets a unique number
+			sidenoteCount += 1;
+
+			return `
+				<span class="sidenote">
+					<input
+						aria-label="Show the sidenote"
+						class="sidenote-input"
+						id="sidenote-input-${sidenoteCount}"
+						type="checkbox"
+					>
+						<label
+							aria-describedby="${sidenoteCount}"
+							class="sidenote-label"
+							for="sidenote-input-${sidenoteCount}"
+							tabindex="0"
+						>${sidenoteCount}</label>
+					</input>
+					<small
+						class="sidenote-content ${sidenoteCount % 2 === 0 ? 'left' : 'right'}"
+						id="${sidenoteCount}"
+					>
+						<span class="sidenote-parenthesis">(Note: </span>
+						<span class="sidenote-text">${sentenceCase(note)}</span>
+						<span class="sidenote-parenthesis">)</span>
+					</small>
+				</span>
+			`;
+		}
+
+		if (label === 'inline code') {
+			return `
+				<code>${children.toString()}</code>
+			`;
+		}
 	}
 
 	return null;
