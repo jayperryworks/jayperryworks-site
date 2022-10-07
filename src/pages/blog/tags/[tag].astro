@@ -127,10 +127,13 @@ const {
 		</ul>
 		<nav>
 			<ReadNextLink
-				eyebrow="More blog posts:"
-				title="Archive"
+				eyebrowSize="delta"
 				link="/blog/page/1"
-			/>
+				titleSize="beta"
+			>
+				<Fragment slot="eyebrow">More blog posts:</Fragment>
+				<Fragment slot="title">Archive</Fragment>
+			</ReadNextLink>
 		</nav>
 	</div>
 </Layout>
