@@ -7,11 +7,13 @@ import svgLoader from 'vite-svg-loader';
 export default defineConfig({
 	site: 'https://jayperryworks.com',
 	vite: {
-		plugins: [svgLoader({
-			svgoConfig: {
-				removeDimensions: true,
-			}
-		})]
+		plugins: [
+			svgLoader({
+				svgoConfig: {
+					removeDimensions: true,
+				}
+			})
+		]
 	},
 	integrations: [
 		compress({
