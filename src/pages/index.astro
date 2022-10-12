@@ -27,10 +27,18 @@ const {
 	headline,
 	intro,
 	intro_link: link,
+	seo_title,
+	seo_description,
+	seo_image,
 	body,
 } = response.data;
 
 const introLink = prismicHelpers.asLink(link, linkResolver);
+const seo = {
+	description: seo_description,
+	image: seo_image,
+	title: seo_title,
+};
 ---
 
 <script>
@@ -49,7 +57,11 @@ const introLink = prismicHelpers.asLink(link, linkResolver);
 	});
 </script>
 
-<Layout path="home" headerOverlay>
+<Layout
+	path="home"
+	{seo}
+	headerOverlay
+>
 	<!-- intro -->
 	<header>
 		<div class="intro">
