@@ -62,4 +62,4 @@ export interface SEOContent {
 	image?: string;
 	imageAlt?: string;
 	title?: string;
-};
+}
