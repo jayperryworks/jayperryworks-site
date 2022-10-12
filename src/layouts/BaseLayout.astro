@@ -18,10 +18,18 @@ import type {
 	Theme,
 } from '@lib/types';
 
+export interface SEOContent {
+	description?: string;
+	image?: string;
+	imageAlt?: string;
+	title?: string;
+};
+
 export interface Props {
+	headerOverlay?: boolean;
 	pageTitle?: string;
 	path?: string;
-	headerOverlay?: boolean;
+	seo?: SEOContent;
 	theme?: Partial<Theme>;
 };
 
@@ -33,10 +41,12 @@ const {
 	headerOverlay = false,
 	path = 'home',
 	theme,
+	seo = {},
 } = Astro.props as Props;
 
 const SITE_TITLE = 'Jay Perry';
 const title = pageTitle ? `${SITE_TITLE} | ${pageTitle}` : SITE_TITLE;
+// const canonicalURL = `${import.meta.env.SITE.slice(0, -1)}${}`;
 
 // if a theme has been passed in, replace the default color tokens with the theme values
 function themeReducer(
@@ -50,23 +60,41 @@ function themeReducer(
 const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer, {}) : {};
 ---
 
+<script is:inline>
+	// Add a class to the html element to confirm JS is available
+	// -> used by the CSS for styling JS-dependent elements
+	let featureClasses = ['js'];
+	// Add a class if the browser/device supports touch
+	if ("ontouchstart" in document.documentElement) featureClasses.push('touch');
+	document.documentElement.className = featureClasses.join(' ');
+</script>
+
 <html lang="en" class="no-js no-touch">
 	<head>
 		<meta charset='utf-8'>
 		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
+
+		<title>{title}</title>
+
+		<!-- favicon -->
 		<link rel="icon" href="/favicon.ico" sizes="any">
 		<link rel="icon" href="/icon.svg" type="image/svg+xml">
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 		<link rel="manifest" href="/manifest.webmanifest">
-		<title>{title}</title>
-		<script>
-			// Add a class to the html element to confirm JS is available
-			// -> used by the CSS for styling JS-dependent elements
-			let featureClasses = ['js'];
-			// Add a class if the browser/device supports touch
-			if ("ontouchstart" in document.documentElement) featureClasses.push('touch');
-			document.documentElement.className = featureClasses.join(' ');
-		</script>
+
+		<!-- social/seo markup -->
+		<!-- hat tip to https://meiert.com/en/blog/minimal-social-markup/ -->
+		<meta name="twitter:card" content={seo.image ? 'summary_large_image' : 'summary'}>
+		<meta property="og:title" content={seo.title || title}>
+		<meta property="og:site_name" content={SITE_TITLE}>
+		<meta property="og:url" content={Astro.url.href}>
+		<meta property="og:locale" content="en_US">
+		<meta property="og:author" content="Jay Perry">
+		{seo.description && <meta property="og:description" name="description" content={seo.description}>}
+		{seo.image && (
+			<meta property="og:image" content={seo.image}>
+			<meta property="og:image:alt" content={seo.imageAlt}>
+		)}
 	</head>
 
 	<body>
