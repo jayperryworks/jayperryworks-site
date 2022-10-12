@@ -32,7 +32,10 @@ import type {
 	TitleField,
 } from '@prismicio/types';
 
-import type { PaginationLink } from '@lib/types';
+import type {
+	PaginationLink,
+	SEOContent,
+} from '@lib/types';
 
 export interface Props {
 	body: Array<Slice>;
@@ -40,9 +43,7 @@ export interface Props {
 	title: TitleField;
 	link?: LinkField;
 	next?: PaginationLink;
-	seo_description?: string,
-	seo_image?: ImageField,
-	seo_title?: string,
+	seo?: SEOContent,
 	series?: LinkField;
 	subtitle?: TitleField;
 	tags?: Tags;
@@ -71,6 +72,12 @@ export async function getStaticPaths() {
  			props: {
  				...data,
  				tags,
+				seo: {
+					description: data.seo_description,
+					image: data.seo_image.url,
+					imageAlt: data.seo_image.alt,
+					title: data.seo_title,
+				},
  				link: prismicHelpers.asLink(data.link),
  				next: nextPost && {
 					title: nextPost.data.title,
@@ -94,23 +101,12 @@ const {
 	date,
 	link,
 	next,
+	seo,
 	series,
 	subtitle,
 	tags,
 	title,
-	seo_title,
-	seo_description,
-	seo_image,
 } = Astro.props as Props;
-
-const seo = {
-	title: seo_title,
-	description: seo_description,
-	image: seo_image.url,
-	imageAlt: seo_image.alt,
-};
-
-console.log(seo_image)
 ---
 
 <Layout

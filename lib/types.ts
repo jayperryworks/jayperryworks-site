@@ -55,3 +55,11 @@ export interface FormattedText {
 	prismicText?: RichTextField;
 	markdown?: string;
 }
+
+// --- metadata ---
+export interface SEOContent {
+	description?: string;
+	image?: string;
+	imageAlt?: string;
+	title?: string;
+};
