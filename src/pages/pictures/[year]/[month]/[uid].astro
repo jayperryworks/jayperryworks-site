@@ -252,7 +252,9 @@ function createMediaString() {
 		<div class="cover-info | type-scale-epsilon type-role-accent">
 			<Heading level={1} text={title} class="cover-title | type-scale-epsilon type-role-accent" />
 			<time class="cover-subtitle" datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
-			{prismicHelpers.isFilled.group(media) && <p class="cover-subtitle" set:html={createMediaString()}></p>}
+			{prismicHelpers.isFilled.group(media) && (
+				<p class="cover-subtitle" set:html={createMediaString()}></p>
+			)}
 		</div>
 	</header>
 
@@ -281,7 +283,7 @@ function createMediaString() {
 						</div>
 						<figcaption class="edition-info">
 							<Heading level={3} class="edition-title">
-								<strong>{edition.name}</strong><span> {edition.type.toLowerCase()}&nbsp;print</span>
+								<strong>{edition.name}</strong><span> {edition.type.toString().toLowerCase()}&nbsp;print</span>
 							</Heading>
 							<DataGrid
 								data={edition.info}
