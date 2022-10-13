@@ -90,7 +90,7 @@ export async function getStaticPaths() {
 					description: data.seo_description,
 					image: data.seo_image.url,
 					imageAlt: data.seo_image.alt,
-					title: data.seo_title || data.title,
+					title: data.seo_title || prismicHelpers.asText(data.title),
 				},
 				collaborators: collaborators.map(
 					({ collaborator }) => collaborator.data.name
@@ -116,6 +116,7 @@ const {
 	contributions,
 	endDate,
 	next,
+	seo,
 } = Astro.props as Props;
 
 const credits = [
@@ -150,6 +151,7 @@ const credits = [
 <Layout
 	pageTitle={prismicHelpers.asText(title)}
 	path="design"
+	{seo}
 >
 	<article>
 		<header>
