@@ -11,10 +11,10 @@ import Figure from '@components/blocks/Figure.astro';
 import type { SpaceScale, FormattedText, ImageFit, Device } from '@lib/types';
 import type { ImageField } from '@prismicio/types';
 
-export type CollageItemSize = 'Default' | 'Large' | 'XLarge';
-export type CollageItemPriority = '1' | '2' | '3';
+type CollageItemSize = 'Default' | 'Large' | 'XLarge';
+type CollageItemPriority = '1' | '2' | '3';
 
-export type CollageItem = {
+type CollageItem = {
 	source: ImageField,
 	device?: Device,
 	priority?: CollageItemPriority,
@@ -72,15 +72,15 @@ function getItemClassList(
 		{images.map(({ source, relativeSize, device, priority }) => (
 			<li class={getItemClassList(relativeSize, priority)}>
 				{device !== 'None'
-					? <DeviceFrame
+					? (<DeviceFrame
 							type={device}
 							{source}
-						/>
-					: <Image
+						/>)
+					: (<Image
 							fit={fitImages}
 							{border}
 							{source}
-						/>
+						/>)
 				}
 			</li>
 		))}
