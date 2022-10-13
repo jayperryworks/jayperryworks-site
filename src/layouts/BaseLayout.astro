@@ -82,7 +82,7 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 		<meta name="twitter:card" content={seo.image ? 'summary_large_image' : 'summary'}>
 		<meta property="og:title" content={seo.title || title}>
 		<meta property="og:site_name" content={SITE_TITLE}>
-		<meta property="og:url" content={Astro.url.href}>
+		<meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)}>
 		<meta property="og:locale" content="en_US">
 		<meta property="og:author" content="Jay Perry">
 		{seo.description && <meta property="og:description" name="description" content={seo.description}>}
