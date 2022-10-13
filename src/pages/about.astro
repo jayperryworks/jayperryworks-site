@@ -4,6 +4,7 @@ import '@styles/tokens/spacing.css';
 
 // helpers
 import prismic from '@lib/prismic';
+import * as prismicHelpers from '@prismicio/helpers';
 import { fetchLinks } from '@lib/routes';
 
 // components
@@ -13,12 +14,26 @@ import Heading from '@components/blocks/Heading.astro';
 
 const response = await prismic.getByUID('page', 'about', { fetchLinks });
 
-const { title, body } = response.data;
+const {
+	body,
+	seo_description,
+	seo_image,
+	seo_title,
+	title,
+} = response.data;
+
+const seo = {
+	description: seo_description,
+	image: seo_image?.url,
+	imageAlt: seo_image?.alt,
+	title: seo_title || prismicHelpers.asText(title),
+};
 ---
 
 <Layout
 	pageTitle="about"
 	path="about"
+	{seo}
 >
 	<article>
 		<Heading

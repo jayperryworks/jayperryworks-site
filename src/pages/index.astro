@@ -27,10 +27,19 @@ const {
 	headline,
 	intro,
 	intro_link: link,
+	seo_title,
+	seo_description,
+	seo_image,
 	body,
 } = response.data;
 
 const introLink = prismicHelpers.asLink(link, linkResolver);
+const seo = {
+	description: seo_description,
+	image: seo_image?.url,
+	imageAlt: seo_image?.alt,
+	title: seo_title,
+};
 ---
 
 <script>
@@ -49,7 +58,11 @@ const introLink = prismicHelpers.asLink(link, linkResolver);
 	});
 </script>
 
-<Layout path="home" headerOverlay>
+<Layout
+	path="home"
+	{seo}
+	headerOverlay
+>
 	<!-- intro -->
 	<header>
 		<div class="intro">
@@ -64,13 +77,14 @@ const introLink = prismicHelpers.asLink(link, linkResolver);
 					typeFace="display"
 					class="blurb"
 				/>
-				<Button
-					class="blurb-cta"
-					href={introLink}
-					iconRight={arrowRight}
-				>
-					A bit more about me
-				</Button>
+				<div class="blurb-cta">
+					<Button
+						href={introLink}
+						iconRight={arrowRight}
+					>
+						A bit more about me
+					</Button>
+				</div>
 			</div>
 			<a
 				class="type-role-accent type-scale-epsilon type-link-undecorated"
@@ -117,8 +131,8 @@ const introLink = prismicHelpers.asLink(link, linkResolver);
 		padding-block-start: var(--space-medium);
 	}
 
-	.blurb :global(.blurb-cta) {
-		margin-block-start: var(--space-wide);
+	.blurb-cta {
+		padding-block-start: var(--space-wide);
 	}
 
 	.toc {

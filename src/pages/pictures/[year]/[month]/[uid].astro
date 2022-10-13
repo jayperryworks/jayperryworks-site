@@ -9,11 +9,12 @@ import arrowRight from '@icons/arrow-right.svg?raw';
 import index from '@icons/index.svg?raw';
 
 // utilities
+import prismic from '@lib/prismic';
+import * as prismicHelpers from '@prismicio/helpers';
 import { arrayToSentence } from '@lib/stringHelpers';
 import { format } from 'date-fns';
 import { indexPage } from '@lib/routes';
-import * as prismicHelpers from '@prismicio/helpers';
-import prismic from '@lib/prismic';
+import { pictureDescription } from '@lib/pictureHelpers';
 
 // components
 import BlockList from '@components/BlockList.astro';
@@ -28,7 +29,7 @@ import PictureGallery from '@components/navigation/PictureGallery.astro';
 import Layout from '@layouts/BaseLayout.astro';
 
 // types
-import {
+import type {
 	DateField,
 	GroupField,
 	ImageField,
@@ -38,6 +39,8 @@ import {
 	SliceZone,
 	TitleField,
 } from '@prismicio/types';
+
+import type { SEOContent } from '@lib/types';
 
 export async function getStaticPaths() {
  	const pictures = await prismic.getAllByType('picture', {
@@ -85,7 +88,7 @@ export async function getStaticPaths() {
 		`,
 	});
 
- 	return pictures.map(({ uid, data }) => {
+ 	return pictures.map(({ uid, data, tags }) => {
 		const date = prismicHelpers.asDate(data.date_completed);
 
 		const editions = data.editions.map((edition) => {
@@ -150,9 +153,15 @@ export async function getStaticPaths() {
  				uid,
  			},
  			props: {
- 				...data,
+				...data,
 				editions,
 				nav,
+				seo: {
+					description: data.seo_description || pictureDescription({ data, tags }),
+					image: data.seo_image?.url || data.cover.url,
+					imageAlt: data.seo_image?.alt || data.cover.alt,
+					title: data.seo_title || prismicHelpers.asText(data.title),
+				},
 				// TODO: remove this once edition slices are deleted
 				body: data.body.filter(({ slice_type }) => slice_type !== 'edition'),
  			},
@@ -189,6 +198,7 @@ export interface Props {
 	editions?: Edition[];
 	height?: number;
 	media?: GroupField;
+	seo: SEOContent,
 	substrate?: LinkField;
 	width?: number;
 }
@@ -202,6 +212,7 @@ const {
 	editions,
 	height,
 	media,
+	seo,
 	substrate,
 	width,
 } = Astro.props as Props;
@@ -228,7 +239,11 @@ function createMediaString() {
 }
 ---
 
-<Layout path="pictures" headerOverlay>
+<Layout
+	path="pictures"
+	headerOverlay
+	{seo}
+>
 	<!-- cover -->
 	<header class="cover">
 		<div class="cover-image">
@@ -237,7 +252,9 @@ function createMediaString() {
 		<div class="cover-info | type-scale-epsilon type-role-accent">
 			<Heading level={1} text={title} class="cover-title | type-scale-epsilon type-role-accent" />
 			<time class="cover-subtitle" datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
-			{prismicHelpers.isFilled.group(media) && <p class="cover-subtitle" set:html={createMediaString()}></p>}
+			{prismicHelpers.isFilled.group(media) && (
+				<p class="cover-subtitle" set:html={createMediaString()}></p>
+			)}
 		</div>
 	</header>
 
@@ -266,7 +283,7 @@ function createMediaString() {
 						</div>
 						<figcaption class="edition-info">
 							<Heading level={3} class="edition-title">
-								<strong>{edition.name}</strong><span> {edition.type.toLowerCase()}&nbsp;print</span>
+								<strong>{edition.name}</strong><span> {edition.type.toString().toLowerCase()}&nbsp;print</span>
 							</Heading>
 							<DataGrid
 								data={edition.info}
@@ -277,6 +294,7 @@ function createMediaString() {
 								<Button
 									href={prismicHelpers.asLink(edition.etsyLink)}
 									iconRight={arrowRight}
+									target="_blank"
 								>
 									Buy on <strong>Etsy</strong>
 								</Button>

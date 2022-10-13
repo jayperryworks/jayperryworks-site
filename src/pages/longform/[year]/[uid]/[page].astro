@@ -18,7 +18,12 @@ import SequenceNav from '@components/navigation/SequenceNav.astro';
 import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
 
 // types
-import type { Align, Theme, ThemeData } from '@lib/types';
+import type {
+	Align,
+	SEOContent,
+	Theme,
+	ThemeData,
+} from '@lib/types';
 import type { Props as SequenceNavItemProps } from '@components/navigation/SequenceNavItem.astro';
 import type { TitleField } from '@prismicio/types';
 
@@ -78,6 +83,12 @@ export async function getStaticPaths({ paginate }) {
 					chapterLabel: data.chapter_label,
 					chapterList: data.chapters.map(({ chapter }) => chapter.data.title),
 				},
+				seo: {
+					description: data.seo_description,
+					image: data.seo_image?.url,
+					imageAlt: data.seo_image?.alt,
+					title: data.seo_title,
+				},
 				theme: {
 					bg,
 					highlight,
@@ -109,12 +120,17 @@ const {
 } = Astro.props.page;
 
 const {
-	title,
-	subtitle,
 	body,
 	project,
+	seo,
+	subtitle,
 	theme,
+	title,
 } = data[0];
+
+// if no title was given for SEO content, make a default one using the page data above
+// -> locating it down here instead of in the pagination function above because currentPage is accessible from here
+if (!seo.title) seo.title = `${prismicHelpers.asText(project.title)}, Part ${currentPage}: ${prismicHelpers.asText(title)}`;
 
 // build a theme for this page based on the data from Prismic
 function generatePageTheme(): Partial<Theme> {
@@ -178,7 +194,12 @@ const nextChapter = project.chapterList[currentPage] ? {
 } : null;
 ---
 
-<Layout path={uid} theme={generatePageTheme()}>
+<Layout
+	path={uid}
+	pageTitle={prismicHelpers.asText(project.title)}
+	theme={generatePageTheme()}
+	{seo}
+>
 	<article>
 
 		<!-- titling -->

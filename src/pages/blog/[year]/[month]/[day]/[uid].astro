@@ -24,24 +24,29 @@ import ReadNextLink from '@components/navigation/ReadNextLink.astro';
 
 // types
 import type {
-	Slice,
-	TitleField,
+	DateField,
+	ImageField,
 	LinkField,
+	Slice,
 	Tags,
-	DateField
+	TitleField,
 } from '@prismicio/types';
 
-import type { PaginationLink } from '@lib/types';
+import type {
+	PaginationLink,
+	SEOContent,
+} from '@lib/types';
 
 export interface Props {
 	body: Array<Slice>;
 	date: DateField;
+	title: TitleField;
 	link?: LinkField;
 	next?: PaginationLink;
+	seo?: SEOContent,
 	series?: LinkField;
 	subtitle?: TitleField;
 	tags?: Tags;
-	title: TitleField;
 }
 
 export async function getStaticPaths() {
@@ -67,6 +72,12 @@ export async function getStaticPaths() {
  			props: {
  				...data,
  				tags,
+				seo: {
+					description: data.seo_description || data.description,
+					image: data.seo_image?.url,
+					imageAlt: data.seo_image?.alt,
+					title: data.seo_title || prismicHelpers.asText(data.title),
+				},
  				link: prismicHelpers.asLink(data.link),
  				next: nextPost && {
 					title: nextPost.data.title,
@@ -90,6 +101,7 @@ const {
 	date,
 	link,
 	next,
+	seo,
 	series,
 	subtitle,
 	tags,
@@ -100,6 +112,7 @@ const {
 <Layout
 	pageTitle={prismicHelpers.asText(title)}
 	path="blog"
+	{seo}
 >
 	<article>
 		<header>

@@ -1,26 +1,40 @@
 ---
-// assets
+// --- assets
 import '@styles/tokens/color.css';
 import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
 import '@styles/utilities/type.css';
 
-// utils
+// --- utils
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 import { picture as permalink } from '@lib/routes';
 
-// components
+// --- components
 import Heading from '@components/blocks/Heading.astro';
 import Layout from '@layouts/BaseLayout.astro';
 import PictureGallery from '@components/navigation/PictureGallery.astro';
 import { PrismicDocumentWithUID } from '@prismicio/types';
 
+// --- data
+// use this aspect ratio when none is specified for a given series
+const DEFAULT_ASPECT_RATIO = '3 / 2';
+
 const pageData = await prismic.getByUID('index_page', 'pictures');
 
 const {
+	seo_description,
+	seo_image,
+	seo_title,
 	title,
 } = pageData.data;
+
+const seo = {
+	description: seo_description,
+	image: seo_image?.url,
+	imageAlt: seo_image?.alt,
+	title: seo_title || prismicHelpers.asText(title),
+};
 
 const picturesData = await prismic.getAllByType('picture', {
 	orderings: {
@@ -75,13 +89,18 @@ let picturesBySeries = seriesList.map((group) => {
 	};
 });
 
+// add pictures that aren't in a series last
 picturesBySeries.push({
 	pictures: picturesData.filter((p) => !p.data.series.data),
-	aspectRatio: '3 / 2',
+	aspectRatio: DEFAULT_ASPECT_RATIO,
 })
 ---
 
-<Layout pageTitle="Prints & paintings" path="pictures">
+<Layout
+	pageTitle="Prints & paintings"
+	path="pictures"
+	{seo}
+>
 	<Heading
 		class="title"
 		level={1}
