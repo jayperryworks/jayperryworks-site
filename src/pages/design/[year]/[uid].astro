@@ -88,8 +88,8 @@ export async function getStaticPaths() {
 				endDate,
 				seo: {
 					description: data.seo_description,
-					image: data.seo_image.url,
-					imageAlt: data.seo_image.alt,
+					image: data.seo_image?.url,
+					imageAlt: data.seo_image?.alt,
 					title: data.seo_title || prismicHelpers.asText(data.title),
 				},
 				collaborators: collaborators.map(

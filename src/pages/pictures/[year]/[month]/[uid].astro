@@ -158,9 +158,9 @@ export async function getStaticPaths() {
 				nav,
 				seo: {
 					description: data.seo_description || pictureDescription({ data, tags }),
-					image: data.seo_image.url || data.cover.url,
-					imageAlt: data.seo_image.alt || data.cover.alt,
-					title: data.seo_title || data.title,
+					image: data.seo_image?.url || data.cover.url,
+					imageAlt: data.seo_image?.alt || data.cover.alt,
+					title: data.seo_title || prismicHelpers.asText(data.title),
 				},
 				// TODO: remove this once edition slices are deleted
 				body: data.body.filter(({ slice_type }) => slice_type !== 'edition'),

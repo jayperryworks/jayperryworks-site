@@ -86,7 +86,7 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 		<meta property="og:locale" content="en_US">
 		<meta property="og:author" content="Jay Perry">
 		{seo.description && <meta property="og:description" name="description" content={seo.description}>}
-		{seo.image && (
+		{(seo.image) && (
 			<meta property="og:image" content={seo.image}>
 			<meta property="og:image:alt" content={seo.imageAlt}>
 		)}
