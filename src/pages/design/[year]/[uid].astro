@@ -86,6 +86,12 @@ export async function getStaticPaths() {
 				...data,
 				startDate,
 				endDate,
+				seo: {
+					description: data.seo_description,
+					image: data.seo_image.url,
+					imageAlt: data.seo_image.alt,
+					title: data.seo_title || data.title,
+				},
 				collaborators: collaborators.map(
 					({ collaborator }) => collaborator.data.name
 				),
