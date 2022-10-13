@@ -22,11 +22,24 @@ const {
 	subtitle,
 	short_title: shortTitle,
 	body,
-
+	seo_title,
+	seo_description,
+	seo_image,
 } = response.data;
+
+const seo = {
+	description: seo_description,
+	image: seo_image.url,
+	imageAlt: seo_image.alt,
+	title: seo_title || prismicHelpers.asText(title),
+};
 ---
 
-<Layout pageTitle={shortTitle} path="design">
+<Layout
+	pageTitle={shortTitle}
+	path="design"
+	{seo}
+>
 	<article>
 		<header>
 			<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
