@@ -43,15 +43,23 @@ const socialChannelList = channel.map((item: Item, index: number): string => {
 	</p>
 	<div class="signoff">
 		<div class="bookend">
+			<div class="lockup">
+				<a
+					class="logo type-link-undecorated"
+					href="/"
+				>
+					<LogoJPW />
+				</a>
+				<small class="copyright | type-role-accent type-scale-zeta">
+					&copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
+				</small>
+			</div>
 			<a
-				class="logo type-link-undecorated"
-				href="/"
+				class="type-role-accent type-scale-zeta"
+				href="/rss/all.xml"
 			>
-				<LogoJPW />
+				RSS feed
 			</a>
-			<small class="copyright | type-role-accent type-scale-zeta">
-				&copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
-			</small>
 		</div>
 	</div>
 </footer>
@@ -86,6 +94,13 @@ const socialChannelList = channel.map((item: Item, index: number): string => {
 	.bookend {
 		display: flex;
 		flex-flow: wrap;
+		justify-content: space-between;
+		gap: var(--space-medium);
+	}
+
+	.lockup {
+		display: flex;
+		flex-fllow: wrap;
 		gap: var(--space-narrow);
 	}
 
