@@ -1,11 +1,12 @@
 ---
-// styles
+// assets
 import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 import '@styles/tokens/borders.css';
 import '@styles/utilities/type.css';
 import '@styles/utilities/borders.css';
+import feed from '@icons/feed.svg?raw';
 
 // helpers
 import { format } from 'date-fns';
@@ -14,6 +15,7 @@ import prismic from '@lib/prismic';
 
 // components
 import LogoJPW from '@components/logos/LogoJPW.astro';
+import Icon from '@components/elements/Icon.astro';
 
 // types
 import { LinkField } from '@prismicio/types';
@@ -55,10 +57,12 @@ const socialChannelList = channel.map((item: Item, index: number): string => {
 				</small>
 			</div>
 			<a
-				class="type-role-accent type-scale-zeta"
+				class="secondary | type-role-accent type-scale-zeta"
 				href="/rss/all.xml"
+				target="_blank"
 			>
 				RSS feed
+				<Icon svg={feed} />
 			</a>
 		</div>
 	</div>
@@ -117,5 +121,11 @@ const socialChannelList = channel.map((item: Item, index: number): string => {
 
 	.logo {
 		width: 12rem;
+	}
+
+	.secondary {
+		display: flex;
+		gap: var(--space-xnarrow);
+		align-items: center;
 	}
 </style>
