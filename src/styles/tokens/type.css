@@ -1,19 +1,15 @@
 :root {
-	/* --- type scale --- */
-	/* --type-scale-alpha: clamp(2.07rem, calc(1rem + 5vw), 3.58rem);
-	--type-scale-beta: clamp(1.73rem, calc(1rem + 3vw), 2.99rem);
-	--type-scale-gamma: clamp(1.44rem, calc(1rem + 2vw), 2.07rem);
-	--type-scale-delta: clamp(1.2rem, calc(1rem + 1vw), 1.44rem);
-	--type-scale-epsilon: 1.2rem;
-	--type-scale-zeta: 1rem; */
-
-	--type-scale-zeta: clamp(0.83rem, calc(0.77rem + 0.33vw), 1.00rem);
-	--type-scale-epsilon: clamp(1.00rem, calc(0.90rem + 0.49vw), 1.25rem);
-	--type-scale-delta: clamp(1.20rem, calc(1.06rem + 0.71vw), 1.56rem);
-	--type-scale-gamma: clamp(1.44rem, calc(1.24rem + 1.00vw), 1.95rem);
-	--type-scale-beta: clamp(1.73rem, calc(1.45rem + 1.39vw), 2.44rem);
-	/* --type-scale-alpha: clamp(2.07rem, calc(1.69rem + 1.91vw), 3.05rem); */
-	--type-scale-alpha: clamp(2.49rem, calc(1.97rem + 2.59vw), 3.82rem);
+	/* --- type scale ---
+	 * -> based on Utopia's fluid type scales, with my own tweaks
+	 * -> major second (1.125) to minor third (1.2) scales (small to large screens)
+	 * -> I used scales with fine intervals and skipped steps to create more contrast, esp. on large screens
+	 */
+	--type-scale-alpha: clamp(2.06rem, calc(1.37rem + 3.48vw), 4.50rem);
+	--type-scale-beta: clamp(1.81rem, calc(1.26rem + 2.77vw), 3.75rem);
+	--type-scale-gamma: clamp(1.44rem, calc(1.12rem + 1.61vw), 2.56rem);
+	--type-scale-delta: clamp(1.13rem, calc(0.93rem + 0.98vw), 1.81rem);
+	--type-scale-epsilon: clamp(1rem, calc(0.86rem + 0.71vw), 1.5rem);
+	--type-scale-zeta: clamp(0.88rem, calc(0.84rem + 0.18vw), 1rem);
 
 	/* --- fonts --- */
 	--type-font-display: "Publico Headline", "Publico", "Georgia", "Times",
