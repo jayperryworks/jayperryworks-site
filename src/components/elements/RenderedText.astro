@@ -11,14 +11,17 @@ import renderMarkdown from '@lib/renderMarkdown';
 // types
 import type { RichTextField } from '@prismicio/types';
 
+// must pass in either markdown or prismicText props to render any content
 export interface Props {
-	htmlSerializer?: Function;
-	inline?: boolean;
 	markdown?: string;
 	prismicText?: RichTextField;
+	allowHTML?: boolean;
+	htmlSerializer?: Function;
+	inline?: boolean;
 }
 
 const {
+	allowHTML = false,
 	htmlSerializer = null,
 	inline = false,
 	markdown,
@@ -35,7 +38,7 @@ if (prismicHelpers.isFilled.richText(prismicText)) {
 	);
 }
 if (markdown) {
-	renderedText = renderMarkdown(markdown, { inline });
+	renderedText = renderMarkdown(markdown, { html: allowHTML, inline });
 }
 ---
 
