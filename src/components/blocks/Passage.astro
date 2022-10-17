@@ -93,7 +93,7 @@ function htmlSerializer(type, element, content, children): string {
 ---
 
 <div class={classList}>
-	<slot><RenderedText {...text} {htmlSerializer} /></slot>
+	<slot><RenderedText {...text} {htmlSerializer} allowHTML={true} /></slot>
 </div>
 
 <style>

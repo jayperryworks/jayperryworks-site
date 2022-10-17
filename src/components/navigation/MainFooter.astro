@@ -1,11 +1,12 @@
 ---
-// styles
+// assets
 import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 import '@styles/tokens/borders.css';
 import '@styles/utilities/type.css';
 import '@styles/utilities/borders.css';
+import feed from '@icons/feed.svg?raw';
 
 // helpers
 import { format } from 'date-fns';
@@ -14,6 +15,7 @@ import prismic from '@lib/prismic';
 
 // components
 import LogoJPW from '@components/logos/LogoJPW.astro';
+import Icon from '@components/elements/Icon.astro';
 
 // types
 import { LinkField } from '@prismicio/types';
@@ -43,15 +45,25 @@ const socialChannelList = channel.map((item: Item, index: number): string => {
 	</p>
 	<div class="signoff">
 		<div class="bookend">
+			<div class="lockup">
+				<a
+					class="logo type-link-undecorated"
+					href="/"
+				>
+					<LogoJPW />
+				</a>
+				<small class="copyright | type-role-accent type-scale-zeta">
+					&copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
+				</small>
+			</div>
 			<a
-				class="logo type-link-undecorated"
-				href="/"
+				class="secondary | type-role-accent type-scale-zeta"
+				href="/rss/all.xml"
+				target="_blank"
 			>
-				<LogoJPW />
+				RSS feed
+				<Icon svg={feed} />
 			</a>
-			<small class="copyright | type-role-accent type-scale-zeta">
-				&copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
-			</small>
 		</div>
 	</div>
 </footer>
@@ -86,6 +98,13 @@ const socialChannelList = channel.map((item: Item, index: number): string => {
 	.bookend {
 		display: flex;
 		flex-flow: wrap;
+		justify-content: space-between;
+		gap: var(--space-medium);
+	}
+
+	.lockup {
+		display: flex;
+		flex-fllow: wrap;
 		gap: var(--space-narrow);
 	}
 
@@ -102,5 +121,11 @@ const socialChannelList = channel.map((item: Item, index: number): string => {
 
 	.logo {
 		width: 12rem;
+	}
+
+	.secondary {
+		display: flex;
+		gap: var(--space-xnarrow);
+		align-items: center;
 	}
 </style>
