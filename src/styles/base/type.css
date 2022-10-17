@@ -35,7 +35,7 @@ html {
 	font-size: 100%;
 }
 
-@media screen and (min-width: 42em) {
+/* @media screen and (min-width: 42em) {
 	html {
 		font-size: 105%;
 	}
@@ -51,7 +51,7 @@ html {
 	html {
 		font-size: 120%;
 	}
-}
+} */
 
 body {
 	font-family: var(--type-font-body);
