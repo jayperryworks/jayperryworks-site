@@ -113,11 +113,8 @@ const {
 					{routes.map(({ label, link }) => (
             <li>
               <a
-                class={[
-									'nav-item',
-									'type-link-undecorated',
-									link.includes(segment) ? 'current' : '',
-								].join(' ')}
+								aria-current={link.includes(segment) && 'page'}
+                class="nav-item | type-link-undecorated"
                 href={link}
               >
 								{label}
@@ -277,7 +274,7 @@ const {
 		font-weight: 300;
   }
 
-  .nav-item.current::before {
+  .nav-item[aria-current="page"]::before {
     --size: 0.5em;
     background-color: var(--color-highlight);
     border-radius: 1000px;
@@ -325,7 +322,7 @@ const {
       color: var(--color-highlight);
     }
 
-    .nav-item.current::before {
+    .nav-item[aria-current="page"]::before {
       background-color: var(--color-highlight);
       height: 0.125em;
       left: 0;
