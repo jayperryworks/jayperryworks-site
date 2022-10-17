@@ -35,24 +35,6 @@ html {
 	font-size: 100%;
 }
 
-/* @media screen and (min-width: 42em) {
-	html {
-		font-size: 105%;
-	}
-}
-
-@media screen and (min-width: 62em) {
-	html {
-		font-size: 110%;
-	}
-}
-
-@media screen and (min-width: 100em) {
-	html {
-		font-size: 120%;
-	}
-} */
-
 body {
 	font-family: var(--type-font-body);
 	font-size: 1.2rem;
