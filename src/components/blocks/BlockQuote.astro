@@ -1,4 +1,7 @@
 ---
+// assets
+import '@styles/tokens/spacing.css';
+
 // components
 import Passage from '@components/blocks/Passage.astro';
 
@@ -23,5 +26,6 @@ const {
 <style>
 	blockquote {
 		font-style: italic;
+		padding-inline-start: var(--space-medium);
 	}
 </style>
