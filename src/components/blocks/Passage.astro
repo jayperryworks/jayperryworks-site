@@ -164,6 +164,7 @@ function htmlSerializer(type, element, content, children): string {
 		text-align: center;
 		transition: color 0.25s ease, border-color 0.25s ease;
 		vertical-align: top;
+		min-width: 1.5em;
 	}
 
 	.prose :global(.sidenote-label:hover),
@@ -219,6 +220,8 @@ function htmlSerializer(type, element, content, children): string {
 			padding: 0;
 			color: var(--label-color-active);
 			font-weight: bold;
+			min-width: auto;
+			margin: 0;
 		}
 
 		.prose :global(.sidenote-content),
