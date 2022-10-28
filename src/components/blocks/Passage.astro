@@ -1,10 +1,11 @@
 ---
-// --- assets
+// --- assetsincrementsidenotes,
 import '@styles/tokens/type.css';
 import '@styles/utilities/type.css';
 
 // --- utils
 import { sentenceCase } from '@lib/stringHelpers';
+import * as sidenotes from '@lib/model/sidenotes';
 
 // --- components
 import RenderedText from '@components/elements/RenderedText.astro';
@@ -15,8 +16,8 @@ import type { TypeScale, FormattedText } from '@lib/types';
 export interface Props {
 	text: FormattedText;
 	class?: string;
-	typeSize?: TypeScale;
 	typeFace?: 'body' | 'display' | 'accent';
+	typeSize?: TypeScale;
 }
 
 // --- props and state
@@ -35,8 +36,6 @@ const classList = [
 	className
 ].join(' ');
 
-let sidenoteCount = 0;
-
 // --- functions
 // render special elements from Prismic text
 function htmlSerializer(type, element, content, children): string {
@@ -52,40 +51,36 @@ function htmlSerializer(type, element, content, children): string {
 			if (note.slice(-1) !== '.') note = note.concat('.');
 
 			// add to sidenote count so each gets a unique number
-			sidenoteCount += 1;
+			sidenotes.increment();
 
 			return `
 				<span class="sidenote">
 					<input
 						aria-label="Show the sidenote"
 						class="sidenote-input"
-						id="sidenote-input-${sidenoteCount}"
+						id="sidenote-input-${sidenotes.getCount()}"
 						type="checkbox"
 					>
 						<label
-							aria-describedby="${sidenoteCount}"
+							aria-describedby="${sidenotes.getCount()}"
 							class="sidenote-label"
-							for="sidenote-input-${sidenoteCount}"
+							for="sidenote-input-${sidenotes.getCount()}"
 							tabindex="0"
-						>${sidenoteCount}</label>
+						>${sidenotes.getCount()}</label>
 					</input>
 					<small
-						class="sidenote-content ${sidenoteCount % 2 === 0 ? 'left' : 'right'}"
-						id="${sidenoteCount}"
+						class="sidenote-content ${sidenotes.getCount() % 2 === 0 ? 'left' : 'right'}"
+						id="${sidenotes.getCount()}"
 					>
 						<span class="sidenote-parenthesis">(Note: </span>
-						<span class="sidenote-text">${sentenceCase(note)}</span>
+						<span class="sidenote-text type-scale-zeta">${sentenceCase(note)}</span>
 						<span class="sidenote-parenthesis">)</span>
 					</small>
 				</span>
 			`;
 		}
 
-		if (label === 'inline code') {
-			return `
-				<code>${children.toString()}</code>
-			`;
-		}
+		if (label === 'inline code') return `<code>${children.toString()}</code>`;
 	}
 
 	return null;
@@ -93,7 +88,13 @@ function htmlSerializer(type, element, content, children): string {
 ---
 
 <div class={classList}>
-	<slot><RenderedText {...text} {htmlSerializer} allowHTML={true} /></slot>
+	<slot>
+		<RenderedText
+			allowHTML={true}
+			{htmlSerializer}
+			{...text}
+		/>
+	</slot>
 </div>
 
 <style>
