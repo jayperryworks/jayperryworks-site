@@ -9,7 +9,6 @@ export function getCount(): number {
 
 export function increment(): void {
 	count += 1;
-	console.log(count);
 }
 
 export function reset(): void {
