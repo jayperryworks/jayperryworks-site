@@ -158,13 +158,14 @@ function htmlSerializer(type, element, content, children): string {
 		font-family: var(--type-font-accent);
 		font-size: 0.6em;
 		line-height: inherit;
-		padding-inline: 0.5rem;
 		margin-inline: 0.25em;
+		min-height: 2em;
+		min-width: 2em;
+		padding-inline: 0.5rem;
 		position: relative;
 		text-align: center;
 		transition: color 0.25s ease, border-color 0.25s ease;
 		vertical-align: top;
-		min-width: 1.5em;
 	}
 
 	.prose :global(.sidenote-label:hover),
@@ -215,13 +216,13 @@ function htmlSerializer(type, element, content, children): string {
 		}
 
 		.prose :global(.sidenote-label) {
-			cursor: default;
 			border: none;
-			padding: 0;
 			color: var(--label-color-active);
+			cursor: default;
 			font-weight: bold;
-			min-width: auto;
 			margin: 0;
+			min-width: auto;
+			padding: 0;
 		}
 
 		.prose :global(.sidenote-content),
