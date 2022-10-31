@@ -25,7 +25,6 @@ import ReadNextLink from '@components/navigation/ReadNextLink.astro';
 // types
 import type {
 	DateField,
-	ImageField,
 	LinkField,
 	Slice,
 	Tags,
@@ -56,11 +55,34 @@ export async function getStaticPaths() {
  			field: 'my.blog_post.date',
  			direction: 'desc',
  		},
+		graphQuery: `
+			{
+				blog_post {
+					...blog_postFields
+					series {
+						...on blog_series {
+							uid
+							title
+							description
+							blog_posts {
+								post {
+									...on blog_post {
+										title
+										date
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		`,
  	});
 
  	return posts.map(({ uid, tags, data }, index) => {
 		const date = prismicHelpers.asDate(data.date);
 		const nextPost = posts[index + 1];
+		const { data: series } = data.series;
 
  		return {
  			params: {
@@ -72,17 +94,26 @@ export async function getStaticPaths() {
  			props: {
  				...data,
  				tags,
+				link: prismicHelpers.asLink(data.link),
+ 				next: nextPost && {
+					title: nextPost.data.title,
+					subtitle: nextPost.data.subtitle,
+					path: permalink(nextPost),
+				},
 				seo: {
 					description: data.seo_description || data.description,
 					image: data.seo_image?.url,
 					imageAlt: data.seo_image?.alt,
 					title: data.seo_title || prismicHelpers.asText(data.title),
 				},
- 				link: prismicHelpers.asLink(data.link),
- 				next: nextPost && {
-					title: nextPost.data.title,
-					subtitle: nextPost.data.subtitle,
-					path: permalink(nextPost),
+				series: series && {
+					title: series.title,
+					uid: series.uid,
+					posts: series.blog_posts.map(({ post }) => ({
+						uid: post.uid,
+						link: permalink(post),
+						title: post.data.title,
+					})),
 				},
  			},
  		};
@@ -107,6 +138,8 @@ const {
 	tags,
 	title,
 } = Astro.props as Props;
+
+console.log(series)
 ---
 
 <Layout
@@ -129,6 +162,17 @@ const {
 				{format(prismicHelpers.asDate(date), 'MMMM dd, yyyy')}
 			</time>
 		</header>
+
+		<aside>
+			<details>
+				<summary>This post is part of the {prismicHelpers.asText(series.title)} series.</summary>
+				<ol>
+					{series.posts.map(({ title, link, uid }) => (
+						<li><a href={link}>{prismicHelpers.asText(title)}</a></li>
+					))}
+				</ol>
+			</details>
+		</aside>
 
 		<BlockList {body} showLedeStyle />
 
