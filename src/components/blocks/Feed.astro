@@ -107,7 +107,7 @@ if (contentSource === 'blog_post') {
 	<Gallery gutter="wide">
 		{feedItems.map((listing) => (
 			<li class="item">
-				<Heading level={5} subheading>{format(new Date(listing.date), 'yy.MM')}</Heading>
+				<Heading level={5} subheading>{format(new Date(listing.date), 'yyyy.MM.dd')}</Heading>
 				<Heading level={3}>
 					<a
 						class="type-link-undecorated"
