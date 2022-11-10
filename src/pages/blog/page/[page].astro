@@ -10,7 +10,7 @@ import arrowRight from '@icons/arrow-right.svg?raw';
 import externalLink from '@icons/external-link.svg?raw';
 
 // helpers
-import { blogPost } from '@lib/routes';
+import { blogPost, fetchLinks } from '@lib/routes';
 import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
@@ -24,6 +24,7 @@ import Layout from '@layouts/BaseLayout.astro';
 
 export async function getStaticPaths({ paginate }): Promise<Function> {
 	const posts = await prismic.getAllByType('blog_post', {
+		fetchLinks,
 		orderings: {
 			field: 'my.blog_post.date',
 			direction: 'desc',
