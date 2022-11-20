@@ -43,7 +43,7 @@ export interface Props {
 	link?: LinkField;
 	next?: PaginationLink;
 	seo?: SEOContent,
-	series?: LinkField;
+	thread?: LinkField;
 	subtitle?: TitleField;
 	tags?: Tags;
 }
@@ -59,19 +59,11 @@ export async function getStaticPaths() {
 			{
 				blog_post {
 					...blog_postFields
-					series {
+					thread {
 						...on blog_series {
 							uid
 							title
 							description
-							blog_posts {
-								post {
-									...on blog_post {
-										title
-										date
-									}
-								}
-							}
 						}
 					}
 				}
@@ -82,7 +74,17 @@ export async function getStaticPaths() {
  	return posts.map(({ uid, tags, data }, index) => {
 		const date = prismicHelpers.asDate(data.date);
 		const nextPost = posts[index + 1];
-		const { data: series } = data.series;
+		const { data: thread } = data.thread;
+
+		// If this post is part of a thread, grab other posts that also belong to the thread
+		// -> these will be ordered by data, because the `posts` array already is
+		if (thread) {
+			thread.posts = posts.filter((post) => {
+				return post.data?.thread?.data?.uid === thread.uid;
+			}).reverse();
+
+			thread.currentNumber = thread.posts.indexOf(posts.find((post) => post.uid === uid));
+		}
 
  		return {
  			params: {
@@ -106,15 +108,7 @@ export async function getStaticPaths() {
 					imageAlt: data.seo_image?.alt,
 					title: data.seo_title || prismicHelpers.asText(data.title),
 				},
-				series: series && {
-					title: series.title,
-					uid: series.uid,
-					posts: series.blog_posts.map(({ post }) => ({
-						uid: post.uid,
-						link: permalink(post),
-						title: post.data.title,
-					})),
-				},
+				thread,
  			},
  		};
  	});
@@ -133,13 +127,11 @@ const {
 	link,
 	next,
 	seo,
-	series,
+	thread,
 	subtitle,
 	tags,
 	title,
 } = Astro.props as Props;
-
-console.log(series)
 ---
 
 <Layout
@@ -163,16 +155,27 @@ console.log(series)
 			</time>
 		</header>
 
-		<aside>
-			<details>
-				<summary>This post is part of the {prismicHelpers.asText(series.title)} series.</summary>
-				<ol>
-					{series.posts.map(({ title, link, uid }) => (
-						<li><a href={link}>{prismicHelpers.asText(title)}</a></li>
-					))}
-				</ol>
-			</details>
-		</aside>
+		{thread && (
+			<aside>
+				<details>
+					<summary>This post is part {thread.currentNumber} of a thread called <em>{prismicHelpers.asText(thread.title)}</em>.</summary>
+					<small>{prismicHelpers.asText(thread.description)}</small>
+					<ol>
+						{thread.posts.map((post) => (
+							<li>
+								<a
+									aria-current={post.uid === uid && 'page'}
+									class="thread-link"
+									href={permalink(post)}
+								>
+									{prismicHelpers.asText(post.data.title)}
+								</a>
+							</li>
+						))}
+					</ol>
+				</details>
+			</aside>
+		)}
 
 		<BlockList {body} showLedeStyle />
 
@@ -241,6 +244,11 @@ console.log(series)
 		margin-inline: auto;
 		max-width: var(--content-width-default);
 		padding-block-start: var(--space-wide);
+	}
+
+	.thread-link[aria-current='page'] {
+		color: var(--color-highlight);
+		text-decoration: none;
 	}
 
 	footer {
