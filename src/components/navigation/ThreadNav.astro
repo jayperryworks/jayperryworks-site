@@ -56,16 +56,18 @@ const {
 	}
 
 	summary {
+		--icon-size: 1.2rem;
+
 		background: url('/assets/icons/expand.svg') left center no-repeat;
-		background-size: 1.5rem;
+		background-size: var(--icon-size);
 		cursor: pointer;
 		display: block;
-		padding-left: 2rem;
+		padding-left: calc(var(--icon-size) + var(--space-xnarrow));
 		position: relative;
 	}
 
 	[open] summary {
-		background-image: url('/assets/icons/arrow-up.svg');
+		background-image: url('/assets/icons/collapse.svg');
 	}
 
 	summary::marker,
