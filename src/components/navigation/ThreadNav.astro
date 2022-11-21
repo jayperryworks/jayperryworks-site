@@ -30,7 +30,9 @@ const {
 	</h2>
 	{description && <p class="description | type-role-accent type-scale-zeta">{description}</p>}
 	<details>
-		<summary class="type-role-accent type-scale-zeta">Posts in this thread</summary>
+		<summary class="type-role-accent type-scale-zeta">
+			<span class="icon">Posts in this thread</span>
+		</summary>
 		<ol>
 			<slot></slot>
 		</ol>
@@ -56,23 +58,49 @@ const {
 	}
 
 	summary {
-		--icon-size: 1.2rem;
-
-		background: url('/assets/icons/expand.svg') left center no-repeat;
-		background-size: var(--icon-size);
 		cursor: pointer;
 		display: block;
-		padding-left: calc(var(--icon-size) + var(--space-xnarrow));
-		position: relative;
-	}
-
-	[open] summary {
-		background-image: url('/assets/icons/collapse.svg');
 	}
 
 	summary::marker,
 	summary::-webkit-details-marker {
 		display: none;
+	}
+
+	summary:hover,
+	summary:active,
+	[open] summary {
+		color: var(--color-highlight);
+	}
+
+	.icon {
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
+
+	.icon::before {
+		--icon-size: 1.2rem;
+
+		background-color: var(--color-primary);
+		content: '';
+		position: relative;
+		display: inline-block;
+		width: var(--icon-size);
+		height: var(--icon-size);
+		margin-inline-end: var(--space-xnarrow);
+		mask: url('/assets/icons/expand.svg') center no-repeat;
+		mask-size: contain;
+	}
+
+	[open] .icon::before {
+		mask-image: url('/assets/icons/collapse.svg');
+	}
+
+	summary:hover .icon::before,
+	summary:active .icon::before,
+	[open] .icon::before {
+		background-color: var(--color-highlight);
 	}
 
 	ol {
