@@ -5,6 +5,7 @@ import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 import '@styles/utilities/borders.css';
+import '@styles/utilities/contentWidth.css';
 import '@styles/utilities/type.css';
 import externalLink from '@icons/external-link.svg?raw';
 
@@ -21,6 +22,8 @@ import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
 import Heading from '@components/blocks/Heading.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
+import ThreadNav from '@components/navigation/ThreadNav.astro';
+import ThreadNavItem from '@components/navigation/ThreadNavItem.astro';
 
 // types
 import type {
@@ -83,7 +86,7 @@ export async function getStaticPaths() {
 				return post.data?.thread?.data?.uid === thread.uid;
 			}).reverse();
 
-			thread.currentNumber = thread.posts.indexOf(posts.find((post) => post.uid === uid));
+			thread.currentNumber = thread.posts.indexOf(posts.find((post) => post.uid === uid)) + 1;
 		}
 
  		return {
@@ -156,25 +159,20 @@ const {
 		</header>
 
 		{thread && (
-			<aside>
-				<details>
-					<summary>This post is part {thread.currentNumber} of a thread called <em>{prismicHelpers.asText(thread.title)}</em>.</summary>
-					<small>{prismicHelpers.asText(thread.description)}</small>
-					<ol>
-						{thread.posts.map((post) => (
-							<li>
-								<a
-									aria-current={post.uid === uid && 'page'}
-									class="thread-link"
-									href={permalink(post)}
-								>
-									{prismicHelpers.asText(post.data.title)}
-								</a>
-							</li>
-						))}
-					</ol>
-				</details>
-			</aside>
+			<ThreadNav
+				title={prismicHelpers.asText(thread.title)}
+				description={prismicHelpers.asText(thread.description)}
+				currentNumber={thread.currentNumber}
+				class="content-width"
+			>
+				{thread.posts.map((post) => (
+					<ThreadNavItem
+						current={post.uid === uid}
+						href={permalink(post)}
+						label={prismicHelpers.asText(post.data.title)}
+					/>
+				))}
+			</ThreadNav>
 		)}
 
 		<BlockList {body} showLedeStyle />

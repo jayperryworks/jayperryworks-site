@@ -1,0 +1,84 @@
+---
+// assets
+// import '@styles/tokens/color.css';
+import '@styles/tokens/borders.css';
+import '@styles/tokens/type.css';
+import '@styles/tokens/spacing.css';
+import '@styles/utilities/type.css';
+import '@styles/utilities/type.css';
+
+// utilities
+import * as prismicHelpers from '@prismicio/helpers';
+
+// types
+export interface Props {
+	title: string;
+	class?: string;
+	currentNumber?: number;
+	description?: string;
+}
+
+const {
+	title,
+	class: className = '',
+	currentNumber = 0,
+	description,
+} = Astro.props as Props;
+---
+
+<aside class={className}>
+	<h2 class="type-scale-epsilon">
+		This post is part {currentNumber} of a thread called <strong>{title}</strong>.
+	</h2>
+	{description && <p class="description | type-role-accent type-scale-zeta">{description}</p>}
+	<details>
+		<summary class="type-role-accent type-scale-zeta">Posts in this thread</summary>
+		<ol>
+			<slot></slot>
+		</ol>
+	</details>
+</aside>
+
+<style>
+	aside {
+		/* border: var(--border-solid); */
+		background-color: var(--color-well);
+		border-radius: var(--border-radius);
+		padding: var(--space-narrow);
+	}
+
+	.description {
+		padding-block-start: var(--space-xxnarrow);
+	}
+
+	details {
+		border-block-start: var(--border-default);
+		margin-block-start: var(--space-narrow);
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	summary {
+		cursor: pointer;
+		display: block;
+		position: relative;
+	}
+
+	summary::marker,
+	summary::-webkit-details-marker {
+		display: none;
+	}
+
+	summary::before {
+		--size: 1.5em;
+		width: var(--size);
+		height: var(--size);
+		background: url('/assets/icons/arrow-down.svg');
+		display: block;
+		position: absolute;
+		left: 0;
+	}
+
+	ol {
+		margin: var(--space-xnarrow) 0 0;
+	}
+</style>
