@@ -1,0 +1,29 @@
+---
+export interface Props {
+	href: string;
+	label: string;
+	current?: boolean;
+}
+
+const {
+	label,
+	href,
+	current = false,
+} = Astro.props as Props;
+---
+
+<li>
+	<a
+		aria-current={current && 'page'}
+		{href}
+	>
+		{label}
+	</a>
+</li>
+
+<style>
+	[aria-current='page'] {
+		color: var(--color-highlight);
+		text-decoration: none;
+	}
+</style>

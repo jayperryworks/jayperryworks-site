@@ -14,7 +14,7 @@
 	--border-default-width: 1px;
 
 	--border-default: var(--border-default-width) dashed var(--color-border);
-	--border-solid: var(--border-default-width) dashed var(--color-border);
+	--border-solid: var(--border-default-width) solid var(--color-border);
 }
 
 /* --- make the spine wider on larger screens --- */

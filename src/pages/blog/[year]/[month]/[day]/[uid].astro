@@ -5,6 +5,7 @@ import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 import '@styles/utilities/borders.css';
+import '@styles/utilities/contentWidth.css';
 import '@styles/utilities/type.css';
 import externalLink from '@icons/external-link.svg?raw';
 
@@ -21,11 +22,12 @@ import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
 import Heading from '@components/blocks/Heading.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
+import ThreadNav from '@components/navigation/ThreadNav.astro';
+import ThreadNavItem from '@components/navigation/ThreadNavItem.astro';
 
 // types
 import type {
 	DateField,
-	ImageField,
 	LinkField,
 	Slice,
 	Tags,
@@ -44,7 +46,7 @@ export interface Props {
 	link?: LinkField;
 	next?: PaginationLink;
 	seo?: SEOContent,
-	series?: LinkField;
+	thread?: LinkField;
 	subtitle?: TitleField;
 	tags?: Tags;
 }
@@ -56,11 +58,36 @@ export async function getStaticPaths() {
  			field: 'my.blog_post.date',
  			direction: 'desc',
  		},
+		graphQuery: `
+			{
+				blog_post {
+					...blog_postFields
+					thread {
+						...on blog_series {
+							uid
+							title
+							description
+						}
+					}
+				}
+			}
+		`,
  	});
 
  	return posts.map(({ uid, tags, data }, index) => {
 		const date = prismicHelpers.asDate(data.date);
 		const nextPost = posts[index + 1];
+		const { data: thread } = data.thread;
+
+		// If this post is part of a thread, grab other posts that also belong to the thread
+		// -> these will be ordered by data, because the `posts` array already is
+		if (thread) {
+			thread.posts = posts.filter((post) => {
+				return post.data?.thread?.data?.uid === thread.uid;
+			}).reverse();
+
+			thread.currentNumber = thread.posts.indexOf(posts.find((post) => post.uid === uid)) + 1;
+		}
 
  		return {
  			params: {
@@ -72,18 +99,19 @@ export async function getStaticPaths() {
  			props: {
  				...data,
  				tags,
+				link: prismicHelpers.asLink(data.link),
+ 				next: nextPost && {
+					title: nextPost.data.title,
+					subtitle: nextPost.data.subtitle,
+					path: permalink(nextPost),
+				},
 				seo: {
 					description: data.seo_description || data.description,
 					image: data.seo_image?.url,
 					imageAlt: data.seo_image?.alt,
 					title: data.seo_title || prismicHelpers.asText(data.title),
 				},
- 				link: prismicHelpers.asLink(data.link),
- 				next: nextPost && {
-					title: nextPost.data.title,
-					subtitle: nextPost.data.subtitle,
-					path: permalink(nextPost),
-				},
+				thread,
  			},
  		};
  	});
@@ -102,7 +130,7 @@ const {
 	link,
 	next,
 	seo,
-	series,
+	thread,
 	subtitle,
 	tags,
 	title,
@@ -117,7 +145,7 @@ const {
 	<article>
 		<header>
 			<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
-			{subtitle && (
+			{prismicHelpers.isFilled.title(subtitle) && (
 				<Heading
 					class="subtitle"
 					subheading
@@ -128,7 +156,25 @@ const {
 			<time datetime={date} class="date">
 				{format(prismicHelpers.asDate(date), 'MMMM dd, yyyy')}
 			</time>
+
+			{thread && (
+				<ThreadNav
+					title={prismicHelpers.asText(thread.title)}
+					description={prismicHelpers.asText(thread.description)}
+					currentNumber={thread.currentNumber}
+					class="content-width"
+				>
+					{thread.posts.map((post) => (
+						<ThreadNavItem
+							current={post.uid === uid}
+							href={permalink(post)}
+							label={prismicHelpers.asText(post.data.title)}
+						/>
+					))}
+				</ThreadNav>
+			)}
 		</header>
+
 
 		<BlockList {body} showLedeStyle />
 
@@ -181,7 +227,12 @@ const {
 		text-align: center;
 	}
 
+	header > :global(* + *) {
+		margin-block-start: var(--space-medium);
+	}
+
 	header :global(.subtitle) {
+		margin-block-start: 0;
 		padding-block-start: var(--space-xxnarrow);
 	}
 
@@ -190,13 +241,17 @@ const {
 		display: block;
 		font-family: var(--type-font-accent);
 		font-weight: 200;
-		padding-block-start: var(--space-medium);
 	}
 
 	.link {
 		margin-inline: auto;
 		max-width: var(--content-width-default);
 		padding-block-start: var(--space-wide);
+	}
+
+	.thread-link[aria-current='page'] {
+		color: var(--color-highlight);
+		text-decoration: none;
 	}
 
 	footer {

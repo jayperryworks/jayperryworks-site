@@ -120,7 +120,7 @@ function htmlSerializer(type, element, content, children): string {
 		/* display an 'external link' icon on any anchor with an absolute url */
 		/* -> except for full urls pointing to my own domain (jayperry.works, jayperryworks.com) */
 		.prose :global(a[href^='http']:not([href*='jayperry'])::after) {
-			--size: 0.7em;
+			--size: 0.6em;
 
 			background-color: currentColor;
 			content: '';

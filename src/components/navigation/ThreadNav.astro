@@ -1,0 +1,113 @@
+---
+// assets
+import '@styles/tokens/borders.css';
+import '@styles/tokens/color.css';
+import '@styles/tokens/spacing.css';
+import '@styles/utilities/type.css';
+
+// utilities
+import * as prismicHelpers from '@prismicio/helpers';
+
+// types
+export interface Props {
+	title: string;
+	class?: string;
+	currentNumber?: number;
+	description?: string;
+}
+
+const {
+	title,
+	class: className = '',
+	currentNumber = 0,
+	description,
+} = Astro.props as Props;
+---
+
+<aside class={className}>
+	<h2 class="type-scale-epsilon">
+		This post is part {currentNumber} of a thread called <strong>{title}</strong>.
+	</h2>
+	{description && <p class="description | type-role-accent type-scale-zeta">{description}</p>}
+	<details>
+		<summary class="type-role-accent type-scale-zeta">
+			<span class="icon">Posts in this thread</span>
+		</summary>
+		<ol>
+			<slot></slot>
+		</ol>
+	</details>
+</aside>
+
+<style>
+	aside {
+		background-color: var(--color-well);
+		border-radius: var(--border-radius);
+		padding: var(--space-narrow);
+		text-align: left;
+	}
+
+	.description {
+		padding-block-start: var(--space-xxnarrow);
+	}
+
+	details {
+		border-block-start: var(--border-default);
+		margin-block-start: var(--space-narrow);
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	summary {
+		cursor: pointer;
+		display: block;
+	}
+
+	summary::marker,
+	summary::-webkit-details-marker {
+		display: none;
+	}
+
+	summary:hover,
+	summary:active,
+	[open] summary {
+		color: var(--color-highlight);
+	}
+
+	.icon {
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
+
+	.icon::before {
+		--icon-size: 1.2rem;
+
+		background-color: var(--color-primary);
+		content: '';
+		display: inline-block;
+		height: var(--icon-size);
+		margin-inline-end: var(--space-xnarrow);
+		mask: url('/assets/icons/expand.svg') center no-repeat;
+		mask-size: contain;
+		position: relative;
+		width: var(--icon-size);
+	}
+
+	[open] .icon::before {
+		mask-image: url('/assets/icons/collapse.svg');
+	}
+
+	summary:hover .icon::before,
+	summary:active .icon::before,
+	[open] .icon::before {
+		background-color: var(--color-highlight);
+	}
+
+	ol {
+		margin: var(--space-narrow) 0 0;
+	}
+
+	ol > :global(li + li) {
+		margin-block-start: var(--space-xxnarrow);
+	}
+</style>
