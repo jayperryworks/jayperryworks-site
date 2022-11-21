@@ -145,7 +145,7 @@ const {
 	<article>
 		<header>
 			<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
-			{subtitle && (
+			{prismicHelpers.isFilled.title(subtitle) && (
 				<Heading
 					class="subtitle"
 					subheading
@@ -156,24 +156,25 @@ const {
 			<time datetime={date} class="date">
 				{format(prismicHelpers.asDate(date), 'MMMM dd, yyyy')}
 			</time>
+
+			{thread && (
+				<ThreadNav
+					title={prismicHelpers.asText(thread.title)}
+					description={prismicHelpers.asText(thread.description)}
+					currentNumber={thread.currentNumber}
+					class="content-width"
+				>
+					{thread.posts.map((post) => (
+						<ThreadNavItem
+							current={post.uid === uid}
+							href={permalink(post)}
+							label={prismicHelpers.asText(post.data.title)}
+						/>
+					))}
+				</ThreadNav>
+			)}
 		</header>
 
-		{thread && (
-			<ThreadNav
-				title={prismicHelpers.asText(thread.title)}
-				description={prismicHelpers.asText(thread.description)}
-				currentNumber={thread.currentNumber}
-				class="content-width"
-			>
-				{thread.posts.map((post) => (
-					<ThreadNavItem
-						current={post.uid === uid}
-						href={permalink(post)}
-						label={prismicHelpers.asText(post.data.title)}
-					/>
-				))}
-			</ThreadNav>
-		)}
 
 		<BlockList {body} showLedeStyle />
 
@@ -226,7 +227,12 @@ const {
 		text-align: center;
 	}
 
+	header > :global(* + *) {
+		margin-block-start: var(--space-medium);
+	}
+
 	header :global(.subtitle) {
+		margin-block-start: 0;
 		padding-block-start: var(--space-xxnarrow);
 	}
 
@@ -235,7 +241,6 @@ const {
 		display: block;
 		font-family: var(--type-font-accent);
 		font-weight: 200;
-		padding-block-start: var(--space-medium);
 	}
 
 	.link {
