@@ -1,29 +1,57 @@
 ---
+// assets
+import '@styles/tokens/borders.css';
+import '@styles/tokens/spacing.css';
+
+// helpers
+import { format } from 'date-fns';
+
+// components
+import Heading from '@components/blocks/Heading.astro';
+
+// types
+import type { DateField } from '@prismicio/types';
+
 export interface Props {
 	href: string;
 	label: string;
 	current?: boolean;
+	date: DateField;
 }
 
 const {
 	label,
 	href,
+	date,
 	current = false,
 } = Astro.props as Props;
 ---
 
 <li>
-	<a
-		aria-current={current && 'page'}
-		{href}
-	>
-		{label}
-	</a>
+	<Heading level={6} subheading>{format(new Date(date), 'yyyy.MM.dd')}</Heading>
+	<Heading level={4}>
+		<a
+			aria-current={current && 'page'}
+			class="type-link-undecorated"
+			{href}
+		>
+			{label}
+		</a>
+	</Heading>
 </li>
 
 <style>
 	[aria-current='page'] {
 		color: var(--color-highlight);
 		text-decoration: none;
+	}
+
+	li > :global(* + *) {
+		padding-block-start: var(--space-xxnarrow);
+	}
+
+	a:hover,
+	a:active {
+		border-color: var(--color-highlight);
 	}
 </style>

@@ -159,14 +159,15 @@ const {
 
 			{thread && (
 				<ThreadNav
-					title={prismicHelpers.asText(thread.title)}
-					description={prismicHelpers.asText(thread.description)}
+					title={thread.title && prismicHelpers.asText(thread.title)}
+					description={thread.description &&prismicHelpers.asText(thread.description)}
 					currentNumber={thread.currentNumber}
 					class="content-width"
 				>
 					{thread.posts.map((post) => (
 						<ThreadNavItem
 							current={post.uid === uid}
+							date={post.data.date}
 							href={permalink(post)}
 							label={prismicHelpers.asText(post.data.title)}
 						/>

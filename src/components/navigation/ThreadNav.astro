@@ -5,12 +5,12 @@ import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
 import '@styles/utilities/type.css';
 
-// utilities
-import * as prismicHelpers from '@prismicio/helpers';
+// components
+import Heading from '@components/blocks/Heading.astro';
 
 // types
 export interface Props {
-	title: string;
+	title?: string;
 	class?: string;
 	currentNumber?: number;
 	description?: string;
@@ -19,21 +19,22 @@ export interface Props {
 const {
 	title,
 	class: className = '',
-	currentNumber = 0,
 	description,
 } = Astro.props as Props;
+
+const heading = `This post is part of a thread${title ? ` called <em>${title}</em>` : ''}.`;
 ---
 
 <aside class={className}>
-	<h2 class="type-scale-epsilon">
-		This post is part {currentNumber} of a thread called <strong>{title}</strong>.
-	</h2>
+	<Heading level={2} class="type-scale-epsilon">
+		<Fragment set:html={heading} />
+	</Heading>
 	{description && <p class="description | type-role-accent type-scale-zeta">{description}</p>}
-	<details>
+	<details open>
 		<summary class="type-role-accent type-scale-zeta">
 			<span class="icon">Posts in this thread</span>
 		</summary>
-		<ol>
+		<ol role="list">
 			<slot></slot>
 		</ol>
 	</details>
@@ -104,10 +105,24 @@ const {
 	}
 
 	ol {
-		margin: var(--space-narrow) 0 0;
+		margin-block-start: var(--space-narrow);
+		margin-block-end: 0;
+		list-style: none;
+		position: relative;
+		padding-inline-start: var(--space-wide);
+	}
+
+	ol::before {
+		content: '';
+		display: block;
+		position: absolute;
+		border-left: var(--border-default);
+		top: 0;
+		left: 0.5em;
+		bottom: 0;
 	}
 
 	ol > :global(li + li) {
-		margin-block-start: var(--space-xxnarrow);
+		margin-block-start: var(--space-narrow);
 	}
 </style>

@@ -1,6 +1,7 @@
-@import url("../tokens/type.css");
 @import url("../tokens/borders.css");
 @import url("../tokens/color.css");
+@import url("../tokens/spacing.css");
+@import url("../tokens/type.css");
 
 /* --- webfonts --- */
 @font-face {
