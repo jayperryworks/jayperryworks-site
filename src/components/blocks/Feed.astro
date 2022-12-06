@@ -18,13 +18,13 @@ import Passage from '@components/blocks/Passage.astro';
 import Number from '@components/elements/Number.astro';
 
 // types
-import type { RichTextField } from '@prismicio/types';
+import type { LinkField, RichTextField } from '@prismicio/types';
 
 type FeedSource = 'blog_post' | 'picture' | 'longform';
 
 export interface Props {
 	cta?: {
-		link: string,
+		link: LinkField,
 		label: string,
 	};
 	description?: {
