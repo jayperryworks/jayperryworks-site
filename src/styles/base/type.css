@@ -92,6 +92,7 @@ h6 {
 p {
 	margin-block: 0;
 	max-width: 70ch;
+	hyphens: auto;
 }
 
 a {
