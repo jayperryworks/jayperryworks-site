@@ -40,7 +40,7 @@ const {
 			{description && <p class="type-role-accent type-scale-zeta">{description}</p>}
 		</div>
 	)}
-	<details open>
+	<details>
 		<summary class="type-role-accent type-scale-zeta">
 			<span class="icon">Posts in this thread</span>
 		</summary>
@@ -56,6 +56,35 @@ const {
 		border-radius: var(--border-radius);
 		padding: var(--space-narrow);
 		text-align: left;
+	}
+
+	.help {
+		--size: 2em;
+		margin-inline-start: 0.25em;
+		margin-block-start: calc((var(--size) / 4) * -1); /* scootch up a little */
+	}
+
+	.help:hover {
+		--label-color: var(--color-highlight);
+	}
+
+	.tooltip {
+		--max-width: 24rem;
+		--min-width: 16rem;
+	}
+
+	.help:hover .tooltip {
+		--show: 1;
+	}
+
+	.info {
+		border-block-start: var(--border-default);
+		margin-block-start: var(--space-xnarrow);
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	.info > :global(* + *) {
+		padding-block-start: var(--space-xxnarrow);
 	}
 
 	details {
@@ -110,39 +139,10 @@ const {
 		background-color: var(--color-highlight);
 	}
 
-	.help {
-		--size: 2em;
-		margin-inline-start: 0.25em;
-		margin-block-start: calc((var(--size) / 4) * -1); /* scootch up a little */
-	}
-
-	.help:hover {
-		--label-color: var(--color-highlight);
-	}
-
-	.tooltip {
-		--max-width: 24rem;
-		--min-width: 16rem;
-	}
-
-	.help:hover .tooltip {
-		--show: 1;
-	}
-
-	.info {
-		padding-block-start: var(--space-xnarrow);
-	}
-
-	.info > :global(* + *) {
-		padding-block-start: var(--space-xxnarrow);
-	}
-
 	ol {
-		--padding-block: var(--space-medium);
-
 		list-style: none;
 		margin-block: 0;
-		padding-block-start: var(--padding-block);
+		padding-block-start: var(--space-medium);
 		padding-inline-start: 0;
 		position: relative;
 	}
