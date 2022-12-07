@@ -138,23 +138,23 @@ const {
 	}
 
 	ol {
-		--padding-block: var(--space-wide);
+		--padding-block: var(--space-medium);
 
 		list-style: none;
 		margin-block: 0;
-		padding-block: var(--padding-block);
-		padding-inline-start: var(--space-wide);
+		padding-block-start: var(--padding-block);
+		padding-inline-start: 0;
 		position: relative;
 	}
 
 	ol::before {
 		border-left: var(--border-default);
-		bottom: var(--padding-block);
+		bottom: 0.5rem;
 		content: '';
 		display: block;
-		left: 0.5em;
+		left: 0.8rem;
 		position: absolute;
-		top: var(--padding-block);
+		top: calc(var(--padding-block) + 0.5rem);
 	}
 
 	ol > :global(li + li) {

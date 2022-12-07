@@ -153,7 +153,7 @@ function htmlSerializer(type, element, content, children): string {
 
 	.prose :global(.sidenote-label) {
 		border-radius: 1000px;
-		border: 1px solid var(--label-color);
+		border: 2px solid var(--label-color);
 		color: var(--label-color);
 		cursor: pointer;
 		display: inline-block;
@@ -191,7 +191,7 @@ function htmlSerializer(type, element, content, children): string {
 	}
 
 	.prose :global(.sidenote-content::before) {
-		color: var(--label-color-active);
+		color: var(--color-highlight);
 		content: attr(id) ".";
 	}
 

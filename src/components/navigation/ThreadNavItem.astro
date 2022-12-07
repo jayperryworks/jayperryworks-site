@@ -7,6 +7,7 @@ import '@styles/tokens/spacing.css';
 import { format } from 'date-fns';
 
 // components
+import Dot from '@components/elements/Dot.astro';
 import Heading from '@components/blocks/Heading.astro';
 
 // types
@@ -28,13 +29,23 @@ const {
 ---
 
 <li>
+	<Dot
+		class="dot"
+		el="a"
+		highlight={current ? 'on' : 'hover'}
+		{href}
+	></Dot>
 	<Heading
+		class="date"
 		level={6}
 		subheading
 	>
 		{format(new Date(date), 'yyyy.MM.dd')}
 	</Heading>
-	<Heading level={4}>
+	<Heading
+		class="title"
+		level={4}
+	>
 		<a
 			aria-current={current && 'page'}
 			class="type-link-undecorated"
@@ -46,17 +57,53 @@ const {
 </li>
 
 <style>
+	li {
+		display: grid;
+		grid-template-areas:
+			"gutter	date"
+			"icon		title";
+		grid-template-rows: auto;
+		grid-template-columns: auto 1fr;
+		/* row-gap: var(--space-xxnarrow); */
+		column-gap: var(--space-narrow);
+	}
+
+	li:first-child::before {
+		content: '';
+		display: block;
+		grid-area: gutter;
+		background-color: var(--color-well);
+		z-index: 0;
+	}
+
+	li:hover .dot::before {
+		opacity: 1;
+	}
+
+	.dot {
+		--color: var(--color-highlight);
+		--border-color: var(--color-primary);
+		--background-color: var(--color-well);
+		--size: 1.6rem;
+		grid-area: icon;
+		align-self: center;
+	}
+
+	.dot:hover {
+		--border-color: var(--color-primary);
+	}
+
+	.date {
+		grid-area: date;
+		padding-block-end: var(--space-xxnarrow);
+	}
+
+	.title {
+		grid-area: title;
+	}
+
 	[aria-current='page'] {
 		color: var(--color-highlight);
 		text-decoration: none;
-	}
-
-	li > :global(* + *) {
-		padding-block-start: var(--space-xxnarrow);
-	}
-
-	a:hover,
-	a:active {
-		border-color: var(--color-highlight);
 	}
 </style>
