@@ -7,6 +7,9 @@ import svgLoader from 'vite-svg-loader';
 export default defineConfig({
 	site: 'https://jayperryworks.com',
 	vite: {
+		build: {
+			cssCodeSplit: false,
+		},
 		plugins: [
 			svgLoader({
 				svgoConfig: {
