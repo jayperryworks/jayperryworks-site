@@ -1,27 +1,114 @@
 ---
+// assets
+import '@styles/tokens/borders.css';
+import '@styles/tokens/spacing.css';
+
+// helpers
+import { format } from 'date-fns';
+
+// components
+import Dot from '@components/elements/Dot.astro';
+import Heading from '@components/blocks/Heading.astro';
+
+// types
+import type { DateField } from '@prismicio/types';
+
 export interface Props {
 	href: string;
 	label: string;
 	current?: boolean;
+	date: DateField;
 }
 
 const {
 	label,
 	href,
+	date,
 	current = false,
 } = Astro.props as Props;
 ---
 
 <li>
-	<a
-		aria-current={current && 'page'}
+	<Dot
+		class="icon"
+		el="a"
+		highlight={current ? 'on' : 'hover'}
 		{href}
+	></Dot>
+	<Heading
+		class="date"
+		level={6}
+		subheading
 	>
-		{label}
-	</a>
+		{format(new Date(date), 'yyyy.MM.dd')}
+	</Heading>
+	<Heading
+		class="title"
+		level={4}
+	>
+		<a
+			aria-current={current && 'page'}
+			class="type-link-undecorated"
+			{href}
+		>
+			{label}
+		</a>
+	</Heading>
 </li>
 
 <style>
+	li {
+		--dot-size: 1.6rem;
+		display: grid;
+		column-gap: var(--space-xnarrow);
+		grid-template-areas:
+			".		date"
+			"icon	title";
+		grid-template-columns: auto 1fr;
+		grid-template-rows: auto;
+		position: relative;
+	}
+
+	li + li .date {
+		padding-block-start: var(--space-medium);
+	}
+
+	li + li::before {
+		border-inline-start: var(--border-default);
+		content: '';
+		display: block;
+		position: absolute;
+		top: calc((var(--dot-size) / 2) * -1);
+		left: calc((var(--dot-size) / 2) + var(--border-default-width));
+		bottom: calc(var(--dot-size) / 2);
+		grid-area: gutter;
+		justify-self: center;
+		z-index: 0;
+	}
+
+	li .icon {
+		--color: var(--color-highlight);
+		--border-color: var(--color-primary);
+		--background-color: var(--color-well);
+		--size: var(--dot-size);
+		grid-area: icon;
+		align-self: center;
+		z-index: 1;
+	}
+
+	li .icon:hover {
+		--border-color: var(--color-primary);
+	}
+
+	.date {
+		grid-area: date;
+		padding-block-end: var(--space-xxnarrow);
+	}
+
+	.title {
+		grid-area: title;
+	}
+
 	[aria-current='page'] {
 		color: var(--color-highlight);
 		text-decoration: none;

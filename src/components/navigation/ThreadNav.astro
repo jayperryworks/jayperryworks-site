@@ -3,14 +3,17 @@
 import '@styles/tokens/borders.css';
 import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
 import '@styles/utilities/type.css';
 
-// utilities
-import * as prismicHelpers from '@prismicio/helpers';
+// components
+import Dot from '@components/elements/Dot.astro';
+import Tooltip from '@components/elements/Tooltip.astro';
+import Heading from '@components/blocks/Heading.astro';
 
 // types
 export interface Props {
-	title: string;
+	title?: string;
 	class?: string;
 	currentNumber?: number;
 	description?: string;
@@ -19,21 +22,29 @@ export interface Props {
 const {
 	title,
 	class: className = '',
-	currentNumber = 0,
 	description,
 } = Astro.props as Props;
 ---
 
 <aside class={className}>
-	<h2 class="type-scale-epsilon">
-		This post is part {currentNumber} of a thread called <strong>{title}</strong>.
-	</h2>
-	{description && <p class="description | type-role-accent type-scale-zeta">{description}</p>}
+	<Heading level={2} class="type-scale-epsilon">
+		This post is part of a thread.
+		<Dot class="help">
+			?
+			<Tooltip class="tooltip">A thread is a series of posts that explore a theme.</Tooltip>
+		</Dot>
+	</Heading>
+	{(title || description) && (
+		<div class="info">
+			{title && <Heading level={3} class="type-scale-delta">{title}</Heading>}
+			{description && <p class="type-role-accent type-scale-zeta">{description}</p>}
+		</div>
+	)}
 	<details>
 		<summary class="type-role-accent type-scale-zeta">
 			<span class="icon">Posts in this thread</span>
 		</summary>
-		<ol>
+		<ol role="list">
 			<slot></slot>
 		</ol>
 	</details>
@@ -47,7 +58,33 @@ const {
 		text-align: left;
 	}
 
-	.description {
+	/* increase specificity so it overrides the child component */
+	aside .help {
+		--size: 2em;
+		margin-inline-start: 0.25em;
+		margin-block-start: calc((var(--size) / 4) * -1); /* scootch up a little */
+	}
+
+	aside .help:hover {
+		--label-color: var(--color-highlight);
+	}
+
+	aside .tooltip {
+		--max-width: 24rem;
+		--min-width: 16rem;
+	}
+
+	.help:hover .tooltip {
+		--show: 1;
+	}
+
+	.info {
+		border-block-start: var(--border-default);
+		margin-block-start: var(--space-xnarrow);
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	.info > :global(* + *) {
 		padding-block-start: var(--space-xxnarrow);
 	}
 
@@ -104,10 +141,10 @@ const {
 	}
 
 	ol {
-		margin: var(--space-narrow) 0 0;
-	}
-
-	ol > :global(li + li) {
-		margin-block-start: var(--space-xxnarrow);
+		list-style: none;
+		margin-block: 0;
+		padding-block-start: var(--space-medium);
+		padding-inline-start: 0;
+		position: relative;
 	}
 </style>

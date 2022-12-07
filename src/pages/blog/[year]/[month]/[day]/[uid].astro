@@ -29,6 +29,8 @@ import ThreadNavItem from '@components/navigation/ThreadNavItem.astro';
 import type {
 	DateField,
 	LinkField,
+	PrismicDocumentWithUID,
+	RichTextField,
 	Slice,
 	Tags,
 	TitleField,
@@ -39,6 +41,13 @@ import type {
 	SEOContent,
 } from '@lib/types';
 
+type Thread = {
+	posts: PrismicDocumentWithUID[],
+	uid: string,
+	description?: RichTextField,
+	title?: TitleField,
+};
+
 export interface Props {
 	body: Array<Slice>;
 	date: DateField;
@@ -46,7 +55,7 @@ export interface Props {
 	link?: LinkField;
 	next?: PaginationLink;
 	seo?: SEOContent,
-	thread?: LinkField;
+	thread?: Thread;
 	subtitle?: TitleField;
 	tags?: Tags;
 }
@@ -85,8 +94,6 @@ export async function getStaticPaths() {
 			thread.posts = posts.filter((post) => {
 				return post.data?.thread?.data?.uid === thread.uid;
 			}).reverse();
-
-			thread.currentNumber = thread.posts.indexOf(posts.find((post) => post.uid === uid)) + 1;
 		}
 
  		return {
@@ -159,14 +166,14 @@ const {
 
 			{thread && (
 				<ThreadNav
-					title={prismicHelpers.asText(thread.title)}
-					description={prismicHelpers.asText(thread.description)}
-					currentNumber={thread.currentNumber}
+					title={thread.title && prismicHelpers.asText(thread.title)}
+					description={thread.description &&prismicHelpers.asText(thread.description)}
 					class="content-width"
 				>
 					{thread.posts.map((post) => (
 						<ThreadNavItem
 							current={post.uid === uid}
+							date={post.data.date}
 							href={permalink(post)}
 							label={prismicHelpers.asText(post.data.title)}
 						/>

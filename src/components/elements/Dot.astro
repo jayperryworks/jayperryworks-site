@@ -1,0 +1,114 @@
+---
+import '@styles/tokens/borders.css';
+import '@styles/tokens/color.css';
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+
+export interface Props {
+	el?: string;
+	class?: string;
+	highlight?: 'on' | 'hover' | 'flashing' | 'off',
+	href?: string,
+}
+
+const {
+	class: className = '',
+	el = 'span',
+	highlight = 'off',
+	href,
+} = Astro.props as Props;
+
+const El = el;
+const classList = [
+	'dot',
+	highlight === 'off' ? '' : `highlight ${highlight}`,
+	className,
+].join(' ');
+---
+
+<El
+	class={classList}
+	{href}
+>
+	<slot></slot>
+</El>
+
+<style>
+	.dot {
+		--color: var(--color-primary);
+		--background-color: transparent;
+		--border-color: var(--color);
+		--size: 2em;
+		--transition-duration: 0.25s;
+
+		align-items: center;
+		background-color: var(--background-color);
+		border-radius: 10000px;
+		border: 2px solid var(--border-color);
+		color: var(--color);
+		cursor: pointer;
+		display: inline-block;
+		display: inline-flex;
+		flex-direction: column;
+		font-family: var(--type-font-accent);
+		font-size: 0.6em;
+		justify-content: center;
+		line-height: inherit;
+		min-height: var(--size);
+		min-width: var(--size);
+		padding: 0.25em;
+		position: relative;
+		text-align: center;
+		text-decoration: none;
+		transition: color 0.25s ease, border-color 0.25s ease;
+		vertical-align: middle;
+	}
+
+	.dot:hover,
+	.dot:active {
+		--color: var(--color-highlight);
+		--border-color: var(--color-highlight);
+	}
+
+	.dot.highlight::before {
+		--margin: 0.3em;
+
+		background-color: var(--color);
+		border-radius: 10000px;
+		bottom: var(--margin);
+		content: '';
+		left: var(--margin);
+		position: absolute;
+		right: var(--margin);
+		top: var(--margin);
+		transition-duration: var(--transition-duration);
+		transition-property: opacity, background-color;
+		transition-timing-function: ease-in-out;
+		z-index: 1;
+	}
+
+	.dot.highlight.flashing::before,
+	.dot.highlight.hover::before {
+		opacity: 0;
+	}
+
+	.dot.highlight.flashing::before {
+		animation: blink 0.75s ease infinite alternate;
+	}
+
+	.dot.highlight:hover::before,
+	.dot.highlight:active::before {
+		opacity: 1;
+		animation: none;
+	}
+
+	@keyframes blink {
+		from {
+			opacity: 0;
+		}
+
+		to {
+			opacity: 1;
+		}
+	}
+</style>

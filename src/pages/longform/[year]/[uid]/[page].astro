@@ -180,7 +180,7 @@ function sequenceNavItemAlign(index: number): Align {
 const sequenceNavItems = project.chapterList.map(
 	(title: TitleField, index: number): SequenceNavItemData => ({
 		title,
-		href: `/longform/${year}/${uid}/${index + 1}/`,
+		href: `/longform/${year}/${uid}/${index + 1}`,
 		complete: currentPage > index + 1,
 		current: currentPage === index + 1,
 		tooltipAlign: sequenceNavItemAlign(index),
