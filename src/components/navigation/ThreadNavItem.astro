@@ -30,7 +30,7 @@ const {
 
 <li>
 	<Dot
-		class="dot"
+		class="icon"
 		el="a"
 		highlight={current ? 'on' : 'hover'}
 		{href}
@@ -74,19 +74,19 @@ const {
 	}
 
 	li + li::before {
-		border-left: var(--border-default);
+		border-inline-start: var(--border-default);
 		content: '';
 		display: block;
 		position: absolute;
 		top: calc((var(--dot-size) / 2) * -1);
-		left: calc(var(--dot-size) / 2);
+		left: calc((var(--dot-size) / 2) + var(--border-default-width));
 		bottom: calc(var(--dot-size) / 2);
 		grid-area: gutter;
 		justify-self: center;
 		z-index: 0;
 	}
 
-	.dot {
+	li .icon {
 		--color: var(--color-highlight);
 		--border-color: var(--color-primary);
 		--background-color: var(--color-well);
@@ -96,7 +96,7 @@ const {
 		z-index: 1;
 	}
 
-	.dot:hover {
+	li .icon:hover {
 		--border-color: var(--color-primary);
 	}
 

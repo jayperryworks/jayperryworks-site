@@ -56,26 +56,27 @@ if (next) highlight = 'flashing';
 		margin-top: 0;
 	}
 
-	.link {
+	/* increase specificity so it overrides the child component */
+	li .link {
 		--background-color: var(--color-bg);
 	}
 
-	.link.current,
-	.link.next {
+	li .link.current,
+	li .link.next {
 		--color: var(--color-highlight);
 	}
 
-	.link.current,
-	.link.next {
+	li .link.current,
+	li .link.next {
 		--border-color: var(--color-primary);
 	}
 
 
-	.link.complete {
+	li .link.complete {
 		--color: var(--color-secondary);
 	}
 
-	.link:hover {
+	li .link:hover {
 		--border-color: var(--color-primary);
 		--color: var(--color-primary);
 	}

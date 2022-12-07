@@ -58,17 +58,18 @@ const {
 		text-align: left;
 	}
 
-	.help {
+	/* increase specificity so it overrides the child component */
+	aside .help {
 		--size: 2em;
 		margin-inline-start: 0.25em;
 		margin-block-start: calc((var(--size) / 4) * -1); /* scootch up a little */
 	}
 
-	.help:hover {
+	aside .help:hover {
 		--label-color: var(--color-highlight);
 	}
 
-	.tooltip {
+	aside .tooltip {
 		--max-width: 24rem;
 		--min-width: 16rem;
 	}
