@@ -144,7 +144,6 @@ function htmlSerializer(type, element, content, children): string {
 				This is because my layout width varies with page blocks (text, images, pullquotes, etc.) and sidenotes may collide with other blocks. */
 	.prose :global(.sidenote) {
 		--label-color: var(--color-primary);
-		--label-color-active: var(--color-highlight);
 		display: inline;
 	}
 
@@ -173,8 +172,7 @@ function htmlSerializer(type, element, content, children): string {
 
 	.prose :global(.sidenote-label:hover),
 	.prose :global(.sidenote-input:checked ~ .sidenote-label) {
-		border-color: var(--label-color-active);
-		color: var(--label-color-active);
+		--label-color: var(--color-highlight);
 	}
 
 	.prose :global(.sidenote-content),

@@ -3,6 +3,7 @@
 import '@styles/tokens/borders.css';
 import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
 import '@styles/utilities/type.css';
 
 // components
@@ -28,7 +29,7 @@ const {
 	<Heading level={2} class="type-scale-epsilon">
 		This post is part of a thread.
 		<span class="help">
-			[ ? ]
+			?
 			<Tooltip class="tooltip">A series of posts that explore a theme.</Tooltip>
 		</span>
 	</Heading>
@@ -49,9 +50,38 @@ const {
 </aside>
 
 <style>
+
 	.help {
+		--label-color: var(--color-primary);
+		--label-color-active: var(--color-highlight);
+		--size: 2em;
+
+		align-items: center;
+		border-radius: 1000px;
+		border: 1px solid var(--label-color);
+		color: var(--label-color);
+		cursor: pointer;
+		display: inline-block;
+		display: inline-flex;
+		flex-direction: column;
+		font-family: var(--type-font-accent);
+		font-size: 0.6em;
+		justify-content: center;
+		line-height: inherit;
+		margin-block-start: calc((var(--size) / 4) * -1); /* scootch up a little */
+		margin-inline: 0.25em;
+		min-height: var(--size);
+		min-width: var(--size);
+		padding: 0.25em;
 		position: relative;
-		color: red;
+		text-align: center;
+		transition: color 0.25s ease, border-color 0.25s ease;
+		vertical-align: middle;
+
+	}
+
+	.help:hover {
+		--label-color: var(--color-highlight);
 	}
 
 	.tooltip {
