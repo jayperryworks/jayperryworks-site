@@ -26,11 +26,11 @@ const classList = [
 ].join(' ');
 ---
 
-<span
+<small
 	class={classList}
 >
 	<slot></slot>
-</span>
+</small>
 
 <style>
 	/* Be sure to add position: relative to the parent element */
@@ -66,7 +66,6 @@ const classList = [
 	padding: var(--space-xnarrow) var(--pointer-margin);
 	position: absolute;
 	transition: var(--transition-duration) opacity ease-in-out;
-	will-change: opacity;
 	z-index: 4;
 }
 

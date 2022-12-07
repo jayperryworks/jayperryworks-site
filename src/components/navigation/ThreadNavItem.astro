@@ -28,7 +28,12 @@ const {
 ---
 
 <li>
-	<Heading level={6} subheading>{format(new Date(date), 'yyyy.MM.dd')}</Heading>
+	<Heading
+		level={6}
+		subheading
+	>
+		{format(new Date(date), 'yyyy.MM.dd')}
+	</Heading>
 	<Heading level={4}>
 		<a
 			aria-current={current && 'page'}

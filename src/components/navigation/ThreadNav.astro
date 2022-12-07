@@ -6,6 +6,7 @@ import '@styles/tokens/spacing.css';
 import '@styles/utilities/type.css';
 
 // components
+import Tooltip from '@components/elements/Tooltip.astro';
 import Heading from '@components/blocks/Heading.astro';
 
 // types
@@ -21,15 +22,22 @@ const {
 	class: className = '',
 	description,
 } = Astro.props as Props;
-
-const heading = `This post is part of a thread${title ? ` called <em>${title}</em>` : ''}.`;
 ---
 
 <aside class={className}>
 	<Heading level={2} class="type-scale-epsilon">
-		<Fragment set:html={heading} />
+		This post is part of a thread.
+		<span class="help">
+			[ ? ]
+			<Tooltip class="tooltip">A series of posts that explore a theme.</Tooltip>
+		</span>
 	</Heading>
-	{description && <p class="description | type-role-accent type-scale-zeta">{description}</p>}
+	{(title || description) && (
+		<div class="info">
+			{title && <Heading level={3} class="type-scale-delta">{title}</Heading>}
+			{description && <p class="type-role-accent type-scale-zeta">{description}</p>}
+		</div>
+	)}
 	<details open>
 		<summary class="type-role-accent type-scale-zeta">
 			<span class="icon">Posts in this thread</span>
@@ -41,15 +49,33 @@ const heading = `This post is part of a thread${title ? ` called <em>${title}</e
 </aside>
 
 <style>
+	.help {
+		position: relative;
+		color: red;
+	}
+
+	.tooltip {
+		--max-width: 24rem;
+		--min-width: 16rem;
+	}
+
+	.help:hover .tooltip {
+		--show: 1;
+	}
+
+	.info {
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	.info > :global(* + *) {
+		padding-block-start: var(--space-xxnarrow);
+	}
+
 	aside {
 		background-color: var(--color-well);
 		border-radius: var(--border-radius);
 		padding: var(--space-narrow);
 		text-align: left;
-	}
-
-	.description {
-		padding-block-start: var(--space-xxnarrow);
 	}
 
 	details {
