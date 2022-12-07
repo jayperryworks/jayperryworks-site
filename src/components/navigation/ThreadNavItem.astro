@@ -58,25 +58,35 @@ const {
 
 <style>
 	li {
+		--dot-size: 1.6rem;
 		display: grid;
+		column-gap: var(--space-xnarrow);
 		grid-template-areas:
-			"gutter	date"
-			"icon		title";
-		grid-template-rows: auto;
+			".		date"
+			"icon	title";
 		grid-template-columns: auto 1fr;
-		/* row-gap: var(--space-xxnarrow); */
-		column-gap: var(--space-narrow);
+		grid-template-rows: auto;
+		position: relative;
 	}
 
-	li:first-child::before {
+	li + li .date {
+		padding-block-start: var(--space-medium);
+	}
+
+	li + li::before {
+		border-left: var(--border-default);
 		content: '';
 		display: block;
+		position: absolute;
+		top: calc((var(--dot-size) / 2) * -1);
+		left: calc(var(--dot-size) / 2);
+		bottom: calc(var(--dot-size) / 2);
 		grid-area: gutter;
-		background-color: var(--color-well);
+		justify-self: center;
 		z-index: 0;
 	}
 
-	li:hover .dot::before {
+	.title:hover ~ .dot::before {
 		opacity: 1;
 	}
 
@@ -84,9 +94,10 @@ const {
 		--color: var(--color-highlight);
 		--border-color: var(--color-primary);
 		--background-color: var(--color-well);
-		--size: 1.6rem;
+		--size: var(--dot-size);
 		grid-area: icon;
 		align-self: center;
+		z-index: 1;
 	}
 
 	.dot:hover {
