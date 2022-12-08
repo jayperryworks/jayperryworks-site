@@ -31,7 +31,12 @@ const {
 		This post is part of a thread.
 		<Dot class="help">
 			?
-			<Tooltip class="tooltip">A thread is a series of posts that explore a theme.</Tooltip>
+			<Tooltip
+				class="tooltip"
+				id="thread-tooltip"
+			>
+				A thread is a series of posts that explore a theme.
+			</Tooltip>
 		</Dot>
 	</Heading>
 	{(title || description) && (
@@ -50,6 +55,24 @@ const {
 	</details>
 </aside>
 
+<script>
+	let Tooltip = {
+		selector: '.help',
+		openClass: 'open',
+		$button: null,
+	};
+
+	Tooltip.$button = document.querySelector(Tooltip.selector);
+
+	document.addEventListener('click', (event) => {
+		if (event.target.closest('.help')) {
+			Tooltip.$button.classList.toggle(Tooltip.openClass);
+			return;
+		}
+		Tooltip.$button.classList.remove(Tooltip.openClass);
+	});
+</script>
+
 <style>
 	aside {
 		background-color: var(--color-well);
@@ -58,15 +81,22 @@ const {
 		text-align: left;
 	}
 
+	/* only show the help tooltip if JS is available */
+	:global(.no-js) .help {
+		display: none;
+	}
+
 	/* increase specificity so it overrides the child component */
 	aside .help {
 		--size: 2em;
+		--color: var(--color-secondary);
+
 		margin-inline-start: 0.25em;
 		margin-block-start: calc((var(--size) / 4) * -1); /* scootch up a little */
 	}
 
-	aside .help:hover {
-		--label-color: var(--color-highlight);
+	aside .help.open {
+		--color: var(--color-highlight);
 	}
 
 	aside .tooltip {
@@ -74,7 +104,7 @@ const {
 		--min-width: 16rem;
 	}
 
-	.help:hover .tooltip {
+	.help.open .tooltip {
 		--show: 1;
 	}
 

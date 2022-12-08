@@ -5,6 +5,7 @@ import type { Align } from '@lib/types';
 export interface Props {
 	align?: Align;
 	class?: string;
+	id?: string;
 	show?: boolean;
 }
 
@@ -12,6 +13,7 @@ export interface Props {
 const {
 	align = 'center',
 	class:className = '',
+	id,
 	// The tooltip is hidden by default.
 	// -> It can be shown by either passing in "true" on this prop...
 	// -> or, set the `--show` CSS variable to 1.
@@ -28,6 +30,7 @@ const classList = [
 
 <small
 	class={classList}
+	{id}
 >
 	<slot></slot>
 </small>
@@ -62,7 +65,7 @@ const classList = [
 	line-height: var(--type-leading-tight);
 	max-width: var(--max-width);
 	min-width: var(--min-width);
-	opacity: var(--show);
+	opacity: var(--show, 0);
 	padding: var(--space-xnarrow) var(--pointer-margin);
 	position: absolute;
 	transition: var(--transition-duration) opacity ease-in-out;

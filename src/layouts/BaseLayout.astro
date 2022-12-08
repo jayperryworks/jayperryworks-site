@@ -55,16 +55,16 @@ function themeReducer(
 const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer, {}) : {};
 ---
 
-<script is:inline>
-	// Add a class to the html element to confirm JS is available
+<script>
+	// Add a class to the body element to confirm JS is available
 	// -> used by the CSS for styling JS-dependent elements
 	let featureClasses = ['js'];
 	// Add a class if the browser/device supports touch
-	if ("ontouchstart" in document.documentElement) featureClasses.push('touch');
-	document.documentElement.className = featureClasses.join(' ');
+	if ("ontouchstart" in document.body) featureClasses.push('touch');
+	document.body.className = featureClasses.join(' ');
 </script>
 
-<html lang="en" class="no-js no-touch">
+<html lang="en">
 	<head>
 		<meta charset='utf-8'>
 		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
@@ -92,7 +92,7 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 		)}
 	</head>
 
-	<body>
+	<body class="no-js no-touch">
 		<MainNav segment={path} overlay={headerOverlay} />
 		<main>
 			<slot />
@@ -101,7 +101,7 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 	</body>
 </html>
 
-<!-- set the page theme as root custom properties to override the default tokens -->
+// set the page theme as root custom properties to override the default tokens
 <style define:vars={themeTokens} is:global></style>
 
 <style>
