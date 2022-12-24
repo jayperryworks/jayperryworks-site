@@ -1,18 +1,19 @@
 ---
 // assets
+import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
 
 // types
-import type { FormattedText } from '@lib/types';
-import type { ImageField } from '@prismicio/types/dist';
+import type { ColorRoles, FormattedText } from '@lib/types';
+import type { ImageField } from '@prismicio/types';
 
 // components
-import Image from '@components/elements/Image.astro';
 import Passage from '@components/blocks/Passage.astro';
 
 export interface Props {
 	text: FormattedText;
 	class?: string;
+	color?: ColorRoles;
 	image?: ImageField;
 }
 
@@ -20,22 +21,44 @@ const {
 	text,
 	class: className = '',
 	image,
+	color = 'secondary',
 } = Astro.props as Props;
+
+function variables(image: ImageField): string {
+	if (image) {
+		const { width, height } = image.dimensions;
+		console.log(image.url)
+
+		return [
+			`--aspect: ${width} / ${height};`,
+			`--color: var(--color-${color});`,
+			`--image: url(${image.url});`,
+		].join('');
+	}
+
+	return '';
+}
 ---
 
 <aside
 	aria-role="presentation"
 	class={className}
+	style={variables(image)}
 >
-	{image ? (
-		<Image source={image} />
-	) : (
-		<Passage {text} typeSize="delta" />
-	)}
+	<Passage {text} typeSize="delta" class="text" />
 </aside>
 
 <style>
 	aside {
-		background-color: red;
+		aspect-ratio: var(--aspect);
+		background-color: var(--color, currentColor);
+		mask-image: var(--image);
+		mask-position: 50% 50%;
+		mask-repeat: no-repeat;
+		mask-size: contain;
+	}
+
+	.text {
+		display: none;
 	}
 </style>
