@@ -2,6 +2,7 @@
 // assets
 import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
+import '@styles/utilities/visibility.css';
 
 // utilities
 import * as prismicHelpers from '@prismicio/helpers';
@@ -28,7 +29,10 @@ const {
 } = Astro.props as Props;
 
 function imageVersion(size: number): string {
-	return `url(${prismicHelpers.asImageSrc(image, { fit: 'max', w: size })})`;
+	return prismicHelpers.asImageSrc(image, {
+		fit: 'max',
+		w: size,
+	});
 }
 
 function variables(): string {
@@ -38,9 +42,9 @@ function variables(): string {
 		return [
 			`--aspect: ${width} / ${height};`,
 			`--color: var(--color-${color});`,
-			`--image-small: url(${imageVersion(800)});`,
-			`--image-medium: url(${imageVersion(1600)});`,
-			`--image-large: url(${imageVersion(2400)});`,
+			`--image-small: url('${imageVersion(800)}');`,
+			`--image-medium: url('${imageVersion(1600)}');`,
+			`--image-large: url('${imageVersion(2400)}');`,
 		].join('');
 	}
 
@@ -53,7 +57,7 @@ function variables(): string {
 	class={className}
 	style={variables()}
 >
-	<Passage {text} typeSize="delta" class="text" />
+	<Passage {text} typeSize="delta" class={image ? 'hide-visually' : ''} />
 </aside>
 
 <style>
@@ -74,13 +78,9 @@ function variables(): string {
 		}
 	}
 
-	@media screen and (min-width: 60em) {
+	@media screen and (min-width: 100em) {
 		aside {
 			--image: var(--image-large);
 		}
-	}
-
-	.text {
-		display: none;
 	}
 </style>
