@@ -1,0 +1,41 @@
+---
+// assets
+import '@styles/tokens/spacing.css';
+
+// types
+import type { FormattedText } from '@lib/types';
+import type { ImageField } from '@prismicio/types/dist';
+
+// components
+import Image from '@components/elements/Image.astro';
+import Passage from '@components/blocks/Passage.astro';
+
+export interface Props {
+	text: FormattedText;
+	class?: string;
+	image?: ImageField;
+}
+
+const {
+	text,
+	class: className = '',
+	image,
+} = Astro.props as Props;
+---
+
+<aside
+	aria-role="presentation"
+	class={className}
+>
+	{image ? (
+		<Image source={image} />
+	) : (
+		<Passage {text} typeSize="delta" />
+	)}
+</aside>
+
+<style>
+	aside {
+		background-color: red;
+	}
+</style>
