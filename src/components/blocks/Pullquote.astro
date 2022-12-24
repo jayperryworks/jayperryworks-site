@@ -3,6 +3,9 @@
 import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
 
+// utilities
+import * as prismicHelpers from '@prismicio/helpers';
+
 // types
 import type { ColorRoles, FormattedText } from '@lib/types';
 import type { ImageField } from '@prismicio/types';
@@ -24,15 +27,20 @@ const {
 	color = 'secondary',
 } = Astro.props as Props;
 
-function variables(image: ImageField): string {
+function imageVersion(size: number): string {
+	return `url(${prismicHelpers.asImageSrc(image, { fit: 'max', w: size })})`;
+}
+
+function variables(): string {
 	if (image) {
 		const { width, height } = image.dimensions;
-		console.log(image.url)
 
 		return [
 			`--aspect: ${width} / ${height};`,
 			`--color: var(--color-${color});`,
-			`--image: url(${image.url});`,
+			`--image-small: url(${imageVersion(800)});`,
+			`--image-medium: url(${imageVersion(1600)});`,
+			`--image-large: url(${imageVersion(2400)});`,
 		].join('');
 	}
 
@@ -43,19 +51,33 @@ function variables(image: ImageField): string {
 <aside
 	aria-role="presentation"
 	class={className}
-	style={variables(image)}
+	style={variables()}
 >
 	<Passage {text} typeSize="delta" class="text" />
 </aside>
 
 <style>
 	aside {
+		--image: var(--image-small);
+
 		aspect-ratio: var(--aspect);
 		background-color: var(--color, currentColor);
 		mask-image: var(--image);
 		mask-position: 50% 50%;
 		mask-repeat: no-repeat;
 		mask-size: contain;
+	}
+
+	@media screen and (min-width: 37em) {
+		aside {
+			--image: var(--image-medium);
+		}
+	}
+
+	@media screen and (min-width: 60em) {
+		aside {
+			--image: var(--image-large);
+		}
 	}
 
 	.text {
