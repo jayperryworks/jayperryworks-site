@@ -27,13 +27,13 @@ import ThreadNavItem from '@components/navigation/ThreadNavItem.astro';
 
 // types
 import type {
-	DateField,
 	LinkField,
 	PrismicDocumentWithUID,
 	RichTextField,
 	Slice,
 	Tags,
 	TitleField,
+	DevelopmentStage,
 } from '@prismicio/types';
 
 import type {
@@ -48,16 +48,23 @@ type Thread = {
 	title?: TitleField,
 };
 
+type PublicationDates = {
+	publication: Date,
+	posted?: Date,
+	updated?: Date,
+};
+
 export interface Props {
 	body: Array<Slice>;
-	date: DateField;
+	date: PublicationDates;
 	title: TitleField;
 	link?: LinkField;
 	next?: PaginationLink;
 	seo?: SEOContent,
-	thread?: Thread;
+	stage?: DevelopmentStage;
 	subtitle?: TitleField;
 	tags?: Tags;
+	thread?: Thread;
 }
 
 export async function getStaticPaths() {
@@ -83,7 +90,13 @@ export async function getStaticPaths() {
 		`,
  	});
 
- 	return posts.map(({ uid, tags, data }, index) => {
+ 	return posts.map(({
+		uid,
+		tags,
+		data,
+		first_publication_date,
+		last_publication_date,
+	}, index) => {
 		const date = prismicHelpers.asDate(data.date);
 		const nextPost = posts[index + 1];
 		const { data: thread } = data.thread;
@@ -105,6 +118,12 @@ export async function getStaticPaths() {
  			},
  			props: {
  				...data,
+				stage: data.stage || 'Note',
+				date: {
+					publication: date,
+					posted: new Date(first_publication_date),
+					updated: new Date(last_publication_date),
+				},
  				tags,
 				link: prismicHelpers.asLink(data.link),
  				next: nextPost && {
@@ -141,7 +160,10 @@ const {
 	subtitle,
 	tags,
 	title,
+	stage,
 } = Astro.props as Props;
+
+console.log(stage)
 ---
 
 <Layout
@@ -160,9 +182,18 @@ const {
 					{prismicHelpers.asText(subtitle)}
 				</Heading>
 			)}
-			<time datetime={date} class="date">
-				{format(prismicHelpers.asDate(date), 'MMMM dd, yyyy')}
-			</time>
+			<p class="date">
+				<time datetime={date.publication}>
+					{format(date.publication, 'MMMM dd, yyyy')}
+				</time>
+				{date.posted !== date.updated && (
+					<Heading level={2} subheading class="type-scale-epsilon">Last updated</Heading>
+					<time datetime={date.updated}>
+						{format(date.updated, 'MMMM dd, yyyy')}
+					</time>
+				)}
+				Stage: {stage}
+			</p>
 
 			{thread && (
 				<ThreadNav

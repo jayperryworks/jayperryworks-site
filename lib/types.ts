@@ -63,3 +63,6 @@ export interface SEOContent {
 	imageAlt?: string;
 	title?: string;
 }
+
+// Strings that represent the stages of development of a piece of writing
+export type DevelopmentStage = 'Note' | 'Sketch' | 'Revised' | 'Polished';
