@@ -266,6 +266,23 @@ function passage(slice: Slice): BlockType {
 	};
 }
 
+function pullquote(slice: Slice): BlockType {
+	const {
+		image,
+		structured_text: prismicText,
+		markdown,
+	} = slice.primary;
+
+	return {
+		image,
+		text: {
+			prismicText,
+			markdown: markdownText(markdown as RichTextField),
+		},
+		...sharedBlockFields(slice),
+	};
+}
+
 function table(slice: Slice): BlockType {
 	const {
 		csv_file: CSVFile,
@@ -292,5 +309,6 @@ export default {
 	figure,
 	heading,
 	passage,
+	pullquote,
 	table,
 };
