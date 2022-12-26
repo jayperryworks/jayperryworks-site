@@ -7,6 +7,7 @@ import '@styles/tokens/type.css';
 import '@styles/utilities/borders.css';
 import '@styles/utilities/contentWidth.css';
 import '@styles/utilities/type.css';
+import '@styles/utilities/visibility.css';
 import externalLink from '@icons/external-link.svg?raw';
 
 // helpers
@@ -60,7 +61,7 @@ export interface Props {
 	title: TitleField;
 	link?: LinkField;
 	next?: PaginationLink;
-	seo?: SEOContent,
+	seo?: SEOContent;
 	stage?: DevelopmentStage;
 	subtitle?: TitleField;
 	tags?: Tags;
@@ -71,7 +72,7 @@ export async function getStaticPaths() {
  	const posts = await prismic.getAllByType('blog_post', {
 		fetchLinks,
  		orderings: {
- 			field: 'my.blog_post.date',
+ 			field: 'my.blog_post.metadata',
  			direction: 'desc',
  		},
 		graphQuery: `
@@ -143,12 +144,7 @@ export async function getStaticPaths() {
  	});
 }
 
-const {
-	year,
-	month,
-	day,
-	uid,
-} = Astro.params;
+const { uid } = Astro.params;
 
 const {
 	body,
@@ -162,8 +158,6 @@ const {
 	title,
 	stage,
 } = Astro.props as Props;
-
-console.log(stage)
 ---
 
 <Layout
@@ -182,18 +176,31 @@ console.log(stage)
 					{prismicHelpers.asText(subtitle)}
 				</Heading>
 			)}
-			<p class="date">
-				<time datetime={date.publication}>
-					{format(date.publication, 'MMMM dd, yyyy')}
-				</time>
+
+			<dl class="metadata">
+				<div class="metadata-item">
+					<dt class="hide-visually">Development stage:</dt>
+					<dd>{stage}</dd>
+				</div>
+				<div class="metadata-item">
+					<dt class="hide-visually">Published:</dt>
+					<dd>
+						<time datetime={date.publication}>
+							{format(date.publication, 'MMMM dd, yyyy')}
+						</time>
+					</dd>
+				</div>
 				{date.posted !== date.updated && (
-					<Heading level={2} subheading class="type-scale-epsilon">Last updated</Heading>
-					<time datetime={date.updated}>
-						{format(date.updated, 'MMMM dd, yyyy')}
-					</time>
+					<div class="metadata-item">
+						<dd>Last updated:</dd>
+						<dt>
+							<time datetime={date.updated}>
+								{format(date.updated, 'MMMM dd, yyyy')}
+							</time>
+						</dt>
+					</div>
 				)}
-				Stage: {stage}
-			</p>
+			</dl>
 
 			{thread && (
 				<ThreadNav
@@ -204,7 +211,7 @@ console.log(stage)
 					{thread.posts.map((post) => (
 						<ThreadNavItem
 							current={post.uid === uid}
-							date={post.data.date}
+							date={post.data.metadata}
 							href={permalink(post)}
 							label={prismicHelpers.asText(post.data.title)}
 						/>
@@ -274,11 +281,40 @@ console.log(stage)
 		padding-block-start: var(--space-xxnarrow);
 	}
 
-	.date {
+	.metadata {
+		--gap: 0.5em;
+
 		color: var(--color-secondary);
-		display: block;
+		display: inline-block;
 		font-family: var(--type-font-accent);
-		font-weight: 200;
+		font-size: var(--type-scale-zeta);
+		font-weight: 300;
+		list-style: none;
+	}
+
+	.metadata-item {
+		align-items: center;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 var(--gap);
+		justify-content: center;
+		position: relative;
+	}
+
+	@media screen and (min-width: 37em) {
+		.metadata {
+			display: inline-flex;
+			gap: var(--gap);
+			justify-content: center;
+		}
+
+		.metadata-item + .metadata-item::before {
+			content: '\2022';
+			display: inline-block;
+			font-size: 1.5;
+			font-weight: bold;
+			line-height: 0.5;
+		}
 	}
 
 	.link {
