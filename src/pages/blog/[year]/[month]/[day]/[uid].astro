@@ -9,6 +9,7 @@ import '@styles/utilities/contentWidth.css';
 import '@styles/utilities/type.css';
 import '@styles/utilities/visibility.css';
 import externalLink from '@icons/external-link.svg?raw';
+import stageIcon from '@icons/stage.svg?raw';
 
 // helpers
 import { format } from 'date-fns';
@@ -21,6 +22,7 @@ import prismic from '@lib/prismic';
 import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
+import Icon from '@components/elements/Icon.astro';
 import Heading from '@components/blocks/Heading.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
 import ThreadNav from '@components/navigation/ThreadNav.astro';
@@ -180,7 +182,10 @@ const {
 			<dl class="metadata">
 				<div class="metadata-item">
 					<dt class="hide-visually">Development stage:</dt>
-					<dd>{stage}</dd>
+					<dd>
+						<Icon svg={stageIcon} margin="right" />
+						{stage}
+					</dd>
 				</div>
 				<div class="metadata-item">
 					<dt class="hide-visually">Published:</dt>
