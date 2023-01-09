@@ -11,7 +11,6 @@ import externalLink from '@icons/external-link.svg?raw';
 
 // helpers
 import { blogPost, fetchLinks } from '@lib/routes';
-import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
@@ -21,6 +20,7 @@ import Button from '@components/elements/Button.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Icon from '@components/elements/Icon.astro';
 import Layout from '@layouts/BaseLayout.astro';
+import PostMetadata from '@components/elements/PostMetadata.astro';
 
 export async function getStaticPaths({ paginate }): Promise<Function> {
 	const posts = await prismic.getAllByType('blog_post', {
@@ -40,13 +40,25 @@ const {
 
 const { next, prev } = page.url;
 
-const postList = page.data.map(({ uid, tags, data }) => {
+const postList = page.data.map(({
+	uid,
+	tags,
+	data,
+	first_publication_date,
+	last_publication_date,
+}) => {
 	// find the slices in each post marked as "include in excerpt"
 	const summary = data.body.filter(({ primary }) => primary.include_in_excerpt);
 
 	if (summary.length > 0) {
 		return {
 			...data,
+			date: {
+				publication: prismicHelpers.asDate(data.date),
+				posted: new Date(first_publication_date),
+				updated: new Date(last_publication_date),
+			},
+			stage: data.stage || 'Note',
 			summary,
 			tags,
 			uid,
@@ -72,25 +84,22 @@ const postList = page.data.map(({ uid, tags, data }) => {
 					id={post.uid}
 				>
 					<header class="post-header">
-						<Heading level={2}>
-							<a
-								href={post.path}
-								class="type-link-undecorated"
-								>
-								{prismicHelpers.asText(post.title)}
-							</a>
-						</Heading>
+						{post.title && (
+							<Heading level={2}>
+								<a
+									href={post.path}
+									class="type-link-undecorated"
+									>
+									{prismicHelpers.asText(post.title)}
+								</a>
+							</Heading>
+						)}
 						{post.subtitle && (
 							<Heading subheading level={3}>{prismicHelpers.asText(post.subtitle)}</Heading>
 						)}
-						<time
-							datetime={post.date}
-							class="date"
-						>
-							{format(new Date(post.date), 'MMMM dd, yyyy')}
-						</time>
+						<PostMetadata {...post} class="date" />
 					</header>
-					<BlockList body={post.summary} />
+					<BlockList body={post.summary} showLedeStyle />
 					{(post.readMore || post.link) && (
 						<footer class="post-footer">
 							<div class="post-buttons | wrapper">
@@ -200,10 +209,6 @@ const postList = page.data.map(({ uid, tags, data }) => {
 	}
 
 	.date {
-		color: var(--color-secondary);
-		display: block;
-		font-family: var(--type-font-accent);
-		font-weight: 200;
 		padding-block-start: var(--space-xnarrow);
 	}
 

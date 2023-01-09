@@ -9,7 +9,6 @@ import '@styles/utilities/contentWidth.css';
 import '@styles/utilities/type.css';
 import '@styles/utilities/visibility.css';
 import externalLink from '@icons/external-link.svg?raw';
-import stageIcon from '@icons/stage.svg?raw';
 
 // helpers
 import { format } from 'date-fns';
@@ -22,7 +21,6 @@ import prismic from '@lib/prismic';
 import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
-import Icon from '@components/elements/Icon.astro';
 import Heading from '@components/blocks/Heading.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
 import ThreadNav from '@components/navigation/ThreadNav.astro';
@@ -30,31 +28,27 @@ import ThreadNavItem from '@components/navigation/ThreadNavItem.astro';
 
 // types
 import type {
+	DevelopmentStage,
 	LinkField,
 	PrismicDocumentWithUID,
+	PublicationDates,
 	RichTextField,
 	Slice,
 	Tags,
 	TitleField,
-	DevelopmentStage,
 } from '@prismicio/types';
 
 import type {
 	PaginationLink,
 	SEOContent,
 } from '@lib/types';
+import PostMetadata from '@components/elements/PostMetadata.astro';
 
 type Thread = {
 	posts: PrismicDocumentWithUID[],
 	uid: string,
 	description?: RichTextField,
 	title?: TitleField,
-};
-
-type PublicationDates = {
-	publication: Date,
-	posted?: Date,
-	updated?: Date,
 };
 
 export interface Props {
@@ -100,7 +94,7 @@ export async function getStaticPaths() {
 		first_publication_date,
 		last_publication_date,
 	}, index) => {
-		const date = prismicHelpers.asDate(data.date);
+		const publishedDate = prismicHelpers.asDate(data.date);
 		const nextPost = posts[index + 1];
 		const { data: thread } = data.thread;
 
@@ -114,16 +108,16 @@ export async function getStaticPaths() {
 
  		return {
  			params: {
- 				year: format(date, 'yyyy'),
- 				month: format(date, 'MM'),
- 				day: format(date, 'dd'),
+ 				year: format(publishedDate, 'yyyy'),
+ 				month: format(publishedDate, 'MM'),
+ 				day: format(publishedDate, 'dd'),
  				uid,
  			},
  			props: {
  				...data,
 				stage: data.stage || 'Note',
 				date: {
-					publication: date,
+					publication: publishedDate,
 					posted: new Date(first_publication_date),
 					updated: new Date(last_publication_date),
 				},
@@ -169,7 +163,9 @@ const {
 >
 	<article>
 		<header>
-			<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
+			{prismicHelpers.isFilled.title(title) && (
+				<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
+			)}
 			{prismicHelpers.isFilled.title(subtitle) && (
 				<Heading
 					class="subtitle"
@@ -179,34 +175,10 @@ const {
 				</Heading>
 			)}
 
-			<dl class="metadata">
-				<div class="metadata-item">
-					<dt class="hide-visually">Development stage:</dt>
-					<dd>
-						<Icon svg={stageIcon} margin="right" />
-						{stage}
-					</dd>
-				</div>
-				<div class="metadata-item">
-					<dt class="hide-visually">Published:</dt>
-					<dd>
-						<time datetime={date.publication}>
-							{format(date.publication, 'MMMM dd, yyyy')}
-						</time>
-					</dd>
-				</div>
-				{date.posted !== date.updated && (
-					<div class="metadata-item">
-						<dd>Last updated:</dd>
-						<dt>
-							<time datetime={date.updated}>
-								{format(date.updated, 'MMMM dd, yyyy')}
-							</time>
-						</dt>
-					</div>
-				)}
-			</dl>
+			<!-- date and stage info -->
+			<PostMetadata {date} {stage} />
 
+			<!-- list of posts in a thread, if applicable -->
 			{thread && (
 				<ThreadNav
 					title={thread.title && prismicHelpers.asText(thread.title)}
@@ -216,7 +188,7 @@ const {
 					{thread.posts.map((post) => (
 						<ThreadNavItem
 							current={post.uid === uid}
-							date={post.data.metadata}
+							date={post.data.date}
 							href={permalink(post)}
 							label={prismicHelpers.asText(post.data.title)}
 						/>
@@ -225,7 +197,7 @@ const {
 			)}
 		</header>
 
-
+		<!-- page body -->
 		<BlockList {body} showLedeStyle />
 
 		{link && (
@@ -284,42 +256,6 @@ const {
 	header :global(.subtitle) {
 		margin-block-start: 0;
 		padding-block-start: var(--space-xxnarrow);
-	}
-
-	.metadata {
-		--gap: 0.5em;
-
-		color: var(--color-secondary);
-		display: inline-block;
-		font-family: var(--type-font-accent);
-		font-size: var(--type-scale-zeta);
-		font-weight: 300;
-		list-style: none;
-	}
-
-	.metadata-item {
-		align-items: center;
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0 var(--gap);
-		justify-content: center;
-		position: relative;
-	}
-
-	@media screen and (min-width: 37em) {
-		.metadata {
-			display: inline-flex;
-			gap: var(--gap);
-			justify-content: center;
-		}
-
-		.metadata-item + .metadata-item::before {
-			content: '\2022';
-			display: inline-block;
-			font-size: 1.5;
-			font-weight: bold;
-			line-height: 0.5;
-		}
 	}
 
 	.link {

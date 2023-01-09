@@ -1,0 +1,103 @@
+---
+// assets
+import stageIcon from '@icons/stage.svg?raw';
+
+// helpers
+import { format } from 'date-fns';
+
+// components
+import Dot from './Dot.astro';
+import Icon from '@components/elements/Icon.astro';
+import Tooltip from './Tooltip.astro';
+
+// types
+import {
+	DevelopmentStage,
+	PublicationDates
+} from '@lib/types';
+
+export interface Props {
+	date: PublicationDates;
+	class?: string,
+	stage?: DevelopmentStage;
+}
+
+const {
+	date,
+	stage = 'Note',
+	class: className = '',
+} = Astro.props as Props;
+
+const DATE_FORMAT = 'MMMM dd, yyyy';
+
+const classList = [
+	'metadata',
+	className,
+].join(' ');
+---
+
+<dl class={classList}>
+	<div class="item">
+		<dt class="hide-visually">Development stage:</dt>
+		<dd>
+			<Icon svg={stageIcon} margin="right" />
+			{stage}
+		</dd>
+	</div>
+	<div class="item">
+		<dt class="hide-visually">Published:</dt>
+		<dd>
+			<time datetime={date.publication}>
+				{format(date.publication, DATE_FORMAT)}
+			</time>
+		</dd>
+	</div>
+	{date?.posted !== date?.updated && (
+		<div class="item">
+			<dd>Last updated:</dd>
+			<dt>
+				<time datetime={date.updated}>
+					{format(date.updated, DATE_FORMAT)}
+				</time>
+			</dt>
+		</div>
+	)}
+</dl>
+
+<style>
+	.metadata {
+		--gap: 0.5em;
+
+		color: var(--color-secondary);
+		display: inline-block;
+		font-family: var(--type-font-accent);
+		font-size: var(--type-scale-zeta);
+		font-weight: 300;
+		list-style: none;
+	}
+
+	.item {
+		align-items: center;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 var(--gap);
+		justify-content: center;
+		position: relative;
+	}
+
+	@media screen and (min-width: 37em) {
+		.metadata {
+			display: inline-flex;
+			gap: var(--gap);
+			justify-content: center;
+		}
+
+		.item + .item::before {
+			content: '\2022';
+			display: inline-block;
+			font-size: 1.5;
+			font-weight: bold;
+			line-height: 0.5;
+		}
+	}
+</style>
