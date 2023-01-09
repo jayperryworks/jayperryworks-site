@@ -61,16 +61,20 @@ if (contentSource === 'blog_post') {
 	});
 
 	if (feedData?.results.length > 0) {
-		feedItems = feedData.results.map((item) => {
+		feedItems = feedData.results.reduce((result, item) => {
 			const { date, title, subtitle } = item.data;
 
-			return {
-				date,
-				path: blogPost(item),
-				subtitle: subtitle && prismicHelpers.asText(subtitle),
-				title: prismicHelpers.asText(title),
-			};
-		});
+			if (prismicHelpers.isFilled.title(title)) {
+				result.push({
+					date,
+					path: blogPost(item),
+					subtitle: subtitle && prismicHelpers.asText(subtitle),
+					title: prismicHelpers.asText(title),
+				});
+			}
+
+			return result;
+		}, []);
 	}
 }
 ---
@@ -97,9 +101,10 @@ if (contentSource === 'blog_post') {
 		)}
 		{description && (
 			<Passage
-				typeSize="delta"
-				typeFace="display"
 				text={description}
+				hyphenate={false}
+				typeFace="display"
+				typeSize="delta"
 			/>
 		)}
 	</header>
@@ -107,15 +112,24 @@ if (contentSource === 'blog_post') {
 	<Gallery gutter="wide">
 		{feedItems.map((listing) => (
 			<li class="item">
-				<Heading level={5} subheading>{format(new Date(listing.date), 'yyyy.MM.dd')}</Heading>
-				<Heading level={3}>
+				<Heading level={5} subheading>
 					<a
 						class="type-link-undecorated"
 						href={listing.path}
 					>
-						{listing.title}
+						{format(new Date(listing.date), 'yyyy.MM.dd')}
 					</a>
 				</Heading>
+				{listing.title && (
+					<Heading level={3}>
+						<a
+							class="type-link-undecorated"
+							href={listing.path}
+						>
+							{listing.title}
+						</a>
+					</Heading>
+				)}
 			</li>
 		))}
 	</Gallery>
