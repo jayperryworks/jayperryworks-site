@@ -16,6 +16,7 @@ import type { TypeScale, FormattedText } from '@lib/types';
 export interface Props {
 	text: FormattedText;
 	class?: string;
+	hyphenate?: boolean;
 	typeFace?: 'body' | 'display' | 'accent';
 	typeSize?: TypeScale;
 }
@@ -24,6 +25,7 @@ export interface Props {
 const {
 	text,
 	class: className = '',
+	hyphenate = true,
 	typeSize = 'epsilon',
 	typeFace = 'body',
 } = Astro.props as Props;
@@ -33,7 +35,8 @@ const classList = [
 	'prose',
 	typeFace !== 'body' ? `type-role-${typeFace}` : '',
 	`type-scale-${typeSize}`,
-	className
+	hyphenate ? 'hyphenate' : '',
+	className,
 ].join(' ');
 
 // --- functions
@@ -102,6 +105,10 @@ function htmlSerializer(type, element, content, children): string {
 	.prose {
 		overflow: visible;
 		position: relative;
+	}
+
+	.hyphenate {
+		hyphens: auto;
 	}
 
 	.prose > :global(*) {

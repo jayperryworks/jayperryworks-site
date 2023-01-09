@@ -7,6 +7,7 @@ import '@styles/tokens/type.css';
 import '@styles/utilities/borders.css';
 import '@styles/utilities/contentWidth.css';
 import '@styles/utilities/type.css';
+import '@styles/utilities/visibility.css';
 import externalLink from '@icons/external-link.svg?raw';
 
 // helpers
@@ -27,9 +28,10 @@ import ThreadNavItem from '@components/navigation/ThreadNavItem.astro';
 
 // types
 import type {
-	DateField,
+	DevelopmentStage,
 	LinkField,
 	PrismicDocumentWithUID,
+	PublicationDates,
 	RichTextField,
 	Slice,
 	Tags,
@@ -40,6 +42,7 @@ import type {
 	PaginationLink,
 	SEOContent,
 } from '@lib/types';
+import PostMetadata from '@components/elements/PostMetadata.astro';
 
 type Thread = {
 	posts: PrismicDocumentWithUID[],
@@ -50,21 +53,22 @@ type Thread = {
 
 export interface Props {
 	body: Array<Slice>;
-	date: DateField;
+	date: PublicationDates;
 	title: TitleField;
 	link?: LinkField;
 	next?: PaginationLink;
-	seo?: SEOContent,
-	thread?: Thread;
+	seo?: SEOContent;
+	stage?: DevelopmentStage;
 	subtitle?: TitleField;
 	tags?: Tags;
+	thread?: Thread;
 }
 
 export async function getStaticPaths() {
  	const posts = await prismic.getAllByType('blog_post', {
 		fetchLinks,
  		orderings: {
- 			field: 'my.blog_post.date',
+ 			field: 'my.blog_post.metadata',
  			direction: 'desc',
  		},
 		graphQuery: `
@@ -83,8 +87,14 @@ export async function getStaticPaths() {
 		`,
  	});
 
- 	return posts.map(({ uid, tags, data }, index) => {
-		const date = prismicHelpers.asDate(data.date);
+ 	return posts.map(({
+		uid,
+		tags,
+		data,
+		first_publication_date,
+		last_publication_date,
+	}, index) => {
+		const publishedDate = prismicHelpers.asDate(data.date);
 		const nextPost = posts[index + 1];
 		const { data: thread } = data.thread;
 
@@ -98,13 +108,19 @@ export async function getStaticPaths() {
 
  		return {
  			params: {
- 				year: format(date, 'yyyy'),
- 				month: format(date, 'MM'),
- 				day: format(date, 'dd'),
+ 				year: format(publishedDate, 'yyyy'),
+ 				month: format(publishedDate, 'MM'),
+ 				day: format(publishedDate, 'dd'),
  				uid,
  			},
  			props: {
  				...data,
+				stage: data.stage || 'Note',
+				date: {
+					publication: publishedDate,
+					posted: new Date(first_publication_date),
+					updated: new Date(last_publication_date),
+				},
  				tags,
 				link: prismicHelpers.asLink(data.link),
  				next: nextPost && {
@@ -124,12 +140,7 @@ export async function getStaticPaths() {
  	});
 }
 
-const {
-	year,
-	month,
-	day,
-	uid,
-} = Astro.params;
+const { uid } = Astro.params;
 
 const {
 	body,
@@ -141,6 +152,7 @@ const {
 	subtitle,
 	tags,
 	title,
+	stage,
 } = Astro.props as Props;
 ---
 
@@ -151,7 +163,9 @@ const {
 >
 	<article>
 		<header>
-			<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
+			{prismicHelpers.isFilled.title(title) && (
+				<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
+			)}
 			{prismicHelpers.isFilled.title(subtitle) && (
 				<Heading
 					class="subtitle"
@@ -160,10 +174,11 @@ const {
 					{prismicHelpers.asText(subtitle)}
 				</Heading>
 			)}
-			<time datetime={date} class="date">
-				{format(prismicHelpers.asDate(date), 'MMMM dd, yyyy')}
-			</time>
 
+			<!-- date and stage info -->
+			<PostMetadata {date} {stage} />
+
+			<!-- list of posts in a thread, if applicable -->
 			{thread && (
 				<ThreadNav
 					title={thread.title && prismicHelpers.asText(thread.title)}
@@ -182,7 +197,7 @@ const {
 			)}
 		</header>
 
-
+		<!-- page body -->
 		<BlockList {body} showLedeStyle />
 
 		{link && (
@@ -241,13 +256,6 @@ const {
 	header :global(.subtitle) {
 		margin-block-start: 0;
 		padding-block-start: var(--space-xxnarrow);
-	}
-
-	.date {
-		color: var(--color-secondary);
-		display: block;
-		font-family: var(--type-font-accent);
-		font-weight: 200;
 	}
 
 	.link {

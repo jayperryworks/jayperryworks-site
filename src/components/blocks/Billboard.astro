@@ -79,9 +79,10 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 		)}
 
 		<Passage
-			typeSize="delta"
-			typeFace="display"
 			text={description}
+			hyphenate={false}
+			typeFace="display"
+			typeSize="delta"
 		/>
 
 		<Button
