@@ -23,6 +23,7 @@ import { LinkField } from '@prismicio/types';
 type Item = {
 	name: string,
 	link: LinkField,
+	attributes?: string,
 };
 
 const response = await prismic.getSingle('social_channels');
@@ -30,11 +31,15 @@ const { channel } = response.data;
 
 
 const socialChannelList = channel.map((item: Item, index: number): string => {
-	const { name, link } = item;
+	const { name, link, attributes } = item;
 
 	return `
 		${index === channel.length - 1 ? 'and' : ''}
-		<a href="${prismicHelpers.asLink(link)}" target="_blank">${name}</a>
+		<a
+			href="${prismicHelpers.asLink(link)}"
+			target="_blank"
+			${attributes || ''}
+		>${name}</a>
 	`.trim();
 }).join(', ');
 ---
