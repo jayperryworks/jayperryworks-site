@@ -13,7 +13,7 @@ import externalLink from '@icons/external-link.svg?raw';
 // helpers
 import { format } from 'date-fns';
 import { blogPost as permalink, fetchLinks } from '@lib/routes';
-import { sentenceCase } from '@lib/stringHelpers';
+import { sentenceCase, truncate } from '@lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
@@ -68,7 +68,7 @@ export async function getStaticPaths() {
  	const posts = await prismic.getAllByType('blog_post', {
 		fetchLinks,
  		orderings: {
- 			field: 'my.blog_post.metadata',
+ 			field: 'my.blog_post.date',
  			direction: 'desc',
  		},
 		graphQuery: `
@@ -124,8 +124,7 @@ export async function getStaticPaths() {
  				tags,
 				link: prismicHelpers.asLink(data.link),
  				next: nextPost && {
-					title: nextPost.data.title,
-					subtitle: nextPost.data.subtitle,
+					title: prismicHelpers.isFilled.title(nextPost.data.title) && prismicHelpers.asText(nextPost.data.title),
 					path: permalink(nextPost),
 				},
 				seo: {
@@ -227,10 +226,15 @@ const {
 				</ul>
 			</section>
 			<section class="nav-wrapper">
-				<ReadNextLink link={next.path}>
-					<Fragment slot="eyebrow">Next post:</Fragment>
-					<Fragment slot="title">{prismicHelpers.asText(next.title)}</Fragment>
-				</ReadNextLink>
+				{next.title
+					? <ReadNextLink link={next.path}>
+							<Fragment slot="eyebrow">Next post:</Fragment>
+							<Fragment slot="title">{next.title}</Fragment>
+						</ReadNextLink>
+					: <ReadNextLink link={next.path}>
+							<Fragment slot="title">Next post</Fragment>
+						</ReadNextLink>
+				}
 			</section>
 		</nav>
 	)}
