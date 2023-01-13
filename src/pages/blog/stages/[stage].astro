@@ -16,11 +16,11 @@ import {
 
 // components
 import Layout from '@layouts/BaseLayout.astro';
-import BlogListings from '@components/layout/BlogListings.astro';
+import BlogListings from '@components/navigation/BlogListings.astro';
+import BlogListingsPost from '@components/navigation/BlogListingsPost.astro';
 import SequenceNav from '@components/navigation/SequenceNav.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
-import PostListing from '@components/elements/PostListing.astro';
 
 // types
 import {
@@ -162,11 +162,16 @@ const {
 			<Heading level={3} subheading>{prismicHelpers.asText(subtitle)}:</Heading>
 			<Heading level={1}>{sentenceCase(stage)}</Heading>
 		</header>
-		<Passage text={description} typeFace="display" typeSize="delta" />
+		<Passage
+			class="intro"
+			text={description}
+			typeFace="display"
+			typeSize="delta"
+		/>
 		<BlogListings class="post-list">
 			{posts.map((post) => (
 				<li class="post">
-					<PostListing {...post} showStage={false} />
+					<BlogListingsPost {...post} showStage={false} />
 				</li>
 			))}
 		</BlogListings>
@@ -183,7 +188,8 @@ const {
 		margin-inline: auto;
 	}
 
-	.wrapper > :global(* + *) {
+	.wrapper > :global(* + *),
+	.intro {
 		margin-block-start: var(--space-wide);
 	}
 
