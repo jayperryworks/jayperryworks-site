@@ -17,10 +17,11 @@ import ReadNextLink from '@components/navigation/ReadNextLink.astro';
 
 // types
 export type Post = {
-	title: string,
-	subtitle?: string,
-	path: string,
 	date: string,
+	path: string,
+	title: string,
+	stage?: string,
+	subtitle?: string,
 };
 
 export type StaticPath = {

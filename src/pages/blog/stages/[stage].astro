@@ -7,24 +7,26 @@ import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 import { blogPost as permalink } from '@lib/routes';
-import { sentenceCase } from '@lib/stringHelpers';
+import { sentenceCase, truncate } from '@lib/stringHelpers';
 
 // components
 import Heading from '@components/blocks/Heading.astro';
 import Layout from '@layouts/BaseLayout.astro';
+import PostListing from '@components/elements/PostListing.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
 
 // types
 export type Post = {
-	title: string,
-	subtitle?: string,
-	path: string,
 	date: string,
+	path: string,
+	title: string,
+	stage?: string,
+	subtitle?: string,
 };
 
 export type StaticPath = {
 	params: {
-		tag: string,
+		stage: string,
 	},
 	props: Props,
 };
@@ -34,6 +36,10 @@ export interface Props {
 }
 
 export async function getStaticPaths(): Promise<StaticPath[]> {
+	const stagesData = await prismic.getSingle('development_stages');
+
+	const { stage: stages } = stagesData.data;
+
 	// get all the blog posts from Prismic
 	const allPosts = await prismic.getAllByType('blog_post', {
 		orderings: {
@@ -42,34 +48,38 @@ export async function getStaticPaths(): Promise<StaticPath[]> {
 		},
 	});
 
-	// create a list of unique tags used in the blog posts
-	const tags = allPosts.reduce((result, post) => {
-		post?.tags.forEach((tag) => {
-			if (!result.includes(tag)) result.push(tag);
-		})
-		return result;
-	}, []);
+	// create a list of unique stage names used in the posts
+	// const stages = allPosts.reduce((result, post) => {
+	// 	const stage = post.data?.stage;
+	// 	if (!result.includes(stage)) result.push(stage);
+	// 	return result;
+	// }, []);
 
-	return tags.reduce((result, tag) => {
-		// create an array of post objects for each tag
+	return stages.reduce((result, stage) => {
+		// create an array of post objects for each stage
 		const posts = allPosts
-			.filter(({ tags }) => tags.includes(tag))
+			.filter(({ data }) => data.stage === stage.name)
 			.map((post) => {
-				const { title, subtitle, date } = post.data;
+				const { title, subtitle, date, description, stage } = post.data;
 
 				// clean up post data to just what we need for the listings
 				return {
-					title: prismicHelpers.asText(title),
-					subtitle: prismicHelpers.asText(subtitle),
+					date: prismicHelpers.asDate(date),
 					path: permalink(post),
-					date,
+					title: prismicHelpers.isFilled.title(title)
+						? prismicHelpers.asText(title)
+						: truncate(description, 5),
+					subtitle: prismicHelpers.isFilled.title(subtitle)
+						? prismicHelpers.asText(subtitle)
+						: undefined,
+					stage,
 				};
 			});
 
 		if (posts) {
 			result.push({
 				params: {
-					tag,
+					stage: stage.uid,
 				},
 				props: {
 					posts,
@@ -82,7 +92,7 @@ export async function getStaticPaths(): Promise<StaticPath[]> {
 }
 
 const {
-	tag,
+	stage,
 } = Astro.params;
 
 const {
@@ -91,37 +101,17 @@ const {
 ---
 
 <Layout
-	pageTitle={sentenceCase(tag)}
+	pageTitle={sentenceCase(stage)}
 	path="blog"
 >
 	<div class="wrapper">
 		<header>
-			<Heading subheading level={3}>Posts filed under</Heading>
-			<Heading level={1}>{sentenceCase(tag)}</Heading>
+			<Heading level={1}>{sentenceCase(stage)} posts</Heading>
 		</header>
 		<ul class="post-list">
 			{posts.map((post) => (
 				<li class="post">
-					<article>
-						<time
-							class="type-role-accent type-scale-zeta"
-							datetime={post.date}
-						>
-							{format(new Date(post.date), 'yyyy.MM.dd')}
-						</time>
-						<Heading level={3}>
-							<a class="type-link-undecorated" href={post.path}>{post.title}</a>
-						</Heading>
-						{post.subtitle && (
-							<Heading
-								subheading
-								level={4}
-								class="subtitle"
-							>
-								<a class="type-link-undecorated" href={post.path}>{post.subtitle}</a>
-							</Heading>
-						)}
-					</article>
+					<PostListing {...post} />
 				</li>
 			))}
 		</ul>
@@ -173,10 +163,5 @@ const {
 
 	.post + .post {
 		padding-block-start: var(--space-wide);
-	}
-
-	.subtitle {
-		/* nudge the subtitle down slightly so date-title-subtitle spacing is optically even */
-		padding-block-start: 0.15em;
 	}
 </style>
