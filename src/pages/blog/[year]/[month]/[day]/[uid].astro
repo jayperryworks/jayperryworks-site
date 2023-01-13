@@ -28,7 +28,7 @@ import ThreadNavItem from '@components/navigation/ThreadNavItem.astro';
 
 // types
 import type {
-	DevelopmentStage,
+	DevelopmentStageName,
 	LinkField,
 	PrismicDocumentWithUID,
 	PublicationDates,
@@ -58,7 +58,7 @@ export interface Props {
 	link?: LinkField;
 	next?: PaginationLink;
 	seo?: SEOContent;
-	stage?: DevelopmentStage;
+	stage?: DevelopmentStageName;
 	subtitle?: TitleField;
 	tags?: Tags;
 	thread?: Thread;

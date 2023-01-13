@@ -65,6 +65,13 @@ export function blogPost({ data, uid }: Partial<PrismicDocumentWithUID>): string
 	return `/blog/${getDateParams(data.date, ['year', 'month', 'day'])}/${uid}/`;
 }
 
+// development stage page
+// -> note this does not included in the linkResolver below
+// 		because there are no equivalent docs in Prismic, just a list of names
+export function blogDevelopmentStage({ uid }: Partial<PrismicDocumentWithUID>): string {
+	return `/blog/stages/${uid}`;
+}
+
 // pictures
 export function picture({ data, uid }: Partial<PrismicDocumentWithUID>): string {
 	return `/pictures/${getDateParams(data.date_completed, ['year', 'month'])}/${uid}/`;

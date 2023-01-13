@@ -7,15 +7,15 @@ import stageIcon from '@icons/stage.svg?raw';
 import Icon from '@components/elements/Icon.astro';
 
 // types
-import { DevelopmentStage } from '@lib/types';
+import { DevelopmentStageName } from '@lib/types';
 
 export interface Props {
 	class?: string;
-	stage?: DevelopmentStage;
+	name?: DevelopmentStageName;
 }
 
 const {
-	stage,
+	name,
 	class: className,
 } = Astro.props as Props;
 
@@ -25,7 +25,7 @@ const classList = [
 ].join(' ');
 ---
 
-<a class={classList} href={`/blog/stages/${stage.toLowerCase() || 'note'}`}>
+<a class={classList} href={`/blog/stages/${name ? name.toLowerCase() : 'note'}`}>
 	<Icon svg={stageIcon} margin="right" align="baseline" />
-	{stage || 'Note'}
+	{name || 'Note'}
 </a>

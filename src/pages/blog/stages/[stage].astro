@@ -1,23 +1,35 @@
 ---
 // styles
+import '@styles/tokens/borders.css';
 import '@styles/tokens/contentWidth.css';
+import '@styles/tokens/spacing.css';
 
 // utils
-import { format } from 'date-fns';
+import { blogDevelopmentStage } from '@lib/routes';
+import { blogPost as permalink } from '@lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
-import { blogPost as permalink } from '@lib/routes';
-import { sentenceCase, truncate } from '@lib/stringHelpers';
+import {
+	sentenceCase,
+	truncate,
+} from '@lib/stringHelpers';
 
 // components
 import Layout from '@layouts/BaseLayout.astro';
-import ReadNextLink from '@components/navigation/ReadNextLink.astro';
+import BlogListings from '@components/layout/BlogListings.astro';
+import SequenceNav from '@components/navigation/SequenceNav.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
 import PostListing from '@components/elements/PostListing.astro';
 
 // types
-import { FormattedText } from '@lib/types';
+import {
+	DevelopmentStage,
+	DevelopmentStageUID,
+	FormattedText,
+} from '@lib/types';
+
+import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
 
 export type Post = {
 	date: string,
@@ -29,21 +41,21 @@ export type Post = {
 
 export type StaticPath = {
 	params: {
-		stage: string,
+		stage: DevelopmentStageUID,
 	},
 	props: Props,
 };
 
 export interface Props {
 	posts: Array<Post>;
+	stages: Array<DevelopmentStage>;
 	description?: FormattedText;
-	stageDescription?: FormattedText;
 }
 
 export async function getStaticPaths(): Promise<StaticPath[]> {
 	const stagesData = await prismic.getSingle('development_stages');
 
-	const { stage: stages, description } = stagesData.data;
+	const { stage: stages } = stagesData.data;
 
 	// get all the blog posts from Prismic
 	const allPosts = await prismic.getAllByType('blog_post', {
@@ -52,13 +64,6 @@ export async function getStaticPaths(): Promise<StaticPath[]> {
 			direction: 'desc',
 		},
 	});
-
-	// create a list of unique stage names used in the posts
-	// const stages = allPosts.reduce((result, post) => {
-	// 	const stage = post.data?.stage;
-	// 	if (!result.includes(stage)) result.push(stage);
-	// 	return result;
-	// }, []);
 
 	return stages.reduce((result, stage) => {
 		// create an array of post objects for each stage
@@ -87,11 +92,9 @@ export async function getStaticPaths(): Promise<StaticPath[]> {
 					stage: stage.uid,
 				},
 				props: {
+					stages,
 					posts,
 					description: {
-						prismicText: description,
-					},
-					stageDescription: {
 						prismicText: stage.description,
 					},
 				},
@@ -109,7 +112,7 @@ const {
 const {
 	posts,
 	description,
-	stageDescription,
+	stages,
 } = Astro.props as Props;
 ---
 
@@ -119,27 +122,30 @@ const {
 >
 	<div class="wrapper">
 		<header>
-			<Heading level={1}>{sentenceCase(stage)} posts</Heading>
-			<Passage text={description} />
-			<Passage text={stageDescription} />
+			<Heading level={3} subheading>Stages of development:</Heading>
+			<Heading level={1}>{sentenceCase(stage)}</Heading>
 		</header>
-		<ul class="post-list">
+		<nav>
+			<SequenceNav>
+				{stages.map((item, index) => (
+					<SequenceNavItem
+						href={blogDevelopmentStage({ uid: item.uid })}
+						current={item.uid === stage}
+						complete={index < stages.indexOf(stages.find(({ uid }) => uid === stage))}
+					>
+						{item.name}
+					</SequenceNavItem>
+				))}
+			</SequenceNav>
+		</nav>
+		<Passage text={description} typeFace="display" typeSize="delta" />
+		<BlogListings class="post-list">
 			{posts.map((post) => (
 				<li class="post">
 					<PostListing {...post} showStage={false} />
 				</li>
 			))}
-		</ul>
-		<nav>
-			<ReadNextLink
-				eyebrowSize="delta"
-				link="/blog/page/1"
-				titleSize="beta"
-			>
-				<Fragment slot="eyebrow">More blog posts:</Fragment>
-				<Fragment slot="title">Archive</Fragment>
-			</ReadNextLink>
-		</nav>
+		</BlogListings>
 	</div>
 </Layout>
 
@@ -148,26 +154,19 @@ const {
 		padding: var(--space-outside) var(--space-xwide);
 	}
 
-	header,
-	.post-list,
-	nav {
+	.wrapper > :global(*) {
 		max-width: var(--content-width-default);
 		margin-inline: auto;
 	}
 
-	header {
-		padding-block-end: var(--space-medium);
+	.wrapper > :global(* + *) {
+		margin-block-start: var(--space-wide);
 	}
 
 	.post-list {
-		list-style: none;
-		padding-inline-start: 0;
-	}
-
-	nav {
-		border-top: var(--border-default);
-		padding-block: var(--space-xwide);
-		margin-block-start: var(--space-xwide);
+		margin-block-start: var(--space-wide);
+		padding-block-start: var(--space-wide);
+		border-block-start: var(--border-default);
 	}
 
 	.post {

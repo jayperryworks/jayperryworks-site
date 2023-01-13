@@ -11,14 +11,14 @@ import Heading from '@components/blocks/Heading.astro';
 import DevelopmentStageLabel from '@components/elements/DevelopmentStageLabel.astro';
 
 // types
-import { DevelopmentStage, PublicationDates } from '@lib/types';
+import { DevelopmentStageName, PublicationDates } from '@lib/types';
 
 export interface Props {
 	date: Date;
 	path: string;
 	title: string;
 	showStage?: boolean;
-	stage?: DevelopmentStage;
+	stage?: DevelopmentStageName;
 	subtitle?: string;
 }
 
@@ -34,7 +34,7 @@ const {
 
 <article>
 	<Heading level={6} subheading class="eyebrow">
-		{showStage && <DevelopmentStageLabel {stage} />}
+		{showStage && <DevelopmentStageLabel name={stage} />}
 		<time datetime={date}>{format(date, 'yyyy.MM.dd')}</time>
 	</Heading>
 

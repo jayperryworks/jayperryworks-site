@@ -11,7 +11,7 @@ import DevelopmentStageLabel from '@components/elements/DevelopmentStageLabel.as
 
 // types
 import {
-	DevelopmentStage,
+	DevelopmentStageName,
 	PublicationDates
 } from '@lib/types';
 
@@ -19,7 +19,7 @@ export interface Props {
 	date: PublicationDates;
 	class?: string,
 	showUpdatedDate?: boolean;
-	stage?: DevelopmentStage;
+	stage?: DevelopmentStageName;
 	dateFormat?: string;
 }
 
@@ -58,7 +58,7 @@ const classList = [
 	<div class="item">
 		<dt class="hide-visually">Development stage:</dt>
 		<dd>
-			<DevelopmentStageLabel stage={stage} />
+			<DevelopmentStageLabel name={stage} />
 		</dd>
 	</div>
 	<div class="item">
