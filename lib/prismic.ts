@@ -1,6 +1,6 @@
 import * as prismic from '@prismicio/client';
 
-const endpoint: string = prismic.getEndpoint('jpw-api');
+const endpoint: string = prismic.getRepositoryEndpoint('jpw-api');
 
 const accessToken: string = import.meta.env.PRISMIC_TOKEN
 	? import.meta.env.PRISMIC_TOKEN.toString()

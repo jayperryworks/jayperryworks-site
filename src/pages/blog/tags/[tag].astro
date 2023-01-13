@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 import { blogPost as permalink } from '@lib/routes';
-import { sentenceCase } from '@lib/stringHelpers';
+import { sentenceCase, truncate } from '@lib/stringHelpers';
 
 // components
 import Heading from '@components/blocks/Heading.astro';
@@ -55,11 +55,13 @@ export async function getStaticPaths(): Promise<StaticPath[]> {
 		const posts = allPosts
 			.filter(({ tags }) => tags.includes(tag))
 			.map((post) => {
-				const { title, subtitle, date } = post.data;
+				const { title, subtitle, date, description } = post.data;
 
 				// clean up post data to just what we need for the listings
 				return {
-					title: prismicHelpers.asText(title),
+					title: prismicHelpers.isFilled.title(title)
+						? prismicHelpers.asText(title)
+						: truncate(description, 5),
 					subtitle: prismicHelpers.asText(subtitle),
 					path: permalink(post),
 					date,

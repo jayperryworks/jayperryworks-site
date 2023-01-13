@@ -10,7 +10,11 @@ function sentenceCase(string: string): string {
 }
 
 function truncate(string: string, length = 5): string {
-	return string.split(' ').splice(0, length).join(' ').concat('...');
+	if (string?.length > 0) {
+		return string.split(' ').splice(0, length).join(' ').concat('...');
+	}
+
+	return '';
 }
 
 // convert an array to a sentence
