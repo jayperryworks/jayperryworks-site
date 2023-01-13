@@ -1,0 +1,210 @@
+---
+// styles
+import '@styles/tokens/borders.css';
+import '@styles/tokens/contentWidth.css';
+import '@styles/tokens/spacing.css';
+
+// utils
+import { blogDevelopmentStage } from '@lib/routes';
+import { blogPost as permalink } from '@lib/routes';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+import {
+	sentenceCase,
+	truncate,
+} from '@lib/stringHelpers';
+
+// components
+import Layout from '@layouts/BaseLayout.astro';
+import BlogListings from '@components/navigation/BlogListings.astro';
+import BlogListingsPost from '@components/navigation/BlogListingsPost.astro';
+import SequenceNav from '@components/navigation/SequenceNav.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
+
+// types
+import {
+	DevelopmentStage,
+	DevelopmentStageUID,
+	FormattedText,
+} from '@lib/types';
+
+import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
+
+export type Post = {
+	date: string,
+	path: string,
+	title: string,
+	stage?: string,
+	subtitle?: string,
+};
+
+export type StaticPath = {
+	params: {
+		stage: DevelopmentStageUID,
+	},
+	props: Props,
+};
+
+export interface Props {
+	subtitle: string;
+	posts: Array<Post>;
+	stages: Array<DevelopmentStage>;
+	description?: FormattedText;
+}
+
+export async function getStaticPaths(): Promise<StaticPath[]> {
+	const stagesResponse = await prismic.getSingle('development_stages', {
+		graphQuery: `
+			{
+				development_stages {
+					...development_stagesFields
+					stages {
+						stage {
+							...on development_stage {
+								...development_stageFields
+							}
+						}
+					}
+				}
+			}
+		`,
+	});
+
+	let { stages, title: subtitle } = stagesResponse.data;
+	stages = stages.map(({ stage }) => stage.data);
+
+	console.log(stages)
+
+	// get all the blog posts from Prismic
+	const allPosts = await prismic.getAllByType('blog_post', {
+		orderings: {
+			field: 'my.blog_post.date',
+			direction: 'desc',
+		},
+	});
+
+	return stages.reduce((result, stage) => {
+		// create an array of post objects for each stage
+		const posts = allPosts
+			.filter(({ data }) => {
+				const name = data.stage || 'Note';
+				return name === stage.name
+			})
+			.map((post) => {
+				const { title, subtitle, date, description, stage } = post.data;
+
+				// clean up post data to just what we need for the listings
+				return {
+					date: prismicHelpers.asDate(date),
+					path: permalink(post),
+					title: prismicHelpers.isFilled.title(title)
+						? prismicHelpers.asText(title)
+						: truncate(description, 5),
+					subtitle: prismicHelpers.isFilled.title(subtitle)
+						? prismicHelpers.asText(subtitle)
+						: undefined,
+					stage: stage?.uid || 'note',
+				};
+			});
+
+		if (posts) {
+			result.push({
+				params: {
+					stage: stage.uid,
+				},
+				props: {
+					subtitle,
+					stages,
+					posts,
+					description: {
+						prismicText: stage.description,
+					},
+				},
+			});
+		}
+
+		return result;
+	}, []);
+}
+
+const {
+	stage,
+} = Astro.params;
+
+const {
+	subtitle,
+	posts,
+	description,
+	stages,
+} = Astro.props as Props;
+---
+
+<Layout
+	pageTitle={sentenceCase(stage)}
+	path="blog"
+>
+	<div class="wrapper">
+		<nav>
+			<SequenceNav>
+				{stages.map((item, index) => (
+					<SequenceNavItem
+						href={blogDevelopmentStage({ uid: item.uid })}
+						current={item.uid === stage}
+						complete={index < stages.indexOf(stages.find(({ uid }) => uid === stage))}
+					>
+						{item.name}
+					</SequenceNavItem>
+				))}
+			</SequenceNav>
+		</nav>
+		<header>
+			<Heading level={3} subheading>{prismicHelpers.asText(subtitle)}:</Heading>
+			<Heading level={1}>{sentenceCase(stage)}</Heading>
+		</header>
+		<Passage
+			class="intro"
+			text={description}
+			typeFace="display"
+			typeSize="delta"
+		/>
+		<BlogListings class="post-list">
+			{posts.map((post) => (
+				<li class="post">
+					<BlogListingsPost {...post} showStage={false} />
+				</li>
+			))}
+		</BlogListings>
+	</div>
+</Layout>
+
+<style>
+	.wrapper {
+		padding: var(--space-outside) var(--space-xwide);
+	}
+
+	.wrapper > :global(*) {
+		max-width: var(--content-width-default);
+		margin-inline: auto;
+	}
+
+	.wrapper > :global(* + *) {
+		margin-block-start: var(--space-wide);
+	}
+
+	.post-list {
+		margin-block-start: var(--space-wide);
+		padding-block-start: var(--space-wide);
+		border-block-start: var(--border-default);
+	}
+
+	.post {
+		display: block;
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+	}
+
+	.post + .post {
+		padding-block-start: var(--space-wide);
+	}
+</style>

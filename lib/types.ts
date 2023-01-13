@@ -65,7 +65,14 @@ export interface SEOContent {
 }
 
 // Strings that represent the stages of development of a piece of writing
-export type DevelopmentStage = 'Note' | 'Sketch' | 'Revised' | 'Polished';
+export type DevelopmentStageName = 'Note' | 'Sketch' | 'Revised' | 'Polished';
+export type DevelopmentStageUID = 'note' | 'sketch' | 'revised' | 'polished';
+
+export type DevelopmentStage = {
+	name: DevelopmentStageName;
+	uid: DevelopmentStageUID;
+	description?: RichTextField;
+};
 
 export interface PublicationDates {
 	publication: Date;

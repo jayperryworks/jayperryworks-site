@@ -307,13 +307,15 @@ const {
 
     .nav-item[aria-current="page"]::before {
       background-color: var(--color-highlight);
-      height: 0.125em;
+      height: 0.18em;
       left: 0;
       position: absolute;
       right: 0;
-      top: 0;
+      bottom: -0.1em;
+			top: auto;
       transform: none;
       width: auto;
+			border-radius: 0;
     }
 
     .nav-item.small-only {

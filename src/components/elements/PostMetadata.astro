@@ -7,27 +7,46 @@ import stageIcon from '@icons/stage.svg?raw';
 import { format } from 'date-fns';
 
 // components
-import Icon from '@components/elements/Icon.astro';
+import DevelopmentStageLabel from '@components/elements/DevelopmentStageLabel.astro';
 
 // types
 import {
-	DevelopmentStage,
+	DevelopmentStageName,
 	PublicationDates
 } from '@lib/types';
 
 export interface Props {
 	date: PublicationDates;
 	class?: string,
-	stage?: DevelopmentStage;
+	showUpdatedDate?: boolean;
+	stage?: DevelopmentStageName;
+	dateFormat?: string;
 }
 
+// default value of `stage` prop is set in the template
+// because if a null value is passed in it will override a default here
 const {
 	date,
-	stage = 'Note',
 	class: className = '',
+	dateFormat = 'MMMM dd, yyyy',
+	stage,
 } = Astro.props as Props;
 
-const DATE_FORMAT = 'MMMM dd, yyyy';
+type formattedDate = {
+	posted?: string,
+	updated?: string,
+	publication?: string,
+};
+
+const formattedDate: formattedDate = Object.keys(date).reduce((result, key) => {
+	if (date[key]) {
+		result[key] = format(date[key], dateFormat);
+	}
+
+	return result;
+}, {});
+
+const showUpdate = formattedDate.posted !== formattedDate.updated;
 
 const classList = [
 	'metadata',
@@ -39,33 +58,28 @@ const classList = [
 	<div class="item">
 		<dt class="hide-visually">Development stage:</dt>
 		<dd>
-			<Icon svg={stageIcon} margin="right" />
-			{stage}
+			<DevelopmentStageLabel name={stage} />
 		</dd>
 	</div>
 	<div class="item">
 		<dt class="hide-visually">Published:</dt>
 		<dd>
-			<time datetime={date.publication}>
-				{format(date.publication, DATE_FORMAT)}
-			</time>
+			<time datetime={date.publication}>{formattedDate.publication}</time>
 		</dd>
 	</div>
-	{date?.posted !== date?.updated && (
+	{showUpdate && (
 		<div class="item">
-			<dd>Last updated:</dd>
-			<dt>
-				<time datetime={date.updated}>
-					{format(date.updated, DATE_FORMAT)}
-				</time>
-			</dt>
+			<dt>Last updated:</dt>
+			<dd>
+				<time datetime={date.updated}>{formattedDate.updated}</time>
+			</dd>
 		</div>
 	)}
 </dl>
 
 <style>
 	.metadata {
-		--gap: 0.5em;
+		--gap: 0.5rem;
 
 		color: var(--color-secondary);
 		display: inline-block;
@@ -79,24 +93,25 @@ const classList = [
 		align-items: center;
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0 var(--gap);
+		gap: 0 calc(var(--gap) / 2);
 		justify-content: center;
 		position: relative;
 	}
 
-	@media screen and (min-width: 37em) {
+	/* @media screen and (min-width: 37em) { */
 		.metadata {
 			display: inline-flex;
 			gap: var(--gap);
 			justify-content: center;
+			flex-wrap: wrap;
 		}
 
 		.item + .item::before {
 			content: '\2022';
 			display: inline-block;
-			font-size: 1.5;
 			font-weight: bold;
 			line-height: 0.5;
+			margin-inline-end: calc(var(--gap) / 2);
 		}
-	}
+	/* } */
 </style>

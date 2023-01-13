@@ -1,0 +1,31 @@
+---
+// assets
+import '@styles/utilities/type.css';
+import stageIcon from '@icons/stage.svg?raw';
+
+// components
+import Icon from '@components/elements/Icon.astro';
+
+// types
+import { DevelopmentStageName } from '@lib/types';
+
+export interface Props {
+	class?: string;
+	name?: DevelopmentStageName;
+}
+
+const {
+	name,
+	class: className,
+} = Astro.props as Props;
+
+const classList = [
+	'type-role-accent',
+	className,
+].join(' ');
+---
+
+<a class={classList} href={`/blog/stages/${name ? name.toLowerCase() : 'note'}`}>
+	<Icon svg={stageIcon} margin="right" align="baseline" />
+	{name || 'Note'}
+</a>

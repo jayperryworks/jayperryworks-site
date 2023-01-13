@@ -6,7 +6,6 @@
 	font-family: var(--type-font-display);
 	font-weight: normal;
 	line-height: var(--type-leading-tight);
-	max-width: none; /* reset default width of p elements */
 }
 
 .type-role-display strong {

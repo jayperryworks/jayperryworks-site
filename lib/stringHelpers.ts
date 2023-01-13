@@ -9,6 +9,14 @@ function sentenceCase(string: string): string {
 	return `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
 }
 
+function truncate(string: string, length = 5): string {
+	if (string?.length > 0) {
+		return string.split(' ').splice(0, length).join(' ').concat('...');
+	}
+
+	return '';
+}
+
 // convert an array to a sentence
 // -> adds an oxford comma
 // -> ['first', 'Second'] => First and second
@@ -75,4 +83,5 @@ export {
 	removeWidows,
 	sentenceCase,
 	titleCase,
+	truncate,
 };

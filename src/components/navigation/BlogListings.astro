@@ -1,0 +1,46 @@
+---
+// components
+import ReadNextLink from "@components/navigation/ReadNextLink.astro";
+
+export interface Props {
+	class?: string;
+}
+
+const {
+	class: className,
+} = Astro.props as Props;
+
+const classList = [
+	'posts',
+	className,
+].join(' ');
+---
+
+<ul class={classList}>
+	<slot></slot>
+</ul>
+<nav>
+	<slot name="footer-nav">
+		<ReadNextLink
+			eyebrowSize="delta"
+			link="/blog/page/1"
+			titleSize="beta"
+		>
+			<Fragment slot="eyebrow">More blog posts:</Fragment>
+			<Fragment slot="title">Archive</Fragment>
+		</ReadNextLink>
+	</slot>
+</nav>
+
+<style>
+	.posts {
+		list-style: none;
+		padding-inline-start: 0;
+	}
+
+	nav {
+		border-top: var(--border-default);
+		padding-block: var(--space-xwide);
+		margin-block-start: var(--space-xwide);
+	}
+</style>
