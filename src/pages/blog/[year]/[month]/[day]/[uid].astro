@@ -175,7 +175,11 @@ const {
 			)}
 
 			<!-- date and stage info -->
-			<PostMetadata {date} {stage} />
+			<PostMetadata
+				showUpdatedDate
+				{date}
+				{stage}
+			/>
 
 			<!-- list of posts in a thread, if applicable -->
 			{thread && (

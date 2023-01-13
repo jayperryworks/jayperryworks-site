@@ -1,0 +1,67 @@
+---
+// styles
+import '@styles/utilities/type.css';
+
+// utils
+import { format } from 'date-fns';
+
+// components
+import Heading from '@components/blocks/Heading.astro';
+import DevelopmentStageLabel from '@components/elements/DevelopmentStageLabel.astro';
+
+// types
+import { DevelopmentStage, PublicationDates } from '@lib/types';
+
+export interface Props {
+	date: Date;
+	path: string;
+	title: string;
+	stage?: DevelopmentStage;
+	subtitle?: string;
+}
+
+const {
+	date,
+	path,
+	title,
+	stage,
+	subtitle,
+} = Astro.props as Props;
+---
+
+<article>
+	<Heading level={6} subheading class="eyebrow">
+		<DevelopmentStageLabel {stage} />
+		<time datetime={date}>{format(date, 'yyyy.MM.dd')}</time>
+	</Heading>
+
+	<Heading level={3}>
+		<a class="type-link-undecorated" href={path}>{title}</a>
+	</Heading>
+
+	{subtitle && (
+		<Heading
+			subheading
+			level={4}
+			class="subtitle"
+		>
+			<a class="type-link-undecorated" href={path}>{subtitle}</a>
+		</Heading>
+	)}
+</article>
+
+<style>
+	.eyebrow {
+		--gap: 0.5em;
+		display: inline-flex;
+		gap: var(--gap);
+	}
+
+	.eyebrow > :global(* + *)::before {
+		content: '\2022';
+		display: inline-block;
+		font-weight: bold;
+		line-height: 0.5;
+		margin-inline-end: var(--gap);
+	}
+</style>

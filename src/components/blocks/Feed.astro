@@ -6,16 +6,17 @@ import arrowRight from '@icons/arrow-right.svg?raw';
 
 // utils
 import { blogPost, linkResolver } from '@lib/routes';
-import { format } from 'date-fns';
+import { truncate } from '@lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
 // components
-import Button from '@components/elements/Button.astro';
 import Gallery from '@components/layout/Gallery.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
+import Button from '@components/elements/Button.astro';
 import Number from '@components/elements/Number.astro';
+import PostListing from '@components/elements/PostListing.astro';
 
 // types
 import type { LinkField, RichTextField } from '@prismicio/types';
@@ -61,20 +62,25 @@ if (contentSource === 'blog_post') {
 	});
 
 	if (feedData?.results.length > 0) {
-		feedItems = feedData.results.reduce((result, item) => {
-			const { date, title, subtitle } = item.data;
+		feedItems = feedData.results.map((item) => {
+			const {
+				date,
+				description,
+				stage,
+				subtitle,
+				title,
+			} = item.data;
 
-			if (prismicHelpers.isFilled.title(title)) {
-				result.push({
-					date,
-					path: blogPost(item),
-					subtitle: subtitle && prismicHelpers.asText(subtitle),
-					title: prismicHelpers.asText(title),
-				});
-			}
-
-			return result;
-		}, []);
+			return {
+				stage,
+				date: prismicHelpers.asDate(date),
+				path: blogPost(item),
+				subtitle: subtitle && prismicHelpers.asText(subtitle),
+				title: prismicHelpers.isFilled.title(title)
+					? prismicHelpers.asText(title)
+					: truncate(description, 5),
+			};
+		});
 	}
 }
 ---
@@ -111,24 +117,7 @@ if (contentSource === 'blog_post') {
 	<Gallery gutter="wide">
 		{feedItems.map((listing) => (
 			<li class="item">
-				<Heading level={5} subheading>
-					<a
-						class="type-link-undecorated"
-						href={listing.path}
-					>
-						{format(new Date(listing.date), 'yyyy.MM.dd')}
-					</a>
-				</Heading>
-				{listing.title && (
-					<Heading level={3}>
-						<a
-							class="type-link-undecorated"
-							href={listing.path}
-						>
-							{listing.title}
-						</a>
-					</Heading>
-				)}
+				<PostListing {...listing} />
 			</li>
 		))}
 	</Gallery>
