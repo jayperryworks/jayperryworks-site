@@ -7,18 +7,6 @@
 	--space-xwide: clamp(1.63rem, calc(0.25rem + 6.88vw), 6.44rem);
 
 	/* outside spacing */
-	--space-outside: var(--space-narrow);
-}
-
-/* --- outside spacing on larger screens --- */
-@media screen and (min-width: 42em) {
-	:root {
-		--space-outside: var(--space-medium);
-	}
-}
-
-@media screen and (min-width: 62em) {
-	:root {
-		--space-outside: var(--space-wide);
-	}
+	/* -> starts at 'xnarrow' min value and expands to 'xwide' max value */
+	--space-outside: clamp(0.69rem, calc(8.84vw - 1.52rem), 6.44rem);
 }

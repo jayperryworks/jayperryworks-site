@@ -67,7 +67,7 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 <html lang="en">
 	<head>
 		<meta charset='utf-8'>
-		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
+		<meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
 		<title>{title}</title>
 
@@ -106,16 +106,11 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 
 <style>
 	body {
-		--spine-color: var(--color-highlight);
-
 		background-color: var(--color-bg);
-		border-left: var(--border-spine-width) solid var(--spine-color);
 		color: var(--color-primary);
 		display: grid;
 		grid-template-rows: auto 1fr auto;
 		min-height: 100vh;
 		position: relative;
-		transition: border-left-color 0.25s ease;
-		will-change: border-left-color;
 	}
 </style>

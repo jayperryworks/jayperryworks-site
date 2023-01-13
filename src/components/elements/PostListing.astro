@@ -1,5 +1,6 @@
 ---
 // styles
+import '@styles/tokens/spacing.css';
 import '@styles/utilities/type.css';
 
 // utils
@@ -57,6 +58,7 @@ const {
 		--gap: 0.5em;
 		display: inline-flex;
 		gap: var(--gap);
+		padding-block-end: var(--space-xnarrow);
 	}
 
 	.eyebrow > :global(* + *)::before {
