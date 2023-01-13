@@ -10,12 +10,15 @@ import { blogPost as permalink } from '@lib/routes';
 import { sentenceCase, truncate } from '@lib/stringHelpers';
 
 // components
-import Heading from '@components/blocks/Heading.astro';
 import Layout from '@layouts/BaseLayout.astro';
-import PostListing from '@components/elements/PostListing.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
+import PostListing from '@components/elements/PostListing.astro';
 
 // types
+import { FormattedText } from '@lib/types';
+
 export type Post = {
 	date: string,
 	path: string,
@@ -33,12 +36,14 @@ export type StaticPath = {
 
 export interface Props {
 	posts: Array<Post>;
+	description?: FormattedText;
+	stageDescription?: FormattedText;
 }
 
 export async function getStaticPaths(): Promise<StaticPath[]> {
 	const stagesData = await prismic.getSingle('development_stages');
 
-	const { stage: stages } = stagesData.data;
+	const { stage: stages, description } = stagesData.data;
 
 	// get all the blog posts from Prismic
 	const allPosts = await prismic.getAllByType('blog_post', {
@@ -83,6 +88,12 @@ export async function getStaticPaths(): Promise<StaticPath[]> {
 				},
 				props: {
 					posts,
+					description: {
+						prismicText: description,
+					},
+					stageDescription: {
+						prismicText: stage.description,
+					},
 				},
 			});
 		}
@@ -97,6 +108,8 @@ const {
 
 const {
 	posts,
+	description,
+	stageDescription,
 } = Astro.props as Props;
 ---
 
@@ -107,11 +120,13 @@ const {
 	<div class="wrapper">
 		<header>
 			<Heading level={1}>{sentenceCase(stage)} posts</Heading>
+			<Passage text={description} />
+			<Passage text={stageDescription} />
 		</header>
 		<ul class="post-list">
 			{posts.map((post) => (
 				<li class="post">
-					<PostListing {...post} />
+					<PostListing {...post} showStage={false} />
 				</li>
 			))}
 		</ul>

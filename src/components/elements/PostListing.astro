@@ -16,6 +16,7 @@ export interface Props {
 	date: Date;
 	path: string;
 	title: string;
+	showStage?: boolean;
 	stage?: DevelopmentStage;
 	subtitle?: string;
 }
@@ -24,6 +25,7 @@ const {
 	date,
 	path,
 	title,
+	showStage = true,
 	stage,
 	subtitle,
 } = Astro.props as Props;
@@ -31,7 +33,7 @@ const {
 
 <article>
 	<Heading level={6} subheading class="eyebrow">
-		<DevelopmentStageLabel {stage} />
+		{showStage && <DevelopmentStageLabel {stage} />}
 		<time datetime={date}>{format(date, 'yyyy.MM.dd')}</time>
 	</Heading>
 
