@@ -47,15 +47,34 @@ export type StaticPath = {
 };
 
 export interface Props {
+	subtitle: string;
 	posts: Array<Post>;
 	stages: Array<DevelopmentStage>;
 	description?: FormattedText;
 }
 
 export async function getStaticPaths(): Promise<StaticPath[]> {
-	const stagesData = await prismic.getSingle('development_stages');
+	const stagesResponse = await prismic.getSingle('development_stages', {
+		graphQuery: `
+			{
+				development_stages {
+					...development_stagesFields
+					stages {
+						stage {
+							...on development_stage {
+								...development_stageFields
+							}
+						}
+					}
+				}
+			}
+		`,
+	});
 
-	const { stage: stages } = stagesData.data;
+	let { stages, title: subtitle } = stagesResponse.data;
+	stages = stages.map(({ stage }) => stage.data);
+
+	console.log(stages)
 
 	// get all the blog posts from Prismic
 	const allPosts = await prismic.getAllByType('blog_post', {
@@ -68,7 +87,10 @@ export async function getStaticPaths(): Promise<StaticPath[]> {
 	return stages.reduce((result, stage) => {
 		// create an array of post objects for each stage
 		const posts = allPosts
-			.filter(({ data }) => data.stage === stage.name)
+			.filter(({ data }) => {
+				const name = data.stage || 'Note';
+				return name === stage.name
+			})
 			.map((post) => {
 				const { title, subtitle, date, description, stage } = post.data;
 
@@ -82,7 +104,7 @@ export async function getStaticPaths(): Promise<StaticPath[]> {
 					subtitle: prismicHelpers.isFilled.title(subtitle)
 						? prismicHelpers.asText(subtitle)
 						: undefined,
-					stage,
+					stage: stage?.uid || 'note',
 				};
 			});
 
@@ -92,6 +114,7 @@ export async function getStaticPaths(): Promise<StaticPath[]> {
 					stage: stage.uid,
 				},
 				props: {
+					subtitle,
 					stages,
 					posts,
 					description: {
@@ -110,6 +133,7 @@ const {
 } = Astro.params;
 
 const {
+	subtitle,
 	posts,
 	description,
 	stages,
@@ -121,10 +145,6 @@ const {
 	path="blog"
 >
 	<div class="wrapper">
-		<header>
-			<Heading level={3} subheading>Stages of development:</Heading>
-			<Heading level={1}>{sentenceCase(stage)}</Heading>
-		</header>
 		<nav>
 			<SequenceNav>
 				{stages.map((item, index) => (
@@ -138,6 +158,10 @@ const {
 				))}
 			</SequenceNav>
 		</nav>
+		<header>
+			<Heading level={3} subheading>{prismicHelpers.asText(subtitle)}:</Heading>
+			<Heading level={1}>{sentenceCase(stage)}</Heading>
+		</header>
 		<Passage text={description} typeFace="display" typeSize="delta" />
 		<BlogListings class="post-list">
 			{posts.map((post) => (
