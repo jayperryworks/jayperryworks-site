@@ -166,16 +166,12 @@ const {
 				<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
 			)}
 			{prismicHelpers.isFilled.title(subtitle) && (
-				<Heading
-					class="subtitle"
-					subheading
-				>
-					{prismicHelpers.asText(subtitle)}
-				</Heading>
+				<Heading subheading>{prismicHelpers.asText(subtitle)} </Heading>
 			)}
 
 			<!-- date and stage info -->
 			<PostMetadata
+				class="metadata"
 				showUpdatedDate
 				{date}
 				{stage}
@@ -186,7 +182,7 @@ const {
 				<ThreadNav
 					title={thread.title && prismicHelpers.asText(thread.title)}
 					description={thread.description &&prismicHelpers.asText(thread.description)}
-					class="content-width"
+					class="thread-nav | content-width"
 				>
 					{thread.posts.map((post) => (
 						<ThreadNavItem
@@ -250,26 +246,27 @@ const {
 	}
 
 	header {
-		padding-inline: var(--space-outside);
 		margin-inline: auto;
 		max-width: var(--content-width-xwide);
 		padding-block-end: var(--space-wide);
+		padding-inline: var(--space-outside);
 		text-align: center;
 	}
 
-	header > :global(* + *) {
+	.metadata {
 		padding-block-start: var(--space-medium);
-	}
-
-	.subtitle {
-		margin-block-start: 0;
-		padding-block-start: var(--space-xxnarrow);
 	}
 
 	.link {
 		margin-inline: auto;
 		max-width: var(--content-width-default);
 		padding-block-start: var(--space-wide);
+	}
+
+	/* add some extra space above this */
+	/* -> subtract the flex gap it already has */
+	.thread-nav {
+		margin-block-start: var(--space-wide);
 	}
 
 	.thread-link[aria-current='page'] {
