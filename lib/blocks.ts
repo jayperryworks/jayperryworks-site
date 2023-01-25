@@ -10,6 +10,7 @@ import type {
 
 import type {
 	ImageField,
+	KeyTextField,
 	LinkField,
 	RichTextField,
 	SelectField,
@@ -124,6 +125,7 @@ function billboard(slice: Slice): BlockType {
 function blockQuote(slice: Slice): BlockType {
 	const {
 		structured_text: prismicText,
+		attribution,
 		markdown,
 	} = slice.primary;
 
@@ -132,6 +134,7 @@ function blockQuote(slice: Slice): BlockType {
 			prismicText,
 			markdown: markdownText(markdown as RichTextField),
 		},
+		attribution,
 		...sharedBlockFields(slice),
 	};
 }
