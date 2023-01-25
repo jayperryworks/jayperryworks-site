@@ -7,25 +7,39 @@ import Passage from '@components/blocks/Passage.astro';
 
 // types
 import type { FormattedText } from '@lib/types';
+import { KeyTextField } from '@prismicio/types';
 
 export interface Props {
 	text: FormattedText;
+	attribution?: KeyTextField;
 	class?: string;
 }
 
 const {
 	text,
+	attribution,
 	class: className = '',
 } = Astro.props as Props;
 ---
 
 <blockquote class={className}>
 	<Passage {text} typeSize="zeta" />
+
+	{attribution && (
+		<cite class="type-role-accent type-scale-zeta">
+			&mdash; {attribution}
+		</cite>
+	)}
 </blockquote>
 
 <style>
 	blockquote {
 		font-style: italic;
 		padding-inline-start: var(--space-medium);
+	}
+
+	cite {
+		display: block;
+		padding-block-start: var(--space-medium);
 	}
 </style>
