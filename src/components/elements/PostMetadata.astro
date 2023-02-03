@@ -51,7 +51,7 @@ const formattedDate: formattedDate = Object.keys(date).reduce((result, key) => {
 		result[key] = `
 			<abbr title="${format(date[key], 'MMMM')}">
 				<span>${format(date[key], 'MMM')}.</span>
-			</abbr> ${dateSuffix}
+			</abbr>&nbsp;${dateSuffix}
 		`;
 	}
 
