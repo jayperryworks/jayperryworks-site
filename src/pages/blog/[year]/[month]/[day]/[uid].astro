@@ -13,7 +13,7 @@ import externalLink from '@icons/external-link.svg?raw';
 // helpers
 import { format } from 'date-fns';
 import { blogPost as permalink, fetchLinks } from '@lib/routes';
-import { sentenceCase, truncate } from '@lib/stringHelpers';
+import { sentenceCase } from '@lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
@@ -163,7 +163,7 @@ const {
 	<article>
 		<header>
 			{prismicHelpers.isFilled.title(title) && (
-				<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
+				<Heading level={1} class="title">{prismicHelpers.asText(title)}</Heading>
 			)}
 			{prismicHelpers.isFilled.title(subtitle) && (
 				<Heading subheading>{prismicHelpers.asText(subtitle)} </Heading>
@@ -171,7 +171,7 @@ const {
 
 			<!-- date and stage info -->
 			<PostMetadata
-				class="metadata"
+				class="metadata | content-width"
 				showUpdatedDate
 				{date}
 				{stage}
@@ -253,8 +253,13 @@ const {
 		text-align: center;
 	}
 
+	.title ~ .metadata {
+		border-block-start: var(--border-default);
+		padding-block-start: var(--space-xnarrow);
+	}
+
 	.metadata {
-		padding-block-start: var(--space-medium);
+		margin-block-start: var(--space-wide);
 	}
 
 	.link {
