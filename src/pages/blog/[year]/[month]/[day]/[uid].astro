@@ -13,7 +13,7 @@ import externalLink from '@icons/external-link.svg?raw';
 // helpers
 import { format } from 'date-fns';
 import { blogPost as permalink, fetchLinks } from '@lib/routes';
-import { sentenceCase, truncate } from '@lib/stringHelpers';
+import { sentenceCase } from '@lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
@@ -254,7 +254,7 @@ const {
 	}
 
 	.metadata {
-		padding-block-start: var(--space-medium);
+		margin-block-start: var(--space-wide);
 	}
 
 	.link {

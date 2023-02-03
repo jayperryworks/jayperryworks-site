@@ -10,7 +10,6 @@ import type {
 
 import type {
 	ImageField,
-	KeyTextField,
 	LinkField,
 	RichTextField,
 	SelectField,

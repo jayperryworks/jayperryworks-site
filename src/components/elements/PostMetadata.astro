@@ -1,7 +1,8 @@
 ---
 // assets
+import '@styles/tokens/borders.css';
+import '@styles/utilities/contentWidth.css';
 import '@styles/utilities/visibility.css';
-import stageIcon from '@icons/stage.svg?raw';
 
 // helpers
 import { format } from 'date-fns';
@@ -14,6 +15,12 @@ import {
 	DevelopmentStageName,
 	PublicationDates
 } from '@lib/types';
+
+type formattedDate = {
+	posted?: string,
+	updated?: string,
+	publication?: string,
+};
 
 export interface Props {
 	date: PublicationDates;
@@ -28,19 +35,23 @@ export interface Props {
 const {
 	date,
 	class: className = '',
-	dateFormat = 'MMMM dd, yyyy',
 	stage,
 } = Astro.props as Props;
 
-type formattedDate = {
-	posted?: string,
-	updated?: string,
-	publication?: string,
-};
-
 const formattedDate: formattedDate = Object.keys(date).reduce((result, key) => {
+	const day = format(date[key], 'd');
+	const year = format(date[key], 'yyyy');
+	const dateSuffix = [
+		day,
+		format(new Date(), 'yyyy') !== year ? year : ''
+	].join(' ');
+
 	if (date[key]) {
-		result[key] = format(date[key], dateFormat);
+		result[key] = `
+			<abbr title="${format(date[key], 'MMMM')}">
+				<span>${format(date[key], 'MMM')}.</span>
+			</abbr> ${dateSuffix}
+		`;
 	}
 
 	return result;
@@ -50,6 +61,7 @@ const showUpdate = formattedDate.posted !== formattedDate.updated;
 
 const classList = [
 	'metadata',
+	'content-width',
 	className,
 ].join(' ');
 ---
@@ -61,17 +73,17 @@ const classList = [
 			<DevelopmentStageLabel name={stage} />
 		</dd>
 	</div>
-	<div class="item">
-		<dt class="hide-visually">Published:</dt>
+	<div class="item right group">
+		<dt>Published:</dt>
 		<dd>
-			<time datetime={date.publication}>{formattedDate.publication}</time>
+			<time datetime={date.publication} set:html={formattedDate.publication}></time>
 		</dd>
 	</div>
 	{showUpdate && (
-		<div class="item">
+		<div class="item group">
 			<dt>Last updated:</dt>
 			<dd>
-				<time datetime={date.updated}>{formattedDate.updated}</time>
+				<time datetime={date.updated} set:html={formattedDate.updated}></time>
 			</dd>
 		</div>
 	)}
@@ -79,39 +91,74 @@ const classList = [
 
 <style>
 	.metadata {
-		--gap: 0.5rem;
+		--gap: var(--space-xnarrow);
 
 		color: var(--color-secondary);
-		display: inline-block;
+		container-name: metadata;
+		container-type: inline-size;
+		display: flex;
+		gap: var(--gap);
 		font-family: var(--type-font-accent);
 		font-size: var(--type-scale-zeta);
 		font-weight: 300;
 		list-style: none;
+		border-block-start: var(--border-default);
+		padding-block-start: var(--space-xnarrow);
 	}
 
 	.item {
 		align-items: center;
-		display: flex;
+		display: inline-flex;
 		flex-wrap: wrap;
-		gap: 0 calc(var(--gap) / 2);
+		gap: 0 0.25em;
 		justify-content: center;
 		position: relative;
 	}
 
-	/* @media screen and (min-width: 37em) { */
-		.metadata {
-			display: inline-flex;
-			gap: var(--gap);
-			justify-content: center;
-			flex-wrap: wrap;
+	.item.right {
+		align-self: flex-end;
+		margin-inline-start: auto;
+	}
+
+	/* add a bullet between grouped items */
+	.item.group + .item.group::before {
+		content: '-';
+		display: inline-block;
+		margin-inline-end: 0.25em;
+	}
+
+	.item dt {
+		display: none;
+	}
+
+	.item :global(abbr) {
+		display: inline-block;
+		text-decoration: none;
+	}
+
+	@container metadata (min-width: 25em) {
+		.item :global(abbr span) {
+			text-indent: -999999999px;
+			overflow: hidden;
+			width: 1px;
+			font-size: 0;
 		}
 
-		.item + .item::before {
+		.item :global(abbr)::after {
+			content: attr(title);
+		}
+	}
+
+	@container metadata (min-width: 38em) {
+		.item dt {
+			display: unset;
+		}
+
+		.item.group + .item.group::before {
 			content: '\2022';
-			display: inline-block;
 			font-weight: bold;
 			line-height: 0.5;
 			margin-inline-end: calc(var(--gap) / 2);
 		}
-	/* } */
+	}
 </style>
