@@ -3,6 +3,7 @@
 import '@styles/tokens/borders.css';
 import '@styles/utilities/borders.css';
 import '@styles/utilities/type.css';
+import '@styles/utilities/contentWidth.css';
 
 // assets
 import arrowLeft from '@icons/arrow-left.svg?raw';
@@ -84,8 +85,8 @@ const postList = page.data.map(({
 					id={post.uid}
 				>
 					<header class="post-header">
-						{post.title && (
-							<Heading level={2}>
+						{prismicHelpers.isFilled.title(post.title) && (
+							<Heading level={2} class="post-title">
 								<a
 									href={post.path}
 									class="type-link-undecorated"
@@ -94,10 +95,10 @@ const postList = page.data.map(({
 								</a>
 							</Heading>
 						)}
-						{post.subtitle && (
+						{prismicHelpers.isFilled.title(post.subtitle) && (
 							<Heading subheading level={3}>{prismicHelpers.asText(post.subtitle)}</Heading>
 						)}
-						<PostMetadata {...post} class="date" />
+						<PostMetadata {...post} class="post-date | content-width" />
 					</header>
 					<BlockList body={post.summary} showLedeStyle />
 					{(post.readMore || post.link) && (
@@ -208,8 +209,13 @@ const postList = page.data.map(({
 		margin-inline: auto;
 	}
 
-	.date {
+	.post-date {
 		margin-block-start: var(--space-wide);
+	}
+
+	.post-title ~ .post-date {
+		border-block-start: var(--border-default);
+		padding-block-start: var(--space-xnarrow);
 	}
 
 	nav {

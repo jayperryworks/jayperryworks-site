@@ -163,7 +163,7 @@ const {
 	<article>
 		<header>
 			{prismicHelpers.isFilled.title(title) && (
-				<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
+				<Heading level={1} class="title">{prismicHelpers.asText(title)}</Heading>
 			)}
 			{prismicHelpers.isFilled.title(subtitle) && (
 				<Heading subheading>{prismicHelpers.asText(subtitle)} </Heading>
@@ -171,7 +171,7 @@ const {
 
 			<!-- date and stage info -->
 			<PostMetadata
-				class="metadata"
+				class="metadata | content-width"
 				showUpdatedDate
 				{date}
 				{stage}
@@ -251,6 +251,11 @@ const {
 		padding-block-end: var(--space-wide);
 		padding-inline: var(--space-outside);
 		text-align: center;
+	}
+
+	.title ~ .metadata {
+		border-block-start: var(--border-default);
+		padding-block-start: var(--space-xnarrow);
 	}
 
 	.metadata {

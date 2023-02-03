@@ -1,7 +1,5 @@
 ---
 // assets
-import '@styles/tokens/borders.css';
-import '@styles/utilities/contentWidth.css';
 import '@styles/utilities/visibility.css';
 
 // helpers
@@ -39,14 +37,17 @@ const {
 } = Astro.props as Props;
 
 const formattedDate: formattedDate = Object.keys(date).reduce((result, key) => {
-	const day = format(date[key], 'd');
 	const year = format(date[key], 'yyyy');
+	// https://stackoverflow.com/questions/281264/remove-empty-elements-from-an-array-in-javascript#2843625
 	const dateSuffix = [
-		day,
-		format(new Date(), 'yyyy') !== year ? year : ''
-	].join(' ');
+		format(date[key], 'd'),
+		// include the year if it's not the current year
+		format(new Date(), 'yyyy') !== year && year
+	].filter(Boolean).join(', ');
 
 	if (date[key]) {
+		// use the abbr element to display the short and full name of the month
+		// -> full names appear when there's room (when the component is wide enough)
 		result[key] = `
 			<abbr title="${format(date[key], 'MMMM')}">
 				<span>${format(date[key], 'MMM')}.</span>
@@ -61,7 +62,6 @@ const showUpdate = formattedDate.posted !== formattedDate.updated;
 
 const classList = [
 	'metadata',
-	'content-width',
 	className,
 ].join(' ');
 ---
@@ -97,13 +97,11 @@ const classList = [
 		container-name: metadata;
 		container-type: inline-size;
 		display: flex;
-		gap: var(--gap);
 		font-family: var(--type-font-accent);
 		font-size: var(--type-scale-zeta);
 		font-weight: 300;
+		gap: var(--gap);
 		list-style: none;
-		border-block-start: var(--border-default);
-		padding-block-start: var(--space-xnarrow);
 	}
 
 	.item {
@@ -138,10 +136,10 @@ const classList = [
 
 	@container metadata (min-width: 25em) {
 		.item :global(abbr span) {
-			text-indent: -999999999px;
-			overflow: hidden;
-			width: 1px;
 			font-size: 0;
+			overflow: hidden;
+			text-indent: -999999999px;
+			width: 1px;
 		}
 
 		.item :global(abbr)::after {
