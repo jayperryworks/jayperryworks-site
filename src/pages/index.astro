@@ -42,6 +42,8 @@ const seo = {
 };
 ---
 
+<script src="src/scripts/IntersectionObserver.js"></script>
+
 <script>
 	document.addEventListener('DOMContentLoaded', () => {
 		const $tocButton = document.getElementById('toc-link');
@@ -103,6 +105,9 @@ const seo = {
 
 	<!-- TOC panels -->
 	<div id="toc">
+		<intersection-observer>Goodbye</intersection-observer>
+		<p>test</p>
+
 		<BlockList {body} numbered />
 	</div>
 </Layout>
