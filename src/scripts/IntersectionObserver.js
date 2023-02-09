@@ -16,12 +16,21 @@
 
 const IOTemplate = document.createElement('template');
 IOTemplate.innerHTML = `
+	<style>
+		::slotted(*) {
+			opacity: 0;
+			transition: opacity 5s ease-out;
+		}
+
+		::slotted(.revealed) {
+			opacity: 1;
+		}
+	</style>
+	
 	<div>
-		<slot>Hello</slot>
+		<slot>Add some content to animate</slot>
 	</div>
 `;
-
-console.log(IOTemplate.content);
 
 class IntersectionObserver extends HTMLElement {
 
@@ -33,6 +42,11 @@ class IntersectionObserver extends HTMLElement {
 		super();
 		this._shadowRoot = this.attachShadow({ mode: 'open' });
 		this._shadowRoot.appendChild(IOTemplate.content.cloneNode(true));
+	}
+
+	connectedCallback() {
+		const children = document.querySelectorAll(::slotted(*));
+		console.log(children);
 	}
 
 }
