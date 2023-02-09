@@ -63,38 +63,74 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 	if ("ontouchstart" in document.body) featureClasses.push('touch');
 	document.body.className = featureClasses.join(' ');
 
+
+	// when an el intersects, mark it as visible
+	// if an element is visible, and the previous element is done, start its reveal
+	// when the reveal finishes, start the next reveal
+	// if the next element isn't visible yet, wait
+
+	// 2 events:
+	// -> an element is visible
+	// -> an element is finished revealing
+
+	type RevealedElement = {
+		DOMRef: Element,
+		isVisible?: boolean,
+		revealed?: boolean,
+	};
+
 	const REVEAL_DURATION = 4;
 
-	const revealedElements = Array.from(document.querySelectorAll('[data-revealed]'))
+	const revealedElements: RevealedElement[] = Array.from(document.querySelectorAll('[data-revealed]'))
 		.map((element) => ({
 			DOMRef: element,
 			isVisible: false,
 			revealed: false,
 		}));
 
-	function setVisible(element) {
-		const currentIndex = revealedElements.indexOf(revealedElements.find((el) => el.DOMRef === element));
-		revealedElements[currentIndex].isVisible = true;
-		console.log('intersecting:', revealedElements[currentIndex]);
-
-		if (currentIndex > 0 && revealedElements[currentIndex - 1].revealed === true) {
-			reveal(element);
-			return;
-		}
-
-		setTimeout(reveal, REVEAL_DURATION * 1000, currentIndex);
+	function getElement(element: Element): RevealedElement {
+		return revealedElements.find((el) => el.DOMRef === element);
 	}
 
-	function reveal(index) {
-		revealedElements[index].revealed = true;
-		revealedElements[index].DOMRef.dataset.revealed = true;
+	function setVisible(element: Element, state: boolean = false) {
+		getElement(element).isVisible = state;
+		console.log('intersecting:', getElement(element));
+
+		if (state) {
+			startReveal(element);
+		}
+	}
+
+	function setReveal(element: Element, state: boolean = false) {
+		getElement(element).revealed = state;
+		console.log('revealed:', getElement(element));
+
+		if (state) {
+			const index = revealedElements.indexOf(getElement(element));
+			revealedElements[index + 1] && startReveal(revealedElements[index + 1].DOMRef);
+		}
+	}
+
+	function startReveal(element: Element) {
+		const current = getElement(element);
+		const currentIndex = revealedElements.indexOf(current);
+
+		if (currentIndex > 0 && revealedElements[currentIndex - 1].revealed) {
+			if (current.isVisible) {
+				console.log('hello');
+				current.DOMRef.dataset.revealed = true;
+				setTimeout(() => { setReveal(element, true) }, REVEAL_DURATION * 1000);
+			}
+		}
+
+		return;
 	}
 
 	if ('IntersectionObserver' in window) {
 		const revealObserver = new IntersectionObserver(
 			(entries) => entries.forEach((entry) => {
 				if (entry.isIntersecting) {
-					setVisible(entry.target);
+					setVisible(entry.target, true);
 				}
 			}),
 			{
