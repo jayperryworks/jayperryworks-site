@@ -62,6 +62,50 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 	// Add a class if the browser/device supports touch
 	if ("ontouchstart" in document.body) featureClasses.push('touch');
 	document.body.className = featureClasses.join(' ');
+
+	const REVEAL_DURATION = 4;
+
+	const revealedElements = Array.from(document.querySelectorAll('[data-revealed]'))
+		.map((element) => ({
+			DOMRef: element,
+			isVisible: false,
+			revealed: false,
+		}));
+
+	function setVisible(element) {
+		const currentIndex = revealedElements.indexOf(revealedElements.find((el) => el.DOMRef === element));
+		revealedElements[currentIndex].isVisible = true;
+		console.log('intersecting:', revealedElements[currentIndex]);
+
+		if (currentIndex > 0 && revealedElements[currentIndex - 1].revealed === true) {
+			reveal(element);
+			return;
+		}
+
+		setTimeout(reveal, REVEAL_DURATION * 1000, currentIndex);
+	}
+
+	function reveal(index) {
+		revealedElements[index].revealed = true;
+		revealedElements[index].DOMRef.dataset.revealed = true;
+	}
+
+	if ('IntersectionObserver' in window) {
+		const revealObserver = new IntersectionObserver(
+			(entries) => entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					setVisible(entry.target);
+				}
+			}),
+			{
+				threshold: 0,
+			}
+		);
+
+		revealedElements.forEach((element) => {
+			revealObserver.observe(element.DOMRef);
+		})
+	}
 </script>
 
 <html lang="en">
@@ -72,10 +116,10 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 		<title>{title}</title>
 
 		<!-- favicon -->
-		<link rel="icon" href="/favicon.ico" sizes="any">
-		<link rel="icon" href="/icon.svg" type="image/svg+xml">
-		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-		<link rel="manifest" href="/manifest.webmanifest">
+		<link rel="icon" hDOMRef="/favicon.ico" sizes="any">
+		<link rel="icon" hDOMRef="/icon.svg" type="image/svg+xml">
+		<link rel="apple-touch-icon" hDOMRef="/apple-touch-icon.png">
+		<link rel="manifest" hDOMRef="/manifest.webmanifest">
 
 		<!-- social/seo markup -->
 		<!-- hat tip to https://meiert.com/en/blog/minimal-social-markup/ -->
@@ -112,5 +156,17 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 		grid-template-rows: auto 1fr auto;
 		min-height: 100vh;
 		position: relative;
+	}
+
+	:global(.js [data-revealed]) {
+		transition: opacity 4s ease;
+	}
+
+	:global(.js [data-revealed='false']) {
+		opacity: 0;
+	}
+
+	:global(.js [data-revealed='true']) {
+		opacity: 1;
 	}
 </style>
