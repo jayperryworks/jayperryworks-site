@@ -26,7 +26,7 @@ IOTemplate.innerHTML = `
 			opacity: 1;
 		}
 	</style>
-	
+
 	<div>
 		<slot>Add some content to animate</slot>
 	</div>
@@ -45,7 +45,7 @@ class IntersectionObserver extends HTMLElement {
 	}
 
 	connectedCallback() {
-		const children = document.querySelectorAll(::slotted(*));
+		const children = document.querySelectorAll('::slotted(*)');
 		console.log(children);
 	}
 
