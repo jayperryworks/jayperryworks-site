@@ -8,7 +8,7 @@ import {
 } from '@lib/rssData';
 
 const items = await getPicturesFeed();
-const customData = await getCustomData();
+const customData = await getCustomData('pictures.xml');
 
 export const get = () => rss({
 	title: `${title}: Pictures`,

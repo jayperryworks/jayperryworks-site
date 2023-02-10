@@ -21,7 +21,7 @@ const customData = await getCustomData();
 
 export const get = () => {
 	return rss({
-		title: `${title}: All posts`,
+		title,
 		description: "Jay's recent writing and drawings.",
 		site: import.meta.env.SITE,
 		stylesheet: '/rss/styles.xsl',

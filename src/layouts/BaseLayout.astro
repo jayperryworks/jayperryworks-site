@@ -78,13 +78,13 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 		<link rel="manifest" href="/manifest.webmanifest">
 
 		<!-- RSS metadata -->
-		<link rel="alternate" type="application/rss+xml" title="Jay Perry: All posts" href="/rss/all.xml">
+		<link rel="alternate" type="application/rss+xml" title="Jay Perry: All posts" href="/rss/feed.xml">
 		<link rel="alternate" type="application/rss+xml" title="Jay Perry: Blog posts" href="/rss/blog.xml">
 		<link rel="alternate" type="application/rss+xml" title="Jay Perry: Pictures" href="/rss/pictures.xml">
 
 		<!-- microdata/profile -->
 		<link rel="author" href="/about/" title="My story">
-		<link rel="me" href="mailto:hi@jayperryworks.com">
+	<link rel="me" href="mailto:hi@jayperryworks.com">
 
 		<!-- social/seo markup -->
 		<!-- hat tip to https://meiert.com/en/blog/minimal-social-markup/ -->
@@ -121,7 +121,14 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 		color: var(--color-primary);
 		display: grid;
 		grid-template-rows: auto 1fr auto;
-		min-height: 100vh;
 		position: relative;
+
+		/*
+		 * several versions of 'full height of window' depending on context/support
+		 * -> https://web.dev/viewport-units/
+		 */
+		min-height: 100vh;
+		min-height: 100svh;
+		min-height: 100dvh;
 	}
 </style>
