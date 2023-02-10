@@ -6,7 +6,7 @@ const items = await getPicturesFeed();
 
 export const get = () => rss({
 	// `<title>` field in output xml
-	title,
+	title: `${title}: Pictures`,
 	// `<description>` field in output xml
 	description: "Jay's recent drawings, paintings, and prints.",
 	// base URL for RSS <item> links

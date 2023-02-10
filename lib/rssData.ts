@@ -84,3 +84,13 @@ export async function getBlogFeed(): Promise<FeedItem[]> {
 }
 
 export const title = 'Jay Perry';
+
+export async function customData() {
+	return `
+		<webfeeds:cover image="" />
+		<webfeeds:icon>${import.meta.env.SITE}/icon.svg</webfeeds:icon>
+		<webfeeds:logo>http://yoursite.com/logo-30px-height.svg</webfeeds:logo>
+		<webfeeds:accentColor></webfeeds:accentColor>
+		<language>en-us</language>
+	`;
+}

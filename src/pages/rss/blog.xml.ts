@@ -6,7 +6,7 @@ const items = await getBlogFeed();
 
 export const get = () => rss({
 	// `<title>` field in output xml
-	title,
+	title: `${title}: Blog posts`,
 	// `<description>` field in output xml
 	description: "Jay's recent writing.",
 	// base URL for RSS <item> links
