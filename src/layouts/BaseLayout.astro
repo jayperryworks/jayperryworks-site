@@ -77,6 +77,11 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 		<link rel="manifest" href="/manifest.webmanifest">
 
+		<!-- RSS metadata -->
+		<link rel="alternate" type="application/rss+xml" title="Jay Perry: All posts" href={`${import.meta.env.SITE}/rss/all.xml`}>
+		<link rel="alternate" type="application/rss+xml" title="Jay Perry: Blog posts" href={`${import.meta.env.SITE}/rss/blog.xml`}>
+		<link rel="alternate" type="application/rss+xml" title="Jay Perry: pictures" href={`${import.meta.env.SITE}/rss/pictures.xml`}>
+
 		<!-- social/seo markup -->
 		<!-- hat tip to https://meiert.com/en/blog/minimal-social-markup/ -->
 		<meta name="twitter:card" content={seo.image ? 'summary_large_image' : 'summary'}>

@@ -5,7 +5,7 @@ import svgLoader from 'vite-svg-loader';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://jayperryworks.com',
+	site: 'https://jayperry.works',
 	vite: {
 		plugins: [
 			svgLoader({

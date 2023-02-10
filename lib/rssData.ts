@@ -83,4 +83,29 @@ export async function getBlogFeed(): Promise<FeedItem[]> {
 	}));
 }
 
+// additional tags for accessibility, discoverability on Feedly, etc.
+export async function getCustomData(): Promise<string> {
+	const { data } = await prismic.getSingle('rss_feed_assets');
+	const {
+		accent_color: accentColor,
+		cover_image: coverImage,
+		icon,
+		logo,
+	} = data;
+
+	return `
+		<webfeeds:cover image="${coverImage.url}" />
+		<webfeeds:icon>${icon.url}</webfeeds:icon>
+		<webfeeds:logo>${logo.url}</webfeeds:logo>
+		<webfeeds:accentColor>${accentColor}</webfeeds:accentColor>
+		<webfeeds:related layout=”card” target=”browser”/>
+		<language>en-us</language>
+	`;
+}
+
 export const title = 'Jay Perry';
+
+export const xmlns = {
+	content: 'http://purl.org/rss/1.0/modules/content/',
+	webfeeds: 'http://webfeeds.org/rss/1.0',
+};
