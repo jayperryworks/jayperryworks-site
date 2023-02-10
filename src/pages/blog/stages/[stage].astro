@@ -74,8 +74,6 @@ export async function getStaticPaths(): Promise<StaticPath[]> {
 	let { stages, title: subtitle } = stagesResponse.data;
 	stages = stages.map(({ stage }) => stage.data);
 
-	console.log(stages)
-
 	// get all the blog posts from Prismic
 	const allPosts = await prismic.getAllByType('blog_post', {
 		orderings: {

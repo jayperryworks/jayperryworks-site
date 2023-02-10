@@ -157,6 +157,15 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 		<link rel="apple-touch-icon" hDOMRef="/apple-touch-icon.png">
 		<link rel="manifest" hDOMRef="/manifest.webmanifest">
 
+		<!-- RSS metadata -->
+		<link rel="alternate" type="application/rss+xml" title="Jay Perry" href="/rss/feed.xml">
+		<link rel="alternate" type="application/rss+xml" title="Jay Perry: Blog posts" href="/rss/blog.xml">
+		<link rel="alternate" type="application/rss+xml" title="Jay Perry: Pictures" href="/rss/pictures.xml">
+
+		<!-- microdata/profile -->
+		<link rel="author" href="/about/" title="My story">
+	<link rel="me" href="mailto:hi@jayperryworks.com">
+
 		<!-- social/seo markup -->
 		<!-- hat tip to https://meiert.com/en/blog/minimal-social-markup/ -->
 		<meta name="twitter:card" content={seo.image ? 'summary_large_image' : 'summary'}>
@@ -164,9 +173,11 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 		<meta property="og:site_name" content={SITE_TITLE}>
 		<meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)}>
 		<meta property="og:locale" content="en_US">
-		<meta property="og:author" content="Jay Perry">
-		{seo.description && <meta property="og:description" name="description" content={seo.description}>}
-		{(seo.image) && (
+		<meta property="og:author" name="author" content="Jay Perry">
+		{seo.description && (
+			<meta property="og:description" name="description" content={seo.description}>
+		)}
+		{seo.image && (
 			<meta property="og:image" content={seo.image}>
 			<meta property="og:image:alt" content={seo.imageAlt}>
 		)}
@@ -190,8 +201,15 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 		color: var(--color-primary);
 		display: grid;
 		grid-template-rows: auto 1fr auto;
-		min-height: 100vh;
 		position: relative;
+
+		/*
+		 * several versions of 'full height of window' depending on context/support
+		 * -> https://web.dev/viewport-units/
+		 */
+		min-height: 100vh;
+		min-height: 100svh;
+		min-height: 100dvh;
 	}
 
 	:global(.js [data-revealed]) {
