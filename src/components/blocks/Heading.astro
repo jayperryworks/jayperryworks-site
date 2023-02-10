@@ -44,7 +44,7 @@ const classList = [
 ].join(' ');
 ---
 
-<El class={classList} data-revealed="false">
+<El class={classList}>
 	<slot>
 		{text && <Fragment set:html={removeWidows(prismicHelpers.asText(text))} />}
 	</slot>

@@ -62,86 +62,6 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 	// Add a class if the browser/device supports touch
 	if ("ontouchstart" in document.body) featureClasses.push('touch');
 	document.body.className = featureClasses.join(' ');
-
-
-	// when an el intersects, mark it as visible
-	// if an element is visible, and the previous element is done, start its reveal
-	// when the reveal finishes, start the next reveal
-	// if the next element isn't visible yet, wait
-
-	// 2 events:
-	// -> an element is visible
-	// -> an element is finished revealing
-
-	type RevealedElement = {
-		DOMRef: Element,
-		isVisible?: boolean,
-		revealed?: boolean,
-	};
-
-	const REVEAL_DURATION = 4;
-
-	const revealedElements: RevealedElement[] = Array.from(document.querySelectorAll('[data-revealed]'))
-		.map((element) => ({
-			DOMRef: element,
-			isVisible: false,
-			revealed: false,
-		}));
-
-	function getElement(element: Element): RevealedElement {
-		return revealedElements.find((el) => el.DOMRef === element);
-	}
-
-	function setVisible(element: Element, state: boolean = false) {
-		getElement(element).isVisible = state;
-		console.log('intersecting:', getElement(element));
-
-		if (state) {
-			startReveal(element);
-		}
-	}
-
-	function setReveal(element: Element, state: boolean = false) {
-		getElement(element).revealed = state;
-		console.log('revealed:', getElement(element));
-
-		if (state) {
-			const index = revealedElements.indexOf(getElement(element));
-			revealedElements[index + 1] && startReveal(revealedElements[index + 1].DOMRef);
-		}
-	}
-
-	function startReveal(element: Element) {
-		const current = getElement(element);
-		const currentIndex = revealedElements.indexOf(current);
-
-		if (currentIndex > 0 && revealedElements[currentIndex - 1].revealed) {
-			if (current.isVisible) {
-				console.log('hello');
-				current.DOMRef.dataset.revealed = true;
-				setTimeout(() => { setReveal(element, true) }, REVEAL_DURATION * 1000);
-			}
-		}
-
-		return;
-	}
-
-	if ('IntersectionObserver' in window) {
-		const revealObserver = new IntersectionObserver(
-			(entries) => entries.forEach((entry) => {
-				if (entry.isIntersecting) {
-					setVisible(entry.target, true);
-				}
-			}),
-			{
-				threshold: 0,
-			}
-		);
-
-		revealedElements.forEach((element) => {
-			revealObserver.observe(element.DOMRef);
-		})
-	}
 </script>
 
 <html lang="en">
@@ -210,17 +130,5 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 		min-height: 100vh;
 		min-height: 100svh;
 		min-height: 100dvh;
-	}
-
-	:global(.js [data-revealed]) {
-		transition: opacity 4s ease;
-	}
-
-	:global(.js [data-revealed='false']) {
-		opacity: 0;
-	}
-
-	:global(.js [data-revealed='true']) {
-		opacity: 1;
 	}
 </style>
