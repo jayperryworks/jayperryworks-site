@@ -98,8 +98,14 @@ export async function getCustomData(): Promise<string> {
 		<webfeeds:icon>${icon.url}</webfeeds:icon>
 		<webfeeds:logo>${logo.url}</webfeeds:logo>
 		<webfeeds:accentColor>${accentColor}</webfeeds:accentColor>
+		<webfeeds:related layout=”card” target=”browser”/>
 		<language>en-us</language>
 	`;
 }
 
 export const title = 'Jay Perry';
+
+export const xmlns = {
+	content: 'http://purl.org/rss/1.0/modules/content/',
+	webfeeds: 'http://webfeeds.org/rss/1.0',
+};
