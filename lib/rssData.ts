@@ -101,8 +101,6 @@ export async function getCustomData(filename = 'feed.xml'): Promise<string> {
 	} = data;
 
 	return `
-		<author><name>Jay Perry</name></author>
-		<id>${import.meta.env.SITE}</id>
 		<webfeeds:cover image="${coverImage.url}" />
 		<webfeeds:icon>${icon.url}</webfeeds:icon>
 		<webfeeds:logo>${logo.url}</webfeeds:logo>
