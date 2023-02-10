@@ -1,8 +1,13 @@
 import rss from '@astrojs/rss';
 
-import { getPicturesFeed, title } from '@lib/rssData';
+import {
+	getCustomData,
+	getPicturesFeed,
+	title,
+} from '@lib/rssData';
 
 const items = await getPicturesFeed();
+const customData = await getCustomData();
 
 export const get = () => rss({
 	// `<title>` field in output xml
@@ -15,6 +20,6 @@ export const get = () => rss({
 	// list of `<item>`s in output xml
 	items,
 	// (optional) inject custom xml
-	customData: '<language>en-us</language>',
+	customData,
 	stylesheet: '/rss/styles.xsl',
 });

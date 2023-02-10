@@ -1,9 +1,10 @@
 import rss from '@astrojs/rss';
 
 import {
+	getCustomData,
 	getBlogFeed,
 	getPicturesFeed,
-	title
+	title,
 } from '@lib/rssData';
 
 const items = [
@@ -14,6 +15,8 @@ const items = [
 	if (a.pubDate < b.pubDate) return 1;
 	return 0;
 });
+
+const customData = await getCustomData();
 
 export const get = () => {
 	return rss({
@@ -33,13 +36,7 @@ export const get = () => {
 		// see "Generating items" section for required frontmatter and advanced use cases
 		items,
 		// (optional) inject custom xml
-		customData: `
-			<webfeeds:cover image="" />
-			<webfeeds:icon>${import.meta.env.SITE}/icon.svg</webfeeds:icon>
-			<webfeeds:logo>http://yoursite.com/logo-30px-height.svg</webfeeds:logo>
-			<webfeeds:accentColor></webfeeds:accentColor>
-			<language>en-us</language>
-		`,
+		customData,
 		stylesheet: '/rss/styles.xsl',
 	});
 };
