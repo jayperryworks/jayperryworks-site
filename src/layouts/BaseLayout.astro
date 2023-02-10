@@ -78,9 +78,13 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 		<link rel="manifest" href="/manifest.webmanifest">
 
 		<!-- RSS metadata -->
-		<link rel="alternate" type="application/rss+xml" title="Jay Perry: All posts" href={`${import.meta.env.SITE}/rss/all.xml`}>
-		<link rel="alternate" type="application/rss+xml" title="Jay Perry: Blog posts" href={`${import.meta.env.SITE}/rss/blog.xml`}>
-		<link rel="alternate" type="application/rss+xml" title="Jay Perry: pictures" href={`${import.meta.env.SITE}/rss/pictures.xml`}>
+		<link rel="alternate" type="application/rss+xml" title="Jay Perry: All posts" href="/rss/all.xml">
+		<link rel="alternate" type="application/rss+xml" title="Jay Perry: Blog posts" href="/rss/blog.xml">
+		<link rel="alternate" type="application/rss+xml" title="Jay Perry: Pictures" href="/rss/pictures.xml">
+
+		<!-- microdata/profile -->
+		<link rel="author" href="/about/" title="My story">
+		<link rel="me" href="mailto:hi@jayperryworks.com">
 
 		<!-- social/seo markup -->
 		<!-- hat tip to https://meiert.com/en/blog/minimal-social-markup/ -->
@@ -89,9 +93,11 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 		<meta property="og:site_name" content={SITE_TITLE}>
 		<meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)}>
 		<meta property="og:locale" content="en_US">
-		<meta property="og:author" content="Jay Perry">
-		{seo.description && <meta property="og:description" name="description" content={seo.description}>}
-		{(seo.image) && (
+		<meta property="og:author" name="author" content="Jay Perry">
+		{seo.description && (
+			<meta property="og:description" name="description" content={seo.description}>
+		)}
+		{seo.image && (
 			<meta property="og:image" content={seo.image}>
 			<meta property="og:image:alt" content={seo.imageAlt}>
 		)}
