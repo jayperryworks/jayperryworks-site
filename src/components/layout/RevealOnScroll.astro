@@ -7,22 +7,35 @@ export interface Props {
 
 const {
 	class: className = '',
-	duration = '1s',
 	tag = 'div',
 } = Astro.props as Props;
 
 const El = tag;
+
+const classList = [
+	'reveal',
+	className,
+].join(' ');
 ---
 
+<El
+	class={classList}
+	data-reveal
+>
+	<slot></slot>
+</El>
+
 <script>
-	const revealedElements = Array.from(document.querySelectorAll('[data-revealed]'));
+	const revealedElements = Array.from(document.querySelectorAll('[data-reveal]'));
 
 	if ('IntersectionObserver' in window) {
 		const revealObserver = new IntersectionObserver(
 			(entries) => entries.forEach((entry) => {
-				if (entry.isIntersecting) {
-					entry.target.dataset.revealed = true;
-					console.log('visible');
+				if (entry.isIntersecting && !entry.target.classList.contains('visible')) {
+					entry.target.classList.add('visible');
+				}
+				if (!entry.isIntersecting) {
+					entry.target.classList.add('ready');
 				}
 			}),
 			{
@@ -36,21 +49,16 @@ const El = tag;
 	}
 </script>
 
-<El
-	data-revealed="false"
-	class={className}
-	style={`--duration: ${duration};`}
->
-	<slot></slot>
-</El>
-
 <style>
-	:global(.js) [data-revealed] {
+	:global(.js) .reveal {
 		opacity: 0;
-		transition: opacity var(--duration, 0.25s) ease;
 	}
 
-	:global(.js) [data-revealed='true'] {
+	:global(.js) .ready {
+		transition: opacity 2s ease;
+	}
+
+	:global(.js) .visible {
 		opacity: 1;
 	}
 </style>
