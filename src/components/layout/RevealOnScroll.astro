@@ -7,7 +7,6 @@ export interface Props {
 
 const {
 	class: className = '',
-	duration = '1s',
 	tag = 'div',
 } = Astro.props as Props;
 
@@ -21,13 +20,9 @@ const El = tag;
 		const revealObserver = new IntersectionObserver(
 			(entries) => entries.forEach((entry) => {
 				if (entry.isIntersecting) {
-					entry.target.dataset.revealed = true;
-					console.log('visible');
-				}
-			}),
-			{
-				threshold: 0.25,
-			}
+					entry.target.dataset.revealed = 'true';
+				}o
+			})
 		);
 
 		revealedElements.forEach((element) => {
@@ -37,20 +32,22 @@ const El = tag;
 </script>
 
 <El
-	data-revealed="false"
+	data-revealed
 	class={className}
-	style={`--duration: ${duration};`}
 >
 	<slot></slot>
 </El>
 
-<style>
-	:global(.js) [data-revealed] {
+<style is:global>
+	.js [data-revealed] {
 		opacity: 0;
-		transition: opacity var(--duration, 0.25s) ease;
 	}
 
-	:global(.js) [data-revealed='true'] {
+	.js [data-revealed='ready'] {
+		transition: opacity 2s ease-out;
+	}
+
+	.js [data-revealed='true'] {
 		opacity: 1;
 	}
 </style>
