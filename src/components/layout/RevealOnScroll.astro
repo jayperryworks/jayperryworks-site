@@ -28,16 +28,28 @@ const classList = [
 <script>
 	const revealedElements = Array.from(document.querySelectorAll('[data-reveal]'));
 
+	// keep count of how many elements have been revealed
+	// so we can stop the script once everything is finished
+	let finishedElementsCount = 0;
+
 	if ('IntersectionObserver' in window) {
 		const revealObserver = new IntersectionObserver(
-			(entries) => entries.forEach((entry) => {
-				if (entry.isIntersecting && !entry.target.classList.contains('visible')) {
-					entry.target.classList.add('visible');
+			(entries) => {
+				if (finishedElementsCount === revealedElements.length) {
+					revealObserver.disconnect();
+					return;
 				}
-				if (!entry.isIntersecting) {
-					entry.target.classList.add('ready');
-				}
-			}),
+
+				return entries.forEach((entry) => {
+					if (entry.isIntersecting && !entry.target.classList.contains('visible')) {
+						entry.target.classList.add('visible');
+						finishedElementsCount++;
+					}
+					if (!entry.isIntersecting) {
+						entry.target.classList.add('ready');
+					}
+				});
+			},
 			{
 				threshold: 0.25,
 			}
