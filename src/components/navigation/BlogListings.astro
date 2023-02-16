@@ -1,5 +1,6 @@
 ---
 // components
+import RevealOnScroll from "@components/layout/RevealOnScroll.astro";
 import ReadNextLink from "@components/navigation/ReadNextLink.astro";
 
 export interface Props {
@@ -19,7 +20,8 @@ const classList = [
 <ul class={classList}>
 	<slot></slot>
 </ul>
-<nav>
+
+<RevealOnScroll tag="nav">
 	<slot name="footer-nav">
 		<ReadNextLink
 			eyebrowSize="delta"
@@ -30,7 +32,7 @@ const classList = [
 			<Fragment slot="title">Archive</Fragment>
 		</ReadNextLink>
 	</slot>
-</nav>
+</RevealOnScroll>
 
 <style>
 	.posts {

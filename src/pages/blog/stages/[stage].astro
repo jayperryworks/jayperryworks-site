@@ -16,9 +16,11 @@ import {
 
 // components
 import Layout from '@layouts/BaseLayout.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import BlogListings from '@components/navigation/BlogListings.astro';
 import BlogListingsPost from '@components/navigation/BlogListingsPost.astro';
 import SequenceNav from '@components/navigation/SequenceNav.astro';
+import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
 
@@ -28,8 +30,6 @@ import {
 	DevelopmentStageUID,
 	FormattedText,
 } from '@lib/types';
-
-import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
 
 export type Post = {
 	date: string,
@@ -143,7 +143,7 @@ const {
 	path="blog"
 >
 	<div class="wrapper">
-		<nav>
+		<RevealOnScroll tag="nav">
 			<SequenceNav>
 				{stages.map((item, index) => (
 					<SequenceNavItem
@@ -155,17 +155,19 @@ const {
 					</SequenceNavItem>
 				))}
 			</SequenceNav>
-		</nav>
-		<header>
+		</RevealOnScroll>
+		<RevealOnScroll tag="header">
 			<Heading level={3} subheading>{prismicHelpers.asText(subtitle)}:</Heading>
 			<Heading level={1}>{sentenceCase(stage)}</Heading>
-		</header>
-		<Passage
-			class="intro"
-			text={description}
-			typeFace="display"
-			typeSize="delta"
-		/>
+		</RevealOnScroll>
+		<RevealOnScroll>
+			<Passage
+				class="intro"
+				text={description}
+				typeFace="display"
+				typeSize="delta"
+			/>
+		</RevealOnScroll>
 		<BlogListings class="post-list">
 			{posts.map((post) => (
 				<li class="post">
