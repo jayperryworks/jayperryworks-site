@@ -16,6 +16,7 @@ import prismic from '@lib/prismic';
 // components
 import LogoJPW from '@components/logos/LogoJPW.astro';
 import Icon from '@components/elements/Icon.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
 import { LinkField } from '@prismicio/types';
@@ -45,14 +46,20 @@ const socialChannelList = channel.map((item: Item, index: number): string => {
 ---
 
 <footer class="border-seam-top">
-	<p class="social type-role-display type-scale-gamma">
+	<RevealOnScroll
+		tag="p"
+		class="social | type-role-display type-scale-gamma"
+	>
 		Keep in touch. You can also find me on <Fragment set:html={socialChannelList} />.
-	</p>
-	<div class="signoff">
+	</RevealOnScroll>
+	<RevealOnScroll
+		tag="div"
+		class="signoff"
+	>
 		<div class="bookend">
 			<div class="lockup">
 				<a
-					class="logo type-link-undecorated"
+					class="logo | type-link-undecorated"
 					href="/"
 				>
 					<LogoJPW />
@@ -70,7 +77,7 @@ const socialChannelList = channel.map((item: Item, index: number): string => {
 				<Icon svg={feed} />
 			</a>
 		</div>
-	</div>
+	</RevealOnScroll>
 </footer>
 
 <style>

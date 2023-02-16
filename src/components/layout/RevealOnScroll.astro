@@ -8,6 +8,7 @@ export interface Props {
 const {
 	class: className = '',
 	tag = 'div',
+	duration = '1.6s',
 } = Astro.props as Props;
 
 const El = tag;
@@ -16,9 +17,16 @@ const classList = [
 	'reveal',
 	className,
 ].join(' ');
+
+const style = [
+	`--reveal-duration: ${duration};`,
+].join(' ');
 ---
 
-<El class={classList}>
+<El
+	class={classList}
+	{style}
+>
 	<slot></slot>
 </El>
 
@@ -32,16 +40,22 @@ const classList = [
 	if ('IntersectionObserver' in window) {
 		const revealObserver = new IntersectionObserver(
 			(entries) => {
+				// if all the elements have been revealed, disconnect the observer
 				if (finishedElementsCount === revealedElements.length) {
 					revealObserver.disconnect();
 					return;
 				}
 
+				// otherwise, continue revealing elements as they become visible
 				return entries.forEach((entry) => {
+					// if the element is visible, add a class to it
 					if (entry.isIntersecting && !entry.target.classList.contains('visible')) {
 						entry.target.classList.add('visible');
 						finishedElementsCount++;
 					}
+
+					// if it's not yet visible, mark it as 'ready' with a class
+					// so it will be ready to transition
 					if (!entry.isIntersecting) {
 						entry.target.classList.add('ready');
 					}
@@ -59,12 +73,13 @@ const classList = [
 </script>
 
 <style>
+	/* only add these styles if javascript is available */
 	:global(.js) .reveal {
 		opacity: 0;
 	}
 
 	:global(.js) .ready {
-		transition: opacity 1.6s ease;
+		transition: opacity var(--reveal-duration) ease;
 	}
 
 	:global(.js) .visible {
