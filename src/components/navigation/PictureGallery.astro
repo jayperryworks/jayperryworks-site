@@ -5,6 +5,7 @@ import { picture as permalink } from '@lib/routes';
 // components
 import Image from '@components/elements/Image.astro';
 import Gallery from '@components/layout/Gallery.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
 import { GallerySize } from '@lib/types';
@@ -25,7 +26,7 @@ const {
 
 <Gallery size={columnSize}>
 	{list.map((picture: PrismicDocumentWithUID) => (
-		<li>
+		<RevealOnScroll tag="li">
 			<a
 				class="type-link-undecorated"
 				href={permalink(picture)}
@@ -37,7 +38,7 @@ const {
 					source={picture.data.cover}
 				/>
 			</a>
-		</li>
+		</RevealOnScroll>
 	))}
 </Gallery>
 
