@@ -22,6 +22,7 @@ import Heading from '@components/blocks/Heading.astro';
 import Icon from '@components/elements/Icon.astro';
 import Layout from '@layouts/BaseLayout.astro';
 import PostMetadata from '@components/elements/PostMetadata.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 export async function getStaticPaths({ paginate }): Promise<Function> {
 	const posts = await prismic.getAllByType('blog_post', {
@@ -84,7 +85,10 @@ const postList = page.data.map(({
 					class="post"
 					id={post.uid}
 				>
-					<header class="post-header">
+					<RevealOnScroll
+						tag="header"
+						class="post-header"
+					>
 						{prismicHelpers.isFilled.title(post.title) && (
 							<Heading level={2} class="post-title">
 								<a
@@ -99,7 +103,7 @@ const postList = page.data.map(({
 							<Heading subheading level={3}>{prismicHelpers.asText(post.subtitle)}</Heading>
 						)}
 						<PostMetadata {...post} class="post-date | content-width" />
-					</header>
+					</RevealOnScroll>
 					<BlockList body={post.summary} showLedeStyle />
 					{(post.readMore || post.link) && (
 						<footer class="post-footer">
@@ -130,7 +134,10 @@ const postList = page.data.map(({
 	</ul>
 
 	<nav class="border-seam-top">
-		<ul class="nav-list">
+		<RevealOnScroll
+			tag="ul"
+			class="nav-list"
+		>
 			{prev && (
 				<li class="nav-item">
 					<a
@@ -153,7 +160,7 @@ const postList = page.data.map(({
 					</a>
 				</li>
 			)}
-		</ul>
+		</RevealOnScroll>
 	</nav>
 </Layout>
 

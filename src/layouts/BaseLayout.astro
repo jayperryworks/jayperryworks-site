@@ -6,8 +6,8 @@ import '@styles/tokens/borders.css';
 import '@styles/tokens/color.css';
 
 // components
-import MainNav from '@components/navigation/MainNav.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
+import MainNav from '@components/navigation/MainNav.astro';
 
 // types
 import type {
@@ -72,10 +72,10 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 		<title>{title}</title>
 
 		<!-- favicon -->
-		<link rel="icon" href="/favicon.ico" sizes="any">
-		<link rel="icon" href="/icon.svg" type="image/svg+xml">
-		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-		<link rel="manifest" href="/manifest.webmanifest">
+		<link rel="icon" hDOMRef="/favicon.ico" sizes="any">
+		<link rel="icon" hDOMRef="/icon.svg" type="image/svg+xml">
+		<link rel="apple-touch-icon" hDOMRef="/apple-touch-icon.png">
+		<link rel="manifest" hDOMRef="/manifest.webmanifest">
 
 		<!-- RSS metadata -->
 		<link rel="alternate" type="application/rss+xml" title="Jay Perry" href="/rss/feed.xml">

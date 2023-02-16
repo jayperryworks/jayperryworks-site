@@ -10,6 +10,7 @@ import DataGrid from '@components/layout/DataGrid.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Layout from '@layouts/BaseLayout.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // utilities
 import { designProject as permalink } from '@lib/routes';
@@ -154,26 +155,29 @@ const credits = [
 	{seo}
 >
 	<article>
-		<header>
+		<RevealOnScroll tag="header">
 			<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
 			{client && (
 				<Heading subheading level={3}>{client}</Heading>
 			)}
-		</header>
+		</RevealOnScroll>
 
 		<BlockList {body} showLedeStyle />
 
-		<aside class="border-seam-top credits">
+		<RevealOnScroll
+			tag="aside"
+			class="border-seam-top credits"
+		>
 			<div class="credits-wrapper">
 				<Heading level={2} class="credits-heading">Credits</Heading>
 				<DataGrid data={credits} />
 			</div>
-		</aside>
+		</RevealOnScroll>
 	</article>
 
 	{next && (
 		<nav class="border-seam-top">
-			<div class="nav-wrapper">
+			<RevealOnScroll class="nav-wrapper">
 				<ReadNextLink
 					align="end"
 					link={next.path}
@@ -182,7 +186,7 @@ const credits = [
 					<Fragment slot="eyebrow">Next case study:</Fragment>
 					<Fragment slot="title">{prismicHelpers.asText(next.title)}</Fragment>
 				</ReadNextLink>
-			</div>
+			</RevealOnScroll>
 		</nav>
 	)}
 </Layout>

@@ -12,8 +12,10 @@ import { sentenceCase, truncate } from '@lib/stringHelpers';
 // components
 import Heading from '@components/blocks/Heading.astro';
 import Layout from '@layouts/BaseLayout.astro';
-import PostListing from '@components/navigation/BlogListingsPost.astro';
+import BlogListings from '@components/navigation/BlogListings.astro';
+import BlogListingsPost from '@components/navigation/BlogListingsPost.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
 export type Post = {
@@ -100,27 +102,17 @@ const {
 	path="blog"
 >
 	<div class="wrapper">
-		<header>
+		<RevealOnScroll tag="header">
 			<Heading subheading level={3}>Posts filed under</Heading>
 			<Heading level={1}>{sentenceCase(tag)}</Heading>
-		</header>
-		<ul class="post-list">
+		</RevealOnScroll>
+		<BlogListings class="post-list">
 			{posts.map((post) => (
 				<li class="post">
-					<PostListing {...post} />
+					<BlogListingsPost {...post} />
 				</li>
 			))}
-		</ul>
-		<nav>
-			<ReadNextLink
-				eyebrowSize="delta"
-				link="/blog/page/1"
-				titleSize="beta"
-			>
-				<Fragment slot="eyebrow">More blog posts:</Fragment>
-				<Fragment slot="title">Archive</Fragment>
-			</ReadNextLink>
-		</nav>
+		</BlogListings>
 	</div>
 </Layout>
 
@@ -129,9 +121,7 @@ const {
 		padding: var(--space-outside) var(--space-xwide);
 	}
 
-	header,
-	.post-list,
-	nav {
+	.wrapper > :global(*) {
 		max-width: var(--content-width-default);
 		margin-inline: auto;
 	}

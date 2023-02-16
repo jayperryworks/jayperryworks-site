@@ -16,6 +16,7 @@ import Heading from '@components/blocks/Heading.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
 import SequenceNav from '@components/navigation/SequenceNav.astro';
 import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
 import type {
@@ -204,7 +205,7 @@ const nextChapter = project.chapterList[currentPage] ? {
 
 		<!-- titling -->
 		<header>
-			<div class="wrapper wide">
+			<RevealOnScroll class="wrapper wide">
 
 				<!-- project title -->
 				<Heading level={1} text={project.title} />
@@ -223,7 +224,7 @@ const nextChapter = project.chapterList[currentPage] ? {
 				<Heading level={3} subheading>{`${project.chapterLabel} ${currentPage}`}</Heading>
 				<Heading level={2} class="header-chapter" text={title} />
 				{subtitle && <Heading level={3} class="header-chapter" subheading text={subtitle} />}
-			</div>
+			</RevealOnScroll>
 		</header>
 
 		<!-- body -->
@@ -232,7 +233,7 @@ const nextChapter = project.chapterList[currentPage] ? {
 
 	<!-- sequence nav -->
 	<nav class="footer-nav">
-		<div class="wrapper">
+		<RevealOnScroll class="wrapper">
 			<SequenceNav>
 				{sequenceNavItems.map((item) => (
 					<SequenceNavItem {...item} next={item.href === url.next}>
@@ -258,7 +259,7 @@ const nextChapter = project.chapterList[currentPage] ? {
 						</aside>
 				}
 			</div>
-		</div>
+		</RevealOnScroll>
 	</nav>
 </Layout>
 

@@ -23,6 +23,7 @@ import Image from '@components/elements/Image.astro';
 import Heading from '@components/blocks/Heading.astro';
 import DataGrid from '@components/layout/DataGrid.astro';
 import Gallery from '@components/layout/Gallery.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import PictureGallery from '@components/navigation/PictureGallery.astro';
 
 // layout
@@ -245,7 +246,10 @@ function createMediaString() {
 	{seo}
 >
 	<!-- cover -->
-	<header class="cover">
+	<RevealOnScroll
+		tag="header"
+		class="cover"
+	>
 		<div class="cover-image">
 			<Image source={cover} fit="contain" />
 		</div>
@@ -256,7 +260,7 @@ function createMediaString() {
 				<p class="cover-subtitle" set:html={createMediaString()}></p>
 			)}
 		</div>
-	</header>
+	</RevealOnScroll>
 
 	<!-- back story -->
 	{prismicHelpers.isFilled.sliceZone(body) && (
@@ -268,15 +272,17 @@ function createMediaString() {
 
 	<!-- editions -->
 	<section class="wrapper | border-seam-top" id="editions">
-		<Heading level={2} align="center">
-			Available editions
-		</Heading>
+		<RevealOnScroll>
+			<Heading level={2} align="center">
+				Available editions
+			</Heading>
+		</RevealOnScroll>
 		<Gallery
 			size="large"
 			gutter="wide"
 		>
 			{editions.map((edition) => (
-				<li>
+				<RevealOnScroll tag="li">
 					<figure class="edition">
 						<div class="edition-image">
 							<Image source={edition.image} />
@@ -301,13 +307,16 @@ function createMediaString() {
 							</div>
 						</figcaption>
 					</figure>
-				</li>
+				</RevealOnScroll>
 			))}
 		</Gallery>
 	</section>
 
 	<nav class="wrapper | border-seam-top">
-		<header class="nav-header">
+		<RevealOnScroll
+			tag="header"
+			class="nav-header"
+		>
 			{nav.title
 				? <Heading level={2} class="nav-header-title">
 						More from the <strong>{prismicHelpers.asText(nav.title)}</strong>&nbsp;series
@@ -320,7 +329,7 @@ function createMediaString() {
 			>
 				See all
 			</Button>
-		</header>
+		</RevealOnScroll>
 		<PictureGallery
 			aspectRatio={nav.aspectRatio}
 			list={nav.pictures as PrismicDocumentWithUID[]}

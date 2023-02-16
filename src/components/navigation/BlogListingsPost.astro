@@ -7,6 +7,7 @@ import '@styles/utilities/type.css';
 import { format } from 'date-fns';
 
 // components
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import Heading from '@components/blocks/Heading.astro';
 import DevelopmentStageLabel from '@components/elements/DevelopmentStageLabel.astro';
 
@@ -32,7 +33,7 @@ const {
 } = Astro.props as Props;
 ---
 
-<article>
+<RevealOnScroll tag="article">
 	<Heading level={6} subheading class="eyebrow">
 		{showStage && <DevelopmentStageLabel name={stage} />}
 		<time datetime={date}>{format(date, 'yyyy.MM.dd')}</time>
@@ -51,7 +52,7 @@ const {
 			<a class="type-link-undecorated" href={path}>{subtitle}</a>
 		</Heading>
 	)}
-</article>
+</RevealOnScroll>
 
 <style>
 	.eyebrow {

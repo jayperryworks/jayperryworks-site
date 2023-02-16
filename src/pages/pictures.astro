@@ -8,13 +8,13 @@ import '@styles/utilities/type.css';
 // --- utils
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
-import { picture as permalink } from '@lib/routes';
+import { PrismicDocumentWithUID } from '@prismicio/types';
 
 // --- components
 import Heading from '@components/blocks/Heading.astro';
 import Layout from '@layouts/BaseLayout.astro';
 import PictureGallery from '@components/navigation/PictureGallery.astro';
-import { PrismicDocumentWithUID } from '@prismicio/types';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // --- data
 // use this aspect ratio when none is specified for a given series
@@ -101,25 +101,28 @@ picturesBySeries.push({
 	path="pictures"
 	{seo}
 >
-	<Heading
-		class="title"
-		level={1}
-		text={title}
-	/>
+	<RevealOnScroll class="title">
+		<Heading
+			level={1}
+			text={title}
+		/>
+	</RevealOnScroll>
 
 	{picturesBySeries.map((series) => (
 		<section
 			class="series"
 			id={series.uid || 'other-work'}
 		>
-			<Heading level={2} class="type-role-accent type-scale-gamma">
-				{series.title
-					? <Fragment>
-							<strong class="series-title">{prismicHelpers.asText(series.title)}</strong> series
-						</Fragment>
-					: <Fragment>Other recent work</Fragment>
-				}
-			</Heading>
+			<RevealOnScroll>
+				<Heading level={2} class="type-role-accent type-scale-gamma">
+					{series.title
+						? <Fragment>
+								<strong class="series-title">{prismicHelpers.asText(series.title)}</strong> series
+							</Fragment>
+						: <Fragment>Other recent work</Fragment>
+					}
+				</Heading>
+			</RevealOnScroll>
 
 			<PictureGallery
 				list={series.pictures as PrismicDocumentWithUID[]}

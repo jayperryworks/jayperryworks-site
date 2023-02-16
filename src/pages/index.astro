@@ -13,12 +13,13 @@ import prismic from '@lib/prismic';
 import { linkResolver, fetchLinks } from '@lib/routes';
 
 // components
+import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
-import Heading from '@components/blocks/Heading.astro';
 import Icon from '@components/elements/Icon.astro';
-import Layout from '@layouts/BaseLayout.astro';
+import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // fetch content
 const response = await prismic.getSingle('homepage', { fetchLinks });
@@ -60,12 +61,12 @@ const seo = {
 
 <Layout
 	path="home"
-	{seo}
 	headerOverlay
+	{seo}
 >
 	<!-- intro -->
 	<header>
-		<div class="intro">
+		<RevealOnScroll class="intro">
 			<div class="blurb">
 				<Heading
 					level={1}
@@ -98,7 +99,7 @@ const seo = {
 				/>
 				Table of contents
 			</a>
-		</div>
+		</RevealOnScroll>
 	</header>
 
 	<!-- TOC panels -->

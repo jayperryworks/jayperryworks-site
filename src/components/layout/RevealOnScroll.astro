@@ -1,0 +1,88 @@
+---
+export interface Props {
+	class?: string;
+	tag?: string;
+	duration?: string;
+}
+
+const {
+	class: className = '',
+	tag = 'div',
+	duration = '1.6s',
+} = Astro.props as Props;
+
+const El = tag;
+
+const classList = [
+	'reveal',
+	className,
+].join(' ');
+
+const style = [
+	`--reveal-duration: ${duration};`,
+].join(' ');
+---
+
+<El
+	class={classList}
+	{style}
+>
+	<slot></slot>
+</El>
+
+<script>
+	const revealedElements = Array.from(document.querySelectorAll('.reveal'));
+
+	// keep count of how many elements have been revealed
+	// so we can stop the script once everything is finished
+	let finishedElementsCount = 0;
+
+	if ('IntersectionObserver' in window) {
+		const revealObserver = new IntersectionObserver(
+			(entries) => {
+				// if all the elements have been revealed, disconnect the observer
+				if (finishedElementsCount === revealedElements.length) {
+					revealObserver.disconnect();
+					return;
+				}
+
+				// otherwise, continue revealing elements as they become visible
+				return entries.forEach((entry) => {
+					// if the element is visible, add a class to it
+					if (entry.isIntersecting && !entry.target.classList.contains('visible')) {
+						entry.target.classList.add('visible');
+						finishedElementsCount++;
+					}
+
+					// if it's not yet visible, mark it as 'ready' with a class
+					// so it will be ready to transition
+					if (!entry.isIntersecting) {
+						entry.target.classList.add('ready');
+					}
+				});
+			},
+			{
+				threshold: 0.25,
+			}
+		);
+
+		revealedElements.forEach((element) => {
+			revealObserver.observe(element);
+		})
+	}
+</script>
+
+<style>
+	/* only add these styles if javascript is available */
+	:global(.js) .reveal {
+		opacity: 0;
+	}
+
+	:global(.js) .ready {
+		transition: opacity var(--reveal-duration) ease;
+	}
+
+	:global(.js) .visible {
+		opacity: 1;
+	}
+</style>
