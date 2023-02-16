@@ -25,6 +25,7 @@ import Heading from '@components/blocks/Heading.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
 import ThreadNav from '@components/navigation/ThreadNav.astro';
 import ThreadNavItem from '@components/navigation/ThreadNavItem.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
 import type {
@@ -161,7 +162,7 @@ const {
 	{seo}
 >
 	<article>
-		<header>
+		<RevealOnScroll tag="header">
 			{prismicHelpers.isFilled.title(title) && (
 				<Heading level={1} class="title">{prismicHelpers.asText(title)}</Heading>
 			)}
@@ -194,13 +195,16 @@ const {
 					))}
 				</ThreadNav>
 			)}
-		</header>
+		</RevealOnScroll>
 
 		<!-- page body -->
 		<BlockList {body} showLedeStyle />
 
 		{link && (
-			<footer class="link">
+			<RevealOnScroll
+				tag="footer"
+				class="link"
+			>
 				<Button
 					href={link}
 					iconRight={externalLink}
@@ -208,14 +212,17 @@ const {
 				>
 					Direct link
 				</Button>
-			</footer>
+			</RevealOnScroll>
 		)}
 	</article>
 
 	<!-- pagination nav -->
 	{next && (
 		<nav>
-			<section class="nav-wrapper tags">
+			<RevealOnScroll
+				tag="section"
+				class="nav-wrapper tags"
+			>
 				<h2 class="type-role-accent type-scale-epsilon">Filed&nbsp;under:</h2>
 				<ul class="tag-list type-role-accent">
 					{tags.map((tag) => (
@@ -224,8 +231,11 @@ const {
 						</li>
 					))}
 				</ul>
-			</section>
-			<section class="nav-wrapper">
+			</RevealOnScroll>
+			<RevealOnScroll
+				tag="section"
+				class="nav-wrapper"
+			>
 				{next.title
 					? <ReadNextLink link={next.path}>
 							<Fragment slot="eyebrow">Next post:</Fragment>
@@ -235,7 +245,7 @@ const {
 							<Fragment slot="title">Next post</Fragment>
 						</ReadNextLink>
 				}
-			</section>
+			</RevealOnScroll>
 		</nav>
 	)}
 </Layout>

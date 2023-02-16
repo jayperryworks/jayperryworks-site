@@ -18,15 +18,12 @@ const classList = [
 ].join(' ');
 ---
 
-<El
-	class={classList}
-	data-reveal
->
+<El class={classList}>
 	<slot></slot>
 </El>
 
 <script>
-	const revealedElements = Array.from(document.querySelectorAll('[data-reveal]'));
+	const revealedElements = Array.from(document.querySelectorAll('.reveal'));
 
 	// keep count of how many elements have been revealed
 	// so we can stop the script once everything is finished
@@ -67,7 +64,7 @@ const classList = [
 	}
 
 	:global(.js) .ready {
-		transition: opacity 2s ease;
+		transition: opacity 1.6s ease;
 	}
 
 	:global(.js) .visible {
