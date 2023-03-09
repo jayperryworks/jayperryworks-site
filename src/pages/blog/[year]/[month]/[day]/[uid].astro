@@ -217,35 +217,39 @@ const {
 	</article>
 
 	<!-- pagination nav -->
-	{next && (
+	{(next || tags.length > 0) && (
 		<nav>
-			<RevealOnScroll
-				tag="section"
-				class="nav-wrapper tags"
-			>
-				<h2 class="type-role-accent type-scale-epsilon">Filed&nbsp;under:</h2>
-				<ul class="tag-list type-role-accent">
-					{tags.map((tag) => (
-						<li>
-							<a href={`/blog/tags/${tag}/`}>{sentenceCase(tag)}</a>
-						</li>
-					))}
-				</ul>
-			</RevealOnScroll>
-			<RevealOnScroll
-				tag="section"
-				class="nav-wrapper"
-			>
-				{next.title
-					? <ReadNextLink link={next.path}>
-							<Fragment slot="eyebrow">Next post:</Fragment>
-							<Fragment slot="title">{next.title}</Fragment>
-						</ReadNextLink>
-					: <ReadNextLink link={next.path}>
-							<Fragment slot="title">Next post</Fragment>
-						</ReadNextLink>
-				}
-			</RevealOnScroll>
+			{tags.length > 0 && (
+				<RevealOnScroll
+					tag="section"
+					class="nav-wrapper tags"
+				>
+					<h2 class="type-role-accent type-scale-epsilon">Filed&nbsp;under:</h2>
+					<ul class="tag-list type-role-accent">
+						{tags.map((tag) => (
+							<li>
+								<a href={`/blog/tags/${tag}/`}>{sentenceCase(tag)}</a>
+							</li>
+						))}
+					</ul>
+				</RevealOnScroll>
+			)}
+			{next && (
+				<RevealOnScroll
+					tag="section"
+					class="nav-wrapper"
+				>
+					{next.title
+						? <ReadNextLink link={next.path}>
+								<Fragment slot="eyebrow">Next post:</Fragment>
+								<Fragment slot="title">{next.title}</Fragment>
+							</ReadNextLink>
+						: <ReadNextLink link={next.path}>
+								<Fragment slot="title">Next post</Fragment>
+							</ReadNextLink>
+					}
+				</RevealOnScroll>
+			)}
 		</nav>
 	)}
 </Layout>

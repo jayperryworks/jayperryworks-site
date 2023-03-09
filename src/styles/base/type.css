@@ -48,6 +48,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
 	line-height: var(--type-leading-tight);
 	max-width: none;
+	text-wrap: balance; /* https: //robinrendle.com/notes/an-end-to-typographic-widows-on-the-web/ */
 }
 
 :is(h1, h2, h3, h4, h5, h6) strong {
