@@ -1,20 +1,22 @@
 ---
 export interface Props {
 	class?: string;
-	tag?: string;
+	disabled?: boolean; // turn off animation effect, so this just becomes a div
 	duration?: string;
+	tag?: string;
 }
 
 const {
 	class: className = '',
+	disabled = false,
+	duration = '2s',
 	tag = 'div',
-	duration = '1.6s',
 } = Astro.props as Props;
 
 const El = tag;
 
 const classList = [
-	'reveal',
+	!disabled ? 'reveal' : '',
 	className,
 ].join(' ');
 
@@ -61,9 +63,6 @@ const style = [
 					}
 				});
 			},
-			{
-				threshold: 0.25,
-			}
 		);
 
 		revealedElements.forEach((element) => {
