@@ -54,31 +54,7 @@ function htmlSerializer(type, element, content, children): string {
 			// add to sidenote count model so each gets a unique number
 			sidenotes.increment();
 
-			return `
-				<span class="sidenote">
-					<input
-						aria-label="Show the sidenote"
-						class="sidenote-input"
-						id="sidenote-input-${sidenotes.getCount()}"
-						type="checkbox"
-					>
-						<label
-							aria-describedby="${sidenotes.getCount()}"
-							class="sidenote-label"
-							for="sidenote-input-${sidenotes.getCount()}"
-							tabindex="0"
-						>${sidenotes.getCount()}</label>
-					</input>
-					<small
-						class="sidenote-content"
-						id="${sidenotes.getCount()}"
-					>
-						<span class="sidenote-parenthesis">(Note: </span>
-						<span class="sidenote-text type-scale-zeta">${sentenceCase(note)}</span>
-						<span class="sidenote-parenthesis">)</span>
-					</small>
-				</span>
-			`;
+			return `<side-note><span slot="content">${sentenceCase(note)}</span></side-note>`;
 		}
 
 		if (label === 'inline code') return `<code>${children.toString()}</code>`;
@@ -87,6 +63,96 @@ function htmlSerializer(type, element, content, children): string {
 	return null;
 }
 ---
+
+<template id="side-note">
+	<!--
+		sidenote component
+		-> Based on Koos Looijesteijn's excellent 'Semantic sidenotes'
+		-> https://www.kooslooijesteijn.net/blog/sidenotes-without-js
+		-> https://github.com/kslstn/sidenotes/blob/main/style.css
+		-> I've opted to keep notes as pop-outs at all screen sizes, rather than move to the side.
+				This is because my layout width varies with page blocks (text, images, pullquotes, etc.) and sidenotes may collide with other blocks.
+	-->
+
+	<style>
+		 .sidenote {
+			--label-color: var(--color-primary);
+			display: inline;
+		}
+
+		.label {
+			background-color: transparent;
+			border-radius: 1000px;
+			border: 2px solid var(--label-color);
+			color: var(--label-color);
+			cursor: pointer;
+			display: inline-block;
+			font-family: var(--type-font-accent);
+			font-size: 0.6em;
+			line-height: inherit;
+			margin-inline: 0.25em;
+			min-height: 2em;
+			min-width: 2em;
+			padding-block: 0;
+			padding-inline: 0.5rem;
+			position: relative;
+			text-align: center;
+			transition: color 0.25s ease, border-color 0.25s ease;
+			vertical-align: top;
+		}
+
+		.label:hover,
+		.open .label {
+			--label-color: var(--color-highlight);
+		}
+
+		.content,
+		.parenthesis {
+			position: absolute;
+			left: -999999px;
+			top: auto;
+		}
+
+		.content {
+			align-items: flex-start;
+			border-radius: 0.2em;
+			display: flex;
+			font-family: var(--type-font-accent);
+			gap: var(--space-xnarrow);
+		}
+
+		.content::before) {
+			color: var(--color-highlight);
+			content: attr(id) ".";
+		}
+
+		.open .content {
+			background-color: var(--color-well);
+			float: left;
+			left: auto;
+			margin-block: var(--space-narrow);
+			min-width: 100%;
+			overflow: hidden;
+			padding: var(--space-narrow);
+			position: relative;
+			z-index: 4;
+		}
+
+		.text {
+			flex: 1;
+			font-size: var(--type-scale-zeta);
+		}
+	</style>
+
+	<span class="sidenote">
+		<button class="label">1</button>
+		<small class="content">
+			<span class="parenthesis">(Note: </span>
+			<slot name="content"></slot>
+			<span class="parenthesis">)</span>
+		</small>
+	</span>
+</template>
 
 <div class={classList}>
 	<slot>
@@ -97,6 +163,28 @@ function htmlSerializer(type, element, content, children): string {
 		/>
 	</slot>
 </div>
+
+<script>
+	class SideNote extends HTMLElement {
+
+		constructor() {
+			let template = (document.getElementById('side-note') as HTMLTemplateElement).content;
+
+			super();
+			const shadowRoot = this.attachShadow({ mode: "open" });
+			shadowRoot.appendChild(template.cloneNode(true));
+
+			const label = shadowRoot.querySelector('.label');
+			const wrapper = shadowRoot.querySelector('.sidenote');
+
+			label.addEventListener('click', (event) => {
+				wrapper.classList.toggle('open');
+			});
+		}
+	}
+
+	customElements.define('side-note', SideNote);
+</script>
 
 <style>
 	.prose {
@@ -135,80 +223,5 @@ function htmlSerializer(type, element, content, children): string {
 			vertical-align: baseline;
 			width: var(--size);
 		}
-	}
-
-	/* sidenotes */
-	/* -> Based on Koos Looijesteijn's excellent 'Semantic sidenotes' */
-	/* -> https://www.kooslooijesteijn.net/blog/sidenotes-without-js */
-	/* -> https://github.com/kslstn/sidenotes/blob/main/style.css */
-	/* -> I've opted to keep notes as pop-outs at all screen sizes, rather than move to the side.
-				This is because my layout width varies with page blocks (text, images, pullquotes, etc.) and sidenotes may collide with other blocks. */
-	.prose :global(.sidenote) {
-		--label-color: var(--color-primary);
-		display: inline;
-	}
-
-	.prose :global(.sidenote-input) {
-		display: none;
-	}
-
-	.prose :global(.sidenote-label) {
-		border-radius: 1000px;
-		border: 2px solid var(--label-color);
-		color: var(--label-color);
-		cursor: pointer;
-		display: inline-block;
-		font-family: var(--type-font-accent);
-		font-size: 0.6em;
-		line-height: inherit;
-		margin-inline: 0.25em;
-		min-height: 2em;
-		min-width: 2em;
-		padding-inline: 0.5rem;
-		position: relative;
-		text-align: center;
-		transition: color 0.25s ease, border-color 0.25s ease;
-		vertical-align: top;
-	}
-
-	.prose :global(.sidenote-label:hover),
-	.prose :global(.sidenote-input:checked ~ .sidenote-label) {
-		--label-color: var(--color-highlight);
-	}
-
-	.prose :global(.sidenote-content),
-	.prose :global(.sidenote-parenthesis) {
-		position: absolute;
-		left: -999999px;
-		top: auto;
-	}
-
-	.prose :global(.sidenote-content) {
-		align-items: flex-start;
-		border-radius: 0.2em;
-		display: flex;
-		font-family: var(--type-font-accent);
-		gap: var(--space-xnarrow);
-	}
-
-	.prose :global(.sidenote-content::before) {
-		color: var(--color-highlight);
-		content: attr(id) ".";
-	}
-
-	.prose :global(.sidenote-input:checked ~ .sidenote-content) {
-		background-color: var(--color-well);
-		float: left;
-		left: auto;
-		margin-block: var(--space-narrow);
-		min-width: 100%;
-		overflow: hidden;
-		padding: var(--space-narrow);
-		position: relative;
-		z-index: 4;
-	}
-
-	.prose :global(.sidenote-text) {
-		flex: 1;
 	}
 </style>
