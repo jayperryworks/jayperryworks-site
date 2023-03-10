@@ -24,9 +24,14 @@ const {
 	class: className = '',
 	description,
 } = Astro.props as Props;
+
+const classList = [
+	'thread-nav',
+	className,
+].join(' ');
 ---
 
-<aside class={className}>
+<aside class={classList}>
 	<Heading level={2} class="type-scale-epsilon">
 		This post is part of a thread.
 		<Dot class="help">
@@ -56,21 +61,21 @@ const {
 </aside>
 
 <script>
-	let Tooltip = {
-		selector: '.help',
-		openClass: 'open',
-		$button: null,
-	};
+	const SELECTOR = '.help';
+	const OPEN_CLASS = 'open';
 
-	Tooltip.$button = document.querySelector(Tooltip.selector);
+	const $threadNav = document.querySelector('.thread-nav');
+	const $button = $threadNav?.querySelector(SELECTOR);
 
-	document.addEventListener('click', (event) => {
-		if (event.target.closest('.help')) {
-			Tooltip.$button.classList.toggle(Tooltip.openClass);
-			return;
-		}
-		Tooltip.$button.classList.remove(Tooltip.openClass);
-	});
+	if ($button) {
+		document.addEventListener('click', (event) => {
+			if (event.target.closest(SELECTOR)) {
+				$button.classList.toggle(OPEN_CLASS);
+				return;
+			}
+			$button.classList.remove(OPEN_CLASS);
+		});
+	}
 </script>
 
 <style>
