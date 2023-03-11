@@ -54,11 +54,7 @@ function htmlSerializer(type, element, content, children): string {
 			// add to sidenote count model so each gets a unique number
 			sidenotes.increment();
 
-			return `
-				<side-note number="${sidenotes.getCount()}">
-					<span>${sentenceCase(note)}</span>
-				</side-note>
-			`;
+			return `<side-note number="${sidenotes.getCount()}">${sentenceCase(note)}</side-note>`;
 		}
 
 		if (label === 'inline code') return `<code>${children.toString()}</code>`;
