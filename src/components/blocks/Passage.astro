@@ -58,7 +58,7 @@ function htmlSerializer(type, element, content, children): string {
 
 			return `
 				<side-note number="${sidenotes.getCount()}">
-					<span class="hide-visually@js">(Note: </span>${sentenceCase(note)}<span class="hide-visually@js">)</span>
+					<span class="fallback">(Note: </span>${sentenceCase(note)}<span class="fallback">)</span>
 				</side-note>
 			`;
 		}

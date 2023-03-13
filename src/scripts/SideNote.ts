@@ -43,6 +43,13 @@ const style = `
 			--label-color: var(--color-highlight);
 		}
 
+		.content,
+		::slotted(.fallback) {
+			left: -999999px;
+			position: absolute;
+			top: auto;
+		}
+
 		.content {
 			align-items: flex-start;
 			border-radius: 0.2em;
@@ -50,14 +57,11 @@ const style = `
 			font-family: var(--type-font-accent);
 			font-size: var(--type-scale-zeta);
 			gap: var(--space-xnarrow);
-			left: -999999px;
-			position: absolute;
-			top: auto;
 		}
 
 		.content::before {
 			color: var(--color-highlight);
-			content: attr(id) ".";
+			content: attr(data-count) ".";
 		}
 
 		.is-open .content {
@@ -112,9 +116,13 @@ class SideNote extends HTMLElement {
 		this.#shadowRoot.innerHTML = `
 			${style}
 
-			<span class="sidenote">
-				<button class="label">${this.number}</button>
-				<small class="content" id="${this.number}">
+			<span class="sidenote" id="sidenote-${this.number}">
+				<button class="label" aria-label="Toggle the note">${this.number}</button>
+				<small
+					class="content"
+					data-count="${this.number}"
+					aria-role="note"
+				>
 					<span class="text"><slot></slot></span>
 				</small>
 			</span>
