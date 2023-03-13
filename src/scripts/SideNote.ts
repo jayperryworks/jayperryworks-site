@@ -71,6 +71,10 @@ const style = `
 			position: relative;
 			z-index: 4;
 		}
+
+		.text {
+			flex: 1;
+		}
 	</style>
 `;
 
@@ -111,7 +115,7 @@ class SideNote extends HTMLElement {
 			<span class="sidenote">
 				<button class="label">${this.number}</button>
 				<small class="content" id="${this.number}">
-					<slot></slot>
+					<span class="text"><slot></slot></span>
 				</small>
 			</span>
 		`;
