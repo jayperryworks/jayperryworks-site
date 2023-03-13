@@ -6,6 +6,7 @@ import '@styles/utilities/type.css';
 // --- utils
 import { sentenceCase } from '@lib/stringHelpers';
 import * as sidenotes from '@lib/model/sidenotes';
+import * as PrismicHelpers from '@prismicio/helpers';
 
 // --- components
 import RenderedText from '@components/elements/RenderedText.astro';
@@ -46,7 +47,7 @@ function htmlSerializer(type, element, content, children): string {
 
 		if (label === 'note') {
 			// remove the fallback parentheses around the label text.
-			let note = children.toString().replace('(', '').replace(')', '').trim();
+			let note = children.toString().replace(/(^\(|\)$)/mg, '').trim();
 
 			// add a period at the end of the note text, if there isn't one.
 			if (note.slice(-1) !== '.') note = note.concat('.');
@@ -54,7 +55,11 @@ function htmlSerializer(type, element, content, children): string {
 			// add to sidenote count model so each gets a unique number
 			sidenotes.increment();
 
-			return `<side-note number="${sidenotes.getCount()}">${sentenceCase(note)}</side-note>`;
+			return `
+				<side-note number="${sidenotes.getCount()}">
+					<span class="hide-visually@js">(Note: </span>${sentenceCase(note)}<span class="hide-visually@js">)</span>
+				</side-note>
+			`;
 		}
 
 		if (label === 'inline code') return `<code>${children.toString()}</code>`;

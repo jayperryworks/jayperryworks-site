@@ -43,20 +43,16 @@ const style = `
 			--label-color: var(--color-highlight);
 		}
 
-		.content,
-		.parenthesis {
-			position: absolute;
-			left: -999999px;
-			top: auto;
-		}
-
 		.content {
 			align-items: flex-start;
 			border-radius: 0.2em;
 			display: flex;
 			font-family: var(--type-font-accent);
-			gap: var(--space-xnarrow);
 			font-size: var(--type-scale-zeta);
+			gap: var(--space-xnarrow);
+			left: -999999px;
+			position: absolute;
+			top: auto;
 		}
 
 		.content::before {
@@ -74,10 +70,6 @@ const style = `
 			padding: var(--space-narrow);
 			position: relative;
 			z-index: 4;
-		}
-
-		::slotted(*) {
-			flex: 1;
 		}
 	</style>
 `;
@@ -119,9 +111,7 @@ class SideNote extends HTMLElement {
 			<span class="sidenote">
 				<button class="label">${this.number}</button>
 				<small class="content" id="${this.number}">
-					<span class="parenthesis">(Note: </span>
 					<slot></slot>
-					<span class="parenthesis">)</span>
 				</small>
 			</span>
 		`;
