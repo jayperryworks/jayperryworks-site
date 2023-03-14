@@ -6,6 +6,7 @@ import '@styles/utilities/type.css';
 // --- utils
 import { sentenceCase } from '@lib/stringHelpers';
 import * as sidenotes from '@lib/model/sidenotes';
+import * as PrismicHelpers from '@prismicio/helpers';
 
 // --- components
 import RenderedText from '@components/elements/RenderedText.astro';
@@ -45,8 +46,9 @@ function htmlSerializer(type, element, content, children): string {
 		const { label } = element.data;
 
 		if (label === 'note') {
-			// remove the fallback parentheses around the label text.
-			let note = children.toString().replace('(', '').replace(')', '').trim();
+			// remove the fallback parentheses around the label text
+			// -> https://stackoverflow.com/questions/19134860/javascript-remove-strings-in-beginning-and-end#19135220
+			let note = children.toString().trim().replace(/(^\(|\)$)/mg, '');
 
 			// add a period at the end of the note text, if there isn't one.
 			if (note.slice(-1) !== '.') note = note.concat('.');
@@ -55,29 +57,9 @@ function htmlSerializer(type, element, content, children): string {
 			sidenotes.increment();
 
 			return `
-				<span class="sidenote">
-					<input
-						aria-label="Show the sidenote"
-						class="sidenote-input"
-						id="sidenote-input-${sidenotes.getCount()}"
-						type="checkbox"
-					>
-						<label
-							aria-describedby="${sidenotes.getCount()}"
-							class="sidenote-label"
-							for="sidenote-input-${sidenotes.getCount()}"
-							tabindex="0"
-						>${sidenotes.getCount()}</label>
-					</input>
-					<small
-						class="sidenote-content"
-						id="${sidenotes.getCount()}"
-					>
-						<span class="sidenote-parenthesis">(Note: </span>
-						<span class="sidenote-text type-scale-zeta">${sentenceCase(note)}</span>
-						<span class="sidenote-parenthesis">)</span>
-					</small>
-				</span>
+				<side-note number="${sidenotes.getCount()}">
+					<span class="fallback">(Note: </span>${sentenceCase(note)}<span class="fallback">)</span>
+				</side-note>
 			`;
 		}
 
@@ -87,6 +69,8 @@ function htmlSerializer(type, element, content, children): string {
 	return null;
 }
 ---
+
+<script src="@scripts/SideNote.ts"></script>
 
 <div class={classList}>
 	<slot>
@@ -135,80 +119,5 @@ function htmlSerializer(type, element, content, children): string {
 			vertical-align: baseline;
 			width: var(--size);
 		}
-	}
-
-	/* sidenotes */
-	/* -> Based on Koos Looijesteijn's excellent 'Semantic sidenotes' */
-	/* -> https://www.kooslooijesteijn.net/blog/sidenotes-without-js */
-	/* -> https://github.com/kslstn/sidenotes/blob/main/style.css */
-	/* -> I've opted to keep notes as pop-outs at all screen sizes, rather than move to the side.
-				This is because my layout width varies with page blocks (text, images, pullquotes, etc.) and sidenotes may collide with other blocks. */
-	.prose :global(.sidenote) {
-		--label-color: var(--color-primary);
-		display: inline;
-	}
-
-	.prose :global(.sidenote-input) {
-		display: none;
-	}
-
-	.prose :global(.sidenote-label) {
-		border-radius: 1000px;
-		border: 2px solid var(--label-color);
-		color: var(--label-color);
-		cursor: pointer;
-		display: inline-block;
-		font-family: var(--type-font-accent);
-		font-size: 0.6em;
-		line-height: inherit;
-		margin-inline: 0.25em;
-		min-height: 2em;
-		min-width: 2em;
-		padding-inline: 0.5rem;
-		position: relative;
-		text-align: center;
-		transition: color 0.25s ease, border-color 0.25s ease;
-		vertical-align: top;
-	}
-
-	.prose :global(.sidenote-label:hover),
-	.prose :global(.sidenote-input:checked ~ .sidenote-label) {
-		--label-color: var(--color-highlight);
-	}
-
-	.prose :global(.sidenote-content),
-	.prose :global(.sidenote-parenthesis) {
-		position: absolute;
-		left: -999999px;
-		top: auto;
-	}
-
-	.prose :global(.sidenote-content) {
-		align-items: flex-start;
-		border-radius: 0.2em;
-		display: flex;
-		font-family: var(--type-font-accent);
-		gap: var(--space-xnarrow);
-	}
-
-	.prose :global(.sidenote-content::before) {
-		color: var(--color-highlight);
-		content: attr(id) ".";
-	}
-
-	.prose :global(.sidenote-input:checked ~ .sidenote-content) {
-		background-color: var(--color-well);
-		float: left;
-		left: auto;
-		margin-block: var(--space-narrow);
-		min-width: 100%;
-		overflow: hidden;
-		padding: var(--space-narrow);
-		position: relative;
-		z-index: 4;
-	}
-
-	.prose :global(.sidenote-text) {
-		flex: 1;
 	}
 </style>
