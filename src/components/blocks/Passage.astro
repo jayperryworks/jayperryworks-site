@@ -48,7 +48,7 @@ function htmlSerializer(type, element, content, children): string {
 		if (label === 'note') {
 			// remove the fallback parentheses around the label text
 			// -> https://stackoverflow.com/questions/19134860/javascript-remove-strings-in-beginning-and-end#19135220
-			let note = children.toString().replace(/(^\(|\)$)/mg, '').trim();
+			let note = children.toString().trim().replace(/(^\(|\)$)/mg, '');
 
 			// add a period at the end of the note text, if there isn't one.
 			if (note.slice(-1) !== '.') note = note.concat('.');
