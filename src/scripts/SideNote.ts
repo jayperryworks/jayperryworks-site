@@ -12,6 +12,11 @@
 
 const style = `
 	<style>
+		*,
+		*::before {
+			box-sizing: border-box;
+		}
+
 		.sidenote {
 			--label-color: var(--color-primary);
 			display: inline;
