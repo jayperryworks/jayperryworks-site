@@ -44,6 +44,18 @@ body {
 	font-variant-ligatures: contextual;
 }
 
+/* prevent mobile browsers from enlarging font size arbitrarily */
+/* -> https: //60devs.com/css-bugs-in-mobile-safari.html */
+/* -> https: //stackoverflow.com/questions/5303263/fix-font-size-issue-on-mobile-safari-iphone-where-text-is-rendered-inconsisten */
+@media screen and (max-device-width: 30em) {
+	body {
+		-webkit-text-size-adjust: 100%;
+		-moz-text-size-adjust: 100%;
+		-ms-text-size-adjust: 100%;
+		text-size-adjust: 100%;
+	}
+}
+
 /* Elements that don't have a class get default styles */
 a:not([class]) {
 	text-decoration-skip-ink: auto;
