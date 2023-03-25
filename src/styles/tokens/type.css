@@ -12,15 +12,9 @@
 	--type-scale-zeta: clamp(0.88rem, calc(0.77rem + 0.54vw), 1.25rem);
 
 	/* --- fonts --- */
-	--type-font-display: "Publico Headline", "Publico", "Georgia", "Times",
-		"Times New Roman", serif;
-	--type-font-body: "Publico Text", "Publico", "Georgia", "Times",
-		"Times New Roman", serif;
-	--type-font-accent: "System", system-ui, -apple-system, BlinkMacSystemFont,
-		"Avenir Next", "Avenir", "Segoe UI", "Lucida Grande", "Helvetica Neue",
-		"Helvetica", "Fira Sans", "Roboto", "Noto", "Droid Sans", "Cantarell",
-		"Oxygen", "Ubuntu", "Franklin Gothic Medium", "Century Gothic",
-		"Liberation Sans", sans-serif;
+	--type-font-display: "Figtree", sans-serif;
+	--type-font-body: 'Tiempos', Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+	--type-font-accent: "Figtree", "System", system-ui, -apple-system, BlinkMacSystemFont, "Avenir Next", "Avenir", "Segoe UI", "Lucida Grande", "Helvetica Neue", "Helvetica", "Fira Sans", "Roboto", "Noto", "Droid Sans", "Cantarell", "Oxygen", "Ubuntu", "Franklin Gothic Medium", "Century Gothic", "Liberation Sans", sans-serif;
 
 	/* --- leading --- */
 	--type-leading-xtight: 1.2;

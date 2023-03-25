@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,700;1,300;1,700&family=Literata:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 @import url("../tokens/borders.css");
 @import url("../tokens/color.css");
 @import url("../tokens/spacing.css");
 @import url("../tokens/type.css");
+
 
 /* --- webfonts --- */
 @font-face {
@@ -45,24 +48,25 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
 	font-family: var(--type-font-display);
-	font-weight: normal;
+	font-weight: 700;
 	line-height: var(--type-leading-tight);
 	max-width: none;
 	text-wrap: balance; /* https: //robinrendle.com/notes/an-end-to-typographic-widows-on-the-web/ */
 }
 
 :is(h1, h2, h3, h4, h5, h6) strong {
-	font-weight: normal;
+	font-weight: 700;
 }
 
 :is(h1, h2, h3, h4, h5, h6) em {
-	font-style: normal;
+	font-style: italic;
 }
 
 h1 {
 	font-size: 2.83rem;
 	font-size: var(--type-scale-alpha);
 	line-height: var(--type-leading-xtight);
+	letter-spacing: -0.01em;
 }
 
 h2 {
