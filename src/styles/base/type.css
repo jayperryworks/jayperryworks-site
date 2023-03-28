@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,700;1,300;1,700&family=Literata:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,700;1,300;1,700&family=Literata:ital,wght@0,300;0,700;1,300;1,700&display=swap');
 
 @import url("../tokens/borders.css");
 @import url("../tokens/color.css");
@@ -44,6 +44,7 @@ body {
 	font-size: 1.2rem;
 	font-size: var(--type-scale-epsilon);
 	line-height: var(--type-leading-default);
+	font-weight: 300;
 }
 
 h1, h2, h3, h4, h5, h6 {
