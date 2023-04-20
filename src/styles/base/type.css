@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,700;1,300;1,700&family=Literata:ital,wght@0,300;0,700;1,300;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,700;1,300;1,700&PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 @import url("../tokens/borders.css");
 @import url("../tokens/color.css");
@@ -67,7 +67,7 @@ h1 {
 	font-size: 2.83rem;
 	font-size: var(--type-scale-alpha);
 	line-height: var(--type-leading-xtight);
-	letter-spacing: -0.01em;
+	/* letter-spacing: -0.01em; */
 }
 
 h2 {
