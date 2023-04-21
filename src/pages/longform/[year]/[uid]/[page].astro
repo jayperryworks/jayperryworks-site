@@ -254,7 +254,7 @@ const nextChapter = project.chapterList[currentPage] ? {
 							<Fragment slot="eyebrow">{`${project.chapterLabel} ${currentPage + 1}`}</Fragment>
 							<Fragment slot="title">{prismicHelpers.asText(nextChapter.title)}</Fragment>
 						</ReadNextLink>
-					: <aside class="end | type-role-body type-scale-gamma">
+					: <aside class="end | type-role-display type-scale-gamma">
 							The end
 						</aside>
 				}
@@ -309,7 +309,7 @@ const nextChapter = project.chapterList[currentPage] ? {
 	}
 
 	.end {
-		text-align: center;
+		text-align: end;
 		font-style: italic;
 		color: var(--color-secondary);
 	}

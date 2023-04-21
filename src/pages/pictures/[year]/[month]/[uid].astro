@@ -288,7 +288,7 @@ function createMediaString() {
 							<Image source={edition.image} />
 						</div>
 						<figcaption class="edition-info">
-							<Heading level={3} class="edition-title">
+							<Heading level={3} class="edition-title | type-role-accent">
 								<strong>{edition.name}</strong><span> {edition.type.toString().toLowerCase()}&nbsp;print</span>
 							</Heading>
 							<DataGrid
@@ -318,7 +318,7 @@ function createMediaString() {
 			class="nav-header"
 		>
 			{nav.title
-				? <Heading level={2} class="nav-header-title">
+				? <Heading level={2} class="nav-header-title | type-scale-gamma">
 						More from the <strong>{prismicHelpers.asText(nav.title)}</strong>&nbsp;series
 					</Heading>
 				: <Heading level={2} class="">More work</Heading>
@@ -424,6 +424,8 @@ function createMediaString() {
 
 	.edition-title > strong {
 		color: var(--color-primary);
+		font-style: normal;
+		font-weight: 300;
 	}
 
 	.edition-image {
@@ -440,7 +442,7 @@ function createMediaString() {
 		--gap: var(--space-narrow);
 		flex-grow: 1;
 		flex-shrink: 1;
-		flex-basis: 12rem;
+		flex-basis: 14rem;
 	}
 
 	.edition-info > dl {
@@ -467,6 +469,7 @@ function createMediaString() {
 
 	.nav-header-title > strong {
 		color: var(--color-primary);
+		font-style: normal;
 	}
 
 	.nav-back-link {

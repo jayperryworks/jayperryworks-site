@@ -6,6 +6,7 @@
 	import '@styles/tokens/color.css';
 
 	// components
+	import Heading from '@components/blocks/Heading.astro';
 	import Passage from '@components/blocks/Passage.astro';
 
 	// types
@@ -26,19 +27,23 @@
 ---
 
 <aside class={className}>
-	{label && <h2>{label}</h2>}
+	{label && (
+		<Heading
+			class="label | type-role-accent type-scale-epsilon"
+			level={2}
+		>
+			{label}
+		</Heading>
+	)}
 	<Passage {text} />
 </aside>
 
 <style>
-	h2 {
+	.label {
 		border-block-start: var(--border-default);
-		color: var(--color-secondary);
-		font-family: var(--type-font-accent);
-		font-size: var(--type-scale-epsilon);
-		font-style: normal;
-		font-weight: 300;
+		color: var(--color-primary);
 		padding-block: var(--space-narrow);
+		font-style: normal;
 	}
 
 	aside {

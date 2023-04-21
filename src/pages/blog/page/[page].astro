@@ -141,21 +141,21 @@ const postList = page.data.map(({
 			{prev && (
 				<li class="nav-item">
 					<a
-						class="nav-link"
+						class="nav-link | type-scale-delta"
 						href={prev}
 					>
 						<Icon svg={arrowLeft} class="nav-icon before" />
-						<span class="nav-label">Newer posts</span>
+						<span class="nav-label | type-role-accent">Newer posts</span>
 					</a>
 				</li>
 			)}
 			{next && (
 				<li class="nav-item">
 					<a
-						class="nav-link"
+						class="nav-link | type-scale-delta"
 						href={next}
 					>
-						<span class="nav-label">Older posts</span>
+						<span class="nav-label | type-role-accent">Older posts</span>
 						<Icon svg={arrowRight} class="nav-icon after" />
 					</a>
 				</li>
@@ -212,8 +212,8 @@ const postList = page.data.map(({
 	}
 
 	.wrapper {
-		max-width: var(--content-width-default);
 		margin-inline: auto;
+		max-width: var(--content-width-default);
 	}
 
 	.post-date {
@@ -242,13 +242,12 @@ const postList = page.data.map(({
 	}
 
 	.nav-link {
-		border: 0;
-		font-size: var(--type-scale-gamma);
-		display: inline-grid;
-		grid-template-columns: [start] 1em [label] minmax(0, 1fr)  [end] 1em;
 		align-items: center;
-		justify-items: center;
+		border: 0;
+		display: inline-grid;
 		gap: var(--space-xnarrow);
+		grid-template-columns: [start] 1em [label] minmax(0, 1fr)  [end] 1em;
+		justify-items: center;
 	}
 
 	.nav-item {
@@ -257,9 +256,16 @@ const postList = page.data.map(({
 	}
 
 	.nav-label {
-		grid-area: label;
-		display: inline-block;
 		border-bottom: var(--border-link);
+		color: var(--color-primary);
+		display: inline-block;
+		grid-area: label;
+		transition: color 0.25s ease-in-out;
+	}
+
+	.nav-label:hover,
+	.nav-label:active {
+		color: var(--color-highlight);
 	}
 
 	.nav-link :global(.nav-icon.before) {

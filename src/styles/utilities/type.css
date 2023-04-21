@@ -29,11 +29,6 @@
 	letter-spacing: -0.02em;
 }
 
-:is(.type-scale-alpha, .type-scale-beta, .type-scale-gamma) .type-role-accent,
-:is(.type-scale-alpha, .type-scale-beta, .type-scale-gamma).type-role-accent {
-	font-weight: 100;
-}
-
 :is(.type-scale-zeta) .type-role-accent,
 :is(.type-scale-zeta).type-role-accent {
 	font-weight: 300;

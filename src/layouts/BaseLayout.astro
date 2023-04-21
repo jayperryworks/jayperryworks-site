@@ -52,7 +52,9 @@ function themeReducer(
 	return result;
 }
 
-const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer, {}) : {};
+const themeTokens: ThemeTokens = theme
+	? Object.keys(theme).reduce(themeReducer, {})
+	: {};
 ---
 
 <script>
