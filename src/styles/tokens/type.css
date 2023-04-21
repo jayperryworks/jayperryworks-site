@@ -11,37 +11,10 @@
 	--type-scale-epsilon: clamp(1rem, calc(0.86rem + 0.71vw), 1.5rem);
 	--type-scale-zeta: clamp(0.88rem, calc(0.77rem + 0.54vw), 1.25rem);
 
-	--cheltenham: 'ITC Cheltenham STD', Georgia, Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
-	/* Iowan is a surprisingly nice match to a humanist geo - feels really nice and it's 'free' as a system font */
-	--iowan: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
-	--calluna: 'Calluna', Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
-	/* faustina looks nice but the kerning feels a little off */
-	--faustina: 'Faustina', Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
-	--figtree: 'Figtree', 'System', system-ui, -apple-system, BlinkMacSystemFont, 'Avenir Next', 'Avenir', 'Segoe UI', 'Lucida Grande', 'Helvetica Neue', 'Helvetica', 'Fira Sans', 'Roboto', 'Noto', 'Droid Sans', 'Cantarell', 'Oxygen', 'Ubuntu', 'Franklin Gothic Medium', 'Century Gothic', 'Liberation Sans', sans-serif;
-	--system: 'System', system-ui, -apple-system, BlinkMacSystemFont, 'Avenir Next', 'Avenir', 'Segoe UI', 'Lucida Grande', 'Helvetica Neue', 'Helvetica', 'Fira Sans', 'Roboto', 'Noto', 'Droid Sans', 'Cantarell', 'Oxygen', 'Ubuntu', 'Franklin Gothic Medium', 'Century Gothic', 'Liberation Sans', sans-serif;
-	--charter: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
-	--tiempos-headline: 'Tiempos Headline Test', serif;
-	--tiempos-text: 'Tiempos Text Test', serif;
-	/* too narrow and contrasty */
-	--plantin: 'Plantin', serif;
-	/* too narrow and contrasty, serifs are too chunky */
-	--pt-serif: 'PT Serif', serif;
-	--baskerville: 'Libre Baskerville', serif;
-	--tt-norms: 'TT Norms Pro', serif;
-	--effra: 'Effra Trial', sans-serif;
-	--sohne: 'Sohne Test', sans-serif;
-	--avenir: 'Avenir Next', 'Avenir', sans-serif;
-	--sanomat: 'Sanomat Trial', serif;
-	--lyon: 'Lyon Display Trial', serif;
-	--argos: 'FONTSPRING DEMO - Argos-Bold Regular', serif;
-
-	--publico-display: 'Publico Headline', sans-serif;
-	--publico-text: 'Publico Text', serif;
-
 	/* --- fonts --- */
-	--type-font-display: var(--sanomat);
-	--type-font-body: var(--iowan);
-	--type-font-accent: var(--system);
+	--type-font-display: 'Sanomat', 'Charter', 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
+	--type-font-body: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
+	--type-font-accent: 'Figtree', 'System', system-ui, -apple-system, BlinkMacSystemFont, 'Avenir Next', 'Avenir', 'Segoe UI', 'Lucida Grande', 'Helvetica Neue', 'Helvetica', 'Fira Sans', 'Roboto', 'Noto', 'Droid Sans', 'Cantarell', 'Oxygen', 'Ubuntu', 'Franklin Gothic Medium', 'Century Gothic', 'Liberation Sans', sans-serif;
 
 	/* --- leading --- */
 	--type-leading-xtight: 1.2;

@@ -48,7 +48,7 @@ const socialChannelList = channel.map((item: Item, index: number): string => {
 <footer class="border-seam-top">
 	<RevealOnScroll
 		tag="p"
-		class="social | type-role-display type-scale-gamma"
+		class="social | type-role-accent"
 	>
 		Keep in touch. You can also find me on <Fragment set:html={socialChannelList} />.
 	</RevealOnScroll>
@@ -93,13 +93,13 @@ const socialChannelList = channel.map((item: Item, index: number): string => {
 		display: block;
 		line-height: var(--type-leading-default);
 		max-width: none;
-		padding-block: var(--space-wide);
+		padding-block: var(--space-medium);
 	}
 
 	.social > :global(a) {
 		color: var(--color-primary);
-		font-family: var(--type-font-display);
-		font-weight: normal;
+		font-family: var(--type-font-accent);
+		/* font-weight: 600; */
 	}
 
 	.signoff {
