@@ -46,7 +46,14 @@ const classList = [
 	</Heading>
 	{(title || description) && (
 		<div class="info">
-			{title && <Heading level={3} class="type-scale-delta">{title}</Heading>}
+			{title && (
+				<Heading
+					level={3}
+					class="title | type-scale-epsilon"
+				>
+					{title}
+				</Heading>
+			)}
 			{description && (
 				<p class="description | type-role-accent type-scale-zeta">{description}</p>
 			)}
@@ -98,8 +105,14 @@ const classList = [
 		font-weight: 300;
 	}
 
+	.title {
+		color: var(--color-primary);
+		font-weight: 600;
+	}
+
 	.description {
 		line-height: var(--type-leading-wide);
+		text-wrap: balance;
 	}
 
 	/* increase specificity so it overrides the child component */
