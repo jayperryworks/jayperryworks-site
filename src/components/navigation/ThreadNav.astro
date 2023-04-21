@@ -32,7 +32,7 @@ const classList = [
 ---
 
 <aside class={classList}>
-	<Heading level={2} class="type-scale-epsilon">
+	<Heading level={2} class="label | type-role-accent type-scale-epsilon">
 		This post is part of a thread.
 		<Dot class="help">
 			?
@@ -47,7 +47,9 @@ const classList = [
 	{(title || description) && (
 		<div class="info">
 			{title && <Heading level={3} class="type-scale-delta">{title}</Heading>}
-			{description && <p class="type-role-accent type-scale-zeta">{description}</p>}
+			{description && (
+				<p class="description | type-role-accent type-scale-zeta">{description}</p>
+			)}
 		</div>
 	)}
 	<details>
@@ -91,8 +93,17 @@ const classList = [
 		display: none;
 	}
 
+	.label {
+		color: var(--color-primary);
+		font-weight: 300;
+	}
+
+	.description {
+		line-height: var(--type-leading-wide);
+	}
+
 	/* increase specificity so it overrides the child component */
-	aside .help {
+	.help {
 		--size: 2em;
 		--color: var(--color-secondary);
 
@@ -100,11 +111,11 @@ const classList = [
 		margin-block-start: calc((var(--size) / 4) * -1); /* scootch up a little */
 	}
 
-	aside .help.open {
+	.help.open {
 		--color: var(--color-highlight);
 	}
 
-	aside .tooltip {
+	.tooltip {
 		--max-width: 24rem;
 		--min-width: 16rem;
 	}
