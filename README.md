@@ -1,16 +1,17 @@
-# Jay Perry
+# Jay's website
 [jayperry.works](http://jayperry.works)
 
-A website for my writing and portfolio. 
+A website for my writing and drawing and everything else.
 
-This repository is the website's front-end code, built with [Astro](https://astro.build) and [Node](https://nodejs.org). The content, graphics, and imagery the website displays are managed with [Prismic](https://prismic.io), a headless CMS.
+## Technical
+This repository is the website's front-end code, built with [Astro](https://astro.build) and [Node](https://nodejs.org). The content, graphics, and imagery the website displays are managed with [Prismic](https://prismic.io), a headless CMS. It's hosted (and configured for) [Netlify](http://netlify.com).
 
-## Run locally
+### Run locally
 1. Clone this repository
 2. Run `npm install`
 3. Run `npm start`
 
-## Deployment
+### Deployment
 Run `npm run build`
 
 ## License
