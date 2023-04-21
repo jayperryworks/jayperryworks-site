@@ -4,7 +4,11 @@
 A website for my writing and drawing and everything else.
 
 ## Technical
-This repository is the website's front-end code, built with [Astro](https://astro.build) and [Node](https://nodejs.org). The content, graphics, and imagery the website displays are managed with [Prismic](https://prismic.io), a headless CMS. It's hosted (and configured for) [Netlify](http://netlify.com).
+This repository is the website's front-end code, built with [Astro](https://astro.build) and [Node](https://nodejs.org). The content, graphics, and imagery the website displays are managed with [Prismic](https://prismic.io), a headless CMS. It's hosted on (and configured for) [Netlify](http://netlify.com).
+
+The code here is written for my own specific needs and preferences -- it's just my website, not a template or theme. In some places it's a hot mess. It's a work in progress, and always will be.
+
+My aim these days is to lean on the web platform as much as I can, with as few dependencies as I can manage. My site supports modern, evergreen browsers. I use modern, vanilla CSS, including variables, grid, flexbox, and container queries. Client-side Javascript is, likewise, vanilla and minimal. I'm starting to use web components for certain things. To that extent, this site is also a place for me to experiment with new-to-me techniques and features.
 
 ### Run locally
 1. Clone this repository
