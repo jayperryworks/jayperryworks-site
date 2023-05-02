@@ -12,6 +12,7 @@ import prismic from '@lib/prismic';
 // components
 import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
+import Button from '@components/elements/Button.astro';
 import Heading from '@components/blocks/Heading.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
 import SequenceNav from '@components/navigation/SequenceNav.astro';
@@ -261,6 +262,16 @@ const nextChapter = project.chapterList[currentPage] ? {
 			</div>
 		</RevealOnScroll>
 	</nav>
+
+	<aside class="support-callout">
+		<div class="box">
+			<h2 class="type-role-accent type-scale-delta">Help support this work</h2>
+			<p>If you've enjoyed this essay, please consider <a href="#">buying a print of one of the illustrations</a>. It helps to fund future projects, like this one.</p>
+			<footer>
+				<Button href="#">See the Patapsco print editions</Button>
+			</footer>
+		</div>
+	</aside>
 </Layout>
 
 <style>
@@ -312,5 +323,21 @@ const nextChapter = project.chapterList[currentPage] ? {
 		text-align: end;
 		font-style: italic;
 		color: var(--color-secondary);
+	}
+
+	.support-callout {
+		padding-inline: var(--space-outside);
+		padding-block-end: var(--space-xwide);
+	}
+
+	.box {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xnarrow);
+		border-radius: var(--border-radius);
+		max-width: var(--content-width-default);
+		margin-inline: auto;
+		padding: var(--space-medium);
+		background-color: var(--color-well);
 	}
 </style>
