@@ -110,7 +110,6 @@ p {
 
 a {
 	--underline-w: 0.125em;
-	--underline-offset: 0.08em;
 
 	border-bottom: var(--underline-w) solid var(--color-highlight);
 	color: inherit;
@@ -125,7 +124,6 @@ a {
 		text-decoration-color: var(--color-highlight);
 		text-decoration-style: solid;
 		text-decoration-thickness: var(--underline-w);
-		text-underline-offset: var(--underline-offset);
 		text-underline-position: under;
 	}
 }
