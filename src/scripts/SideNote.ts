@@ -124,7 +124,7 @@ class SideNote extends HTMLElement {
 		this.#shadowRoot.innerHTML = `
 			${style}
 
-			<span class="sidenote is-open" id="sidenote-${this.number}">
+			<span class="sidenote" id="sidenote-${this.number}">
 				<button class="label" aria-label="Toggle the note">${this.number}</button>
 				<small
 					class="content"
