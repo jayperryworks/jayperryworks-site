@@ -8,7 +8,7 @@
 	--type-scale-beta: clamp(1.81rem, calc(1.26rem + 2.77vw), 3.75rem);
 	--type-scale-gamma: clamp(1.44rem, calc(1.12rem + 1.61vw), 2.56rem);
 	--type-scale-delta: clamp(1.13rem, calc(0.93rem + 0.98vw), 1.81rem);
-	--type-scale-epsilon: clamp(1rem, calc(0.86rem + 0.71vw), 1.5rem);
+	--type-scale-epsilon: clamp(1.13rem, calc(1.02rem + 0.54vw), 1.5rem);
 	--type-scale-zeta: clamp(0.88rem, calc(0.77rem + 0.54vw), 1.25rem);
 
 	/* --- fonts --- */

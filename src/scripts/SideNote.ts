@@ -18,14 +18,15 @@ const style = `
 		}
 
 		.sidenote {
-			--label-color: var(--color-primary);
+			--label-color: var(--color-bg);
+			--label-bg: var(--color-primary);
 			display: inline;
 		}
 
 		.label {
-			background-color: transparent;
+			background-color: var(--label-bg);
+			border: 0;
 			border-radius: 1000px;
-			border: 2px solid var(--label-color);
 			color: var(--label-color);
 			cursor: pointer;
 			display: inline-block;
@@ -39,13 +40,13 @@ const style = `
 			padding-inline: 0.5rem;
 			position: relative;
 			text-align: center;
-			transition: color 0.25s ease, border-color 0.25s ease;
+			transition: background-color 0.25s ease;
 			vertical-align: top;
 		}
 
 		.label:hover,
 		.is-open .label {
-			--label-color: var(--color-highlight);
+			--label-bg: var(--color-highlight);
 		}
 
 		.content,
@@ -55,30 +56,32 @@ const style = `
 			top: auto;
 		}
 
-		.content {
+		.is-open .content {
+			display: block;
+			float: left;
+			left: auto;
+			min-width: 100%;
+			overflow: hidden;
+			padding-block: var(--space-narrow);
+			position: relative;
+			z-index: 4;
+		}
+
+		/* use an additional wrapper element inside .content so Safari doesn't mess up spacing - it collapses margins if we apply these styles to .content */
+		.wrapper {
 			align-items: flex-start;
-			border-radius: 0.2em;
 			display: flex;
 			font-family: var(--type-font-accent);
 			font-size: var(--type-scale-zeta);
 			gap: var(--space-xnarrow);
+			background-color: var(--color-well);
+			border-radius: 0.2em;
+			padding: var(--space-narrow);
 		}
 
-		.content::before {
+		.wrapper::before {
 			color: var(--color-highlight);
 			content: attr(data-count) ".";
-		}
-
-		.is-open .content {
-			background-color: var(--color-well);
-			float: left;
-			left: auto;
-			margin-block: var(--space-narrow);
-			min-width: 100%;
-			overflow: hidden;
-			padding: var(--space-narrow);
-			position: relative;
-			z-index: 4;
 		}
 
 		.text {
@@ -121,14 +124,15 @@ class SideNote extends HTMLElement {
 		this.#shadowRoot.innerHTML = `
 			${style}
 
-			<span class="sidenote" id="sidenote-${this.number}">
+			<span class="sidenote is-open" id="sidenote-${this.number}">
 				<button class="label" aria-label="Toggle the note">${this.number}</button>
 				<small
 					class="content"
-					data-count="${this.number}"
 					aria-role="note"
 				>
-					<span class="text"><slot></slot></span>
+					<span class="wrapper" data-count="${this.number}">
+						<span class="text"><slot></slot></span>
+					</span>
 				</small>
 			</span>
 		`;
