@@ -24,6 +24,7 @@ const style = `
 		}
 
 		.label {
+			--size: 2em;
 			background-color: var(--label-bg);
 			border: 0;
 			border-radius: 1000px;
@@ -32,10 +33,10 @@ const style = `
 			display: inline-block;
 			font-family: var(--type-font-accent);
 			font-size: 0.6em;
-			line-height: inherit;
+			line-height: var(--size);
 			margin-inline: 0.25em;
-			min-height: 2em;
-			min-width: 2em;
+			min-height: var(--size);
+			min-width: var(--size);
 			padding-block: 0;
 			padding-inline: 0.5rem;
 			position: relative;
