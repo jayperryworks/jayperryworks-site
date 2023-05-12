@@ -32,13 +32,15 @@ const {
 ---
 
 <aside class={className}>
-	<Heading class="type-scale-gamma">{title}</Heading>
+	<Heading class="type-scale-delta">{title}</Heading>
 
 	<slot></slot>
 
 	{actions && (
 		<footer>
-			{actions.map(({label, link}) => <Button iconRight={arrow} href={link}>{label}</Button>)}
+			{actions.map(({label, link}) => (
+				<Button iconRight={arrow} href={link}>{label}</Button>
+			))}
 		</footer>
 	)}
 </aside>
@@ -61,6 +63,10 @@ const {
 	}
 
 	footer {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: var(--space-xnarrow);
 		padding-block-start: var(--space-medium);
 	}
 </style>
