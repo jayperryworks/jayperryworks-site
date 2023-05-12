@@ -1,0 +1,48 @@
+---
+// components
+import Heading from '@components/blocks/Heading.astro';
+import Button from '@components/elements/Button.astro';
+
+// types
+import { TitleField } from '@prismicio/types';
+
+type Actions = Array<{
+	label: string,
+	link: string,
+}>;
+
+export type Props = {
+	title: TitleField,
+	actions?: Actions,
+};
+
+const {
+	title,
+	actions,
+	class: className = ''
+} = Astro.props as Props;
+---
+
+<aside class={className}>
+	<Heading class="type-scale-gamma">{title}</Heading>
+
+	<slot></slot>
+
+	{actions && (
+		<footer>
+			{actions.map(({label, link}) => <Button href={link}>{label}</Button>)}
+		</footer>
+	)}
+</aside>
+
+<style>
+	aside {
+		display: flex;
+		flex-direction: column;
+		border-radius: var(--border-radius);
+		max-width: var(--content-width-default);
+		margin-inline: auto;
+		padding: var(--space-medium);
+		background-color: var(--color-well);
+	}
+</style>
