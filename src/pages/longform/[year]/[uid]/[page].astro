@@ -264,13 +264,14 @@ const nextChapter = project.chapterList[currentPage] ? {
 		</RevealOnScroll>
 	</nav>
 
-	<div class="support-callout">
+	<div class="support">
 		<Callout
 			title="Help support this work"
 			actions={[{
 				label: 'See the Patapsco print editions',
 				link: '#'
 			}]}
+			class="support-box"
 		>
 			<p>If you've enjoyed reading this essay, please consider supporting my future work by buying a print. Thanks a lot!</p>
 		</Callout>
@@ -328,8 +329,13 @@ const nextChapter = project.chapterList[currentPage] ? {
 		color: var(--color-secondary);
 	}
 
-	.support-callout {
+	.support {
 		padding-inline: var(--space-outside);
 		padding-block-end: var(--space-xwide);
+	}
+
+	.support-box {
+		max-width: var(--content-width-default);
+		margin-inline: auto;
 	}
 </style>
