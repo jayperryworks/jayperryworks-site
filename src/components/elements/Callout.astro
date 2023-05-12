@@ -1,4 +1,11 @@
 ---
+// assets
+import '@styles/tokens/borders.css';
+import '@styles/tokens/spacing.css';
+import '@styles/utilities/type.css';
+
+import arrow from '@icons/arrow-right.svg?raw';
+
 // components
 import Heading from '@components/blocks/Heading.astro';
 import Button from '@components/elements/Button.astro';
@@ -14,6 +21,7 @@ type Actions = Array<{
 export type Props = {
 	title: TitleField,
 	actions?: Actions,
+	class?: string,
 };
 
 const {
@@ -30,13 +38,15 @@ const {
 
 	{actions && (
 		<footer>
-			{actions.map(({label, link}) => <Button href={link}>{label}</Button>)}
+			{actions.map(({label, link}) => <Button iconRight={arrow} href={link}>{label}</Button>)}
 		</footer>
 	)}
 </aside>
 
 <style>
 	aside {
+		--color-bg: var(--color-well);
+
 		display: flex;
 		flex-direction: column;
 		border-radius: var(--border-radius);
@@ -44,5 +54,13 @@ const {
 		margin-inline: auto;
 		padding: var(--space-medium);
 		background-color: var(--color-well);
+	}
+
+	aside > :global(* + *) {
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	footer {
+		padding-block-start: var(--space-medium);
 	}
 </style>

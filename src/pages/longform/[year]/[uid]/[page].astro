@@ -150,8 +150,9 @@ function generatePageTheme(): Partial<Theme> {
 			primary: 25,
 			secondary: 35,
 			border: (generatedTheme?.bg?.l - 20) || 40,
-			shadow: (generatedTheme?.bg?.l - 10) || 10,
+			shadow: (generatedTheme?.bg?.l - 15) || 10,
 			well: (generatedTheme?.bg?.l - 5) || 60,
+			island: (generatedTheme?.bg?.l + 5) || 70,
 		};
 
 		Object.keys(themeFallbacks).forEach((role) => {
@@ -271,7 +272,7 @@ const nextChapter = project.chapterList[currentPage] ? {
 				link: '#'
 			}]}
 		>
-			<p>If you've enjoyed this essay, please consider <a href="#">buying a print of one of the illustrations</a>. It helps to fund future projects, like this one.</p>
+			<p>If you've enjoyed reading this essay, please consider buying a print of one of the illustrations. It helps to fund future projects, like this one.</p>
 		</Callout>
 	</div>
 </Layout>
@@ -330,16 +331,5 @@ const nextChapter = project.chapterList[currentPage] ? {
 	.support-callout {
 		padding-inline: var(--space-outside);
 		padding-block-end: var(--space-xwide);
-	}
-
-	.box {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-xnarrow);
-		border-radius: var(--border-radius);
-		max-width: var(--content-width-default);
-		margin-inline: auto;
-		padding: var(--space-medium);
-		background-color: var(--color-well);
 	}
 </style>
