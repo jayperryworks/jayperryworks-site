@@ -87,6 +87,11 @@ export function longform({ data, uid }: Partial<PrismicDocumentWithUID>): string
 	return `/longform/${getDateParams(data.date, ['year'])}/${uid}/1/`;
 }
 
+// picture series
+export function pictureSeries({ uid }: Partial<PrismicDocumentWithUID>): string {
+	return `/pictures#${uid}`;
+}
+
 // --- link resolver for Prismic ---
 export function linkResolver(doc: Partial<PrismicDocument>): string {
 	const { type } = doc;
@@ -99,6 +104,7 @@ export function linkResolver(doc: Partial<PrismicDocument>): string {
 		blog_post: blogPost,
 		design_project: designProject,
 		index_page: indexPage,
+		picture_series: pictureSeries,
 	};
 
 	return contentTypes[type](doc) || null;
