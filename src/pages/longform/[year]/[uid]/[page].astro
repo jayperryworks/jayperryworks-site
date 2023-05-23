@@ -10,26 +10,34 @@ import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
 // components
-import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
+import Callout from '@components/elements/Callout.astro';
 import Heading from '@components/blocks/Heading.astro';
+import Layout from '@layouts/BaseLayout.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import SequenceNav from '@components/navigation/SequenceNav.astro';
 import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
 import type {
 	Align,
-	SEOContent,
 	Theme,
 	ThemeData,
 } from '@lib/types';
+
 import type { Props as SequenceNavItemProps } from '@components/navigation/SequenceNavItem.astro';
-import type { TitleField } from '@prismicio/types';
+import type { Action as CalloutAction } from '@components/elements/Callout.astro';
+import type { RichTextField, TitleField } from '@prismicio/types';
 
 export interface SequenceNavItemData extends SequenceNavItemProps {
 	title: TitleField;
+}
+
+type Callout = {
+	title: TitleField,
+	description: RichTextField,
+	actions?: CalloutAction[],
 }
 
 // Using 'nested pagination' to generate 'chapter' pages for each longform project
@@ -58,9 +66,17 @@ export async function getStaticPaths({ paginate }) {
 		`,
 	});
 
+
 	// loop over each project and create a massaged list of chapters to be paginated
 	return projectsResponse.map(({ uid, data }) => {
 		const year = format(prismicHelpers.asDate(data.date), 'yyyy');
+
+		const callouts = data.body.map(({ primary, items }) => ({
+			title: primary.heading,
+			description: { prismicText: primary.description },
+			actions: items.map(({ call_to_action_label: label, link }) => ({ label, link, })),
+		}));
+
 		const chapters = data.chapters.map(({ chapter }) => {
 			const {
 				title,
@@ -77,6 +93,7 @@ export async function getStaticPaths({ paginate }) {
 				title,
 				subtitle,
 				body,
+				callouts,
 				project: {
 					uid,
 					title: data.title,
@@ -127,6 +144,7 @@ const {
 	subtitle,
 	theme,
 	title,
+	callouts,
 } = data[0];
 
 // if no title was given for SEO content, make a default one using the page data above
@@ -149,8 +167,9 @@ function generatePageTheme(): Partial<Theme> {
 			primary: 25,
 			secondary: 35,
 			border: (generatedTheme?.bg?.l - 20) || 40,
-			shadow: (generatedTheme?.bg?.l - 10) || 10,
+			shadow: (generatedTheme?.bg?.l - 15) || 10,
 			well: (generatedTheme?.bg?.l - 5) || 60,
+			island: (generatedTheme?.bg?.l + 5) || 70,
 		};
 
 		Object.keys(themeFallbacks).forEach((role) => {
@@ -193,6 +212,7 @@ const nextChapter = project.chapterList[currentPage] ? {
 	number: currentPage + 1,
 	href: url.next,
 } : null;
+
 ---
 
 <Layout
@@ -261,6 +281,17 @@ const nextChapter = project.chapterList[currentPage] ? {
 			</div>
 		</RevealOnScroll>
 	</nav>
+
+	{callouts?.length > 0 && (
+		<div class="support">
+			{callouts.map((callout: Callout) => (
+				<Callout
+					{...callout}
+					class="support-box"
+				/>
+			))}
+		</div>
+	)}
 </Layout>
 
 <style>
@@ -312,5 +343,15 @@ const nextChapter = project.chapterList[currentPage] ? {
 		text-align: end;
 		font-style: italic;
 		color: var(--color-secondary);
+	}
+
+	.support {
+		padding-inline: var(--space-outside);
+		padding-block-end: var(--space-xwide);
+	}
+
+	.support-box {
+		max-width: var(--content-width-default);
+		margin-inline: auto;
 	}
 </style>
