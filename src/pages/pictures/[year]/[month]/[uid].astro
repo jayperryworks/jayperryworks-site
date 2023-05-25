@@ -19,12 +19,13 @@ import { pictureDescription } from '@lib/pictureHelpers';
 // components
 import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
-import Image from '@components/elements/Image.astro';
-import Heading from '@components/blocks/Heading.astro';
 import DataGrid from '@components/layout/DataGrid.astro';
 import Gallery from '@components/layout/Gallery.astro';
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Image from '@components/elements/Image.astro';
+import PictureFrame from '@components/elements/PictureFrame.astro';
 import PictureGallery from '@components/navigation/PictureGallery.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // layout
 import Layout from '@layouts/BaseLayout.astro';
@@ -251,7 +252,7 @@ function createMediaString() {
 		class="cover"
 	>
 		<div class="cover-image">
-			<Image source={cover} fit="contain" />
+			<PictureFrame source={cover} />
 		</div>
 		<div class="cover-info | type-scale-epsilon type-role-accent">
 			<Heading level={1} text={title} class="cover-title | type-scale-epsilon type-role-accent" />
@@ -345,13 +346,14 @@ function createMediaString() {
 		grid-template-rows: 1fr auto;
 		grid-template-areas: 'image' 'info';
 		gap: var(--space-wide);
-		/* max-height: 100vh; */
+		height: 100dvh;
 		height: 100vh;
 		position: relative;
 	}
 
 	.cover-image {
-		overflow: hidden;
+		/* overflow: hidden;
+		max-height: 100%; */
 	}
 
 	.cover-info {

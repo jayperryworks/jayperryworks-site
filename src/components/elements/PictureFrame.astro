@@ -1,0 +1,66 @@
+---
+// assets
+	import '@styles/tokens/color.css';
+
+	// components
+	import Image from '@components/elements/Image.astro';
+
+	// types
+	import type { ImageField } from '@prismicio/types';
+
+	import type {
+		CSSVariable,
+		HexColor,
+		HSLColor,
+	} from '@lib/types';
+
+	export interface Props {
+		source: ImageField,
+		class?: string,
+		matte?: CSSVariable | HexColor | HSLColor,
+	};
+
+	const {
+		source,
+		class: className,
+		matte,
+	} = Astro.props as Props;
+
+	const aspectRatio = `${source.dimensions.width} / ${source.dimensions.height}`;
+
+	const classList = [
+		'frame',
+		className,
+	].join(' ');
+
+	const styleList = [
+		`--aspect-ratio: ${aspectRatio}`,
+		matte ? `--matte-color: ${matte};` : '',
+	].join(';');
+---
+
+<div
+	class={classList}
+	style={styleList}
+>
+	<Image
+		{source}
+		{aspectRatio}
+		fit='contain'
+	/>
+</div>
+
+<style>
+	.frame {
+		--frame-color: var(--color-primary);
+		--frame-thickness: 1rem;
+		--shadow-color: var(--color-shadow);
+		--matte-color: var(--color-island, #fff);
+		--matte-thickness: 8%;
+
+		aspect-ratio: var(--aspect-ratio);
+		background-color: var(--matte-color);
+		border: var(--frame-thickness) solid var(--frame-color);
+		padding: var(--matte-thickness);
+	}
+</style>
