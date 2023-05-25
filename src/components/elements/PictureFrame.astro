@@ -45,22 +45,32 @@
 >
 	<Image
 		{source}
-		{aspectRatio}
-		fit='contain'
+		class="picture"
 	/>
 </div>
 
 <style>
 	.frame {
 		--frame-color: var(--color-primary);
-		--frame-thickness: 1rem;
+		--frame-thickness: 0.25em;
 		--shadow-color: var(--color-shadow);
 		--matte-color: var(--color-island, #fff);
-		--matte-thickness: 8%;
+		--matte-thickness: 12%;
 
+		align-items: center;
 		aspect-ratio: var(--aspect-ratio);
 		background-color: var(--matte-color);
 		border: var(--frame-thickness) solid var(--frame-color);
-		padding: var(--matte-thickness);
+		box-shadow: 0 0.25em 0.5em var(--color-shadow);
+		display: grid;
+		grid-template-columns: var(--matte-thickness) 1fr var(--matte-thickness);
+		grid-template-rows: var(--matte-thickness) 1fr var(--matte-thickness);
+		justify-content: center;
+	}
+
+	.picture {
+		display: block;
+		grid-area: 2 / 2;
+		margin: auto;
 	}
 </style>

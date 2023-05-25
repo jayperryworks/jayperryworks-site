@@ -251,9 +251,7 @@ function createMediaString() {
 		tag="header"
 		class="cover"
 	>
-		<div class="cover-image">
-			<PictureFrame source={cover} />
-		</div>
+		<PictureFrame source={cover} class="cover-image" />
 		<div class="cover-info | type-scale-epsilon type-role-accent">
 			<Heading level={1} text={title} class="cover-title | type-scale-epsilon type-role-accent" />
 			<time class="cover-subtitle" datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
@@ -340,7 +338,7 @@ function createMediaString() {
 
 <style>
 	.cover {
-		padding: var(--space-xwide) var(--space-outside) var(--space-wide);
+		padding: var(--space-xwide) var(--space-outside);
 		display: grid;
 		grid-template-columns: 1fr;
 		grid-template-rows: 1fr auto;
@@ -349,11 +347,15 @@ function createMediaString() {
 		height: 100dvh;
 		height: 100vh;
 		position: relative;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.cover-image {
-		/* overflow: hidden;
-		max-height: 100%; */
+		overflow: hidden;
+		max-height: 100%;
+		max-width: 100%;
+		margin-inline: auto;
 	}
 
 	.cover-info {
