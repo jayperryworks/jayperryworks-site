@@ -253,7 +253,7 @@ function createMediaString() {
 	>
 		<PictureFrame source={cover} class="cover-image" />
 		<div class="cover-info | type-scale-epsilon type-role-accent">
-			<Heading level={1} text={title} class="cover-title | type-scale-epsilon type-role-accent" />
+			<Heading level={1} text={title} class="cover-title" />
 			<time class="cover-subtitle" datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
 			{prismicHelpers.isFilled.group(media) && (
 				<p class="cover-subtitle" set:html={createMediaString()}></p>
@@ -371,6 +371,9 @@ function createMediaString() {
 
 	.cover-title {
 		color: var(--color-primary);
+		font-family: var(--type-role-accent);
+		font-size: var(--type-scale-epsilon);
+		font-weight: 300;
 	}
 
 	.cover-title,
