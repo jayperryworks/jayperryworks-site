@@ -220,6 +220,7 @@ const {
 } = Astro.props as Props;
 
 const date = prismicHelpers.asDate(dateCompleted);
+const substrateName = substrate.data.name.toLowerCase();
 
 function createMediaString() {
 	// convert the list of media to a sentence
@@ -230,7 +231,7 @@ function createMediaString() {
 
 	// add the substrate as a suffix
 	if (prismicHelpers.isFilled.link(substrate)) {
-		string += ` on ${substrate.data.name.toLowerCase()}`;
+		string += ` on ${substrateName}`;
 	}
 
 	if (width && height) {
@@ -251,7 +252,11 @@ function createMediaString() {
 		tag="header"
 		class="cover"
 	>
-		<PictureFrame source={cover} class="cover-image" />
+		<PictureFrame
+			source={cover as ImageField}
+			class="cover-image"
+			type={substrateName.includes('paper') ? 'frame' : 'panel'}
+		/>
 		<div class="cover-info | type-scale-epsilon type-role-accent">
 			<Heading level={1} text={title} class="cover-title" />
 			<time class="cover-subtitle" datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
@@ -354,7 +359,7 @@ function createMediaString() {
 	.cover-image {
 		overflow: hidden;
 		max-height: 100%;
-		max-width: 100%;
+		/* max-width: 100%; */
 		margin-inline: auto;
 	}
 
@@ -371,9 +376,7 @@ function createMediaString() {
 
 	.cover-title {
 		color: var(--color-primary);
-		font-family: var(--type-role-accent);
 		font-size: var(--type-scale-epsilon);
-		font-weight: 300;
 	}
 
 	.cover-title,
@@ -400,7 +403,7 @@ function createMediaString() {
 			width: auto;
 		}
 
-		.cover-info > * + *::before {
+		.cover-info > :global(* + *)::before {
 			content: '\2022'; /* bullet */
 			display: inline-block;
 			padding-inline-end: var(--gap);

@@ -17,29 +17,58 @@
 	export interface Props {
 		source: ImageField,
 		class?: string,
-		matte?: CSSVariable | HexColor | HSLColor,
+		frameThickness: number,
+		matteColor?: CSSVariable | HexColor | HSLColor,
+		matteThickness?: number,
+		type?: 'frame' | 'panel',
 	};
 
-	const {
+	let {
 		source,
 		class: className,
-		matte,
+		frameThickness,
+		matteColor,
+		matteThickness,
+		type = 'frame',
 	} = Astro.props as Props;
 
-	const aspectRatio = `${source.dimensions.width} / ${source.dimensions.height}`;
+	const types = {
+		frame: {
+			matte: 12,
+			border: 0.25,
+		},
+		panel: {
+			matte: 0.2,
+			border: 0.1,
+		},
+	};
+
+	if (!matteThickness) matteThickness = types[type].matte;
+	if (!frameThickness) frameThickness = types[type].border;
+
+	// calculate the aspect ratio of the frame based on thickness of the matte
+	// -> a matte, equal on all sides, will change the aspect ratio of the container
+	const { width: imageWidth, height: imageHeight } = source.dimensions;
+	const matteThicknessPixels = (matteThickness / 100) * imageWidth;
+	const frameWidth = imageWidth + matteThicknessPixels;
+	// add a little to the vertical matte thickness because it's always a little narrow for some reason
+	// -> not sure why my math is off by 1/2% or so - can't figure this out
+	const frameHeight = imageHeight + (matteThicknessPixels + (matteThicknessPixels * 0.4));
 
 	const classList = [
-		'frame',
+		type,
 		className,
-	].join(' ');
+	].filter(i => i).join(' ');
 
 	const styleList = [
-		`--aspect-ratio: ${aspectRatio}`,
-		matte ? `--matte-color: ${matte};` : '',
-	].join(';');
+		`--frame-aspect-ratio: ${frameWidth} / ${frameHeight}`,
+		matteColor && `--matte-color: ${matteColor};`,
+		`--frame-thickness: ${frameThickness}em`,
+		`--matte-thickness: ${matteThickness}%`,
+	].filter(i => i).join(';');
 ---
 
-<div
+<figure
 	class={classList}
 	style={styleList}
 >
@@ -47,30 +76,33 @@
 		{source}
 		class="picture"
 	/>
-</div>
+</figure>
 
 <style>
-	.frame {
+	.frame,
+	.panel {
 		--frame-color: var(--color-primary);
-		--frame-thickness: 0.25em;
 		--shadow-color: var(--color-shadow);
 		--matte-color: var(--color-island, #fff);
-		--matte-thickness: 12%;
 
 		align-items: center;
-		aspect-ratio: var(--aspect-ratio);
+		aspect-ratio: var(--frame-aspect-ratio);
 		background-color: var(--matte-color);
 		border: var(--frame-thickness) solid var(--frame-color);
 		box-shadow: 0 0.25em 0.5em var(--color-shadow);
 		display: grid;
 		grid-template-columns: var(--matte-thickness) 1fr var(--matte-thickness);
-		grid-template-rows: var(--matte-thickness) 1fr var(--matte-thickness);
-		justify-content: center;
+		grid-template-rows: auto 1fr auto;
+		justify-items: center;
+	}
+
+	.panel {
+		box-shadow: 0 0.7em 0.4em var(--color-shadow);
 	}
 
 	.picture {
 		display: block;
 		grid-area: 2 / 2;
-		margin: auto;
+		height: 100%;
 	}
 </style>
