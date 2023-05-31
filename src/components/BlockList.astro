@@ -138,6 +138,10 @@ const classList = [
 	}
 
 	/* --- spacing between different types of blocks --- */
+	.block-list :global(.heading + .heading) {
+		padding-block-start: var(--space-xnarrow);
+	}
+
 	.block-list :global(.heading + .text) {
 		padding-block-start: var(--space-narrow);
 	}
