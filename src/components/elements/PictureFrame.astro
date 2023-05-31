@@ -17,6 +17,7 @@
 	export interface Props {
 		source: ImageField,
 		class?: string,
+		el?: string,
 		frameThickness: number,
 		matteColor?: CSSVariable | HexColor | HSLColor,
 		matteThickness?: number,
@@ -26,6 +27,7 @@
 	let {
 		source,
 		class: className,
+		el = 'figure',
 		frameThickness,
 		matteColor,
 		matteThickness,
@@ -66,9 +68,11 @@
 		`--frame-thickness: ${frameThickness}em`,
 		`--matte-thickness: ${matteThickness}%`,
 	].filter(i => i).join(';');
+
+	const El = el;
 ---
 
-<figure
+<El
 	class={classList}
 	style={styleList}
 >
@@ -76,7 +80,7 @@
 		{source}
 		class="picture"
 	/>
-</figure>
+</El>
 
 <style>
 	.frame,
