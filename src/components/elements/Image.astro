@@ -31,6 +31,7 @@ const {
 	fit,
 	position,
 	widths = [ 800, 1200, 2000 ],
+	style,
 } = Astro.props as Props;
 
 const { src, srcset } = prismicHelpers.asImageWidthSrcSet(source, {
@@ -48,14 +49,16 @@ const classList = [
 	fit ? `fit ${fit}` : '',
 ].join(' ');
 
-const style = [
+const styleList = [
 	aspectRatio ? `--aspect-ratio: ${aspectRatio};` : '',
 	position ? `--object-position: ${position};` : '',
+	style
 ].join(' ');
 ---
 
 <img
 	class={classList}
+	style={styleList}
 	decoding="async"
 	loading="lazy"
 	{alt}
@@ -63,7 +66,6 @@ const style = [
 	{srcset}
 	{width}
 	{height}
-	{style}
 />
 
 <style>

@@ -27,7 +27,6 @@
 	let {
 		source,
 		class: className,
-		el = 'figure',
 		frameThickness,
 		matteColor,
 		matteThickness,
@@ -36,11 +35,11 @@
 
 	const types = {
 		frame: {
-			matte: 12,
+			matte: 8,
 			border: 0.25,
 		},
 		panel: {
-			matte: 0.2,
+			matte: 0.1,
 			border: 0.1,
 		},
 	};
@@ -48,39 +47,22 @@
 	if (!matteThickness) matteThickness = types[type].matte;
 	if (!frameThickness) frameThickness = types[type].border;
 
-	// calculate the aspect ratio of the frame based on thickness of the matte
-	// -> a matte, equal on all sides, will change the aspect ratio of the container
-	const { width: imageWidth, height: imageHeight } = source.dimensions;
-	const matteThicknessPixels = (matteThickness / 100) * imageWidth;
-	const frameWidth = imageWidth + matteThicknessPixels;
-	// add a little to the vertical matte thickness because it's always a little narrow for some reason
-	// -> not sure why my math is off by 1/2% or so - can't figure this out
-	const frameHeight = imageHeight + (matteThicknessPixels + (matteThicknessPixels * 0.4));
-
 	const classList = [
 		type,
 		className,
 	].filter(i => i).join(' ');
 
 	const styleList = [
-		`--frame-aspect-ratio: ${frameWidth} / ${frameHeight}`,
 		matteColor && `--matte-color: ${matteColor};`,
 		`--frame-thickness: ${frameThickness}em`,
-		`--matte-thickness: ${matteThickness}%`,
+		`--matte-thickness: ${matteThickness}vmin`,
 	].filter(i => i).join(';');
-
-	const El = el;
 ---
-
-<El
+<Image
+	{source}
 	class={classList}
 	style={styleList}
->
-	<Image
-		{source}
-		class="picture"
-	/>
-</El>
+/>
 
 <style>
 	.frame,
@@ -89,24 +71,14 @@
 		--shadow-color: var(--color-shadow);
 		--matte-color: var(--color-island, #fff);
 
-		align-items: center;
-		aspect-ratio: var(--frame-aspect-ratio);
 		background-color: var(--matte-color);
 		border: var(--frame-thickness) solid var(--frame-color);
 		box-shadow: 0 0.25em 0.5em var(--color-shadow);
-		display: grid;
-		grid-template-columns: var(--matte-thickness) 1fr var(--matte-thickness);
-		grid-template-rows: auto 1fr auto;
-		justify-items: center;
+		padding: var(--matte-thickness);
+		height: 100%;
 	}
 
 	.panel {
 		box-shadow: 0 0.7em 0.4em var(--color-shadow);
-	}
-
-	.picture {
-		display: block;
-		grid-area: 2 / 2;
-		height: 100%;
 	}
 </style>
