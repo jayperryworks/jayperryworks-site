@@ -190,7 +190,7 @@ const classList = [
   }
 
   /* --- small-screen nav --- */
-  :global(body[data-js]) .nav {
+  :global(body[data-supports~='js']) .nav {
     background-color: hsl(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95);
     bottom: 0;
     display: block;
@@ -205,7 +205,7 @@ const classList = [
   }
 
   @supports (display: flex) {
-    :global(body[data-js]) .nav {
+    :global(body[data-supports~='js']) .nav {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -214,7 +214,7 @@ const classList = [
   }
 
   /* closed (visually hidden) state */
-  :global(body[data-js]) .nav.closed {
+  :global(body[data-supports~='js']) .nav.closed {
     border: 0;
     clip-path: inset(100%);
     clip: rect(1px, 1px, 1px, 1px);
@@ -226,7 +226,7 @@ const classList = [
   }
 
   /* open (transitioned) state */
-  :global(body[data-js]) .nav.open {
+  :global(body[data-supports~='js']) .nav.open {
     opacity: 1;
   }
 
@@ -236,7 +236,7 @@ const classList = [
     margin: 0;
   }
 
-  :global(body[data-js]) .nav-list {
+  :global(body[data-supports~='js']) .nav-list {
     display: block;
   }
 
@@ -280,14 +280,14 @@ const classList = [
     }
 
     .nav,
-    :global(body[data-js]) .nav {
+    :global(body[data-supports~='js']) .nav {
       background-color: transparent;
       display: inline-block;
       opacity: 1;
       position: relative;
     }
 
-    :global(body[data-js]) .nav.closed {
+    :global(body[data-supports~='js']) .nav.closed {
       clip-path: none;
       clip: auto;
       height: auto;

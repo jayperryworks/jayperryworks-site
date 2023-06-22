@@ -64,9 +64,7 @@ const themeTokens: ThemeTokens = theme
 	if ("ontouchstart" in document.body) featureData.push('touch');
 
 	// Add a data attribute for each supported feature
-	featureData.forEach(item => {
-		document.body.dataset[item] = 'true';
-	});
+	document.body.dataset['supports'] = featureData.join(' ');
 </script>
 
 <html lang="en">
