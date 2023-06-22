@@ -261,10 +261,10 @@ function createMediaString() {
 			type={substrateName.includes('paper') ? 'frame' : 'panel'}
 		/>
 		<div class="cover-info | type-scale-epsilon type-role-accent">
-			<Heading level={1} text={title} class="cover-title" />
-			<time class="cover-subtitle" datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
+			<Heading level={1} text={title} class="cover-info-item title" />
+			<time class="cover-info-item year" datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
 			{prismicHelpers.isFilled.group(media) && (
-				<p class="cover-subtitle" set:html={createMediaString()}></p>
+				<p class="cover-info-item media" set:html={createMediaString()}></p>
 			)}
 		</div>
 	</RevealOnScroll>
@@ -378,40 +378,35 @@ function createMediaString() {
 		--gap: var(--space-xnarrow);
 
 		display: flex;
+		flex-direction: column;
 		gap: var(--gap);
 		padding-block-start: var(--space-xwide);
-		align-items: baseline;
+		align-items: center;
 		justify-content: center;
-		flex-wrap: wrap;
 		grid-area: info;
 	}
 
-	.cover-title {
-		color: var(--color-primary);
-		font-size: var(--type-scale-epsilon);
-	}
-
-	.cover-title,
-	.cover-subtitle {
+	.cover-info-item {
 		text-align: center;
 		width: 100%;
 	}
 
-	@media screen and (min-width: 30em) {
-		.cover-subtitle {
-			width: auto;
-		}
-
-		.cover-subtitle + .cover-subtitle::before {
-			content: '\2022'; /* bullet */
-			display: inline-block;
-			padding-inline-end: var(--gap);
-			font-weight: bold;
-		}
+	.cover-info-item.title {
+		color: var(--color-primary);
+		font-size: var(--type-scale-epsilon);
 	}
 
-	@media screen and (min-width: 55em) {
-		.cover-title {
+	.cover-info-item.media {
+		display: none;
+	}
+
+	@media screen and (min-width: 30em) {
+		.cover-info {
+			flex-direction: row;
+			align-items: baseline;
+		}
+
+		.cover-info-item {
 			width: auto;
 		}
 
@@ -420,6 +415,12 @@ function createMediaString() {
 			display: inline-block;
 			padding-inline-end: var(--gap);
 			font-weight: bold;
+		}
+	}
+
+	@media screen and (min-width: 87em) {
+		.cover-info-item.media {
+			display: inline-block;
 		}
 	}
 
