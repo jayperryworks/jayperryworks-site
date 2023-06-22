@@ -95,10 +95,7 @@ const classList = [
 		text-align: left;
 	}
 
-	/* only show the help tooltip if JS is available */
-	:global(.no-js) .help {
-		display: none;
-	}
+
 
 	.label {
 		color: var(--color-primary);
@@ -115,8 +112,13 @@ const classList = [
 		text-wrap: balance;
 	}
 
-	/* increase specificity so it overrides the child component */
+	/* only show the help tooltip if JS is available */
 	.help {
+		display: none;
+	}
+
+	/* increase specificity so it overrides the child component */
+	:global(body[data-supports~='js']) .help {
 		--size: 2em;
 		--color: var(--color-secondary);
 

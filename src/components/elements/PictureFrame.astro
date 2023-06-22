@@ -1,0 +1,84 @@
+---
+// assets
+	import '@styles/tokens/color.css';
+
+	// components
+	import Image from '@components/elements/Image.astro';
+
+	// types
+	import type { ImageField } from '@prismicio/types';
+
+	import type {
+		CSSVariable,
+		HexColor,
+		HSLColor,
+	} from '@lib/types';
+
+	export interface Props {
+		source: ImageField,
+		class?: string,
+		el?: string,
+		frameThickness: number,
+		matteColor?: CSSVariable | HexColor | HSLColor,
+		matteThickness?: number,
+		type?: 'frame' | 'panel',
+	};
+
+	let {
+		source,
+		class: className,
+		frameThickness,
+		matteColor,
+		matteThickness,
+		type = 'frame',
+	} = Astro.props as Props;
+
+	const types = {
+		frame: {
+			matte: 7,
+			border: 0.25,
+		},
+		panel: {
+			matte: 0.2,
+			border: 0.1,
+		},
+	};
+
+	if (!matteThickness) matteThickness = types[type].matte;
+	if (!frameThickness) frameThickness = types[type].border;
+
+	const classList = [
+		type,
+		className,
+	].filter(i => i).join(' ');
+
+	const styleList = [
+		matteColor && `--matte-color: ${matteColor};`,
+		`--frame-thickness: ${frameThickness}em`,
+		`--matte-thickness: ${matteThickness}vmin`,
+	].filter(i => i).join(';');
+---
+<Image
+	{source}
+	class={classList}
+	style={styleList}
+/>
+
+<style>
+	.frame,
+	.panel {
+		--frame-color: var(--color-primary);
+		--shadow-color: var(--color-shadow);
+		--matte-color: var(--color-island, #fff);
+
+		background-color: var(--matte-color);
+		border: var(--frame-thickness) solid var(--frame-color);
+		box-shadow: 0 0.25em 0.5em var(--color-shadow);
+		padding: var(--matte-thickness);
+		height: 100%;
+	}
+
+	.panel {
+		box-shadow: 0 0.7em 0.4em var(--color-shadow);
+	}
+</style>
