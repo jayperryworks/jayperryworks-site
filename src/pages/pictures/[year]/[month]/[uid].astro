@@ -345,33 +345,37 @@ function createMediaString() {
 
 <style>
 	.cover {
-		padding: var(--space-xwide) var(--space-outside);
 		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: minmax(auto, 80dvh) auto;
-		grid-template-areas: 'image' 'info';
+		grid-template-columns: var(--space-outside) 1fr var(--space-outside);
+		grid-template-rows: var(--space-xwide) minmax(60dvh, 1fr) auto var(--space-wide);
+		grid-template-areas:
+			'. . .'
+			'. image .'
+			'. info .'
+			'. . .';
 		gap: var(--space-wide);
-		min-height: 100vh;
-		min-height: 100dvh;
+		max-height: 100vh;
+		max-height: 100dvh;
 		position: relative;
 		justify-content: center;
 		align-items: center;
 	}
 
 	.cover-image {
+		grid-area: image;
 		max-height: 100%;
 		margin-inline: auto;
 	}
 
 	.cover-info {
 		--gap: var(--space-xnarrow);
-		--modifier: calc(20rem - 100%);
 
 		display: flex;
 		gap: var(--gap);
 		align-items: baseline;
 		justify-content: center;
 		flex-wrap: wrap;
+		grid-area: info;
 	}
 
 	.cover-title {
