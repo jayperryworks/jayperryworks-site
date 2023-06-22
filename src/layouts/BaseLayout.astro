@@ -21,7 +21,7 @@ import type {
 import type { SEOContent } from '@lib/types';
 
 export interface Props {
-	headerOverlay?: boolean;
+	overlayNav?: boolean;
 	pageTitle?: string;
 	path?: string;
 	seo?: SEOContent;
@@ -33,10 +33,10 @@ export type ThemeTokens = Partial<Record<`color-${ColorRoles}`, HexColor | HSLCo
 // props and data
 const {
 	pageTitle,
-	headerOverlay = false,
 	path = 'home',
-	theme,
 	seo = {},
+	overlayNav = false,
+	theme,
 } = Astro.props as Props;
 
 const SITE_TITLE = 'Jay Perry';
@@ -58,12 +58,15 @@ const themeTokens: ThemeTokens = theme
 ---
 
 <script>
-	// Add a class to the body element to confirm JS is available
+	// Add data attributes to the body element to confirm JS, touch, etc. is available
 	// -> used by the CSS for styling JS-dependent elements
-	let featureClasses = ['js'];
-	// Add a class if the browser/device supports touch
-	if ("ontouchstart" in document.body) featureClasses.push('touch');
-	document.body.className = featureClasses.join(' ');
+	let featureData = ['js'];
+	if ("ontouchstart" in document.body) featureData.push('touch');
+
+	// Add a data attribute for each supported feature
+	featureData.forEach(item => {
+		document.body.dataset[item] = 'true';
+	});
 </script>
 
 <html lang="en">
@@ -105,8 +108,8 @@ const themeTokens: ThemeTokens = theme
 		)}
 	</head>
 
-	<body class="no-js no-touch">
-		<MainNav segment={path} overlay={headerOverlay} />
+	<body>
+		<MainNav segment={path} overlay={overlayNav} />
 		<main>
 			<slot />
 		</main>
@@ -130,7 +133,6 @@ const themeTokens: ThemeTokens = theme
 		 * -> https://web.dev/viewport-units/
 		 */
 		min-height: 100vh;
-		min-height: 100svh;
 		min-height: 100dvh;
 	}
 </style>

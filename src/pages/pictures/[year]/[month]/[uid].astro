@@ -24,6 +24,7 @@ import Gallery from '@components/layout/Gallery.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Image from '@components/elements/Image.astro';
 import PictureFrame from '@components/elements/PictureFrame.astro';
+import MainNav from '@components/navigation/MainNav.astro';
 import PictureGallery from '@components/navigation/PictureGallery.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
@@ -245,8 +246,8 @@ function createMediaString() {
 ---
 
 <Layout
+	overlayNav={true}
 	path="pictures"
-	headerOverlay
 	{seo}
 >
 	<!-- cover -->
@@ -271,7 +272,7 @@ function createMediaString() {
 	<!-- back story -->
 	{prismicHelpers.isFilled.sliceZone(body) && (
 		<section class="wrapper | border-seam-top" id="backstory">
-			<Heading level={1} align="center">Back story</Heading>
+			<Heading level={2} align="center">Back story</Heading>
 			<BlockList {body} />
 		</section>
 	)}
@@ -347,18 +348,24 @@ function createMediaString() {
 	.cover {
 		display: grid;
 		grid-template-columns: var(--space-outside) 1fr var(--space-outside);
-		grid-template-rows: var(--space-xwide) minmax(60dvh, 1fr) auto var(--space-wide);
+		/* add a space above the top margin roughly the height of the main nav
+				to keep the cover image vertically centered */
+		grid-template-rows: 3.125rem var(--space-xwide) minmax(60dvh, 1fr) auto var(--space-wide);
 		grid-template-areas:
+			'nav-space nav-space nav-space'
 			'. . .'
 			'. image .'
 			'. info .'
 			'. . .';
-		gap: var(--space-wide);
-		max-height: 100vh;
-		max-height: 100dvh;
+		height: 100vh;
+		height: 100dvh;
 		position: relative;
 		justify-content: center;
 		align-items: center;
+	}
+
+	.cover-nav {
+		grid-area: nav;
 	}
 
 	.cover-image {
@@ -372,6 +379,7 @@ function createMediaString() {
 
 		display: flex;
 		gap: var(--gap);
+		padding-block-start: var(--space-xwide);
 		align-items: baseline;
 		justify-content: center;
 		flex-wrap: wrap;

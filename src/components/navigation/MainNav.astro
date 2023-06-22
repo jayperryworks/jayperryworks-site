@@ -20,6 +20,7 @@ import LogoJP from '@components/logos/LogoJP.astro';
 // types
 export interface Props {
 	segment: string;
+	class?: string;
 	overlay?: boolean;
 }
 
@@ -38,8 +39,14 @@ const routes = response.data.nav_item.map(
 
 const {
 	segment,
+	class:className = '',
 	overlay = false,
 } = Astro.props as Props;
+
+const classList = [
+	overlay ? 'overlay' : '',
+	className,
+].join(' ');
 ---
 
 <script>
@@ -78,80 +85,75 @@ const {
 	});
 </script>
 
-<header class={overlay ? 'overlay' : ''}>
-  <nav>
-    <a
-      class="logo"
-      href="/"
-    >
-      <LogoJP />
-    </a>
+<nav class={classList}>
+	<a
+		class="logo"
+		href="/"
+	>
+		<LogoJP />
+	</a>
 
-    <!-- nav -->
-  	<div class="type-align-right">
-      <button
-				class="nav-button | type-role-accent type-scale-epsilon"
-				id="nav-button-open"
-      >
-        Menu
-        <Icon
-					svg={menu}
-					margin="left"
+	<!-- nav -->
+	<div class="type-align-right">
+		<button
+			class="nav-button | type-role-accent type-scale-epsilon"
+			id="nav-button-open"
+		>
+			Menu
+			<Icon
+				svg={menu}
+				margin="left"
+			/>
+		</button>
+		<div
+			class="nav closed"
+			id="nav-wrapper"
+		>
+			<button
+				class="nav-button close type-scale-epsilon type-role-accent"
+				id="nav-button-close"
+			>
+				<Icon
+					svg={close}
+					margin="right"
 				/>
-      </button>
-      <div
-        class="nav closed"
-				id="nav-wrapper"
-      >
-        <button
-          class="nav-button close type-scale-epsilon type-role-accent"
-					id="nav-button-close"
-        >
-          <Icon
-						svg={close}
-						margin="right"
-					/>
-          <span class="hide-visually">Close</span>
-        </button>
-        <ul class="nav-list">
-					{routes.map(({ label, link }) => (
-            <li>
-              <a
-								aria-current={link.includes(segment) && 'page'}
-                class="nav-item | type-link-undecorated"
-                href={link}
-              >
-								{label}
-              </a>
-            </li>
-					))}
-        </ul>
-      </div>
-    </div>
-  </nav>
-</header>
+				<span class="hide-visually">Close</span>
+			</button>
+			<ul class="nav-list">
+				{routes.map(({ label, link }) => (
+					<li>
+						<a
+							aria-current={link.includes(segment) && 'page'}
+							class="nav-item | type-link-undecorated"
+							href={link}
+						>
+							{label}
+						</a>
+					</li>
+				))}
+			</ul>
+		</div>
+	</div>
+</nav>
 
 <style>
 	/* --- layout --- */
-	header {
-    --transition: 0.25s;
+	nav {
+		--transition: 0.25s;
 
 		padding-inline: var(--space-outside);
+		display: flex;
+		justify-content: space-between;
 	}
 
-  .overlay {
-    background-color: transparent;
+	.overlay {
+		background-color: transparent;
     left: 0;
     position: absolute;
     right: 0;
     top: 0;
     z-index: 4;
   }
-
-	nav {
-		display: flex;
-		justify-content: space-between;
-	}
 
   /* --- nav elements --- */
   .logo {
@@ -188,7 +190,7 @@ const {
   }
 
   /* --- small-screen nav --- */
-  :global(.js) .nav {
+  :global(body[data-js]) .nav {
     background-color: hsl(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95);
     bottom: 0;
     display: block;
@@ -203,7 +205,7 @@ const {
   }
 
   @supports (display: flex) {
-    :global(.js) .nav {
+    :global(body[data-js]) .nav {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -212,7 +214,7 @@ const {
   }
 
   /* closed (visually hidden) state */
-  :global(.js) .nav.closed {
+  :global(body[data-js]) .nav.closed {
     border: 0;
     clip-path: inset(100%);
     clip: rect(1px, 1px, 1px, 1px);
@@ -224,7 +226,7 @@ const {
   }
 
   /* open (transitioned) state */
-  :global(.js) .nav.open {
+  :global(body[data-js]) .nav.open {
     opacity: 1;
   }
 
@@ -234,7 +236,7 @@ const {
     margin: 0;
   }
 
-  :global(.js) .nav-list {
+  :global(body[data-js]) .nav-list {
     display: block;
   }
 
@@ -278,14 +280,14 @@ const {
     }
 
     .nav,
-    :global(.js) .nav {
+    :global(body[data-js]) .nav {
       background-color: transparent;
       display: inline-block;
       opacity: 1;
       position: relative;
     }
 
-    :global(.js) .nav.closed {
+    :global(body[data-js]) .nav.closed {
       clip-path: none;
       clip: auto;
       height: auto;
