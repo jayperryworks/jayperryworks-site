@@ -44,7 +44,7 @@ import type {
 	TitleField,
 } from '@prismicio/types';
 
-import type { SEOContent } from '@lib/types';
+import type { FormattedText, SEOContent } from '@lib/types';
 
 export async function getStaticPaths() {
  	const pictures = await prismic.getAllByType('picture', {
@@ -95,8 +95,6 @@ export async function getStaticPaths() {
  	return pictures.map(({ uid, data, tags }) => {
 		const date = prismicHelpers.asDate(data.date_completed);
 
-		let editionTypeNotes = [];
-
 		const editions = data.editions.map((edition) => {
 			const {
 				etsy_link: etsyLink,
@@ -113,10 +111,6 @@ export async function getStaticPaths() {
 				print_type: printType,
 			} = size.data;
 
-			// Add the print type name and description to the editionTypeNotes array
-			// if it isn't already in there
-			if (!editionTypeNotes.includes(printType.data)) editionTypeNotes.push(printType.data);
-
 			const dimensions = data.orientation === 'horizontal'
 				? [ longSide, shortSide ]
 				: [ shortSide, longSide ];
@@ -126,7 +120,12 @@ export async function getStaticPaths() {
 				image,
 				limit,
 				name,
-				type: prismicHelpers.asText(printType.data.name),
+				type: {
+					name: prismicHelpers.asText(printType.data.name).toLowerCase(),
+					description: {
+						prismicText: printType.data.description,
+					},
+				},
 				info: [
 					{
 						label: 'Type',
@@ -141,6 +140,9 @@ export async function getStaticPaths() {
 						value: dimensions.map(side => `${side + (border * 2)}"`).join(' x '),
 					},
 				],
+				printNotes: {
+
+				}
 			};
 		});
 
@@ -165,7 +167,6 @@ export async function getStaticPaths() {
  			props: {
 				...data,
 				editions,
-				editionTypeNotes,
 				nav,
 				seo: {
 					description: data.seo_description || pictureDescription({ data, tags }),
@@ -185,19 +186,19 @@ export type EditionInfo = {
 	value: string,
 };
 
+export type PrintType = {
+	name: string,
+	description?: FormattedText,
+}
+
 export type Edition = {
 	etsyLink: LinkField,
 	image: ImageField,
 	limit: number,
 	name: string,
-	type: TitleField,
+	type: PrintType,
 	info: EditionInfo[],
 };
-
-export type EditionTypeNote = {
-	name: TitleField,
-	description?: RichTextField,
-}
 
 export type Nav = {
 	title?: TitleField,
@@ -212,7 +213,6 @@ export interface Props {
 	body: SliceZone;
 	title: TitleField;
 	editions?: Edition[];
-	editionTypeNotes?: EditionTypeNote[];
 	height?: number;
 	media?: GroupField;
 	seo: SEOContent,
@@ -227,7 +227,6 @@ const {
 	body,
 	title,
 	editions,
-	editionTypeNotes,
 	height,
 	media,
 	seo,
@@ -311,13 +310,25 @@ function createMediaString() {
 						</div>
 						<figcaption class="edition-info">
 							<Heading level={3} class="edition-title">
-								<strong>{edition.name}</strong><span> {edition.type.toString().toLowerCase()}&nbsp;print</span>
+								<strong>{edition.name}</strong><span> {edition.type.name}&nbsp;print</span>
 							</Heading>
 							<DataGrid
 								data={edition.info}
 								gutter="narrow"
 								columnWidth={8}
 							/>
+							{edition.type.description && (
+								<details>
+									<summary>
+										<Heading level={4} subheading>About {edition.type.name} prints</h3>
+									</summary>
+									<Passage
+										text={edition.type.description}
+										typeFace="accent"
+										typeSize="zeta"
+									/>
+								</details>
+							)}
 							<div class="edition-cta">
 								<Button
 									href={prismicHelpers.asLink(edition.etsyLink)}
@@ -332,12 +343,6 @@ function createMediaString() {
 				</RevealOnScroll>
 			))}
 		</Gallery>
-		<aside>
-			{editionTypeNotes.map(({ name, description }) => (
-				<h3>About {prismicHelpers.asText(name)} prints</h3>
-				<Passage content={{ prismicText: description }} />
-			))}
-		</aside>
 	</section>
 
 	<nav class="wrapper | border-seam-top">
