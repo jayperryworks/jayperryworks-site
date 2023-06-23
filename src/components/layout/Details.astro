@@ -1,0 +1,89 @@
+---
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+
+// types
+export interface Props {
+	title: string;
+	class?: string;
+	titleEl?: string;
+}
+
+const {
+	title,
+	class: className = '',
+	titleEl = 'span',
+} = Astro.props as Props;
+
+const El = titleEl;
+---
+
+<details class={className}>
+	<summary>
+		<El class="title">{title}</El>
+	</summary>
+	<div class="body">
+		<slot name="body"></slot>
+	</div>
+</details>
+
+<style>
+	details {
+		--spacing: var(--space-narrow);
+		--title-size: var(--type-scale-epsilon);
+		--title-font: var(--type-role-accent);
+
+		display: grid;
+		grid-template-rows: auto auto;
+		gap: var(--spacing);
+	}
+
+	summary {
+		cursor: pointer;
+		display: block;
+	}
+
+	summary::marker,
+	summary::-webkit-details-marker {
+		display: none;
+	}
+
+	summary:hover,
+	summary:active,
+	[open] summary {
+		color: var(--color-highlight);
+	}
+
+	.title {
+		position: relative;
+		display: flex;
+		align-items: center;
+		transition: color 0.25s ease-in-out;
+		font-size: var(--title-size);
+		font-family: var(--title-font);
+	}
+
+	.title::before {
+		--icon-size: 1.2rem;
+
+		background-color: var(--color-primary);
+		content: '';
+		display: inline-block;
+		height: var(--icon-size);
+		margin-inline-end: var(--space-xnarrow);
+		mask: url('/assets/icons/expand.svg') center no-repeat;
+		mask-size: contain;
+		position: relative;
+		width: var(--icon-size);
+	}
+
+	[open] .title::before {
+		mask-image: url('/assets/icons/collapse.svg');
+	}
+
+	summary:hover .title::before,
+	summary:active .title::before,
+	[open] .title::before {
+		background-color: var(--color-highlight);
+	}
+</style>

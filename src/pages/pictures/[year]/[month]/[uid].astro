@@ -21,6 +21,7 @@ import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
 import Passage from '@components/blocks/Passage.astro';
 import DataGrid from '@components/layout/DataGrid.astro';
+import Details from '@components/layout/Details.astro';
 import Gallery from '@components/layout/Gallery.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Image from '@components/elements/Image.astro';
@@ -318,16 +319,18 @@ function createMediaString() {
 								columnWidth={8}
 							/>
 							{edition.type.description && (
-								<details>
-									<summary>
-										<Heading level={4} subheading>About {edition.type.name} prints</h3>
-									</summary>
+								<Details
+									title={`What's a ${edition.type.name} print?`}
+									titleEl="h4"
+									class="edition-note"
+								>
 									<Passage
+										slot="body"
 										text={edition.type.description}
 										typeFace="accent"
 										typeSize="zeta"
 									/>
-								</details>
+								</Details>
 							)}
 							<div class="edition-cta">
 								<Button
@@ -496,6 +499,13 @@ function createMediaString() {
 
 	.edition-info > dl {
 		padding-block-start: var(--space-narrow);
+	}
+
+	.edition-note {
+		padding: var(--space-xnarrow);
+		border: var(--border-solid);
+		background-color: var(--color-well);
+		border-radius: var(--border-radius);
 	}
 
 	.edition-cta {
