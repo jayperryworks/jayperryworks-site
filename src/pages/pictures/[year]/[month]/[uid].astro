@@ -19,12 +19,12 @@ import { pictureDescription } from '@lib/pictureHelpers';
 // components
 import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
+import Passage from '@components/blocks/Passage.astro';
 import DataGrid from '@components/layout/DataGrid.astro';
 import Gallery from '@components/layout/Gallery.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Image from '@components/elements/Image.astro';
 import PictureFrame from '@components/elements/PictureFrame.astro';
-import MainNav from '@components/navigation/MainNav.astro';
 import PictureGallery from '@components/navigation/PictureGallery.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
@@ -39,6 +39,7 @@ import type {
 	LinkField,
 	PrismicDocument,
 	PrismicDocumentWithUID,
+	RichTextField,
 	SliceZone,
 	TitleField,
 } from '@prismicio/types';
@@ -94,6 +95,8 @@ export async function getStaticPaths() {
  	return pictures.map(({ uid, data, tags }) => {
 		const date = prismicHelpers.asDate(data.date_completed);
 
+		let editionTypeNotes = [];
+
 		const editions = data.editions.map((edition) => {
 			const {
 				etsy_link: etsyLink,
@@ -109,6 +112,10 @@ export async function getStaticPaths() {
 				long_side: longSide,
 				print_type: printType,
 			} = size.data;
+
+			// Add the print type name and description to the editionTypeNotes array
+			// if it isn't already in there
+			if (!editionTypeNotes.includes(printType.data)) editionTypeNotes.push(printType.data);
 
 			const dimensions = data.orientation === 'horizontal'
 				? [ longSide, shortSide ]
@@ -158,6 +165,7 @@ export async function getStaticPaths() {
  			props: {
 				...data,
 				editions,
+				editionTypeNotes,
 				nav,
 				seo: {
 					description: data.seo_description || pictureDescription({ data, tags }),
@@ -186,6 +194,11 @@ export type Edition = {
 	info: EditionInfo[],
 };
 
+export type EditionTypeNote = {
+	name: TitleField,
+	description?: RichTextField,
+}
+
 export type Nav = {
 	title?: TitleField,
 	aspectRatio?: string,
@@ -199,6 +212,7 @@ export interface Props {
 	body: SliceZone;
 	title: TitleField;
 	editions?: Edition[];
+	editionTypeNotes?: EditionTypeNote[];
 	height?: number;
 	media?: GroupField;
 	seo: SEOContent,
@@ -213,6 +227,7 @@ const {
 	body,
 	title,
 	editions,
+	editionTypeNotes,
 	height,
 	media,
 	seo,
@@ -317,6 +332,12 @@ function createMediaString() {
 				</RevealOnScroll>
 			))}
 		</Gallery>
+		<aside>
+			{editionTypeNotes.map(({ name, description }) => (
+				<h3>About {prismicHelpers.asText(name)} prints</h3>
+				<Passage content={{ prismicText: description }} />
+			))}
+		</aside>
 	</section>
 
 	<nav class="wrapper | border-seam-top">
