@@ -491,25 +491,22 @@ function createMediaString() {
 	}
 
 	.edition-info {
-		--gap: var(--space-narrow);
+		--gap: var(--space-medium);
+
 		flex-grow: 1;
 		flex-shrink: 1;
 		flex-basis: 14rem;
-	}
-
-	.edition-info > dl {
-		padding-block-start: var(--space-narrow);
+		display: flex;
+		flex-direction: column;
+		gap: var(--gap);
 	}
 
 	.edition-note {
+		--title-size: var(--type-scale-zeta);
+
 		padding: var(--space-xnarrow);
-		border: var(--border-solid);
 		background-color: var(--color-well);
 		border-radius: var(--border-radius);
-	}
-
-	.edition-cta {
-		padding-block-start: var(--space-medium);
 	}
 
 	.nav-header {

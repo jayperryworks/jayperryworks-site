@@ -29,13 +29,13 @@ const El = titleEl;
 
 <style>
 	details {
-		--spacing: var(--space-narrow);
+		--spacing: var(--space-xxnarrow);
+		--title-font: var(--type-font-accent);
+		--title-weight: normal;
 		--title-size: var(--type-scale-epsilon);
-		--title-font: var(--type-role-accent);
 
 		display: grid;
 		grid-template-rows: auto auto;
-		gap: var(--spacing);
 	}
 
 	summary {
@@ -61,6 +61,7 @@ const El = titleEl;
 		transition: color 0.25s ease-in-out;
 		font-size: var(--title-size);
 		font-family: var(--title-font);
+		font-weight: var(--title-weight);
 	}
 
 	.title::before {
@@ -85,5 +86,9 @@ const El = titleEl;
 	summary:active .title::before,
 	[open] .title::before {
 		background-color: var(--color-highlight);
+	}
+
+	.body {
+		padding-block-start: var(--spacing);
 	}
 </style>
