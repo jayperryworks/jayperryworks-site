@@ -1,4 +1,5 @@
 ---
+import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 
@@ -23,7 +24,7 @@ const El = titleEl;
 		<El class="title">{title}</El>
 	</summary>
 	<div class="body">
-		<slot name="body"></slot>
+		<slot></slot>
 	</div>
 </details>
 
@@ -31,16 +32,17 @@ const El = titleEl;
 	details {
 		--spacing: var(--space-xxnarrow);
 		--title-font: var(--type-font-accent);
-		--title-weight: normal;
+		--title-weight: 300;
 		--title-size: var(--type-scale-epsilon);
+		--title-color: var(--color-primary);
 
-		display: grid;
-		grid-template-rows: auto auto;
+		display: block;
 	}
 
 	summary {
 		cursor: pointer;
 		display: block;
+		color: var(--title-color);
 	}
 
 	summary::marker,
@@ -67,7 +69,7 @@ const El = titleEl;
 	.title::before {
 		--icon-size: 1.2rem;
 
-		background-color: var(--color-primary);
+		background-color: var(--title-color);
 		content: '';
 		display: inline-block;
 		height: var(--icon-size);

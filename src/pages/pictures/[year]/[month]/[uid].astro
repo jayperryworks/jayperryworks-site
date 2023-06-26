@@ -19,15 +19,15 @@ import { pictureDescription } from '@lib/pictureHelpers';
 // components
 import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
-import Passage from '@components/blocks/Passage.astro';
-import DataGrid from '@components/layout/DataGrid.astro';
-import Details from '@components/layout/Details.astro';
-import Gallery from '@components/layout/Gallery.astro';
-import Heading from '@components/blocks/Heading.astro';
-import Image from '@components/elements/Image.astro';
 import PictureFrame from '@components/elements/PictureFrame.astro';
-import PictureGallery from '@components/navigation/PictureGallery.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
+import CardWithImage from '@components/layout/CardWithImage.astro';
+import DataGrid from '@components/layout/DataGrid.astro';
+import Expander from '@components/layout/Expander.astro';
+import Gallery from '@components/layout/Gallery.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+import PictureGallery from '@components/navigation/PictureGallery.astro';
 
 // layout
 import Layout from '@layouts/BaseLayout.astro';
@@ -305,44 +305,38 @@ function createMediaString() {
 		>
 			{editions.map((edition) => (
 				<RevealOnScroll tag="li">
-					<figure class="edition">
-						<div class="edition-image">
-							<Image source={edition.image} />
+					<CardWithImage image={edition.image}>
+						<Heading level={3} class="edition-title">
+							<strong>{edition.name}</strong><span> {edition.type.name}&nbsp;print</span>
+						</Heading>
+						<DataGrid
+							data={edition.info}
+							gutter="narrow"
+							columnWidth={8}
+						/>
+						{edition.type.description && (
+							<Expander
+								title={`About ${edition.type.name} prints`}
+								titleEl="h4"
+								class="edition-note"
+							>
+								<Passage
+									text={edition.type.description}
+									typeFace="accent"
+									typeSize="zeta"
+								/>
+							</Expander>
+						)}
+						<div class="edition-cta">
+							<Button
+								href={prismicHelpers.asLink(edition.etsyLink)}
+								iconRight={arrowRight}
+								target="_blank"
+							>
+								Buy on <strong>Etsy</strong>
+							</Button>
 						</div>
-						<figcaption class="edition-info">
-							<Heading level={3} class="edition-title">
-								<strong>{edition.name}</strong><span> {edition.type.name}&nbsp;print</span>
-							</Heading>
-							<DataGrid
-								data={edition.info}
-								gutter="narrow"
-								columnWidth={8}
-							/>
-							{edition.type.description && (
-								<Details
-									title={`What's a ${edition.type.name} print?`}
-									titleEl="h4"
-									class="edition-note"
-								>
-									<Passage
-										slot="body"
-										text={edition.type.description}
-										typeFace="accent"
-										typeSize="zeta"
-									/>
-								</Details>
-							)}
-							<div class="edition-cta">
-								<Button
-									href={prismicHelpers.asLink(edition.etsyLink)}
-									iconRight={arrowRight}
-									target="_blank"
-								>
-									Buy on <strong>Etsy</strong>
-								</Button>
-							</div>
-						</figcaption>
-					</figure>
+					</CardWithImage>
 				</RevealOnScroll>
 			))}
 		</Gallery>
@@ -454,20 +448,10 @@ function createMediaString() {
 	}
 
 	.wrapper {
-		padding: var(--space-xwide) var(--space-outside);
-	}
-
-	.wrapper > :global(* + *) {
-		padding-block-start: var(--space-wide);
-	}
-
-	.edition {
 		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		gap: var(--space-medium);
-		margin-inline: auto;
-		max-width: var(--content-width-wide);
+		flex-direction: column;
+		gap: var(--space-wide);
+		padding: var(--space-xwide) var(--space-outside);
 	}
 
 	.edition-title {
@@ -480,33 +464,13 @@ function createMediaString() {
 		font-weight: 300;
 	}
 
-	.edition-image {
-		flex-grow: 1;
-		flex-shrink: 1;
-		flex-basis: 31rem;
-	}
-
-	.edition-image :global(img) {
-		display: block;
-	}
-
-	.edition-info {
-		--gap: var(--space-medium);
-
-		flex-grow: 1;
-		flex-shrink: 1;
-		flex-basis: 14rem;
-		display: flex;
-		flex-direction: column;
-		gap: var(--gap);
-	}
-
 	.edition-note {
+		--title-color: var(--color-secondary);
 		--title-size: var(--type-scale-zeta);
 
-		padding: var(--space-xnarrow);
 		background-color: var(--color-well);
 		border-radius: var(--border-radius);
+		padding: var(--space-narrow);
 	}
 
 	.nav-header {

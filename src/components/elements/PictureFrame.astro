@@ -24,15 +24,6 @@
 		type?: 'frame' | 'panel',
 	};
 
-	let {
-		source,
-		class: className,
-		frameThickness,
-		matteColor,
-		matteThickness,
-		type = 'frame',
-	} = Astro.props as Props;
-
 	const types = {
 		frame: {
 			matte: 7,
@@ -44,8 +35,15 @@
 		},
 	};
 
-	if (!matteThickness) matteThickness = types[type].matte;
-	if (!frameThickness) frameThickness = types[type].border;
+	const {
+		source,
+		class: className,
+		// put the 'type' prop first because 'frameThickness' and 'matteThickness' use its value for their defaults
+		type = 'frame',
+		frameThickness = types[type].border,
+		matteThickness = types[type].matte,
+		matteColor,
+	} = Astro.props as Props;
 
 	const classList = [
 		type,

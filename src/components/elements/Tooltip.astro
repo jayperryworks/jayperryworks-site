@@ -21,7 +21,6 @@ const {
 } = Astro.props as Props;
 
 const classList = [
-	'tooltip',
 	`align-${align}`,
 	show ? 'show' : '',
 	className,
@@ -37,7 +36,7 @@ const classList = [
 
 <style>
 	/* Be sure to add position: relative to the parent element */
-	.tooltip {
+	small {
 	--bg: hsl(
 		var(--color-bg-h)
 		var(--color-bg-s)
@@ -73,8 +72,8 @@ const classList = [
 	z-index: 4;
 }
 
-.tooltip::before,
-.tooltip::after {
+small::before,
+small::after {
 	border-left: var(--pointer-size) solid transparent;
 	border-right: var(--pointer-size) solid transparent;
 	content: "";
@@ -84,76 +83,76 @@ const classList = [
 	width: 0;
 }
 
-.tooltip.align-start {
+small.align-start {
 	left: calc(var(--pointer-margin) * -1);
 	text-align: left;
 }
 
-.tooltip.align-end {
+small.align-end {
 	right: calc(var(--pointer-margin) * -1);
 	text-align: right;
 }
 
-.tooltip.align-center {
+small.align-center {
 	left: 50%;
 	text-align: center;
 	transform: translateX(-50%);
 }
 
-.tooltip::before {
+small::before {
 	border-top: var(--pointer-size) solid var(--border);
 	bottom: calc(var(--pointer-size) * -1);
 }
 
-.tooltip::after {
+small::after {
 	border-top: var(--pointer-size) solid var(--bg);
 	bottom: calc((var(--pointer-size) - 0.1em) * -1);
 }
 
-.tooltip.align-start::before,
-.tooltip.align-start::after {
+small.align-start::before,
+small.align-start::after {
 	left: var(--pointer-margin);
 }
 
-.tooltip.align-end::before,
-.tooltip.align-end::after {
+small.align-end::before,
+small.align-end::after {
 	right: var(--pointer-margin);
 }
 
-.tooltip.align-center::before,
-.tooltip.align-center::after {
+small.align-center::before,
+small.align-center::after {
 	left: 50%;
 	transform: translateX(-50%);
 }
 
-.tooltip.align-center {
+small.align-center {
 	left: 50%;
 	text-align: center;
 	transform: translateX(-50%);
 }
 
-.tooltip.show {
+small.show {
 	--show: 1;
 	pointer-events: all;
 }
 
 @media screen and (min-width: 45em) {
 	/* widen spacing a little on larger screens, where there's more outside room */
-	.tooltip {
+	small {
 		--pointer-margin: var(--space-narrow);
 	}
 }
 
 @media screen and (min-width: 55em) {
 	/* move all tooltips to be centered on large screens */
-	.tooltip[class*='align'] {
+	small[class*='align'] {
 		left: 50%;
 		text-align: center;
 		transform: translateX(-50%);
 	}
 
-	.tooltip[class*='align']::before,
-	.tooltip[class*='align']::after {
+	small[class*='align']::before,
+	small[class*='align']::after {
 		left: 50%;
 		transform: translateX(-50%);
 	}

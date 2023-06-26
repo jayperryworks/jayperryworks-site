@@ -1,0 +1,60 @@
+---
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/contentWidth.css';
+
+import Image from '@components/elements/Image.astro';
+
+export interface Props {
+	image: string;
+	class?: string;
+}
+
+const {
+	image,
+	class: className = '',
+} = Astro.props as Props;
+---
+
+<figure class={className}>
+	<div class="image">
+		<Image source={image} />
+	</div>
+	<figcaption class="info">
+		<slot></slot>
+	</figcaption>
+</figure>
+
+<style>
+	figure {
+		--info-width: 14rem;
+		--info-spacing: var(--space-medium);
+		--spacing: var(--space-medium);
+
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: var(--spacing);
+		margin-inline: auto;
+		max-width: var(--content-width-wide);
+	}
+
+	.image {
+		flex-grow: 1;
+		flex-shrink: 1;
+		flex-basis: 31rem;
+	}
+
+	.image :global(img) {
+		display: block;
+	}
+
+	.info {
+
+		flex-grow: 1;
+		flex-shrink: 1;
+		flex-basis: var(--info-width);
+		display: flex;
+		flex-direction: column;
+		gap: var(--info-spacing);
+	}
+</style>
