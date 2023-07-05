@@ -12,6 +12,7 @@ import { TitleField } from '@prismicio/types';
 export interface Props {
 	align?: 'left' | 'center' | 'right',
 	class?: string,
+	id?: string,
 	level?: number,
 	subheading?: boolean,
 	text?: TitleField,
@@ -20,6 +21,7 @@ export interface Props {
 const {
 	align = 'left',
 	class: className = '',
+	id,
 	level = 2,
 	subheading = false,
 	text,
@@ -44,7 +46,7 @@ const classList = [
 ].join(' ');
 ---
 
-<El class={classList}>
+<El class={classList} id={id}>
 	<slot>
 		{text && <Fragment set:html={removeWidows(prismicHelpers.asText(text))} />}
 	</slot>
