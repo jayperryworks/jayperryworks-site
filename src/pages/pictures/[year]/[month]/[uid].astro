@@ -299,11 +299,17 @@ function createMediaString() {
 				Available editions
 			</Heading>
 		</RevealOnScroll>
-		<Tabs nav={editions.map(({ name, type }) => ({
-			label: name,
-			id: `${type.name}-${name}`
-		}))}>
-			<section slot="content">
+		<Tabs>
+			<Fragment slot="labels">
+				{editions.map(({ name, type }) => (
+					<a
+						class="type-role-accent"
+						href={`#${type.name}-${name}`}>
+						{name}
+					</a>
+				))}
+			</Fragment>
+			<Fragment slot="content">
 				{editions.map(({ name, type, image, info, etsyLink }) => (
 					<article id={`${type.name}-${name}`}>
 						<CardWithImage image={image}>
@@ -340,7 +346,7 @@ function createMediaString() {
 						</CardWithImage>
 					</article>
 				))}
-			</section>
+			</Fragment>
 		</Gallery>
 	</section>
 
@@ -402,13 +408,14 @@ function createMediaString() {
 	.cover-info {
 		--gap: var(--space-xnarrow);
 
+		align-items: center;
+		color: var(--color-secondary);
 		display: flex;
 		flex-direction: column;
 		gap: var(--gap);
-		padding-block-start: var(--space-xwide);
-		align-items: center;
-		justify-content: center;
 		grid-area: info;
+		justify-content: center;
+		padding-block-start: var(--space-xwide);
 	}
 
 	.cover-info-item {

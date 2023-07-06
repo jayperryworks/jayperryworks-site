@@ -225,7 +225,7 @@ const {
 					tag="section"
 					class="nav-wrapper tags"
 				>
-					<h2 class="type-role-accent type-scale-epsilon">Filed&nbsp;under:</h2>
+					<h2 class="tag-label type-role-accent type-scale-epsilon">Filed&nbsp;under:</h2>
 					<ul class="tag-list type-role-accent">
 						{tags.map((tag) => (
 							<li>
@@ -312,6 +312,10 @@ const {
 			gap: var(--space-xnarrow);
 			flex-wrap: nowrap;
 		}
+	}
+
+	.tag-label {
+		color: var(--color-secondary);
 	}
 
 	.tag-list {

@@ -5,13 +5,7 @@
 	- number: the note count, defaults to 1
 */
 
-type NavItem = {
-	label: string,
-	id: string,
-}
-
 export interface Props {
-	nav: NavItem[];
 	class?: string;
 }
 
@@ -23,13 +17,11 @@ const {
 <jp-tabs>
 	<header>
 		<nav>
-			{nav.map(({ label, id }) => (
-				<a href={`#${id}`}>{label}</a>
-			))}
+			<slot name="labels"></slot>
 		</nav>
 	</header>
 	<section class="content">
-		<slot></slot>
+		<slot name="content"></slot>
 	</section>
 </jp-tabs>
 
@@ -60,5 +52,9 @@ const {
 	nav {
 		display: flex;
 		gap: var(--space-narrow);
+	}
+
+	nav :global(a) {
+		color: red;
 	}
 </style>

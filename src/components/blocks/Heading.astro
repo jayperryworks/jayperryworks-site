@@ -40,7 +40,7 @@ const El = !subheading ? `h${level}` : 'p';
 
 const classList = [
 	'heading',
-	subheading ? `type-role-accent type-scale-${levels[level - 1]}` : '',
+	subheading ? `sub type-role-accent type-scale-${levels[level - 1]}` : '',
 	align !== 'left' ? `align-${align}` : '',
 	className,
 ].join(' ');
@@ -56,6 +56,10 @@ const classList = [
 	.heading {
 		max-width: none;
 		margin-block: 0;
+	}
+
+	.sub {
+		color: var(--color-secondary);
 	}
 
 	.align-center {
