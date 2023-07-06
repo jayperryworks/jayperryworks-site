@@ -25,9 +25,9 @@ import Passage from '@components/blocks/Passage.astro';
 import CardWithImage from '@components/layout/CardWithImage.astro';
 import DataGrid from '@components/layout/DataGrid.astro';
 import Expander from '@components/layout/Expander.astro';
-import Gallery from '@components/layout/Gallery.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import PictureGallery from '@components/navigation/PictureGallery.astro';
+import Tabs from '@components/navigation/Tabs.astro';
 
 // layout
 import Layout from '@layouts/BaseLayout.astro';
@@ -299,46 +299,48 @@ function createMediaString() {
 				Available editions
 			</Heading>
 		</RevealOnScroll>
-		<Gallery
-			size="large"
-			gutter="wide"
-		>
-			{editions.map((edition) => (
-				<RevealOnScroll tag="li">
-					<CardWithImage image={edition.image}>
-						<Heading level={3} class="edition-title">
-							<strong>{edition.name}</strong><span> {edition.type.name}&nbsp;print</span>
-						</Heading>
-						<DataGrid
-							data={edition.info}
-							gutter="narrow"
-							columnWidth={8}
-						/>
-						{edition.type.description && (
-							<Expander
-								title={`About ${edition.type.name} prints`}
-								titleEl="h4"
-								class="edition-note"
-							>
-								<Passage
-									text={edition.type.description}
-									typeFace="accent"
-									typeSize="zeta"
-								/>
-							</Expander>
-						)}
-						<div class="edition-cta">
-							<Button
-								href={prismicHelpers.asLink(edition.etsyLink)}
-								iconRight={arrowRight}
-								target="_blank"
-							>
-								Buy on <strong>Etsy</strong>
-							</Button>
-						</div>
-					</CardWithImage>
-				</RevealOnScroll>
-			))}
+		<Tabs nav={editions.map(({ name, type }) => ({
+			label: name,
+			id: `${type.name}-${name}`
+		}))}>
+			<section slot="content">
+				{editions.map(({ name, type, image, info, etsyLink }) => (
+					<article id={`${type.name}-${name}`}>
+						<CardWithImage image={image}>
+							<Heading level={3} class="edition-title">
+								<strong>{name}</strong><span> {type.name}&nbsp;print</span>
+							</Heading>
+							<DataGrid
+								data={info}
+								gutter="narrow"
+								columnWidth={8}
+							/>
+							{type.description && (
+								<Expander
+									title={`About ${type.name} prints`}
+									titleEl="h4"
+									class="edition-note"
+								>
+									<Passage
+										text={type.description}
+										typeFace="accent"
+										typeSize="zeta"
+									/>
+								</Expander>
+							)}
+							<div class="edition-cta">
+								<Button
+									href={prismicHelpers.asLink(etsyLink)}
+									iconRight={arrowRight}
+									target="_blank"
+								>
+									Buy on <strong>Etsy</strong>
+								</Button>
+							</div>
+						</CardWithImage>
+					</article>
+				))}
+			</section>
 		</Gallery>
 	</section>
 

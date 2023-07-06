@@ -1,0 +1,64 @@
+---
+/* tabs component
+
+	props
+	- number: the note count, defaults to 1
+*/
+
+type NavItem = {
+	label: string,
+	id: string,
+}
+
+export interface Props {
+	nav: NavItem[];
+	class?: string;
+}
+
+const {
+	nav,
+} = Astro.props as Props;
+---
+
+<jp-tabs>
+	<header>
+		<nav>
+			{nav.map(({ label, id }) => (
+				<a href={`#${id}`}>{label}</a>
+			))}
+		</nav>
+	</header>
+	<section class="content">
+		<slot></slot>
+	</section>
+</jp-tabs>
+
+<script>
+	class Tabs extends HTMLElement {
+
+		constructor() {
+			super();
+		}
+
+		connectedCallback() {
+			const $nav = this.querySelectorAll('nav a');
+			const $content = this.querySelector('.content');
+
+			$nav.forEach(($item) => {
+				$item.addEventListener('click', (event) => {
+					console.log(event.target);
+					event.preventDefault();
+				});
+			})
+		}
+	}
+
+	customElements.define('jp-tabs', Tabs);
+</script>
+
+<style>
+	nav {
+		display: flex;
+		gap: var(--space-narrow);
+	}
+</style>
