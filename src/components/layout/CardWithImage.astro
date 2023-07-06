@@ -1,11 +1,16 @@
 ---
+// assets
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/contentWidth.css';
 
+// components
 import Image from '@components/elements/Image.astro';
 
+// types
+import { ImageField } from '@prismicio/types';
+
 export interface Props {
-	image: string;
+	image: ImageField;
 	class?: string;
 }
 
