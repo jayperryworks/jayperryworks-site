@@ -34,11 +34,13 @@ const {
 
 		connectedCallback() {
 			const $nav = this.querySelectorAll('nav a');
-			const $content = this.querySelector('.content');
+			const $content = this.querySelector('.content > *');
 
 			$nav.forEach(($item) => {
 				$item.addEventListener('click', (event) => {
-					console.log(event.target);
+					$nav.forEach(($i) => { $i.classList.remove('active') });
+					$item.classList.add('active');
+
 					event.preventDefault();
 				});
 			})
@@ -56,5 +58,9 @@ const {
 
 	nav :global(a) {
 		color: red;
+	}
+
+	nav :global(.active) {
+		color: blue;
 	}
 </style>
