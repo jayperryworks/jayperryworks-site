@@ -222,11 +222,13 @@ function heading(slice: Slice): BlockType {
 		level,
 		subheading,
 		title1: text,
+		id,
 	} = slice.primary;
 
 	return {
 		...sharedBlockFields(slice),
 		level: level || 2,
+		id,
 		subheading,
 		text,
 	};
