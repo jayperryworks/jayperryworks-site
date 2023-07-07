@@ -17,11 +17,11 @@ const {
 <jp-tabs class={className}>
 	<header>
 		<slot name="title"></slot>
-		<nav>
+		<nav class="scroll-snap">
 			<slot name="labels"></slot>
 		</nav>
 	</header>
-	<section class="content">
+	<section class="content scroll-snap">
 		<slot name="content"></slot>
 	</section>
 </jp-tabs>
@@ -63,9 +63,11 @@ const {
 
 <style>
 	jp-tabs {
+		--spacing: var(--space-medium);
+
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-medium);
+		gap: var(--spacing);
 	}
 
 	header {
@@ -73,6 +75,9 @@ const {
 		justify-content: space-between;
 		align-items: center;
 		gap: var(--space-wide);
+		flex-wrap: wrap;
+		flex-shrink: 0;
+		min-block-size: fit-content;
 	}
 
 	nav {
@@ -81,11 +86,14 @@ const {
 	}
 
 	nav :global(a) {
+		align-items: center;
 		color: var(--color-primary);
-		display: inline-block;
+		display: inline-flex;
 		padding: 0.25em 1.13em;
+		scroll-snap-align: start;
 		text-decoration: none;
 		transition: all 0.25s ease-in-out;
+		white-space: nowrap;
 	}
 
 	nav :global(.active) {
@@ -100,11 +108,41 @@ const {
 	}
 
 	.content {
-		display: flex;
-		overflow: hidden;
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: 100%;
+		overflow-x: scroll;
+		block-size: 100%;
+	}
+
+	.content > :global(*) {
+		scroll-snap-align: start;
 	}
 
 	.content :global(.active) {
 		border: 2px blue solid;
+	}
+
+	.scroll-snap {
+		overflow: auto hidden;
+		overscroll-behavior-x: contain;
+		scroll-snap-type: x mandatory;
+	}
+
+	@media (hover: none) {
+		.scroll-snap {
+			scrollbar-width: none;
+		}
+
+		.scroll-snap::-webkit-scrollbar {
+			width: 0;
+			height: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.scroll-snap {
+			scroll-behavior: smooth;
+		}
 	}
 </style>
