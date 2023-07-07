@@ -2,7 +2,7 @@
 /* tabs component
 
 	props
-	- number: the note count, defaults to 1
+	- class: pass in a CSS class name to apply to the container
 */
 
 export interface Props {
@@ -10,12 +10,13 @@ export interface Props {
 }
 
 const {
-	nav,
+	class: className,
 } = Astro.props as Props;
 ---
 
-<jp-tabs>
+<jp-tabs class={className}>
 	<header>
+		<slot name="title"></slot>
 		<nav>
 			<slot name="labels"></slot>
 		</nav>
@@ -27,19 +28,29 @@ const {
 
 <script>
 	class Tabs extends HTMLElement {
+		#activeClass: string;
 
 		constructor() {
 			super();
+			this.#activeClass = 'active';
 		}
 
 		connectedCallback() {
 			const $nav = this.querySelectorAll('nav a');
-			const $content = this.querySelector('.content > *');
+			const $content = this.querySelectorAll('.content > *');
+
+			$nav[0].classList.add(this.#activeClass);
+			$content[0].classList.add(this.#activeClass);
 
 			$nav.forEach(($item) => {
 				$item.addEventListener('click', (event) => {
-					$nav.forEach(($i) => { $i.classList.remove('active') });
-					$item.classList.add('active');
+					$nav.forEach(($i) => {$i.classList.remove(this.#activeClass) });
+					$content.forEach(($c) => {$c.classList.remove(this.#activeClass) });
+
+					$item.classList.add(this.#activeClass);
+
+					const activeContent = this.querySelector((event.target as HTMLElement).getAttribute('href'));
+					activeContent.classList.add(this.#activeClass);
 
 					event.preventDefault();
 				});
@@ -51,16 +62,49 @@ const {
 </script>
 
 <style>
+	jp-tabs {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-medium);
+	}
+
+	header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: var(--space-wide);
+	}
+
 	nav {
 		display: flex;
-		gap: var(--space-narrow);
+		align-items: baseline;
 	}
 
 	nav :global(a) {
-		color: red;
+		color: var(--color-primary);
+		display: inline-block;
+		padding: 0.25em 1.13em;
+		text-decoration: none;
+		transition: all 0.25s ease-in-out;
 	}
 
 	nav :global(.active) {
-		color: blue;
+		background-color: var(--color-primary);
+		border-radius: 10000px;
+		color: var(--color-bg);
+	}
+
+	nav :global(.active):hover,
+	nav :global(.active):active {
+		color: var(--color-bg);
+	}
+
+	.content {
+		display: flex;
+		overflow: hidden;
+	}
+
+	.content :global(.active) {
+		border: 2px blue solid;
 	}
 </style>

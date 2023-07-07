@@ -5,6 +5,7 @@ import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/type.css';
 import '@styles/utilities/borders.css';
 import '@styles/utilities/type.css';
+import '@styles/utilities/contentWidth.css';
 import arrowRight from '@icons/arrow-right.svg?raw';
 import index from '@icons/index.svg?raw';
 
@@ -299,55 +300,64 @@ function createMediaString() {
 				Available editions
 			</Heading>
 		</RevealOnScroll>
-		<Tabs>
-			<Fragment slot="labels">
-				{editions.map(({ name, type }) => (
-					<a
-						class="type-role-accent"
-						href={`#${type.name}-${name}`}>
-						{name}
-					</a>
-				))}
-			</Fragment>
-			<Fragment slot="content">
-				{editions.map(({ name, type, image, info, etsyLink }) => (
-					<article id={`${type.name}-${name}`}>
-						<CardWithImage image={image}>
-							<Heading level={3} class="edition-title">
-								<strong>{name}</strong><span> {type.name}&nbsp;print</span>
-							</Heading>
-							<DataGrid
-								data={info}
-								gutter="narrow"
-								columnWidth={8}
-							/>
-							{type.description && (
-								<Expander
-									title={`About ${type.name} prints`}
-									titleEl="h4"
-									class="edition-note"
-								>
-									<Passage
-										text={type.description}
-										typeFace="accent"
-										typeSize="zeta"
-									/>
-								</Expander>
-							)}
-							<div class="edition-cta">
-								<Button
-									href={prismicHelpers.asLink(etsyLink)}
-									iconRight={arrowRight}
-									target="_blank"
-								>
-									Buy on <strong>Etsy</strong>
-								</Button>
-							</div>
-						</CardWithImage>
-					</article>
-				))}
-			</Fragment>
-		</Gallery>
+		<section class="content-width-xwide">
+			<Tabs>
+				<Heading
+					level={3}
+					align="left"
+					slot="title"
+				>
+					Giclée prints
+				</Heading>
+				<Fragment slot="labels">
+					{editions.map(({ name, type }) => (
+						<a
+							class="type-role-accent"
+							href={`#${type.name}-${name.toLowerCase()}`}>
+							{name}
+						</a>
+					))}
+				</Fragment>
+				<Fragment slot="content">
+					{editions.map(({ name, type, image, info, etsyLink }) => (
+						<article id={`${type.name}-${name.toLowerCase()}`}>
+							<CardWithImage image={image}>
+								<Heading level={3} class="edition-title">
+									<strong>{name}</strong><span> {type.name}&nbsp;print</span>
+								</Heading>
+								<DataGrid
+									data={info}
+									gutter="narrow"
+									columnWidth={8}
+								/>
+								{type.description && (
+									<Expander
+										title={`About ${type.name} prints`}
+										titleEl="h4"
+										class="edition-note"
+									>
+										<Passage
+											text={type.description}
+											typeFace="accent"
+											typeSize="zeta"
+										/>
+									</Expander>
+								)}
+								<div class="edition-cta">
+									<Button
+										href={prismicHelpers.asLink(etsyLink)}
+										iconRight={arrowRight}
+										target="_blank"
+									>
+										Buy on <strong>Etsy</strong>
+									</Button>
+								</div>
+							</CardWithImage>
+						</article>
+					))}
+				</Fragment>
+			</Tabs>
+		</section>
 	</section>
 
 	<nav class="wrapper | border-seam-top">
