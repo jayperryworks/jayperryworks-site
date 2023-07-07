@@ -21,40 +21,91 @@ const {
 			<slot name="labels"></slot>
 		</nav>
 	</header>
-	<section class="content scroll-snap">
+	<section class="panels scroll-snap">
 		<slot name="content"></slot>
 	</section>
 </jp-tabs>
 
 <script>
 	class Tabs extends HTMLElement {
-		#activeClass: string;
+		// the class name applied to the active tab and panel
+		#activeClassName: string;
+
+		// state: the active tab and panel
+		#activePanel: Element;
+		#activeTab: Element;
+
+		// DOM containers
+		#nav: Element;
+		#panels: Element;
 
 		constructor() {
 			super();
-			this.#activeClass = 'active';
+			this.#activeClassName = 'active';
 		}
 
 		connectedCallback() {
-			const $nav = this.querySelectorAll('nav a');
-			const $content = this.querySelectorAll('.content > *');
+			// click:
+			// event.target.scrollIntoView()?
+			// move the #panels container so the active panel is in view
+			// use offsetLeft? https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetLeft
+			//
 
-			$nav[0].classList.add(this.#activeClass);
-			$content[0].classList.add(this.#activeClass);
+			// get the container elements
+			this.#nav = this.querySelector('nav');
+			this.#panels = this.querySelector('.panels');
 
-			$nav.forEach(($item) => {
+			// set initial state
+			this.activeTab = (this.#nav.children[0] as Element);
+
+			// set event listeners on the tab labels
+			Array.from(this.#nav.children).forEach(($item) => {
 				$item.addEventListener('click', (event) => {
-					$nav.forEach(($i) => {$i.classList.remove(this.#activeClass) });
-					$content.forEach(($c) => {$c.classList.remove(this.#activeClass) });
-
-					$item.classList.add(this.#activeClass);
-
-					const activeContent = this.querySelector((event.target as HTMLElement).getAttribute('href'));
-					activeContent.classList.add(this.#activeClass);
-
+					this.activeTab = event.target as Element;
 					event.preventDefault();
 				});
 			})
+
+			// as the panels are scrolled, changed the active tab label to match
+			if ('IntersectionObserver' in window) {
+				const panelObserver = new IntersectionObserver(
+					(entries) => {
+						return entries.forEach((entry) => {
+							if (entry.isIntersecting && !entry.target.classList.contains(this.#activeClassName)) {
+								this.activeTab = this.querySelector(`nav [href='#${entry.target.getAttribute('id')}']`);
+							}
+						});
+					},
+					{
+						root: this.#panels,
+						threshold: 0.5,
+					}
+				);
+
+				Array.from(this.#panels.children).forEach((panel) => {
+					panelObserver.observe(panel);
+				})
+			}
+		}
+
+		set activeTab(tab: Element) {
+			// remove the active class name from the old active tab & panel
+			if (this.#activeTab) {
+				this.#activeTab.classList.remove(this.#activeClassName);
+				this.#activePanel.classList.remove(this.#activeClassName);
+			}
+
+			// set the new active tab and panel
+			this.#activeTab = tab;
+			this.#activePanel = this.querySelector(this.#activeTab.getAttribute('href'));
+
+			// add the class name to the new active tab and panel
+			this.#activeTab.classList.add(this.#activeClassName);
+			this.#activePanel.classList.add(this.#activeClassName);
+		}
+
+		get activeTab() {
+			return this.#activeTab;
 		}
 	}
 
@@ -85,7 +136,7 @@ const {
 		align-items: baseline;
 	}
 
-	nav :global(a) {
+	nav > :global(*) {
 		align-items: center;
 		color: var(--color-primary);
 		display: inline-flex;
@@ -107,19 +158,21 @@ const {
 		color: var(--color-bg);
 	}
 
-	.content {
-		display: grid;
-		grid-auto-flow: column;
-		grid-auto-columns: 100%;
-		overflow-x: scroll;
+	.panels {
 		block-size: 100%;
+		display: grid;
+		grid-auto-columns: 100%;
+		grid-auto-flow: column;
+		overflow-x: scroll;
+		padding-block-end: 1rem; /* space for the scroll bar */
+		position: relative;
 	}
 
-	.content > :global(*) {
+	.panels > :global(*) {
 		scroll-snap-align: start;
 	}
 
-	.content :global(.active) {
+	.panels :global(.active) {
 		border: 2px blue solid;
 	}
 

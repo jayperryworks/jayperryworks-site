@@ -49,13 +49,13 @@ const seo = {
 		const $tocButton = document.getElementById('toc-link');
 		const $tocSection = document.querySelector($tocButton.getAttribute('href'));
 
-		$tocButton.addEventListener('pointerdown', () => {
+		$tocButton.addEventListener('pointerdown', (event) => {
 			$tocSection.scrollIntoView({
 				behavior: 'smooth',
 				block: 'start',
 			});
 
-			return false;
+			event.preventDefault();
 		});
 	});
 </script>
