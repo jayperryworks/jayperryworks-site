@@ -45,12 +45,6 @@ const {
 		}
 
 		connectedCallback() {
-			// click:
-			// event.target.scrollIntoView()?
-			// move the #panels container so the active panel is in view
-			// use offsetLeft? https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetLeft
-			//
-
 			// get the container elements
 			this.#nav = this.querySelector('nav');
 			this.#panels = this.querySelector('.panels');
@@ -58,11 +52,17 @@ const {
 			// set initial state
 			this.activeTab = (this.#nav.children[0] as Element);
 
+
 			// set event listeners on the tab labels
 			Array.from(this.#nav.children).forEach(($item) => {
 				$item.addEventListener('click', (event) => {
 					this.activeTab = event.target as Element;
 					event.preventDefault();
+
+					this.#panels.scroll({
+						left: (this.#activePanel as HTMLElement).offsetLeft,
+					});
+
 				});
 			})
 
@@ -173,7 +173,7 @@ const {
 	}
 
 	.panels :global(.active) {
-		border: 2px blue solid;
+		/* border: 2px blue solid; */
 	}
 
 	.scroll-snap {
