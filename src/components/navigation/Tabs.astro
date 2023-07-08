@@ -34,10 +34,12 @@ const {
 		// state: the active tab and panel
 		#activePanel: Element;
 		#activeTab: Element;
+		#watchScrolling: Boolean = true;
 
 		// DOM containers
 		#nav: Element;
-		#panels: Element;
+		#panelsWrapper: Element;
+		#panels: Element[];
 
 		constructor() {
 			super();
@@ -47,22 +49,24 @@ const {
 		connectedCallback() {
 			// get the container elements
 			this.#nav = this.querySelector('nav');
-			this.#panels = this.querySelector('.panels');
+			this.#panelsWrapper = this.querySelector('.panels');
+			this.#panels = Array.from(this.#panelsWrapper.children);
 
 			// set initial state
 			this.activeTab = (this.#nav.children[0] as Element);
 
-
 			// set event listeners on the tab labels
 			Array.from(this.#nav.children).forEach(($item) => {
 				$item.addEventListener('click', (event) => {
-					this.activeTab = event.target as Element;
-					event.preventDefault();
+					const targetPanel = (this.querySelector(
+						(event.target as HTMLElement).getAttribute('href')
+					) as HTMLElement);
 
-					this.#panels.scroll({
-						left: (this.#activePanel as HTMLElement).offsetLeft,
+					// scroll to the active panel
+					this.#panelsWrapper.scroll({
+						left: targetPanel.offsetLeft,
 					});
-
+					event.preventDefault();
 				});
 			})
 
@@ -77,12 +81,12 @@ const {
 						});
 					},
 					{
-						root: this.#panels,
+						root: this.#panelsWrapper,
 						threshold: 0.5,
 					}
 				);
 
-				Array.from(this.#panels.children).forEach((panel) => {
+				this.#panels.forEach((panel) => {
 					panelObserver.observe(panel);
 				})
 			}
