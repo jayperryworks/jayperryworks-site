@@ -57,7 +57,7 @@ const {
 			// set event listeners on the tab labels
 			Array.from(this.#nav.children).forEach(($item) => {
 				$item.addEventListener('click', (event) => {
-					this.scrollToActivePanel(event.target as HTMLElement);
+					this.showActivePanel(event.target as HTMLElement);
 					event.preventDefault();
 				});
 			})
@@ -83,11 +83,12 @@ const {
 				})
 			}
 
+			// when the the tabs container changes size, keep the active panel in view
 			if ('ResizeObserver' in window) {
 				const panelResizeObserver = new ResizeObserver(
 					(entries) => {
 						return entries.forEach(() => {
-							this.scrollToActivePanel(this.#activeTab as HTMLElement);
+							this.showActivePanel(this.#activeTab as HTMLElement);
 						});
 					}
 				);
@@ -117,7 +118,7 @@ const {
 			return this.#activeTab;
 		}
 
-		scrollToActivePanel($tab = this.#activeTab) {
+		showActivePanel($tab = this.#activeTab) {
 			const targetPanelID = $tab.getAttribute('href');
 			const $targetPanel = (this.querySelector(targetPanelID) as HTMLElement);
 
