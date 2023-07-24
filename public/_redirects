@@ -1,4 +1,6 @@
 /blog /blog/page/1
 /work/prints/*	/pictures/:splat	302
 /writing/* /blog/:splat 302
-/rss/all.xml	/rss/feed.xml
+/rss/all.xml	/rss/feed.xml	302
+/blog/rss/*	/rss/blog.xml	302
+/pictures/rss/*	/rss/pictures.xml	302
