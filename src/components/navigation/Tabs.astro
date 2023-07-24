@@ -34,7 +34,6 @@ const {
 		// state: the active tab and panel
 		#activePanel: Element;
 		#activeTab: Element;
-		#watchScrolling: Boolean = true;
 
 		// DOM containers
 		#nav: Element;
@@ -58,14 +57,7 @@ const {
 			// set event listeners on the tab labels
 			Array.from(this.#nav.children).forEach(($item) => {
 				$item.addEventListener('click', (event) => {
-					const targetPanel = (this.querySelector(
-						(event.target as HTMLElement).getAttribute('href')
-					) as HTMLElement);
-
-					// scroll to the active panel
-					this.#panelsWrapper.scroll({
-						left: targetPanel.offsetLeft,
-					});
+					this.scrollToActivePanel(event.target as HTMLElement);
 					event.preventDefault();
 				});
 			})
@@ -90,7 +82,20 @@ const {
 					panelObserver.observe(panel);
 				})
 			}
+
+			if ('ResizeObserver' in window) {
+				const panelResizeObserver = new ResizeObserver(
+					(entries) => {
+						return entries.forEach(() => {
+							this.scrollToActivePanel(this.#activeTab as HTMLElement);
+						});
+					}
+				);
+
+				panelResizeObserver.observe(this);
+			}
 		}
+
 
 		set activeTab(tab: Element) {
 			// remove the active class name from the old active tab & panel
@@ -110,6 +115,16 @@ const {
 
 		get activeTab() {
 			return this.#activeTab;
+		}
+
+		scrollToActivePanel($tab = this.#activeTab) {
+			const targetPanelID = $tab.getAttribute('href');
+			const $targetPanel = (this.querySelector(targetPanelID) as HTMLElement);
+
+			// scroll to the active panel
+			this.#panelsWrapper.scroll({
+				left: $targetPanel.offsetLeft,
+			});
 		}
 	}
 
