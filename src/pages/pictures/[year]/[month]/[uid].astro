@@ -130,21 +130,18 @@ export async function getStaticPaths() {
 				},
 				info: [
 					{
-						label: 'Type',
-						value: prismicHelpers.asText(printType.data.name),
-					},
-					{
-						label: 'Size',
+						label: 'Print size',
 						value: dimensions.map(side => `${side}"`).join(' x '),
 					},
 					{
 						label: 'Paper size',
 						value: dimensions.map(side => `${side + (border * 2)}"`).join(' x '),
 					},
+					{
+						label: 'Edition limit',
+						value: limit ? prismicHelpers.asText(limit) : 'Open',
+					},
 				],
-				printNotes: {
-
-				}
 			};
 		});
 
@@ -322,26 +319,17 @@ function createMediaString() {
 					{editions.map(({ name, type, image, info, etsyLink }) => (
 						<article id={`${type.name}-${name.toLowerCase()}`}>
 							<CardWithImage image={image}>
-								<Heading level={3} class="edition-title">
-									<strong>{name}</strong><span> {type.name}&nbsp;print</span>
-								</Heading>
 								<DataGrid
 									data={info}
 									gutter="narrow"
 									columnWidth={8}
 								/>
 								{type.description && (
-									<Expander
-										title={`About ${type.name} prints`}
-										titleEl="h4"
-										class="edition-note"
-									>
-										<Passage
-											text={type.description}
-											typeFace="accent"
-											typeSize="zeta"
-										/>
-									</Expander>
+									<Passage
+										text={type.description}
+										typeFace="accent"
+										typeSize="zeta"
+									/>
 								)}
 								<div class="edition-cta">
 									<Button
@@ -471,6 +459,12 @@ function createMediaString() {
 		flex-direction: column;
 		gap: var(--space-wide);
 		padding: var(--space-xwide) var(--space-outside);
+	}
+
+	.edition {
+		padding: var(--space-medium);
+		border-radius: var(--border-radius);
+		border: var(--border-solid);
 	}
 
 	.edition-title {
