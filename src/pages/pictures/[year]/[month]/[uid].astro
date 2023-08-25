@@ -41,7 +41,6 @@ import type {
 	LinkField,
 	PrismicDocument,
 	PrismicDocumentWithUID,
-	RichTextField,
 	SliceZone,
 	TitleField,
 } from '@prismicio/types';
@@ -132,6 +131,10 @@ export async function getStaticPaths() {
 					{
 						label: 'Print size',
 						value: dimensions.map(side => `${side}"`).join(' x '),
+					},
+					{
+						label: 'Border',
+						value: `${border}"`,
 					},
 					{
 						label: 'Paper size',
@@ -348,6 +351,7 @@ function createMediaString() {
 		</section>
 	</section>
 
+	<!-- Footer nav -->
 	<nav class="wrapper | border-seam-top">
 		<RevealOnScroll
 			tag="header"
