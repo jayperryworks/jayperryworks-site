@@ -1,5 +1,7 @@
 ---
 // assets
+import '@styles/tokens/borders.css';
+import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 
@@ -66,18 +68,25 @@ const sectionList = body.reduce((result: Array<any>, slice: Slice) => {
 		primary,
 	} = slice;
 
+	const {
+		short_title: shortTitle,
+		marker,
+		uid,
+	} = primary;
+
 	// if the block is a section, then add a new section to the array
-	if (type === 'sectionStart') {
+	if (type === 'section_start') {
 		result.push({
-			uid: primary.uid,
-			numbered: (primary.numbered || false),
+			marker,
+			shortTitle,
+			uid,
 			blocks: [],
 		});
 		return result;
 	}
 
 	// if the first blocks are outside a section, then make a generic/empty 'section'
-	if (result.length === 0 && type !== 'sectionStart') {
+	if (result.length === 0 && type !== 'section_start') {
 		result.push({ blocks: [] });
 	}
 
@@ -94,7 +103,6 @@ const sectionList = body.reduce((result: Array<any>, slice: Slice) => {
 	return result;
 }, []);
 
-
 const classList = [
 	'block-list',
 	className,
@@ -102,9 +110,12 @@ const classList = [
 ---
 
 <div class={classList}>
-	{sectionList.map(({ uid, blocks }) => (
+	{sectionList.map(({ uid, marker, blocks }) => (
 		uid
-			? <section id={uid}>
+			? <section
+					class={marker ? 'section-marker' : ''}
+					id={uid}
+				>
 					{blocks.map((block) => (
 						<Block
 							class={[
@@ -149,6 +160,27 @@ const classList = [
 	/* when two sections of type follow one another, add "invisible" spacing between so they feel like one continuous flow of text */
 	.block-list :global(.text + .text) {
 		padding-block-start: var(--space-medium);
+	}
+
+	/* --- section styling --- */
+	.section-marker {
+		margin-block-start: var(--space-xwide);
+		padding-block-start: var(--space-xwide);
+		position: relative;
+	}
+
+	.section-marker::before {
+		--width: 5ch;
+
+		content: '';
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 50%;
+		width: var(--width);
+		height: 4px;
+		background-color: var(--color-secondary);
+		margin-inline-start: calc((var(--width) / 2) * -1);
 	}
 
 	/* --- 'lede' (intro copy) styling --- */
