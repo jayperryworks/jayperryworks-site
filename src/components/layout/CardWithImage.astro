@@ -21,42 +21,50 @@ const {
 ---
 
 <figure class={className}>
-	<div class="image">
-		<Image source={image} />
+	<div class="wrapper">
+		<Image
+			class="image"
+			source={image}
+		/>
+		<figcaption class="info">
+			<slot></slot>
+		</figcaption>
 	</div>
-	<figcaption class="info">
-		<slot></slot>
-	</figcaption>
 </figure>
 
 <style>
 	figure {
-		--info-width: 12rem;
+		--info-width: 22rem;
 		--info-spacing: var(--space-medium);
 		--spacing: var(--space-medium);
 
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
+		margin: 0;
+		container-name: card;
+		container-type: inline-size;
+	}
+
+	.wrapper {
+		display: grid;
+		grid-template-areas:
+			'image'
+			'info';
 		gap: var(--spacing);
-		margin-inline: auto;
+	}
+
+	@container (min-width: 40em) {
+		.wrapper {
+			grid-template-columns: 1fr var(--info-width);
+			grid-template-areas: 'image info';
+		}
 	}
 
 	.image {
-		flex-grow: 1;
-		flex-shrink: 1;
-		flex-basis: 45rem;
-	}
-
-	.image :global(img) {
+		grid-area: image;
 		display: block;
 	}
 
 	.info {
-
-		flex-grow: 1;
-		flex-shrink: 1;
-		flex-basis: var(--info-width);
+		grid-area: info;
 		display: flex;
 		flex-direction: column;
 		gap: var(--info-spacing);
