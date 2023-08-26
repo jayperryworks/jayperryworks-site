@@ -25,7 +25,8 @@
 				"janisdd.vscode-edit-csv",
 				"EditorConfig.EditorConfig",
 				"ms-vscode-remote.remote-containers",
-				"jenkey2011.string-highlight"
+				"jenkey2011.string-highlight",
+				"AndrsDC.base16-themes"
 			]
 		}
 	},
