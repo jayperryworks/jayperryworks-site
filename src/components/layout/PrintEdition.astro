@@ -17,31 +17,7 @@ import DataGrid from '@components/layout/DataGrid.astro';
 import Tabs from '@components/navigation/Tabs.astro';
 
 // --- types
-import type { FormattedText } from '@lib/types';
-
-import type {
-	ImageField,
-	LinkField,
-} from '@prismicio/types';
-
-type Edition = {
-	etsyLink: LinkField,
-	image: ImageField,
-	limit: number,
-	name: string,
-	info: EditionInfo[],
-};
-
-type EditionInfo = {
-	label: string,
-	value: string,
-};
-
-type PrintType = {
-	name: string,
-	description: FormattedText,
-	sizes?: Edition[],
-};
+import type { PrintType } from '@lib/types';
 
 export interface Props {
 	type: PrintType;
@@ -54,7 +30,11 @@ const {
 } = Astro.props as Props;
 ---
 
-<section class="wrapper | content-width-xwide">
+<section class:list={[
+	'wrapper',
+	'content-width-xwide',
+	className
+]}>
 	<!-- tabs for edition sizes -->
 	<Tabs>
 		<Heading
@@ -68,7 +48,8 @@ const {
 			{type.sizes.map(({ name }) => (
 				<a
 					class="type-role-accent"
-					href={(`#${type.name}-${name}`).toLowerCase()}>
+					href={(`#${type.name}-${name}`).toLowerCase()}
+				>
 					{name}
 				</a>
 			))}
@@ -78,15 +59,15 @@ const {
 				<article id={`${type.name}-${name.toLowerCase()}`}>
 					<CardWithImage image={image}>
 						<DataGrid
+							columnWidth={8}
 							data={info}
 							gutter="narrow"
-							columnWidth={8}
 						/>
 						<Button
+							class="cta"
 							href={prismicHelpers.asLink(etsyLink)}
 							iconRight={arrowRight}
 							target="_blank"
-							class="cta"
 						>
 							Buy on <strong>Etsy</strong>
 						</Button>

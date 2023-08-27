@@ -40,7 +40,11 @@ import type {
 	TitleField,
 } from '@prismicio/types';
 
-import type { FormattedText, SEOContent } from '@lib/types';
+import type {
+	Edition,
+	PrintType,
+	SEOContent,
+} from '@lib/types';
 
 export async function getStaticPaths() {
  	const pictures = await prismic.getAllByType('picture', {
@@ -91,7 +95,7 @@ export async function getStaticPaths() {
  	return pictures.map(({ uid, data, tags }) => {
 		const date = prismicHelpers.asDate(data.date_completed);
 
-		const editions = data.editions.map((edition) => {
+		const editions: Edition[] = data.editions.map((edition) => {
 			const {
 				etsy_link: etsyLink,
 				image,
@@ -178,25 +182,7 @@ export async function getStaticPaths() {
  	});
 }
 
-export type EditionInfo = {
-	label: string,
-	value: string,
-};
-
-export type PrintType = {
-	name: string,
-	description?: FormattedText,
-}
-
-export type Edition = {
-	etsyLink: LinkField,
-	image: ImageField,
-	limit: number,
-	name: string,
-	type: PrintType,
-	info: EditionInfo[],
-};
-
+// --- types
 export type Nav = {
 	title?: TitleField,
 	aspectRatio?: string,
@@ -255,14 +241,8 @@ function createMediaString() {
 	return string;
 }
 
-/*
-	{
-		name,
-		description,
-		sizes: [ ...editions ]
-	}
-*/
-const editionsByType = editions.reduce((result, edition) => {
+// sort the editions by print type (giclee, etc.)
+const editionsByType: PrintType[] = editions.reduce((result, edition) => {
 	const currentTypeInResult = result.length > 0 && result.find((item) => item.name === edition.type.name);
 	if (!currentTypeInResult) {
 		result.push({

@@ -1,4 +1,6 @@
 import {
+	ImageField,
+	LinkField,
 	RichTextField,
 	TitleField,
 } from '@prismicio/types';
@@ -11,8 +13,7 @@ export type CSSHue = `${number | string}deg` | CSSVariable;
 export type CSSPercentage = `${number | string}%` | CSSVariable;
 
 export type HexColor = `#${number}`;
-export type HSLColor = `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage})`
-	| `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage} / ${number | string})`;
+// export type HSLColor = `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage})` | `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage} / ${number | string})`;
 
 type HSLChannel = 'h' | 's' | 'l' | 'a';
 
@@ -47,6 +48,26 @@ export interface Block {
 	// e.g. a Passage with a prismicText prop
 	[key: string]: unknown;
 }
+
+export type Edition = {
+	etsyLink: LinkField,
+	image: ImageField,
+	info: EditionInfo[],
+	name: string,
+	limit?: number,
+	type?: PrintType,
+};
+
+export type EditionInfo = {
+	label: string,
+	value: string,
+};
+
+export type PrintType = {
+	name: string,
+	description: FormattedText,
+	sizes?: Edition[],
+};
 
 // --- type ---
 export type TypeScale = 'alpha' | 'beta' | 'gamma' | 'delta' | 'epsilon' | 'zeta';
