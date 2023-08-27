@@ -6,10 +6,12 @@
 */
 
 export interface Props {
+	border?: boolean;
 	class?: string;
 }
 
 const {
+	border = true,
 	class: className,
 } = Astro.props as Props;
 ---
@@ -21,7 +23,7 @@ const {
 			<slot name="labels"></slot>
 		</nav>
 	</header>
-	<section class="panels scroll-snap">
+	<section class={['panels', 'scroll-snap', border ? 'border' : ''].join(' ')}>
 		<slot name="content"></slot>
 	</section>
 </jp-tabs>
@@ -97,7 +99,6 @@ const {
 			}
 		}
 
-
 		set activeTab(tab: Element) {
 			// remove the active class name from the old active tab & panel
 			if (this.#activeTab) {
@@ -135,6 +136,7 @@ const {
 <style>
 	jp-tabs {
 		--spacing: var(--space-medium);
+		--border: var(--border-default);
 
 		display: flex;
 		flex-direction: column;
@@ -149,6 +151,11 @@ const {
 		flex-wrap: wrap;
 		flex-shrink: 0;
 		min-block-size: fit-content;
+	}
+
+	.border {
+		padding-block: var(--spacing);
+		border-block: var(--border);
 	}
 
 	nav {

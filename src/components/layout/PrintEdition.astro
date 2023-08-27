@@ -1,0 +1,117 @@
+---
+// --- assets
+import '@styles/utilities/contentWidth.css';
+import '@styles/utilities/type.css';
+import arrowRight from '@icons/arrow-right.svg?raw';
+
+// --- helpers
+import { titleCase } from '@lib/stringHelpers';
+import * as prismicHelpers from '@prismicio/helpers';
+
+// --- components
+import Button from '@components/elements/Button.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
+import CardWithImage from '@components/layout/CardWithImage.astro';
+import DataGrid from '@components/layout/DataGrid.astro';
+import Tabs from '@components/navigation/Tabs.astro';
+
+// --- types
+import type { FormattedText } from '@lib/types';
+
+import type {
+	ImageField,
+	LinkField,
+} from '@prismicio/types';
+
+type Edition = {
+	etsyLink: LinkField,
+	image: ImageField,
+	limit: number,
+	name: string,
+	info: EditionInfo[],
+};
+
+type EditionInfo = {
+	label: string,
+	value: string,
+};
+
+type PrintType = {
+	name: string,
+	description: FormattedText,
+	sizes?: Edition[],
+};
+
+export interface Props {
+	type: PrintType;
+	class?: string;
+}
+
+const {
+	type,
+	class: className,
+} = Astro.props as Props;
+---
+
+<section class="wrapper | content-width-xwide">
+	<!-- tabs for edition sizes -->
+	<Tabs>
+		<Heading
+			level={3}
+			align="left"
+			slot="title"
+		>
+			{titleCase(type.name)} prints
+		</Heading>
+		<Fragment slot="labels">
+			{type.sizes.map(({ name }) => (
+				<a
+					class="type-role-accent"
+					href={(`#${type.name}-${name}`).toLowerCase()}>
+					{name}
+				</a>
+			))}
+		</Fragment>
+		<Fragment slot="content">
+			{type.sizes.map(({ name, image, info, etsyLink }) => (
+				<article id={`${type.name}-${name.toLowerCase()}`}>
+					<CardWithImage image={image}>
+						<DataGrid
+							data={info}
+							gutter="narrow"
+							columnWidth={8}
+						/>
+						<Button
+							href={prismicHelpers.asLink(etsyLink)}
+							iconRight={arrowRight}
+							target="_blank"
+							class="cta"
+						>
+							Buy on <strong>Etsy</strong>
+						</Button>
+					</CardWithImage>
+				</article>
+			))}
+		</Fragment>
+	</Tabs>
+
+	<!-- edition type description -->
+	{type.description && (
+		<div class="content-width">
+			<Passage text={type.description} />
+		</div>
+	)}
+</section>
+
+<style>
+	.wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-wide);
+	}
+
+	.cta {
+		align-self: flex-start;
+	}
+</style>
