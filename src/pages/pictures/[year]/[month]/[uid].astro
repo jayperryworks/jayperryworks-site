@@ -298,7 +298,9 @@ const editionsByType: PrintType[] = editions.reduce((result, edition) => {
 		</RevealOnScroll>
 
 		{editionsByType.map((type) => (
-			<PrintEdition {type} />
+			<RevealOnScroll>
+				<PrintEdition {type} />
+			</RevealOnScroll>
 		))}
 	</section>
 
