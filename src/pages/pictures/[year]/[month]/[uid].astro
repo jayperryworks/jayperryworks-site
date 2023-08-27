@@ -12,7 +12,7 @@ import index from '@icons/index.svg?raw';
 // utilities
 import prismic from '@lib/prismic';
 import * as prismicHelpers from '@prismicio/helpers';
-import { arrayToSentence } from '@lib/stringHelpers';
+import { arrayToSentence, titleCase } from '@lib/stringHelpers';
 import { format } from 'date-fns';
 import { indexPage } from '@lib/routes';
 import { pictureDescription } from '@lib/pictureHelpers';
@@ -22,6 +22,7 @@ import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
 import PictureFrame from '@components/elements/PictureFrame.astro';
 import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
 import CardWithImage from '@components/layout/CardWithImage.astro';
 import DataGrid from '@components/layout/DataGrid.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
@@ -266,16 +267,15 @@ function createMediaString() {
 	}
 */
 const editionsByType = editions.reduce((result, edition) => {
-	const alreadyExists = result.length > 0 && result.includes(edition.type);
-	console.log(alreadyExists);
-	if (!alreadyExists) {
+	const currentTypeInResult = result.length > 0 && result.find((item) => item.name === edition.type.name);
+	if (!currentTypeInResult) {
 		result.push({
 			...edition.type,
+			sizes: [ edition ],
 		});
 	} else {
-		console.log(result)
-		// result.find(({ name }) => name === edition.type.name).sizes = [];
-		// .push(edition);
+		delete edition.type;
+		currentTypeInResult.sizes.push(edition);
 	}
 	return result;
 }, []);
@@ -323,60 +323,60 @@ console.log('editions by type', editionsByType);
 			</Heading>
 		</RevealOnScroll>
 
+		{editionsByType.map((type) => (
+			<section class="content-width-xwide">
+				<!-- tabs for edition sizes -->
+				<Tabs>
+					<Heading
+						level={3}
+						align="left"
+						slot="title"
+					>
+						{type.name.titleCase()} prints
+					</Heading>
+					<Fragment slot="labels">
+						{type.sizes.map(({ name }) => (
+							<a
+								class="type-role-accent"
+								href={(`#${type.name}-${name}`).toLowerCase()}>
+								{name}
+							</a>
+						))}
+					</Fragment>
+					<Fragment slot="content">
+						{type.sizes.map(({ name, image, info, etsyLink }) => (
+							<article id={`${type.name}-${name.toLowerCase()}`}>
+								<CardWithImage image={image}>
+									<DataGrid
+										data={info}
+										gutter="narrow"
+										columnWidth={8}
+									/>
+									<div class="edition-cta">
+										<Button
+											href={prismicHelpers.asLink(etsyLink)}
+											iconRight={arrowRight}
+											target="_blank"
+										>
+											Buy on <strong>Etsy</strong>
+										</Button>
+									</div>
+								</CardWithImage>
+							</article>
+						))}
+					</Fragment>
+				</Tabs>
 
-		<section class="content-width-xwide">
-
-			<!-- tabs for edition sizes -->
-			<Tabs>
-				<Heading
-					level={3}
-					align="left"
-					slot="title"
-				>
-					Giclée prints
-				</Heading>
-				<Fragment slot="labels">
-					{editions.map(({ name, type }) => (
-						<a
-							class="type-role-accent"
-							href={`#${type.name}-${name.toLowerCase()}`}>
-							{name}
-						</a>
-					))}
-				</Fragment>
-				<Fragment slot="content">
-					{editions.map(({ name, image, type, info, etsyLink }) => (
-						<article id={`${type.name}-${name.toLowerCase()}`}>
-							<CardWithImage image={image}>
-								<DataGrid
-									data={info}
-									gutter="narrow"
-									columnWidth={8}
-								/>
-								<div class="edition-cta">
-									<Button
-										href={prismicHelpers.asLink(etsyLink)}
-										iconRight={arrowRight}
-										target="_blank"
-									>
-										Buy on <strong>Etsy</strong>
-									</Button>
-								</div>
-							</CardWithImage>
-						</article>
-					))}
-				</Fragment>
-			</Tabs>
-
-			<!-- edition type description -->
-			{/*type.description && (
-				<Passage
-					text={type.description}
-					typeFace="accent"
-					typeSize="zeta"
-				/>
-			)*/}
-		</section>
+				<!-- edition type description -->
+				{type.description && (
+					<Passage
+						text={type.description}
+						typeFace="accent"
+						typeSize="zeta"
+					/>
+				)}
+			</section>
+		))}
 	</section>
 
 	<!-- Footer nav -->
