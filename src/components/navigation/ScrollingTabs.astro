@@ -19,7 +19,7 @@ const {
 <jp-tabs class={className}>
 	<header>
 		<slot name="title"></slot>
-		<nav class="scroll-snap">
+		<nav class="disabled | scroll-snap">
 			<slot name="labels"></slot>
 		</nav>
 	</header>
@@ -52,6 +52,16 @@ const {
 			this.#nav = this.querySelector('nav');
 			this.#panelsWrapper = this.querySelector('.panels');
 			this.#panels = Array.from(this.#panelsWrapper.children);
+
+			// if there's only one item, then exit
+			// -> we don't need any of these behaviors unless there's more than one thing to show
+			if (this.#panels.length === 1) {
+				return;
+			};
+
+			// if JS is available (i.e. if this is running), remove the 'disabled' class
+			// to display the interactive tab labels
+			this.#nav.classList.remove('disabled');
 
 			// set initial state
 			this.activeTab = (this.#nav.children[0] as Element);
@@ -157,6 +167,10 @@ const {
 	nav {
 		display: flex;
 		align-items: baseline;
+	}
+
+	.disabled {
+		display: none;
 	}
 
 	nav > :global(*) {

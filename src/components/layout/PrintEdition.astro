@@ -2,6 +2,7 @@
 // --- assets
 import '@styles/utilities/contentWidth.css';
 import '@styles/utilities/type.css';
+import '@styles/utilities/visibility.css';
 import arrowRight from '@icons/arrow-right.svg?raw';
 
 // --- helpers
@@ -41,7 +42,7 @@ const {
 			align="left"
 			slot="title"
 		>
-			{titleCase(type.name)} prints
+			{titleCase(type.name)} print{type.sizes.length > 1 && 's'}
 		</Heading>
 		<Fragment slot="labels">
 			{type.sizes.map(({ name }) => (
@@ -58,6 +59,13 @@ const {
 				<article id={`${type.name}-${name.toLowerCase()}`}>
 					<CardWithImage image={image}>
 						<div class="info">
+							<Heading
+								level={4}
+								align='left'
+								class="name | hide-visually@js"
+							>
+								{titleCase(name)}
+							</Heading>
 							<DataGrid
 								columnWidth={6}
 								data={info}
@@ -94,6 +102,10 @@ const {
 		gap: var(--space-wide);
 	}
 
+	.name {
+		width: 100%;
+	}
+
 	.info {
 		flex: 1;
 		display: flex;
@@ -109,7 +121,7 @@ const {
 
 	.cta {
 		align-self: flex-start;
-		order: -1;
+		/* order: -1; */
 	}
 
 	@container (min-width: 24em) {

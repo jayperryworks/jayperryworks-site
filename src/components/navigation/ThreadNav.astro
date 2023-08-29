@@ -118,7 +118,7 @@ const classList = [
 	}
 
 	/* increase specificity so it overrides the child component */
-	:global(body[data-supports~='js']) .help {
+	:global([data-supports~='js']) .help {
 		--size: 2em;
 		--color: var(--color-secondary);
 
