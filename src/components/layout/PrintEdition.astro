@@ -57,19 +57,22 @@ const {
 			{type.sizes.map(({ name, image, info, etsyLink }) => (
 				<article id={`${type.name}-${name.toLowerCase()}`}>
 					<CardWithImage image={image}>
-						<Button
-							class="cta"
-							href={prismicHelpers.asLink(etsyLink)}
-							iconRight={arrowRight}
-							target="_blank"
-						>
-							Buy on <strong>Etsy</strong>
-						</Button>
-						<DataGrid
+						<div class="info">
+							<DataGrid
 							columnWidth={8}
 							data={info}
 							gutter="narrow"
-						/>
+							class="data"
+							/>
+							<Button
+								class="cta"
+								href={prismicHelpers.asLink(etsyLink)}
+								iconRight={arrowRight}
+								target="_blank"
+							>
+								Buy on <strong>Etsy</strong>
+							</Button>
+						</div>
 					</CardWithImage>
 				</article>
 			))}
@@ -91,7 +94,32 @@ const {
 		gap: var(--space-wide);
 	}
 
+	.info {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-medium);
+		container-name: info;
+		container-type: inline-size;
+	}
+
+	.data {
+		flex: 1;
+	}
+
 	.cta {
 		align-self: flex-start;
+		order: -1;
+	}
+
+	@container (min-width: 26em) {
+		.info {
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: var(--space-medium) var(--space-xwide);
+		}
+		.cta {
+			order: unset;
+		}
 	}
 </style>
