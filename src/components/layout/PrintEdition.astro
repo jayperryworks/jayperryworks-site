@@ -14,7 +14,7 @@ import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
 import CardWithImage from '@components/layout/CardWithImage.astro';
 import DataGrid from '@components/layout/DataGrid.astro';
-import Tabs from '@components/navigation/Tabs.astro';
+import Tabs from '@components/navigation/ScrollingTabs.astro';
 
 // --- types
 import type { PrintType } from '@lib/types';
@@ -30,13 +30,12 @@ const {
 } = Astro.props as Props;
 ---
 
-<section class:list={[
-	'wrapper',
+<section class={[
 	'content-width-xwide',
 	className
-]}>
+].join(' ')}>
 	<!-- tabs for edition sizes -->
-	<Tabs>
+	<Tabs class="tabs">
 		<Heading
 			level={3}
 			align="left"
@@ -58,11 +57,6 @@ const {
 			{type.sizes.map(({ name, image, info, etsyLink }) => (
 				<article id={`${type.name}-${name.toLowerCase()}`}>
 					<CardWithImage image={image}>
-						<DataGrid
-							columnWidth={8}
-							data={info}
-							gutter="narrow"
-						/>
 						<Button
 							class="cta"
 							href={prismicHelpers.asLink(etsyLink)}
@@ -71,6 +65,11 @@ const {
 						>
 							Buy on <strong>Etsy</strong>
 						</Button>
+						<DataGrid
+							columnWidth={8}
+							data={info}
+							gutter="narrow"
+						/>
 					</CardWithImage>
 				</article>
 			))}
@@ -86,7 +85,7 @@ const {
 </section>
 
 <style>
-	.wrapper {
+	section {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-wide);

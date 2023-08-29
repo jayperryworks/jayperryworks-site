@@ -153,11 +153,6 @@ const {
 		min-block-size: fit-content;
 	}
 
-	.border {
-		padding-block: var(--spacing);
-		border-block: var(--border);
-	}
-
 	nav {
 		display: flex;
 		align-items: baseline;
@@ -202,6 +197,11 @@ const {
 
 	.panels :global(.active) {
 		/* border: 2px blue solid; */
+	}
+
+	.border {
+		padding-block: var(--spacing);
+		border-block: var(--border);
 	}
 
 	.scroll-snap {

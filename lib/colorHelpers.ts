@@ -8,9 +8,10 @@ import {
 	HSLColor,
 	HSLChannel,
 	HSLObject,
+	HSLAColor,
 } from './types.ts';
 
-export function convertHexToHSL(hex: HexColor): HSLColor {
+export function convertHexToHSL(hex: HexColor): HSLColor | HSLAColor {
 	// convert the color from a hex to an array of hsl values...
 	const hsl = convertColor.hex.hsl(hex);
 
@@ -38,7 +39,7 @@ export function convertHexToHSLObject(hex: HexColor): Partial<HSLObject> {
 	}, { h: null, s: null, l: null });
 }
 
-export function convertHSLObjectToHSL(object: HSLObject): HSLColor {
+export function convertHSLObjectToHSL(object: HSLObject): HSLColor | HSLAColor {
 	if (object?.a < 1) return `hsl(${object.h}deg ${object.s}% ${object.l}% / ${object.a})`;
 	return `hsl(${object.h}deg ${object.s}% ${object.l}%)`;
 }

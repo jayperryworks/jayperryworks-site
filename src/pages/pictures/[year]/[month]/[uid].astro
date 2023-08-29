@@ -183,6 +183,10 @@ export async function getStaticPaths() {
 }
 
 // --- types
+interface EditionsByPrintType extends PrintType {
+	sizes?: Edition[];
+}
+
 export type Nav = {
 	title?: TitleField,
 	aspectRatio?: string,
@@ -222,6 +226,7 @@ const substrateName = prismicHelpers.isFilled.link(substrate)
 	? substrate.data.name.toLowerCase()
 	: 'paper';
 
+// convert a picture's media/substrate data to plain english
 function createMediaString() {
 	// convert the list of media to a sentence
 	let string = arrayToSentence(
@@ -242,7 +247,7 @@ function createMediaString() {
 }
 
 // sort the editions by print type (giclee, etc.)
-const editionsByType: PrintType[] = editions.reduce((result, edition) => {
+const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) => {
 	const currentTypeInResult = result.length > 0 && result.find((item) => item.name === edition.type.name);
 	if (!currentTypeInResult) {
 		result.push({

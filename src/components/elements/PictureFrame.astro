@@ -11,6 +11,7 @@
 	import type {
 		CSSVariable,
 		HexColor,
+		HSLAColor,
 		HSLColor,
 	} from '@lib/types';
 
@@ -19,7 +20,7 @@
 		class?: string,
 		el?: string,
 		frameThickness: number,
-		matteColor?: CSSVariable | HexColor | HSLColor,
+		matteColor?: CSSVariable | HexColor | HSLColor | HSLAColor,
 		matteThickness?: number,
 		type?: 'frame' | 'panel',
 	};

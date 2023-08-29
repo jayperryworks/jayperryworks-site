@@ -14,6 +14,7 @@ import type {
 	ColorRoles,
 	CSSVariable,
 	HexColor,
+	HSLAColor,
 	HSLColor,
 	Theme,
 } from '@lib/types';
@@ -28,7 +29,7 @@ export interface Props {
 	theme?: Partial<Theme>;
 }
 
-export type ThemeTokens = Partial<Record<`color-${ColorRoles}`, HexColor | HSLColor | CSSVariable>>;
+export type ThemeTokens = Partial<Record<`color-${ColorRoles}`, HexColor | HSLColor | HSLAColor | CSSVariable>>;
 
 // props and data
 const {
