@@ -59,15 +59,15 @@ const {
 					<CardWithImage image={image}>
 						<div class="info">
 							<DataGrid
-							columnWidth={8}
-							data={info}
-							gutter="narrow"
-							class="data"
+								columnWidth={6}
+								data={info}
+								class="data"
+								gutter="narrow"
 							/>
 							<Button
-								class="cta"
 								href={prismicHelpers.asLink(etsyLink)}
 								iconRight={arrowRight}
+								class="cta"
 								target="_blank"
 							>
 								Buy on <strong>Etsy</strong>
@@ -112,12 +112,13 @@ const {
 		order: -1;
 	}
 
-	@container (min-width: 26em) {
+	@container (min-width: 24em) {
 		.info {
 			flex-direction: row;
 			flex-wrap: wrap;
-			gap: var(--space-medium) var(--space-xwide);
+			gap: var(--space-medium);
 		}
+
 		.cta {
 			order: unset;
 		}

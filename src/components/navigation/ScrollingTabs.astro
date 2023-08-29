@@ -137,6 +137,7 @@ const {
 	jp-tabs {
 		--spacing: var(--space-medium);
 		--border: var(--border-default);
+		--scrollbar-h: 1rem;
 
 		display: flex;
 		flex-direction: column;
@@ -186,9 +187,9 @@ const {
 		grid-auto-columns: 100%;
 		grid-auto-flow: column;
 		overflow-x: scroll;
-		padding-block-end: 1rem; /* space for the scroll bar */
+		padding-block-end: var(--scrollbar-h); /* space for the scroll bar */
 		position: relative;
-		gap: var(--space-medium);
+		gap: var(--spacing);
 	}
 
 	.panels > :global(*) {
@@ -200,7 +201,8 @@ const {
 	}
 
 	.border {
-		padding-block: var(--spacing);
+		padding-block-start: var(--spacing);
+		padding-block-end: calc(var(--spacing) + var(--scrollbar-h));
 		border-block: var(--border);
 	}
 
