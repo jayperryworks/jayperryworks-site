@@ -27,7 +27,7 @@ export interface Props {
 const {
 	data,
 	class: className,
-	columnWidth = 18,
+	columnWidth = 8,
 	gutter = 'medium',
 	typeSize = 'zeta',
 } = Astro.props as Props;
@@ -67,11 +67,8 @@ const itemClassList = [
 <style>
 	dl {
 	  list-style: none;
-	  display: block;
-	}
-
-	.group + .group {
-		margin-block-start: var(--gutter);
+	  display: grid;
+		gap: var(--gutter);
 	}
 
 	.item {
@@ -115,16 +112,10 @@ const itemClassList = [
 
 	}
 
-	/* use grid display inside a media query to prevent sidescrolling on small mobile screens */
-	@media screen and (min-width: 25em) {
+	/* set up the grid template inside a media query to prevent sidescrolling on small mobile screens */
+	@media screen and (min-width: 18em) {
 		dl {
-			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(var(--col-size), 1fr));
-			grid-gap: var(--gutter);
-		}
-
-		.group + .group {
-			margin-block-start: 0;
 		}
 	}
 </style>

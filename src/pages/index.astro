@@ -1,5 +1,6 @@
 ---
 // assets
+import '@styles/tokens/color.css';
 import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
 import '@styles/utilities/borders.css';
@@ -48,13 +49,13 @@ const seo = {
 		const $tocButton = document.getElementById('toc-link');
 		const $tocSection = document.querySelector($tocButton.getAttribute('href'));
 
-		$tocButton.addEventListener('pointerdown', () => {
+		$tocButton.addEventListener('pointerdown', (event) => {
 			$tocSection.scrollIntoView({
 				behavior: 'smooth',
 				block: 'start',
 			});
 
-			return false;
+			event.preventDefault();
 		});
 	});
 </script>
@@ -87,7 +88,7 @@ const seo = {
 				</div>
 			</div>
 			<a
-				class="type-role-accent type-scale-epsilon type-link-undecorated"
+				class="toc-link type-role-accent type-scale-epsilon type-link-undecorated"
 				href="#toc"
 				id="toc-link"
 			>
@@ -133,6 +134,10 @@ const seo = {
 
 	.blurb-cta {
 		padding-block-start: var(--space-wide);
+	}
+
+	.toc-link {
+		color: var(--color-secondary);
 	}
 
 	.toc {

@@ -1,4 +1,6 @@
 import {
+	ImageField,
+	LinkField,
 	RichTextField,
 	TitleField,
 } from '@prismicio/types';
@@ -9,10 +11,11 @@ export type ColorRoles = 'primary' | 'secondary' | 'highlight' | 'bg' | 'island'
 export type CSSVariable = `var(--${string})`;
 export type CSSHue = `${number | string}deg` | CSSVariable;
 export type CSSPercentage = `${number | string}%` | CSSVariable;
+export type CSSAlpha = `/ ${number | string}`;
 
 export type HexColor = `#${number}`;
-export type HSLColor = `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage})`
-	| `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage} / ${number | string})`;
+export type HSLColor = `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage})`;
+export type HSLAColor = `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage} ${CSSAlpha})`;
 
 type HSLChannel = 'h' | 's' | 'l' | 'a';
 
@@ -32,21 +35,6 @@ export type Prominence = 'Small' | 'Medium' | 'Large';
 export type GallerySize = 'small' | 'medium' | 'large';
 export type ImageFit = 'default' | 'contain' | 'cover';
 export type Device = 'None' | 'Phone' | 'Tablet (horizontal)' | 'Tablet (vertical)';
-
-export type PaginationLink = {
-	path: string,
-	title: TitleField,
-	subtitle?: TitleField,
-};
-
-export interface Block {
-	type: string;
-	includeInExcerpt?: boolean;
-	prominence?: Prominence;
-	// the arbitrary props for any given Block component, defined on each component
-	// e.g. a Passage with a prismicText prop
-	[key: string]: unknown;
-}
 
 // --- type ---
 export type TypeScale = 'alpha' | 'beta' | 'gamma' | 'delta' | 'epsilon' | 'zeta';
@@ -79,3 +67,38 @@ export interface PublicationDates {
 	posted?: Date;
 	updated?: Date;
 }
+
+// --- components ---
+export type PaginationLink = {
+	path: string,
+	title: TitleField,
+	subtitle?: TitleField,
+};
+
+export interface Block {
+	type: string;
+	includeInExcerpt?: boolean;
+	prominence?: Prominence;
+	// the arbitrary props for any given Block component, defined on each component
+	// e.g. a Passage with a prismicText prop
+	[key: string]: unknown;
+}
+
+export interface PrintType {
+	name: string;
+	description: FormattedText;
+}
+
+export type EditionInfo = {
+	label: string,
+	value: string,
+};
+
+export type Edition = {
+	etsyLink: LinkField,
+	image: ImageField,
+	info: EditionInfo[],
+	name: string,
+	limit?: number,
+	type?: PrintType,
+};

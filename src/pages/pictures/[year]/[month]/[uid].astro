@@ -5,7 +5,7 @@ import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/type.css';
 import '@styles/utilities/borders.css';
 import '@styles/utilities/type.css';
-import arrowRight from '@icons/arrow-right.svg?raw';
+import '@styles/utilities/contentWidth.css';
 import index from '@icons/index.svg?raw';
 
 // utilities
@@ -19,14 +19,11 @@ import { pictureDescription } from '@lib/pictureHelpers';
 // components
 import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
-import DataGrid from '@components/layout/DataGrid.astro';
-import Gallery from '@components/layout/Gallery.astro';
-import Heading from '@components/blocks/Heading.astro';
-import Image from '@components/elements/Image.astro';
 import PictureFrame from '@components/elements/PictureFrame.astro';
-import MainNav from '@components/navigation/MainNav.astro';
-import PictureGallery from '@components/navigation/PictureGallery.astro';
+import Heading from '@components/blocks/Heading.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+import PrintEdition from '@components/layout/PrintEdition.astro';
+import PictureGallery from '@components/navigation/PictureGallery.astro';
 
 // layout
 import Layout from '@layouts/BaseLayout.astro';
@@ -43,7 +40,11 @@ import type {
 	TitleField,
 } from '@prismicio/types';
 
-import type { SEOContent } from '@lib/types';
+import type {
+	Edition,
+	PrintType,
+	SEOContent,
+} from '@lib/types';
 
 export async function getStaticPaths() {
  	const pictures = await prismic.getAllByType('picture', {
@@ -94,7 +95,7 @@ export async function getStaticPaths() {
  	return pictures.map(({ uid, data, tags }) => {
 		const date = prismicHelpers.asDate(data.date_completed);
 
-		const editions = data.editions.map((edition) => {
+		const editions: Edition[] = data.editions.map((edition) => {
 			const {
 				etsy_link: etsyLink,
 				image,
@@ -119,19 +120,28 @@ export async function getStaticPaths() {
 				image,
 				limit,
 				name,
-				type: prismicHelpers.asText(printType.data.name),
+				type: {
+					name: prismicHelpers.asText(printType.data.name).toLowerCase(),
+					description: {
+						prismicText: printType.data.description,
+					},
+				},
 				info: [
 					{
-						label: 'Type',
-						value: prismicHelpers.asText(printType.data.name),
+						label: 'Print size',
+						value: dimensions.map(side => `${side}"`).join(' x '),
 					},
 					{
-						label: 'Size',
-						value: dimensions.map(side => `${side}"`).join(' x '),
+						label: 'Border',
+						value: `${border}"`,
 					},
 					{
 						label: 'Paper size',
 						value: dimensions.map(side => `${side + (border * 2)}"`).join(' x '),
+					},
+					{
+						label: 'Edition limit',
+						value: limit ? prismicHelpers.asText(limit) : 'Open',
 					},
 				],
 			};
@@ -172,19 +182,10 @@ export async function getStaticPaths() {
  	});
 }
 
-export type EditionInfo = {
-	label: string,
-	value: string,
-};
-
-export type Edition = {
-	etsyLink: LinkField,
-	image: ImageField,
-	limit: number,
-	name: string,
-	type: TitleField,
-	info: EditionInfo[],
-};
+// --- types
+interface EditionsByPrintType extends PrintType {
+	sizes?: Edition[];
+}
 
 export type Nav = {
 	title?: TitleField,
@@ -225,6 +226,7 @@ const substrateName = prismicHelpers.isFilled.link(substrate)
 	? substrate.data.name.toLowerCase()
 	: 'paper';
 
+// convert a picture's media/substrate data to plain english
 function createMediaString() {
 	// convert the list of media to a sentence
 	let string = arrayToSentence(
@@ -243,6 +245,21 @@ function createMediaString() {
 
 	return string;
 }
+
+// sort the editions by print type (giclee, etc.)
+const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) => {
+	const currentTypeInResult = result.length > 0 && result.find((item) => item.name === edition.type.name);
+	if (!currentTypeInResult) {
+		result.push({
+			...edition.type,
+			sizes: [ edition ],
+		});
+	} else {
+		delete edition.type;
+		currentTypeInResult.sizes.push(edition);
+	}
+	return result;
+}, []);
 ---
 
 <Layout
@@ -284,41 +301,15 @@ function createMediaString() {
 				Available editions
 			</Heading>
 		</RevealOnScroll>
-		<Gallery
-			size="large"
-			gutter="wide"
-		>
-			{editions.map((edition) => (
-				<RevealOnScroll tag="li">
-					<figure class="edition">
-						<div class="edition-image">
-							<Image source={edition.image} />
-						</div>
-						<figcaption class="edition-info">
-							<Heading level={3} class="edition-title">
-								<strong>{edition.name}</strong><span> {edition.type.toString().toLowerCase()}&nbsp;print</span>
-							</Heading>
-							<DataGrid
-								data={edition.info}
-								gutter="narrow"
-								columnWidth={8}
-							/>
-							<div class="edition-cta">
-								<Button
-									href={prismicHelpers.asLink(edition.etsyLink)}
-									iconRight={arrowRight}
-									target="_blank"
-								>
-									Buy on <strong>Etsy</strong>
-								</Button>
-							</div>
-						</figcaption>
-					</figure>
-				</RevealOnScroll>
-			))}
-		</Gallery>
+
+		{editionsByType.map((type) => (
+			<RevealOnScroll>
+				<PrintEdition {type} />
+			</RevealOnScroll>
+		))}
 	</section>
 
+	<!-- Footer nav -->
 	<nav class="wrapper | border-seam-top">
 		<RevealOnScroll
 			tag="header"
@@ -377,13 +368,14 @@ function createMediaString() {
 	.cover-info {
 		--gap: var(--space-xnarrow);
 
+		align-items: center;
+		color: var(--color-secondary);
 		display: flex;
 		flex-direction: column;
 		gap: var(--gap);
-		padding-block-start: var(--space-xwide);
-		align-items: center;
-		justify-content: center;
 		grid-area: info;
+		justify-content: center;
+		padding-block-start: var(--space-xwide);
 	}
 
 	.cover-info-item {
@@ -425,55 +417,10 @@ function createMediaString() {
 	}
 
 	.wrapper {
-		padding: var(--space-xwide) var(--space-outside);
-	}
-
-	.wrapper > :global(* + *) {
-		padding-block-start: var(--space-wide);
-	}
-
-	.edition {
 		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		gap: var(--space-medium);
-		margin-inline: auto;
-		max-width: var(--content-width-wide);
-	}
-
-	.edition-title {
-		color: var(--color-secondary);
-	}
-
-	.edition-title > strong {
-		color: var(--color-primary);
-		font-style: normal;
-		font-weight: 300;
-	}
-
-	.edition-image {
-		flex-grow: 1;
-		flex-shrink: 1;
-		flex-basis: 31rem;
-	}
-
-	.edition-image :global(img) {
-		display: block;
-	}
-
-	.edition-info {
-		--gap: var(--space-narrow);
-		flex-grow: 1;
-		flex-shrink: 1;
-		flex-basis: 14rem;
-	}
-
-	.edition-info > dl {
-		padding-block-start: var(--space-narrow);
-	}
-
-	.edition-cta {
-		padding-block-start: var(--space-medium);
+		flex-direction: column;
+		gap: var(--space-wide);
+		padding: var(--space-xwide) var(--space-outside);
 	}
 
 	.nav-header {

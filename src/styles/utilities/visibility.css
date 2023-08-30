@@ -1,5 +1,6 @@
 /* hide an element visually, but keep it legible to screen readers, etc. */
-.hide-visually {
+.hide-visually,
+[data-supports~='js'] .hide-visually\@js {
 	border: 0;
 	clip: rect(1px, 1px, 1px, 1px);
 	clip-path: inset(100%);
@@ -10,7 +11,8 @@
 	width: 1px;
 }
 
-.show-visually {
+.show-visually,
+[data-supports~='js'] .show-visually\@js {
 	clip: auto;
 	clip-path: none;
 	height: auto;

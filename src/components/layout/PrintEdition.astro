@@ -1,0 +1,138 @@
+---
+// --- assets
+import '@styles/utilities/contentWidth.css';
+import '@styles/utilities/type.css';
+import '@styles/utilities/visibility.css';
+import arrowRight from '@icons/arrow-right.svg?raw';
+
+// --- helpers
+import { titleCase } from '@lib/stringHelpers';
+import * as prismicHelpers from '@prismicio/helpers';
+
+// --- components
+import Button from '@components/elements/Button.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
+import CardWithImage from '@components/layout/CardWithImage.astro';
+import DataGrid from '@components/layout/DataGrid.astro';
+import Tabs from '@components/navigation/ScrollingTabs.astro';
+
+// --- types
+import type { PrintType } from '@lib/types';
+
+export interface Props {
+	type: PrintType;
+	class?: string;
+}
+
+const {
+	type,
+	class: className,
+} = Astro.props as Props;
+---
+
+<section class={[
+	'content-width-xwide',
+	className
+].join(' ')}>
+	<!-- tabs for edition sizes -->
+	<Tabs class="tabs">
+		<Heading
+			level={3}
+			align="left"
+			slot="title"
+		>
+			{titleCase(type.name)} print{type.sizes.length > 1 && 's'}
+		</Heading>
+		<Fragment slot="labels">
+			{type.sizes.map(({ name }) => (
+				<a
+					class="type-role-accent"
+					href={(`#${type.name}-${name}`).toLowerCase()}
+				>
+					{name}
+				</a>
+			))}
+		</Fragment>
+		<Fragment slot="content">
+			{type.sizes.map(({ name, image, info, etsyLink }) => (
+				<article id={`${type.name}-${name.toLowerCase()}`}>
+					<CardWithImage image={image}>
+						<div class="info">
+							<Heading
+								level={4}
+								align='left'
+								class="name | hide-visually@js"
+							>
+								{titleCase(name)}
+							</Heading>
+							<DataGrid
+								columnWidth={6}
+								data={info}
+								class="data"
+								gutter="narrow"
+							/>
+							<Button
+								href={prismicHelpers.asLink(etsyLink)}
+								iconRight={arrowRight}
+								class="cta"
+								target="_blank"
+							>
+								Buy on <strong>Etsy</strong>
+							</Button>
+						</div>
+					</CardWithImage>
+				</article>
+			))}
+		</Fragment>
+	</Tabs>
+
+	<!-- edition type description -->
+	{type.description && (
+		<div class="content-width">
+			<Passage text={type.description} />
+		</div>
+	)}
+</section>
+
+<style>
+	section {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-wide);
+	}
+
+	.name {
+		width: 100%;
+	}
+
+	.info {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-medium);
+		container-name: info;
+		container-type: inline-size;
+	}
+
+	.data {
+		flex: 1;
+	}
+
+	.cta {
+		align-self: flex-start;
+		/* order: -1; */
+	}
+
+	@container (min-width: 24em) {
+		.info {
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: var(--space-medium);
+		}
+
+		.cta {
+			order: unset;
+		}
+	}
+</style>

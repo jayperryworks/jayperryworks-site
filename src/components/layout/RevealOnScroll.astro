@@ -73,15 +73,15 @@ const style = [
 
 <style>
 	/* only add these styles if javascript is available */
-	:global(body[data-supports~='js']) .reveal {
+	:global([data-supports~='js']) .reveal {
 		opacity: 0;
 	}
 
-	:global(body[data-supports~='js']) .ready {
+	:global([data-supports~='js']) .ready {
 		transition: opacity var(--reveal-duration) ease;
 	}
 
-	:global(body[data-supports~='js']) .visible {
+	:global([data-supports~='js']) .visible {
 		opacity: 1;
 	}
 </style>

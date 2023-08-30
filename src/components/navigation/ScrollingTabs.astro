@@ -1,0 +1,245 @@
+---
+/* tabs component
+
+	props
+	- class: pass in a CSS class name to apply to the container
+*/
+
+export interface Props {
+	border?: boolean;
+	class?: string;
+}
+
+const {
+	border = true,
+	class: className,
+} = Astro.props as Props;
+---
+
+<jp-tabs class={className}>
+	<header>
+		<slot name="title"></slot>
+		<nav class="disabled | scroll-snap">
+			<slot name="labels"></slot>
+		</nav>
+	</header>
+	<section class={['panels', 'scroll-snap', border ? 'border' : ''].join(' ')}>
+		<slot name="content"></slot>
+	</section>
+</jp-tabs>
+
+<script>
+	class Tabs extends HTMLElement {
+		// the class name applied to the active tab and panel
+		#activeClassName: string;
+
+		// state: the active tab and panel
+		#activePanel: Element;
+		#activeTab: Element;
+
+		// DOM containers
+		#nav: Element;
+		#panelsWrapper: Element;
+		#panels: Element[];
+
+		constructor() {
+			super();
+			this.#activeClassName = 'active';
+		}
+
+		connectedCallback() {
+			// get the container elements
+			this.#nav = this.querySelector('nav');
+			this.#panelsWrapper = this.querySelector('.panels');
+			this.#panels = Array.from(this.#panelsWrapper.children);
+
+			// if there's only one item, then exit
+			// -> we don't need any of these behaviors unless there's more than one thing to show
+			if (this.#panels.length === 1) {
+				return;
+			};
+
+			// if JS is available (i.e. if this is running), remove the 'disabled' class
+			// to display the interactive tab labels
+			this.#nav.classList.remove('disabled');
+
+			// set initial state
+			this.activeTab = (this.#nav.children[0] as Element);
+
+			// set event listeners on the tab labels
+			Array.from(this.#nav.children).forEach(($item) => {
+				$item.addEventListener('click', (event) => {
+					this.showActivePanel(event.target as HTMLElement);
+					event.preventDefault();
+				});
+			})
+
+			// as the panels are scrolled, changed the active tab label to match
+			if ('IntersectionObserver' in window) {
+				const panelObserver = new IntersectionObserver(
+					(entries) => {
+						return entries.forEach((entry) => {
+							if (entry.isIntersecting && !entry.target.classList.contains(this.#activeClassName)) {
+								this.activeTab = this.querySelector(`nav [href='#${entry.target.getAttribute('id')}']`);
+							}
+						});
+					},
+					{
+						root: this.#panelsWrapper,
+						threshold: 0.5,
+					}
+				);
+
+				this.#panels.forEach((panel) => {
+					panelObserver.observe(panel);
+				})
+			}
+
+			// when the the tabs container changes size, keep the active panel in view
+			if ('ResizeObserver' in window) {
+				const panelResizeObserver = new ResizeObserver(
+					(entries) => {
+						return entries.forEach(() => {
+							this.showActivePanel(this.#activeTab as HTMLElement);
+						});
+					}
+				);
+
+				panelResizeObserver.observe(this);
+			}
+		}
+
+		set activeTab(tab: Element) {
+			// remove the active class name from the old active tab & panel
+			if (this.#activeTab) {
+				this.#activeTab.classList.remove(this.#activeClassName);
+				this.#activePanel.classList.remove(this.#activeClassName);
+			}
+
+			// set the new active tab and panel
+			this.#activeTab = tab;
+			this.#activePanel = this.querySelector(this.#activeTab.getAttribute('href'));
+
+			// add the class name to the new active tab and panel
+			this.#activeTab.classList.add(this.#activeClassName);
+			this.#activePanel.classList.add(this.#activeClassName);
+		}
+
+		get activeTab() {
+			return this.#activeTab;
+		}
+
+		showActivePanel($tab = this.#activeTab) {
+			const targetPanelID = $tab.getAttribute('href');
+			const $targetPanel = (this.querySelector(targetPanelID) as HTMLElement);
+
+			// scroll to the active panel
+			this.#panelsWrapper.scroll({
+				left: $targetPanel.offsetLeft,
+			});
+		}
+	}
+
+	customElements.define('jp-tabs', Tabs);
+</script>
+
+<style>
+	jp-tabs {
+		--spacing: var(--space-medium);
+		--border: var(--border-default);
+		--scrollbar-h: 1rem;
+
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing);
+	}
+
+	header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: var(--space-wide);
+		flex-wrap: wrap;
+		flex-shrink: 0;
+		min-block-size: fit-content;
+	}
+
+	nav {
+		display: flex;
+		align-items: baseline;
+	}
+
+	.disabled {
+		display: none;
+	}
+
+	nav > :global(*) {
+		align-items: center;
+		color: var(--color-primary);
+		display: inline-flex;
+		padding: 0.25em 1.13em;
+		scroll-snap-align: start;
+		text-decoration: none;
+		transition: all 0.25s ease-in-out;
+		white-space: nowrap;
+	}
+
+	nav :global(.active) {
+		background-color: var(--color-primary);
+		border-radius: 10000px;
+		color: var(--color-bg);
+	}
+
+	nav :global(.active):hover,
+	nav :global(.active):active {
+		color: var(--color-bg);
+	}
+
+	.panels {
+		block-size: 100%;
+		display: grid;
+		grid-auto-columns: 100%;
+		grid-auto-flow: column;
+		overflow-x: scroll;
+		padding-block-end: var(--scrollbar-h); /* space for the scroll bar */
+		position: relative;
+		gap: var(--spacing);
+	}
+
+	.panels > :global(*) {
+		scroll-snap-align: start;
+	}
+
+	.panels :global(.active) {
+		/* border: 2px blue solid; */
+	}
+
+	.border {
+		padding-block-start: var(--spacing);
+		padding-block-end: calc(var(--spacing) + var(--scrollbar-h));
+		border-block: var(--border);
+	}
+
+	.scroll-snap {
+		overflow: auto hidden;
+		overscroll-behavior-x: contain;
+		scroll-snap-type: x mandatory;
+	}
+
+	@media (hover: none) {
+		.scroll-snap {
+			scrollbar-width: none;
+		}
+
+		.scroll-snap::-webkit-scrollbar {
+			width: 0;
+			height: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.scroll-snap {
+			scroll-behavior: smooth;
+		}
+	}
+</style>

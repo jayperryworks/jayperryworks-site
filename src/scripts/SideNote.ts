@@ -105,7 +105,6 @@ class SideNote extends HTMLElement {
 	constructor() {
 		super();
 		this.#shadowRoot = this.attachShadow({ mode: 'open' });
-		this.render();
 	}
 
 	attributeChangedCallback() {
@@ -113,6 +112,8 @@ class SideNote extends HTMLElement {
 	}
 
 	connectedCallback() {
+		this.render();
+
 		const label = this.#shadowRoot.querySelector('.label');
 		const wrapper = this.#shadowRoot.querySelector('.sidenote');
 
@@ -140,4 +141,4 @@ class SideNote extends HTMLElement {
 	}
 }
 
-export default customElements.define('side-note', SideNote);
+export default customElements.define('jp-sidenote', SideNote);

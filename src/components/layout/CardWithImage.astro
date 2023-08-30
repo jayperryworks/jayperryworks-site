@@ -1,0 +1,69 @@
+---
+// assets
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/contentWidth.css';
+
+// components
+import Image from '@components/elements/Image.astro';
+
+// types
+import { ImageField } from '@prismicio/types';
+
+export interface Props {
+	image: ImageField;
+	class?: string;
+}
+
+const {
+	image,
+	class: className = '',
+} = Astro.props as Props;
+---
+
+<figure class={className}>
+	<div class="wrapper">
+		<Image
+			class="image"
+			source={image}
+		/>
+		<figcaption>
+			<slot></slot>
+		</figcaption>
+	</div>
+</figure>
+
+<style>
+	figure {
+		--info-width: 18rem;
+		--spacing: var(--space-medium);
+
+		margin: 0;
+		container-name: card;
+		container-type: inline-size;
+	}
+
+	.wrapper {
+		display: grid;
+		grid-template-areas:
+			'image'
+			'info';
+		gap: var(--spacing);
+	}
+
+	@container (min-width: 50em) {
+		.wrapper {
+			grid-template-columns: 1fr var(--info-width);
+			grid-template-areas: 'image info';
+		}
+	}
+
+	.image {
+		display: block;
+		grid-area: image;
+		width: 100%;
+	}
+
+	figcaption {
+		grid-area: info;
+	}
+</style>

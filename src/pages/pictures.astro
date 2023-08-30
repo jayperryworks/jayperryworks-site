@@ -115,10 +115,10 @@ picturesBySeries.push({
 			id={series.uid || 'other-work'}
 		>
 			<RevealOnScroll>
-				<Heading level={2} class="type-role-accent type-scale-gamma">
+				<Heading level={2} class="series-title type-role-accent type-scale-gamma">
 					{series.title
 						? <Fragment>
-								<strong class="series-title">{prismicHelpers.asText(series.title)}</strong> series
+								<strong class="series-name">{prismicHelpers.asText(series.title)}</strong> series
 							</Fragment>
 						: <Fragment>Other recent work</Fragment>
 					}
@@ -154,9 +154,13 @@ picturesBySeries.push({
 		padding-block-start: var(--space-medium);
 	}
 
-	.series .series-title {
-		color: var(--color-primary);
+	.series-title {
+		color: var(--color-secondary);
+	}
+
+	.series .series-name {
 		font-weight: 300;
+		color: var(--color-primary);
 		font-style: normal;
 	}
 </style>

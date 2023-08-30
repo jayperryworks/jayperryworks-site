@@ -56,9 +56,9 @@ function htmlSerializer(type, element, content, children): string {
 			sidenotes.increment();
 
 			return `
-				<side-note number="${sidenotes.getCount()}">
+				<jp-sidenote number="${sidenotes.getCount()}">
 					<span class="fallback">(Note: </span>${sentenceCase(note)}<span class="fallback">)</span>
-				</side-note>
+				</jp-sidenote>
 			`;
 		}
 
@@ -85,7 +85,7 @@ function htmlSerializer(type, element, content, children): string {
 	.prose {
 		overflow: visible;
 		position: relative;
-		hyphens: auto;
+		/* hyphens: auto; */
 	}
 
 	.prose > :global(*) {
