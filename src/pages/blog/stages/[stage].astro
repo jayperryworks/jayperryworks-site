@@ -164,7 +164,7 @@ const {
 			<Passage
 				class="intro"
 				text={description}
-				typeFace="display"
+				typeFace="accent"
 				typeSize="delta"
 			/>
 		</RevealOnScroll>
@@ -190,6 +190,10 @@ const {
 
 	.wrapper > :global(* + *) {
 		margin-block-start: var(--space-wide);
+	}
+
+	.intro {
+		color: var(--color-secondary);
 	}
 
 	.post-list {
