@@ -1,0 +1,56 @@
+---
+export interface Props {
+	id: string;
+	title: string;
+	aspectRatio?: string;
+	class?: string;
+}
+
+const {
+	title,
+	id,
+	aspectRatio = '16 / 9',
+	class: className,
+} = Astro.props as Props;
+
+const src = `https://tube.tchncs.de/videos/embed/${id}?title=0&amp;warningTitle=0&amp;peertubeLink=0&amp;p2p=0`;
+
+const styleList = [
+	aspectRatio ? `--aspect-ratio: ${aspectRatio}` : '',
+].join(' ');
+---
+
+<figure
+	class={className}
+	style={styleList}
+>
+	<iframe
+		{title}
+		{src}
+		width="560"
+		height="315"
+		frameborder="0"
+		allowfullscreen=""
+		sandbox="allow-same-origin allow-scripts allow-popups"
+	>
+	</iframe>
+</figure>
+
+<style>
+	figure {
+		aspect-ratio: var(--aspect-ratio, auto);
+		margin: 0;
+		max-width: 100%;
+	}
+
+	iframe {
+		bottom: 0;
+		display: block;
+		height: 100%;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 100%;
+	}
+</style>
