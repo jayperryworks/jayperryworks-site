@@ -1,15 +1,24 @@
 ---
+import Figure from '@components/blocks/Figure.astro';
+import { FormattedText } from '@lib/types';
+
 export interface Props {
 	id: string;
 	title: string;
 	aspectRatio?: string;
+	attribution?: FormattedText;
+	border?: boolean;
+	caption?: FormattedText;
 	class?: string;
 }
 
 const {
-	title,
 	id,
+	title,
 	aspectRatio = '16 / 9',
+	attribution,
+	border,
+	caption,
 	class: className,
 } = Astro.props as Props;
 
@@ -20,30 +29,37 @@ const styleList = [
 ].join(' ');
 ---
 
-<figure
+<Figure
 	class={className}
-	style={styleList}
+	{border}
+	{caption}
+	{attribution}
 >
-	<iframe
-		{title}
-		{src}
-		width="560"
-		height="315"
-		frameborder="0"
-		allowfullscreen=""
-		sandbox="allow-same-origin allow-scripts allow-popups"
+	<div
+		class="aspect"
+		style={styleList}
 	>
-	</iframe>
-</figure>
+		<iframe
+			{title}
+			{src}
+			width="560"
+			height="315"
+			frameborder="0"
+			sandbox="allow-same-origin allow-scripts allow-popups"
+			allowfullscreen
+		>
+		</iframe>
+	</div>
+</Figure>
 
 <style>
-	figure {
+	.aspect {
 		aspect-ratio: var(--aspect-ratio, auto);
-		margin: 0;
 		max-width: 100%;
 	}
 
 	iframe {
+		border: none;
 		bottom: 0;
 		display: block;
 		height: 100%;
