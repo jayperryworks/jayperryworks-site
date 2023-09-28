@@ -120,6 +120,11 @@ const themeTokens: ThemeTokens = theme
 <style define:vars={themeTokens} is:global></style>
 
 <style>
+	html {
+		/* make anchor links scroll smoothly */
+		scroll-behavior: smooth;
+	}
+
 	body {
 		background-color: var(--color-bg);
 		color: var(--color-primary);
