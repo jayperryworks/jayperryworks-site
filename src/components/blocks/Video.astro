@@ -22,7 +22,7 @@ const {
 	class: className,
 } = Astro.props as Props;
 
-const src = `https://tube.tchncs.de/videos/embed/${id}?title=0&amp;warningTitle=0&amp;peertubeLink=0&amp;p2p=0`;
+const src = `https://tube.tchncs.de/videos/embed/${id}?title=0&warningTitle=0&peertubeLink=0&p2p=0`;
 
 const styleList = [
 	aspectRatio ? `--aspect-ratio: ${aspectRatio}` : '',
@@ -56,6 +56,7 @@ const styleList = [
 	.aspect {
 		aspect-ratio: var(--aspect-ratio, auto);
 		max-width: 100%;
+		position: relative;
 	}
 
 	iframe {
