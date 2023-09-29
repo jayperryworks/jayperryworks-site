@@ -44,25 +44,9 @@ const seo = {
 };
 ---
 
-<script>
-	document.addEventListener('DOMContentLoaded', () => {
-		const $tocButton = document.getElementById('toc-link');
-		const $tocSection = document.querySelector($tocButton.getAttribute('href'));
-
-		$tocButton.addEventListener('pointerdown', (event) => {
-			$tocSection.scrollIntoView({
-				behavior: 'smooth',
-				block: 'start',
-			});
-
-			event.preventDefault();
-		});
-	});
-</script>
-
 <Layout
 	path="home"
-	headerOverlay
+	overlayNav
 	{seo}
 >
 	<!-- intro -->
@@ -90,7 +74,6 @@ const seo = {
 			<a
 				class="toc-link type-role-accent type-scale-epsilon type-link-undecorated"
 				href="#toc"
-				id="toc-link"
 			>
 				<Icon
 					align="baseline"
@@ -112,6 +95,7 @@ const seo = {
 	header {
 		display: flex;
 		min-height: 100vh;
+		min-height: 100svh;
 		padding-block-end: var(--space-narrow);
 		padding-block-start: var(--space-wide);
 		padding-inline: var(--space-outside);
