@@ -14,6 +14,7 @@ import ImageGallery from '@components/blocks/ImageGallery.astro';
 import Passage from '@components/blocks/Passage.astro';
 import Pullquote from '@components/blocks/Pullquote.astro';
 import Table from '@components/blocks/Table.astro';
+import Video from '@components/blocks/Video.astro';
 
 // layout/effects components
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
@@ -56,6 +57,7 @@ const blocks = {
 	passage: Passage,
 	pullquote: Pullquote,
 	table: Table,
+	video: Video,
 };
 
 const Component = blocks[block.type];

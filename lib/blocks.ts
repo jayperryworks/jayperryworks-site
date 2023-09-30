@@ -198,23 +198,31 @@ function feed(slice: Slice): BlockType {
 
 function figure(slice: Slice): BlockType {
 	const {
-		image,
-		caption,
 		attribution,
+		caption,
+		image,
 		device = 'None',
+		border = false,
 	} = slice.primary;
 
-	return {
-		source: image,
-		attribution: {
-			markdown: markdownText(attribution as RichTextField),
-		},
-		caption: {
-			markdown: markdownText(caption as RichTextField),
-		},
+	const output = {
+		border,
 		device: device as Device,
+		source: image,
+		attribution: undefined,
+		caption: undefined,
 		...sharedBlockFields(slice),
 	};
+
+	if (prismicHelpers.isFilled.richText(attribution as RichTextField)) {
+		output.attribution = { markdown: markdownText(attribution as RichTextField) };
+	}
+
+	if (prismicHelpers.isFilled.richText(caption as RichTextField)) {
+		output.caption = { markdown: markdownText(caption as RichTextField) };
+	}
+
+	return output;
 }
 
 function heading(slice: Slice): BlockType {
@@ -302,6 +310,37 @@ function table(slice: Slice): BlockType {
 	};
 }
 
+function video(slice: Slice): BlockType {
+	const {
+		aspect_ratio: aspectRatio,
+		attribution,
+		border,
+		caption,
+		id,
+		title1: title,
+	} = slice.primary;
+
+	const output = {
+		aspectRatio,
+		border,
+		id,
+		title,
+		attribution: undefined,
+		caption: undefined,
+		...sharedBlockFields(slice),
+	};
+
+	if (prismicHelpers.isFilled.richText(attribution as RichTextField)) {
+		output.attribution = { markdown: markdownText(attribution as RichTextField) };
+	}
+
+	if (prismicHelpers.isFilled.richText(caption as RichTextField)) {
+		output.caption = { markdown: markdownText(caption as RichTextField) };
+	}
+
+	return output;
+}
+
 // list of block types with functions for each
 export default {
 	image_gallery: imageGallery,
@@ -315,4 +354,5 @@ export default {
 	passage,
 	pullquote,
 	table,
+	video,
 };

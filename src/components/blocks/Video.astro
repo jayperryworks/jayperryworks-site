@@ -1,0 +1,83 @@
+---
+import '@styles/tokens/borders.css';
+
+import Figure from '@components/blocks/Figure.astro';
+import { FormattedText } from '@lib/types';
+
+export interface Props {
+	id: string;
+	title: string;
+	aspectRatio?: string;
+	attribution?: FormattedText;
+	border?: boolean;
+	caption?: FormattedText;
+	class?: string;
+}
+
+const {
+	id,
+	title,
+	aspectRatio = '16 / 9',
+	attribution,
+	border,
+	caption,
+	class: className,
+} = Astro.props as Props;
+
+const src = `https://tube.tchncs.de/videos/embed/${id}?title=0&warningTitle=0&peertubeLink=0&p2p=0`;
+
+const classList = [
+	'aspect',
+	border ? 'border' : '',
+].join(' ');
+
+const styleList = [
+	aspectRatio ? `--aspect-ratio: ${aspectRatio}` : '',
+].join(' ');
+---
+
+<Figure
+	class={className}
+	{caption}
+	{attribution}
+>
+	<div
+		class={classList}
+		style={styleList}
+	>
+		<iframe
+			{title}
+			{src}
+			width="560"
+			height="315"
+			frameborder="0"
+			sandbox="allow-same-origin allow-scripts allow-popups"
+			allowfullscreen
+		>
+		</iframe>
+	</div>
+</Figure>
+
+<style>
+	.aspect {
+		aspect-ratio: var(--aspect-ratio, auto);
+		max-width: 100%;
+		position: relative;
+	}
+
+	.border {
+		border: var(--border-solid);
+	}
+
+	iframe {
+		border: none;
+		bottom: 0;
+		display: block;
+		height: 100%;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 100%;
+	}
+</style>
