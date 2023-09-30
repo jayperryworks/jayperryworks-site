@@ -1,4 +1,6 @@
 ---
+import '@styles/tokens/borders.css';
+
 import Figure from '@components/blocks/Figure.astro';
 import { FormattedText } from '@lib/types';
 
@@ -24,6 +26,11 @@ const {
 
 const src = `https://tube.tchncs.de/videos/embed/${id}?title=0&warningTitle=0&peertubeLink=0&p2p=0`;
 
+const classList = [
+	'aspect',
+	border ? 'border' : '',
+].join(' ');
+
 const styleList = [
 	aspectRatio ? `--aspect-ratio: ${aspectRatio}` : '',
 ].join(' ');
@@ -31,12 +38,11 @@ const styleList = [
 
 <Figure
 	class={className}
-	{border}
 	{caption}
 	{attribution}
 >
 	<div
-		class="aspect"
+		class={classList}
 		style={styleList}
 	>
 		<iframe
@@ -57,6 +63,10 @@ const styleList = [
 		aspect-ratio: var(--aspect-ratio, auto);
 		max-width: 100%;
 		position: relative;
+	}
+
+	.border {
+		border: var(--border-solid);
 	}
 
 	iframe {
