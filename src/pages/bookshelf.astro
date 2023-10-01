@@ -1,0 +1,124 @@
+---
+import Figure from '@components/blocks/Figure.astro';
+import Gallery from '@components/layout/Gallery.astro';
+// --- assets
+import '@styles/tokens/color.css';
+import '@styles/tokens/contentWidth.css';
+import '@styles/tokens/spacing.css';
+import '@styles/utilities/type.css';
+
+// --- utils
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+
+// --- components
+import Image from '@components/elements/Image.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Gallery from '@components/layout/Gallery.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+
+// --- layout
+import Layout from '@layouts/BaseLayout.astro';
+
+const pageData = await prismic.getByUID('index_page', 'bookshelf');
+
+console.log(pageData);
+
+const {
+	seo_description,
+	seo_image,
+	seo_title,
+	title,
+	subtitle,
+	short_title: shortTitle,
+} = pageData.data;
+
+const seo = {
+	description: seo_description,
+	image: seo_image?.url,
+	imageAlt: seo_image?.alt,
+	title: seo_title || prismicHelpers.asText(title),
+};
+
+const books = await prismic.getAllByType('book', {
+	orderings: {
+		field: 'my.book.date_started',
+		direction: 'desc',
+	},
+});
+
+console.log(books);
+---
+
+<Layout
+	pageTitle={shortTitle}
+	path="bookshelf"
+	{seo}
+>
+	<RevealOnScroll
+		class="title"
+		tag="header"
+	>
+		<Heading
+			level={1}
+			text={title}
+		/>
+		{subtitle && (
+			<Heading
+				level={4}
+				text={subtitle}
+				subheading
+			/>
+		)}
+	</RevealOnScroll>
+
+	<div class="wrapper">
+		<Gallery>
+			{books.map(({
+				uid,
+				tags,
+				data,
+			}) => (
+				<RevealOnScroll tag="li">
+					<article
+						id={uid}
+						data-tags={tags.join(' ')}
+					>
+						<a href={prismicHelpers.asLink(data.purchase_url)} target="_blank">
+							<Image source={data.cover} />
+						</a>
+						<Heading
+							class="type-scale-delta"
+							level={2}
+							text={data.title}
+						/>
+						<Heading
+							level={5}
+							subheading
+						>
+							{data.author}
+						</Heading>
+					</article>
+				</RevealOnScroll>
+			))}
+		</Gallery>
+	</div>
+</Layout>
+
+<style>
+	.title,
+	.wrapper {
+		margin-inline: auto;
+		padding-block-end: var(--space-wide);
+		padding-block-start: var(--space-xwide);
+		padding-inline: var(--space-outside);
+	}
+
+	.title {
+		max-width: var(--content-width-wide);
+	}
+
+	.wrapper {
+		max-width: var(--content-width-xxwide);
+	}
+</style>
