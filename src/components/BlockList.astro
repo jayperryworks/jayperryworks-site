@@ -102,18 +102,19 @@ const sectionList = body.reduce((result: Array<any>, slice: Slice) => {
 	}
 	return result;
 }, []);
-
-const classList = [
-	'block-list',
-	className,
-].join(' ');
 ---
 
-<div class={classList}>
+<div class={[
+	'block-list',
+	className,
+].join(' ')}>
 	{sectionList.map(({ uid, marker, blocks }) => (
 		uid
 			? <section
-					class={marker ? 'section-marker' : ''}
+					class={[
+						'block-list',
+						marker ? 'section-marker' : ''
+					].join(' ')}
 					id={uid}
 				>
 					{blocks.map((block) => (
