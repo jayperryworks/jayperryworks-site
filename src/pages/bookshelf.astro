@@ -15,16 +15,12 @@ import Image from '@components/elements/Image.astro';
 import Icon from '@components/elements/Icon.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Gallery from '@components/layout/Gallery.astro';
-import DataGrid from '@components/layout/DataGrid.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // --- layout
 import Layout from '@layouts/BaseLayout.astro';
-import Passage from '@components/blocks/Passage.astro';
 
 const pageData = await prismic.getByUID('index_page', 'bookshelf');
-
-// console.log(pageData);
 
 const {
 	seo_description,
@@ -48,10 +44,6 @@ const booksResponse = await prismic.getAllByType('book', {
 		direction: 'desc',
 	},
 });
-
-// https://covers.openlibrary.org/b/id/11403183.jpg
-// https://covers.openlibrary.org/b/id/8739161.jpg
-// https://covers.openlibrary.org/b/id/12835209.jpg
 
 let books = await Promise.all(booksResponse.map(async ({
 	uid,
@@ -79,8 +71,6 @@ let books = await Promise.all(booksResponse.map(async ({
 			.map((key) => `${key}=${queryParams[key]}`)
 			.join('&');
 
-		console.log(queryString);
-
 		const openLibraryResponse = await fetch(`http://openlibrary.org/api/books?${queryString}`);
 		const openLibraryData = await openLibraryResponse.json();
 
@@ -91,14 +81,11 @@ let books = await Promise.all(booksResponse.map(async ({
 			url,
 		} = openLibraryData[queryParams.bibkeys];
 
-
-
 		publishDate = publish_date;
 		cover = coverList;
 		infoURL = url;
 
-		publisher = publishers?.length > 0
-			&& publishers.map(({ name }) => name).join(', ');
+		publisher = publishers?.length > 0 && publishers[0].name;
 	}
 
 	return {
@@ -154,13 +141,16 @@ let books = await Promise.all(booksResponse.map(async ({
 						data-tags={book.tags.join(' ')}
 						data-read={book.readDate}
 					>
-						<img src={book?.cover?.large}>
-						<!-- <Image
-							fit="contain"
-							source={book.cover}
-							class="cover-image"
-							aspectRatio="1 / 1"
-						/> -->
+						<figure class="cover">
+							{book.cover
+								? <img
+										src={book?.cover?.large}
+										alt={`Cover for '${book.title}'`}
+										class="cover-image"
+									>
+								: <div class="cover-image placeholder"></div>
+							}
+						</figure>
 						<header>
 							<Heading
 								class="type-scale-delta"
@@ -254,10 +244,27 @@ let books = await Promise.all(booksResponse.map(async ({
 		flex-direction: column;
 	}
 
+	.cover {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		aspect-ratio: 1 / 1;
+		overflow: hidden;
+		padding-block-end: var(--space-narrow);
+	}
+
 	.cover-image {
 		display: block;
-		height: auto !important;
-		text-decoration: none;
+		height: auto;
+		height: 100%;
+		box-shadow: 0.5em 0.5em 0.3em var(--color-shadow);
+	}
+
+	.cover-image.placeholder {
+		width: 100%;
+		height: 100%;
+		background-color: var(--color-color-well);
+		box-shadow: 0;
 	}
 
 	.metadata {
