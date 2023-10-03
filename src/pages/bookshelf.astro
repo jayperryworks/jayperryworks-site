@@ -20,10 +20,11 @@ import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // --- layout
 import Layout from '@layouts/BaseLayout.astro';
+import Passage from '@components/blocks/Passage.astro';
 
 const pageData = await prismic.getByUID('index_page', 'bookshelf');
 
-console.log(pageData);
+// console.log(pageData);
 
 const {
 	seo_description,
@@ -41,26 +42,64 @@ const seo = {
 	title: seo_title || prismicHelpers.asText(title),
 };
 
-const booksData = await prismic.getAllByType('book', {
+const booksResponse = await prismic.getAllByType('book', {
 	orderings: {
 		field: 'my.book.date_started',
 		direction: 'desc',
 	},
 });
 
-const books = booksData.map(({
+// https://covers.openlibrary.org/b/id/11403183.jpg
+// https://covers.openlibrary.org/b/id/8739161.jpg
+// https://covers.openlibrary.org/b/id/12835209.jpg
+
+let books = await Promise.all(booksResponse.map(async ({
 	uid,
 	tags,
 	data,
 }) => {
 	const {
 		author,
-		cover,
-		info_link: infoURL,
 		purchase_url: purchaseURL,
 		related_content: relatedContent,
 		title,
+		read_date: readDate,
+		isbn,
 	} = data;
+
+	let publishDate, publisher, cover, infoURL;
+
+	if (isbn) {
+		const queryParams = {
+			bibkeys: `ISBN:${isbn}`,
+			format: 'json',
+			jscmd: 'data',
+		}
+		const queryString = Object.keys(queryParams)
+			.map((key) => `${key}=${queryParams[key]}`)
+			.join('&');
+
+		console.log(queryString);
+
+		const openLibraryResponse = await fetch(`http://openlibrary.org/api/books?${queryString}`);
+		const openLibraryData = await openLibraryResponse.json();
+
+		const {
+			publish_date,
+			publishers,
+			cover: coverList,
+			url,
+		} = openLibraryData[queryParams.bibkeys];
+
+
+
+		publishDate = publish_date;
+		cover = coverList;
+		infoURL = url;
+
+		publisher = publishers?.length > 0
+			&& publishers.map(({ name }) => name).join(', ');
+	}
 
 	return {
 		urls: {
@@ -69,17 +108,15 @@ const books = booksData.map(({
 		},
 		author,
 		cover,
-		publishDate: 2020,
-		publisher: 'Random House',
-		readDate: 2023,
+		publishDate,
+		publisher,
+		readDate,
 		relatedContent,
 		tags,
 		title,
 		uid,
 	}
-});
-
-console.log(booksData);
+}));
 ---
 
 <Layout
@@ -117,12 +154,13 @@ console.log(booksData);
 						data-tags={book.tags.join(' ')}
 						data-read={book.readDate}
 					>
-						<Image
+						<img src={book?.cover?.large}>
+						<!-- <Image
 							fit="contain"
 							source={book.cover}
 							class="cover-image"
 							aspectRatio="1 / 1"
-						/>
+						/> -->
 						<header>
 							<Heading
 								class="type-scale-delta"
@@ -136,11 +174,15 @@ console.log(booksData);
 								{book.author}
 							</Heading>
 						</header>
-						<div class="metadata">
-							<p class="type-role-accent color-secondary">
-								{[book.publisher, book.publishDate].join(', ')}
-							</p>
-						</div>
+
+						{book.publisher && (
+							<div class="metadata">
+								<p class="type-role-accent color-secondary">
+									{[book.publisher, book.publishDate].join(', ')}
+								</p>
+							</div>
+						)}
+
 						<footer class="actions">
 							<a
 								class="type-role-accent"
@@ -154,13 +196,13 @@ console.log(booksData);
 									svg={externalLink}
 								/>
 							</a>
-							{prismicHelpers.isFilled.link(book.urls.info) && (
+							{book.urls.info && (
 								<a
 									class="type-role-accent"
-									href={prismicHelpers.asLink(book.urls.info)}
+									href={book.urls.info}
 									target="_blank"
 								>
-									More info
+									Open Library
 									<Icon
 										size="small"
 										margin="left"
