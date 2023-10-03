@@ -9,6 +9,7 @@ import externalLink from '@icons/external-link.svg?raw';
 // --- utils
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
+import { format } from 'date-fns';
 
 // --- components
 import Image from '@components/elements/Image.astro';
@@ -81,8 +82,8 @@ let books = await Promise.all(booksResponse.map(async ({
 			url,
 		} = openLibraryData[queryParams.bibkeys];
 
-		publishDate = publish_date;
-		cover = coverList;
+		publishDate = publish_date && format(new Date(publish_date), 'yyyy');
+		cover = coverList && Object.values(coverList).pop();
 		infoURL = url;
 
 		publisher = publishers?.length > 0 && publishers[0].name;
@@ -144,7 +145,7 @@ let books = await Promise.all(booksResponse.map(async ({
 						<figure class="cover">
 							{book.cover
 								? <img
-										src={book?.cover?.large}
+										src={book.cover}
 										alt={`Cover for '${book.title}'`}
 										class="cover-image"
 									>
@@ -165,7 +166,7 @@ let books = await Promise.all(booksResponse.map(async ({
 							</Heading>
 						</header>
 
-						{book.publisher && (
+						{book.publisher && book.publishDate && (
 							<div class="metadata">
 								<p class="type-role-accent color-secondary">
 									{[book.publisher, book.publishDate].join(', ')}
