@@ -23,7 +23,7 @@
 
 	const {
 		text,
-		border,
+		border = true,
 		class: className = '',
 		label,
 		typeSize = 'Default',
@@ -56,14 +56,13 @@
 		color: var(--color-secondary);
 	}
 
-	.hasBorder {
-		border-block-start: var(--border-default);
+	aside > :global(* + *) {
 		padding-block-start: var(--space-narrow);
 	}
 
-	.label {
-		padding-block-end: var(--space-narrow);
-		font-style: normal;
+	.hasBorder {
+		border-block-start: var(--border-default);
+		padding-block-start: var(--space-narrow);
 	}
 
 	.text {
