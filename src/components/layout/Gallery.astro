@@ -48,28 +48,19 @@ const classList = [
     /* default values, can be modified via inline styles on a parent */
     --min-width: 300px;
 
-    display: block;
-    font-size: 0;
-    margin: calc((var(--gutter) / 2) * -1);
+		display: grid;
+		gap: var(--gutter);
+		grid-template-columns: 1fr;
+		margin: 0;
     padding-inline-start: 0;
     position: relative;
-    text-align: left;
   }
 
-  @supports (display: grid) and (display: flex) {
-    .gallery {
-      display: grid;
-      gap: var(--gutter);
-      grid-template-columns: 1fr;
-      margin: 0;
-    }
-
-    @media screen and (min-width: 30em) {
-      .gallery {
-        grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
-      }
-    }
-  }
+	@media screen and (min-width: 30em) {
+		.gallery {
+			grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
+		}
+	}
 
   .small {
     --min-width: 180px;
@@ -87,41 +78,28 @@ const classList = [
   }
 
   .gallery :global(li) {
-    display: inline-block;
+		flex-direction: column;
+		flex: 1;
+    display: flex;
     font-size: 1rem;
     margin: 0; /* overrule default li spacing */
-    padding: calc(var(--gutter) / 2);
     position: relative;
-    vertical-align: top;
   }
 
-  @supports (display: grid) {
-    .gallery :global(li) {
-      padding: 0;
-    }
+	.gallery.constrain-content :global(li) {
+		max-width: var(--content-width-default);
+	}
 
-    .gallery.constrain-content :global(li) {
-      max-width: var(--content-width-default);
-    }
+	.gallery :global(li.wide) {
+		grid-column: span 2;
+	}
 
-    .gallery :global(li.wide) {
-      grid-column: span 2;
-    }
-
-    .gallery :global(li.xwide) {
-      grid-column: span 3;
-    }
-  }
+	.gallery :global(li.xwide) {
+		grid-column: span 3;
+	}
 
   .large.constrain-content :global(li) {
     max-width: var(--content-width-wide);
-  }
-
-  @supports (display: flex) {
-    .flex :global(li) {
-      display: flex;
-      flex-direction: column;
-    }
   }
 
   .alignCenter {

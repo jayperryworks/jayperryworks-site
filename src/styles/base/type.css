@@ -12,8 +12,6 @@
 @font-face {
 	font-display: swap;
 	font-family: 'Sanomat';
-	font-stretch: normal;
-	font-style: normal;
 	font-weight: 700;
 	src:
 		local('Sanomat'),
@@ -24,7 +22,6 @@
 @font-face {
 	font-display: swap;
 	font-family: 'Sanomat';
-	font-stretch: normal;
 	font-style: italic;
 	font-weight: 700;
 	src:
@@ -37,9 +34,6 @@
 @font-face {
 	font-display: swap;
 	font-family: 'Figtree';
-	font-stretch: normal;
-	font-style: normal;
-	font-weight: normal;
 	src:
 		local('Figtree'),
 		url('/assets/fonts/Figtree-VariableFont-wght.ttf') format('ttf');
@@ -59,9 +53,6 @@
 @font-face {
 	font-display: swap;
 	font-family: 'Iowan Old Style';
-	font-stretch: normal;
-	font-style: normal;
-	font-weight: normal;
 	src:
 		local('Iowan Old Style'),
 		url('/assets/fonts/Iowan-Roman.woff2') format('woff2'),
@@ -71,9 +62,7 @@
 @font-face {
 	font-display: swap;
 	font-family: 'Iowan Old Style';
-	font-stretch: normal;
 	font-style: italic;
-	font-weight: normal;
 	src:
 		local('Iowan Old Style'),
 		url('/assets/fonts/Iowan-Italic.woff2') format('woff2'),
@@ -83,9 +72,7 @@
 @font-face {
 	font-display: swap;
 	font-family: 'Iowan Old Style';
-	font-stretch: normal;
-	font-style: italic;
-	font-weight: normal;
+	font-weight: bold;
 	src:
 		local('Iowan Old Style'),
 		url('/assets/fonts/Iowan-Bold.woff2') format('woff2'),
@@ -95,9 +82,8 @@
 @font-face {
 	font-display: swap;
 	font-family: 'Iowan Old Style';
-	font-stretch: normal;
 	font-style: italic;
-	font-weight: normal;
+	font-weight: bold;
 	src:
 		local('Iowan Old Style'),
 		url('/assets/fonts/Iowan-Bold-Italic.woff2') format('woff2'),

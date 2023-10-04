@@ -1,0 +1,288 @@
+---
+// --- assets
+import '@styles/tokens/color.css';
+import '@styles/tokens/contentWidth.css';
+import '@styles/tokens/spacing.css';
+import '@styles/utilities/type.css';
+import externalLink from '@icons/external-link.svg?raw';
+
+// --- utils
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+import { format } from 'date-fns';
+
+// --- components
+import Icon from '@components/elements/Icon.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Gallery from '@components/layout/Gallery.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+import BlockList from '@components/BlockList.astro';
+
+// --- layout
+import Layout from '@layouts/BaseLayout.astro';
+
+const pageData = await prismic.getByUID('index_page', 'bookshelf');
+
+const {
+	body,
+	seo_description,
+	seo_image,
+	seo_title,
+	short_title: shortTitle,
+	subtitle,
+	title,
+} = pageData.data;
+
+const seo = {
+	description: seo_description,
+	image: seo_image?.url,
+	imageAlt: seo_image?.alt,
+	title: seo_title || prismicHelpers.asText(title),
+};
+
+const booksResponse = await prismic.getAllByType('book', {
+	orderings: {
+		field: 'my.book.date_started',
+		direction: 'desc',
+	},
+});
+
+let books = await Promise.all(booksResponse.map(async ({
+	uid,
+	tags,
+	data,
+}) => {
+	const {
+		author,
+		isbn,
+		purchase_url: purchaseURL,
+		read_date: readDate,
+		related_content: relatedContent,
+		title,
+	} = data;
+
+	let publishDate, publisher, cover, infoURL;
+
+	if (isbn) {
+		const queryParams = {
+			bibkeys: `ISBN:${isbn}`,
+			format: 'json',
+			jscmd: 'data',
+		}
+		const queryString = Object.keys(queryParams)
+			.map((key) => `${key}=${queryParams[key]}`)
+			.join('&');
+
+		const openLibraryResponse = await fetch(`http://openlibrary.org/api/books?${queryString}`);
+		const openLibraryData = await openLibraryResponse.json();
+
+		const {
+			publish_date,
+			publishers,
+			cover: coverList,
+			url,
+		} = openLibraryData[queryParams.bibkeys];
+
+		publishDate = publish_date && format(new Date(publish_date), 'yyyy');
+		cover = coverList && Object.values(coverList).pop();
+		infoURL = url;
+
+		publisher = publishers?.length > 0 && publishers[0].name;
+	}
+
+	return {
+		urls: {
+			info: infoURL,
+			purchase: purchaseURL,
+		},
+		author,
+		cover,
+		publishDate,
+		publisher,
+		readDate,
+		relatedContent,
+		tags,
+		title,
+		uid,
+	}
+}));
+---
+
+<Layout
+	pageTitle={shortTitle}
+	path="bookshelf"
+	{seo}
+>
+	<RevealOnScroll
+		class="header"
+		tag="header"
+	>
+		<Heading
+			align="center"
+			level={1}
+			text={title}
+		/>
+		{subtitle && (
+			<Heading
+				align="center"
+				level={4}
+				subheading
+				text={subtitle}
+			/>
+		)}
+	</RevealOnScroll>
+
+	<BlockList {body} showLedeStyle />
+
+	<div class="wrapper">
+		<Gallery gutter="wide">
+			{books.map((book) => (
+				<RevealOnScroll
+					tag="li"
+					class="item"
+				>
+					<article
+						class="book"
+						id={book.uid}
+						data-tags={book.tags.join(' ')}
+						data-read={book.readDate}
+					>
+						<figure class="cover">
+							{book.cover
+								? <img
+										src={book.cover}
+										alt={`Cover for '${book.header}'`}
+										class="cover-image"
+									>
+								: <div class="cover-image placeholder"></div>
+							}
+						</figure>
+						<header>
+							<Heading
+								class="type-scale-delta"
+								level={2}
+								text={book.title}
+							/>
+							<Heading
+								level={5}
+								subheading
+							>
+								{book.author}
+							</Heading>
+						</header>
+
+						{book.publisher && book.publishDate && (
+							<div class="metadata">
+								<p class="type-role-accent color-secondary">
+									{[book.publisher, book.publishDate].join(', ')}
+								</p>
+							</div>
+						)}
+
+						<footer class="actions">
+							<a
+								class="type-role-accent"
+								href={prismicHelpers.asLink(book.urls.purchase)}
+								target="_blank"
+							>
+								Purchase
+								<Icon
+									size="small"
+									margin="left"
+									svg={externalLink}
+								/>
+							</a>
+							{book.urls.info && (
+								<a
+									class="type-role-accent"
+									href={book.urls.info}
+									target="_blank"
+								>
+									Open Library
+									<Icon
+										size="small"
+										margin="left"
+										svg={externalLink}
+									/>
+								</a>
+							)}
+						</footer>
+					</article>
+				</RevealOnScroll>
+			))}
+		</Gallery>
+	</div>
+</Layout>
+
+<style>
+	.header,
+	.wrapper {
+		margin-inline: auto;
+		padding-block-start: var(--space-xwide);
+		padding-inline: var(--space-outside);
+	}
+
+	.header {
+		max-width: var(--content-width-wide);
+		padding-block-end: var(--space-wide);
+	}
+
+	.wrapper {
+		max-width: var(--content-width-xxwide);
+		padding-block-end: var(--space-xwide);
+	}
+
+	.item {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-narrow);
+	}
+
+	.book {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		gap: var(--space-narrow);
+	}
+
+	figcaption {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.cover {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		aspect-ratio: 1 / 1;
+		overflow: hidden;
+		padding-block-end: var(--space-narrow);
+	}
+
+	.cover-image {
+		display: block;
+		height: auto;
+		height: 100%;
+		box-shadow: 0.5em 0.5em 0.3em var(--color-shadow);
+	}
+
+	.cover-image.placeholder {
+		width: 100%;
+		height: 100%;
+		background-color: var(--color-color-well);
+		box-shadow: 0;
+	}
+
+	.metadata {
+		color: var(--color-secondary);
+	}
+
+	.actions {
+		align-items: flex-end;
+		display: flex;
+		flex-direction: row;
+		flex: 1;
+		gap: var(--space-narrow);
+	}
+</style>

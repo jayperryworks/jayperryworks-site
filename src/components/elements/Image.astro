@@ -52,7 +52,7 @@ const classList = [
 const styleList = [
 	aspectRatio ? `--aspect-ratio: ${aspectRatio};` : '',
 	position ? `--object-position: ${position};` : '',
-	style
+	style,
 ].join(' ');
 ---
 
@@ -84,7 +84,7 @@ const styleList = [
 	.fit,
 	[width][height].fit {
 		display: block;
-		height: 100%;
+		height: auto;
 		width: 100%;
 	}
 
