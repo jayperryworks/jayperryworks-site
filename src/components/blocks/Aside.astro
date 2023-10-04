@@ -11,22 +11,31 @@
 
 	// types
 	import { KeyTextField } from '@prismicio/types';
-	import type { FormattedText } from '@lib/types';
+	import type { FormattedText, TypeScale } from '@lib/types';
 
 	export interface Props {
 		text: FormattedText;
+		border?: boolean;
 		class?: string;
 		label?: KeyTextField;
+		typeSize?: 'Default' | 'Small';
 	}
 
 	const {
 		text,
+		border,
 		class: className = '',
 		label,
+		typeSize = 'Default',
 	} = Astro.props as Props;
+
+	const typeScale = {
+		Default: 'epsilon',
+		Small: 'zeta',
+	};
 ---
 
-<aside class={className}>
+<aside class:list={[className, { hasBorder: border }]}>
 	{label && (
 		<Heading
 			class="label | type-role-accent type-scale-epsilon"
@@ -35,18 +44,29 @@
 			{label}
 		</Heading>
 	)}
-	<Passage {text} />
+	<Passage
+		{text}
+		class="text"
+		typeSize={typeScale[typeSize] as TypeScale}
+	/>
 </aside>
 
 <style>
-	.label {
+	aside {
+		color: var(--color-secondary);
+	}
+
+	.hasBorder {
 		border-block-start: var(--border-default);
-		padding-block: var(--space-narrow);
+		padding-block-start: var(--space-narrow);
+	}
+
+	.label {
+		padding-block-end: var(--space-narrow);
 		font-style: normal;
 	}
 
-	aside {
+	.text {
 		font-style: italic;
-		color: var(--color-secondary);
 	}
 </style>

@@ -60,17 +60,21 @@ function sharedBlockFields(slice: Slice): BlockType {
 // --- block types ---
 function aside(slice: Slice): BlockType {
 	const {
-		structured_text: prismicText,
-		markdown,
+		border,
 		label,
+		markdown,
+		structured_text: prismicText,
+		type_size: typeSize,
 	} = slice.primary;
 
 	return {
+		border,
 		label,
 		text: {
 			prismicText,
 			markdown: markdownText(markdown as RichTextField),
 		},
+		typeSize,
 		...sharedBlockFields(slice),
 	};
 }

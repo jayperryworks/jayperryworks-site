@@ -12,11 +12,11 @@ import prismic from '@lib/prismic';
 import { format } from 'date-fns';
 
 // --- components
-import Image from '@components/elements/Image.astro';
 import Icon from '@components/elements/Icon.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Gallery from '@components/layout/Gallery.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+import BlockList from '@components/BlockList.astro';
 
 // --- layout
 import Layout from '@layouts/BaseLayout.astro';
@@ -24,12 +24,13 @@ import Layout from '@layouts/BaseLayout.astro';
 const pageData = await prismic.getByUID('index_page', 'bookshelf');
 
 const {
+	body,
 	seo_description,
 	seo_image,
 	seo_title,
-	title,
-	subtitle,
 	short_title: shortTitle,
+	subtitle,
+	title,
 } = pageData.data;
 
 const seo = {
@@ -53,11 +54,11 @@ let books = await Promise.all(booksResponse.map(async ({
 }) => {
 	const {
 		author,
+		isbn,
 		purchase_url: purchaseURL,
+		read_date: readDate,
 		related_content: relatedContent,
 		title,
-		read_date: readDate,
-		isbn,
 	} = data;
 
 	let publishDate, publisher, cover, infoURL;
@@ -113,21 +114,25 @@ let books = await Promise.all(booksResponse.map(async ({
 	{seo}
 >
 	<RevealOnScroll
-		class="title"
+		class="header"
 		tag="header"
 	>
 		<Heading
+			align="center"
 			level={1}
 			text={title}
 		/>
 		{subtitle && (
 			<Heading
+				align="center"
 				level={4}
-				text={subtitle}
 				subheading
+				text={subtitle}
 			/>
 		)}
 	</RevealOnScroll>
+
+	<BlockList {body} showLedeStyle />
 
 	<div class="wrapper">
 		<Gallery gutter="wide">
@@ -146,7 +151,7 @@ let books = await Promise.all(booksResponse.map(async ({
 							{book.cover
 								? <img
 										src={book.cover}
-										alt={`Cover for '${book.title}'`}
+										alt={`Cover for '${book.header}'`}
 										class="cover-image"
 									>
 								: <div class="cover-image placeholder"></div>
@@ -210,15 +215,16 @@ let books = await Promise.all(booksResponse.map(async ({
 </Layout>
 
 <style>
-	.title,
+	.header,
 	.wrapper {
 		margin-inline: auto;
 		padding-block-start: var(--space-xwide);
 		padding-inline: var(--space-outside);
 	}
 
-	.title {
+	.header {
 		max-width: var(--content-width-wide);
+		padding-block-end: var(--space-wide);
 	}
 
 	.wrapper {
