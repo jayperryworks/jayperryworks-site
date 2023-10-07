@@ -103,12 +103,33 @@ const {
 </article>
 
 <style>
-	article,
+	article {
+	}
+
+	article {
+		--cover-size: 12em;
+
+		container-type: inline-size;
+	}
+
 	.wrapper {
-		display: flex;
-		flex-direction: column;
+		align-items: start;
+		display: grid;
 		flex: 1;
-		gap: var(--space-narrow);
+		gap: var(--space-medium);
+		grid-template-areas:
+			'cover'
+			'header'
+			'metadata'
+			'actions';
+		grid-template-rows:
+			200px
+			repeat(3, auto);
+		justify-items: start;
+	}
+
+	header {
+		grid-area: header;
 	}
 
 	.cover {
@@ -116,26 +137,25 @@ const {
 		justify-content: flex-start;
 		align-items: center;
 		aspect-ratio: 1 / 1;
-		overflow: hidden;
-		padding-block-end: var(--space-narrow);
+		grid-area: cover;
+		align-self: stretch;
 	}
 
 	.cover-image {
-		display: block;
-		height: auto;
-		height: 100%;
 		box-shadow: 0.5em 0.5em 0.3em var(--color-shadow);
+		display: block;
+		height: 100%;
 	}
 
 	.cover-image.placeholder {
 		width: 100%;
 		height: 100%;
-		background-color: var(--color-color-well);
+		background-color: var(--color-well);
 		box-shadow: 0;
 	}
 
 	.metadata {
-		color: var(--color-secondary);
+		grid-area: metadata;
 	}
 
 	.actions {
@@ -144,5 +164,25 @@ const {
 		flex-direction: row;
 		flex: 1;
 		gap: var(--space-narrow);
+		grid-area: actions;
+	}
+
+	@container (min-width: 28em) {
+		.wrapper {
+			align-items: start;
+			gap: var(--space-xnarrow) var(--space-narrow);
+			grid-template-areas:
+				'cover header'
+				'cover metadata'
+				'cover actions';
+			grid-template-columns: var(--cover-size) 1fr;
+			grid-template-rows: auto;
+			justify-items: stretch;
+		}
+
+		.cover {
+			justify-content: center;
+			align-self: start;
+		}
 	}
 </style>
