@@ -1,0 +1,148 @@
+---
+// assets
+import '@styles/tokens/color.css';
+import '@styles/tokens/spacing.css';
+import '@styles/utilities/type.css';
+import externalLink from '@icons/external-link.svg?raw';
+
+// components
+import Heading from '@components/blocks/Heading.astro';
+import Icon from '@components/elements/Icon.astro';
+
+// types
+import { TitleField } from '@prismicio/types';
+
+type Action = {
+	label: string;
+	url: string;
+	type: 'external' | 'internal';
+};
+
+type Cover = {
+	src: string,
+	srcset: string,
+}
+
+export interface Props {
+	actions?: Action[];
+	class?: string;
+	cover?: Cover;
+	title?: TitleField;
+	author?: TitleField;
+}
+
+const {
+	actions,
+	author,
+	class: className = '',
+	cover,
+	title,
+} = Astro.props as Props;
+---
+
+<article class={className}>
+	<div class="wrapper">
+
+		<!-- cover -->
+		<figure class="cover">
+			<slot name="cover">
+				{cover
+					? <img
+							src={cover.src}
+							srcset={cover.srcset}
+							alt={`Cover for '${title}'`}
+							class="cover-image"
+						>
+					: <div class="cover-image placeholder"></div>
+				}
+			</slot>
+		</figure>
+
+		<!-- title, author, etc. -->
+		<header>
+			<slot name="header">
+				<Heading
+					class="type-scale-delta"
+					level={2}
+					text={title}
+				/>
+				<Heading
+					level={5}
+					subheading
+				>
+					{author}
+				</Heading>
+			</slot>
+		</header>
+
+		<!-- book metadata -->
+		<div class="metadata">
+			<slot name="metadata"></slot>
+		</div>
+
+		<!-- actions -->
+		{actions && (
+			<footer class="actions">
+				{actions.map(({label, url}) => (
+					<a
+						class="type-role-accent"
+						href={url}
+						target="_blank"
+					>
+						{label}
+						<Icon
+							size="small"
+							margin="left"
+							svg={externalLink}
+						/>
+					</a>
+				))}
+			</footer>
+		)}
+	</div>
+</article>
+
+<style>
+	article,
+	.wrapper {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		gap: var(--space-narrow);
+	}
+
+	.cover {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		aspect-ratio: 1 / 1;
+		overflow: hidden;
+		padding-block-end: var(--space-narrow);
+	}
+
+	.cover-image {
+		display: block;
+		height: auto;
+		height: 100%;
+		box-shadow: 0.5em 0.5em 0.3em var(--color-shadow);
+	}
+
+	.cover-image.placeholder {
+		width: 100%;
+		height: 100%;
+		background-color: var(--color-color-well);
+		box-shadow: 0;
+	}
+
+	.metadata {
+		color: var(--color-secondary);
+	}
+
+	.actions {
+		align-items: flex-end;
+		display: flex;
+		flex-direction: row;
+		flex: 1;
+		gap: var(--space-narrow);
+	}
+</style>

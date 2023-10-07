@@ -4,7 +4,6 @@ import '@styles/tokens/color.css';
 import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
 import '@styles/utilities/type.css';
-import externalLink from '@icons/external-link.svg?raw';
 
 // --- utils
 import * as prismicHelpers from '@prismicio/helpers';
@@ -12,8 +11,8 @@ import prismic from '@lib/prismic';
 import { format } from 'date-fns';
 
 // --- components
-import Icon from '@components/elements/Icon.astro';
 import Heading from '@components/blocks/Heading.astro';
+import BookCard from '@components/layout/BookCard.astro';
 import Gallery from '@components/layout/Gallery.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import BlockList from '@components/BlockList.astro';
@@ -56,13 +55,14 @@ let books = await Promise.all(booksResponse.map(async ({
 		author,
 		isbn,
 		purchase_url: purchaseURL,
-		read_date: readDate,
 		related_content: relatedContent,
 		title,
 	} = data;
 
+	// fields populated by Open Library
 	let publishDate, publisher, cover, infoURL;
 
+	// query the Open Library API with the book's ISBN number
 	if (isbn) {
 		const queryParams = {
 			bibkeys: `ISBN:${isbn}`,
@@ -91,15 +91,22 @@ let books = await Promise.all(booksResponse.map(async ({
 	}
 
 	return {
-		urls: {
-			info: infoURL,
-			purchase: purchaseURL,
-		},
+		actions: [
+			{
+				label: 'Purchase',
+				url: purchaseURL,
+				type: 'external'
+			},
+			{
+				label: 'Open Library',
+				url: infoURL,
+				type: 'external'
+			},
+		],
 		author,
 		cover,
 		publishDate,
 		publisher,
-		readDate,
 		relatedContent,
 		tags,
 		title,
@@ -137,78 +144,32 @@ let books = await Promise.all(booksResponse.map(async ({
 	<div class="wrapper">
 		<Gallery gutter="wide">
 			{books.map((book) => (
-				<RevealOnScroll
-					tag="li"
+				<li
 					class="item"
+					data-tags={book.tags.join(' ')}
+					id={book.uid}
 				>
-					<article
-						class="book"
-						id={book.uid}
-						data-tags={book.tags.join(' ')}
-						data-read={book.readDate}
-					>
-						<figure class="cover">
-							{book.cover
-								? <img
-										src={book.cover}
-										alt={`Cover for '${book.header}'`}
-										class="cover-image"
-									>
-								: <div class="cover-image placeholder"></div>
-							}
-						</figure>
-						<header>
-							<Heading
-								class="type-scale-delta"
-								level={2}
-								text={book.title}
-							/>
-							<Heading
-								level={5}
-								subheading
-							>
-								{book.author}
-							</Heading>
-						</header>
-
-						{book.publisher && book.publishDate && (
-							<div class="metadata">
-								<p class="type-role-accent color-secondary">
+					<RevealOnScroll>
+						<BookCard
+							class="book"
+							title={book.title}
+							author={book.author}
+							cover={{
+								src: book.cover,
+							}}
+							actions={book.actions}
+						>
+							{book.publisher && book.publishDate && (
+								<p
+									slot="metadata"
+									class="type-role-accent color-secondary"
+								>
 									{[book.publisher, book.publishDate].join(', ')}
 								</p>
-							</div>
-						)}
-
-						<footer class="actions">
-							<a
-								class="type-role-accent"
-								href={prismicHelpers.asLink(book.urls.purchase)}
-								target="_blank"
-							>
-								Purchase
-								<Icon
-									size="small"
-									margin="left"
-									svg={externalLink}
-								/>
-							</a>
-							{book.urls.info && (
-								<a
-									class="type-role-accent"
-									href={book.urls.info}
-									target="_blank"
-								>
-									Open Library
-									<Icon
-										size="small"
-										margin="left"
-										svg={externalLink}
-									/>
-								</a>
 							)}
-						</footer>
-					</article>
-				</RevealOnScroll>
+						</BookCard>
+					</RevealOnScroll>
+				</li>
 			))}
 		</Gallery>
 	</div>
@@ -243,12 +204,6 @@ let books = await Promise.all(booksResponse.map(async ({
 		flex-direction: column;
 		flex: 1;
 		gap: var(--space-narrow);
-	}
-
-	figcaption {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
 	}
 
 	.cover {
