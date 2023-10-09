@@ -111,6 +111,9 @@ const {
 		--cover-size: 12em;
 
 		container-type: inline-size;
+		display: flex;
+		flex-direction: column;
+		flex: 1;
 	}
 
 	.wrapper {
@@ -123,17 +126,19 @@ const {
 			'metadata'
 			'actions';
 		grid-template-rows:
-			200px
-			repeat(3, auto);
+			var(--cover-size)
+			auto
+			auto
+			1fr;
 	}
 
 	.cover {
-		display: flex;
-		justify-content: flex-start;
 		align-items: center;
-		aspect-ratio: 1 / 1;
-		grid-area: cover;
 		align-self: stretch;
+		aspect-ratio: 1 / 1;
+		display: flex;
+		grid-area: cover;
+		justify-content: flex-start;
 	}
 
 	.cover-image {
@@ -143,10 +148,10 @@ const {
 	}
 
 	.cover-image.placeholder {
-		width: 100%;
-		height: 100%;
 		background-color: var(--color-well);
 		box-shadow: 0;
+		height: 100%;
+		width: 100%;
 	}
 
 	header {
@@ -160,13 +165,14 @@ const {
 	}
 
 	.actions {
-		align-items: flex-end;
 		display: flex;
 		flex-direction: row;
+		flex-wrap: wrap;
 		flex: 1;
 		gap: var(--space-narrow);
 		grid-area: actions;
 		padding-block-start: var(--space-narrow);
+		align-self: end;
 	}
 
 	@container (min-width: 28em) {
@@ -176,10 +182,12 @@ const {
 			grid-template-areas:
 				'cover header'
 				'cover metadata'
-				'cover actions'
-				'cover .';
+				'cover actions';
 			grid-template-columns: var(--cover-size) 1fr;
-			grid-template-rows: repeat(3, auto);
+			grid-template-rows:
+				auto
+				auto
+				1fr;
 			flex: 1;
 		}
 
