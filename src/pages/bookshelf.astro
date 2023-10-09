@@ -149,26 +149,24 @@ let books = await Promise.all(booksResponse.map(async ({
 					data-tags={book.tags.join(' ')}
 					id={book.uid}
 				>
-					<RevealOnScroll>
-						<BookCard
-							class="book"
-							title={book.title}
-							author={book.author}
-							cover={{
-								src: book.cover,
-							}}
-							actions={book.actions}
-						>
-							{book.publisher && book.publishDate && (
-								<p
-									slot="metadata"
-									class="type-role-accent color-secondary"
-								>
-									{[book.publisher, book.publishDate].join(', ')}
-								</p>
-							)}
-						</BookCard>
-					</RevealOnScroll>
+					<BookCard
+						class="book"
+						title={book.title}
+						author={book.author}
+						cover={{
+							src: book.cover,
+						}}
+						actions={book.actions}
+					>
+						{book.publisher && book.publishDate && (
+							<p
+								slot="metadata"
+								class="type-role-accent color-secondary"
+							>
+								{[book.publisher, book.publishDate].join(', ')}
+							</p>
+						)}
+					</BookCard>
 				</li>
 			))}
 		</Gallery>

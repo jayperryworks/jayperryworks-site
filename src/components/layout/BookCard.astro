@@ -8,6 +8,7 @@ import externalLink from '@icons/external-link.svg?raw';
 // components
 import Heading from '@components/blocks/Heading.astro';
 import Icon from '@components/elements/Icon.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
 import { TitleField } from '@prismicio/types';
@@ -41,7 +42,7 @@ const {
 ---
 
 <article class={className}>
-	<div class="wrapper">
+	<RevealOnScroll class="wrapper">
 
 		<!-- cover -->
 		<figure class="cover">
@@ -99,7 +100,7 @@ const {
 				))}
 			</footer>
 		)}
-	</div>
+	</RevealOnScroll>
 </article>
 
 <style>
@@ -116,7 +117,6 @@ const {
 		align-items: start;
 		display: grid;
 		flex: 1;
-		gap: var(--space-medium);
 		grid-template-areas:
 			'cover'
 			'header'
@@ -125,11 +125,6 @@ const {
 		grid-template-rows:
 			200px
 			repeat(3, auto);
-		justify-items: start;
-	}
-
-	header {
-		grid-area: header;
 	}
 
 	.cover {
@@ -154,8 +149,14 @@ const {
 		box-shadow: 0;
 	}
 
+	header {
+		grid-area: header;
+		padding-block-start: var(--space-medium);
+	}
+
 	.metadata {
 		grid-area: metadata;
+		padding-block-start: var(--space-xnarrow);
 	}
 
 	.actions {
@@ -165,6 +166,7 @@ const {
 		flex: 1;
 		gap: var(--space-narrow);
 		grid-area: actions;
+		padding-block-start: var(--space-narrow);
 	}
 
 	@container (min-width: 28em) {
@@ -174,15 +176,24 @@ const {
 			grid-template-areas:
 				'cover header'
 				'cover metadata'
-				'cover actions';
+				'cover actions'
+				'cover .';
 			grid-template-columns: var(--cover-size) 1fr;
-			grid-template-rows: auto;
-			justify-items: stretch;
+			grid-template-rows: repeat(3, auto);
+			flex: 1;
 		}
 
 		.cover {
-			justify-content: center;
 			align-self: start;
+			height: 100%;
+			justify-content: center;
+			width: 100%;
+		}
+
+		header,
+		.metadata,
+		.actions {
+			padding-block-start: 0;
 		}
 	}
 </style>
