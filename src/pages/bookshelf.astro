@@ -161,7 +161,7 @@ let books = await Promise.all(booksResponse.map(async ({
 						{book.publisher && book.publishDate && (
 							<p
 								slot="metadata"
-								class="type-role-accent color-secondary"
+								class="metadata type-role-accent"
 							>
 								{[book.publisher, book.publishDate].join(', ')}
 							</p>

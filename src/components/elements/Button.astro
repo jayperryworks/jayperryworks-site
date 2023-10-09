@@ -43,9 +43,10 @@ const classList = [
 >
   {iconLeft && (
     <Icon
-      svg={iconLeft}
-      size={size}
+			align="baseline"
       class="icon left"
+      size={size}
+      svg={iconLeft}
     />
 	)}
 
@@ -53,9 +54,10 @@ const classList = [
 
 	{iconRight && (
     <Icon
-      svg={iconRight}
-      size={size}
+			align="baseline"
       class="icon right"
+      size={size}
+      svg={iconRight}
     />
 	)}
 </a>
@@ -65,30 +67,31 @@ const classList = [
     --color: var(--color-primary, currentColor);
 		--fill: transparent;
     --font-size: var(--type-scale-epsilon, 1rem);
-    --icon-padding: 1em;
-    --icon-offset: 0.5em;
+    --icon-padding: 0.3em;
+    --icon-spacing: 0.8em;
     --padding-x: 1.2em;
     --padding-y: 0.57em;
     --shadow-spread: 8px;
     --baseline-compensation: 0.05em;
 
+		gap: var(--icon-spacing);
+		overflow: visible;
+		text-decoration: none;
+		z-index: 1;
     background-color: var(--fill);
     border-radius: 0.2em;
     border: 0.1rem solid var(--color);
     color: currentColor;
     color: var(--color);
     cursor: pointer;
-    display: inline-block;
+    display: inline-flex;
     font-family: var(--type-font-accent);
     font-size: var(--font-size);
     font-weight: 300;
-    /* margin-block-end: var(--shadow-spread); */
     padding: var(--padding-y) var(--padding-x) calc(var(--padding-y) - var(--baseline-compensation));
     position: relative;
-		text-decoration: none;
     transition: all 0.25s ease;
-		overflow: visible;
-		z-index: 1;
+		align-items: center;
   }
 
   /* pre-render a box shadow on a pseudo element, but hide it */
@@ -128,33 +131,18 @@ const classList = [
   /* --- sizes --- */
   .small {
     --font-size: var(--type-scale-zeta);
-    --icon-padding: 1.4em;
+    --icon-padding: 0.2em;
+		--icon-spacing: 0.6em;
+		--padding-x: 1em;
+    --padding-y: 0.5em;
   }
 
   /* --- icons --- */
   .button.has-icon.left {
-    padding-inline-start: calc(var(--padding-x) + var(--icon-padding));
+    padding-inline-start: calc(var(--padding-x) - var(--icon-padding));
   }
 
   .button.has-icon.right {
-    padding-inline-end: calc(var(--padding-x) + var(--icon-padding));
-  }
-
-  .button :global(.icon) {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-30%);
-  }
-
-  .button.small :global(.icon) {
-    transform: translateY(-40%);
-  }
-
-  .button :global(.icon.left) {
-    left: calc(var(--padding-x) - var(--icon-offset));
-  }
-
-  .button :global(.icon.right) {
-    right: calc(var(--padding-x) - var(--icon-offset));
+    padding-inline-end: calc(var(--padding-x) - var(--icon-padding));
   }
 </style>

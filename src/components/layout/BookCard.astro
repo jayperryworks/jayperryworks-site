@@ -6,8 +6,8 @@ import '@styles/utilities/type.css';
 import externalLink from '@icons/external-link.svg?raw';
 
 // components
+import Button from '@components/elements/Button.astro';
 import Heading from '@components/blocks/Heading.astro';
-import Icon from '@components/elements/Icon.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
@@ -85,18 +85,15 @@ const {
 		{actions && (
 			<footer class="actions">
 				{actions.map(({label, url}) => (
-					<a
-						class="type-role-accent"
+					<Button
 						href={url}
+						iconRight={externalLink}
+						class="type-role-accent"
+						size="small"
 						target="_blank"
 					>
 						{label}
-						<Icon
-							size="small"
-							margin="left"
-							svg={externalLink}
-						/>
-					</a>
+					</Button>
 				))}
 			</footer>
 		)}
@@ -169,7 +166,7 @@ const {
 		flex-direction: row;
 		flex-wrap: wrap;
 		flex: 1;
-		gap: var(--space-narrow);
+		gap: var(--space-xnarrow);
 		grid-area: actions;
 		padding-block-start: var(--space-narrow);
 		align-self: end;
