@@ -51,7 +51,12 @@ const {
 	{actions && (
 		<footer>
 			{actions.map(({label, link}) => (
-				<Button iconRight={arrow} href={prismicHelpers.asLink(link, linkResolver)}>{label}</Button>
+				<Button
+					iconRight={arrow}
+					href={prismicHelpers.asLink(link, linkResolver)}
+				>
+					{label}
+				</Button>
 			))}
 		</footer>
 	)}

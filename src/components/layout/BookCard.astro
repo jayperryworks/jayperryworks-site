@@ -1,0 +1,204 @@
+---
+// assets
+import '@styles/tokens/color.css';
+import '@styles/tokens/spacing.css';
+import '@styles/utilities/type.css';
+import externalLink from '@icons/external-link.svg?raw';
+
+// components
+import Button from '@components/elements/Button.astro';
+import Heading from '@components/blocks/Heading.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+
+// types
+import { TitleField } from '@prismicio/types';
+
+type Action = {
+	label: string;
+	url: string;
+	type: 'external' | 'internal';
+};
+
+type Cover = {
+	src: string,
+	srcset: string,
+}
+
+export interface Props {
+	actions?: Action[];
+	class?: string;
+	cover?: Cover;
+	title?: TitleField;
+	author?: TitleField;
+}
+
+const {
+	actions,
+	author,
+	class: className = '',
+	cover,
+	title,
+} = Astro.props as Props;
+---
+
+<article class={className}>
+	<RevealOnScroll class="wrapper">
+
+		<!-- cover -->
+		<figure class="cover">
+			<slot name="cover">
+				{cover
+					? <img
+							src={cover.src}
+							srcset={cover.srcset}
+							alt={`Cover for '${title}'`}
+							class="cover-image"
+						>
+					: <div class="cover-image placeholder"></div>
+				}
+			</slot>
+		</figure>
+
+		<!-- title, author, etc. -->
+		<header>
+			<slot name="header">
+				<Heading
+					class="type-scale-delta"
+					level={2}
+					text={title}
+				/>
+				<Heading
+					level={5}
+					subheading
+				>
+					{author}
+				</Heading>
+			</slot>
+		</header>
+
+		<!-- book metadata -->
+		<div class="metadata">
+			<slot name="metadata"></slot>
+		</div>
+
+		<!-- actions -->
+		{actions && (
+			<footer class="actions">
+				{actions.map(({label, url}) => (
+					<Button
+						href={url}
+						iconRight={externalLink}
+						class="type-role-accent"
+						size="small"
+						target="_blank"
+					>
+						{label}
+					</Button>
+				))}
+			</footer>
+		)}
+	</RevealOnScroll>
+</article>
+
+<style>
+	article {
+	}
+
+	article {
+		--cover-size: 12em;
+
+		container-type: inline-size;
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+	}
+
+	.wrapper {
+		align-items: start;
+		display: grid;
+		flex: 1;
+		grid-template-areas:
+			'cover'
+			'header'
+			'metadata'
+			'actions';
+		grid-template-rows:
+			var(--cover-size)
+			auto
+			auto
+			1fr;
+	}
+
+	.cover {
+		align-items: center;
+		align-self: stretch;
+		aspect-ratio: 1 / 1;
+		display: flex;
+		grid-area: cover;
+		justify-content: flex-start;
+	}
+
+	.cover-image {
+		box-shadow: 0.5em 0.5em 0.3em var(--color-shadow);
+		display: block;
+		height: 100%;
+	}
+
+	.cover-image.placeholder {
+		background-color: var(--color-well);
+		box-shadow: 0;
+		height: 100%;
+		width: 100%;
+	}
+
+	header {
+		grid-area: header;
+		padding-block-start: var(--space-medium);
+	}
+
+	.metadata {
+		grid-area: metadata;
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	.actions {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		flex: 1;
+		gap: var(--space-xnarrow);
+		grid-area: actions;
+		padding-block-start: var(--space-narrow);
+		align-self: end;
+	}
+
+	@container (min-width: 28em) {
+		.wrapper {
+			align-items: start;
+			gap: var(--space-xnarrow) var(--space-narrow);
+			grid-template-areas:
+				'cover header'
+				'cover metadata'
+				'cover actions';
+			grid-template-columns: var(--cover-size) 1fr;
+			grid-template-rows:
+				auto
+				auto
+				1fr;
+			flex: 1;
+		}
+
+		.cover {
+			align-self: start;
+			height: 100%;
+			justify-content: center;
+			width: 100%;
+		}
+
+		header,
+		.metadata,
+		.actions {
+			padding-block-start: 0;
+		}
+	}
+</style>
