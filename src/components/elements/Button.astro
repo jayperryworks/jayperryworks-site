@@ -70,7 +70,7 @@ const classList = [
     --icon-padding-offset: 0.3em;
     --icon-spacing: 0.8em;
     --padding-x: 1.2em;
-    --padding-y: 0.57em;
+    --padding-y: 0.88em;
     --shadow-spread: 8px;
     --baseline-compensation: 0.05em;
 
@@ -85,7 +85,8 @@ const classList = [
     font-family: var(--type-font-accent);
     font-size: var(--font-size);
     font-weight: 300;
-		gap: var(--icon-spacing);
+		gap: 0.3em; /* add a space for elements in the slot, e.g. <strong> */
+		line-height: var(--type-leading-xtight);
 		overflow: visible;
 		padding-block-end: calc(var(--padding-y) - var(--baseline-compensation));
     padding-block-start: var(--padding-y);
@@ -147,4 +148,12 @@ const classList = [
   .button.has-icon.right {
     padding-inline-end: calc(var(--padding-x) - var(--icon-padding-offset));
   }
+
+	.icon.left {
+		margin-inline-end: var(--icon-padding-offset);
+	}
+
+	.icon.right {
+		margin-inline-start: var(--icon-padding-offset);
+	}
 </style>
