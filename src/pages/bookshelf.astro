@@ -94,7 +94,7 @@ let books = await Promise.all(booksResponse.map(async ({
 		actions: [
 			{
 				label: 'Purchase',
-				url: purchaseURL,
+				url: prismicHelpers.asLink(purchaseURL),
 				type: 'external'
 			},
 			{
@@ -161,7 +161,7 @@ let books = await Promise.all(booksResponse.map(async ({
 						{book.publisher && book.publishDate && (
 							<p
 								slot="metadata"
-								class="metadata type-role-accent"
+								class="metadata type-role-accent type-scale-zeta"
 							>
 								{[book.publisher, book.publishDate].join(', ')}
 							</p>

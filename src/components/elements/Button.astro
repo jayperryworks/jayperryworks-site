@@ -67,17 +67,14 @@ const classList = [
     --color: var(--color-primary, currentColor);
 		--fill: transparent;
     --font-size: var(--type-scale-epsilon, 1rem);
-    --icon-padding: 0.3em;
+    --icon-padding-offset: 0.3em;
     --icon-spacing: 0.8em;
     --padding-x: 1.2em;
     --padding-y: 0.57em;
     --shadow-spread: 8px;
     --baseline-compensation: 0.05em;
 
-		gap: var(--icon-spacing);
-		overflow: visible;
-		text-decoration: none;
-		z-index: 1;
+		align-items: center;
     background-color: var(--fill);
     border-radius: 0.2em;
     border: 0.1rem solid var(--color);
@@ -88,10 +85,15 @@ const classList = [
     font-family: var(--type-font-accent);
     font-size: var(--font-size);
     font-weight: 300;
-    padding: var(--padding-y) var(--padding-x) calc(var(--padding-y) - var(--baseline-compensation));
+		gap: var(--icon-spacing);
+		overflow: visible;
+		padding-block-end: calc(var(--padding-y) - var(--baseline-compensation));
+    padding-block-start: var(--padding-y);
+		padding-inline: var(--padding-x);
     position: relative;
+		text-decoration: none;
     transition: all 0.25s ease;
-		align-items: center;
+		z-index: 1;
   }
 
   /* pre-render a box shadow on a pseudo element, but hide it */
@@ -131,18 +133,18 @@ const classList = [
   /* --- sizes --- */
   .small {
     --font-size: var(--type-scale-zeta);
-    --icon-padding: 0.2em;
+    --icon-padding-offset: 0.2em;
 		--icon-spacing: 0.6em;
-		--padding-x: 1em;
-    --padding-y: 0.5em;
+		--padding-x: 0.88em;
+    --padding-y: 0.42em;
   }
 
   /* --- icons --- */
   .button.has-icon.left {
-    padding-inline-start: calc(var(--padding-x) - var(--icon-padding));
+    padding-inline-start: calc(var(--padding-x) - var(--icon-padding-offset));
   }
 
   .button.has-icon.right {
-    padding-inline-end: calc(var(--padding-x) - var(--icon-padding));
+    padding-inline-end: calc(var(--padding-x) - var(--icon-padding-offset));
   }
 </style>
