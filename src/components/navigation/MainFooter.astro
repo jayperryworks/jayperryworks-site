@@ -12,13 +12,16 @@ import feed from '@icons/feed.svg?raw';
 import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
+import { linkResolver, fetchLinks } from '@lib/routes';
 
 // components
 import LogoJPW from '@components/logos/LogoJPW.astro';
+import Button from '@components/elements/Button.astro';
 import Icon from '@components/elements/Icon.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
+import { mainNavLink } from '@lib/types';
 import { LinkField } from '@prismicio/types';
 
 type Item = {
@@ -27,33 +30,97 @@ type Item = {
 	attributes?: string,
 };
 
-const response = await prismic.getSingle('social_channels');
-const { channel } = response.data;
+const response = await prismic.getSingle('main_nav', { fetchLinks });
+const routes = response.data.nav_item.map(
+	({ label, link }): mainNavLink => ({
+		label,
+		link: prismicHelpers.asLink(link, linkResolver),
+	})
+);
+
+const socialChannels = await prismic.getSingle('social_channels');
+const { channel } = socialChannels.data;
 
 
-const socialChannelList = channel.map((item: Item, index: number): string => {
+const socialChannelList = channel.map((item: Item): string => {
 	const { name, link, attributes } = item;
 
 	return `
-		${index === channel.length - 1 ? 'and' : ''}
-		<a
-			href="${prismicHelpers.asLink(link)}"
-			target="_blank"
-			${attributes || ''}
-		>${name}</a>
+		<li>
+			<a
+				class="type-role-accent"
+				href="${prismicHelpers.asLink(link)}"
+				target="_blank"
+				${attributes || ''}
+			>
+				${name}
+			</a>
+		</li>
 	`.trim();
-}).join(', ');
+}).join('');
 ---
 
 <footer class="border-seam-top">
-	<RevealOnScroll
-		tag="p"
-		class="social | type-role-accent"
-	>
-		Keep in touch. You can also find me on <Fragment set:html={socialChannelList} />.
+	<RevealOnScroll tag="nav">
+		<ul>
+			{routes.map(({ label, link }) => (
+				<li>
+					<a
+						class="type-role-accent"
+						href={link}
+					>
+						{label}
+					</a>
+				</li>
+			))}
+		</ul>
 	</RevealOnScroll>
 	<RevealOnScroll
-		tag="div"
+		tag="section"
+	>
+		<h2 class="type-scale-gamma">Colophon</h2>
+		<p>This site is typeset with Sanomat, Figtree, and Iowan Old Style. It was built with Astro, uses Prismic for content management, and is hosted by Netlify.</p>
+		<Button href="/colophon" size="small">Read more</Button>
+		<h2 class="type-scale-gamma">Privacy</h2>
+		<p>I don't track you. This site uses no cookies or client-side tracking scripts.</p>
+		<Button href="/privacy" size="small">Read more</Button>
+		<!-- <ul>
+			<li>
+				<a
+					class="type-role-accent"
+					href="/colophon"
+				>
+					Colophon
+				</a>
+			</li>
+			<li>
+				<a
+					class="type-role-accent"
+					href="/privacy"
+				>
+					Privacy
+				</a>
+			</li>
+		</ul> -->
+	</RevealOnScroll>
+	<RevealOnScroll tag="section">
+		<h2 class="type-scale-gamma">Keep in touch</h2>
+		<ul>
+			<Fragment set:html={socialChannelList}>
+			<li>
+				<a
+					class="type-role-accent"
+					href="/rss/feed.xml"
+					target="_blank"
+				>
+					RSS feed
+					<Icon svg={feed} margin="left" />
+				</a>
+			</li>
+		</ul>
+	</RevealOnScroll>
+	<RevealOnScroll
+		tag="aside"
 		class="signoff"
 	>
 		<div class="bookend">
@@ -68,14 +135,6 @@ const socialChannelList = channel.map((item: Item, index: number): string => {
 					&copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
 				</small>
 			</div>
-			<a
-				class="secondary | type-role-accent type-scale-zeta"
-				href="/rss/feed.xml"
-				target="_blank"
-			>
-				RSS feed
-				<Icon svg={feed} />
-			</a>
 		</div>
 	</RevealOnScroll>
 </footer>

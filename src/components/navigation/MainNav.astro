@@ -18,16 +18,13 @@ import Icon from '@components/elements/Icon.astro';
 import LogoJP from '@components/logos/LogoJP.astro';
 
 // types
+import { mainNavLink } from '@lib/types';
+
 export interface Props {
 	segment: string;
 	class?: string;
 	overlay?: boolean;
 }
-
-type mainNavLink = {
-	label: string,
-	link: string,
-};
 
 const response = await prismic.getSingle('main_nav', { fetchLinks });
 const routes = response.data.nav_item.map(
