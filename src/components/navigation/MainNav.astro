@@ -5,8 +5,6 @@ import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 import '@styles/utilities/type.css';
 import '@styles/utilities/visibility.css';
-import menu from '@icons/menu.svg?raw';
-import close from '@icons/close.svg?raw';
 
 // utils
 import prismic from '@lib/prismic';
@@ -14,14 +12,12 @@ import * as prismicHelpers from '@prismicio/helpers';
 import { linkResolver, fetchLinks } from '@lib/routes';
 
 // components
-import Icon from '@components/elements/Icon.astro';
 import LogoJP from '@components/logos/LogoJP.astro';
 
 // types
 export interface Props {
 	segment: string;
 	class?: string;
-	overlay?: boolean;
 }
 
 type mainNavLink = {
@@ -40,52 +36,10 @@ const routes = response.data.nav_item.map(
 const {
 	segment,
 	class:className = '',
-	overlay = false,
 } = Astro.props as Props;
-
-const classList = [
-	overlay ? 'overlay' : '',
-	className,
-].join(' ');
 ---
 
-<script>
-  // namespace for this component's JS
-  let MainNav = {
-		// current state
-		open: false,
-		$navButtonOpen: null,
-		$navButtonClose: null,
-		$navWrapper: null,
-	};
-
-	document.addEventListener('DOMContentLoaded', () => {
-		MainNav.$navButtonOpen = document.getElementById('nav-button-open');
-		MainNav.$navButtonClose = document.getElementById('nav-button-close');
-		MainNav.$navWrapper = document.getElementById('nav-wrapper');
-
-		MainNav.$navButtonOpen.onpointerdown = () => {
-			MainNav.open = true;
-			MainNav.$navWrapper.classList.remove('closed');
-			MainNav.$navWrapper.classList.add('open');
-			MainNav.$navButtonOpen.classList.add('hide');
-		}
-
-		MainNav.$navButtonClose.onpointerdown = () => {
-			MainNav.open = false;
-			MainNav.$navWrapper.classList.remove('open');
-			MainNav.$navButtonOpen.classList.remove('hide');
-		}
-
-		MainNav.$navWrapper.ontransitionend = () => {
-			if (!MainNav.open) {
-				MainNav.$navWrapper.classList.add('closed');
-			}
-		};
-	});
-</script>
-
-<nav class={classList}>
+<header class={className}>
 	<a
 		class="logo"
 		href="/"
@@ -94,32 +48,9 @@ const classList = [
 	</a>
 
 	<!-- nav -->
-	<div class="type-align-right">
-		<button
-			class="nav-button | type-role-accent type-scale-epsilon"
-			id="nav-button-open"
-		>
-			Menu
-			<Icon
-				svg={menu}
-				margin="left"
-			/>
-		</button>
-		<div
-			class="nav closed"
-			id="nav-wrapper"
-		>
-			<button
-				class="nav-button close type-scale-epsilon type-role-accent"
-				id="nav-button-close"
-			>
-				<Icon
-					svg={close}
-					margin="right"
-				/>
-				<span class="hide-visually">Close</span>
-			</button>
-			<ul class="nav-list">
+	<jp-hamburger-nav>
+		<nav class="nav-wrapper type-align-right">
+			<ul class="nav-list" hidden>
 				{routes.map(({ label, link }) => (
 					<li>
 						<a
@@ -132,28 +63,116 @@ const classList = [
 					</li>
 				))}
 			</ul>
-		</div>
-	</div>
-</nav>
+		</nav>
+	</jp-hamburger-nav>
+</header>
+
+<script is:inline type="module">
+	class HamburgerNav extends HTMLElement {
+		constructor() {
+			super();
+
+			// DOM element references
+			this.button = null;
+			this.wrapper = null;
+
+			// state
+			this.isOpen = false;
+		}
+
+		connectedCallback() {
+			console.log('hello')
+			// render JS-dependent buttons
+			this.wrapper = this.querySelector('.nav-wrapper');
+			this.wrapper.insertAdjacentHTML('afterbegin', this.renderButton(false));
+			this.hideNav();
+
+			// select elements we need to work with
+			this.button = this.querySelector('#nav-button-open');
+			this.closeButton = this.querySelector('#nav-button-close');
+
+			// event listeners
+			this.button.addEventListener('click', () => {
+				console.log('open')
+				this.open = true;
+			});
+
+			this.closeButton.addEventListener('click', () => {
+				this.open = false;
+			});
+
+			this.wrapper.addEventListener('ontransitionend', () => {
+				if (!this.open) this.hideNav();
+			});
+		}
+
+		set open(state) {
+			this.isOpen = state;
+
+			if (state) this.openNav();
+			if (!state) this.closeNav();
+		}
+
+		get open() {
+			return this.open || false;
+		}
+
+		openNav() {
+			this.wrapper.setAttribute('hidden', 'false');
+			this.classList.add('open');
+			this.button.setAttribute('aria-expanded', 'true');
+		}
+
+		closeNav() {
+			this.classList.remove('open');
+			this.button.setAttribute('aria-expanded', 'false');
+		}
+
+		hideNav() {
+			this.wrapper.setAttribute('hidden', 'true');
+		}
+
+		renderButton(open = false) {
+			const openIcon = `
+				<svg class="icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+					<path d="M.5 3.5h15M.5 8h8M.5 12.5h12" fill="none" fill-rule="evenodd" stroke-linecap="square" stroke="currentColor"/>
+				</svg>
+			`;
+
+			const closeIcon = `
+				<svg class="icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+					<path d="M15.266.734L.734 15.266M.734.734l14.532 14.532" fill="none" fill-rule="evenodd" stroke="currentColor"/>
+				</svg>
+			`;
+
+			return `
+				<button
+					aria-expanded="false"
+					class="nav-button | type-role-accent type-scale-epsilon"
+					id="nav-button-open"
+				>
+					<span class="hide-visually">Menu</span>
+					${open ? openIcon : closeIcon}
+					</svg>
+				</button>
+			`;
+		}
+	}
+
+	export default customElements.define('jp-hamburger-nav', HamburgerNav);
+</script>
 
 <style>
 	/* --- layout --- */
-	nav {
+	header {
 		--transition: 0.25s;
 
 		padding-inline: var(--space-outside);
 		display: flex;
+		flex-direction: row;
+		align-items: center;
 		justify-content: space-between;
 	}
-
-	.overlay {
-		background-color: transparent;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 4;
-  }
 
   /* --- nav elements --- */
   .logo {
@@ -162,26 +181,27 @@ const classList = [
     max-width: 2.5rem;
   }
 
-  .nav-button {
+  jp-hamburger-nav :global(.nav-button) {
     background-color: transparent;
     border: 0;
     box-shadow: none;
     cursor: pointer;
-    display: inline-block;
-    margin-block-start: 1em;
-    margin-block-start: var(--space-narrow);
+    display: inline-flex;
+		flex-direction: row;
+		gap: 0.5em;
+		align-items: center;
     outline: none;
     padding: 0;
     transition: color 0.25s ease-in-out;
     will-change: color;
   }
 
-  .nav-button:hover,
-  .nav-button:active {
+  jp-hamburger-nav :global(.nav-button:hover),
+  jp-hamburger-nav :global(.nav-button:active) {
     color: var(--color-highlight);
   }
 
-  .nav-button.close {
+  jp-hamburger-nav :global(.nav-button.close) {
     margin-inline-end: 1.5em;
     margin-inline-end: var(--space-medium);
     position: absolute;
@@ -189,8 +209,24 @@ const classList = [
     top: 0;
   }
 
+	jp-hamburger-nav :global(.icon) {
+		color: currentColor;
+    display: inline-block;
+    fill: currentColor;
+    height: 1em;
+    max-height: 100%;
+    max-width: 100%;
+    pointer-events: none;
+    vertical-align: middle;
+    width: 1em;
+	}
+
   /* --- small-screen nav --- */
-  :global([data-supports~='js']) .nav {
+  :global([data-supports~='js']) .nav-wrapper {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
     background-color: hsl(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95);
     bottom: 0;
     display: block;
@@ -200,21 +236,11 @@ const classList = [
     right: 0;
     top: 0;
     transition: opacity 0.25s ease;
-    will-change: opacity;
     z-index: 4;
   }
 
-  @supports (display: flex) {
-    :global([data-supports~='js']) .nav {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-
   /* closed (visually hidden) state */
-  :global([data-supports~='js']) .nav.closed {
+  /* :global([data-supports~='js']) jp-hamburger-nav.closed {
     border: 0;
     clip-path: inset(100%);
     clip: rect(1px, 1px, 1px, 1px);
@@ -223,10 +249,10 @@ const classList = [
     padding: 0;
     position: absolute;
     width: 1px;
-  }
+  } */
 
   /* open (transitioned) state */
-  :global([data-supports~='js']) .nav.open {
+  :global([data-supports~='js']) jp-hamburger-nav.open .nav-wrapper {
     opacity: 1;
   }
 
