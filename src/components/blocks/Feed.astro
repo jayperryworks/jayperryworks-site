@@ -41,7 +41,6 @@ const {
 	cta,
 	description,
 	contentSource,
-	number,
 	subtitle,
 	title,
 } = Astro.props as Props;
@@ -87,7 +86,6 @@ if (contentSource === 'blog_post') {
 
 <article>
 	<header>
-		{number && <Number {number} />}
 		<Heading level={1}>
 			<a
 				class="type-link-undecorated"

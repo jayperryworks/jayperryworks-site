@@ -115,10 +115,10 @@ picturesBySeries.push({
 			id={series.uid || 'other-work'}
 		>
 			<RevealOnScroll>
-				<Heading level={2} class="series-title type-role-accent type-scale-gamma">
+				<Heading level={2} class="series-title type-scale-gamma">
 					{series.title
 						? <Fragment>
-								<strong class="series-name">{prismicHelpers.asText(series.title)}</strong> series
+								{prismicHelpers.asText(series.title)} series
 							</Fragment>
 						: <Fragment>Other recent work</Fragment>
 					}

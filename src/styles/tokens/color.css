@@ -1,7 +1,7 @@
 :root {
 	/* --- primary --- */
-	--color-primary-h: 0deg;
-	--color-primary-s: 0%;
+	--color-primary-h: 220deg;
+	--color-primary-s: 5%;
 	--color-primary-l: 27%;
 
 	--color-primary: hsl(
@@ -9,9 +9,9 @@
 	);
 
 	/* --- secondary --- */
-	--color-secondary-h: 223deg;
-	--color-secondary-s: 7%;
-	--color-secondary-l: 65%;
+	--color-secondary-h: 220deg;
+	--color-secondary-s: 30%;
+	--color-secondary-l: 40%;
 
 	--color-secondary: hsl(
 		var(--color-secondary-h) var(--color-secondary-s) var(--color-secondary-l)
