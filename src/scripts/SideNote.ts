@@ -130,7 +130,7 @@ class SideNote extends HTMLElement {
 				<button class="label" aria-label="Toggle the note">${this.number}</button>
 				<small
 					class="content"
-					aria-role="note"
+					role="note"
 				>
 					<span class="wrapper" data-count="${this.number}">
 						<span class="text"><slot></slot></span>

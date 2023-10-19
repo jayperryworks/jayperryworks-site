@@ -78,7 +78,10 @@ const postList = page.data.map(({
 <Layout pageTitle="Blog">
 	<MainNav segment="blog" />
 	<main>
-		<ul class="post-list" aria-role="feed">
+		<ul
+			class="post-list"
+			role="feed"
+		>
 			{postList.map((post, index) => (
 				<li class={index > 0 ? 'border-seam-top' : ''}>
 					<article
