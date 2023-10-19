@@ -42,10 +42,13 @@ const {
 ---
 
 <article class={className}>
-	<RevealOnScroll class="wrapper">
+	<div class="wrapper">
 
 		<!-- cover -->
-		<figure class="cover">
+		<RevealOnScroll
+			tag="figure"
+			class="cover"
+		>
 			<slot name="cover">
 				{cover
 					? <img
@@ -57,7 +60,7 @@ const {
 					: <div class="cover-image placeholder"></div>
 				}
 			</slot>
-		</figure>
+		</RevealOnScroll>
 
 		<!-- title, author, etc. -->
 		<header>
@@ -97,7 +100,7 @@ const {
 				))}
 			</footer>
 		)}
-	</RevealOnScroll>
+	</div>
 </article>
 
 <style>

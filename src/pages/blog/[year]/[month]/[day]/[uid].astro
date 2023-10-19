@@ -163,7 +163,7 @@ const {
 	<MainNav segment="blog" />
 	<main>
 		<article>
-			<RevealOnScroll tag="header" class="headline">
+			<header class="headline">
 				{prismicHelpers.isFilled.title(title) && (
 					<Heading level={1} class="title">{prismicHelpers.asText(title)}</Heading>
 				)}
@@ -196,16 +196,13 @@ const {
 						))}
 					</ThreadNav>
 				)}
-			</RevealOnScroll>
+			</header>
 
 			<!-- page body -->
 			<BlockList {body} showLedeStyle />
 
 			{link && (
-				<RevealOnScroll
-					tag="footer"
-					class="link"
-				>
+				<footer class="link">
 					<Button
 						href={link}
 						iconRight={externalLink}
@@ -213,7 +210,7 @@ const {
 					>
 						Direct link
 					</Button>
-				</RevealOnScroll>
+				</footer>
 			)}
 		</article>
 

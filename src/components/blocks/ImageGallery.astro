@@ -4,6 +4,7 @@ import DeviceFrame from '@components/elements/DeviceFrame.astro';
 import Image from '@components/elements/Image.astro';
 import Figure from '@components/blocks/Figure.astro';
 import Gallery from '@components/layout/Gallery.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
 import type { SpaceScale, FormattedText, ImageFit, Device } from '@lib/types';
@@ -47,7 +48,7 @@ const {
 		{gutter}
 	>
 		{images.map((image) => (
-			<li>
+			<RevealOnScroll tag="li">
 				{image?.device !== 'None'
 					? <DeviceFrame
 							type={image.device}
@@ -59,7 +60,7 @@ const {
 							{border}
 						/>
 				}
-			</li>
+			</RevealOnScroll>
 		))}
 	</Gallery>
 </Figure>

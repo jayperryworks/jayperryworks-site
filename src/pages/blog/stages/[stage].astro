@@ -24,7 +24,6 @@ import MainFooter from '@components/navigation/MainFooter.astro';
 import MainNav from '@components/navigation/MainNav.astro';
 import SequenceNav from '@components/navigation/SequenceNav.astro';
 import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
 import {
@@ -146,7 +145,7 @@ const {
 >
 	<MainNav segment="blog" />
 	<main class="wrapper">
-		<RevealOnScroll tag="nav">
+		<nav>
 			<SequenceNav>
 				{stages.map((item, index) => (
 					<SequenceNavItem
@@ -158,18 +157,16 @@ const {
 					</SequenceNavItem>
 				))}
 			</SequenceNav>
-		</RevealOnScroll>
-		<RevealOnScroll tag="header">
+		</nav>
+		<header class="headline">
 			<Heading level={3} subheading>{prismicHelpers.asText(subtitle)}:</Heading>
 			<Heading level={1}>{sentenceCase(stage)}</Heading>
-		</RevealOnScroll>
-		<RevealOnScroll>
-			<Passage
-				class="intro"
-				text={description}
-				typeSize="delta"
-			/>
-		</RevealOnScroll>
+		</header>
+		<Passage
+			class="intro"
+			text={description}
+			typeSize="delta"
+		/>
 		<BlogListings class="post-list">
 			{posts.map((post) => (
 				<li class="post">
@@ -193,6 +190,12 @@ const {
 
 	.wrapper > :global(* + *) {
 		margin-block-start: var(--space-wide);
+	}
+
+	.headline {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xxnarrow);
 	}
 
 	.post-list {

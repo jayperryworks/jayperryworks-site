@@ -65,11 +65,11 @@ const classList = ['block', displayModeClass, className].join(' ');
 const style = `--block-width: var(--content-width-${getWidth(block.prominence)});`;
 ---
 
-<RevealOnScroll class={classList}>
+<div class={classList}>
 	<div class="wrapper" {style}>
 		<Component {...block} />
 	</div>
-</RevealOnScroll>
+</div>
 
 <style>
 	.block.flow {

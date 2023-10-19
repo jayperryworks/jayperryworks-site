@@ -18,7 +18,6 @@ import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import MainNav from '@components/navigation/MainNav.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
 
@@ -50,27 +49,25 @@ const seo = {
 	<main>
 		<!-- intro -->
 		<section class="cover">
-			<RevealOnScroll class="intro">
-				<div class="blurb">
-					<Heading
-						level={1}
-						text={headline}
-					/>
-					<Passage
-						text={{ prismicText: intro }}
-						class="blurb"
-						typeSize="delta"
-					/>
-					<div class="blurb-cta">
-						<Button
-							href={introLink}
-							iconRight={arrowRight}
-						>
-							A bit more about me
-						</Button>
-					</div>
+			<div class="blurb">
+				<Heading
+					level={1}
+					text={headline}
+				/>
+				<Passage
+					text={{ prismicText: intro }}
+					class="blurb"
+					typeSize="delta"
+				/>
+				<div class="blurb-cta">
+					<Button
+						href={introLink}
+						iconRight={arrowRight}
+					>
+						A bit more about me
+					</Button>
 				</div>
-			</RevealOnScroll>
+			</div>
 		</section>
 
 		<!-- TOC panels -->

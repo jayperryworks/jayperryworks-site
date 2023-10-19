@@ -101,10 +101,10 @@ const {
 <Layout pageTitle={sentenceCase(tag)}>
 	<MainNav segment="blog" />
 	<main class="wrapper">
-		<RevealOnScroll tag="header">
+		<header class="headline">
 			<Heading subheading level={3}>Posts filed under</Heading>
 			<Heading level={1}>{sentenceCase(tag)}</Heading>
-		</RevealOnScroll>
+		</header>
 		<BlogListings class="post-list">
 			{posts.map((post) => (
 				<li class="post">
@@ -126,8 +126,11 @@ const {
 		margin-inline: auto;
 	}
 
-	header {
+	.headline {
 		padding-block-end: var(--space-medium);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xxnarrow);
 	}
 
 	.post-list {

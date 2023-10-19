@@ -124,10 +124,7 @@ let books = await Promise.all(booksResponse.map(async ({
 >
 	<MainNav segment="bookshelf" />
 	<main>
-		<RevealOnScroll
-			class="header"
-			tag="header"
-		>
+		<header class="headline">
 			<Heading
 				align="center"
 				level={1}
@@ -141,7 +138,7 @@ let books = await Promise.all(booksResponse.map(async ({
 					text={subtitle}
 				/>
 			)}
-		</RevealOnScroll>
+		</header>
 
 		<BlockList {body} showLedeStyle />
 
@@ -157,9 +154,7 @@ let books = await Promise.all(booksResponse.map(async ({
 							class="book"
 							title={book.title}
 							author={book.author}
-							cover={{
-								src: book.cover,
-							}}
+							cover={{ src: book.cover }}
 							actions={book.actions}
 						>
 							{book.publisher && book.publishDate && (
@@ -180,14 +175,14 @@ let books = await Promise.all(booksResponse.map(async ({
 </Layout>
 
 <style>
-	.header,
+	.headline,
 	.wrapper {
 		margin-inline: auto;
 		padding-block-start: var(--space-xwide);
 		padding-inline: var(--space-outside);
 	}
 
-	.header {
+	.headline {
 		max-width: var(--content-width-wide);
 		padding-block-end: var(--space-wide);
 	}

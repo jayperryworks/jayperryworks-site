@@ -159,29 +159,25 @@ const credits = [
 	<MainNav segment="design" />
 	<main>
 		<article>
-			<RevealOnScroll
-				class="headline"
-				tag="header"
-			>
+			<header class="headline">
 				<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
 				{client && (
 					<Heading subheading level={3}>{client}</Heading>
 				)}
-			</RevealOnScroll>
+			</header>
+
 			<BlockList {body} showLedeStyle />
-			<RevealOnScroll
-				tag="aside"
-				class="border-seam-top credits"
-			>
+
+			<aside class="border-seam-top credits">
 				<div class="credits-wrapper">
 					<Heading level={2} class="credits-heading">Credits</Heading>
 					<DataGrid data={credits} />
 				</div>
-			</RevealOnScroll>
+			</aside>
 		</article>
 		{next && (
 			<nav class="border-seam-top">
-				<RevealOnScroll class="nav-wrapper">
+				<div class="nav-wrapper">
 					<ReadNextLink
 						align="end"
 						link={next.path}
@@ -190,7 +186,7 @@ const credits = [
 						<Fragment slot="eyebrow">Next case study:</Fragment>
 						<Fragment slot="title">{prismicHelpers.asText(next.title)}</Fragment>
 					</ReadNextLink>
-				</RevealOnScroll>
+				</div>
 			</nav>
 		)}
 	</main>

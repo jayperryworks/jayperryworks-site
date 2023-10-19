@@ -21,7 +21,6 @@ import Button from '@components/elements/Button.astro';
 import Icon from '@components/elements/Icon.astro';
 import PostMetadata from '@components/elements/PostMetadata.astro';
 import Heading from '@components/blocks/Heading.astro';
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import MainNav from '@components/navigation/MainNav.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
 import BlockList from '@components/BlockList.astro';
@@ -86,10 +85,7 @@ const postList = page.data.map(({
 						class="post"
 						id={post.uid}
 					>
-						<RevealOnScroll
-							tag="header"
-							class="post-header"
-						>
+						<header class="post-header">
 							{prismicHelpers.isFilled.title(post.title) && (
 								<Heading level={2} class="post-title">
 									<a
@@ -104,7 +100,7 @@ const postList = page.data.map(({
 								<Heading subheading level={3}>{prismicHelpers.asText(post.subtitle)}</Heading>
 							)}
 							<PostMetadata {...post} class="post-date | content-width" />
-						</RevealOnScroll>
+						</header>
 						<BlockList body={post.summary} showLedeStyle />
 						{(post.readMore || post.link) && (
 							<footer class="post-footer">
@@ -134,10 +130,7 @@ const postList = page.data.map(({
 			))}
 		</ul>
 		<nav class="border-seam-top">
-			<RevealOnScroll
-				tag="ul"
-				class="nav-list"
-			>
+			<ul class="nav-list">
 				{prev && (
 					<li class="nav-item">
 						<a
@@ -160,7 +153,7 @@ const postList = page.data.map(({
 						</a>
 					</li>
 				)}
-			</RevealOnScroll>
+			</ul>
 		</nav>
 	</main>
 	<MainFooter />

@@ -33,7 +33,7 @@ const {
 } = Astro.props as Props;
 ---
 
-<RevealOnScroll tag="article">
+<article>
 	<Heading level={6} subheading class="eyebrow">
 		{showStage && <DevelopmentStageLabel name={stage} />}
 		<time datetime={date}>{format(date, 'yyyy.MM.dd')}</time>
@@ -52,7 +52,7 @@ const {
 			<a class="type-link-undecorated" href={path}>{subtitle}</a>
 		</Heading>
 	)}
-</RevealOnScroll>
+</article>
 
 <style>
 	.eyebrow {

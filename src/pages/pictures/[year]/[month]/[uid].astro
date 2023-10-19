@@ -272,10 +272,7 @@ const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) 
 	<MainNav segment="pictures" />
 	<main>
 		<!-- cover -->
-		<RevealOnScroll
-			tag="header"
-			class="cover"
-		>
+		<header class="cover">
 			<PictureFrame
 				source={cover as ImageField}
 				class="cover-image"
@@ -288,7 +285,7 @@ const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) 
 					<p class="cover-info-item media" set:html={createMediaString()}></p>
 				)}
 			</div>
-		</RevealOnScroll>
+		</header>
 
 		<!-- back story -->
 		{prismicHelpers.isFilled.sliceZone(body) && (
@@ -300,25 +297,18 @@ const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) 
 
 		<!-- editions -->
 		<section class="wrapper | border-seam-top" id="editions">
-			<RevealOnScroll>
-				<Heading level={2} align="center">
-					Available editions
-				</Heading>
-			</RevealOnScroll>
+			<Heading level={2} align="center">
+				Available editions
+			</Heading>
 
 			{editionsByType.map((type) => (
-				<RevealOnScroll>
-					<PrintEdition {type} />
-				</RevealOnScroll>
+				<PrintEdition {type} />
 			))}
 		</section>
 
 		<!-- Footer nav -->
 		<nav class="wrapper | border-seam-top">
-			<RevealOnScroll
-				tag="header"
-				class="nav-header"
-			>
+			<header class="nav-header">
 				{nav.title
 					? <Heading level={2} class="nav-header-title | type-scale-gamma">
 							More from the <strong>{prismicHelpers.asText(nav.title)}</strong>&nbsp;series
@@ -331,7 +321,7 @@ const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) 
 				>
 					See all
 				</Button>
-			</RevealOnScroll>
+			</header>
 			<PictureGallery
 				aspectRatio={nav.aspectRatio}
 				list={nav.pictures as PrismicDocumentWithUID[]}

@@ -46,12 +46,12 @@ const seo = {
 	<MainNav segment="design" />
 	<main>
 		<article>
-			<RevealOnScroll tag="header">
+			<header class="headline">
 				<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
 				{subtitle && (
 					<Heading level={3} subheading>{prismicHelpers.asText(subtitle)}</Heading>
 				)}
-			</RevealOnScroll>
+			</header>
 			<BlockList {body} showLedeStyle />
 		</article>
 	</main>
@@ -63,7 +63,7 @@ const seo = {
 		padding-block: var(--space-xwide);
 	}
 
-	header {
+	.headline {
 		padding-block-end: var(--space-wide);
 		padding-inline: var(--space-outside);
 		text-align: center;
