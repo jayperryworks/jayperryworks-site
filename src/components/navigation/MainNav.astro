@@ -50,7 +50,7 @@ const {
 	<!-- nav -->
 	<jp-hamburger-nav>
 		<nav class="type-align-right" id="nav-wrapper">
-			<ul id="nav-list">
+			<ul class="is-hidden" id="nav-list">
 				{routes.map(({ label, link }) => (
 					<li>
 						<a
@@ -73,7 +73,6 @@ const {
 			super();
 
 			// DOM element references
-			this.wrapper = null;
 			this.button = null;
 			this.list = null;
 
@@ -82,10 +81,8 @@ const {
 		}
 
 		connectedCallback() {
-
 			// render JS-dependent buttons
-			this.wrapper = this.querySelector('#nav-wrapper');
-			this.wrapper.insertAdjacentHTML('afterbegin', this.renderButton(false));
+			this.renderButton(this.querySelector('#nav-wrapper'));
 
 			// select elements we need to work with
 			this.button = this.querySelector('#nav-button');
@@ -96,17 +93,10 @@ const {
 
 			// event listeners
 			this.button.addEventListener('click', () => {
-				console.log('toggle');
-
-				if (!this.open) {
-					this.open = true;
-				} else {
-					this.open = false;
-				}
+				this.open = !this.open;
 			});
 
 			this.list.addEventListener('transitionend', () => {
-				console.log('transition', this.open);
 				if (!this.open) this.hideNav();
 			});
 		}
@@ -131,8 +121,8 @@ const {
 			this.list.classList.add('is-hidden');
 		}
 
-		renderButton() {
-			return `
+		renderButton(container) {
+			const template = `
 				<button
 					aria-expanded="false"
 					class="nav-button | type-role-accent type-scale-epsilon"
@@ -145,6 +135,8 @@ const {
 					</svg>
 				</button>
 			`;
+
+			container.insertAdjacentHTML('afterbegin', template);
 		}
 	}
 
@@ -232,8 +224,8 @@ const {
   /* --- small-screen nav --- */
   :global([data-supports~='js']) #nav-list {
 		align-items: flex-start;
-    bottom: 0;
     background-color: hsl(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95);
+    bottom: 0;
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-narrow);
@@ -254,7 +246,7 @@ const {
   }
 
   /* closed (visually hidden) state */
-  :global([data-supports~='js']) #nav-list.is-hidden {
+  #nav-list.is-hidden {
     border: 0;
     clip-path: inset(100%);
     clip: rect(1px, 1px, 1px, 1px);
@@ -266,7 +258,7 @@ const {
   }
 
   /* open (transitioned) state */
-  :global([data-supports~='js']) #nav-list.is-open {
+  #nav-list.is-open {
     opacity: 1;
   }
 
