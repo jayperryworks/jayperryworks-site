@@ -87,27 +87,10 @@ const {
 			// only run this script if the screen is small enough to need a hamburger menu
 			const breakpoint = window.matchMedia(this._breakpoint);
 
+			if (breakpoint.matches) this.render();
+
 			breakpoint.addEventListener('change', () => {
-				if (breakpoint.matches) {
-					// render JS-dependent buttons
-					this.renderButton(this.querySelector('#nav-wrapper'));
-
-					// select elements we need to work with
-					this.button = this.querySelector('#nav-button');
-					this.list = this.querySelector('#nav-list');
-
-					// hide the nav initially
-					this.hideNav();
-
-					// event listeners
-					this.button.addEventListener('click', () => {
-						this.open = !this.open;
-					});
-
-					this.list.addEventListener('transitionend', () => {
-						if (!this.open) this.hideNav();
-					});
-				}
+				if (breakpoint.matches) this.render();
 			});
 		}
 
@@ -138,7 +121,7 @@ const {
 					class="nav-button | type-role-accent type-scale-epsilon"
 					id="nav-button"
 				>
-					<span class="hide-visually">Menu</span>
+					<span>Menu</span>
 					<svg class="icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
 						<path class="open" d="M.5 3.5h15M.5 8h8M.5 12.5h12" fill="none" fill-rule="evenodd" stroke-linecap="square" stroke="currentColor"/>
 						<path class="close" d="M15.266.734L.734 15.266M.734.734l14.532 14.532" fill="none" fill-rule="evenodd" stroke="currentColor"/>
@@ -147,6 +130,29 @@ const {
 			`;
 
 			container.insertAdjacentHTML('afterbegin', template);
+		}
+
+		render() {
+			// render JS-dependent buttons
+			if (!this.button) {
+				this.renderButton(this.querySelector('#nav-wrapper'));
+
+				// select elements we need to work with
+				this.button = this.querySelector('#nav-button');
+				this.list = this.querySelector('#nav-list');
+
+				// hide the nav initially
+				this.hideNav();
+
+				// event listeners
+				this.button.addEventListener('click', () => {
+					this.open = !this.open;
+				});
+
+				this.list.addEventListener('transitionend', () => {
+					if (!this.open) this.hideNav();
+				});
+			}
 		}
 	}
 
@@ -233,7 +239,7 @@ const {
 
   /* --- small-screen nav --- */
   #nav-list {
-		align-items: flex-start;
+		align-items: center;
     background-color: hsl(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95);
     bottom: 0;
 		display: flex;
@@ -246,8 +252,8 @@ const {
     opacity: 0;
 		overflow-y: scroll;
 		padding-block: var(--space-wide);
-		padding-inline-start: 25%;
-		padding-inline-end: var(--space-outside);
+		/* padding-inline-start: 25%; */
+		padding-inline: var(--space-outside);
     position: fixed;
     right: 0;
     top: 0;
@@ -295,18 +301,23 @@ const {
 		font-weight: 300;
   }
 
+  .nav-item[aria-current="page"] {
+		--dot-size: 0.5em;
+		--dot-margin: 0.4em;
+
+		margin-inline-start: calc((var(--dot-margin) + var(--dot-size)) * -1);
+		display: flex;
+		gap: var(--dot-margin);
+		align-items: center;
+	}
+
   .nav-item[aria-current="page"]::before {
-    --size: 0.5em;
     background-color: var(--color-highlight);
     border-radius: 1000px;
     content: '';
     display: block;
-    height: var(--size);
-    left: calc(var(--space-medium) * -1);
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: var(--size);
+    height: var(--dot-size);
+    width: var(--dot-size);
   }
 
   /* --- large-screen nav --- */
@@ -316,10 +327,11 @@ const {
     }
 
     #nav-list {
-      background-color: transparent;
-      display: inline-flex;
+			align-items: flex-start;
 			flex-direction: row;
 			gap: var(--space-narrow);
+      background-color: transparent;
+      display: inline-flex;
       opacity: 1;
       position: relative;
     }
@@ -341,20 +353,24 @@ const {
 
     .nav-item:hover,
     .nav-item:active {
-      color: var(--color-highlight);
+			color: var(--color-highlight);
     }
 
+		.nav-item[aria-current="page"] {
+			display: block;
+			margin-inline-start: 0;
+		}
+
     .nav-item[aria-current="page"]::before {
-      background-color: var(--color-highlight);
-      height: 0.18em;
-      left: 0;
-      position: absolute;
-      right: 0;
-      bottom: -0.1em;
-			top: auto;
-      transform: none;
-      width: auto;
+			background-color: var(--color-highlight);
 			border-radius: 0;
+			bottom: -0.1em;
+			height: 0.18em;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: auto;
+			width: auto;
     }
 
     .nav-item.small-only {
