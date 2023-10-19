@@ -121,9 +121,10 @@ const {
 		}
 
 		toggleNav() {
+			this.button.setAttribute('aria-expanded', this.open.toString());
 			this.list.classList.toggle('is-open');
 			this.list.classList.remove('is-hidden');
-			this.button.setAttribute('aria-expanded', this.open.toString());
+			document.body.classList.toggle('has-overlay');
 		}
 
 		hideNav() {
@@ -139,21 +140,11 @@ const {
 				>
 					<span class="hide-visually">Menu</span>
 					<svg class="icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-						<path d="M.5 3.5h15M.5 8h8M.5 12.5h12" fill="none" fill-rule="evenodd" stroke-linecap="square" stroke="currentColor"/>
+						<path class="open" d="M.5 3.5h15M.5 8h8M.5 12.5h12" fill="none" fill-rule="evenodd" stroke-linecap="square" stroke="currentColor"/>
+						<path class="close" d="M15.266.734L.734 15.266M.734.734l14.532 14.532" fill="none" fill-rule="evenodd" stroke="currentColor"/>
 					</svg>
 				</button>
 			`;
-		}
-
-		changeButtonMode() {
-			const closeIcon = `
-				<svg class="icon close" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-					<path d="M15.266.734L.734 15.266M.734.734l14.532 14.532" fill="none" fill-rule="evenodd" stroke="currentColor"/>
-				</svg>
-			`;
-
-			this.button.insertAdjacentHTML('beforeend', closeIcon);
-			const icon = this.button.querySelector('.icon');
 		}
 	}
 
@@ -221,6 +212,23 @@ const {
     width: 1em;
 	}
 
+	jp-hamburger-nav :global(.icon .open),
+	jp-hamburger-nav :global(.icon .close), {
+		transition: 0.25s opacity ease;
+	}
+
+	jp-hamburger-nav :global([aria-expanded='false'] .close) {
+		opacity: 0;
+	}
+
+	jp-hamburger-nav :global([aria-expanded='true'] .close) {
+		opacity: 1;
+	}
+
+	jp-hamburger-nav :global([aria-expanded='true'] .open) {
+		opacity: 0;
+	}
+
   /* --- small-screen nav --- */
   :global([data-supports~='js']) #nav-list {
 		align-items: flex-start;
@@ -267,6 +275,14 @@ const {
     margin-block-start: 0;
   }
 
+	:global(.has-overlay) {
+		/* prevent scrolling on the body when the overlay is displayed */
+		height: 100vh;
+		height: 100dvh;
+		overflow: hidden;
+	}
+
+	/* nav link elements */
   .nav-item {
     display: inline-block;
     font-size: var(--type-scale-delta);
