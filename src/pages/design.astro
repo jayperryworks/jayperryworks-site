@@ -11,8 +11,10 @@ import prismic from '@lib/prismic';
 
 // components
 import Layout from '@layouts/BaseLayout.astro';
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import Heading from '@components/blocks/Heading.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+import MainNav from '@components/navigation/MainNav.astro';
+import MainFooter from '@components/navigation/MainFooter.astro';
 import BlockList from '@components/BlockList.astro';
 
 // fetch content
@@ -41,16 +43,19 @@ const seo = {
 	path="design"
 	{seo}
 >
-	<article>
-		<RevealOnScroll tag="header">
-			<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
-			{subtitle && (
-				<Heading level={3} subheading>{prismicHelpers.asText(subtitle)}</Heading>
-			)}
-		</RevealOnScroll>
-
-		<BlockList {body} showLedeStyle />
-	</article>
+	<MainNav segment="design" />
+	<main>
+		<article>
+			<RevealOnScroll tag="header">
+				<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
+				{subtitle && (
+					<Heading level={3} subheading>{prismicHelpers.asText(subtitle)}</Heading>
+				)}
+			</RevealOnScroll>
+			<BlockList {body} showLedeStyle />
+		</article>
+	</main>
+	<MainFooter />
 </Layout>
 
 <style>

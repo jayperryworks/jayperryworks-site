@@ -10,8 +10,10 @@ import { fetchLinks } from '@lib/routes';
 // components
 import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import Heading from '@components/blocks/Heading.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+import MainNav from '@components/navigation/MainNav.astro';
+import MainFooter from '@components/navigation/MainFooter.astro';
 
 const response = await prismic.getByUID('page', 'about', { fetchLinks });
 
@@ -33,19 +35,22 @@ const seo = {
 
 <Layout
 	pageTitle="about"
-	path="about"
 	{seo}
 >
-	<article>
-		<RevealOnScroll>
-			<Heading
-				level={1}
-				class="title"
-				text={title}
-			/>
-		</RevealOnScroll>
-		<BlockList {body} showLedeStyle />
-	</article>
+	<MainNav segment="about" />
+	<main>
+		<article>
+			<RevealOnScroll>
+				<Heading
+					level={1}
+					class="title"
+					text={title}
+				/>
+			</RevealOnScroll>
+			<BlockList {body} showLedeStyle />
+		</article>
+	</main>
+	<MainFooter />
 </Layout>
 
 <style>
