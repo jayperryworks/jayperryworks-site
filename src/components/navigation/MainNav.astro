@@ -78,11 +78,15 @@ const {
 
 			// state
 			this._open = false;
+
+			// config
+			this._breakpoint = '(max-width: 43em)';
 		}
 
 		connectedCallback() {
 			// only run this script if the screen is small enough to need a hamburger menu
-			const breakpoint = window.matchMedia('(max-width: 43em)');
+			const breakpoint = window.matchMedia(this._breakpoint);
+
 			breakpoint.addEventListener('change', () => {
 				if (breakpoint.matches) {
 					// render JS-dependent buttons
