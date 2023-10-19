@@ -222,7 +222,7 @@ const {
 	}
 
   /* --- small-screen nav --- */
-  :global([data-supports~='js']) #nav-list {
+  #nav-list {
 		align-items: flex-start;
     background-color: hsl(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95);
     bottom: 0;
@@ -267,8 +267,8 @@ const {
     margin-block-start: 0;
   }
 
+	/* prevent scrolling on the body when the overlay is displayed */
 	:global(.has-overlay) {
-		/* prevent scrolling on the body when the overlay is displayed */
 		height: 100vh;
 		height: 100dvh;
 		overflow: hidden;
@@ -301,19 +301,20 @@ const {
 
   /* --- large-screen nav --- */
   @media screen and (min-width: 43em) {
-    .nav-button {
+    jp-hamburger-nav :global(.nav-button) {
       display: none;
     }
 
-    .nav,
-    :global([data-supports~='js']) .nav {
+    #nav-list {
       background-color: transparent;
-      display: inline-block;
+      display: inline-flex;
+			flex-direction: row;
+			gap: var(--space-narrow);
       opacity: 1;
       position: relative;
     }
 
-    :global([data-supports~='js']) .nav.closed {
+    #nav-list.is-hidden {
       clip-path: none;
       clip: auto;
       height: auto;
@@ -348,17 +349,6 @@ const {
 
     .nav-item.small-only {
       display: none;
-    }
-
-    #nav-list > li {
-      display: inline-block;
-    }
-
-    #nav-list > li + li {
-      margin-inline-start: 1em;
-      margin-inline-start: var(--space-narrow);
-      margin-block-start:  0;
-      padding-block-start: 0;
     }
   }
 </style>
