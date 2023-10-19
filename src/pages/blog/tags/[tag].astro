@@ -14,7 +14,8 @@ import Heading from '@components/blocks/Heading.astro';
 import Layout from '@layouts/BaseLayout.astro';
 import BlogListings from '@components/navigation/BlogListings.astro';
 import BlogListingsPost from '@components/navigation/BlogListingsPost.astro';
-import ReadNextLink from '@components/navigation/ReadNextLink.astro';
+import MainFooter from '@components/navigation/MainFooter.astro';
+import MainNav from '@components/navigation/MainNav.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
@@ -97,15 +98,13 @@ const {
 } = Astro.props as Props;
 ---
 
-<Layout
-	pageTitle={sentenceCase(tag)}
-	path="blog"
->
-	<div class="wrapper">
-		<RevealOnScroll tag="header">
+<Layout pageTitle={sentenceCase(tag)}>
+	<MainNav segment="blog" />
+	<main class="wrapper">
+		<header class="headline">
 			<Heading subheading level={3}>Posts filed under</Heading>
 			<Heading level={1}>{sentenceCase(tag)}</Heading>
-		</RevealOnScroll>
+		</header>
 		<BlogListings class="post-list">
 			{posts.map((post) => (
 				<li class="post">
@@ -113,7 +112,8 @@ const {
 				</li>
 			))}
 		</BlogListings>
-	</div>
+	</main>
+	<MainFooter />
 </Layout>
 
 <style>
@@ -126,8 +126,11 @@ const {
 		margin-inline: auto;
 	}
 
-	header {
+	.headline {
 		padding-block-end: var(--space-medium);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xxnarrow);
 	}
 
 	.post-list {

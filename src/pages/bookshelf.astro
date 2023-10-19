@@ -15,6 +15,8 @@ import Heading from '@components/blocks/Heading.astro';
 import BookCard from '@components/layout/BookCard.astro';
 import Gallery from '@components/layout/Gallery.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+import MainNav from '@components/navigation/MainNav.astro';
+import MainFooter from '@components/navigation/MainFooter.astro';
 import BlockList from '@components/BlockList.astro';
 
 // --- layout
@@ -120,68 +122,67 @@ let books = await Promise.all(booksResponse.map(async ({
 	path="bookshelf"
 	{seo}
 >
-	<RevealOnScroll
-		class="header"
-		tag="header"
-	>
-		<Heading
-			align="center"
-			level={1}
-			text={title}
-		/>
-		{subtitle && (
+	<MainNav segment="bookshelf" />
+	<main>
+		<header class="headline">
 			<Heading
 				align="center"
-				level={4}
-				subheading
-				text={subtitle}
+				level={1}
+				text={title}
 			/>
-		)}
-	</RevealOnScroll>
+			{subtitle && (
+				<Heading
+					align="center"
+					level={4}
+					subheading
+					text={subtitle}
+				/>
+			)}
+		</header>
 
-	<BlockList {body} showLedeStyle />
+		<BlockList {body} showLedeStyle />
 
-	<div class="wrapper">
-		<Gallery gutter="wide">
-			{books.map((book) => (
-				<li
-					class="item"
-					data-tags={book.tags.join(' ')}
-					id={book.uid}
-				>
-					<BookCard
-						class="book"
-						title={book.title}
-						author={book.author}
-						cover={{
-							src: book.cover,
-						}}
-						actions={book.actions}
+		<div class="wrapper">
+			<Gallery gutter="wide">
+				{books.map((book) => (
+					<li
+						class="item"
+						data-tags={book.tags.join(' ')}
+						id={book.uid}
 					>
-						{book.publisher && book.publishDate && (
-							<p
-								slot="metadata"
-								class="metadata type-role-accent type-scale-zeta"
-							>
-								{[book.publisher, book.publishDate].join(', ')}
-							</p>
-						)}
-					</BookCard>
-				</li>
-			))}
-		</Gallery>
-	</div>
+						<BookCard
+							class="book"
+							title={book.title}
+							author={book.author}
+							cover={{ src: book.cover }}
+							actions={book.actions}
+						>
+							{book.publisher && book.publishDate && (
+								<p
+									slot="metadata"
+									class="metadata type-role-accent type-scale-zeta"
+								>
+									{[book.publisher, book.publishDate].join(', ')}
+								</p>
+							)}
+						</BookCard>
+					</li>
+				))}
+			</Gallery>
+		</div>
+	</main>
+	<MainFooter />
 </Layout>
 
 <style>
-	.header,
+	.headline,
 	.wrapper {
 		margin-inline: auto;
 		padding-block-start: var(--space-xwide);
 		padding-inline: var(--space-outside);
 	}
 
-	.header {
+	.headline {
 		max-width: var(--content-width-wide);
 		padding-block-end: var(--space-wide);
 	}

@@ -21,6 +21,8 @@ import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
 import PictureFrame from '@components/elements/PictureFrame.astro';
 import Heading from '@components/blocks/Heading.astro';
+import MainFooter from '@components/navigation/MainFooter.astro';
+import MainNav from '@components/navigation/MainNav.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import PrintEdition from '@components/layout/PrintEdition.astro';
 import PictureGallery from '@components/navigation/PictureGallery.astro';
@@ -267,72 +269,66 @@ const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) 
 	path="pictures"
 	{seo}
 >
-	<!-- cover -->
-	<RevealOnScroll
-		tag="header"
-		class="cover"
-	>
-		<PictureFrame
-			source={cover as ImageField}
-			class="cover-image"
-			type={substrateName.includes('paper') ? 'frame' : 'panel'}
-		/>
-		<div class="cover-info | type-scale-epsilon type-role-accent">
-			<Heading level={1} text={title} class="cover-info-item title" />
-			<time class="cover-info-item year" datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
-			{prismicHelpers.isFilled.group(media) && (
-				<p class="cover-info-item media" set:html={createMediaString()}></p>
-			)}
-		</div>
-	</RevealOnScroll>
+	<MainNav segment="pictures" />
+	<main>
+		<!-- cover -->
+		<header class="cover">
+			<PictureFrame
+				source={cover as ImageField}
+				class="cover-image"
+				type={substrateName.includes('paper') ? 'frame' : 'panel'}
+			/>
+			<div class="cover-info | type-scale-epsilon type-role-accent">
+				<Heading level={1} text={title} class="cover-info-item title" />
+				<time class="cover-info-item year" datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
+				{prismicHelpers.isFilled.group(media) && (
+					<p class="cover-info-item media" set:html={createMediaString()}></p>
+				)}
+			</div>
+		</header>
 
-	<!-- back story -->
-	{prismicHelpers.isFilled.sliceZone(body) && (
-		<section class="wrapper | border-seam-top" id="backstory">
-			<Heading level={2} align="center">Back story</Heading>
-			<BlockList {body} />
-		</section>
-	)}
+		<!-- back story -->
+		{prismicHelpers.isFilled.sliceZone(body) && (
+			<section class="wrapper | border-seam-top" id="backstory">
+				<Heading level={2} align="center">Back story</Heading>
+				<BlockList {body} />
+			</section>
+		)}
 
-	<!-- editions -->
-	<section class="wrapper | border-seam-top" id="editions">
-		<RevealOnScroll>
+		<!-- editions -->
+		<section class="wrapper | border-seam-top" id="editions">
 			<Heading level={2} align="center">
 				Available editions
 			</Heading>
-		</RevealOnScroll>
 
-		{editionsByType.map((type) => (
-			<RevealOnScroll>
+			{editionsByType.map((type) => (
 				<PrintEdition {type} />
-			</RevealOnScroll>
-		))}
-	</section>
+			))}
+		</section>
 
-	<!-- Footer nav -->
-	<nav class="wrapper | border-seam-top">
-		<RevealOnScroll
-			tag="header"
-			class="nav-header"
-		>
-			{nav.title
-				? <Heading level={2} class="nav-header-title | type-scale-gamma">
-						More from the <strong>{prismicHelpers.asText(nav.title)}</strong>&nbsp;series
-					</Heading>
-				: <Heading level={2} class="">More work</Heading>
-			}
-			<Button
-				href={indexPage({ uid: 'pictures' } as PrismicDocument)}
-				iconRight={index}
-			>
-				See all
-			</Button>
-		</RevealOnScroll>
-		<PictureGallery
-			aspectRatio={nav.aspectRatio}
-			list={nav.pictures as PrismicDocumentWithUID[]}
-		/>
-	</nav>
+		<!-- Footer nav -->
+		<nav class="wrapper | border-seam-top">
+			<header class="nav-header">
+				{nav.title
+					? <Heading level={2} class="nav-header-title | type-scale-gamma">
+							More from the <strong>{prismicHelpers.asText(nav.title)}</strong>&nbsp;series
+						</Heading>
+					: <Heading level={2} class="">More work</Heading>
+				}
+				<Button
+					href={indexPage({ uid: 'pictures' } as PrismicDocument)}
+					iconRight={index}
+				>
+					See all
+				</Button>
+			</header>
+			<PictureGallery
+				aspectRatio={nav.aspectRatio}
+				list={nav.pictures as PrismicDocumentWithUID[]}
+			/>
+		</nav>
+	</main>
+	<MainFooter />
 </Layout>
 
 <style>

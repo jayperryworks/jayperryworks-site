@@ -51,7 +51,7 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 
 <article>
 	<header>
-		<Heading level={1}>
+		<Heading level={2} class="type-scale-alpha">
 			<a
 				class="type-link-undecorated"
 				href={resolvedLink}
@@ -117,11 +117,11 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 	}
 
 	article {
+		align-items: center;
 		display: grid;
 		flex: 1;
-		grid-template-rows: repeat(auto-fit, minmax(auto, 1fr));
 		gap: var(--space-medium);
-		align-items: center;
+		grid-template-rows: repeat(auto-fit, minmax(auto, 1fr));
 	}
 
 	article :global(.cover) {

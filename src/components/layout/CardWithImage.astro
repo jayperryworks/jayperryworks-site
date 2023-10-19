@@ -5,6 +5,7 @@ import '@styles/tokens/contentWidth.css';
 
 // components
 import Image from '@components/elements/Image.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
 import { ImageField } from '@prismicio/types';
@@ -22,10 +23,12 @@ const {
 
 <figure class={className}>
 	<div class="wrapper">
-		<Image
-			class="image"
-			source={image}
-		/>
+		<RevealOnScroll>
+			<Image
+				class="image"
+				source={image}
+			/>
+		</RevealOnScroll>
 		<figcaption>
 			<slot></slot>
 		</figcaption>

@@ -5,10 +5,6 @@ import '@styles/base/type.css';
 import '@styles/tokens/borders.css';
 import '@styles/tokens/color.css';
 
-// components
-import MainFooter from '@components/navigation/MainFooter.astro';
-import MainNav from '@components/navigation/MainNav.astro';
-
 // types
 import type {
 	ColorRoles,
@@ -34,9 +30,7 @@ export type ThemeTokens = Partial<Record<`color-${ColorRoles}`, HexColor | HSLCo
 // props and data
 const {
 	pageTitle,
-	path = 'home',
 	seo = {},
-	overlayNav = false,
 	theme,
 } = Astro.props as Props;
 
@@ -108,18 +102,12 @@ const themeTokens: ThemeTokens = theme
 	</head>
 
 	<body>
-		<MainNav segment={path} overlay={overlayNav} />
-		<main>
-			<slot />
-		</main>
-		<MainFooter class="footer" />
+		<slot />
 	</body>
 </html>
 
 <!-- set the page theme as root custom properties to override the default tokens -->
-<style define:vars={themeTokens} is:global></style>
-
-<style>
+<style define:vars={themeTokens} is:global>
 	html {
 		/* make anchor links scroll smoothly */
 		scroll-behavior: smooth;
@@ -128,9 +116,9 @@ const themeTokens: ThemeTokens = theme
 	body {
 		background-color: var(--color-bg);
 		color: var(--color-primary);
-		display: grid;
-		grid-template-rows: auto 1fr auto;
 		position: relative;
+		display: flex;
+		flex-direction: column;
 
 		/*
 		 * several versions of 'full height of window' depending on context/support
