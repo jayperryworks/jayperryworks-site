@@ -10,14 +10,16 @@ import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
 // components
+import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
 import Callout from '@components/elements/Callout.astro';
 import Heading from '@components/blocks/Heading.astro';
-import Layout from '@layouts/BaseLayout.astro';
+import MainFooter from '@components/navigation/MainFooter.astro';
+import MainNav from '@components/navigation/MainNav.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import SequenceNav from '@components/navigation/SequenceNav.astro';
 import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
 import type {
@@ -216,98 +218,94 @@ const nextChapter = project.chapterList[currentPage] ? {
 ---
 
 <Layout
-	path={uid}
 	pageTitle={prismicHelpers.asText(project.title)}
 	theme={generatePageTheme()}
 	{seo}
 >
-	<article>
-
-		<!-- titling -->
-		<header>
-			<RevealOnScroll class="wrapper wide">
-
-				<!-- project title -->
-				<Heading level={1} text={project.title} />
-				{project.subtitle && <Heading level={1} subheading text={project.subtitle} />}
-
-				<!-- sequence nav -->
-				<div class="header-nav | wrapper">
-					<SequenceNav>
-						{sequenceNavItems.map((item) => (
-							<SequenceNavItem {...item}>{prismicHelpers.asText(item.title)}</SequenceNavItem>
-						))}
-					</SequenceNav>
+	<MainNav segment={uid} />
+	<main>
+		<article>
+			<!-- titling -->
+			<header class="headline">
+				<RevealOnScroll class="wrapper wide">
+					<!-- project title -->
+					<Heading level={1} text={project.title} />
+					{project.subtitle && <Heading level={1} subheading text={project.subtitle} />}
+					<!-- sequence nav -->
+					<div class="header-nav | wrapper">
+						<SequenceNav>
+							{sequenceNavItems.map((item) => (
+								<SequenceNavItem {...item}>{prismicHelpers.asText(item.title)}</SequenceNavItem>
+							))}
+						</SequenceNav>
+					</div>
+					<!-- chapter title -->
+					<Heading level={3} subheading>{`${project.chapterLabel} ${currentPage}`}</Heading>
+					<Heading level={2} class="header-chapter" text={title} />
+					{subtitle && <Heading level={3} class="header-chapter" subheading text={subtitle} />}
+				</RevealOnScroll>
+			</header>
+			<!-- body -->
+			<BlockList {body} showLedeStyle />
+		</article>
+		<!-- sequence nav -->
+		<nav class="footer-nav">
+			<RevealOnScroll class="wrapper">
+				<SequenceNav>
+					{sequenceNavItems.map((item) => (
+						<SequenceNavItem {...item} next={item.href === url.next}>
+							{prismicHelpers.asText(item.title)}
+						</SequenceNavItem>
+					))}
+				</SequenceNav>
+				<div class="next">
+					{nextChapter
+						? <ReadNextLink
+								align="end"
+								class="next"
+								eyebrowSize="gamma"
+								link={nextChapter.href}
+								titleSize="beta"
+							>
+								<Fragment slot="eyebrow">{`${project.chapterLabel} ${currentPage + 1}`}</Fragment>
+								<Fragment slot="title">{prismicHelpers.asText(nextChapter.title)}</Fragment>
+							</ReadNextLink>
+						: <aside class="end | type-role-display type-scale-gamma">
+								The end
+							</aside>
+					}
 				</div>
-
-				<!-- chapter title -->
-				<Heading level={3} subheading>{`${project.chapterLabel} ${currentPage}`}</Heading>
-				<Heading level={2} class="header-chapter" text={title} />
-				{subtitle && <Heading level={3} class="header-chapter" subheading text={subtitle} />}
 			</RevealOnScroll>
-		</header>
+		</nav>
+	</main>
 
-		<!-- body -->
-		<BlockList {body} showLedeStyle />
-	</article>
-
-	<!-- sequence nav -->
-	<nav class="footer-nav">
-		<RevealOnScroll class="wrapper">
-			<SequenceNav>
-				{sequenceNavItems.map((item) => (
-					<SequenceNavItem {...item} next={item.href === url.next}>
-						{prismicHelpers.asText(item.title)}
-					</SequenceNavItem>
+	<!-- Callouts -->
+		{callouts?.length > 0 && (
+			<div class="support">
+				{callouts.map((callout: Callout) => (
+					<Callout
+						{...callout}
+						class="support-box"
+					/>
 				))}
-			</SequenceNav>
-
-			<div class="next">
-				{nextChapter
-					? <ReadNextLink
-							align="end"
-							class="next"
-							eyebrowSize="gamma"
-							link={nextChapter.href}
-							titleSize="beta"
-						>
-							<Fragment slot="eyebrow">{`${project.chapterLabel} ${currentPage + 1}`}</Fragment>
-							<Fragment slot="title">{prismicHelpers.asText(nextChapter.title)}</Fragment>
-						</ReadNextLink>
-					: <aside class="end | type-role-display type-scale-gamma">
-							The end
-						</aside>
-				}
 			</div>
-		</RevealOnScroll>
-	</nav>
-
-	{callouts?.length > 0 && (
-		<div class="support">
-			{callouts.map((callout: Callout) => (
-				<Callout
-					{...callout}
-					class="support-box"
-				/>
-			))}
-		</div>
-	)}
+		)}
+		<MainFooter />
 </Layout>
 
 <style>
 	article {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xwide);
 		padding-block: var(--space-xwide);
 	}
 
-	article > * + * {
-		padding-block-start: var(--space-xwide);
-	}
-
-	header {
+	.headline {
 		text-align: center;
 	}
 
-	header,
+	.headline,
 	.footer-nav {
 		padding-inline: var(--space-outside);
 	}

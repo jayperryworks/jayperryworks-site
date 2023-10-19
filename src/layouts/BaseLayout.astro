@@ -117,10 +117,8 @@ const themeTokens: ThemeTokens = theme
 		background-color: var(--color-bg);
 		color: var(--color-primary);
 		position: relative;
-		display: grid;
-		grid-template-rows: auto 1fr auto;
-		/* if pages using this layout have a different root structure, use the grid area names to put things in the right pace */
-		grid-template-areas: 'header' 'body' 'footer';
+		display: flex;
+		flex-direction: column;
 
 		/*
 		 * several versions of 'full height of window' depending on context/support

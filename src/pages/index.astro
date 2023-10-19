@@ -49,7 +49,7 @@ const seo = {
 
 	<main>
 		<!-- intro -->
-		<header class="cover">
+		<section class="cover">
 			<RevealOnScroll class="intro">
 				<div class="blurb">
 					<Heading
@@ -71,12 +71,12 @@ const seo = {
 					</div>
 				</div>
 			</RevealOnScroll>
-		</header>
+		</section>
 
 		<!-- TOC panels -->
-		<div id="toc">
+		<section id="toc">
 			<BlockList {body} numbered />
-		</div>
+		</section>
 	</main>
 	<MainFooter />
 </Layout>
@@ -110,14 +110,14 @@ const seo = {
 		padding-inline-start: 0;
 	}
 
-	.toc > li {
+	/* .toc > li {
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
 		min-height: 100svh;
 		padding-block: var(--space-wide);
 		padding-inline: var(--space-outside);
-	}
+	} */
 
 	.wrapper {
 		display: flex;
