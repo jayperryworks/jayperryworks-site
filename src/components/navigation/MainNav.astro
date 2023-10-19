@@ -81,23 +81,29 @@ const {
 		}
 
 		connectedCallback() {
-			// render JS-dependent buttons
-			this.renderButton(this.querySelector('#nav-wrapper'));
+			// only run this script if the screen is small enough to need a hamburger menu
+			const breakpoint = window.matchMedia('(max-width: 43em)');
+			breakpoint.addEventListener('change', () => {
+				if (breakpoint.matches) {
+					// render JS-dependent buttons
+					this.renderButton(this.querySelector('#nav-wrapper'));
 
-			// select elements we need to work with
-			this.button = this.querySelector('#nav-button');
-			this.list = this.querySelector('#nav-list');
+					// select elements we need to work with
+					this.button = this.querySelector('#nav-button');
+					this.list = this.querySelector('#nav-list');
 
-			// hide the nav initially
-			this.hideNav();
+					// hide the nav initially
+					this.hideNav();
 
-			// event listeners
-			this.button.addEventListener('click', () => {
-				this.open = !this.open;
-			});
+					// event listeners
+					this.button.addEventListener('click', () => {
+						this.open = !this.open;
+					});
 
-			this.list.addEventListener('transitionend', () => {
-				if (!this.open) this.hideNav();
+					this.list.addEventListener('transitionend', () => {
+						if (!this.open) this.hideNav();
+					});
+				}
 			});
 		}
 
