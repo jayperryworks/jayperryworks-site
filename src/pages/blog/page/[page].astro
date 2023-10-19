@@ -16,13 +16,15 @@ import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
 // components
-import BlockList from '@components/BlockList.astro';
-import Button from '@components/elements/Button.astro';
-import Heading from '@components/blocks/Heading.astro';
-import Icon from '@components/elements/Icon.astro';
 import Layout from '@layouts/BaseLayout.astro';
+import Button from '@components/elements/Button.astro';
+import Icon from '@components/elements/Icon.astro';
 import PostMetadata from '@components/elements/PostMetadata.astro';
+import Heading from '@components/blocks/Heading.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+import MainNav from '@components/navigation/MainNav.astro';
+import MainFooter from '@components/navigation/MainFooter.astro';
+import BlockList from '@components/BlockList.astro';
 
 export async function getStaticPaths({ paginate }): Promise<Function> {
 	const posts = await prismic.getAllByType('blog_post', {
@@ -74,94 +76,94 @@ const postList = page.data.map(({
 });
 ---
 
-<Layout
-	path="blog"
-	pageTitle="Blog"
->
-	<ul class="post-list" aria-role="feed">
-		{postList.map((post, index) => (
-			<li class={index > 0 ? 'border-seam-top' : ''}>
-				<article
-					class="post"
-					id={post.uid}
-				>
-					<RevealOnScroll
-						tag="header"
-						class="post-header"
+<Layout pageTitle="Blog">
+	<MainNav segment="blog" />
+	<main>
+		<ul class="post-list" aria-role="feed">
+			{postList.map((post, index) => (
+				<li class={index > 0 ? 'border-seam-top' : ''}>
+					<article
+						class="post"
+						id={post.uid}
 					>
-						{prismicHelpers.isFilled.title(post.title) && (
-							<Heading level={2} class="post-title">
-								<a
-									href={post.path}
-									class="type-link-undecorated"
-									>
-									{prismicHelpers.asText(post.title)}
-								</a>
-							</Heading>
-						)}
-						{prismicHelpers.isFilled.title(post.subtitle) && (
-							<Heading subheading level={3}>{prismicHelpers.asText(post.subtitle)}</Heading>
-						)}
-						<PostMetadata {...post} class="post-date | content-width" />
-					</RevealOnScroll>
-					<BlockList body={post.summary} showLedeStyle />
-					{(post.readMore || post.link) && (
-						<footer class="post-footer">
-							<div class="post-buttons | wrapper">
-								{post.readMore && (
-									<Button
+						<RevealOnScroll
+							tag="header"
+							class="post-header"
+						>
+							{prismicHelpers.isFilled.title(post.title) && (
+								<Heading level={2} class="post-title">
+									<a
 										href={post.path}
-										iconRight={arrowRight}
-									>
-										Read more
-									</Button>
-								)}
-								{post.link && (
-									<Button
-										href={post.link}
-										iconRight={externalLink}
-										target="_blank"
-									>
-										Direct link
-									</Button>
-								)}
-							</div>
-						</footer>
-					)}
-				</article>
-			</li>
-		))}
-	</ul>
-
-	<nav class="border-seam-top">
-		<RevealOnScroll
-			tag="ul"
-			class="nav-list"
-		>
-			{prev && (
-				<li class="nav-item">
-					<a
-						class="nav-link | type-scale-delta"
-						href={prev}
-					>
-						<Icon svg={arrowLeft} class="nav-icon before" />
-						<span class="nav-label | type-role-accent">Newer posts</span>
-					</a>
+										class="type-link-undecorated"
+										>
+										{prismicHelpers.asText(post.title)}
+									</a>
+								</Heading>
+							)}
+							{prismicHelpers.isFilled.title(post.subtitle) && (
+								<Heading subheading level={3}>{prismicHelpers.asText(post.subtitle)}</Heading>
+							)}
+							<PostMetadata {...post} class="post-date | content-width" />
+						</RevealOnScroll>
+						<BlockList body={post.summary} showLedeStyle />
+						{(post.readMore || post.link) && (
+							<footer class="post-footer">
+								<div class="post-buttons | wrapper">
+									{post.readMore && (
+										<Button
+											href={post.path}
+											iconRight={arrowRight}
+										>
+											Read more
+										</Button>
+									)}
+									{post.link && (
+										<Button
+											href={post.link}
+											iconRight={externalLink}
+											target="_blank"
+										>
+											Direct link
+										</Button>
+									)}
+								</div>
+							</footer>
+						)}
+					</article>
 				</li>
-			)}
-			{next && (
-				<li class="nav-item">
-					<a
-						class="nav-link | type-scale-delta"
-						href={next}
-					>
-						<span class="nav-label | type-role-accent">Older posts</span>
-						<Icon svg={arrowRight} class="nav-icon after" />
-					</a>
-				</li>
-			)}
-		</RevealOnScroll>
-	</nav>
+			))}
+		</ul>
+		<nav class="border-seam-top">
+			<RevealOnScroll
+				tag="ul"
+				class="nav-list"
+			>
+				{prev && (
+					<li class="nav-item">
+						<a
+							class="nav-link | type-scale-delta"
+							href={prev}
+						>
+							<Icon svg={arrowLeft} class="nav-icon before" />
+							<span class="nav-label | type-role-accent">Newer posts</span>
+						</a>
+					</li>
+				)}
+				{next && (
+					<li class="nav-item">
+						<a
+							class="nav-link | type-scale-delta"
+							href={next}
+						>
+							<span class="nav-label | type-role-accent">Older posts</span>
+							<Icon svg={arrowRight} class="nav-icon after" />
+						</a>
+					</li>
+				)}
+			</RevealOnScroll>
+		</nav>
+	</main>
+	<MainFooter />
 </Layout>
 
 

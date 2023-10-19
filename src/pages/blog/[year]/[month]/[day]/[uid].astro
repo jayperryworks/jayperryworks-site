@@ -22,6 +22,8 @@ import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
 import Heading from '@components/blocks/Heading.astro';
+import MainFooter from '@components/navigation/MainFooter.astro';
+import MainNav from '@components/navigation/MainNav.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
 import ThreadNav from '@components/navigation/ThreadNav.astro';
 import ThreadNavItem from '@components/navigation/ThreadNavItem.astro';
@@ -157,102 +159,102 @@ const {
 } = Astro.props as Props;
 ---
 
-<Layout
-	pageTitle={prismicHelpers.asText(title)}
-	path="blog"
-	{seo}
->
-	<article>
-		<RevealOnScroll tag="header">
-			{prismicHelpers.isFilled.title(title) && (
-				<Heading level={1} class="title">{prismicHelpers.asText(title)}</Heading>
-			)}
-			{prismicHelpers.isFilled.title(subtitle) && (
-				<Heading subheading>{prismicHelpers.asText(subtitle)} </Heading>
-			)}
+<Layout pageTitle={prismicHelpers.asText(title)} {seo}>
+	<MainNav segment="blog" />
+	<main>
+		<article>
+			<RevealOnScroll tag="header" class="headline">
+				{prismicHelpers.isFilled.title(title) && (
+					<Heading level={1} class="title">{prismicHelpers.asText(title)}</Heading>
+				)}
+				{prismicHelpers.isFilled.title(subtitle) && (
+					<Heading subheading>{prismicHelpers.asText(subtitle)} </Heading>
+				)}
 
-			<!-- date and stage info -->
-			<PostMetadata
-				class="metadata | content-width"
-				showUpdatedDate
-				{date}
-				{stage}
-			/>
+				<!-- date and stage info -->
+				<PostMetadata
+					class="metadata | content-width"
+					showUpdatedDate
+					{date}
+					{stage}
+				/>
 
-			<!-- list of posts in a thread, if applicable -->
-			{thread && (
-				<ThreadNav
-					title={thread.title && prismicHelpers.asText(thread.title)}
-					description={thread.description &&prismicHelpers.asText(thread.description)}
-					class="thread-nav | content-width"
-				>
-					{thread.posts.map((post) => (
-						<ThreadNavItem
-							current={post.uid === uid}
-							date={post.data.date}
-							href={permalink(post)}
-							label={prismicHelpers.asText(post.data.title)}
-						/>
-					))}
-				</ThreadNav>
-			)}
-		</RevealOnScroll>
-
-		<!-- page body -->
-		<BlockList {body} showLedeStyle />
-
-		{link && (
-			<RevealOnScroll
-				tag="footer"
-				class="link"
-			>
-				<Button
-					href={link}
-					iconRight={externalLink}
-					target="_blank"
-				>
-					Direct link
-				</Button>
-			</RevealOnScroll>
-		)}
-	</article>
-
-	<!-- pagination nav -->
-	{(next || tags.length > 0) && (
-		<nav>
-			{tags.length > 0 && (
-				<RevealOnScroll
-					tag="section"
-					class="nav-wrapper tags"
-				>
-					<h2 class="tag-label type-role-accent type-scale-epsilon">Filed&nbsp;under:</h2>
-					<ul class="tag-list type-role-accent">
-						{tags.map((tag) => (
-							<li>
-								<a href={`/blog/tags/${tag}/`}>{sentenceCase(tag)}</a>
-							</li>
+				<!-- list of posts in a thread, if applicable -->
+				{thread && (
+					<ThreadNav
+						title={thread.title && prismicHelpers.asText(thread.title)}
+						description={thread.description &&prismicHelpers.asText(thread.description)}
+						class="thread-nav | content-width"
+					>
+						{thread.posts.map((post) => (
+							<ThreadNavItem
+								current={post.uid === uid}
+								date={post.data.date}
+								href={permalink(post)}
+								label={prismicHelpers.asText(post.data.title)}
+							/>
 						))}
-					</ul>
-				</RevealOnScroll>
-			)}
-			{next && (
+					</ThreadNav>
+				)}
+			</RevealOnScroll>
+
+			<!-- page body -->
+			<BlockList {body} showLedeStyle />
+
+			{link && (
 				<RevealOnScroll
-					tag="section"
-					class="nav-wrapper"
+					tag="footer"
+					class="link"
 				>
-					{next.title
-						? <ReadNextLink link={next.path}>
-								<Fragment slot="eyebrow">Next post:</Fragment>
-								<Fragment slot="title">{next.title}</Fragment>
-							</ReadNextLink>
-						: <ReadNextLink link={next.path}>
-								<Fragment slot="title">Next post</Fragment>
-							</ReadNextLink>
-					}
+					<Button
+						href={link}
+						iconRight={externalLink}
+						target="_blank"
+					>
+						Direct link
+					</Button>
 				</RevealOnScroll>
 			)}
-		</nav>
-	)}
+		</article>
+
+		<!-- pagination nav -->
+		{(next || tags.length > 0) && (
+			<nav>
+				{tags.length > 0 && (
+					<RevealOnScroll
+						tag="section"
+						class="nav-wrapper tags"
+					>
+						<h2 class="tag-label type-role-accent type-scale-epsilon">Filed&nbsp;under:</h2>
+						<ul class="tag-list type-role-accent">
+							{tags.map((tag) => (
+								<li>
+									<a href={`/blog/tags/${tag}/`}>{sentenceCase(tag)}</a>
+								</li>
+							))}
+						</ul>
+					</RevealOnScroll>
+				)}
+				{next && (
+					<RevealOnScroll
+						tag="section"
+						class="nav-wrapper"
+					>
+						{next.title
+							? <ReadNextLink link={next.path}>
+									<Fragment slot="eyebrow">Next post:</Fragment>
+									<Fragment slot="title">{next.title}</Fragment>
+								</ReadNextLink>
+							: <ReadNextLink link={next.path}>
+									<Fragment slot="title">Next post</Fragment>
+								</ReadNextLink>
+						}
+					</RevealOnScroll>
+				)}
+			</nav>
+		)}
+	</main>
+	<MainFooter />
 </Layout>
 
 <style>
@@ -260,7 +262,7 @@ const {
 		padding-block: var(--space-xwide);
 	}
 
-	header {
+	.headline {
 		margin-inline: auto;
 		max-width: var(--content-width-xwide);
 		padding-block-end: var(--space-wide);

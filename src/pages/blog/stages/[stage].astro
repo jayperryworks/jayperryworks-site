@@ -16,13 +16,15 @@ import {
 
 // components
 import Layout from '@layouts/BaseLayout.astro';
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
-import BlogListings from '@components/navigation/BlogListings.astro';
-import BlogListingsPost from '@components/navigation/BlogListingsPost.astro';
-import SequenceNav from '@components/navigation/SequenceNav.astro';
-import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
+import BlogListings from '@components/navigation/BlogListings.astro';
+import BlogListingsPost from '@components/navigation/BlogListingsPost.astro';
+import MainFooter from '@components/navigation/MainFooter.astro';
+import MainNav from '@components/navigation/MainNav.astro';
+import SequenceNav from '@components/navigation/SequenceNav.astro';
+import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
 import {
@@ -142,7 +144,8 @@ const {
 	pageTitle={sentenceCase(stage)}
 	path="blog"
 >
-	<div class="wrapper">
+	<MainNav segment="blog" />
+	<main class="wrapper">
 		<RevealOnScroll tag="nav">
 			<SequenceNav>
 				{stages.map((item, index) => (
@@ -164,7 +167,6 @@ const {
 			<Passage
 				class="intro"
 				text={description}
-				typeFace="accent"
 				typeSize="delta"
 			/>
 		</RevealOnScroll>
@@ -175,7 +177,8 @@ const {
 				</li>
 			))}
 		</BlogListings>
-	</div>
+	</main>
+	<MainFooter />
 </Layout>
 
 <style>
@@ -190,10 +193,6 @@ const {
 
 	.wrapper > :global(* + *) {
 		margin-block-start: var(--space-wide);
-	}
-
-	.intro {
-		color: var(--color-secondary);
 	}
 
 	.post-list {
