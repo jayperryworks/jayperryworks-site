@@ -7,7 +7,6 @@ import '@styles/utilities/type.css';
 import { format } from 'date-fns';
 
 // components
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import Heading from '@components/blocks/Heading.astro';
 import DevelopmentStageLabel from '@components/elements/DevelopmentStageLabel.astro';
 
@@ -33,10 +32,14 @@ const {
 } = Astro.props as Props;
 ---
 
-<article>
-	<Heading level={6} subheading class="eyebrow">
+<article class="wrapper">
+	<Heading
+		class="eyebrow"
+		level={6}
+		subheading
+	>
 		{showStage && <DevelopmentStageLabel name={stage} />}
-		<time datetime={date}>{format(date, 'yyyy.MM.dd')}</time>
+		<time datetime={date.toString()}>{format(date, 'yyyy.MM.dd')}</time>
 	</Heading>
 
 	<Heading level={3}>
@@ -45,9 +48,9 @@ const {
 
 	{subtitle && (
 		<Heading
-			subheading
-			level={4}
 			class="subtitle"
+			level={4}
+			subheading
 		>
 			<a class="type-link-undecorated" href={path}>{subtitle}</a>
 		</Heading>
@@ -55,6 +58,11 @@ const {
 </article>
 
 <style>
+	/* reset the flow styling from the .block-list parent container */
+	.wrapper > .heading + .heading {
+		padding-block-start: 0;
+	}
+
 	.eyebrow {
 		--gap: 0.5em;
 		display: inline-flex;

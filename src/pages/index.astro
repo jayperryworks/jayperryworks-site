@@ -49,17 +49,17 @@ const seo = {
 	<main>
 		<!-- intro -->
 		<section class="cover">
-			<div class="blurb">
+			<div class="intro">
 				<Heading
 					level={1}
 					text={headline}
 				/>
 				<Passage
 					text={{ prismicText: intro }}
-					class="blurb"
 					typeSize="delta"
+					class="blurb"
 				/>
-				<div class="blurb-cta">
+				<div class="intro-cta">
 					<Button
 						href={introLink}
 						iconRight={arrowRight}
@@ -94,11 +94,15 @@ const seo = {
 		max-width: var(--content-width-xxwide);
 	}
 
-	.blurb > :global(* + *) {
+	.intro > :global(* + *) {
 		padding-block-start: var(--space-medium);
 	}
 
-	.blurb-cta {
+	.intro :global(p + p) {
+		margin-block-start: var(--space-xnarrow);
+	}
+
+	.intro-cta {
 		padding-block-start: var(--space-wide);
 	}
 
@@ -106,15 +110,6 @@ const seo = {
 		list-style: none;
 		padding-inline-start: 0;
 	}
-
-	/* .toc > li {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-		min-height: 100svh;
-		padding-block: var(--space-wide);
-		padding-inline: var(--space-outside);
-	} */
 
 	.wrapper {
 		display: flex;
