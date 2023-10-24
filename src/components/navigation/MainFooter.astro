@@ -46,16 +46,10 @@ const socialChannelList = channel.map((item: Item, index: number): string => {
 ---
 
 <footer class="border-seam-top">
-	<RevealOnScroll
-		tag="p"
-		class="social | type-role-accent"
-	>
+	<p class="social | type-role-accent">
 		Keep in touch. You can also find me on <Fragment set:html={socialChannelList} />.
-	</RevealOnScroll>
-	<RevealOnScroll
-		tag="div"
-		class="signoff"
-	>
+	</p>
+	<div class="signoff">
 		<div class="bookend">
 			<div class="lockup">
 				<a
@@ -77,14 +71,15 @@ const socialChannelList = channel.map((item: Item, index: number): string => {
 				<Icon svg={feed} />
 			</a>
 		</div>
-	</RevealOnScroll>
+	</div>
 </footer>
 
 <style>
 	footer {
-		position: relative;
-		padding-inline: var(--space-outside);
 		flex-shrink: 0;
+		margin-block-start: auto;
+		padding-inline: var(--space-outside);
+		position: relative;
 	}
 
 	.social {
@@ -99,7 +94,6 @@ const socialChannelList = channel.map((item: Item, index: number): string => {
 	.social > :global(a) {
 		color: var(--color-primary);
 		font-family: var(--type-font-accent);
-		/* font-weight: 600; */
 	}
 
 	.signoff {

@@ -7,6 +7,7 @@ import '@styles/tokens/contentWidth.css';
 import Image from '@components/elements/Image.astro';
 import DeviceFrame from '@components/elements/DeviceFrame.astro';
 import Caption from '@components/blocks/FigureCaption.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // typescript
 import type { ImageField } from '@prismicio/types';
@@ -38,7 +39,10 @@ const {
 } = Astro.props as Props;
 ---
 
-<figure class={className}>
+<RevealOnScroll
+	class={className}
+	tag="figure"
+>
 	<slot>
 		{source && (
 			device !== 'None'
@@ -61,7 +65,7 @@ const {
 			{attribution}
 		/>
 	)}
-</figure>
+</RevealOnScroll>
 
 <style>
 	figure {

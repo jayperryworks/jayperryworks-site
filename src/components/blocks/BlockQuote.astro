@@ -24,7 +24,7 @@ const {
 ---
 
 <blockquote class={className}>
-	<Passage {text} typeSize="zeta" />
+	<Passage {text} />
 
 	{attribution && (
 		<cite class="type-role-accent type-scale-zeta">
@@ -37,6 +37,11 @@ const {
 	blockquote {
 		font-style: italic;
 		padding-inline-start: var(--space-medium);
+	}
+
+	blockquote :global(p) {
+		font-size: 0.89em;
+		font-style: italic;
 	}
 
 	cite {

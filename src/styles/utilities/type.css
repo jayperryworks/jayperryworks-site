@@ -20,13 +20,14 @@
 .type-role-accent {
 	/* color: var(--color-secondary); */
 	font-family: var(--type-font-accent);
-	font-weight: 200;
+	font-weight: 300;
 	line-height: var(--type-leading-tight);
 }
 
 .type-role-accent strong {
 	font-weight: 700;
 	letter-spacing: -0.02em;
+	font-variation-settings: "wght" 700;
 }
 
 :is(.type-scale-zeta) .type-role-accent,

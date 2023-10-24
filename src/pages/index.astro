@@ -5,7 +5,6 @@ import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
 import '@styles/utilities/borders.css';
 import '@styles/utilities/type.css';
-import arrowDown from '@icons/arrow-down.svg?raw';
 import arrowRight from '@icons/arrow-right.svg?raw';
 
 // utils
@@ -17,10 +16,10 @@ import { linkResolver, fetchLinks } from '@lib/routes';
 import Layout from '@layouts/BaseLayout.astro';
 import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
-import Icon from '@components/elements/Icon.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+import MainNav from '@components/navigation/MainNav.astro';
+import MainFooter from '@components/navigation/MainFooter.astro';
 
 // fetch content
 const response = await prismic.getSingle('homepage', { fetchLinks });
@@ -44,25 +43,22 @@ const seo = {
 };
 ---
 
-<Layout
-	path="home"
-	overlayNav
-	{seo}
->
-	<!-- intro -->
-	<header>
-		<RevealOnScroll class="intro">
-			<div class="blurb">
+<Layout {seo}>
+	<MainNav segment='home' />
+
+	<main>
+		<!-- intro -->
+		<section class="cover">
+			<div class="intro">
 				<Heading
 					level={1}
 					text={headline}
 				/>
 				<Passage
 					text={{ prismicText: intro }}
-					class="blurb"
 					typeSize="delta"
 				/>
-				<div class="blurb-cta">
+				<div class="intro-cta">
 					<Button
 						href={introLink}
 						iconRight={arrowRight}
@@ -71,33 +67,19 @@ const seo = {
 					</Button>
 				</div>
 			</div>
-			<a
-				class="toc-link type-role-accent type-scale-epsilon type-link-undecorated"
-				href="#toc"
-			>
-				<Icon
-					align="baseline"
-					margin="right"
-					svg={arrowDown}
-				/>
-				Table of contents
-			</a>
-		</RevealOnScroll>
-	</header>
+		</section>
 
-	<!-- TOC panels -->
-	<div id="toc">
-		<BlockList {body} numbered />
-	</div>
+		<!-- TOC panels -->
+		<section id="toc">
+			<BlockList {body} numbered />
+		</section>
+	</main>
+	<MainFooter />
 </Layout>
 
 <style>
-	header {
-		display: flex;
-		min-height: 100vh;
-		min-height: 100svh;
-		padding-block-end: var(--space-narrow);
-		padding-block-start: var(--space-wide);
+	.cover {
+		padding-block: var(--space-xwide);
 		padding-inline: var(--space-outside);
 	}
 
@@ -111,30 +93,21 @@ const seo = {
 		max-width: var(--content-width-xxwide);
 	}
 
-
-	.blurb > :global(* + *) {
+	.intro > :global(* + *) {
 		padding-block-start: var(--space-medium);
 	}
 
-	.blurb-cta {
-		padding-block-start: var(--space-wide);
+	.intro :global(p + p) {
+		margin-block-start: var(--space-xnarrow);
 	}
 
-	.toc-link {
-		color: var(--color-secondary);
+	.intro-cta {
+		padding-block-start: var(--space-wide);
 	}
 
 	.toc {
 		list-style: none;
 		padding-inline-start: 0;
-	}
-
-	.toc > li {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-		padding-block: var(--space-wide);
-		padding-inline: var(--space-outside);
 	}
 
 	.wrapper {

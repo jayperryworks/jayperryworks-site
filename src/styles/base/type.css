@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,700;1,300;1,700&PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
 @import url("../tokens/borders.css");
 @import url("../tokens/color.css");
 @import url("../tokens/spacing.css");
@@ -34,22 +32,24 @@
 @font-face {
 	font-display: swap;
 	font-family: 'Figtree';
+	font-weight: 300 900;
 	src:
-		local('Figtree'),
-		url('/assets/fonts/Figtree-VariableFont-wght.ttf') format('ttf');
+		url('/assets/fonts/Figtree.ttf') format('truetype') tech('variations'),
+		url('/assets/fonts/Figtree.ttf') format('truetype-variations');
 }
 
 @font-face {
 	font-display: swap;
 	font-family: 'Figtree';
-	font-stretch: normal;
 	font-style: italic;
-	font-weight: normal;
+	font-weight: 300 900;
 	src:
 		local('Figtree'),
-		url('/assets/fonts/Figtree-Italic-VariableFont-wght.ttf') format('ttf');
+		url('/assets/fonts/Figtree-Italic.ttf') format('truetype') tech('variations'),
+		url('/assets/fonts/Figtree-Italic.ttf') format('truetype-variations');
 }
 
+/* Text: Figtree */
 @font-face {
 	font-display: swap;
 	font-family: 'Iowan Old Style';
@@ -160,7 +160,6 @@ a {
 	color: inherit;
 	cursor: pointer;
 	transition: color 0.25s ease;
-	will-change: color;
 }
 
 @supports (text-decoration-thickness: var(--underline-w)) {
