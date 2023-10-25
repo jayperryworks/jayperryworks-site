@@ -14,7 +14,6 @@ import { format } from 'date-fns';
 import Heading from '@components/blocks/Heading.astro';
 import BookCard from '@components/layout/BookCard.astro';
 import Gallery from '@components/layout/Gallery.astro';
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import MainNav from '@components/navigation/MainNav.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
 import BlockList from '@components/BlockList.astro';
@@ -56,6 +55,7 @@ let books = await Promise.all(booksResponse.map(async ({
 	const {
 		author,
 		isbn,
+		olid,
 		purchase_url: purchaseURL,
 		related_content: relatedContent,
 		title,
@@ -65,9 +65,9 @@ let books = await Promise.all(booksResponse.map(async ({
 	let publishDate, publisher, cover, infoURL;
 
 	// query the Open Library API with the book's ISBN number
-	if (isbn) {
+	if (isbn || olid) {
 		const queryParams = {
-			bibkeys: `ISBN:${isbn}`,
+			bibkeys: isbn ? `ISBN:${isbn}` : `OLID:${olid}`,
 			format: 'json',
 			jscmd: 'data',
 		}
