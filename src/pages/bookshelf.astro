@@ -75,6 +75,7 @@ let books = await Promise.all(booksResponse.map(async ({
 			.map((key) => `${key}=${queryParams[key]}`)
 			.join('&');
 
+		// Open Library API docs: https://openlibrary.org/dev/docs/api/books
 		const openLibraryResponse = await fetch(`http://openlibrary.org/api/books?${queryString}`);
 		const openLibraryData = await openLibraryResponse.json();
 
