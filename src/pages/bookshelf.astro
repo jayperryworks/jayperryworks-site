@@ -96,13 +96,13 @@ let books = await Promise.all(booksResponse.map(async ({
 	return {
 		actions: [
 			{
-				label: 'Purchase',
-				url: prismicHelpers.asLink(purchaseURL),
+				label: 'Open Library',
+				url: infoURL,
 				type: 'external'
 			},
 			{
-				label: 'Open Library',
-				url: infoURL,
+				label: 'Purchase',
+				url: prismicHelpers.asLink(purchaseURL),
 				type: 'external'
 			},
 		],
@@ -152,7 +152,6 @@ let books = await Promise.all(booksResponse.map(async ({
 						id={book.uid}
 					>
 						<BookCard
-							class="book"
 							title={book.title}
 							author={book.author}
 							cover={{ src: book.cover }}
@@ -196,48 +195,6 @@ let books = await Promise.all(booksResponse.map(async ({
 	.item {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-narrow);
-	}
-
-	.book {
-		display: flex;
-		flex-direction: column;
-		flex: 1;
-		gap: var(--space-narrow);
-	}
-
-	.cover {
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
-		aspect-ratio: 1 / 1;
-		overflow: hidden;
-		padding-block-end: var(--space-narrow);
-	}
-
-	.cover-image {
-		display: block;
-		height: auto;
-		height: 100%;
-		box-shadow: 0.5em 0.5em 0.3em var(--color-shadow);
-	}
-
-	.cover-image.placeholder {
-		width: 100%;
-		height: 100%;
-		background-color: var(--color-color-well);
-		box-shadow: 0;
-	}
-
-	.metadata {
-		color: var(--color-secondary);
-	}
-
-	.actions {
-		align-items: flex-end;
-		display: flex;
-		flex-direction: row;
-		flex: 1;
 		gap: var(--space-narrow);
 	}
 </style>
