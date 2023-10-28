@@ -42,6 +42,7 @@ const {
 
 const classList = [
 	overlay ? 'overlay' : '',
+	'h-card',
 	className,
 ].join(' ');
 ---
@@ -84,8 +85,9 @@ const classList = [
 
 <nav class={classList}>
 	<a
-		class="logo"
-		href="/"
+		class="logo p-url"
+		href={Astro.site}
+		rel="me"
 	>
 		<LogoJP />
 	</a>
