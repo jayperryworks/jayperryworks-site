@@ -6,6 +6,7 @@ import '@styles/tokens/type.css';
 import '@styles/tokens/borders.css';
 import '@styles/utilities/type.css';
 import '@styles/utilities/borders.css';
+import arrowRight from '@icons/arrow-right.svg?raw';
 import feed from '@icons/feed.svg?raw';
 
 // helpers
@@ -61,30 +62,16 @@ const socialChannelList = channel.map((item: Item): string => {
 ---
 
 <footer class="border-seam-top">
-	<RevealOnScroll tag="nav">
-		<ul>
-			{routes.map(({ label, link }) => (
-				<li>
-					<a
-						class="type-role-accent"
-						href={link}
-					>
-						{label}
-					</a>
-				</li>
-			))}
-		</ul>
-	</RevealOnScroll>
-	<RevealOnScroll
-		tag="section"
-	>
-		<h2 class="type-scale-gamma">Colophon</h2>
-		<p>This site is typeset with Sanomat, Figtree, and Iowan Old Style. It was built with Astro, uses Prismic for content management, and is hosted by Netlify.</p>
-		<Button href="/colophon" size="small">Read more</Button>
-		<h2 class="type-scale-gamma">Privacy</h2>
-		<p>I don't track you. This site uses no cookies or client-side tracking scripts.</p>
-		<Button href="/privacy" size="small">Read more</Button>
-		<!-- <ul>
+	<RevealOnScroll tag="section" class="about">
+		<img src="https://placehold.it/600x600" />
+		<p>Hi! My name is Jay. I'm a designer, illustrator, and writer living in Baltimore.</p>
+		<Button
+			href="/about/"
+			iconRight={arrowRight}
+		>
+			A bit more about me
+		</Button>
+		<ul class="about-links">
 			<li>
 				<a
 					class="type-role-accent"
@@ -101,7 +88,21 @@ const socialChannelList = channel.map((item: Item): string => {
 					Privacy
 				</a>
 			</li>
-		</ul> -->
+		</ul>
+	</RevealOnScroll>
+	<RevealOnScroll tag="nav">
+		<ul>
+			{routes.map(({ label, link }) => (
+				<li>
+					<a
+						class="type-role-accent"
+						href={link}
+					>
+						{label}
+					</a>
+				</li>
+			))}
+		</ul>
 	</RevealOnScroll>
 	<RevealOnScroll tag="section">
 		<h2 class="type-scale-gamma">Keep in touch</h2>
