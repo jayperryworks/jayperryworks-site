@@ -20,4 +20,16 @@
 	--type-leading-xtight: 1.2;
 	--type-leading-tight: 1.3;
 	--type-leading-default: 1.7;
+
+	@media screen and (min-width: 40em) {
+		--type-leading-default: 1.8;
+	}
+
+	@media screen and (min-width: 60em) {
+		--type-leading-default: 1.9;
+	}
+
+	@media screen and (min-width: 90em) {
+		--type-leading-default: 2;
+	}
 }

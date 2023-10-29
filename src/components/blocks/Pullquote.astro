@@ -13,6 +13,7 @@ import type { ImageField } from '@prismicio/types';
 
 // components
 import Passage from '@components/blocks/Passage.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 export interface Props {
 	text: FormattedText;
@@ -52,13 +53,15 @@ function variables(): string {
 }
 ---
 
-<aside
-	aria-role="presentation"
-	class={className}
-	style={variables()}
->
-	<Passage {text} typeSize="delta" class={image ? 'hide-visually' : ''} />
-</aside>
+<RevealOnScroll>
+	<aside
+		role="presentation"
+		class={className}
+		style={variables()}
+	>
+		<Passage {text} typeSize="delta" class={image ? 'hide-visually' : ''} />
+	</aside>
+</RevealOnScroll>
 
 <style>
 	aside {

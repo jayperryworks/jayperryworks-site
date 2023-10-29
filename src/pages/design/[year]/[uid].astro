@@ -5,11 +5,13 @@ import '@styles/tokens/contentWidth.css';
 import '@styles/utilities/borders.css';
 
 // components
-import BlockList from '@components/BlockList.astro';
-import DataGrid from '@components/layout/DataGrid.astro';
-import Heading from '@components/blocks/Heading.astro';
 import Layout from '@layouts/BaseLayout.astro';
+import BlockList from '@components/BlockList.astro';
+import Heading from '@components/blocks/Heading.astro';
+import MainFooter from '@components/navigation/MainFooter.astro';
+import MainNav from '@components/navigation/MainNav.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
+import DataGrid from '@components/layout/DataGrid.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // utilities
@@ -154,41 +156,41 @@ const credits = [
 	path="design"
 	{seo}
 >
-	<article>
-		<RevealOnScroll tag="header">
-			<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
-			{client && (
-				<Heading subheading level={3}>{client}</Heading>
-			)}
-		</RevealOnScroll>
+	<MainNav segment="design" />
+	<main>
+		<article>
+			<header class="headline">
+				<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
+				{client && (
+					<Heading subheading level={3}>{client}</Heading>
+				)}
+			</header>
 
-		<BlockList {body} showLedeStyle />
+			<BlockList {body} showLedeStyle />
 
-		<RevealOnScroll
-			tag="aside"
-			class="border-seam-top credits"
-		>
-			<div class="credits-wrapper">
-				<Heading level={2} class="credits-heading">Credits</Heading>
-				<DataGrid data={credits} />
-			</div>
-		</RevealOnScroll>
-	</article>
-
-	{next && (
-		<nav class="border-seam-top">
-			<RevealOnScroll class="nav-wrapper">
-				<ReadNextLink
-					align="end"
-					link={next.path}
-					titleSize="beta"
-				>
-					<Fragment slot="eyebrow">Next case study:</Fragment>
-					<Fragment slot="title">{prismicHelpers.asText(next.title)}</Fragment>
-				</ReadNextLink>
-			</RevealOnScroll>
-		</nav>
-	)}
+			<aside class="border-seam-top credits">
+				<div class="credits-wrapper">
+					<Heading level={2} class="credits-heading">Credits</Heading>
+					<DataGrid data={credits} />
+				</div>
+			</aside>
+		</article>
+		{next && (
+			<nav class="border-seam-top">
+				<div class="nav-wrapper">
+					<ReadNextLink
+						align="end"
+						link={next.path}
+						titleSize="beta"
+					>
+						<Fragment slot="eyebrow">Next case study:</Fragment>
+						<Fragment slot="title">{prismicHelpers.asText(next.title)}</Fragment>
+					</ReadNextLink>
+				</div>
+			</nav>
+		)}
+	</main>
+	<MainFooter />
 </Layout>
 
 <style>
@@ -196,16 +198,15 @@ const credits = [
 		padding-block-end: var(--space-xwide);
 	}
 
-	header {
+	.headline {
 		max-width: var(--content-width-xwide);
 		margin-inline: auto;
 		padding-block-start: var(--space-wide);
 		padding-block-end: var(--space-xwide);
 		text-align: center;
-	}
-
-	header > * + * {
-		padding-block-start: var(--space-xxnarrow);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xxnarrow);
 	}
 
 	.credits {

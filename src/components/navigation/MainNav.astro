@@ -5,8 +5,6 @@ import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 import '@styles/utilities/type.css';
 import '@styles/utilities/visibility.css';
-import menu from '@icons/menu.svg?raw';
-import close from '@icons/close.svg?raw';
 
 // utils
 import prismic from '@lib/prismic';
@@ -14,7 +12,6 @@ import * as prismicHelpers from '@prismicio/helpers';
 import { linkResolver, fetchLinks } from '@lib/routes';
 
 // components
-import Icon from '@components/elements/Icon.astro';
 import LogoJP from '@components/logos/LogoJP.astro';
 
 // types
@@ -23,7 +20,6 @@ import { mainNavLink } from '@lib/types';
 export interface Props {
 	segment: string;
 	class?: string;
-	overlay?: boolean;
 }
 
 const response = await prismic.getSingle('main_nav', { fetchLinks });
@@ -37,53 +33,10 @@ const routes = response.data.nav_item.map(
 const {
 	segment,
 	class:className = '',
-	overlay = false,
 } = Astro.props as Props;
-
-const classList = [
-	overlay ? 'overlay' : '',
-	'h-card',
-	className,
-].join(' ');
 ---
 
-<script>
-  // namespace for this component's JS
-  let MainNav = {
-		// current state
-		open: false,
-		$navButtonOpen: null,
-		$navButtonClose: null,
-		$navWrapper: null,
-	};
-
-	document.addEventListener('DOMContentLoaded', () => {
-		MainNav.$navButtonOpen = document.getElementById('nav-button-open');
-		MainNav.$navButtonClose = document.getElementById('nav-button-close');
-		MainNav.$navWrapper = document.getElementById('nav-wrapper');
-
-		MainNav.$navButtonOpen.onpointerdown = () => {
-			MainNav.open = true;
-			MainNav.$navWrapper.classList.remove('closed');
-			MainNav.$navWrapper.classList.add('open');
-			MainNav.$navButtonOpen.classList.add('hide');
-		}
-
-		MainNav.$navButtonClose.onpointerdown = () => {
-			MainNav.open = false;
-			MainNav.$navWrapper.classList.remove('open');
-			MainNav.$navButtonOpen.classList.remove('hide');
-		}
-
-		MainNav.$navWrapper.ontransitionend = () => {
-			if (!MainNav.open) {
-				MainNav.$navWrapper.classList.add('closed');
-			}
-		};
-	});
-</script>
-
-<nav class={classList}>
+<header class={className}>
 	<a
 		class="logo p-url"
 		href={Astro.site}
@@ -93,32 +46,9 @@ const classList = [
 	</a>
 
 	<!-- nav -->
-	<div class="type-align-right">
-		<button
-			class="nav-button | type-role-accent type-scale-epsilon"
-			id="nav-button-open"
-		>
-			Menu
-			<Icon
-				svg={menu}
-				margin="left"
-			/>
-		</button>
-		<div
-			class="nav closed"
-			id="nav-wrapper"
-		>
-			<button
-				class="nav-button close type-scale-epsilon type-role-accent"
-				id="nav-button-close"
-			>
-				<Icon
-					svg={close}
-					margin="right"
-				/>
-				<span class="hide-visually">Close</span>
-			</button>
-			<ul class="nav-list">
+	<jp-hamburger-nav>
+		<nav class="type-align-right" id="nav-wrapper">
+			<ul class="is-hidden" id="nav-list">
 				{routes.map(({ label, link }) => (
 					<li>
 						<a
@@ -131,28 +61,113 @@ const classList = [
 					</li>
 				))}
 			</ul>
-		</div>
-	</div>
-</nav>
+		</nav>
+	</jp-hamburger-nav>
+</header>
+
+<script is:inline type="module">
+	class HamburgerNav extends HTMLElement {
+		constructor() {
+			super();
+
+			// DOM element references
+			this.button = null;
+			this.list = null;
+
+			// state
+			this._open = false;
+
+			// config
+			this._breakpoint = '(max-width: 43em)';
+		}
+
+		connectedCallback() {
+			// only run this script if the screen is small enough to need a hamburger menu
+			const breakpoint = window.matchMedia(this._breakpoint);
+
+			if (breakpoint.matches) this.render();
+
+			breakpoint.addEventListener('change', () => {
+				if (breakpoint.matches) this.render();
+			});
+		}
+
+		set open(state) {
+			this._open = state;
+			this.toggleNav();
+		}
+
+		get open() {
+			return this._open || false;
+		}
+
+		toggleNav() {
+			this.button.setAttribute('aria-expanded', this.open.toString());
+			this.list.classList.toggle('is-open');
+			this.list.classList.remove('is-hidden');
+			document.body.classList.toggle('has-overlay');
+		}
+
+		hideNav() {
+			this.list.classList.add('is-hidden');
+		}
+
+		renderButton(container) {
+			const template = `
+				<button
+					aria-expanded="false"
+					class="nav-button | type-role-accent type-scale-epsilon"
+					id="nav-button"
+				>
+					<span>Menu</span>
+					<svg class="icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+						<path class="open" d="M.5 3.5h15M.5 8h8M.5 12.5h12" fill="none" fill-rule="evenodd" stroke-linecap="square" stroke="currentColor"/>
+						<path class="close" d="M15.266.734L.734 15.266M.734.734l14.532 14.532" fill="none" fill-rule="evenodd" stroke="currentColor"/>
+					</svg>
+				</button>
+			`;
+
+			container.insertAdjacentHTML('afterbegin', template);
+		}
+
+		render() {
+			// render JS-dependent buttons
+			if (!this.button) {
+				this.renderButton(this.querySelector('#nav-wrapper'));
+
+				// select elements we need to work with
+				this.button = this.querySelector('#nav-button');
+				this.list = this.querySelector('#nav-list');
+
+				// hide the nav initially
+				this.hideNav();
+
+				// event listeners
+				this.button.addEventListener('click', () => {
+					this.open = !this.open;
+				});
+
+				this.list.addEventListener('transitionend', () => {
+					if (!this.open) this.hideNav();
+				});
+			}
+		}
+	}
+
+	export default customElements.define('jp-hamburger-nav', HamburgerNav);
+</script>
 
 <style>
 	/* --- layout --- */
-	nav {
+	header {
 		--transition: 0.25s;
 
 		padding-inline: var(--space-outside);
 		display: flex;
+		flex-direction: row;
+		align-items: center;
 		justify-content: space-between;
 	}
-
-	.overlay {
-		background-color: transparent;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 4;
-  }
 
   /* --- nav elements --- */
   .logo {
@@ -161,26 +176,29 @@ const classList = [
     max-width: 2.5rem;
   }
 
-  .nav-button {
+  jp-hamburger-nav :global(.nav-button) {
     background-color: transparent;
     border: 0;
     box-shadow: none;
     cursor: pointer;
-    display: inline-block;
-    margin-block-start: 1em;
-    margin-block-start: var(--space-narrow);
+    display: inline-flex;
+		flex-direction: row;
+		gap: 0.5em;
+		align-items: center;
     outline: none;
     padding: 0;
     transition: color 0.25s ease-in-out;
     will-change: color;
+		z-index: 5;
+		position: relative;
   }
 
-  .nav-button:hover,
-  .nav-button:active {
+  jp-hamburger-nav :global(.nav-button:hover),
+  jp-hamburger-nav :global(.nav-button:active) {
     color: var(--color-highlight);
   }
 
-  .nav-button.close {
+  jp-hamburger-nav :global(.nav-button.close) {
     margin-inline-end: 1.5em;
     margin-inline-end: var(--space-medium);
     position: absolute;
@@ -188,32 +206,61 @@ const classList = [
     top: 0;
   }
 
+	jp-hamburger-nav :global(.icon) {
+		color: currentColor;
+    display: inline-block;
+    fill: currentColor;
+    height: 1em;
+    max-height: 100%;
+    max-width: 100%;
+    pointer-events: none;
+    vertical-align: middle;
+    width: 1em;
+	}
+
+	jp-hamburger-nav :global(.icon .open),
+	jp-hamburger-nav :global(.icon .close), {
+		transition: 0.25s opacity ease;
+	}
+
+	jp-hamburger-nav :global([aria-expanded='false'] .close) {
+		opacity: 0;
+	}
+
+	jp-hamburger-nav :global([aria-expanded='true'] .close) {
+		opacity: 1;
+	}
+
+	jp-hamburger-nav :global([aria-expanded='true'] .open) {
+		opacity: 0;
+	}
+
   /* --- small-screen nav --- */
-  :global([data-supports~='js']) .nav {
+  #nav-list {
+		align-items: center;
     background-color: hsl(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95);
     bottom: 0;
-    display: block;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-narrow);
+		justify-content: center;
     left: 0;
+		list-style: none;
+		margin: 0;
     opacity: 0;
+		overflow-y: scroll;
+		padding-block: var(--space-wide);
+		/* padding-inline-start: 25%; */
+		padding-inline: var(--space-outside);
     position: fixed;
     right: 0;
     top: 0;
     transition: opacity 0.25s ease;
-    will-change: opacity;
     z-index: 4;
   }
 
-  @supports (display: flex) {
-    :global([data-supports~='js']) .nav {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-
   /* closed (visually hidden) state */
-  :global([data-supports~='js']) .nav.closed {
+  #nav-list.is-hidden {
     border: 0;
     clip-path: inset(100%);
     clip: rect(1px, 1px, 1px, 1px);
@@ -225,29 +272,23 @@ const classList = [
   }
 
   /* open (transitioned) state */
-  :global([data-supports~='js']) .nav.open {
+  #nav-list.is-open {
     opacity: 1;
   }
 
-  .nav-list {
-    display: inline-block;
-    list-style: none;
-    margin: 0;
-  }
-
-  :global([data-supports~='js']) .nav-list {
-    display: block;
-  }
-
-  .nav-list > li {
+  #nav-list > li {
     display: block;
     margin-block-start: 0;
   }
 
-  .nav-list > li + li {
-    padding-block-start: var(--space-narrow);
-  }
+	/* prevent scrolling on the body when the overlay is displayed */
+	:global(.has-overlay) {
+		height: 100vh;
+		height: 100dvh;
+		overflow: hidden;
+	}
 
+	/* nav link elements */
   .nav-item {
     display: inline-block;
     font-size: var(--type-scale-delta);
@@ -258,35 +299,42 @@ const classList = [
 		font-weight: 300;
   }
 
+  .nav-item[aria-current="page"] {
+		--dot-size: 0.5em;
+		--dot-margin: 0.4em;
+
+		margin-inline-start: calc((var(--dot-margin) + var(--dot-size)) * -1);
+		display: flex;
+		gap: var(--dot-margin);
+		align-items: center;
+	}
+
   .nav-item[aria-current="page"]::before {
-    --size: 0.5em;
     background-color: var(--color-highlight);
     border-radius: 1000px;
     content: '';
     display: block;
-    height: var(--size);
-    left: calc(var(--space-medium) * -1);
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: var(--size);
+    height: var(--dot-size);
+    width: var(--dot-size);
   }
 
   /* --- large-screen nav --- */
   @media screen and (min-width: 43em) {
-    .nav-button {
+    jp-hamburger-nav :global(.nav-button) {
       display: none;
     }
 
-    .nav,
-    :global([data-supports~='js']) .nav {
+    #nav-list {
+			align-items: flex-start;
+			flex-direction: row;
+			gap: var(--space-narrow);
       background-color: transparent;
-      display: inline-block;
+      display: inline-flex;
       opacity: 1;
       position: relative;
     }
 
-    :global([data-supports~='js']) .nav.closed {
+    #nav-list.is-hidden {
       clip-path: none;
       clip: auto;
       height: auto;
@@ -303,35 +351,28 @@ const classList = [
 
     .nav-item:hover,
     .nav-item:active {
-      color: var(--color-highlight);
+			color: var(--color-highlight);
     }
 
+		.nav-item[aria-current="page"] {
+			display: block;
+			margin-inline-start: 0;
+		}
+
     .nav-item[aria-current="page"]::before {
-      background-color: var(--color-highlight);
-      height: 0.18em;
-      left: 0;
-      position: absolute;
-      right: 0;
-      bottom: -0.1em;
-			top: auto;
-      transform: none;
-      width: auto;
+			background-color: var(--color-highlight);
 			border-radius: 0;
+			bottom: -0.1em;
+			height: 0.18em;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: auto;
+			width: auto;
     }
 
     .nav-item.small-only {
       display: none;
-    }
-
-    .nav-list > li {
-      display: inline-block;
-    }
-
-    .nav-list > li + li {
-      margin-inline-start: 1em;
-      margin-inline-start: var(--space-narrow);
-      margin-block-start:  0;
-      padding-block-start: 0;
     }
   }
 </style>
