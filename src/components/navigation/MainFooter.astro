@@ -185,18 +185,21 @@ socialChannelList.join('');
 		row-gap: var(--space-wide);
 		grid-template-columns: auto minmax(min-content, var(--content-width-xxwide)) auto;
 		grid-template-areas:
-		'. about .'
-		'. nav .'
-		'. social .'
-		'. meta .'
-		'. signoff .';
+			'. about .'
+			'. nav .'
+			'. social .'
+			'. meta .'
+			'. signoff .';
 		grid-template-rows: repeat(4, auto);
 		padding-block: var(--space-xwide) var(--space-medium);
 		padding-inline: var(--space-outside);
 		position: relative;
 	}
 
-	footer > :global(* + *) {
+	.nav,
+	.social,
+	.meta,
+	.signoff {
 		border-block-start: var(--border-default);
 		padding-block-start: var(--spacing);
 	}
@@ -304,5 +307,25 @@ socialChannelList.join('');
 		display: flex;
 		color: var(--color-secondary);
 		align-items: center;
+	}
+
+	@media screen and (min-width: 54em) {
+		footer {
+			grid-template-columns: auto repeat(4, 1fr) auto;
+			grid-template-areas:
+				'. about about about nav .'
+				'. social social meta meta .'
+				'. signoff signoff signoff signoff .';
+		}
+
+		.nav {
+			border-block-start: 0;
+			padding-block-start: 0;
+		}
+
+		.meta {
+			justify-self: end;
+			text-align: end;
+		}
 	}
 </style>
