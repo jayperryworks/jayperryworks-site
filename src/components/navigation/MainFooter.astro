@@ -31,16 +31,24 @@ type Item = {
 	attributes?: string,
 };
 
-const response = await prismic.getSingle('main_nav', { fetchLinks });
-const routes = response.data.nav_item.map(
-	({ label, link }): mainNavLink => ({
-		label,
-		link: prismicHelpers.asLink(link, linkResolver),
-	})
+const routesResponse = await prismic.getSingle('main_nav', { fetchLinks });
+const routes = routesResponse.data.nav_item.reduce(
+	(result, item): mainNavLink[] => {
+		const { label, link } = item;
+
+		if (label !== 'About') {
+			result.push({
+				label,
+				link: prismicHelpers.asLink(link, linkResolver),
+			});
+		}
+		return result;
+	},
+	[]
 );
 
-const socialChannels = await prismic.getSingle('social_channels');
-const { channel } = socialChannels.data;
+const socialChannelsResponse = await prismic.getSingle('social_channels');
+const { channel } = socialChannelsResponse.data;
 
 
 const socialChannelList = channel.map((item: Item): string => {
@@ -63,35 +71,51 @@ const socialChannelList = channel.map((item: Item): string => {
 
 <footer class="border-seam-top">
 	<RevealOnScroll tag="section" class="about">
-		<img src="https://placehold.it/600x600" />
-		<p>Hi! My name is Jay. I'm a designer, illustrator, and writer living in Baltimore.</p>
-		<Button
-			href="/about/"
-			iconRight={arrowRight}
-		>
-			A bit more about me
-		</Button>
-		<ul class="about-links">
-			<li>
-				<a
-					class="type-role-accent"
-					href="/colophon"
+		<div class="about-wrapper">
+			<img
+				class="about-portrait"
+				src="https://placehold.it/600x600"
+			>
+			<div class="about-blurb">
+				<p>Hi! My name is Jay. I'm a designer, illustrator, and writer living in Baltimore.</p>
+				<Button
+					href="/about/"
+					iconRight={arrowRight}
 				>
-					Colophon
-				</a>
-			</li>
-			<li>
-				<a
-					class="type-role-accent"
-					href="/privacy"
+					A bit more about me
+				</Button>
+				<ul
+					class="about-links"
+					role="list"
 				>
-					Privacy
-				</a>
-			</li>
-		</ul>
+					<li>
+						<a
+							class="type-role-accent"
+							href="/colophon"
+						>
+							Colophon
+						</a>
+					</li>
+					<li>
+						<a
+							class="type-role-accent"
+							href="/privacy"
+						>
+							Privacy
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
 	</RevealOnScroll>
-	<RevealOnScroll tag="nav">
-		<ul>
+	<RevealOnScroll
+		class="nav"
+		tag="nav"
+	>
+		<ul
+			role="list"
+			class="nav-list"
+		>
 			{routes.map(({ label, link }) => (
 				<li>
 					<a
@@ -104,101 +128,157 @@ const socialChannelList = channel.map((item: Item): string => {
 			))}
 		</ul>
 	</RevealOnScroll>
-	<RevealOnScroll tag="section">
+	<RevealOnScroll
+		tag="section"
+		class="social"
+	>
 		<h2 class="type-scale-gamma">Keep in touch</h2>
-		<ul>
-			<Fragment set:html={socialChannelList}>
+		<ul
+			class="social-links"
+			role="list"
+		>
 			<li>
 				<a
-					class="type-role-accent"
-					href="/rss/feed.xml"
-					target="_blank"
+				class="type-role-accent"
+				href="/rss/feed.xml"
+				target="_blank"
 				>
-					RSS feed
-					<Icon svg={feed} margin="left" />
-				</a>
-			</li>
+				RSS feed
+				<Icon svg={feed} margin="left" />
+			</a>
+		</li>
+		<Fragment set:html={socialChannelList}>
 		</ul>
 	</RevealOnScroll>
 	<RevealOnScroll
 		tag="aside"
 		class="signoff"
 	>
-		<div class="bookend">
-			<div class="lockup">
-				<a
-					class="logo | type-link-undecorated"
-					href="/"
-				>
-					<LogoJPW />
-				</a>
-				<small class="copyright | type-role-accent type-scale-zeta">
-					&copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
-				</small>
-			</div>
-		</div>
+		<a
+			class="logo | type-link-undecorated"
+			href="/"
+		>
+			<LogoJPW />
+		</a>
+		<small class="copyright | type-role-accent type-scale-zeta">
+			&copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
+		</small>
 	</RevealOnScroll>
 </footer>
 
 <style>
 	footer {
-		position: relative;
-		padding-inline: var(--space-outside);
+		--spacing: var(--space-wide);
+
+		background-color: var(--color-well);
+		display: grid;
 		flex-shrink: 0;
+		row-gap: var(--space-wide);
+		grid-template-columns: auto minmax(min-content, var(--content-width-xxwide)) auto;
+		grid-template-areas:
+		'. about .'
+		'. nav .'
+		'. social .'
+		'. signoff .';
+		grid-template-rows: repeat(4, auto);
+		padding-block: var(--space-xwide) var(--space-medium);
+		padding-inline: var(--space-outside);
+		position: relative;
 	}
 
-	.social {
-		border-block-end: var(--border-default);
-		color: var(--color-secondary);
-		display: block;
-		line-height: var(--type-leading-default);
-		max-width: none;
-		padding-block: var(--space-medium);
+	footer > :global(* + *) {
+		border-block-start: var(--border-default);
+		padding-block-start: var(--spacing);
 	}
 
-	.social > :global(a) {
-		color: var(--color-primary);
-		font-family: var(--type-font-accent);
-		/* font-weight: 600; */
+	.about {
+		container-name: about;
+		container-type: inline-size;
+		grid-area: about;
 	}
 
-	.signoff {
-		padding-block: var(--space-medium);
-		overflow: hidden;
-	}
-
-	.bookend {
+	.about-blurb {
+		align-items: flex-start;
 		display: flex;
-		flex-flow: wrap;
-		justify-content: space-between;
-		gap: var(--space-medium);
-	}
-
-	.lockup {
-		display: flex;
-		flex-flow: wrap;
+		flex-direction: column;
 		gap: var(--space-narrow);
 	}
 
-	.logo,
-	.copyright {
-		display: inline-block;
-		vertical-align: top;
+	.about-portrait {
+		aspect-ratio: 1 / 1;
+		object-fit: cover;
+		max-width: 6rem;
 	}
 
-	.copyright {
-		color: var(--color-secondary);
-		align-items: center;
+	.about-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-narrow);
+		padding: 0;
+		margin: 0;
+	}
+
+	@container about (min-width: 24em) {
+		.about-wrapper {
+			display: grid;
+			grid-template-columns: auto 1fr;
+			grid-template-rows: auto;
+			grid-template-areas:
+				'portrait blurb';
+			gap: var(--space-medium);
+		}
+
+		.about-portrait {
+			max-width: 8rem;
+		}
+	}
+
+	@container about (min-width: 34em) {
+		.about-portrait {
+			max-width: 12rem;
+		}
+	}
+
+	.nav {
+		grid-area: nav;
+	}
+
+	.nav-list {
+		padding: 0;
+		margin: 0;
+	}
+
+	.social {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xnarrow);
+		grid-area: social;
+	}
+
+	.social-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-narrow);
+		padding: 0;
+		margin: 0;
+	}
+
+	.signoff {
+		overflow: hidden;
+		display: flex;
+		flex-flow: wrap;
+		gap: var(--space-narrow);
+		align-items: flex-start;
+		grid-area: signoff;
 	}
 
 	.logo {
 		width: 12rem;
 	}
 
-	.secondary {
-		align-items: center;
-		color: var(--color-secondary);
+	.copyright {
 		display: flex;
-		gap: var(--space-xnarrow);
+		color: var(--color-secondary);
+		align-items: center;
 	}
 </style>
