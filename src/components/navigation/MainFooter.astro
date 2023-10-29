@@ -7,7 +7,6 @@ import '@styles/tokens/borders.css';
 import '@styles/utilities/type.css';
 import '@styles/utilities/borders.css';
 import arrowRight from '@icons/arrow-right.svg?raw';
-import feed from '@icons/feed.svg?raw';
 
 // helpers
 import { format } from 'date-fns';
@@ -51,7 +50,7 @@ const socialChannelsResponse = await prismic.getSingle('social_channels');
 const { channel } = socialChannelsResponse.data;
 
 
-const socialChannelList = channel.map((item: Item): string => {
+const socialChannelList = channel.map((item: Item) => {
 	const { name, link, attributes } = item;
 
 	return `
@@ -66,7 +65,21 @@ const socialChannelList = channel.map((item: Item): string => {
 			</a>
 		</li>
 	`.trim();
-}).join('');
+});
+
+socialChannelList.push(`
+	<li>
+		<a
+		class="type-role-accent"
+		href="/rss/feed.xml"
+		target="_blank"
+		>
+			RSS feed
+		</a>
+	</li>
+`);
+
+socialChannelList.join('');
 ---
 
 <footer class="border-seam-top">
@@ -84,27 +97,6 @@ const socialChannelList = channel.map((item: Item): string => {
 				>
 					A bit more about me
 				</Button>
-				<ul
-					class="about-links"
-					role="list"
-				>
-					<li>
-						<a
-							class="type-role-accent"
-							href="/colophon"
-						>
-							Colophon
-						</a>
-					</li>
-					<li>
-						<a
-							class="type-role-accent"
-							href="/privacy"
-						>
-							Privacy
-						</a>
-					</li>
-				</ul>
 			</div>
 		</div>
 	</RevealOnScroll>
@@ -136,19 +128,36 @@ const socialChannelList = channel.map((item: Item): string => {
 		<ul
 			class="social-links"
 			role="list"
+			set:html={socialChannelList}
 		>
-			<li>
-				<a
-				class="type-role-accent"
-				href="/rss/feed.xml"
-				target="_blank"
-				>
-				RSS feed
-				<Icon svg={feed} margin="left" />
-			</a>
-		</li>
-		<Fragment set:html={socialChannelList}>
 		</ul>
+	</RevealOnScroll>
+	<RevealOnScroll
+		tag="section"
+		class="meta"
+	>
+		<h2 class="type-scale-gamma">About this site</h2>
+		<ul
+					class="meta-links"
+					role="list"
+				>
+					<li>
+						<a
+							class="type-role-accent"
+							href="/colophon"
+						>
+							Colophon
+						</a>
+					</li>
+					<li>
+						<a
+							class="type-role-accent"
+							href="/privacy"
+						>
+							Privacy
+						</a>
+					</li>
+				</ul>
 	</RevealOnScroll>
 	<RevealOnScroll
 		tag="aside"
@@ -179,6 +188,7 @@ const socialChannelList = channel.map((item: Item): string => {
 		'. about .'
 		'. nav .'
 		'. social .'
+		'. meta .'
 		'. signoff .';
 		grid-template-rows: repeat(4, auto);
 		padding-block: var(--space-xwide) var(--space-medium);
@@ -210,14 +220,6 @@ const socialChannelList = channel.map((item: Item): string => {
 		max-width: 6rem;
 	}
 
-	.about-links {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-narrow);
-		padding: 0;
-		margin: 0;
-	}
-
 	@container about (min-width: 24em) {
 		.about-wrapper {
 			display: grid;
@@ -240,12 +242,22 @@ const socialChannelList = channel.map((item: Item): string => {
 	}
 
 	.nav {
+		container-type: inline-size;
+		container-name: nav-list;
 		grid-area: nav;
 	}
 
 	.nav-list {
 		padding: 0;
 		margin: 0;
+	}
+
+	@container nav-list (min-width: 20em) {
+		.nav-list {
+			display: flex;
+			flex-wrap: wrap;
+			gap: var(--space-medium);
+		}
 	}
 
 	.social {
@@ -256,6 +268,18 @@ const socialChannelList = channel.map((item: Item): string => {
 	}
 
 	.social-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-narrow);
+		padding: 0;
+		margin: 0;
+	}
+
+	.meta {
+		grid-area: meta;
+	}
+
+	.meta-links {
 		display: flex;
 		flex-wrap: wrap;
 		gap: var(--space-narrow);
