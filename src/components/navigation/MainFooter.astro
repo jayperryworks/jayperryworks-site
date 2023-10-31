@@ -46,6 +46,11 @@ const routes = routesResponse.data.nav_item.reduce(
 	[]
 );
 
+routes.unshift({
+	label: 'Home',
+	link: Astro.site,
+});
+
 const socialChannelsResponse = await prismic.getSingle('social_channels');
 const { channel } = socialChannelsResponse.data;
 
@@ -83,85 +88,89 @@ socialChannelList.join('');
 ---
 
 <footer class="border-seam-top">
-	<RevealOnScroll tag="section" class="about">
-		<div class="about-wrapper">
-			<img
-				class="about-portrait"
-				src="https://placehold.it/600x600"
-			>
-			<div class="about-blurb">
-				<p>Hi! My name is Jay. I'm a designer, illustrator, and writer living in Baltimore.</p>
-				<Button
-					href="/about/"
-					iconRight={arrowRight}
+	<div class="tier first">
+		<RevealOnScroll tag="section" class="about">
+			<div class="about-wrapper">
+				<img
+					class="about-portrait"
+					src="https://placehold.it/600x600"
 				>
-					A bit more about me
-				</Button>
+				<div class="about-blurb">
+					<p>Hi! My name is Jay. I'm a designer, illustrator, and writer living in Baltimore.</p>
+					<Button
+						href="/about/"
+						iconRight={arrowRight}
+					>
+						A bit more about me
+					</Button>
+				</div>
 			</div>
-		</div>
-	</RevealOnScroll>
-	<RevealOnScroll
-		class="nav"
-		tag="nav"
-	>
-		<ul
-			role="list"
-			class="nav-list"
+		</RevealOnScroll>
+		<RevealOnScroll
+			class="nav"
+			tag="nav"
 		>
-			{routes.map(({ label, link }) => (
+			<ul
+				role="list"
+				class="nav-list"
+			>
+				{routes.map(({ label, link }) => (
+					<li>
+						<a
+							class="type-role-accent"
+							href={link}
+						>
+							{label}
+						</a>
+					</li>
+				))}
+			</ul>
+		</RevealOnScroll>
+	</div>
+	<div class="tier second">
+		<RevealOnScroll
+			tag="section"
+			class="social"
+		>
+			<h2 class="type-scale-gamma">Keep in touch</h2>
+			<ul
+				class="social-links"
+				role="list"
+				set:html={socialChannelList}
+			>
+			</ul>
+		</RevealOnScroll>
+		<RevealOnScroll
+			tag="section"
+			class="meta"
+		>
+			<h2 class="type-scale-gamma">About this site</h2>
+			<ul
+				class="meta-links"
+				role="list"
+			>
 				<li>
 					<a
 						class="type-role-accent"
-						href={link}
+						href="/colophon"
 					>
-						{label}
+						Colophon
 					</a>
 				</li>
-			))}
-		</ul>
-	</RevealOnScroll>
-	<RevealOnScroll
-		tag="section"
-		class="social"
-	>
-		<h2 class="type-scale-gamma">Keep in touch</h2>
-		<ul
-			class="social-links"
-			role="list"
-			set:html={socialChannelList}
-		>
-		</ul>
-	</RevealOnScroll>
-	<RevealOnScroll
-		tag="section"
-		class="meta"
-	>
-		<h2 class="type-scale-gamma">About this site</h2>
-		<ul
-			class="meta-links"
-			role="list"
-		>
-			<li>
-				<a
-					class="type-role-accent"
-					href="/colophon"
-				>
-					Colophon
-				</a>
-			</li>
-			<li>
-				<a
-					class="type-role-accent"
-					href="/privacy"
-				>
-					Privacy
-				</a>
-			</li>
-		</ul>
-	</RevealOnScroll>
+				<li>
+					<a
+						class="type-role-accent"
+						href="/privacy"
+					>
+						Privacy
+					</a>
+				</li>
+			</ul>
+		</RevealOnScroll>
+	</div>
 	<RevealOnScroll
 		tag="aside"
-		class="signoff"
+		class="tier signoff"
 	>
 		<a
 			class="logo | type-link-undecorated"
@@ -180,26 +189,25 @@ socialChannelList.join('');
 		--spacing: var(--space-wide);
 
 		background-color: var(--color-well);
-		display: grid;
+		display: flex;
+		flex-direction: column;
 		flex-shrink: 0;
-		row-gap: var(--space-wide);
-		grid-template-columns: auto minmax(min-content, var(--content-width-xxwide)) auto;
-		grid-template-areas:
-			'. about .'
-			'. nav .'
-			'. social .'
-			'. meta .'
-			'. signoff .';
-		grid-template-rows: repeat(4, auto);
-		padding-block: var(--space-xwide) var(--space-medium);
+		gap: var(--space-wide);
 		padding-inline: var(--space-outside);
 		position: relative;
 	}
 
-	.nav,
-	.social,
-	.meta,
-	.signoff {
+	.tier {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-wide);
+		margin-inline: auto;
+		max-width: var(--content-width-xxwide);
+		width: 100%;
+	}
+
+	.tier + .tier,
+	.tier > * + * {
 		border-block-start: var(--border-default);
 		padding-block-start: var(--spacing);
 	}
@@ -207,7 +215,7 @@ socialChannelList.join('');
 	.about {
 		container-name: about;
 		container-type: inline-size;
-		grid-area: about;
+		padding-block-start: var(--space-xwide);
 	}
 
 	.about-blurb {
@@ -219,18 +227,19 @@ socialChannelList.join('');
 
 	.about-portrait {
 		aspect-ratio: 1 / 1;
-		object-fit: cover;
+		border-radius: var(--border-radius);
 		max-width: 6rem;
+		object-fit: cover;
 	}
 
 	@container about (min-width: 24em) {
 		.about-wrapper {
 			display: grid;
+			gap: var(--space-medium);
 			grid-template-columns: auto 1fr;
 			grid-template-rows: auto;
 			grid-template-areas:
 				'portrait blurb';
-			gap: var(--space-medium);
 		}
 
 		.about-portrait {
@@ -245,9 +254,10 @@ socialChannelList.join('');
 	}
 
 	.nav {
-		container-type: inline-size;
 		container-name: nav-list;
-		grid-area: nav;
+		container-type: inline-size;
+		display: block;
+		min-width: 18rem;
 	}
 
 	.nav-list {
@@ -266,16 +276,14 @@ socialChannelList.join('');
 	.social {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-xnarrow);
-		grid-area: social;
 	}
 
 	.social-links {
 		display: flex;
 		flex-wrap: wrap;
 		gap: var(--space-narrow);
-		padding: 0;
 		margin: 0;
+		padding: 0;
 	}
 
 	.meta {
@@ -283,7 +291,7 @@ socialChannelList.join('');
 	}
 
 	.meta-links {
-		display: flex;
+		display: inline-flex;
 		flex-wrap: wrap;
 		gap: var(--space-narrow);
 		padding: 0;
@@ -291,16 +299,24 @@ socialChannelList.join('');
 	}
 
 	.signoff {
-		overflow: hidden;
+		align-items: center;
 		display: flex;
 		flex-flow: wrap;
 		gap: var(--space-narrow);
-		align-items: flex-start;
-		grid-area: signoff;
+		justify-content: space-between;
+		overflow: hidden;
+		padding-block-end: var(--space-wide);
 	}
 
 	.logo {
-		width: 12rem;
+		/* size of the svg viewbox */
+		--width: 141;
+		--height: 23;
+
+		aspect-ratio: var(--width) / var(--height);
+		display: block;
+		max-width: 12rem;
+		overflow: hidden;
 	}
 
 	.copyright {
@@ -310,21 +326,39 @@ socialChannelList.join('');
 	}
 
 	@media screen and (min-width: 54em) {
-		footer {
-			grid-template-columns: auto repeat(4, 1fr) auto;
-			grid-template-areas:
-				'. about about about nav .'
-				'. social social meta meta .'
-				'. signoff signoff signoff signoff .';
+		.tier.second {
+			flex-direction: row;
+			justify-content: space-between;
 		}
 
-		.nav {
+		.tier > * + * {
 			border-block-start: 0;
 			padding-block-start: 0;
 		}
 
 		.meta {
 			justify-self: end;
+			text-align: end;
+		}
+
+		.meta-list {
+			text-align: end;
+		}
+	}
+
+	@media screen and (min-width: 75em) {
+		.tier.first {
+			align-items: center;
+			display: grid;
+			grid-template-columns: 1fr auto;
+			padding-block-start: var(--space-wide);
+		}
+
+		.about {
+			padding-block-start: 0;
+		}
+
+		.nav-list {
 			text-align: end;
 		}
 	}
