@@ -17,7 +17,6 @@ import { linkResolver, fetchLinks } from '@lib/routes';
 // components
 import LogoJPW from '@components/logos/LogoJPW.astro';
 import Button from '@components/elements/Button.astro';
-import Icon from '@components/elements/Icon.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
@@ -85,27 +84,37 @@ socialChannelList.push(`
 `);
 
 socialChannelList.join('');
+
+export interface Props {
+	showAboutSection?: boolean;
+}
+
+const {
+	showAboutSection = true,
+} = Astro.props as Props;
 ---
 
-<footer class="border-seam-top">
+<footer>
 	<div class="tier first">
-		<RevealOnScroll tag="section" class="about">
-			<div class="about-wrapper">
-				<img
-					class="about-portrait"
-					src="https://placehold.it/600x600"
-				>
-				<div class="about-blurb">
-					<p>Hi! My name is Jay. I'm a designer, illustrator, and writer living in Baltimore.</p>
-					<Button
-						href="/about/"
-						iconRight={arrowRight}
+		{showAboutSection && (
+			<RevealOnScroll tag="section" class="about">
+				<div class="about-wrapper">
+					<img
+						class="about-portrait"
+						src="https://placehold.it/600x600"
 					>
-						A bit more about me
-					</Button>
+					<div class="about-blurb">
+						<p>Hi! My name is Jay. I'm a designer, illustrator, and writer living in Baltimore.</p>
+						<Button
+							href="/about/"
+							iconRight={arrowRight}
+						>
+							A bit more about me
+						</Button>
+					</div>
 				</div>
-			</div>
-		</RevealOnScroll>
+			</RevealOnScroll>
+		)}
 		<RevealOnScroll
 			class="nav"
 			tag="nav"
