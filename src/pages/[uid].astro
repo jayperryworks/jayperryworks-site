@@ -1,0 +1,115 @@
+---
+// assets
+import '@styles/tokens/spacing.css';
+
+// helpers
+import { fetchLinks } from '@lib/routes';
+import { titleCase } from '@lib/stringHelpers';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+
+// components
+import Layout from '@layouts/BaseLayout.astro';
+import BlockList from '@components/BlockList.astro';
+import Heading from '@components/blocks/Heading.astro';
+import MainNav from '@components/navigation/MainNav.astro';
+import MainFooter from '@components/navigation/MainFooter.astro';
+
+// types
+import { Props } from '@components/Block.astro';
+import { Slice, TitleField } from '@prismicio/types';
+import { SEOContent } from '@lib/types';
+
+export interface Props {
+	body: Slice[];
+	seo?: SEOContent;
+	title: TitleField;
+	subtitle: TitleField;
+}
+
+// data & pagination
+export async function getStaticPaths({ paginate }): Promise<Function> {
+	const pages = await prismic.getAllByType('page', { fetchLinks });
+
+	return pages.map(({ uid, data }) => {
+		const {
+			body,
+			seo_description,
+			seo_image,
+			seo_title,
+			title,
+		} = data;
+
+		const seo = {
+			description: seo_description,
+			image: seo_image?.url,
+			imageAlt: seo_image?.alt,
+			title: seo_title || prismicHelpers.asText(title),
+		};
+
+		return {
+			params: {
+				uid,
+			},
+			props: {
+				body,
+				seo,
+				title,
+			}
+		};
+	});
+}
+
+// props
+const {
+	body,
+	seo,
+	subtitle,
+	title,
+} = Astro.props as Props;
+
+const {
+	uid,
+} = Astro.params;
+---
+
+<Layout
+	pageTitle={titleCase(uid)}
+	{seo}
+>
+	<MainNav segment={uid} />
+	<main>
+		<article>
+			<header>
+				<Heading
+					level={1}
+					text={title}
+				/>
+				{subtitle && (
+					<Heading
+						class="type-scale-gamma"
+						text={title}
+						subheading
+					/>
+				)}
+			</header>
+			<BlockList {body} showLedeStyle />
+		</article>
+	</main>
+	<MainFooter />
+</Layout>
+
+<style>
+  article {
+    padding-block: var(--space-xwide);
+	}
+
+	header {
+		padding-block-end: var(--space-wide);
+		padding-inline: var(--space-outside);
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-narrow);
+	}
+</style>
