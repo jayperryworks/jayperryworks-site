@@ -118,7 +118,7 @@ picturesBySeries.push({
 			>
 				<Heading
 					level={2}
-					class="series-title type-scale-gamma"
+					class="type-scale-gamma"
 				>
 					{series.title
 						? `${prismicHelpers.asText(series.title)} series`
@@ -137,33 +137,25 @@ picturesBySeries.push({
 </Layout>
 
 <style>
-	:global(.title),
-	.series {
-		margin-inline: auto;
-		max-width: var(--content-width-xxwide);
+	main {
 		padding-inline: var(--space-outside);
 	}
 
-	:global(.title) {
+	main :global(.title),
+	.series {
+		margin-inline: auto;
+		max-width: var(--content-width-xxwide);
+	}
+
+	main :global(.title) {
 		padding-block-end: var(--space-wide);
 		padding-block-start: var(--space-xwide);
 	}
 
 	.series {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-medium);
 		padding-block-end: var(--space-xwide);
-	}
-
-	.series > :global(* + *) {
-		padding-block-start: var(--space-medium);
-	}
-
-	.series-title {
-		color: var(--color-secondary);
-	}
-
-	.series .series-name {
-		font-weight: 300;
-		color: var(--color-primary);
-		font-style: normal;
 	}
 </style>
