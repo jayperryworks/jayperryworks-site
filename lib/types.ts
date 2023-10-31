@@ -69,6 +69,11 @@ export interface PublicationDates {
 }
 
 // --- components ---
+export type mainNavLink = {
+	label: string,
+	link: string,
+};
+
 export type PaginationLink = {
 	path: string,
 	title: TitleField,
