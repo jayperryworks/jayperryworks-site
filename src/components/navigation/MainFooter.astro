@@ -1,5 +1,5 @@
 ---
-// assets
+// --- assets ---
 import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
@@ -8,18 +8,21 @@ import '@styles/utilities/type.css';
 import '@styles/utilities/borders.css';
 import arrowRight from '@icons/arrow-right.svg?raw';
 
-// helpers
+// --- helpers ---
 import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 import { linkResolver, fetchLinks } from '@lib/routes';
 
-// components
+// --- components ---
 import LogoJPW from '@components/logos/LogoJPW.astro';
 import Button from '@components/elements/Button.astro';
+import Image from '@components/elements/Image.astro';
+import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
-// types
+// --- types ---
 import { mainNavLink } from '@lib/types';
 import { LinkField } from '@prismicio/types';
 
@@ -29,12 +32,50 @@ type Item = {
 	attributes?: string,
 };
 
+export interface Props {
+	showAboutSection?: boolean;
+}
+
+const {
+	showAboutSection = true,
+} = Astro.props as Props;
+
+
+// --- data ---
+
+// footer content
+const contentResponse = await prismic.getSingle('main_footer', { fetchLinks });
+const {
+	portrait,
+	about,
+	meta_links_title: metaTitle,
+	meta_links
+} = contentResponse.data;
+
+const blurb = { prismicText: about };
+
+const metaLinks = meta_links.map((item) => {
+	const { label, link } = item;
+
+	return `
+		<li>
+			<a
+				class="type-role-accent"
+				href="${prismicHelpers.asLink(link, linkResolver)}"
+			>
+				${label}
+			</a>
+		</li>
+	`;
+});
+
+// routes for nav
 const routesResponse = await prismic.getSingle('main_nav', { fetchLinks });
 const routes = routesResponse.data.nav_item.reduce(
 	(result, item): mainNavLink[] => {
 		const { label, link } = item;
 
-		if (label !== 'About') {
+		if (link.uid !== 'about') {
 			result.push({
 				label,
 				link: prismicHelpers.asLink(link, linkResolver),
@@ -71,12 +112,13 @@ const socialChannelList = channel.map((item: Item) => {
 	`.trim();
 });
 
+// social channels
 socialChannelList.push(`
 	<li>
 		<a
-		class="type-role-accent"
-		href="/rss/feed.xml"
-		target="_blank"
+			class="type-role-accent"
+			href="/rss/feed.xml"
+			target="_blank"
 		>
 			RSS feed
 		</a>
@@ -84,27 +126,17 @@ socialChannelList.push(`
 `);
 
 socialChannelList.join('');
-
-export interface Props {
-	showAboutSection?: boolean;
-}
-
-const {
-	showAboutSection = true,
-} = Astro.props as Props;
 ---
 
 <footer>
 	<div class="tier first">
+		<!-- About -->
 		{showAboutSection && (
 			<RevealOnScroll tag="section" class="about">
 				<div class="about-wrapper">
-					<img
-						class="about-portrait"
-						src="https://placehold.it/600x600"
-					>
+					<Image source={portrait} class="about-portrait" />
 					<div class="about-blurb">
-						<p>Hi! My name is Jay. I'm a designer, illustrator, and writer living in Baltimore.</p>
+						<Passage text={blurb} />
 						<Button
 							href="/about/"
 							iconRight={arrowRight}
@@ -115,6 +147,8 @@ const {
 				</div>
 			</RevealOnScroll>
 		)}
+
+		<!-- Main nav -->
 		<RevealOnScroll
 			class="nav"
 			tag="nav"
@@ -137,11 +171,18 @@ const {
 		</RevealOnScroll>
 	</div>
 	<div class="tier second">
+
+		<!-- Social links -->
 		<RevealOnScroll
 			tag="section"
 			class="social"
 		>
-			<h2 class="type-scale-gamma">Keep in touch</h2>
+			<Heading
+				class="type-scale-gamma"
+				level={2}
+			>
+				Keep in touch
+			</Heading>
 			<ul
 				class="social-links"
 				role="list"
@@ -149,37 +190,29 @@ const {
 			>
 			</ul>
 		</RevealOnScroll>
+
+		<!-- Meta links -->
 		<RevealOnScroll
 			tag="section"
 			class="meta"
 		>
-			<h2 class="type-scale-gamma">About this site</h2>
+			<Heading
+				class="type-scale-gamma"
+				level={2}
+			>
+				{metaTitle}
+			</Heading>
 			<ul
 				class="meta-links"
 				role="list"
+				set:html={metaLinks}
 			>
-				<li>
-					<a
-						class="type-role-accent"
-						href="/colophon"
-					>
-						Colophon
-					</a>
-				</li>
-				<li>
-					<a
-						class="type-role-accent"
-						href="/privacy"
-					>
-						Privacy
-					</a>
-				</li>
 			</ul>
 		</RevealOnScroll>
 	</div>
 	<RevealOnScroll
 		tag="aside"
-		class="tier signoff"
+		class="tier third signoff"
 	>
 		<a
 			class="logo | type-link-undecorated"
@@ -209,14 +242,14 @@ const {
 	.tier {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-wide);
+		gap: var(--spacing);
 		margin-inline: auto;
 		max-width: var(--content-width-xxwide);
 		width: 100%;
 	}
 
 	.tier + .tier,
-	.tier > * + * {
+	.tier:where(.first, .second) > :global(* + *) {
 		border-block-start: var(--border-default);
 		padding-block-start: var(--spacing);
 	}
@@ -234,11 +267,13 @@ const {
 		gap: var(--space-narrow);
 	}
 
-	.about-portrait {
-		aspect-ratio: 1 / 1;
+	.about :global(img.about-portrait) {
+		--size: 6rem;
+
+		aspect-ratio: 1.2 / 1;
 		border-radius: var(--border-radius);
-		max-width: 6rem;
 		object-fit: cover;
+		width: var(--size);
 	}
 
 	@container about (min-width: 24em) {
@@ -251,14 +286,14 @@ const {
 				'portrait blurb';
 		}
 
-		.about-portrait {
-			max-width: 8rem;
+		.about :global(img.about-portrait) {
+			--size: 8rem;
 		}
 	}
 
 	@container about (min-width: 34em) {
-		.about-portrait {
-			max-width: 12rem;
+		.about :global(img.about-portrait) {
+			--size: 12rem;
 		}
 	}
 
@@ -274,7 +309,7 @@ const {
 		margin: 0;
 	}
 
-	@container nav-list (min-width: 20em) {
+	@container nav-list (min-width: 30em) {
 		.nav-list {
 			display: flex;
 			flex-wrap: wrap;
@@ -340,7 +375,7 @@ const {
 			justify-content: space-between;
 		}
 
-		.tier > * + * {
+		.tier:where(.second, .third) > :global(* + *) {
 			border-block-start: 0;
 			padding-block-start: 0;
 		}
@@ -361,6 +396,11 @@ const {
 			display: grid;
 			grid-template-columns: 1fr auto;
 			padding-block-start: var(--space-wide);
+		}
+
+		.tier.first > :global(* + *) {
+			border-block-start: 0;
+			padding-block-start: 0;
 		}
 
 		.about {

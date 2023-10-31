@@ -1,6 +1,8 @@
 :root {
+	--key-h: 220deg;
+
 	/* --- primary --- */
-	--color-primary-h: 220deg;
+	--color-primary-h: var(--key-h);
 	--color-primary-s: 5%;
 	--color-primary-l: 27%;
 
@@ -9,7 +11,7 @@
 	);
 
 	/* --- secondary --- */
-	--color-secondary-h: 220deg;
+	--color-secondary-h: var(--key-h);
 	--color-secondary-s: 30%;
 	--color-secondary-l: 40%;
 
@@ -18,7 +20,7 @@
 	);
 
 	/* --- highlight --- */
-	--color-highlight-h: 223deg;
+	--color-highlight-h: var(--key-h);
 	--color-highlight-s: 75%;
 	--color-highlight-l: 70%;
 
@@ -43,17 +45,17 @@
 	);
 
 	/* --- well --- */
-	--color-well-h: 223deg;
-	--color-well-s: 7%;
-	--color-well-l: 95%;
+	--color-well-h: var(--key-h);
+	--color-well-s: 18%;
+	--color-well-l: 96%;
 
 	--color-well: hsl(
 		var(--color-well-h) var(--color-well-s) var(--color-well-l)
 	);
 
 	/* --- borders --- */
-	--color-border-h: 223deg;
-	--color-border-s: 7%;
+	--color-border-h: var(--key-h);
+	--color-border-s: 18%;
 	--color-border-l: 78%;
 
 	--color-border: hsl(
@@ -61,7 +63,7 @@
 	);
 
 	/* --- shadows --- */
-	--color-shadow-h: 223deg;
+	--color-shadow-h: var(--key-h);
 	--color-shadow-s: 7%;
 	--color-shadow-l: 78%;
 	--color-shadow-a: 0.6;
