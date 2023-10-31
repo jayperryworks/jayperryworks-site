@@ -88,7 +88,7 @@ const routes = routesResponse.data.nav_item.reduce(
 
 routes.unshift({
 	label: 'Home',
-	link: Astro.site,
+	link: '/',
 });
 
 const socialChannelsResponse = await prismic.getSingle('social_channels');
@@ -241,6 +241,7 @@ socialChannelList.join('');
 		flex-direction: column;
 		flex-shrink: 0;
 		gap: var(--space-wide);
+		padding-block-start: var(--space-xwide);
 		padding-inline: var(--space-outside);
 		position: relative;
 	}
@@ -263,7 +264,6 @@ socialChannelList.join('');
 	.about {
 		container-name: about;
 		container-type: inline-size;
-		padding-block-start: var(--space-xwide);
 	}
 
 	.about-blurb {
