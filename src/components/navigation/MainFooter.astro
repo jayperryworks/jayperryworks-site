@@ -153,6 +153,12 @@ socialChannelList.join('');
 			class="nav"
 			tag="nav"
 		>
+			<Heading
+				class="type-scale-gamma"
+				level={2}
+			>
+				Explore
+			</Heading>
 			<ul
 				role="list"
 				class="nav-list"
@@ -386,28 +392,6 @@ socialChannelList.join('');
 		}
 
 		.meta-list {
-			text-align: end;
-		}
-	}
-
-	@media screen and (min-width: 75em) {
-		.tier.first {
-			align-items: center;
-			display: grid;
-			grid-template-columns: 1fr auto;
-			padding-block-start: var(--space-wide);
-		}
-
-		.tier.first > :global(* + *) {
-			border-block-start: 0;
-			padding-block-start: 0;
-		}
-
-		.about {
-			padding-block-start: 0;
-		}
-
-		.nav-list {
 			text-align: end;
 		}
 	}
