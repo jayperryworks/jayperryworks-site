@@ -18,6 +18,7 @@ export interface Props {
 	class?: string;
 	typeFace?: 'body' | 'display' | 'accent';
 	typeSize?: TypeScale;
+	wrap?: 'none' | 'pretty' | 'balance';
 }
 
 // --- props and state
@@ -26,6 +27,7 @@ const {
 	class: className = '',
 	typeSize = 'epsilon',
 	typeFace = 'body',
+	wrap = 'pretty',
 } = Astro.props as Props;
 
 
@@ -33,6 +35,7 @@ const classList = [
 	'prose',
 	typeFace !== 'body' ? `type-role-${typeFace}` : '',
 	`type-scale-${typeSize}`,
+	wrap !== 'none' ? wrap : '',
 	className,
 ].join(' ');
 
@@ -85,6 +88,14 @@ function htmlSerializer(type, element, content, children): string {
 	.prose {
 		overflow: visible;
 		position: relative;
+	}
+
+	.balance {
+		text-wrap: balance;
+	}
+
+	.pretty {
+		text-wrap: pretty;
 	}
 
 	.prose > :global(*) {

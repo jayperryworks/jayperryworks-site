@@ -3,10 +3,10 @@
 	--space-xnarrow: clamp(0.69rem, calc(0.65rem + 0.18vw), 0.81rem);
 	--space-narrow: clamp(1rem, calc(0.93rem + 0.36vw), 1.25rem);
 	--space-medium: clamp(1.13rem, calc(0.93rem + 0.98vw), 1.81rem);
-	--space-wide: clamp(1.25rem, calc(0.71rem + 2.68vw),3.13rem);
-	--space-xwide: clamp(1.63rem, calc(0.25rem + 6.88vw), 6.44rem);
+	--space-wide: clamp(1.44rem, calc(0.96rem + 2.41vw),3.13rem);
+	--space-xwide: clamp(2.06rem, calc(0.81rem + 6.25vw), 6.44rem);
 
 	/* outside spacing */
 	/* -> starts at 'xnarrow' min value and expands to 'xwide' max value */
-	--space-outside: clamp(0.69rem, calc(8.84vw - 1.52rem), 6.44rem);
+	--space-outside: clamp(1rem, calc(7.77vw - 0.55rem), 6.44rem);
 }

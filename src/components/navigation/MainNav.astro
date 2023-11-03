@@ -15,15 +15,12 @@ import { linkResolver, fetchLinks } from '@lib/routes';
 import LogoJP from '@components/logos/LogoJP.astro';
 
 // types
+import { mainNavLink } from '@lib/types';
+
 export interface Props {
 	segment: string;
 	class?: string;
 }
-
-type mainNavLink = {
-	label: string,
-	link: string,
-};
 
 const response = await prismic.getSingle('main_nav', { fetchLinks });
 const routes = response.data.nav_item.map(
@@ -41,8 +38,9 @@ const {
 
 <header class={className}>
 	<a
-		class="logo"
-		href="/"
+		class="logo p-url"
+		href={Astro.site}
+		rel="me"
 	>
 		<LogoJP />
 	</a>

@@ -12,7 +12,6 @@ import MainFooter from '@components/navigation/MainFooter.astro';
 import MainNav from '@components/navigation/MainNav.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
 import DataGrid from '@components/layout/DataGrid.astro';
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // utilities
 import { designProject as permalink } from '@lib/routes';
@@ -29,7 +28,7 @@ import type {
 	TitleField,
 } from '@prismicio/types';
 
-import type { PaginationLink } from '@lib/types';
+import type { PaginationLink, SEOContent } from '@lib/types';
 
 export type Contribution = {
 	task: string,
@@ -46,6 +45,7 @@ export interface Props {
 	contributions?: GroupField;
 	endDate?: NumberField;
 	next?: PaginationLink;
+	seo?: SEOContent;
 	subtitle?: TitleField;
 }
 
