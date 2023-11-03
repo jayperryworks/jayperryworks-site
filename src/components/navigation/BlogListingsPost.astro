@@ -59,18 +59,18 @@ const {
 
 <style>
 	/* reset the flow styling from the .block-list parent container */
-	.wrapper > .heading + .heading {
+	.wrapper > :global(.heading + .heading) {
 		padding-block-start: 0;
 	}
 
-	.eyebrow {
+	.wrapper :global(.eyebrow) {
 		--gap: 0.5em;
 		display: inline-flex;
 		gap: var(--gap);
 		padding-block-end: var(--space-xnarrow);
 	}
 
-	.eyebrow > :global(* + *)::before {
+	.wrapper :global(.eyebrow > * + *::before) {
 		content: '\2022';
 		display: inline-block;
 		font-weight: bold;
