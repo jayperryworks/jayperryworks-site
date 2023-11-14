@@ -34,9 +34,14 @@ const {
 	segment,
 	class:className = '',
 } = Astro.props as Props;
+
+const classList = [
+	'wrapper',
+	className,
+].join(' ');
 ---
 
-<header class={className}>
+<header class={classList}>
 	<a
 		class="logo p-url"
 		href={Astro.site}
@@ -160,7 +165,7 @@ const {
 
 <style>
 	/* --- layout --- */
-	header {
+	.wrapper {
 		--transition: 0.25s;
 
 		padding-inline: var(--space-outside);
