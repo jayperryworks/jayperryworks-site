@@ -48,7 +48,11 @@ const classList = [
 	>
 		<slot name="title"></slot>
 	</a>
-	<Icon svg={icon} size="large" class="icon" />
+	<Icon
+		class="icon"
+		size="large"
+		svg={icon}
+	/>
 </p>
 
 <style>
@@ -94,7 +98,7 @@ const classList = [
 		cursor: pointer;
 	}
 
-	.icon {
+	.next :global(.icon) {
 		grid-area: icon;
 		margin: 0;
 		cursor: pointer;

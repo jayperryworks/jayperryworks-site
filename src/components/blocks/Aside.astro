@@ -38,7 +38,7 @@
 <aside class:list={[className, { hasBorder: border }]}>
 	{label && (
 		<Heading
-			class="label | type-role-accent type-scale-epsilon"
+			class="type-role-accent type-scale-epsilon"
 			level={2}
 		>
 			{label}
@@ -55,10 +55,9 @@
 <style>
 	aside {
 		color: var(--color-secondary);
-	}
-
-	aside > :global(* + *) {
-		padding-block-start: var(--space-narrow);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-narrow);
 	}
 
 	.hasBorder {
@@ -66,7 +65,7 @@
 		padding-block-start: var(--space-narrow);
 	}
 
-	.text {
+	aside :global(.text) {
 		font-style: italic;
 	}
 </style>

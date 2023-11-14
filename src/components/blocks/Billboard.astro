@@ -108,11 +108,11 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 		padding-block-start: var(--space-medium);
 	}
 
-	header > :global(.subtitle) {
+	header :global(.subtitle) {
 		padding-block-start: var(--space-xnarrow);
 	}
 
-	header > :global(.cta) {
+	header :global(.cta) {
 		margin-block-start: var(--space-wide);
 	}
 
@@ -120,7 +120,7 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 		align-items: center;
 		display: grid;
 		flex: 1;
-		gap: var(--space-medium);
+		gap: var(--space-wide) var(--space-medium);
 		grid-template-rows: repeat(auto-fit, minmax(auto, 1fr));
 	}
 
@@ -129,7 +129,7 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 		width: 100%;
 	}
 
-	article :global(.cover) > :global(img) {
+	article :global(.cover img) {
 		max-height: 60vh;
 	}
 

@@ -56,33 +56,32 @@ if (next) highlight = 'flashing';
 		margin-top: 0;
 	}
 
-	/* increase specificity so it overrides the child component */
-	li .link {
+	li :global(.link) {
 		--background-color: var(--color-bg);
 	}
 
-	li .link.current,
-	li .link.next {
+	li :global(.link.current),
+	li :global(.link.next) {
 		--color: var(--color-highlight);
 	}
 
-	li .link.current,
-	li .link.next {
+	li :global(.link.current),
+	li :global(.link.next) {
 		--border-color: var(--color-primary);
 	}
 
 
-	li .link.complete {
+	li :global(.link.complete) {
 		--color: var(--color-secondary);
 	}
 
-	li .link:hover {
+	li :global(.link:hover) {
 		--border-color: var(--color-primary);
 		--color: var(--color-primary);
 	}
 
 	/* reveal the tooltip when a a is hovered */
-	.link:hover .tooltip {
+	:global(.link:hover .tooltip) {
 		--show: 1;
 	}
 </style>

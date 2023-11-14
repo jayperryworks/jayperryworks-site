@@ -25,8 +25,15 @@ const classList = [
 ].join(' ');
 ---
 
-<a class={classList} href={`/blog/stages/${name ? name.toLowerCase() : 'note'}`}>
-	<Icon svg={stageIcon} margin="right" align="baseline" />
+<a
+	class={classList}
+	href={`/blog/stages/${name ? name.toLowerCase() : 'note'}`}
+>
+	<Icon
+		align="baseline"
+		margin="right"
+		svg={stageIcon}
+	/>
 	{name || 'Note'}
 </a>
 
