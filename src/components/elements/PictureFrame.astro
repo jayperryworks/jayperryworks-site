@@ -47,6 +47,7 @@
 	} = Astro.props as Props;
 
 	const classList = [
+		'picture',
 		type,
 		className,
 	].filter(i => i).join(' ');
@@ -57,6 +58,7 @@
 		`--matte-thickness: ${matteThickness}vmin`,
 	].filter(i => i).join(';');
 ---
+
 <Image
 	{source}
 	class={classList}
@@ -64,8 +66,8 @@
 />
 
 <style>
-	.frame,
-	.panel {
+	:global(.picture.frame),
+	:global(.picture.panel) {
 		--frame-color: var(--color-primary);
 		--shadow-color: var(--color-shadow);
 		--matte-color: var(--color-island, #fff);
@@ -77,7 +79,7 @@
 		height: 100%;
 	}
 
-	.panel {
+	:global(.picture.panel) {
 		box-shadow: 0 0.7em 0.4em var(--color-shadow);
 	}
 </style>

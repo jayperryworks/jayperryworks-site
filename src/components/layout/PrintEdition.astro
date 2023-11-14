@@ -32,6 +32,7 @@ const {
 ---
 
 <section class={[
+	'wrapper',
 	'content-width-xwide',
 	className
 ].join(' ')}>
@@ -96,17 +97,17 @@ const {
 </section>
 
 <style>
-	section {
+	.wrapper {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-wide);
 	}
 
-	.name {
+	.wrapper :global(.name) {
 		width: 100%;
 	}
 
-	.info {
+	.wrapper :global(.info) {
 		flex: 1;
 		display: flex;
 		flex-direction: column;
@@ -115,23 +116,23 @@ const {
 		container-type: inline-size;
 	}
 
-	.data {
+	.wrapper :global(.data) {
 		flex: 1;
 	}
 
-	.cta {
+	.wrapper :global(.cta) {
 		align-self: flex-start;
 		/* order: -1; */
 	}
 
 	@container (min-width: 24em) {
-		.info {
+		.wrapper :global(.info) {
 			flex-direction: row;
 			flex-wrap: wrap;
 			gap: var(--space-medium);
 		}
 
-		.cta {
+		.wrapper :global(.cta) {
 			order: unset;
 		}
 	}
