@@ -39,44 +39,43 @@ const {
 } = Astro.props as Props;
 ---
 
-<RevealOnScroll
-	class={className}
-	tag="figure"
->
-	<slot>
-		{source && (
-			device !== 'None'
-			? <DeviceFrame
-					type={device}
-					{source}
-				/>
-			: <Image
-					{border}
-					{fit}
-					{source}
-				/>
-		)}
-	</slot>
+<figure class={['figure', className].join(' ')}>
+	<RevealOnScroll>
+		<slot>
+			{source && (
+				device !== 'None'
+				? <DeviceFrame
+						type={device}
+						{source}
+					/>
+				: <Image
+						{border}
+						{fit}
+						{source}
+					/>
+			)}
+		</slot>
 
-	{(caption || attribution) && (
-		<Caption
-			class="caption"
-			text={caption}
-			{attribution}
-		/>
-	)}
-</RevealOnScroll>
+		{(caption || attribution) && (
+			<Caption
+				class="caption"
+				text={caption}
+				{attribution}
+			/>
+		)}
+	</RevealOnScroll>
+</figure>
 
 <style>
-	figure {
+	.figure {
 		text-align: center;
 	}
 
-	figure :global(img) {
+	.figure :global(img) {
 		width: 100%;
 	}
 
-	figure :global(.caption) {
+	.figure :global(.caption) {
 		margin-block-start: auto;
 		margin-inline: auto;
 		padding-block-start: var(--space-narrow);
