@@ -34,9 +34,14 @@ const {
 	segment,
 	class:className = '',
 } = Astro.props as Props;
+
+const classList = [
+	'main-header',
+	className,
+].join(' ');
 ---
 
-<header class={className}>
+<header class={classList}>
 	<a
 		class="logo p-url"
 		href={Astro.site}
@@ -65,6 +70,7 @@ const {
 	</jp-hamburger-nav>
 </header>
 
+<!-- keep this script inline because we need it immediately -->
 <script is:inline type="module">
 	class HamburgerNav extends HTMLElement {
 		constructor() {
@@ -159,7 +165,7 @@ const {
 
 <style>
 	/* --- layout --- */
-	header {
+	.main-header {
 		--transition: 0.25s;
 
 		padding-inline: var(--space-outside);
