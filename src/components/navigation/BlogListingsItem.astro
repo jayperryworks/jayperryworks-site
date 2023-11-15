@@ -32,7 +32,7 @@ const {
 } = Astro.props as Props;
 ---
 
-<article class="blog-listings-post">
+<article class="blog-listings-item">
 	<Heading
 		class="eyebrow"
 		level={6}
@@ -58,18 +58,18 @@ const {
 
 <style>
 	/* reset the flow styling from the .block-list parent container */
-	.blog-listings-post > :global(.heading + .heading) {
+	.blog-listings-item > :global(.heading + .heading) {
 		padding-block-start: 0;
 	}
 
-	.blog-listings-post :global(.eyebrow) {
+	.blog-listings-item :global(.eyebrow) {
 		--gap: 0.5em;
 		display: inline-flex;
 		gap: var(--gap);
 		padding-block-end: var(--space-xnarrow);
 	}
 
-	.blog-listings-post :global(.eyebrow > * + *::before) {
+	.blog-listings-item :global(.eyebrow > * + *::before) {
 		content: '\2022';
 		display: inline-block;
 		font-weight: bold;

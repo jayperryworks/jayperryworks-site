@@ -13,10 +13,9 @@ import { sentenceCase, truncate } from '@lib/stringHelpers';
 import Heading from '@components/blocks/Heading.astro';
 import Layout from '@layouts/BaseLayout.astro';
 import BlogListings from '@components/navigation/BlogListings.astro';
-import BlogListingsPost from '@components/navigation/BlogListingsPost.astro';
+import BlogListingsItem from '@components/navigation/BlogListingsItem.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
 import MainNav from '@components/navigation/MainNav.astro';
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
 export type Post = {
@@ -105,10 +104,10 @@ const {
 			<Heading subheading level={3}>Posts filed under</Heading>
 			<Heading level={1}>{sentenceCase(tag)}</Heading>
 		</header>
-		<BlogListings class="post-list">
+		<BlogListings>
 			{posts.map((post) => (
 				<li class="post">
-					<BlogListingsPost {...post} />
+					<BlogListingsItem {...post} />
 				</li>
 			))}
 		</BlogListings>
@@ -119,23 +118,21 @@ const {
 <style>
 	.wrapper {
 		padding: var(--space-outside) var(--space-xwide);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-medium);
 	}
 
 	.wrapper > :global(*) {
 		max-width: var(--content-width-default);
+		width: 100%;
 		margin-inline: auto;
 	}
 
 	.headline {
-		padding-block-end: var(--space-medium);
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-xxnarrow);
-	}
-
-	.post-list {
-		list-style: none;
-		padding-inline-start: 0;
 	}
 
 	nav {
