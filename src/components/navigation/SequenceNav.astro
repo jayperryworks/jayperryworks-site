@@ -2,12 +2,12 @@
 import '@styles/tokens/borders.css';
 import '@styles/tokens/color.css';
 ---
-<ol>
+<ol class="sequence-nav">
 	<slot></slot>
 </ol>
 
 <style>
-	ol {
+	.sequence-nav {
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
@@ -19,7 +19,7 @@ import '@styles/tokens/color.css';
 		position: relative;
 	}
 
-	ol::after {
+	.sequence-nav::after {
 		--height: 1px;
 
 		content: '';

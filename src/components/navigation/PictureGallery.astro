@@ -24,27 +24,30 @@ const {
 } = Astro.props as Props;
 ---
 
-<Gallery size={columnSize}>
+<Gallery
+	class="picture-gallery"
+	size={columnSize}
+>
 	{list.map((picture: PrismicDocumentWithUID) => (
 		<RevealOnScroll tag="li">
 			<a
-				class="type-link-undecorated"
+				class="link | type-link-undecorated"
 				href={permalink(picture)}
 			>
 				<Image
-					{aspectRatio}
-					border
+					class="image"
 					fit="cover"
 					source={picture.data.cover}
+					{aspectRatio}
+					border
 				/>
 			</a>
 		</RevealOnScroll>
 	))}
 </Gallery>
 
-<style>
-	li > a,
-	li :global(img) {
+<style is:global>
+	.picture-gallery .link {
 		display: block;
 	}
 </style>

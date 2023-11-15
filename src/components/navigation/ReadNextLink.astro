@@ -30,7 +30,7 @@ const {
 } = Astro.props as Props;
 
 const classList = [
-	'next',
+	'read-next',
 	`align-${align}`,
 	className,
 ].join(' ');
@@ -56,7 +56,7 @@ const classList = [
 </p>
 
 <style>
-	.next {
+	.read-next {
 		--gap: var(--space-xxnarrow) var(--space-medium);
 
 		align-items: center;
@@ -69,18 +69,18 @@ const classList = [
 		padding: 0;
 	}
 
-	.next.align-start {
+	.read-next.align-start {
 		display: inline-grid;
 		justify-items: start;
 	}
 
-	.next.align-end {
+	.read-next.align-end {
 		display: grid;
 		justify-items: end;
 		text-align: end;
 	}
 
-	.next.align-center {
+	.read-next.align-center {
 		display: inline-grid;
 		justify-items: center;
 		text-align: center;
@@ -98,7 +98,7 @@ const classList = [
 		cursor: pointer;
 	}
 
-	.next :global(.icon) {
+	.read-next :global(.icon) {
 		grid-area: icon;
 		margin: 0;
 		cursor: pointer;

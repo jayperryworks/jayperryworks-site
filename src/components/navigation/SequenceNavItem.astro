@@ -37,7 +37,7 @@ if (complete || current) highlight = 'on';
 if (next) highlight = 'flashing';
 ---
 
-<li>
+<li class="sequence-nav-item">
 	<Dot
 		el="a"
 		class={classList}
@@ -51,35 +51,35 @@ if (next) highlight = 'flashing';
 </li>
 
 <style>
-	li {
+	.sequence-nav-item {
 		display: block;
 	}
 
-	li,
-	li + li {
+	.sequence-nav-item,
+	.sequence-nav-item + .sequence-nav-item {
 		margin-block-start: 0;
 	}
 
-	li :global(.link) {
+	.sequence-nav-item :global(.link) {
 		--background-color: var(--color-bg);
 	}
 
-	li :global(.link.current),
-	li :global(.link.next) {
+	.sequence-nav-item :global(.link.current),
+	.sequence-nav-item :global(.link.next) {
 		--color: var(--color-highlight);
 	}
 
-	li :global(.link.current),
-	li :global(.link.next) {
+	.sequence-nav-item :global(.link.current),
+	.sequence-nav-item :global(.link.next) {
 		--border-color: var(--color-primary);
 	}
 
 
-	li :global(.link.complete) {
+	.sequence-nav-item :global(.link.complete) {
 		--color: var(--color-secondary);
 	}
 
-	li :global(.link:hover) {
+	.sequence-nav-item :global(.link:hover) {
 		--border-color: var(--color-primary);
 		--color: var(--color-primary);
 	}
