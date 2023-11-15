@@ -38,7 +38,7 @@ const {
 } = Astro.props as Props;
 ---
 
-<aside class={className}>
+<aside class={['callout', className].join(' ')}>
 	<Heading
 		class="type-scale-gamma"
 		text={title}
@@ -66,7 +66,7 @@ const {
 </aside>
 
 <style>
-	aside {
+	.callout {
 		--color-bg: var(--color-well);
 
 		display: flex;

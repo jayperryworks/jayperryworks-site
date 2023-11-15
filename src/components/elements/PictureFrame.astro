@@ -60,14 +60,14 @@
 ---
 
 <Image
-	{source}
 	class={classList}
 	style={styleList}
+	{source}
 />
 
-<style>
-	:global(.picture.frame),
-	:global(.picture.panel) {
+<style is:global>
+	.picture.frame,
+	.picture.panel {
 		--frame-color: var(--color-primary);
 		--shadow-color: var(--color-shadow);
 		--matte-color: var(--color-island, #fff);
@@ -79,7 +79,7 @@
 		height: 100%;
 	}
 
-	:global(.picture.panel) {
+	.picture.panel {
 		box-shadow: 0 0.7em 0.4em var(--color-shadow);
 	}
 </style>

@@ -20,6 +20,7 @@ const {
 } = Astro.props as Props;
 
 const classList = [
+	'development-stage-label',
 	'type-role-accent',
 	className,
 ].join(' ');
@@ -38,7 +39,7 @@ const classList = [
 </a>
 
 <style>
-	a {
+	.development-stage-label {
 		color: var(--color-secondary);
 	}
 </style>

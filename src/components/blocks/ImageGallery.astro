@@ -39,7 +39,7 @@ const {
 ---
 
 <Figure
-	class={className}
+	class={['image-gallery', className].join(' ')}
 	{caption}
 	{attribution}
 >
@@ -65,13 +65,13 @@ const {
 	</Gallery>
 </Figure>
 
-<style>
-	li {
+<style is:global>
+	.image-gallery li {
 		text-align: center;
 		font-size: 0;
 	}
 
-	li > :global(img) {
+	.image-gallery li > :global(img) {
 		display: block;
 	}
 </style>

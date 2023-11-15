@@ -44,6 +44,7 @@ const width = widths[0];
 const height = (source.dimensions.height / source.dimensions.width) * widths[0];
 
 const classList = [
+	'image',
 	border ? 'border' : '',
 	className,
 	fit ? `fit ${fit}` : '',
@@ -69,7 +70,7 @@ const styleList = [
 />
 
 <style>
-	img {
+	.image {
 		aspect-ratio: var(--aspect-ratio, auto);
 		content-visibility: auto;
 		display: inline-block;

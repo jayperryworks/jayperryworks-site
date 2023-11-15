@@ -83,7 +83,7 @@ if (contentSource === 'blog_post') {
 }
 ---
 
-<article>
+<article class="feed">
 	<header>
 		<Heading level={2}>
 			<a
@@ -130,15 +130,11 @@ if (contentSource === 'blog_post') {
 </article>
 
 <style>
-	article {
+	.feed {
 		flex: 1;
 		justify-content: center;
 		display: flex;
 		flex-direction: column;
-	}
-
-	footer {
-		padding-block-start: var(--space-xwide);
 	}
 
 	header {
@@ -155,5 +151,9 @@ if (contentSource === 'blog_post') {
 
 	.item > :global(* + *) {
 		padding-block-start: var(--space-xnarrow);
+	}
+
+	footer {
+		padding-block-start: var(--space-xwide);
 	}
 </style>
