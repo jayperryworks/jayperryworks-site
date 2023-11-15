@@ -44,7 +44,7 @@ const {
 } = Astro.props as Props;
 ---
 
-<article class={className}>
+<article class={['book-card', className].join(' ')}>
 	<div class="wrapper">
 
 		<!-- cover -->
@@ -107,7 +107,7 @@ const {
 </article>
 
 <style>
-	article {
+	.book-card {
 		--cover-size: 12em;
 
 		container-type: inline-size;
@@ -134,7 +134,7 @@ const {
 		text-align: center;
 	}
 
-	article :global(.cover) {
+	.book-card :global(.cover) {
 		align-items: center;
 		align-self: stretch;
 		aspect-ratio: 1 / 1;
