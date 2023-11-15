@@ -263,8 +263,10 @@ socialChannelList.join('');
 
 	/* --- about --- */
 	footer :global(.about) {
+		border-block-end: var(--border-default);
 		container-name: about;
 		container-type: inline-size;
+		padding-block-end: var(--spacing);
 	}
 
 	footer :global(.about-blurb) {
@@ -311,12 +313,6 @@ socialChannelList.join('');
 		gap: var(--spacing);
 	}
 
-	.links,
-	footer :global(.signoff) {
-		border-block-start: var(--border-default);
-		padding-block-start: var(--spacing);
-	}
-
 	.links :global(.links-list) {
 		padding: 0;
 		margin: 0;
@@ -344,12 +340,14 @@ socialChannelList.join('');
 	/* --- signoff --- */
 	footer :global(.signoff) {
 		align-items: center;
+		border-block-start: var(--border-default);
 		display: flex;
 		flex-flow: wrap;
 		gap: var(--space-narrow);
 		justify-content: space-between;
 		overflow: hidden;
 		padding-block-end: var(--space-wide);
+		padding-block-start: var(--spacing);
 	}
 
 	.logo {

@@ -51,9 +51,13 @@ if (next) highlight = 'flashing';
 </li>
 
 <style>
+	li {
+		display: block;
+	}
+
 	li,
 	li + li {
-		margin-top: 0;
+		margin-block-start: 0;
 	}
 
 	li :global(.link) {
