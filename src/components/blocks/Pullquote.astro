@@ -55,11 +55,15 @@ function variables(): string {
 
 <RevealOnScroll>
 	<aside
-		role="presentation"
 		class={className}
+		role="presentation"
 		style={variables()}
 	>
-		<Passage {text} typeSize="delta" class={image ? 'hide-visually' : ''} />
+		<Passage
+			class={image ? 'hide-visually' : ''}
+			typeSize="delta"
+			{text}
+		/>
 	</aside>
 </RevealOnScroll>
 

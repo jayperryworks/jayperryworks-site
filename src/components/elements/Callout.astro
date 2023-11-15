@@ -39,7 +39,10 @@ const {
 ---
 
 <aside class={className}>
-	<Heading class="type-scale-gamma" text={title} />
+	<Heading
+		class="type-scale-gamma"
+		text={title}
+	/>
 
 	<slot>
 		<RenderedText
@@ -71,10 +74,7 @@ const {
 		border-radius: var(--border-radius);
 		padding: var(--space-medium);
 		background-color: var(--color-well);
-	}
-
-	aside > :global(* + *) {
-		padding-block-start: var(--space-xnarrow);
+		gap: var(--space-xnarrow);
 	}
 
 	footer {
