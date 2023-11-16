@@ -17,30 +17,39 @@ const classList = [
 ].join(' ');
 ---
 
-<ul class={classList}>
-	<slot></slot>
-</ul>
+<div class="blog-listings">
+	<ul class={classList}>
+		<slot></slot>
+	</ul>
 
-<RevealOnScroll tag="nav">
-	<slot name="footer-nav">
-		<ReadNextLink
-			eyebrowSize="delta"
-			link="/blog/page/1"
-			titleSize="beta"
-		>
-			<Fragment slot="eyebrow">More blog posts:</Fragment>
-			<Fragment slot="title">Archive</Fragment>
-		</ReadNextLink>
-	</slot>
-</RevealOnScroll>
+	<RevealOnScroll tag="nav" class="footer-nav">
+		<slot name="footer-nav">
+			<ReadNextLink
+				eyebrowSize="delta"
+				link="/blog/page/1"
+				titleSize="beta"
+			>
+				<Fragment slot="eyebrow">More blog posts:</Fragment>
+				<Fragment slot="title">Archive</Fragment>
+			</ReadNextLink>
+		</slot>
+	</RevealOnScroll>
+</div>
 
 <style>
+	.blog-listings {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-xwide);
+	}
 	.posts {
 		list-style: none;
 		padding-inline-start: 0;
+		margin-block: 0;
 	}
 
-	nav {
+	.blog-listings .footer-nav {
 		border-top: var(--border-default);
 		padding-block: var(--space-xwide);
 		margin-block-start: var(--space-xwide);

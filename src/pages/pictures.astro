@@ -119,11 +119,12 @@ picturesBySeries.push({
 				<Heading
 					level={2}
 					class="type-scale-gamma"
-				>
-					{series.title
-						? `${prismicHelpers.asText(series.title)} series`
-						: 'Other recent work'
+					set:html={
+						series.title
+							? `<em>${prismicHelpers.asText(series.title)}</em> series`
+							: 'Other recent work'
 					}
+				>
 				</Heading>
 
 				<PictureGallery

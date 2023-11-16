@@ -61,7 +61,7 @@ const formattedDate: formattedDate = Object.keys(date).reduce((result, key) => {
 const showUpdate = formattedDate.posted !== formattedDate.updated;
 
 const classList = [
-	'metadata',
+	'post-metadata',
 	className,
 ].join(' ');
 ---
@@ -90,7 +90,7 @@ const classList = [
 </dl>
 
 <style>
-	.metadata {
+	.post-metadata {
 		--gap: var(--space-xnarrow);
 
 		color: var(--color-secondary);

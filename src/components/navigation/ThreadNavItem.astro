@@ -28,7 +28,7 @@ const {
 } = Astro.props as Props;
 ---
 
-<li>
+<li class="thread-nav-item">
 	<Dot
 		class="icon"
 		el="a"
@@ -57,7 +57,7 @@ const {
 </li>
 
 <style>
-	li {
+	.thread-nav-item {
 		--dot-size: 1.6rem;
 		display: grid;
 		column-gap: var(--space-xnarrow);
@@ -69,47 +69,49 @@ const {
 		position: relative;
 	}
 
-	li + li .date {
+	.thread-nav-item + .thread-nav-item :global(.date) {
 		padding-block-start: var(--space-medium);
 	}
 
-	li + li::before {
+	.thread-nav-item + .thread-nav-item::before {
 		border-inline-start: var(--border-default);
+		bottom: calc(var(--dot-size) / 2);
 		content: '';
 		display: block;
-		position: absolute;
-		top: calc((var(--dot-size) / 2) * -1);
-		left: calc((var(--dot-size) / 2) + var(--border-default-width));
-		bottom: calc(var(--dot-size) / 2);
 		grid-area: gutter;
 		justify-self: center;
+		left: calc((var(--dot-size) / 2) + var(--border-default-width));
+		position: absolute;
+		top: calc((var(--dot-size) / 2) * -1);
 		z-index: 0;
 	}
 
-	li .icon {
+	.thread-nav-item :global(.icon) {
 		--color: var(--color-highlight);
 		--border-color: var(--color-primary);
 		--background-color: var(--color-well);
 		--size: var(--dot-size);
-		grid-area: icon;
+
 		align-self: center;
+		grid-area: icon;
+		margin-block-start: -0.2em; /* scoot up just a little */
 		z-index: 1;
 	}
 
-	li .icon:hover {
+	.thread-nav-item :global(.icon:hover) {
 		--border-color: var(--color-primary);
 	}
 
-	.date {
+	.thread-nav-item :global(.date) {
 		grid-area: date;
 		padding-block-end: var(--space-xxnarrow);
 	}
 
-	.title {
+	.thread-nav-item :global(.title) {
 		grid-area: title;
 	}
 
-	[aria-current='page'] {
+	.thread-nav-item [aria-current='page'] {
 		text-decoration: none;
 	}
 </style>

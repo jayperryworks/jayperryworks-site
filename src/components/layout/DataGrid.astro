@@ -39,7 +39,7 @@ const itemClassList = [
 ---
 
 <dl
-	class={className}
+	class={['data-grid', className].join(' ')}
 	style={`
 		--gutter: var(--space-${gutter});
 		--col-size: ${columnWidth}rem;
@@ -65,7 +65,7 @@ const itemClassList = [
 </dl>
 
 <style>
-	dl {
+	.data-grid {
 	  list-style: none;
 	  display: grid;
 		gap: var(--gutter);
@@ -114,7 +114,7 @@ const itemClassList = [
 
 	/* set up the grid template inside a media query to prevent sidescrolling on small mobile screens */
 	@media screen and (min-width: 18em) {
-		dl {
+		.data-grid {
 			grid-template-columns: repeat(auto-fit, minmax(var(--col-size), 1fr));
 		}
 	}

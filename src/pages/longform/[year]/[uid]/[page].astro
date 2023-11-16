@@ -69,7 +69,7 @@ export async function getStaticPaths({ paginate }) {
 
 
 	// loop over each project and create a massaged list of chapters to be paginated
-	return projectsResponse.map(({ uid, data }) => {
+	return projectsResponse.flatMap(({ uid, data }) => {
 		const year = format(prismicHelpers.asDate(data.date), 'yyyy');
 
 		const callouts = data.body.map(({ primary, items }) => ({
@@ -118,10 +118,12 @@ export async function getStaticPaths({ paginate }) {
 		});
 
 		// one chapter per page under the given project params
-		return paginate(chapters, {
+		const pages = paginate(chapters, {
 			pageSize: 1,
 			params: { year, uid },
-		})
+		});
+
+		return pages;
 
 	});
 }
@@ -349,7 +351,7 @@ const nextChapter = project.chapterList[currentPage] ? {
 		padding-block-end: var(--space-xwide);
 	}
 
-	.support-box {
+	.support :global(.support-box) {
 		max-width: var(--content-width-default);
 		margin-inline: auto;
 	}

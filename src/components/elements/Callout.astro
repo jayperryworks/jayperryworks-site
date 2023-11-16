@@ -38,8 +38,11 @@ const {
 } = Astro.props as Props;
 ---
 
-<aside class={className}>
-	<Heading class="type-scale-gamma" text={title} />
+<aside class={['callout', className].join(' ')}>
+	<Heading
+		class="type-scale-gamma"
+		text={title}
+	/>
 
 	<slot>
 		<RenderedText
@@ -63,7 +66,7 @@ const {
 </aside>
 
 <style>
-	aside {
+	.callout {
 		--color-bg: var(--color-well);
 
 		display: flex;
@@ -71,10 +74,7 @@ const {
 		border-radius: var(--border-radius);
 		padding: var(--space-medium);
 		background-color: var(--color-well);
-	}
-
-	aside > :global(* + *) {
-		padding-block-start: var(--space-xnarrow);
+		gap: var(--space-xnarrow);
 	}
 
 	footer {

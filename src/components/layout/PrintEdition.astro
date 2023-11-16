@@ -32,6 +32,7 @@ const {
 ---
 
 <section class={[
+	'print-edition',
 	'content-width-xwide',
 	className
 ].join(' ')}>
@@ -96,17 +97,17 @@ const {
 </section>
 
 <style>
-	section {
+	.print-edition {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-wide);
 	}
 
-	.name {
+	.print-edition :global(.name) {
 		width: 100%;
 	}
 
-	.info {
+	.print-edition :global(.info) {
 		flex: 1;
 		display: flex;
 		flex-direction: column;
@@ -115,23 +116,23 @@ const {
 		container-type: inline-size;
 	}
 
-	.data {
+	.print-edition :global(.data) {
 		flex: 1;
 	}
 
-	.cta {
+	.print-edition :global(.cta) {
 		align-self: flex-start;
 		/* order: -1; */
 	}
 
 	@container (min-width: 24em) {
-		.info {
+		.print-edition :global(.info) {
 			flex-direction: row;
 			flex-wrap: wrap;
 			gap: var(--space-medium);
 		}
 
-		.cta {
+		.print-edition :global(.cta) {
 			order: unset;
 		}
 	}

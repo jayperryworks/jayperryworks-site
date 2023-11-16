@@ -19,7 +19,7 @@ import Layout from '@layouts/BaseLayout.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
 import BlogListings from '@components/navigation/BlogListings.astro';
-import BlogListingsPost from '@components/navigation/BlogListingsPost.astro';
+import BlogListingsItem from '@components/navigation/BlogListingsItem.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
 import MainNav from '@components/navigation/MainNav.astro';
 import SequenceNav from '@components/navigation/SequenceNav.astro';
@@ -163,14 +163,16 @@ const {
 			<Heading level={1}>{sentenceCase(stage)}</Heading>
 		</header>
 		<Passage
-			class="intro"
 			text={description}
 			typeSize="delta"
 		/>
 		<BlogListings class="post-list">
 			{posts.map((post) => (
 				<li class="post">
-					<BlogListingsPost {...post} showStage={false} />
+					<BlogListingsItem
+						showStage={false}
+						{...post}
+					/>
 				</li>
 			))}
 		</BlogListings>
@@ -198,7 +200,7 @@ const {
 		gap: var(--space-xxnarrow);
 	}
 
-	.post-list {
+	.wrapper :global(.post-list) {
 		margin-block-start: var(--space-wide);
 		padding-block-start: var(--space-wide);
 		border-block-start: var(--border-default);

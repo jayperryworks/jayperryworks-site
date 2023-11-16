@@ -32,7 +32,7 @@ const {
 
 
 const classList = [
-	'prose',
+	'passage',
 	typeFace !== 'body' ? `type-role-${typeFace}` : '',
 	`type-scale-${typeSize}`,
 	wrap !== 'none' ? wrap : '',
@@ -85,7 +85,7 @@ function htmlSerializer(type, element, content, children): string {
 </div>
 
 <style>
-	.prose {
+	.passage {
 		overflow: visible;
 		position: relative;
 	}
@@ -98,15 +98,15 @@ function htmlSerializer(type, element, content, children): string {
 		text-wrap: pretty;
 	}
 
-	.prose > :global(*) {
+	.passage > :global(*) {
 		line-height: var(--type-leading-default);
 	}
 
-  .prose > :global(* + *) {
+  .passage > :global(* + *) {
     margin-block-start: 1em;
   }
 
-	.prose :global(li + li) {
+	.passage :global(li + li) {
 		margin-block-start: 1em;
 	}
 
@@ -114,7 +114,7 @@ function htmlSerializer(type, element, content, children): string {
 	@supports (mask: url('/assets/icons/external-link.svg') no-repeat 50% 50%) {
 		/* display an 'external link' icon on any anchor with an absolute url */
 		/* -> except for full urls pointing to my own domain (jayperry.works, jayperryworks.com) */
-		.prose :global(a[href^='http']:not([href*='jayperry'])::after) {
+		.passage :global(a[href^='http']:not([href*='jayperry'])::after) {
 			--size: 0.6em;
 
 			background-color: currentColor;

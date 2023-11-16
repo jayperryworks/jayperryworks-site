@@ -267,12 +267,12 @@ const {
 		text-align: center;
 	}
 
-	.title ~ .metadata {
+	.headline :global(.title ~ .metadata) {
 		border-block-start: var(--border-default);
 		padding-block-start: var(--space-xnarrow);
 	}
 
-	.metadata {
+	:global(.metadata) {
 		margin-block-start: var(--space-wide);
 	}
 
@@ -284,22 +284,11 @@ const {
 
 	/* add some extra space above this */
 	/* -> subtract the flex gap it already has */
-	.thread-nav {
+	article :global(.thread-nav) {
 		margin-block-start: var(--space-wide);
 	}
 
-	.thread-link[aria-current='page'] {
-		color: var(--color-highlight);
-		text-decoration: none;
-	}
-
-	footer {
-		margin-inline: auto;
-		max-width: var(--content-width-default);
-		padding-block-start: var(--space-xwide);
-	}
-
-	.tags {
+	article :global(.tags) {
 		display: flex;
 		align-items: baseline;
 		gap: 0.25em;
@@ -307,7 +296,7 @@ const {
 	}
 
 	@media screen and (min-width: 30em) {
-		.tags {
+		article :global(.tags) {
 			gap: var(--space-xnarrow);
 			flex-wrap: nowrap;
 		}
@@ -352,14 +341,14 @@ const {
 		padding-inline: var(--space-outside);
 	}
 
-	.nav-wrapper {
+	:global(.nav-wrapper) {
 		margin-inline: auto;
 		max-width: var(--content-width-default);
 		border-top: var(--border-default);
 		padding-block-start: var(--space-wide);
 	}
 
-	.nav-wrapper + .nav-wrapper {
+	:global(.nav-wrapper + .nav-wrapper) {
 		margin-block-start: var(--space-wide);
 	}
 </style>

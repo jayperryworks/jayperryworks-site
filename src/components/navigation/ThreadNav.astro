@@ -89,21 +89,19 @@ const classList = [
 </script>
 
 <style>
-	aside {
+	.thread-nav {
 		background-color: var(--color-well);
 		border-radius: var(--border-radius);
 		padding: var(--space-narrow);
 		text-align: left;
 	}
 
-	.label {
+	.thread-nav :global(.label) {
+		display: flex;
+		align-items: center;
+		gap: var(--space-xnarrow);
 		color: var(--color-primary);
 		font-weight: 300;
-	}
-
-	.title {
-		color: var(--color-primary);
-		font-weight: 600;
 	}
 
 	.description {
@@ -113,12 +111,12 @@ const classList = [
 	}
 
 	/* only show the help tooltip if JS is available */
-	.help {
+	.thread-nav :global(.help) {
 		display: none;
 	}
 
 	/* increase specificity so it overrides the child component */
-	:global([data-supports~='js']) .help {
+	:global([data-supports~='js'] .help) {
 		--size: 2em;
 		--color: var(--color-secondary);
 
@@ -126,16 +124,16 @@ const classList = [
 		margin-block-start: calc((var(--size) / 4) * -1); /* scootch up a little */
 	}
 
-	.help.open {
+	.thread-nav :global(.help.open) {
 		--color: var(--color-highlight);
 	}
 
-	.tooltip {
+	.thread-nav :global(.tooltip) {
 		--max-width: 24rem;
 		--min-width: 16rem;
 	}
 
-	.help.open .tooltip {
+	.thread-nav :global(.help.open .tooltip) {
 		--show: 1;
 	}
 
@@ -149,7 +147,7 @@ const classList = [
 		padding-block-start: var(--space-xxnarrow);
 	}
 
-	.list {
+	.thread-nav :global(.list) {
 		--spacing: var(--space-medium);
 		--title-color: var(--color-secondary);
 		--title-size: var(--type-scale-zeta);

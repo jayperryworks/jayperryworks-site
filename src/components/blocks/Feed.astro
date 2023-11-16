@@ -15,7 +15,7 @@ import Gallery from '@components/layout/Gallery.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
 import Button from '@components/elements/Button.astro';
-import PostListing from '@components/navigation/BlogListingsPost.astro';
+import PostListing from '@components/navigation/BlogListingsItem.astro';
 
 // types
 import type { LinkField, RichTextField } from '@prismicio/types';
@@ -83,7 +83,7 @@ if (contentSource === 'blog_post') {
 }
 ---
 
-<article>
+<article class="feed">
 	<header>
 		<Heading level={2}>
 			<a
@@ -130,15 +130,11 @@ if (contentSource === 'blog_post') {
 </article>
 
 <style>
-	article {
+	.feed {
 		flex: 1;
 		justify-content: center;
 		display: flex;
 		flex-direction: column;
-	}
-
-	footer {
-		padding-block-start: var(--space-xwide);
 	}
 
 	header {
@@ -155,5 +151,9 @@ if (contentSource === 'blog_post') {
 
 	.item > :global(* + *) {
 		padding-block-start: var(--space-xnarrow);
+	}
+
+	footer {
+		padding-block-start: var(--space-xwide);
 	}
 </style>

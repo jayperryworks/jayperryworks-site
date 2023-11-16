@@ -170,8 +170,17 @@ const credits = [
 
 			<aside class="border-seam-top credits">
 				<div class="credits-wrapper">
-					<Heading level={2} class="credits-heading">Credits</Heading>
-					<DataGrid data={credits} />
+					<Heading
+						level={2}
+						class="credits-heading"
+					>
+						Credits
+					</Heading>
+					<DataGrid
+						data={credits}
+						columnWidth={16}
+						gutter="wide"
+					/>
 				</div>
 			</aside>
 		</article>
@@ -214,7 +223,7 @@ const credits = [
 		margin-block-start: var(--space-xwide);
 	}
 
-	.credits-heading {
+	.credits :global(.credits-heading) {
 		text-align: center;
 		padding-block-end: var(--space-wide);
 	}

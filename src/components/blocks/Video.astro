@@ -27,6 +27,7 @@ const {
 const src = `https://tube.tchncs.de/videos/embed/${id}?title=0&warningTitle=0&peertubeLink=0&p2p=0`;
 
 const classList = [
+	'video',
 	'aspect',
 	border ? 'border' : '',
 ].join(' ');
@@ -59,13 +60,13 @@ const styleList = [
 </Figure>
 
 <style>
-	.aspect {
+	:global(.video.aspect) {
 		aspect-ratio: var(--aspect-ratio, auto);
 		max-width: 100%;
 		position: relative;
 	}
 
-	.border {
+	:global(.video.border) {
 		border: var(--border-solid);
 	}
 

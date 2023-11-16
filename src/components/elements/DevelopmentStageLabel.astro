@@ -20,18 +20,26 @@ const {
 } = Astro.props as Props;
 
 const classList = [
+	'development-stage-label',
 	'type-role-accent',
 	className,
 ].join(' ');
 ---
 
-<a class={classList} href={`/blog/stages/${name ? name.toLowerCase() : 'note'}`}>
-	<Icon svg={stageIcon} margin="right" align="baseline" />
+<a
+	class={classList}
+	href={`/blog/stages/${name ? name.toLowerCase() : 'note'}`}
+>
+	<Icon
+		align="baseline"
+		margin="right"
+		svg={stageIcon}
+	/>
 	{name || 'Note'}
 </a>
 
 <style>
-	a {
+	.development-stage-label {
 		color: var(--color-secondary);
 	}
 </style>

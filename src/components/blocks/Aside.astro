@@ -33,12 +33,18 @@
 		Default: 'epsilon',
 		Small: 'zeta',
 	};
+
+	const classList = [
+		'aside',
+		className,
+		border ? 'border' : '',
+	].join(' ');
 ---
 
-<aside class:list={[className, { hasBorder: border }]}>
+<aside class={classList}>
 	{label && (
 		<Heading
-			class="label | type-role-accent type-scale-epsilon"
+			class="type-role-accent type-scale-epsilon"
 			level={2}
 		>
 			{label}
@@ -53,20 +59,19 @@
 </aside>
 
 <style>
-	aside {
+	.aside {
 		color: var(--color-secondary);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-narrow);
 	}
 
-	aside > :global(* + *) {
-		padding-block-start: var(--space-narrow);
-	}
-
-	.hasBorder {
+	.border {
 		border-block-start: var(--border-default);
 		padding-block-start: var(--space-narrow);
 	}
 
-	.text {
+	.aside :global(.text) {
 		font-style: italic;
 	}
 </style>

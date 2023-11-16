@@ -55,16 +55,20 @@ function variables(): string {
 
 <RevealOnScroll>
 	<aside
+		class={['pullquote', className].join(' ')}
 		role="presentation"
-		class={className}
 		style={variables()}
 	>
-		<Passage {text} typeSize="delta" class={image ? 'hide-visually' : ''} />
+		<Passage
+			class={image ? 'hide-visually' : ''}
+			typeSize="delta"
+			{text}
+		/>
 	</aside>
 </RevealOnScroll>
 
 <style>
-	aside {
+	.pullquote {
 		--image: var(--image-small);
 
 		aspect-ratio: var(--aspect);
@@ -76,13 +80,13 @@ function variables(): string {
 	}
 
 	@media screen and (min-width: 37em) {
-		aside {
+		.pullquote {
 			--image: var(--image-medium);
 		}
 	}
 
 	@media screen and (min-width: 100em) {
-		aside {
+		.pullquote {
 			--image: var(--image-large);
 		}
 	}

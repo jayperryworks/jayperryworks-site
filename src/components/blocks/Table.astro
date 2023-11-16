@@ -39,7 +39,7 @@ try {
 }
 ---
 
-<div class="wrapper">
+<div class="table">
 	<table class="type-role-accent type-scale-zeta">
 		<thead>
 			<tr>{data.header.map((heading) => <th>{heading}</th>)}</tr>
@@ -64,7 +64,7 @@ try {
 </div>
 
 <style>
-	.wrapper {
+	.table {
     --min-width: 50rem;
 
     border-top: 1px solid var(--color-border);
@@ -74,7 +74,7 @@ try {
   }
 
   @media screen and (min-width: 37.5em) {
-    .wrapper {
+    .table {
       border: 0;
       padding: 0;
     }

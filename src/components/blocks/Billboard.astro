@@ -16,7 +16,6 @@ import Figure from '@components/blocks/Figure.astro';
 import Collage from '@components/blocks/Collage.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
-import Number from '@components/elements/Number.astro';
 
 // types
 import { removeWidows } from '@lib/stringHelpers';
@@ -49,7 +48,7 @@ const { link, label } = cta;
 const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 ---
 
-<article>
+<article class="billboard">
 	<header>
 		<Heading level={2}>
 			<a
@@ -108,33 +107,33 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 		padding-block-start: var(--space-medium);
 	}
 
-	header > :global(.subtitle) {
+	header :global(.subtitle) {
 		padding-block-start: var(--space-xnarrow);
 	}
 
-	header > :global(.cta) {
+	header :global(.cta) {
 		margin-block-start: var(--space-wide);
 	}
 
-	article {
+	.billboard {
 		align-items: center;
 		display: grid;
 		flex: 1;
-		gap: var(--space-medium);
+		gap: var(--space-wide) var(--space-medium);
 		grid-template-rows: repeat(auto-fit, minmax(auto, 1fr));
 	}
 
-	article :global(.cover) {
+	.billboard :global(.cover) {
 		justify-self: center;
 		width: 100%;
 	}
 
-	article :global(.cover) > :global(img) {
+	.billboard :global(.cover img) {
 		max-height: 60vh;
 	}
 
 	@media screen and (min-width: 42em) {
-		article {
+		.billboard {
 			grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
 			gap: var(--space-wide);
 		}

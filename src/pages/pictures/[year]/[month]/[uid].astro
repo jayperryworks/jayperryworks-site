@@ -311,7 +311,7 @@ const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) 
 			<header class="nav-header">
 				{nav.title
 					? <Heading level={2} class="nav-header-title | type-scale-gamma">
-							More from the <strong>{prismicHelpers.asText(nav.title)}</strong>&nbsp;series
+							More from the <em>{prismicHelpers.asText(nav.title)}</em>&nbsp;series
 						</Heading>
 					: <Heading level={2} class="">More work</Heading>
 				}
@@ -351,11 +351,7 @@ const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) 
 		align-items: center;
 	}
 
-	.cover-nav {
-		grid-area: nav;
-	}
-
-	.cover-image {
+	.cover :global(.cover-image) {
 		grid-area: image;
 		max-height: 100%;
 		margin-inline: auto;
@@ -374,17 +370,17 @@ const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) 
 		padding-block-start: var(--space-xwide);
 	}
 
-	.cover-info-item {
+	.cover :global(.cover-info-item) {
 		text-align: center;
 		width: 100%;
 	}
 
-	.cover-info-item.title {
+	.cover :global(.cover-info-item.title) {
 		color: var(--color-primary);
 		font-size: var(--type-scale-epsilon);
 	}
 
-	.cover-info-item.media {
+	.cover .cover-info-item.media {
 		display: none;
 	}
 
@@ -394,7 +390,7 @@ const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) 
 			align-items: baseline;
 		}
 
-		.cover-info-item {
+		.cover :global(.cover-info-item) {
 			width: auto;
 		}
 
@@ -428,21 +424,7 @@ const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) 
 		gap: var(--space-xnarrow);
 	}
 
-	.nav-header-title {
+	.nav-header :global(.nav-header-title) {
 		flex: 1 1 44rem;
-		color: var(--color-secondary);
-	}
-
-	.nav-header-title > strong {
-		color: var(--color-primary);
-		font-style: normal;
-	}
-
-	.nav-back-link {
-		display: inline-block;
-	}
-
-	.nav-back-link > :global(*) {
-		vertical-align: bottom;
 	}
 </style>

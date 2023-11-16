@@ -101,7 +101,7 @@ const socialChannelList = channel.map((item: Item) => {
 	return `
 		<li>
 			<a
-				class="type-role-accent"
+				class="links-item | type-role-accent"
 				href="${prismicHelpers.asLink(link)}"
 				target="_blank"
 				${attributes || ''}
@@ -116,7 +116,7 @@ const socialChannelList = channel.map((item: Item) => {
 socialChannelList.push(`
 	<li>
 		<a
-			class="type-role-accent"
+			class="links-item | type-role-accent"
 			href="/rss/feed.xml"
 			target="_blank"
 		>
@@ -129,29 +129,37 @@ socialChannelList.join('');
 ---
 
 <footer>
-	<div class="tier first">
-		<!-- About -->
-		{showAboutSection && (
-			<RevealOnScroll tag="section" class="about">
-				<div class="about-wrapper">
-					<Image source={portrait} class="about-portrait" />
-					<div class="about-blurb">
-						<Passage text={blurb} />
-						<Button
-							href="/about/"
-							iconRight={arrowRight}
-						>
-							A bit more about me
-						</Button>
-					</div>
+	<!-- About -->
+	{showAboutSection && (
+		<RevealOnScroll
+			tag="section"
+			class="tier about"
+		>
+			<div class="about-wrapper">
+				<Image
+					source={portrait}
+					class="about-portrait"
+				/>
+				<div class="about-blurb">
+					<Passage text={blurb} />
+					<Button
+						href="/about/"
+						iconRight={arrowRight}
+					>
+						A bit more about me
+					</Button>
 				</div>
-			</RevealOnScroll>
-		)}
+			</div>
+		</RevealOnScroll>
+	)}
+
+	<!-- Links -->
+	<nav class="tier links">
 
 		<!-- Main nav -->
 		<RevealOnScroll
-			class="nav"
-			tag="nav"
+			class="links-section explore"
+			tag="section"
 		>
 			<Heading
 				class="type-scale-gamma"
@@ -161,12 +169,12 @@ socialChannelList.join('');
 			</Heading>
 			<ul
 				role="list"
-				class="nav-list"
+				class="links-list"
 			>
 				{routes.map(({ label, link }) => (
 					<li>
 						<a
-							class="type-role-accent"
+							class="links-item | type-role-accent"
 							href={link}
 						>
 							{label}
@@ -175,13 +183,11 @@ socialChannelList.join('');
 				))}
 			</ul>
 		</RevealOnScroll>
-	</div>
-	<div class="tier second">
 
 		<!-- Social links -->
 		<RevealOnScroll
+			class="links-section social"
 			tag="section"
-			class="social"
 		>
 			<Heading
 				class="type-scale-gamma"
@@ -190,7 +196,7 @@ socialChannelList.join('');
 				Keep in touch
 			</Heading>
 			<ul
-				class="social-links"
+				class="links-list"
 				role="list"
 				set:html={socialChannelList}
 			>
@@ -199,8 +205,8 @@ socialChannelList.join('');
 
 		<!-- Meta links -->
 		<RevealOnScroll
+			class="links-section meta"
 			tag="section"
-			class="meta"
 		>
 			<Heading
 				class="type-scale-gamma"
@@ -209,16 +215,18 @@ socialChannelList.join('');
 				{metaTitle}
 			</Heading>
 			<ul
-				class="meta-links"
+				class="links-list"
 				role="list"
 				set:html={metaLinks}
 			>
 			</ul>
 		</RevealOnScroll>
-	</div>
+	</nav>
+
+	<!-- Copyright -->
 	<RevealOnScroll
 		tag="aside"
-		class="tier third signoff"
+		class="tier signoff"
 	>
 		<a
 			class="logo | type-link-undecorated"
@@ -233,6 +241,7 @@ socialChannelList.join('');
 </footer>
 
 <style>
+	/* --- container  --- */
 	footer {
 		--spacing: var(--space-wide);
 
@@ -241,39 +250,33 @@ socialChannelList.join('');
 		flex-direction: column;
 		flex-shrink: 0;
 		gap: var(--space-wide);
-		padding-block-start: var(--space-xwide);
+		padding-block: var(--space-xwide) var(--space-wide);
 		padding-inline: var(--space-outside);
 		position: relative;
 	}
 
-	.tier {
-		display: flex;
-		flex-direction: column;
-		gap: var(--spacing);
+	footer :global(.tier) {
 		margin-inline: auto;
 		max-width: var(--content-width-xxwide);
 		width: 100%;
 	}
 
-	.tier + .tier,
-	.tier:where(.first, .second) > :global(* + *) {
-		border-block-start: var(--border-default);
-		padding-block-start: var(--spacing);
-	}
-
-	.about {
+	/* --- about --- */
+	footer :global(.about) {
+		border-block-end: var(--border-default);
 		container-name: about;
 		container-type: inline-size;
+		padding-block-end: var(--spacing);
 	}
 
-	.about-blurb {
+	footer :global(.about-blurb) {
 		align-items: flex-start;
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-narrow);
 	}
 
-	.about :global(img.about-portrait) {
+	footer :global(.about-portrait) {
 		--size: 6rem;
 
 		aspect-ratio: 1.2 / 1;
@@ -292,70 +295,58 @@ socialChannelList.join('');
 				'portrait blurb';
 		}
 
-		.about :global(img.about-portrait) {
+		footer :global(.about-portrait) {
 			--size: 8rem;
 		}
 	}
 
 	@container about (min-width: 34em) {
-		.about :global(img.about-portrait) {
+		footer :global(.about-portrait) {
 			--size: 12rem;
 		}
 	}
 
-	.nav {
-		container-name: nav-list;
-		container-type: inline-size;
-		display: block;
-		min-width: 18rem;
-	}
-
-	.nav-list {
-		padding: 0;
-		margin: 0;
-	}
-
-	@container nav-list (min-width: 30em) {
-		.nav-list {
-			display: flex;
-			flex-wrap: wrap;
-			gap: var(--space-medium);
-		}
-	}
-
-	.social {
+	/* --- links --- */
+	.links {
 		display: flex;
 		flex-direction: column;
+		gap: var(--spacing);
 	}
 
-	.social-links {
+	.links :global(.links-list) {
+		padding: 0;
+		margin: 0;
 		display: flex;
 		flex-wrap: wrap;
-		gap: var(--space-narrow);
-		margin: 0;
-		padding: 0;
+		gap: var(--space-xnarrow) var(--space-medium);
 	}
 
-	.meta {
+	.link :global(.links-item) {
+		flex: 1 0 20rem;
+	}
+
+	.links :global(.explore) {
+		grid-area: explore;
+	}
+
+	.links :global(.social) {
+		grid-area: social;
+	}
+
+	.links :global(.meta) {
 		grid-area: meta;
 	}
 
-	.meta-links {
-		display: inline-flex;
-		flex-wrap: wrap;
-		gap: var(--space-narrow);
-		padding: 0;
-		margin: 0;
-	}
-
-	.signoff {
+	/* --- signoff --- */
+	footer :global(.signoff) {
 		align-items: center;
+		border-block-start: var(--border-default);
 		display: flex;
 		flex-flow: wrap;
 		gap: var(--space-narrow);
 		justify-content: space-between;
 		overflow: hidden;
-		padding-block-end: var(--space-wide);
+		padding-block-start: var(--spacing);
 	}
 
 	.logo {
@@ -375,24 +366,33 @@ socialChannelList.join('');
 		align-items: center;
 	}
 
+	/* --- large screen layout --- */
 	@media screen and (min-width: 54em) {
-		.tier.second {
-			flex-direction: row;
-			justify-content: space-between;
+		footer :global(.links) {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			grid-template-areas:
+				'explore explore explore'
+				'social social meta';
 		}
+	}
 
-		.tier:where(.second, .third) > :global(* + *) {
-			border-block-start: 0;
-			padding-block-start: 0;
+	@media screen and (min-width: 90em) {
+		footer :global(.links) {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			grid-template-areas:
+				'explore explore'
+				'social meta';
 		}
+	}
 
-		.meta {
-			justify-self: end;
-			text-align: end;
-		}
-
-		.meta-list {
-			text-align: end;
+	@media screen and (min-width: 130em) {
+		footer :global(.links) {
+			display: grid;
+			grid-template-columns: repeat(6, 1fr);
+			grid-template-areas:
+				'explore explore explore social social meta';
 		}
 	}
 </style>
