@@ -13,11 +13,9 @@ import Heading from '@components/blocks/Heading.astro';
 import ImageGallery from '@components/blocks/ImageGallery.astro';
 import Passage from '@components/blocks/Passage.astro';
 import Pullquote from '@components/blocks/Pullquote.astro';
+import StickyNoteGallery from '@components/blocks/StickyNoteGallery.astro';
 import Table from '@components/blocks/Table.astro';
 import Video from '@components/blocks/Video.astro';
-
-// layout/effects components
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // Typescript
 import type { Block } from '@lib/types';
@@ -56,10 +54,12 @@ const blocks = {
 	imageGallery: ImageGallery,
 	passage: Passage,
 	pullquote: Pullquote,
+	stickyNoteGrid: StickyNoteGallery,
 	table: Table,
 	video: Video,
 };
 
+console.log(block.type);
 const Component = blocks[block.type];
 const classList = ['block', displayModeClass, className].join(' ');
 const style = `--block-width: var(--content-width-${getWidth(block.prominence)});`;

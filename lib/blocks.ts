@@ -299,6 +299,22 @@ function pullquote(slice: Slice): BlockType {
 	};
 }
 
+function stickyNoteGallery(slice: Slice): BlockType {
+	const {
+		title,
+		subtitle,
+		description,
+	} = slice.primary;
+
+	return {
+		title,
+		subtitle,
+		description,
+		notes: slice.items,
+		...sharedBlockFields(slice),
+	};
+}
+
 function table(slice: Slice): BlockType {
 	const {
 		csv_file: CSVFile,
@@ -357,6 +373,7 @@ export default {
 	heading,
 	passage,
 	pullquote,
+	sticky_note_grid: stickyNoteGallery,
 	table,
 	video,
 };
