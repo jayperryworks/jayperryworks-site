@@ -107,3 +107,8 @@ export type Edition = {
 	limit?: number,
 	type?: PrintType,
 };
+
+export type StickyNote = {
+	shortStatement: RichTextField,
+	extendedStatement: RichTextField,
+}

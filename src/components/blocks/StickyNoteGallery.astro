@@ -1,0 +1,35 @@
+---
+// components
+import Gallery from '@components/layout/Gallery.astro';
+import Passage from '@components/blocks/Passage.astro';
+
+// types
+import type {
+	StickyNote,
+} from '@prismicio/types';
+
+export interface Props {
+	notes: StickyNote[],
+}
+
+const {
+	notes,
+} = Astro.props as Props;
+---
+
+<section class="sticky-note-gallery">
+	<Gallery>
+		{notes.map(({ shortStatement, extendedStatement }) => (
+			<li class="sticky-note-item">
+				<article class="sticky-note">
+					<Passage text={{ prismicText: shortStatement }} />
+					<Passage text={{ prismicText: extendedStatement }} />
+				</article>
+			</li>
+		))}
+	</Gallery>
+</section>
+
+<style>
+
+</style>
