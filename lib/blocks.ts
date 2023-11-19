@@ -50,7 +50,7 @@ function sharedBlockFields(slice: Slice): BlockType {
 	} = slice.primary;
 
 	return {
-		displayMode,
+		displayMode: (displayMode as string).toLowerCase(),
 		prominence: prominence as BlockType['prominence'],
 		includeInExcerpt: Boolean(includeInExcerpt),
 		type: camelCase(slice.slice_type),
@@ -303,13 +303,13 @@ function stickyNoteGallery(slice: Slice): BlockType {
 	const {
 		title,
 		subtitle,
-		description,
+		description: prismicText,
 	} = slice.primary;
 
 	return {
 		title,
 		subtitle,
-		description,
+		description: { prismicText },
 		notes: slice.items,
 		...sharedBlockFields(slice),
 	};

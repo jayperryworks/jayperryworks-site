@@ -1,21 +1,29 @@
 ---
+// utilities
+import * as prismicHelpers from '@prismicio/helpers';
+
 // components
 import Gallery from '@components/layout/Gallery.astro';
 import Passage from '@components/blocks/Passage.astro';
+import Heading from '@components/blocks/Heading.astro';
+import RenderedText from '@components/elements/RenderedText.astro';
 
 // types
-import type {
+import {
+	FormattedText,
 	StickyNote,
-} from '@prismicio/types';
+} from '@lib/types';
+
+import { TitleField } from '@prismicio/types';
 
 export interface Props {
+	description: FormattedText,
+	subtitle: TitleField,
+	title: TitleField,
 	notes: StickyNote[],
 }
 
-console.log('sticky note component');
-
 const {
-
 	notes,
 	description,
 	subtitle,
@@ -24,13 +32,24 @@ const {
 ---
 
 <section class="sticky-note-gallery">
+	<Heading
+		level={2}
+		text={title}
+	/>
+	{prismicHelpers.isFilled.title(subtitle) && (
+		<Heading
+			level={4}
+			text={subtitle}
+			subheading
+		/>
+	)}
+	{description && (
+		<Passage text={description} />
+	)}
 	<Gallery>
-		{notes.map(({ shortStatement, extendedStatement }) => (
-			<li class="sticky-note-item">
-				<article class="sticky-note">
-					<Passage text={{ prismicText: shortStatement }} />
-					<Passage text={{ prismicText: extendedStatement }} />
-				</article>
+		{notes.map((note) => (
+			<li class="sticky-note-item | type-role-accent type-scale-delta">
+				<RenderedText prismicText={note.short_statement} inline /> <RenderedText prismicText={note.extended_statement} inline />
 			</li>
 		))}
 	</Gallery>
