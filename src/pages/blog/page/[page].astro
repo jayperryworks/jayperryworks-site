@@ -214,11 +214,11 @@ const postList = page.data.map(({
 		max-width: var(--content-width-default);
 	}
 
-	.post-date {
+	.post-header :global(.post-date) {
 		margin-block-start: var(--space-wide);
 	}
 
-	.post-title ~ .post-date {
+	.post-header :global(.post-title ~ .post-date) {
 		border-block-start: var(--border-default);
 		padding-block-start: var(--space-xnarrow);
 	}
