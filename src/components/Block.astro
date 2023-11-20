@@ -32,12 +32,13 @@ const {
 function getWidth(prominence) {
 	const widths = {
 		Small: 'narrow',
-		Medium: 'default',
+		Medium: 'medium',
 		Large: 'xwide',
 		XLarge: 'xxwide',
+		Full: 'full',
 	};
 
-	return widths[prominence] || 'default';
+	return widths[prominence] || 'medium';
 }
 
 const displayModeClass = block.displayMode === 'slide' ? 'slide border-seam-top' : '';
@@ -58,40 +59,55 @@ const blocks = {
 };
 
 const Component = blocks[block.type];
-const classList = ['block', displayModeClass, className].join(' ');
-const style = `--block-width: var(--content-width-${getWidth(block.prominence)});`;
+
+const classList = [
+	'block',
+	displayModeClass,
+	className
+].join(' ');
 ---
 
-<div class={classList}>
-	<div class="wrapper" {style}>
-		<Component {...block} />
-	</div>
+<div
+	class={classList}
+	style={`--block-width: ${getWidth(block.prominence)}`}
+>
+	<Component {...block} />
 </div>
 
 <style>
-	.block.flow {
-		padding-inline: var(--space-outside);
+	/* https://ryanmulligan.dev/blog/layout-breakouts/ */
+	.block {
+		--gap: var(--space-outside);
+		--full: minmax(var(--gap), 1fr);
+		/* --xxwide: minmax(0, var(--content-width-xxwide) - var(--content-width-xwide)); */
+		/* --xwide: minmax(0, var(--content-width-xwide) - var(--content-width-wide)); */
+		/* --wide: minmax(0, var(--content-width-wide) - var(--content-width-default)); */
+		--xwide: minmax(0, 7rem);
+		--wide: minmax(0, 6rem);
+		--medium: minmax(0, (var(--content-width-wide) - var(--content-width-default)) / 2);
+		--narrow: min(var(--content-width-narrow), 100% - (var(--gap) * 2));
+
+		display: grid;
+		grid-template-columns:
+			[full-start] var(--full)
+			[xxwide-start] var(--xxwide)
+			[xwide-start] var(--xwide)
+			[wide-start] var(--wide)
+			[medium-start] var(--medium)
+			[narrow-start] var(--narrow) [narrow-end]
+			var(--medium) [medium-end]
+			var(--wide) [wide-end]
+			var(--xwide) [xwide-end]
+			var(--xxwide) [xxwide-end]
+			var(--full) [full-end]
 	}
 
-	.block.slide {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-		padding-block: var(--space-xwide);
-		padding-inline: var(--space-outside);
-	}
-
-	.wrapper {
+	/* .wrapper {
 		max-width: var(--block-width);
 		margin-inline: auto;
-	}
+	} */
 
-	.slide .wrapper {
-		display: flex;
-		flex-direction: column;
-		flex: 1;
-		margin-inline: auto;
-		max-width: var(--content-width-xxwide);
-		width: 100%;
+	.block > :global(*) {
+		grid-column: var(--block-width);
 	}
 </style>
