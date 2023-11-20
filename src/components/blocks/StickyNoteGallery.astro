@@ -17,17 +17,17 @@ import {
 import { TitleField } from '@prismicio/types';
 
 export interface Props {
-	description: FormattedText,
-	subtitle: TitleField,
-	title: TitleField,
 	notes: StickyNote[],
+	title: TitleField,
+	description?: FormattedText,
+	subtitle?: TitleField,
 }
 
 const {
 	notes,
+	title,
 	description,
 	subtitle,
-	title,
 } = Astro.props as Props;
 ---
 
@@ -47,9 +47,9 @@ const {
 		<Passage text={description} />
 	)}
 	<Gallery size="large" gutter="medium">
-		{notes.map((note) => (
+		{notes.map(({ shortStatement, extendedStatement }) => (
 			<li class="sticky-note-item | type-role-accent type-scale-delta">
-				<RenderedText prismicText={note.short_statement} /> <RenderedText prismicText={note.extended_statement} />
+				<RenderedText prismicText={shortStatement} /> <RenderedText prismicText={extendedStatement} />
 			</li>
 		))}
 	</Gallery>
