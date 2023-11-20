@@ -46,15 +46,31 @@ const {
 	{description && (
 		<Passage text={description} />
 	)}
-	<Gallery>
+	<Gallery size="large" gutter="medium">
 		{notes.map((note) => (
 			<li class="sticky-note-item | type-role-accent type-scale-delta">
-				<RenderedText prismicText={note.short_statement} inline /> <RenderedText prismicText={note.extended_statement} inline />
+				<RenderedText prismicText={note.short_statement} /> <RenderedText prismicText={note.extended_statement} />
 			</li>
 		))}
 	</Gallery>
 </section>
 
 <style>
+	:global(.block.slide) .sticky-note-gallery {
+		padding-block: var(--space-xwide);
+	}
 
+	.sticky-note-gallery {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-medium);
+	}
+
+	.sticky-note-item {
+		box-shadow: 0 0.15em 0.5em var(--color-shadow);
+		background-color: var(--color-island);
+		/* border: var(--border-solid); */
+		border-radius: var(--border-radius);
+		padding: var(--space-medium);
+	}
 </style>
