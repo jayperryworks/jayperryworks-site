@@ -109,6 +109,6 @@ export type Edition = {
 };
 
 export type StickyNote = {
-	shortStatement: RichTextField,
-	extendedStatement: RichTextField,
+	shortStatement: string,
+	extendedStatement: string,
 }

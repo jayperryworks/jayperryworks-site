@@ -311,8 +311,8 @@ function stickyNoteGallery(slice: Slice): BlockType {
 		subtitle,
 		description: { prismicText },
 		notes: slice.items.map((item) => ({
-			shortStatement: item.short_statement,
-			extendedStatement: item.extended_statement,
+			shortStatement: markdownText(item.short_statement as RichTextField),
+			extendedStatement: markdownText(item.extended_statement as RichTextField),
 		})),
 		...sharedBlockFields(slice),
 	};
