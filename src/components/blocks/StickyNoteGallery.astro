@@ -33,16 +33,14 @@ const {
 
 const formattedNotes = notes.map((note) => {
 	return Object.keys(note).map((key, index) => {
-		console.log(note[key]);
 		if (note[key]) {
 			const value = renderMarkdown(note[key], { inline: true });
+
 			if (index === 0) return `<strong>${value}</strong>`;
 			return value;
-	};
+		}
 	}).join(' ');
 });
-
-console.log(formattedNotes)
 ---
 
 <section class="sticky-note-gallery">
