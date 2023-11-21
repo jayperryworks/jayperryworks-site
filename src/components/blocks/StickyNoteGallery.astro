@@ -64,7 +64,7 @@ console.log(formattedNotes)
 		{formattedNotes.map((note) => (
 			<li class="sticky-note-item">
 				<RevealOnScroll
-					class="type-role-accent type-scale-epsilon"
+					class="sticky-note-text | type-role-accent type-scale-epsilon"
 					set:html={note}
 					tag="p"
 				/>
@@ -89,5 +89,9 @@ console.log(formattedNotes)
 		border-radius: var(--border-radius);
 		box-shadow: 0 0.15em 0.5em var(--color-shadow);
 		padding: var(--space-medium);
+	}
+
+	.sticky-note-item :global(p) {
+		text-wrap: balance;
 	}
 </style>
