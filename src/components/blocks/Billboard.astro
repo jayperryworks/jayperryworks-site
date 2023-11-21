@@ -123,6 +123,11 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 		grid-template-rows: repeat(auto-fit, minmax(auto, 1fr));
 	}
 
+	:global(.block.slide) .billboard {
+		min-height: 100svh;
+		padding-block: var(--space-xwide);
+	}
+
 	.billboard :global(.cover) {
 		justify-self: center;
 		width: 100%;

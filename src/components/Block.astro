@@ -13,6 +13,7 @@ import Heading from '@components/blocks/Heading.astro';
 import ImageGallery from '@components/blocks/ImageGallery.astro';
 import Passage from '@components/blocks/Passage.astro';
 import Pullquote from '@components/blocks/Pullquote.astro';
+import StickyNoteGallery from '@components/blocks/StickyNoteGallery.astro';
 import Table from '@components/blocks/Table.astro';
 import Video from '@components/blocks/Video.astro';
 
@@ -53,6 +54,7 @@ const blocks = {
 	imageGallery: ImageGallery,
 	passage: Passage,
 	pullquote: Pullquote,
+	stickyNoteGrid: StickyNoteGallery,
 	table: Table,
 	video: Video,
 };
@@ -69,16 +71,12 @@ const style = `--block-width: var(--content-width-${getWidth(block.prominence)})
 </div>
 
 <style>
-	.block.flow {
+	.block {
 		padding-inline: var(--space-outside);
 	}
 
 	.block.slide {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-		padding-block: var(--space-xwide);
-		padding-inline: var(--space-outside);
+		padding-block-start: 0;
 	}
 
 	.wrapper {
@@ -87,11 +85,6 @@ const style = `--block-width: var(--content-width-${getWidth(block.prominence)})
 	}
 
 	.slide .wrapper {
-		display: flex;
-		flex-direction: column;
-		flex: 1;
-		margin-inline: auto;
 		max-width: var(--content-width-xxwide);
-		width: 100%;
 	}
 </style>

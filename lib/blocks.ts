@@ -50,7 +50,7 @@ function sharedBlockFields(slice: Slice): BlockType {
 	} = slice.primary;
 
 	return {
-		displayMode,
+		displayMode: (displayMode as string).toLowerCase(),
 		prominence: prominence as BlockType['prominence'],
 		includeInExcerpt: Boolean(includeInExcerpt),
 		type: camelCase(slice.slice_type),
@@ -299,6 +299,25 @@ function pullquote(slice: Slice): BlockType {
 	};
 }
 
+function stickyNoteGallery(slice: Slice): BlockType {
+	const {
+		title,
+		subtitle,
+		description: prismicText,
+	} = slice.primary;
+
+	return {
+		title,
+		subtitle,
+		description: { prismicText },
+		notes: slice.items.map((item) => ({
+			shortStatement: markdownText(item.short_statement as RichTextField),
+			extendedStatement: markdownText(item.extended_statement as RichTextField),
+		})),
+		...sharedBlockFields(slice),
+	};
+}
+
 function table(slice: Slice): BlockType {
 	const {
 		csv_file: CSVFile,
@@ -357,6 +376,7 @@ export default {
 	heading,
 	passage,
 	pullquote,
+	sticky_note_grid: stickyNoteGallery,
 	table,
 	video,
 };

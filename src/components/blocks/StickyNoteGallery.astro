@@ -1,0 +1,93 @@
+---
+// utilities
+import * as prismicHelpers from '@prismicio/helpers';
+import renderMarkdown from '@lib/renderMarkdown';
+
+// components
+import Gallery from '@components/layout/Gallery.astro';
+import Passage from '@components/blocks/Passage.astro';
+import Heading from '@components/blocks/Heading.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+
+// types
+import {
+	FormattedText,
+	StickyNote,
+} from '@lib/types';
+
+import { TitleField } from '@prismicio/types';
+
+export interface Props {
+	notes: StickyNote[],
+	title: TitleField,
+	description?: FormattedText,
+	subtitle?: TitleField,
+}
+
+const {
+	notes,
+	title,
+	description,
+	subtitle,
+} = Astro.props as Props;
+
+const formattedNotes = notes.map((note) => {
+	return Object.keys(note).map((key, index) => {
+		console.log(note[key]);
+		if (note[key]) {
+			const value = renderMarkdown(note[key], { inline: true });
+			if (index === 0) return `<strong>${value}</strong>`;
+			return value;
+	};
+	}).join(' ');
+});
+
+console.log(formattedNotes)
+---
+
+<section class="sticky-note-gallery">
+	<Heading
+		level={2}
+		text={title}
+	/>
+	{prismicHelpers.isFilled.title(subtitle) && (
+		<Heading
+			level={4}
+			text={subtitle}
+			subheading
+		/>
+	)}
+	{description && (
+		<Passage text={description} />
+	)}
+	<Gallery gutter="medium">
+		{formattedNotes.map((note) => (
+			<li class="sticky-note-item">
+				<RevealOnScroll
+					class="type-role-accent type-scale-epsilon"
+					set:html={note}
+					tag="p"
+				/>
+			</li>
+		))}
+	</Gallery>
+</section>
+
+<style>
+	:global(.block.slide) .sticky-note-gallery {
+		padding-block: var(--space-xwide);
+	}
+
+	.sticky-note-gallery {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-medium);
+	}
+
+	.sticky-note-item {
+		background-color: var(--color-island);
+		border-radius: var(--border-radius);
+		box-shadow: 0 0.15em 0.5em var(--color-shadow);
+		padding: var(--space-medium);
+	}
+</style>
