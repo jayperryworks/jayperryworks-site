@@ -19,14 +19,16 @@ const items = [
 
 const customData = await getCustomData();
 
-export const get = () => {
-	return rss({
-		title,
-		description: "Jay's recent writing and drawings.",
-		site: import.meta.env.SITE,
-		stylesheet: '/rss/styles.xsl',
-		xmlns,
-		customData,
-		items,
-	});
-};
+export function GET() {
+	return new Response(
+		rss({
+			title,
+			description: "Jay's recent writing and drawings.",
+			site: import.meta.env.SITE,
+			stylesheet: '/rss/styles.xsl',
+			xmlns,
+			customData,
+			items,
+		})
+	);
+}
