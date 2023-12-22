@@ -1,5 +1,6 @@
 ---
 // --- assets
+import '@styles/tokens/borders.css';
 import '@styles/tokens/color.css';
 import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
@@ -12,10 +13,11 @@ import { PrismicDocumentWithUID } from '@prismicio/types';
 
 // --- components
 import Heading from '@components/blocks/Heading.astro';
-import Layout from '@layouts/BaseLayout.astro';
+import Passage from '@components/blocks/Passage.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
 import MainNav from '@components/navigation/MainNav.astro';
 import PictureGallery from '@components/navigation/PictureGallery.astro';
+import Layout from '@layouts/BaseLayout.astro';
 
 // --- data
 // use this aspect ratio when none is specified for a given series
@@ -49,9 +51,12 @@ const picturesData = await prismic.getAllByType('picture', {
 				date_completed
 				series {
 					...on picture_series {
-						uid
-						title
 						date_started
+						description
+						grid_column_size
+						grid_gutter_width
+						title
+						uid
 					}
 				}
 				substrate {
@@ -73,11 +78,25 @@ const seriesList = picturesData
 
 		if (!series) return result;
 
-		const { uid, title, date_started: startDate } = series;
+		const {
+			uid,
+			title,
+			date_started: startDate,
+			description,
+			grid_column_size: columnSize,
+			grid_gutter_width: gutter,
+		} = series;
 
 		if (result.find((s) => s.uid === uid)) return result;
 
-		result.push({ startDate, title, uid, });
+		result.push({
+			columnSize,
+			description,
+			gutter,
+			startDate,
+			title,
+			uid,
+		});
 		return result;
 	}, [])
 	.sort((a, b) => {
@@ -123,20 +142,28 @@ picturesBySeries.push({
 				class="series"
 				id={series.uid || 'other-work'}
 			>
-				<Heading
-					level={2}
-					class="type-scale-gamma"
-					set:html={
-						series.title
-							? `<em>${prismicHelpers.asText(series.title)}</em> series`
-							: 'Other recent work'
-					}
-				>
-				</Heading>
+				<header class="series-header">
+					<Heading
+						level={2}
+						class="type-scale-gamma"
+						set:html={
+							series.title
+								? `<em>${prismicHelpers.asText(series.title)}</em> series`
+								: 'Other recent work'
+						}
+					>
+					</Heading>
+
+					{series.description && (
+						<Passage text={{ markdown: prismicHelpers.asText(series.description) }} />
+					)}
+				</header>
 
 				<PictureGallery
 					list={series.pictures as PrismicDocumentWithUID[]}
 					aspectRatio={series.aspectRatio}
+					columnSize={series.columnSize?.toLowerCase()}
+					gutter={series.gutter?.toLowerCase()}
 				/>
 			</section>
 		))}
@@ -145,25 +172,37 @@ picturesBySeries.push({
 </Layout>
 
 <style>
-	main {
+	main :global(.title),
+	.series {
 		padding-inline: var(--space-outside);
 	}
 
 	main :global(.title),
-	.series {
+	.series > * {
 		margin-inline: auto;
 		max-width: var(--content-width-xxwide);
+		width: 100%;
 	}
 
 	main :global(.title) {
-		padding-block-end: var(--space-wide);
-		padding-block-start: var(--space-xwide);
+		padding-block: var(--space-xwide);
 	}
 
 	.series {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-medium);
+		gap: var(--space-wide);
 		padding-block-end: var(--space-xwide);
+	}
+
+	.series:not(:first-of-type) {
+		border-block-start: var(--border-default);
+		padding-block-start: var(--space-xwide);
+	}
+
+	.series-header {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xnarrow);
 	}
 </style>

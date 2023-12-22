@@ -9,19 +9,21 @@ import Gallery from '@components/layout/Gallery.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
-import { GallerySize } from '@lib/types';
+import { GallerySize, SpaceScale } from '@lib/types';
 import { PrismicDocumentWithUID } from '@prismicio/types';
 
 export interface Props {
 	list: PrismicDocumentWithUID[];
 	aspectRatio?: string;
 	columnSize?: GallerySize;
+	gutter?: SpaceScale;
 }
 
 const {
 	list,
 	aspectRatio = '3 / 2',
 	columnSize = 'medium',
+	gutter = 'wide',
 } = Astro.props as Props;
 
 function frameType(picture) {
@@ -35,8 +37,8 @@ function frameType(picture) {
 
 <Gallery
 	class="picture-gallery"
-	gutter="wide"
 	size={columnSize}
+	{gutter}
 >
 	{list.map((picture: PrismicDocumentWithUID) => (
 		<RevealOnScroll tag="li">
