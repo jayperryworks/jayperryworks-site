@@ -19,7 +19,7 @@ import PictureGallery from '@components/navigation/PictureGallery.astro';
 
 // --- data
 // use this aspect ratio when none is specified for a given series
-const DEFAULT_ASPECT_RATIO = '3 / 2';
+const DEFAULT_ASPECT_RATIO = '1 / 1';
 
 const pageData = await prismic.getByUID('index_page', 'pictures');
 
@@ -54,6 +54,11 @@ const picturesData = await prismic.getAllByType('picture', {
 						date_started
 					}
 				}
+				substrate {
+					...on picture_substrate {
+						name
+					}
+				}
 				cover
 				title
 			}
@@ -61,6 +66,7 @@ const picturesData = await prismic.getAllByType('picture', {
 	`,
 });
 
+// create an array of series from the pictures data
 const seriesList = picturesData
 	.reduce((result, picture) => {
 		const { data: series } = picture.data.series;
@@ -79,6 +85,7 @@ const seriesList = picturesData
 		return 1;
 	});
 
+// populate the series array with pictures data (for each series)
 let picturesBySeries = seriesList.map((group) => {
 	const pictures = picturesData.filter((p) => p.data.series.uid === group.uid);
 	const { width, height } = pictures[0].data.cover.dimensions;

@@ -1,9 +1,10 @@
 ---
 // utilities
 import { picture as permalink } from '@lib/routes';
+import * as prismicHelpers from '@prismicio/helpers';
 
 // components
-import Image from '@components/elements/Image.astro';
+import PictureFrame from '@components/elements/PictureFrame.astro';
 import Gallery from '@components/layout/Gallery.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
@@ -22,10 +23,19 @@ const {
 	aspectRatio = '3 / 2',
 	columnSize = 'medium',
 } = Astro.props as Props;
+
+function frameType(picture) {
+	if (prismicHelpers.isFilled.link(picture.data.substrate)) {
+		return picture.data.substrate.data.name.includes('Paper') ? 'frame' : 'panel';
+	}
+
+	return 'frame';
+}
 ---
 
 <Gallery
 	class="picture-gallery"
+	gutter="wide"
 	size={columnSize}
 >
 	{list.map((picture: PrismicDocumentWithUID) => (
@@ -34,10 +44,11 @@ const {
 				class="link | type-link-undecorated"
 				href={permalink(picture)}
 			>
-				<Image
-					class="image"
+				<PictureFrame
 					fit="cover"
+					matteThickness={frameType(picture) === 'frame' ? 4 : undefined}
 					source={picture.data.cover}
+					type={frameType(picture)}
 					{aspectRatio}
 					border
 				/>
@@ -47,7 +58,10 @@ const {
 </Gallery>
 
 <style is:global>
-	.picture-gallery .link {
-		display: block;
+	.link {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex: 1;
 	}
 </style>
