@@ -10,12 +10,16 @@ import {
 const items = await getPicturesFeed();
 const customData = await getCustomData('pictures.xml');
 
-export const get = () => rss({
-	title: `${title}: Pictures`,
-	description: "Jay's recent drawings, paintings, and prints.",
-	site: import.meta.env.SITE,
-	stylesheet: '/rss/styles.xsl',
-	xmlns,
-	customData,
-	items,
-});
+export function GET() {
+	return new Response(
+		rss({
+			title: `${title}: Pictures`,
+			description: "Jay's recent drawings, paintings, and prints.",
+			site: import.meta.env.SITE,
+			stylesheet: '/rss/styles.xsl',
+			xmlns,
+			customData,
+			items,
+		})
+	);
+}

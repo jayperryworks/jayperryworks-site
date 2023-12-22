@@ -1,15 +1,9 @@
 import * as prismic from '@prismicio/client';
 
-function getEnvString(key: string): string {
-	if (import.meta.env[key]) {
-		return import.meta.env[key].toString();
-	}
-	return process.env[key].toString();
-}
+const endpoint = import.meta.env.PRISMIC_REPOSITORY || process.env.PRISMIC_REPOSITORY;
+const accessToken = import.meta.env.PRISMIC_TOKEN || process.env.PRISMIC_TOKEN;
 
-const endpoint = getEnvString('PRISMIC_REPOSITORY');
-const endpointUrl = prismic.getRepositoryEndpoint(endpoint);
-
-const accessToken = getEnvString('PRISMIC_TOKEN');
-
-export default prismic.createClient(endpointUrl, { accessToken });
+export default prismic.createClient(
+	prismic.getRepositoryEndpoint(endpoint),
+	{ accessToken },
+);
