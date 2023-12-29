@@ -9,7 +9,14 @@ import Gallery from '@components/layout/Gallery.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
-import { GallerySize, SpaceScale } from '@lib/types';
+import {
+	CSSVariable,
+	GallerySize,
+	HexColor,
+	HSLAColor,
+	HSLColor,
+	SpaceScale,
+} from '@lib/types';
 import { PrismicDocumentWithUID } from '@prismicio/types';
 
 export interface Props {
@@ -17,13 +24,15 @@ export interface Props {
 	aspectRatio?: string;
 	columnSize?: GallerySize;
 	gutter?: SpaceScale;
+	matteColor?: CSSVariable | HexColor | HSLColor | HSLAColor,
 }
 
 const {
-	list,
 	aspectRatio = '3 / 2',
 	columnSize = 'medium',
 	gutter = 'wide',
+	list,
+	matteColor,
 } = Astro.props as Props;
 
 function frameType(picture) {
@@ -41,7 +50,7 @@ function frameType(picture) {
 	{gutter}
 >
 	{list.map((picture: PrismicDocumentWithUID) => (
-		<RevealOnScroll tag="li">
+		<RevealOnScroll tag="li" class={ picture.data.featured ? 'featured' : '' }>
 			<a
 				class="link | type-link-undecorated"
 				href={permalink(picture)}
@@ -52,6 +61,7 @@ function frameType(picture) {
 					source={picture.data.cover}
 					type={frameType(picture)}
 					{aspectRatio}
+					{matteColor}
 					border
 				/>
 			</a>
@@ -66,4 +76,10 @@ function frameType(picture) {
 		justify-content: center;
 		flex: 1;
 	}
+
+	/* @media screen and (min-width: 40em) {
+		.featured {
+			grid-area: span 2 / span 2;
+		}
+	} */
 </style>

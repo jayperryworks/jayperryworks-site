@@ -8,8 +8,9 @@ import '@styles/utilities/type.css';
 
 // --- utils
 import * as prismicHelpers from '@prismicio/helpers';
-import prismic from '@lib/prismic';
+import { convertHexToHSL } from '@lib/colorHelpers';
 import { PrismicDocumentWithUID } from '@prismicio/types';
+import prismic from '@lib/prismic';
 
 // --- components
 import Heading from '@components/blocks/Heading.astro';
@@ -51,10 +52,12 @@ const picturesData = await prismic.getAllByType('picture', {
 				date_completed
 				series {
 					...on picture_series {
+						background_color
 						date_started
 						description
 						grid_column_size
 						grid_gutter_width
+						matte_color
 						title
 						uid
 					}
@@ -66,6 +69,7 @@ const picturesData = await prismic.getAllByType('picture', {
 				}
 				cover
 				title
+				featured
 			}
 		}
 	`,
@@ -79,17 +83,23 @@ const seriesList = picturesData
 		if (!series) return result;
 
 		const {
-			uid,
-			title,
+			background_color: background,
 			date_started: startDate,
 			description,
 			grid_column_size: columnSize,
 			grid_gutter_width: gutter,
+			matte_color: matte,
+			title,
+			uid,
 		} = series;
 
 		if (result.find((s) => s.uid === uid)) return result;
 
 		result.push({
+			color: {
+				background: background ? convertHexToHSL(background) : null,
+				matte: matte ? convertHexToHSL(matte) : null,
+			},
 			columnSize,
 			description,
 			gutter,
@@ -141,8 +151,10 @@ picturesBySeries.push({
 				role="feed"
 				class="series"
 				id={series.uid || 'other-work'}
+				style={series.color?.background ? `--color-bg: ${series.color.background}` : ''}
 			>
 				<header class="series-header">
+					{series.color?.background}
 					<Heading
 						level={2}
 						class="type-scale-gamma"
@@ -164,6 +176,7 @@ picturesBySeries.push({
 					aspectRatio={series.aspectRatio}
 					columnSize={series.columnSize?.toLowerCase()}
 					gutter={series.gutter?.toLowerCase()}
+					matteColor={series.color?.matte}
 				/>
 			</section>
 		))}
@@ -192,6 +205,7 @@ picturesBySeries.push({
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-wide);
+		background-color: var(--color-bg);
 		padding-block-end: var(--space-xwide);
 	}
 
