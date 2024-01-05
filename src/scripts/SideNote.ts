@@ -17,37 +17,39 @@ const style = `
 			box-sizing: border-box;
 		}
 
-		.sidenote {
-			--label-color: var(--color-bg);
-			--label-bg: var(--color-primary);
+		:host {
+			--label-color: var(--color-primary);
+			--label-bg: var(--color-bg);
+
 			display: inline;
 		}
 
 		.label {
-			--size: 2em;
-			background-color: var(--label-bg);
-			border: 0;
+			--size: 1.6em;
+
+			background-color: transparent;
 			border-radius: 1000px;
+			border: 2px solid var(--label-color);
 			color: var(--label-color);
 			cursor: pointer;
 			display: inline-block;
 			font-family: var(--type-font-accent);
 			font-size: 0.6em;
 			line-height: var(--size);
-			margin-inline: 0.25em;
+			margin-inline: 0.15em;
 			min-height: var(--size);
 			min-width: var(--size);
 			padding-block: 0;
-			padding-inline: 0.5rem;
+			padding-inline: 0.6rem;
 			position: relative;
 			text-align: center;
-			transition: background-color 0.25s ease;
+			transition: color 0.25s ease, border-color 0.25s ease;
 			vertical-align: top;
 		}
 
 		.label:hover,
-		.is-open .label {
-			--label-bg: var(--color-highlight);
+		.label.is-open {
+			--label-color: var(--color-highlight);
 		}
 
 		.content,
@@ -57,7 +59,8 @@ const style = `
 			top: auto;
 		}
 
-		.is-open .content {
+		.content.is-open {
+			clear: right;
 			display: block;
 			float: left;
 			left: auto;
@@ -65,7 +68,7 @@ const style = `
 			overflow: hidden;
 			padding-block: var(--space-narrow);
 			position: relative;
-			z-index: 4;
+			top: unset;
 		}
 
 		/* use an additional wrapper element inside .content so Safari doesn't mess up spacing - it collapses margins if we apply these styles to .content */
@@ -115,10 +118,11 @@ class SideNote extends HTMLElement {
 		this.render();
 
 		const label = this.#shadowRoot.querySelector('.label');
-		const wrapper = this.#shadowRoot.querySelector('.sidenote');
+		const content = this.#shadowRoot.querySelector('.content');
 
 		label.addEventListener('click', () => {
-			wrapper.classList.toggle('is-open');
+			label.classList.toggle('is-open');
+			content.classList.toggle('is-open');
 		});
 	}
 
@@ -126,17 +130,15 @@ class SideNote extends HTMLElement {
 		this.#shadowRoot.innerHTML = `
 			${style}
 
-			<span class="sidenote" id="sidenote-${this.number}">
-				<button class="label" aria-label="Toggle the note">${this.number}</button>
-				<small
-					class="content"
-					role="note"
-				>
-					<span class="wrapper" data-count="${this.number}">
-						<span class="text"><slot></slot></span>
-					</span>
-				</small>
-			</span>
+			<button class="label" aria-label="Toggle the note">${this.number}</button>
+			<small
+				class="content"
+				role="note"
+			>
+				<span class="wrapper" data-count="${this.number}">
+					<span class="text"><slot></slot></span>
+				</span>
+			</small>
 		`;
 	}
 }
