@@ -8,6 +8,7 @@ import '@styles/tokens/borders.css';
 
 // utilities
 import * as prismicHelpers from '@prismicio/helpers';
+import { arrayToPunctatedString } from '@lib/stringHelpers';
 
 // types
 import type { ImageField } from '@prismicio/types';
@@ -50,11 +51,11 @@ const classList = [
 	fit ? `fit ${fit}` : '',
 ].join(' ');
 
-const styleList = [
-	aspectRatio ? `--aspect-ratio: ${aspectRatio};` : '',
-	position ? `--object-position: ${position};` : '',
+const styleList = arrayToPunctatedString([
+	aspectRatio && `--aspect-ratio: ${aspectRatio}`,
+	position && `--object-position: ${position}`,
 	style,
-].join(' ');
+]);
 ---
 
 <img

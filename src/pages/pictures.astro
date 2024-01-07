@@ -52,6 +52,7 @@ const picturesData = await prismic.getAllByType('picture', {
 				date_completed
 				series {
 					...on picture_series {
+						aspect_ratio
 						background_color
 						date_started
 						description
@@ -83,6 +84,7 @@ const seriesList = picturesData
 		if (!series) return result;
 
 		const {
+			aspect_ratio: aspectRatio,
 			background_color: background,
 			date_started: startDate,
 			description,
@@ -96,6 +98,7 @@ const seriesList = picturesData
 		if (result.find((s) => s.uid === uid)) return result;
 
 		result.push({
+			aspectRatio: aspectRatio || DEFAULT_ASPECT_RATIO,
 			color: {
 				background: background ? convertHexToHSL(background) : null,
 				matte: matte ? convertHexToHSL(matte) : null,
@@ -115,22 +118,16 @@ const seriesList = picturesData
 	});
 
 // populate the series array with pictures data (for each series)
-let picturesBySeries = seriesList.map((group) => {
-	const pictures = picturesData.filter((p) => p.data.series.uid === group.uid);
-	const { width, height } = pictures[0].data.cover.dimensions;
-
-	return {
-		...group,
-		pictures,
-		aspectRatio: `${width} / ${height}`,
-	};
-});
+let picturesBySeries = seriesList.map((group) => ({
+	pictures: picturesData.filter((p) => p.data.series.uid === group.uid),
+	...group,
+}));
 
 // add pictures that aren't in a series last
 picturesBySeries.push({
 	pictures: picturesData.filter((p) => !p.data.series.data),
 	aspectRatio: DEFAULT_ASPECT_RATIO,
-})
+});
 ---
 
 <Layout

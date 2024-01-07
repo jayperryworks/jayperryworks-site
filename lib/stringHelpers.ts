@@ -76,7 +76,21 @@ function removeWidows(string: string, minWordCount = 4): string {
 	return string;
 }
 
+// convert an array to a string with 'separator' punctuation after each item
+// -> ['--variable: 1', '--another: 2'] -> '--variable: 1; --another: 2;'
+// -> removes any falsey or null items
+function arrayToPunctatedString(items: string[], separator = ';') {
+	return items.reduce((result, item) => {
+		if (item) {
+			result.push(item.slice(-1) !== separator ? item.concat(separator) : item);
+		}
+
+		return result;
+	}, []).join(' ');
+}
+
 export {
+	arrayToPunctatedString,
 	arrayToSentence,
 	camelCase,
 	paramCase,

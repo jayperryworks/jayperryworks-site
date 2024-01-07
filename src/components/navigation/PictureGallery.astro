@@ -28,12 +28,14 @@ export interface Props {
 }
 
 const {
-	aspectRatio = '3 / 2',
+	aspectRatio,
 	columnSize = 'medium',
 	gutter = 'wide',
 	list,
 	matteColor,
 } = Astro.props as Props;
+
+console.log(aspectRatio);
 
 function frameType(picture) {
 	if (prismicHelpers.isFilled.link(picture.data.substrate)) {
@@ -50,7 +52,14 @@ function frameType(picture) {
 	{gutter}
 >
 	{list.map((picture: PrismicDocumentWithUID) => (
-		<RevealOnScroll tag="li" class={ picture.data.featured ? 'featured' : '' }>
+		<RevealOnScroll
+			tag="li"
+			class={[
+				picture.data.featured ? 'featured' : '',
+				'item',
+			].join(' ')}
+			style={ `--aspectRatio: ${aspectRatio};` }
+		>
 			<a
 				class="link | type-link-undecorated"
 				href={permalink(picture)}
@@ -60,7 +69,6 @@ function frameType(picture) {
 					matteThickness={frameType(picture) === 'frame' ? 4 : undefined}
 					source={picture.data.cover}
 					type={frameType(picture)}
-					{aspectRatio}
 					{matteColor}
 					border
 				/>
@@ -70,6 +78,10 @@ function frameType(picture) {
 </Gallery>
 
 <style is:global>
+	.item {
+		aspect-ratio: var(--aspectRatio);
+	}
+
 	.link {
 		display: flex;
 		align-items: center;
