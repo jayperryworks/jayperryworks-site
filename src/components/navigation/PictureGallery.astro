@@ -35,8 +35,6 @@ const {
 	matteColor,
 } = Astro.props as Props;
 
-console.log(aspectRatio);
-
 function frameType(picture) {
 	if (prismicHelpers.isFilled.link(picture.data.substrate)) {
 		return picture.data.substrate.data.name.includes('Paper') ? 'frame' : 'panel';
@@ -56,21 +54,20 @@ function frameType(picture) {
 			tag="li"
 			class={[
 				picture.data.featured ? 'featured' : '',
-				'item',
+				aspectRatio ? 'has-aspect' : '',
 			].join(' ')}
-			style={ `--aspectRatio: ${aspectRatio};` }
+			style={ aspectRatio ? `--aspectRatio: ${aspectRatio};` : '' }
 		>
 			<a
 				class="link | type-link-undecorated"
 				href={permalink(picture)}
 			>
 				<PictureFrame
-					fit="cover"
+					class="picture"
 					matteThickness={frameType(picture) === 'frame' ? 4 : undefined}
 					source={picture.data.cover}
 					type={frameType(picture)}
 					{matteColor}
-					border
 				/>
 			</a>
 		</RevealOnScroll>
@@ -78,8 +75,8 @@ function frameType(picture) {
 </Gallery>
 
 <style is:global>
-	.item {
-		aspect-ratio: var(--aspectRatio);
+	.has-aspect {
+		aspect-ratio: var(--aspectRatio, none);
 	}
 
 	.link {
@@ -87,6 +84,10 @@ function frameType(picture) {
 		align-items: center;
 		justify-content: center;
 		flex: 1;
+	}
+
+	.has-aspect .link {
+		display: grid;
 	}
 
 	/* @media screen and (min-width: 40em) {

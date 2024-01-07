@@ -98,7 +98,7 @@ const seriesList = picturesData
 		if (result.find((s) => s.uid === uid)) return result;
 
 		result.push({
-			aspectRatio: aspectRatio || DEFAULT_ASPECT_RATIO,
+			aspectRatio: aspectRatio ? undefined : DEFAULT_ASPECT_RATIO,
 			color: {
 				background: background ? convertHexToHSL(background) : null,
 				matte: matte ? convertHexToHSL(matte) : null,

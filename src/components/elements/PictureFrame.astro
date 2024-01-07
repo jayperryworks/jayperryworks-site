@@ -41,9 +41,9 @@ const types = {
 
 const {
 	source,
-	class: className,
 	// put the 'type' prop first because 'frameThickness' and 'matteThickness' use its value for their defaults
 	type = 'frame',
+	class: className,
 	frameThickness = types[type].border,
 	matteThickness = types[type].matte,
 	matteColor,
@@ -79,7 +79,7 @@ const styleList = arrayToPunctatedString([
 		border: var(--frame-thickness) solid var(--frame-color);
 		box-shadow: 0 0.25em 0.5em var(--color-shadow);
 		padding: var(--matte-thickness);
-		height: 100%;
+		max-height: 100%;
 	}
 
 	.picture.panel {
