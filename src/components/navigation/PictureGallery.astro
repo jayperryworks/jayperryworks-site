@@ -60,7 +60,6 @@ function matteThickness(picture) {
 		<RevealOnScroll
 			tag="li"
 			class={[
-				'item',
 				picture.data.featured ? 'featured' : '',
 				aspectRatio ? 'has-aspect' : '',
 			].join(' ')}
@@ -82,26 +81,17 @@ function matteThickness(picture) {
 </Gallery>
 
 <style is:global>
-	.item {
-		flex-direction: row;
-		overflow: hidden;
-	}
-
 	.has-aspect {
 		aspect-ratio: var(--aspectRatio, none);
 	}
 
-	/* .link {
-		display: flex;
-	} */
-
 	.has-aspect .link {
 		flex: 1;
+		align-content: center;
 		align-items: center;
-		display: grid;
-		justify-items: center;
+		display: flex;
+		justify-content: center;
 		max-height: 100%;
-		max-width: 100%;
 	}
 
 	/* @media screen and (min-width: 40em) {
