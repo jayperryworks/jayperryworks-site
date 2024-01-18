@@ -1,5 +1,6 @@
 ---
 // --- assets
+import '@styles/tokens/borders.css';
 import '@styles/tokens/color.css';
 import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
@@ -7,19 +8,21 @@ import '@styles/utilities/type.css';
 
 // --- utils
 import * as prismicHelpers from '@prismicio/helpers';
-import prismic from '@lib/prismic';
+import { convertHexToHSL } from '@lib/colorHelpers';
 import { PrismicDocumentWithUID } from '@prismicio/types';
+import prismic from '@lib/prismic';
 
 // --- components
 import Heading from '@components/blocks/Heading.astro';
-import Layout from '@layouts/BaseLayout.astro';
+import Passage from '@components/blocks/Passage.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
 import MainNav from '@components/navigation/MainNav.astro';
 import PictureGallery from '@components/navigation/PictureGallery.astro';
+import Layout from '@layouts/BaseLayout.astro';
 
 // --- data
 // use this aspect ratio when none is specified for a given series
-const DEFAULT_ASPECT_RATIO = '3 / 2';
+const DEFAULT_ASPECT_RATIO = '1 / 1';
 
 const pageData = await prismic.getByUID('index_page', 'pictures');
 
@@ -49,29 +52,66 @@ const picturesData = await prismic.getAllByType('picture', {
 				date_completed
 				series {
 					...on picture_series {
-						uid
-						title
+						aspect_ratios
+						background_color
 						date_started
+						description
+						grid_column_size
+						grid_gutter_width
+						matte_color
+						title
+						uid
+					}
+				}
+				substrate {
+					...on picture_substrate {
+						name
 					}
 				}
 				cover
 				title
+				featured
 			}
 		}
 	`,
 });
 
+// create an array of series from the pictures data
 const seriesList = picturesData
 	.reduce((result, picture) => {
 		const { data: series } = picture.data.series;
 
 		if (!series) return result;
 
-		const { uid, title, date_started: startDate } = series;
+		const {
+			aspect_ratios: sameAspectRatio,
+			background_color: background,
+			date_started: startDate,
+			description,
+			grid_column_size: columnSize,
+			grid_gutter_width: gutter,
+			matte_color: matte,
+			title,
+			uid,
+		} = series;
 
 		if (result.find((s) => s.uid === uid)) return result;
 
-		result.push({ startDate, title, uid, });
+		result.push({
+			// if all the pictures in the series have the same aspect ratio, leave this prop undefined so the grid boxes will be whatever shape the pictures are
+			// if not, use the default aspect ratio so the grid boxes will be the same shape and will constrain the different-shaped pictures to equal areas
+			aspectRatio: sameAspectRatio ? undefined : DEFAULT_ASPECT_RATIO,
+			color: {
+				background: background ? convertHexToHSL(background) : null,
+				matte: matte ? convertHexToHSL(matte) : null,
+			},
+			columnSize,
+			description,
+			gutter,
+			startDate,
+			title,
+			uid,
+		});
 		return result;
 	}, [])
 	.sort((a, b) => {
@@ -79,22 +119,18 @@ const seriesList = picturesData
 		return 1;
 	});
 
-let picturesBySeries = seriesList.map((group) => {
-	const pictures = picturesData.filter((p) => p.data.series.uid === group.uid);
-	const { width, height } = pictures[0].data.cover.dimensions;
-
-	return {
-		...group,
-		pictures,
-		aspectRatio: `${width} / ${height}`,
-	};
-});
+// populate the series array with pictures data (for each series)
+let picturesBySeries = seriesList.map((group) => ({
+	pictures: picturesData.filter((p) => p.data.series.uid === group.uid),
+	...group,
+}));
 
 // add pictures that aren't in a series last
+// -> use default aspect ratio because they all have different aspect ratios
 picturesBySeries.push({
 	pictures: picturesData.filter((p) => !p.data.series.data),
 	aspectRatio: DEFAULT_ASPECT_RATIO,
-})
+});
 ---
 
 <Layout
@@ -104,32 +140,43 @@ picturesBySeries.push({
 >
 	<MainNav segment="pictures" />
 	<main>
-		<Heading
-			class="title"
-			level={1}
-			text={title}
-		/>
+		<header class="title">
+			<Heading
+				level={1}
+				text={title}
+			/>
+		</header>
 
 		{picturesBySeries.map((series) => (
 			<section
 				role="feed"
 				class="series"
 				id={series.uid || 'other-work'}
+				style={series.color?.background ? `--color-bg: ${series.color.background}` : ''}
 			>
-				<Heading
-					level={2}
-					class="type-scale-gamma"
-					set:html={
-						series.title
-							? `<em>${prismicHelpers.asText(series.title)}</em> series`
-							: 'Other recent work'
-					}
-				>
-				</Heading>
+				<header class="series-header">
+					<Heading
+						level={2}
+						class="type-scale-gamma"
+						set:html={
+							series.title
+								? `<em>${prismicHelpers.asText(series.title)}</em> series`
+								: 'Other recent work'
+						}
+					>
+					</Heading>
+
+					{series.description && (
+						<Passage text={{ markdown: prismicHelpers.asText(series.description) }} />
+					)}
+				</header>
 
 				<PictureGallery
 					list={series.pictures as PrismicDocumentWithUID[]}
 					aspectRatio={series.aspectRatio}
+					columnSize={series.columnSize?.toLowerCase()}
+					gutter={series.gutter?.toLowerCase()}
+					matteColor={series.color?.matte}
 				/>
 			</section>
 		))}
@@ -138,25 +185,38 @@ picturesBySeries.push({
 </Layout>
 
 <style>
-	main {
+	.title,
+	.series {
 		padding-inline: var(--space-outside);
 	}
 
-	main :global(.title),
-	.series {
-		margin-inline: auto;
+	.title > :global(h1),
+	.series > :global(*) {
 		max-width: var(--content-width-xxwide);
+		margin-inline: auto;
+		width: 100%;
 	}
 
-	main :global(.title) {
-		padding-block-end: var(--space-wide);
-		padding-block-start: var(--space-xwide);
+	.title {
+		padding-block: var(--space-xwide);
 	}
 
 	.series {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-medium);
+		gap: var(--space-wide);
+		background-color: var(--color-bg);
 		padding-block-end: var(--space-xwide);
+	}
+
+	.series:not(:first-of-type) {
+		border-block-start: var(--border-default);
+		padding-block-start: var(--space-xwide);
+	}
+
+	.series-header {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xnarrow);
 	}
 </style>

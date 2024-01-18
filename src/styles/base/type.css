@@ -32,7 +32,7 @@
 @font-face {
 	font-display: swap;
 	font-family: 'Figtree';
-	font-weight: 300 900;
+	font-weight: 300 600;
 	src:
 		url('/assets/fonts/Figtree.ttf') format('truetype') tech('variations'),
 		url('/assets/fonts/Figtree.ttf') format('truetype-variations');
@@ -42,7 +42,7 @@
 	font-display: swap;
 	font-family: 'Figtree';
 	font-style: italic;
-	font-weight: 300 900;
+	font-weight: 300 600;
 	src:
 		local('Figtree'),
 		url('/assets/fonts/Figtree-Italic.ttf') format('truetype') tech('variations'),
@@ -101,6 +101,7 @@ body {
 	font-size: var(--type-scale-epsilon);
 	line-height: var(--type-leading-default);
 	font-weight: 300;
+	hanging-punctuation: first last;
 }
 
 h1, h2, h3, h4, h5, h6 {
