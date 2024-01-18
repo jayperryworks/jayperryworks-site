@@ -140,11 +140,12 @@ picturesBySeries.push({
 >
 	<MainNav segment="pictures" />
 	<main>
-		<Heading
-			class="title"
-			level={1}
-			text={title}
-		/>
+		<header class="title">
+			<Heading
+				level={1}
+				text={title}
+			/>
+		</header>
 
 		{picturesBySeries.map((series) => (
 			<section
@@ -184,19 +185,19 @@ picturesBySeries.push({
 </Layout>
 
 <style>
-	main :global(.title),
+	.title,
 	.series {
 		padding-inline: var(--space-outside);
 	}
 
-	main :global(.title),
-	.series > * {
-		margin-inline: auto;
+	.title > :global(*),
+	.series > :global(*) {
 		max-width: var(--content-width-xxwide);
+		margin-inline: auto;
 		width: 100%;
 	}
 
-	main :global(.title) {
+	.title {
 		padding-block: var(--space-xwide);
 	}
 
