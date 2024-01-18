@@ -52,7 +52,7 @@ const picturesData = await prismic.getAllByType('picture', {
 				date_completed
 				series {
 					...on picture_series {
-						aspect_ratio
+						aspect_ratios
 						background_color
 						date_started
 						description
@@ -84,7 +84,7 @@ const seriesList = picturesData
 		if (!series) return result;
 
 		const {
-			aspect_ratio: aspectRatio,
+			aspect_ratios: sameAspectRatio,
 			background_color: background,
 			date_started: startDate,
 			description,
@@ -98,7 +98,9 @@ const seriesList = picturesData
 		if (result.find((s) => s.uid === uid)) return result;
 
 		result.push({
-			aspectRatio: aspectRatio ? undefined : DEFAULT_ASPECT_RATIO,
+			// if all the pictures in the series have the same aspect ratio, leave this prop undefined so the grid boxes will be whatever shape the pictures are
+			// if not, use the default aspect ratio so the grid boxes will be the same shape and will constrain the different-shaped pictures to equal areas
+			aspectRatio: sameAspectRatio ? undefined : DEFAULT_ASPECT_RATIO,
 			color: {
 				background: background ? convertHexToHSL(background) : null,
 				matte: matte ? convertHexToHSL(matte) : null,
@@ -124,6 +126,7 @@ let picturesBySeries = seriesList.map((group) => ({
 }));
 
 // add pictures that aren't in a series last
+// -> use default aspect ratio because they all have different aspect ratios
 picturesBySeries.push({
 	pictures: picturesData.filter((p) => !p.data.series.data),
 	aspectRatio: DEFAULT_ASPECT_RATIO,

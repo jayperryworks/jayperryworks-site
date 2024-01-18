@@ -39,8 +39,15 @@ function frameType(picture) {
 	if (prismicHelpers.isFilled.link(picture.data.substrate)) {
 		return picture.data.substrate.data.name.includes('Paper') ? 'frame' : 'panel';
 	}
+}
 
-	return 'frame';
+function matteThickness(picture) {
+	// use the default matte thickness for 'panel'-type pictures
+	if (frameType(picture) === 'panel') return undefined;
+
+	// otherwise, send values based on how wide the columns are
+	if (columnSize === 'large') return 4;
+	return 3;
 }
 ---
 
@@ -53,6 +60,7 @@ function frameType(picture) {
 		<RevealOnScroll
 			tag="li"
 			class={[
+				'item',
 				picture.data.featured ? 'featured' : '',
 				aspectRatio ? 'has-aspect' : '',
 			].join(' ')}
@@ -63,8 +71,7 @@ function frameType(picture) {
 				href={permalink(picture)}
 			>
 				<PictureFrame
-					class="picture"
-					matteThickness={frameType(picture) === 'frame' ? 4 : undefined}
+					matteThickness={matteThickness(picture)}
 					source={picture.data.cover}
 					type={frameType(picture)}
 					{matteColor}
@@ -75,19 +82,26 @@ function frameType(picture) {
 </Gallery>
 
 <style is:global>
+	.item {
+		flex-direction: row;
+		overflow: hidden;
+	}
+
 	.has-aspect {
 		aspect-ratio: var(--aspectRatio, none);
 	}
 
-	.link {
+	/* .link {
 		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex: 1;
-	}
+	} */
 
 	.has-aspect .link {
+		flex: 1;
+		align-items: center;
 		display: grid;
+		justify-items: center;
+		max-height: 100%;
+		max-width: 100%;
 	}
 
 	/* @media screen and (min-width: 40em) {
