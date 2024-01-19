@@ -37,8 +37,8 @@ const style = `
 			font-family: var(--type-font-accent);
 			font-size: var(--type-scale-eta);
 			line-height: var(--size);
-			transform: translateY(20%); /* scoot down a little */
-			margin-inline: 0.15em;
+			transform: translateY(10%); /* scoot down a little */
+			margin-inline: 0.35rem;
 			min-height: var(--size);
 			min-width: var(--size);
 			padding-block: 0;
