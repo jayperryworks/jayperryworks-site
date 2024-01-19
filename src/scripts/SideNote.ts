@@ -18,10 +18,11 @@ const style = `
 		}
 
 		:host {
-			--label-color: var(--color-primary);
+			--label-color: var(--color-secondary);
 			--label-bg: var(--color-bg);
 
 			display: inline;
+			font-size: 0; /* eliminate whitespace rendering */
 		}
 
 		.label {
@@ -34,13 +35,14 @@ const style = `
 			cursor: pointer;
 			display: inline-block;
 			font-family: var(--type-font-accent);
-			font-size: 0.6em;
+			font-size: var(--type-scale-eta);
 			line-height: var(--size);
+			transform: translateY(20%); /* scoot down a little */
 			margin-inline: 0.15em;
 			min-height: var(--size);
 			min-width: var(--size);
 			padding-block: 0;
-			padding-inline: 0.6rem;
+			padding-inline: 0.45rem;
 			position: relative;
 			text-align: center;
 			transition: color 0.25s ease, border-color 0.25s ease;
@@ -52,24 +54,28 @@ const style = `
 			--label-color: var(--color-highlight);
 		}
 
-		.content,
-		::slotted(.fallback) {
-			left: -999999px;
-			position: absolute;
-			top: auto;
-		}
-
-		.content.is-open {
-			clear: right;
-			display: block;
+		.content {
+			clear: both;
 			float: left;
-			left: auto;
+			font-size: 1rem;
 			min-width: 100%;
 			overflow: hidden;
 			padding-block: var(--space-narrow);
-			position: relative;
-			top: unset;
 		}
+
+		.content.is-hidden,
+		::slotted(.fallback) {
+			clip-path: inset(50%);
+			clip: rect(0 0 0 0);
+			display: inline-block;
+			height: 0;
+			overflow: hidden;
+			position: relative;
+			white-space: nowrap;
+			width: 0;
+			padding: 0;
+		}
+
 
 		/* use an additional wrapper element inside .content so Safari doesn't mess up spacing - it collapses margins if we apply these styles to .content */
 		.wrapper {
@@ -122,7 +128,7 @@ class SideNote extends HTMLElement {
 
 		label.addEventListener('click', () => {
 			label.classList.toggle('is-open');
-			content.classList.toggle('is-open');
+			content.classList.toggle('is-hidden');
 		});
 	}
 
@@ -130,12 +136,21 @@ class SideNote extends HTMLElement {
 		this.#shadowRoot.innerHTML = `
 			${style}
 
-			<button class="label" aria-label="Toggle the note">${this.number}</button>
+			<button
+				class="label"
+				aria-label="Toggle the note"
+			>
+				${this.number}
+			</button>
+
 			<small
-				class="content"
+				class="content is-hidden"
 				role="note"
 			>
-				<span class="wrapper" data-count="${this.number}">
+				<span
+					class="wrapper"
+					data-count="${this.number}"
+				>
 					<span class="text"><slot></slot></span>
 				</span>
 			</small>
