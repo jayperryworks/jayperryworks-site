@@ -17,56 +17,65 @@ const style = `
 			box-sizing: border-box;
 		}
 
-		.sidenote {
-			--label-color: var(--color-bg);
-			--label-bg: var(--color-primary);
+		:host {
+			--label-color: var(--color-secondary);
+			--label-bg: var(--color-bg);
+
 			display: inline;
+			font-size: 0; /* eliminate whitespace rendering */
 		}
 
 		.label {
-			--size: 2em;
-			background-color: var(--label-bg);
-			border: 0;
+			--size: 1.6em;
+
+			background-color: transparent;
 			border-radius: 1000px;
+			border: 2px solid var(--label-color);
 			color: var(--label-color);
 			cursor: pointer;
 			display: inline-block;
 			font-family: var(--type-font-accent);
-			font-size: 0.6em;
+			font-size: var(--type-scale-eta);
 			line-height: var(--size);
-			margin-inline: 0.25em;
+			transform: translateY(10%); /* scoot down a little */
+			margin-inline: 0.35rem;
 			min-height: var(--size);
 			min-width: var(--size);
 			padding-block: 0;
-			padding-inline: 0.5rem;
+			padding-inline: 0.45rem;
 			position: relative;
 			text-align: center;
-			transition: background-color 0.25s ease;
+			transition: color 0.25s ease, border-color 0.25s ease;
 			vertical-align: top;
 		}
 
 		.label:hover,
-		.is-open .label {
-			--label-bg: var(--color-highlight);
+		.label.is-open {
+			--label-color: var(--color-highlight);
 		}
 
-		.content,
-		::slotted(.fallback) {
-			left: -999999px;
-			position: absolute;
-			top: auto;
-		}
-
-		.is-open .content {
-			display: block;
+		.content {
+			clear: both;
 			float: left;
-			left: auto;
+			font-size: 1rem;
 			min-width: 100%;
 			overflow: hidden;
 			padding-block: var(--space-narrow);
-			position: relative;
-			z-index: 4;
 		}
+
+		.content.is-hidden,
+		::slotted(.fallback) {
+			clip-path: inset(50%);
+			clip: rect(0 0 0 0);
+			display: inline-block;
+			height: 0;
+			overflow: hidden;
+			position: relative;
+			white-space: nowrap;
+			width: 0;
+			padding: 0;
+		}
+
 
 		/* use an additional wrapper element inside .content so Safari doesn't mess up spacing - it collapses margins if we apply these styles to .content */
 		.wrapper {
@@ -115,10 +124,11 @@ class SideNote extends HTMLElement {
 		this.render();
 
 		const label = this.#shadowRoot.querySelector('.label');
-		const wrapper = this.#shadowRoot.querySelector('.sidenote');
+		const content = this.#shadowRoot.querySelector('.content');
 
 		label.addEventListener('click', () => {
-			wrapper.classList.toggle('is-open');
+			label.classList.toggle('is-open');
+			content.classList.toggle('is-hidden');
 		});
 	}
 
@@ -126,17 +136,24 @@ class SideNote extends HTMLElement {
 		this.#shadowRoot.innerHTML = `
 			${style}
 
-			<span class="sidenote" id="sidenote-${this.number}">
-				<button class="label" aria-label="Toggle the note">${this.number}</button>
-				<small
-					class="content"
-					role="note"
+			<button
+				class="label"
+				aria-label="Toggle the note"
+			>
+				${this.number}
+			</button>
+
+			<small
+				class="content is-hidden"
+				role="note"
+			>
+				<span
+					class="wrapper"
+					data-count="${this.number}"
 				>
-					<span class="wrapper" data-count="${this.number}">
-						<span class="text"><slot></slot></span>
-					</span>
-				</small>
-			</span>
+					<span class="text"><slot></slot></span>
+				</span>
+			</small>
 		`;
 	}
 }

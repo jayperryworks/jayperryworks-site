@@ -59,7 +59,10 @@ function htmlSerializer(type, element, content, children): string {
 			sidenotes.increment();
 
 			return `
-				<jp-sidenote number="${sidenotes.getCount()}">
+				<jp-sidenote
+					id="sidenote-${sidenotes.getCount()}"
+					number="${sidenotes.getCount()}"
+				>
 					<span class="fallback">(Note: </span>${sentenceCase(note)}<span class="fallback">)</span>
 				</jp-sidenote>
 			`;

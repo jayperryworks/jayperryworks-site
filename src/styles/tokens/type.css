@@ -10,6 +10,7 @@
 	--type-scale-delta: clamp(1.25rem, calc(1.09rem + 0.80vw), 1.81rem);
 	--type-scale-epsilon: clamp(1.13rem, calc(1.02rem + 0.54vw), 1.5rem);
 	--type-scale-zeta: clamp(0.88rem, calc(0.82rem + 0.27vw), 1.06rem);
+	--type-scale-eta: clamp(0.69rem, calc(0.67rem + 0.09vw), 0.75rem);
 
 	/* --- fonts --- */
 	--type-font-display: 'Sanomat', 'Charter', 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
