@@ -2,61 +2,64 @@
 // assets
 	import '@styles/tokens/color.css';
 
-	// components
-	import Image from '@components/elements/Image.astro';
+// utilities
+import { arrayToPunctatedString } from '@lib/stringHelpers';
 
-	// types
-	import type { ImageField } from '@prismicio/types';
+// components
+import Image from '@components/elements/Image.astro';
 
-	import type {
-		CSSVariable,
-		HexColor,
-		HSLAColor,
-		HSLColor,
-	} from '@lib/types';
+// types
+import type { ImageField } from '@prismicio/types';
 
-	export interface Props {
-		source: ImageField,
-		class?: string,
-		el?: string,
-		frameThickness: number,
-		matteColor?: CSSVariable | HexColor | HSLColor | HSLAColor,
-		matteThickness?: number,
-		type?: 'frame' | 'panel',
-	};
+import type {
+	CSSVariable,
+	HexColor,
+	HSLAColor,
+	HSLColor,
+} from '@lib/types';
 
-	const types = {
-		frame: {
-			matte: 7,
-			border: 0.25,
-		},
-		panel: {
-			matte: 0.2,
-			border: 0.1,
-		},
-	};
+export interface Props {
+	source: ImageField,
+	class?: string,
+	el?: string,
+	frameThickness: number,
+	matteColor?: CSSVariable | HexColor | HSLColor | HSLAColor,
+	matteThickness?: number,
+	type?: 'frame' | 'panel',
+};
 
-	const {
-		source,
-		class: className,
-		// put the 'type' prop first because 'frameThickness' and 'matteThickness' use its value for their defaults
-		type = 'frame',
-		frameThickness = types[type].border,
-		matteThickness = types[type].matte,
-		matteColor,
-	} = Astro.props as Props;
+const types = {
+	frame: {
+		matte: 7,
+		border: 0.25,
+	},
+	panel: {
+		matte: 0.2,
+		border: 0.1,
+	},
+};
 
-	const classList = [
-		'picture',
-		type,
-		className,
-	].filter(i => i).join(' ');
+const {
+	source,
+	// put the 'type' prop first because 'frameThickness' and 'matteThickness' use its value for their defaults
+	type = 'frame',
+	class: className,
+	frameThickness = types[type].border,
+	matteThickness = types[type].matte,
+	matteColor,
+} = Astro.props as Props;
 
-	const styleList = [
-		matteColor && `--matte-color: ${matteColor};`,
-		`--frame-thickness: ${frameThickness}em`,
-		`--matte-thickness: ${matteThickness}vmin`,
-	].filter(i => i).join(';');
+const classList = [
+	'picture',
+	type,
+	className,
+].filter(i => i).join(' ');
+
+const styleList = arrayToPunctatedString([
+	matteColor && `--matte-color: ${matteColor};`,
+	`--frame-thickness: ${frameThickness}em`,
+	`--matte-thickness: ${matteThickness}vmin`,
+]);
 ---
 
 <Image
@@ -76,7 +79,7 @@
 		border: var(--frame-thickness) solid var(--frame-color);
 		box-shadow: 0 0.25em 0.5em var(--color-shadow);
 		padding: var(--matte-thickness);
-		height: 100%;
+		max-height: 100%;
 	}
 
 	.picture.panel {

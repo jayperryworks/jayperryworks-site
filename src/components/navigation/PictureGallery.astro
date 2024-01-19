@@ -1,45 +1,79 @@
 ---
 // utilities
 import { picture as permalink } from '@lib/routes';
+import * as prismicHelpers from '@prismicio/helpers';
 
 // components
-import Image from '@components/elements/Image.astro';
+import PictureFrame from '@components/elements/PictureFrame.astro';
 import Gallery from '@components/layout/Gallery.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
-import { GallerySize } from '@lib/types';
+import {
+	CSSVariable,
+	GallerySize,
+	HexColor,
+	HSLAColor,
+	HSLColor,
+	SpaceScale,
+} from '@lib/types';
 import { PrismicDocumentWithUID } from '@prismicio/types';
 
 export interface Props {
 	list: PrismicDocumentWithUID[];
 	aspectRatio?: string;
 	columnSize?: GallerySize;
+	gutter?: SpaceScale;
+	matteColor?: CSSVariable | HexColor | HSLColor | HSLAColor,
 }
 
 const {
-	list,
-	aspectRatio = '3 / 2',
+	aspectRatio,
 	columnSize = 'medium',
+	gutter = 'wide',
+	list,
+	matteColor,
 } = Astro.props as Props;
+
+function frameType(picture) {
+	if (prismicHelpers.isFilled.link(picture.data.substrate)) {
+		return picture.data.substrate.data.name.includes('Paper') ? 'frame' : 'panel';
+	}
+}
+
+function matteThickness(picture) {
+	// use the default matte thickness for 'panel'-type pictures
+	if (frameType(picture) === 'panel') return undefined;
+
+	// otherwise, send values based on how wide the columns are
+	if (columnSize === 'large') return 4;
+	return 3;
+}
 ---
 
 <Gallery
 	class="picture-gallery"
 	size={columnSize}
+	{gutter}
 >
 	{list.map((picture: PrismicDocumentWithUID) => (
-		<RevealOnScroll tag="li">
+		<RevealOnScroll
+			tag="li"
+			class={[
+				picture.data.featured ? 'featured' : '',
+				aspectRatio ? 'has-aspect' : '',
+			].join(' ')}
+			style={ aspectRatio ? `--aspectRatio: ${aspectRatio};` : '' }
+		>
 			<a
 				class="link | type-link-undecorated"
 				href={permalink(picture)}
 			>
-				<Image
-					class="image"
-					fit="cover"
+				<PictureFrame
+					matteThickness={matteThickness(picture)}
 					source={picture.data.cover}
-					{aspectRatio}
-					border
+					type={frameType(picture)}
+					{matteColor}
 				/>
 			</a>
 		</RevealOnScroll>
@@ -47,7 +81,22 @@ const {
 </Gallery>
 
 <style is:global>
-	.picture-gallery .link {
-		display: block;
+	.has-aspect {
+		aspect-ratio: var(--aspectRatio, none);
 	}
+
+	.has-aspect .link {
+		flex: 1;
+		align-content: center;
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		max-height: 100%;
+	}
+
+	/* @media screen and (min-width: 40em) {
+		.featured {
+			grid-area: span 2 / span 2;
+		}
+	} */
 </style>

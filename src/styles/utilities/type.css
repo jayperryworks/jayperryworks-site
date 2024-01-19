@@ -25,9 +25,9 @@
 }
 
 .type-role-accent strong {
-	font-weight: 700;
+	font-weight: 600;
 	letter-spacing: -0.02em;
-	font-variation-settings: "wght" 700;
+	font-variation-settings: "wght" 600;
 }
 
 :is(.type-scale-zeta) .type-role-accent,

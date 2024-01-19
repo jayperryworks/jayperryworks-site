@@ -1,9 +1,12 @@
 ---
+import { arrayToPunctatedString } from '@lib/stringHelpers';
 export interface Props {
 	class?: string;
 	disabled?: boolean; // turn off animation effect, so this just becomes a div
 	duration?: string;
 	tag?: string;
+	id?: string;
+	style?: string;
 }
 
 const {
@@ -12,6 +15,7 @@ const {
 	duration = '1.6s',
 	tag = 'div',
 	id = '',
+	style,
 } = Astro.props as Props;
 
 const El = tag;
@@ -21,15 +25,20 @@ const classList = [
 	className,
 ].join(' ');
 
-const style = [
+const cssVariables = [
 	`--reveal-duration: ${duration};`,
 ].join(' ');
+
+const styleList = arrayToPunctatedString([
+	cssVariables,
+	style,
+]);
 ---
 
 <El
 	class={classList}
+	style={styleList}
 	{id}
-	{style}
 >
 	<slot></slot>
 </El>
