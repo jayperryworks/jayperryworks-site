@@ -1,43 +1,44 @@
 // Global markdown renderer for the 'generate' utils
 import { marked } from 'marked';
 import markedFootnote from 'marked-footnote';
-import markedSmartyPants from 'marked-smartypants-lite';
-
-// sidenote custom element
-import * as sidenotes from '@lib/model/sidenotes';
+import { markedSmartypantsLite as markedSmartyPants } from 'marked-smartypants-lite';
 
 export default function render(
 	content: string,
 	{
 		inline = false,
-		html = false,
 		footnotes = false,
 	} = {},
 ): string {
-	// markdown-it options
-	const renderOptions = {
-		gfm: true,
-	};
-
+	// override default output for links if they point to an outside url
 	// https://marked.js.org/using_pro#renderer
 	const renderer = {
 		link(href, title, text) {
-			if (href.includes('http')) {
-				// add target=_blank attr
-			}
+			return href.includes('http')
+				? `<a href="${href}" target="_blank" title="${title}">${text}</a>`
+				: `<a href="${href}" title="${title}">${text}</a>`;
 		},
-		footnote() {
-			// need to figure out what params it accepts and how to overwrite it
-		},
+		footnotes() {
+			console.log('footnote');
+			return `
+				<jp-sidenote-markdown>
+					<sup><a href="#id">ref</a></sup>
+				</jp-sidenote-markdown>
+			`;
+		}
 	};
 
 	// https://github.com/bent10/marked-extensions/tree/main/packages/footnote
 	marked.use(
+		{
+			gfm: true,
+			renderer,
+		},
 		markedSmartyPants(),
-		markedFootnote(),
-		renderOptions,
-		{ renderer }
+		footnotes && markedFootnote(),
 	);
+
+	// output footnotes as usual but use JS to find the target footnote content and move it into the sidenote element? That would create a fallback that's more accessible/useful than the parenthesis I'm using now?
 
 	// Modify the output rules for footnotes
 	// const blockRenderer = markdown(renderOptions).use(footnotes);
@@ -101,7 +102,5 @@ export default function render(
 
 	// if the 'inline' option is true, render without surrounding p tag
 	// and leave out block-level plugins (e.g. footnotes)
-	return inline
-		? markdown(renderOptions).renderInline(content)
-		: blockRenderer.render(content);
+	return inline ? marked.parseInline(content) : marked.parse(content);
 }
