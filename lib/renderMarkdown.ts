@@ -1,70 +1,52 @@
 // Global markdown renderer for the 'generate' utils
-import { marked } from 'marked';
-import markedFootnote from 'marked-footnote';
-import { markedSmartypantsLite as markedSmartyPants } from 'marked-smartypants-lite';
-
-import * as sidenotes from '@lib/model/sidenotes';
+import { remark } from 'remark';
+import remarkParse from 'remark-parse';
+import remarkGFM from 'remark-gfm';
+import remarkStringify from 'remark-stringify';
+import remarkRehype from 'remark-rehype';
+import remarkJPFootnotes from './remarkJPFootnotes.ts';
 
 // probably the best option:
 // - the custom element is repeatable for each and keeps it out of the global namespace
 // - will need to modify the output anyway to use global numbering
-const option1 = `
-	<sup>
-		<jp-sidenote>
-			<a href="footnote-${sidenotes.getCount()}">${sidenotes.getCount()}</a>
-		</jp-sidenote>
-	</sup>
-`;
+// const option1 = `
+// 	<sup>
+// 		<jp-sidenote>
+// 			<a href="footnote-${sidenotes.getCount()}">${sidenotes.getCount()}</a>
+// 		</jp-sidenote>
+// 	</sup>
+// `;
 
 // simplest but will still need global numbering
-const option2 = `
-	<jp-sidenotes>
-		<p>Lorem ipsum dolor sit amet<sup><a href="#footnote-1">1</a></sup></p>
+// - except that we need to hide the footnotes at the bottom, so maybe we need BOTH a wrapper and individual elements?
+// const option2 = `
+// 	<jp-sidenotes>
+// 		<p>Lorem ipsum dolor sit amet<sup><a href="#footnote-1">1</a></sup></p>
 
-		<aside>
-			<h2>Footnotes</h2>
-			<ul>
-				<li>1. Note lorem ipsum</li>
-			</ul>
-		</aside>
-	</jp-sidenotes>
-`;
+// 		<aside>
+// 			<h2>Footnotes</h2>
+// 			<ul>
+// 				<li>1. Note lorem ipsum</li>
+// 			</ul>
+// 		</aside>
+// 	</jp-sidenotes>
+// `;
 
-export default function render(
+export default async function render(
 	content: string,
 	{
 		inline = false,
-		footnotes = false,
 	} = {},
-): string {
-	// override default output for links if they point to an outside url
-	// https://marked.js.org/using_pro#renderer
-	const renderer = {
-		link(href, title, text) {
-			return href.includes('http')
-				? `<a href="${href}" target="_blank" title="${title}">${text}</a>`
-				: `<a href="${href}" title="${title}">${text}</a>`;
-		},
-		footnotes() {
-			return `
-				<sup>
-					<jp-sidenote>
-						<a href="footnote-${sidenotes.getCount()}">${sidenotes.getCount()}</a>
-					</jp-sidenote>
-				</sup>
-			`;
-		}
-	};
+): Promise<string> {
 
-	// https://github.com/bent10/marked-extensions/tree/main/packages/footnote
-	marked.use(
-		{
-			gfm: true,
-			renderer,
-		},
-		markedSmartyPants(),
-		footnotes && markedFootnote(),
-	);
+	return await remark()
+		.use(remarkParse)
+		.use(remarkGFM)
+		.use(remarkJPFootnotes)
+		.use(remarkRehype)
+		.use(remarkStringify)
+		.process(content)
+		.toString();
 
 	// output footnotes as usual but use JS to find the target footnote content and move it into the sidenote element? That would create a fallback that's more accessible/useful than the parenthesis I'm using now?
 
@@ -130,5 +112,5 @@ export default function render(
 
 	// if the 'inline' option is true, render without surrounding p tag
 	// and leave out block-level plugins (e.g. footnotes)
-	return inline ? marked.parseInline(content) : marked.parse(content);
+	// return inline ? marked.parseInline(content) : marked.parse(content);
 }

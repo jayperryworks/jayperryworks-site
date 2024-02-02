@@ -38,7 +38,7 @@ if (prismicHelpers.isFilled.richText(prismicText)) {
 	);
 }
 if (markdown) {
-	renderedText = renderMarkdown(markdown, { html: allowHTML, inline });
+	renderedText = await renderMarkdown(markdown, { html: allowHTML, inline });
 }
 ---
 
