@@ -1,8 +1,8 @@
 // Global markdown renderer for the 'generate' utils
-import { remark } from 'remark';
+import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkGFM from 'remark-gfm';
-import remarkStringify from 'remark-stringify';
+import rehypeStringify from 'rehype-stringify';
 import remarkRehype from 'remark-rehype';
 import remarkJPFootnotes from './remarkJPFootnotes.ts';
 
@@ -38,15 +38,15 @@ export default async function render(
 		inline = false,
 	} = {},
 ): Promise<string> {
-
-	return await remark()
+	const result = await unified()
 		.use(remarkParse)
 		.use(remarkGFM)
-		.use(remarkJPFootnotes)
 		.use(remarkRehype)
-		.use(remarkStringify)
-		.process(content)
-		.toString();
+		.use(rehypeStringify)
+		// .use(remarkJPFootnotes)
+		.process(content);
+
+	return result.toString();
 
 	// output footnotes as usual but use JS to find the target footnote content and move it into the sidenote element? That would create a fallback that's more accessible/useful than the parenthesis I'm using now?
 

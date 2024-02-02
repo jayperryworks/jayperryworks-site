@@ -28,7 +28,7 @@ const {
 	prismicText,
 } = Astro.props as Props;
 
-let renderedText: string;
+let renderedText: string | Promise<string>;
 
 if (prismicHelpers.isFilled.richText(prismicText)) {
 	renderedText = prismicHelpers.asHTML(
@@ -38,7 +38,7 @@ if (prismicHelpers.isFilled.richText(prismicText)) {
 	);
 }
 if (markdown) {
-	renderedText = await renderMarkdown(markdown, { html: allowHTML, inline });
+	renderedText = await renderMarkdown(markdown, { inline });
 }
 ---
 

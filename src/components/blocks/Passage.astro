@@ -80,7 +80,6 @@ function htmlSerializer(type, element, content, children): string {
 <div class={classList}>
 	<slot>
 		<RenderedText
-			allowHTML={true}
 			{htmlSerializer}
 			{...text}
 		/>
