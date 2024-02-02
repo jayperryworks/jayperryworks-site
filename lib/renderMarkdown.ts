@@ -3,6 +3,33 @@ import { marked } from 'marked';
 import markedFootnote from 'marked-footnote';
 import { markedSmartypantsLite as markedSmartyPants } from 'marked-smartypants-lite';
 
+import * as sidenotes from '@lib/model/sidenotes';
+
+// probably the best option:
+// - the custom element is repeatable for each and keeps it out of the global namespace
+// - will need to modify the output anyway to use global numbering
+const option1 = `
+	<sup>
+		<jp-sidenote>
+			<a href="footnote-${sidenotes.getCount()}">${sidenotes.getCount()}</a>
+		</jp-sidenote>
+	</sup>
+`;
+
+// simplest but will still need global numbering
+const option2 = `
+	<jp-sidenotes>
+		<p>Lorem ipsum dolor sit amet<sup><a href="#footnote-1">1</a></sup></p>
+
+		<aside>
+			<h2>Footnotes</h2>
+			<ul>
+				<li>1. Note lorem ipsum</li>
+			</ul>
+		</aside>
+	</jp-sidenotes>
+`;
+
 export default function render(
 	content: string,
 	{
@@ -19,11 +46,12 @@ export default function render(
 				: `<a href="${href}" title="${title}">${text}</a>`;
 		},
 		footnotes() {
-			console.log('footnote');
 			return `
-				<jp-sidenote-markdown>
-					<sup><a href="#id">ref</a></sup>
-				</jp-sidenote-markdown>
+				<sup>
+					<jp-sidenote>
+						<a href="footnote-${sidenotes.getCount()}">${sidenotes.getCount()}</a>
+					</jp-sidenote>
+				</sup>
 			`;
 		}
 	};
