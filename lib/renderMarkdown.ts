@@ -46,6 +46,7 @@ export default async function render(
 		// .use(remarkJPFootnotes)
 		.process(content);
 
+	// console.log(result.toString());
 	return result.toString();
 
 	// output footnotes as usual but use JS to find the target footnote content and move it into the sidenote element? That would create a fallback that's more accessible/useful than the parenthesis I'm using now?
