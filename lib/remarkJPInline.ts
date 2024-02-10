@@ -7,7 +7,6 @@ export default function remarkJPInline(options) {
 		return (tree) => {
 			visit(tree, { tagName: 'p' }, (node, index, parent) => {
 				parent.children.splice(index, 1, ...node.children);
-				console.log(node);
 				return [SKIP, index];
 			});
 		};
