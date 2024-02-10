@@ -41,8 +41,6 @@ if (prismicHelpers.isFilled.richText(prismicText)) {
 if (markdown) {
 	renderedText = await renderMarkdown(markdown, { inline });
 }
-
-console.log('markdown', markdown);
 ---
 
 <Fragment set:html={renderedText} />

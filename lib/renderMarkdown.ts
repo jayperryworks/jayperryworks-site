@@ -4,7 +4,8 @@ import remarkParse from 'remark-parse';
 import remarkGFM from 'remark-gfm';
 import rehypeStringify from 'rehype-stringify';
 import remarkRehype from 'remark-rehype';
-import remarkJPFootnotes from './remarkJPFootnotes.ts';
+// import remarkJPFootnotes from './remarkJPFootnotes.ts';
+import remarkJPInline from './remarkJPInline.ts';
 
 // probably the best option:
 // - the custom element is repeatable for each and keeps it out of the global namespace
@@ -42,8 +43,8 @@ export default async function render(
 		.use(remarkParse)
 		.use(remarkGFM)
 		.use(remarkRehype)
+		.use(remarkJPInline, { renderInline: inline })
 		.use(rehypeStringify)
-		// .use(remarkJPFootnotes)
 		.process(content);
 
 	// console.log(result.toString());
