@@ -69,6 +69,12 @@ const seo = {
 			</div>
 		</section>
 
+		<section>
+			<Passage text={{
+				markdown: 'Here is a _footnote_ test[^The first] **and** another[^1]. [1]: The note.'
+			}} />
+		</section>
+
 		<!-- TOC panels -->
 		<section id="toc">
 			<BlockList {body} numbered />
