@@ -1,11 +1,11 @@
 // Global markdown renderer for the 'generate' utils
 import { unified } from 'unified';
-import remarkParse from 'remark-parse';
-import remarkGFM from 'remark-gfm';
 import rehypeStringify from 'rehype-stringify';
+import remarkGFM from 'remark-gfm';
+import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
-// import remarkJPFootnotes from './remarkJPFootnotes.ts';
-import remarkJPInline from './remarkJPInline.ts';
+import remarkJPFootnotes from './remarkJPFootnotes.js';
+import remarkJPInline from './remarkJPInline.js';
 
 // probably the best option:
 // - the custom element is repeatable for each and keeps it out of the global namespace
@@ -33,21 +33,33 @@ import remarkJPInline from './remarkJPInline.ts';
 // 	</jp-sidenotes>
 // `;
 
-export default async function render(
-	content: string,
-	{
+
+/**
+ * Render markdown text to HTML
+ * @date 3/1/2024 - 4:53:14 PM
+ *
+ * @export
+ * @async
+ * @param {string} content - markdown-formatted text
+ * @param {Object} [options={}] - options object
+ * @param {boolean} [options.inline=false] if 'inline' is true, surrounding p tags will be removed.
+ * @returns {Promise<string>} HTML template
+ */
+
+export default async function render(content, options = {}) {
+	const {
 		inline = false,
-	} = {},
-): Promise<string> {
+	} = options;
+
 	const result = await unified()
 		.use(remarkParse)
 		.use(remarkGFM)
 		.use(remarkRehype)
+		.use(remarkJPFootnotes)
 		.use(remarkJPInline, { renderInline: inline })
 		.use(rehypeStringify)
 		.process(content);
 
-	// console.log(result.toString());
 	return result.toString();
 
 	// output footnotes as usual but use JS to find the target footnote content and move it into the sidenote element? That would create a fallback that's more accessible/useful than the parenthesis I'm using now?
