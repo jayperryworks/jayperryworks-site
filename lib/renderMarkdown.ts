@@ -56,9 +56,11 @@ export default async function render(content, options = {}) {
 		.use(remarkGFM)
 		.use(remarkRehype)
 		// .use(remarkJPFootnotes)
-		// .use(remarkJPInline, { renderInline: inline })
+		.use(remarkJPInline, { renderInline: inline })
 		.use(rehypeStringify)
 		.process(content);
+
+	console.log(result.toString());
 
 	return result.toString();
 

@@ -69,9 +69,18 @@ const seo = {
 			</div>
 		</section>
 
-		<section>
+		<section style="
+			margin-inline: auto;
+			padding-block: var(--space-wide);
+			max-width: var(--content-width-default);
+		">
 			<Passage text={{
-				markdown: 'Here is a _footnote_ test[^The first] **and** another[^1]. [1]: The note.'
+				markdown: 'Here is a _footnote_ test[^1] **and** another [^2].\n\n[^1]: The note.\n\n[^2]: Another note.'
+// 				`
+// A note[^1]
+
+// [^1]: Big note.
+// `;
 			}} />
 		</section>
 
