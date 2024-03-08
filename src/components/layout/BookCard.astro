@@ -1,7 +1,9 @@
 ---
 // assets
+import '@styles/tokens/borders.css';
 import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
 import '@styles/utilities/type.css';
 import externalLink from '@icons/external-link.svg?raw';
 
@@ -42,6 +44,10 @@ const {
 	cover,
 	title,
 } = Astro.props as Props;
+
+function getInitial(title) {
+	return prismicHelpers.asText(title).split(' ').find((word) => (word !== 'A' && word !== 'The'))[0].charAt(0);
+}
 ---
 
 <article class={['book-card', className].join(' ')}>
@@ -60,7 +66,9 @@ const {
 							alt={`Cover for '${prismicHelpers.asText(title)}'`}
 							class="cover-image"
 						>
-					: <div class="cover-image placeholder"></div>
+					: <div class="cover-image placeholder">
+							<p class="type-role-display type-scale-alpha">{getInitial(title)}</p>
+						</div>
 				}
 			</slot>
 		</RevealOnScroll>
@@ -68,17 +76,21 @@ const {
 		<!-- title, author, etc. -->
 		<header>
 			<slot name="header">
-				<Heading
-					class="type-scale-delta"
-					level={2}
-					text={title}
-				/>
-				<Heading
-					level={5}
-					subheading
-				>
-					{author}
-				</Heading>
+				{title && (
+					<Heading
+						class="type-scale-delta"
+						level={2}
+						text={title}
+					/>
+				)}
+				{author && (
+					<Heading
+						level={5}
+						subheading
+					>
+						{author}
+					</Heading>)
+				}
 			</slot>
 		</header>
 
@@ -135,6 +147,8 @@ const {
 	}
 
 	.book-card :global(.cover) {
+		height: 100%;
+		width: 100%;
 		align-items: center;
 		align-self: stretch;
 		aspect-ratio: 1 / 1;
@@ -151,10 +165,17 @@ const {
 	}
 
 	.cover-image.placeholder {
-		background-color: var(--color-well);
+		align-items: center;
+		aspect-ratio: 1 / 1.2;
+		background-color: var(--color-bg);
+		border: var(--border-solid);
 		box-shadow: 0;
+		color: var(--color-border);
+		display: flex;
+		flex-direction: column;
 		height: 100%;
-		width: 100%;
+		justify-content: center;
+		padding-block-start: 0.8rem; /* scoot the initial down a little to optically align it/compensate for line height */
 	}
 
 	header {
