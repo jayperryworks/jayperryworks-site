@@ -25,7 +25,7 @@ const style = `
 			font-size: 0; /* eliminate whitespace rendering */
 		}
 
-		.label {
+		::slotted(.label) {
 			--size: 1.6em;
 
 			background-color: transparent;
@@ -101,6 +101,9 @@ const style = `
 `;
 
 class SideNoteMarkdown extends HTMLElement {
+	#footnote;
+	#shadowRoot;
+
 	static get observedAttributes() {
 		return ['number'];
 	}
@@ -111,7 +114,7 @@ class SideNoteMarkdown extends HTMLElement {
 
 	constructor() {
 		super();
-		this._shadowRoot = this.attachShadow({ mode: 'open' });
+		this.#shadowRoot = this.attachShadow({ mode: 'open' });
 	}
 
 	attributeChangedCallback() {
@@ -119,28 +122,24 @@ class SideNoteMarkdown extends HTMLElement {
 	}
 
 	connectedCallback() {
-		this.button = this.querySelector('a[data-footnote-ref]');
-		this.footnote = document.querySelector(`${this.button.getAttribute('href')} p`);
+		const button = this.querySelector('a[data-footnote-ref]');
+		this.#footnote = document.querySelector(`${button.getAttribute('href')} p`);
+		this.#footnote.querySelector('[data-footnote-backref]').remove();
 
 		this.render();
 
-		this.content = this._shadowRoot.querySelector('.content');
+		const content = this.#shadowRoot.querySelector('.content');
+		content.querySelector('.text').innerHTML = this.#footnote.innerHTML;
 
-		const text = this._shadowRoot.querySelector('.text');
-
-		text.appendChild(this.footnote);
-
-
-		console.log(this.footnote.innerHTML);
-
-		// label.addEventListener('click', () => {
-		// 	label.classList.toggle('is-open');
-		// 	content.classList.toggle('is-hidden');
-		// });
+		button.addEventListener('click', (event) => {
+			event.preventDefault();
+			button.classList.toggle('is-open');
+			content.classList.toggle('is-hidden');
+		});
 	}
 
 	render() {
-		this._shadowRoot.innerHTML = `
+		this.#shadowRoot.innerHTML = `
 			${style}
 
 			<slot></slot>
