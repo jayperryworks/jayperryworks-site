@@ -16,6 +16,7 @@ import type { TypeScale, FormattedText } from '@lib/types';
 export interface Props {
 	text: FormattedText;
 	class?: string;
+	foonotes?: boolean;
 	typeFace?: 'body' | 'display' | 'accent';
 	typeSize?: TypeScale;
 	wrap?: 'none' | 'pretty' | 'balance';
@@ -25,8 +26,9 @@ export interface Props {
 const {
 	text,
 	class: className = '',
-	typeSize = 'epsilon',
+	footnotes = true,
 	typeFace = 'body',
+	typeSize = 'epsilon',
 	wrap = 'pretty',
 } = Astro.props as Props;
 
@@ -47,7 +49,7 @@ function htmlSerializer(type, element, content, children): string {
 	if (element.data) {
 		const { label } = element.data;
 
-		if (label === 'note') {
+		if (label === 'note' && footnotes) {
 			// remove the fallback parentheses around the label text
 			// -> https://stackoverflow.com/questions/19134860/javascript-remove-strings-in-beginning-and-end#19135220
 			let note = children.toString().trim().replace(/(^\(|\)$)/mg, '');
@@ -82,6 +84,7 @@ function htmlSerializer(type, element, content, children): string {
 		<RenderedText
 			{htmlSerializer}
 			{...text}
+			{footnotes}
 		/>
 	</slot>
 </div>
