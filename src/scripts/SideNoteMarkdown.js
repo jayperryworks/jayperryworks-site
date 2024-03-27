@@ -25,35 +25,6 @@ const style = `
 			font-size: 0; /* eliminate whitespace rendering */
 		}
 
-		::slotted(.label) {
-			--size: 1.6em;
-
-			background-color: transparent;
-			border-radius: 1000px;
-			border: 2px solid var(--label-color);
-			color: var(--label-color);
-			cursor: pointer;
-			display: inline-block;
-			font-family: var(--type-font-accent);
-			font-size: var(--type-scale-eta);
-			line-height: var(--size);
-			transform: translateY(10%); /* scoot down a little */
-			margin-inline: 0.35rem;
-			min-height: var(--size);
-			min-width: var(--size);
-			padding-block: 0;
-			padding-inline: 0.45rem;
-			position: relative;
-			text-align: center;
-			transition: color 0.25s ease, border-color 0.25s ease;
-			vertical-align: top;
-		}
-
-		.label:hover,
-		.label.is-open {
-			--label-color: var(--color-highlight);
-		}
-
 		.content {
 			clear: both;
 			float: left;
@@ -61,6 +32,12 @@ const style = `
 			min-width: 100%;
 			overflow: hidden;
 			padding-block: var(--space-narrow);
+		}
+
+		.content::after {
+			clear: both;
+			content: '';
+			display: block;
 		}
 
 		.content.is-hidden,
@@ -133,7 +110,7 @@ class SideNoteMarkdown extends HTMLElement {
 
 		button.addEventListener('click', (event) => {
 			event.preventDefault();
-			button.classList.toggle('is-open');
+			button.classList.toggle('is-active');
 			content.classList.toggle('is-hidden');
 		});
 	}
