@@ -6,33 +6,7 @@ import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import remarkJPFootnotes from './remarkJPFootnotes.js';
 import remarkJPInline from './remarkJPInline.js';
-
-// probably the best option:
-// - the custom element is repeatable for each and keeps it out of the global namespace
-// - will need to modify the output anyway to use global numbering
-// const option1 = `
-// 	<sup>
-// 		<jp-sidenote>
-// 			<a href="footnote-${sidenotes.getCount()}">${sidenotes.getCount()}</a>
-// 		</jp-sidenote>
-// 	</sup>
-// `;
-
-// simplest but will still need global numbering
-// - except that we need to hide the footnotes at the bottom, so maybe we need BOTH a wrapper and individual elements?
-// const option2 = `
-// 	<jp-sidenotes>
-// 		<p>Lorem ipsum dolor sit amet<sup><a href="#footnote-1">1</a></sup></p>
-
-// 		<aside>
-// 			<h2>Footnotes</h2>
-// 			<ul>
-// 				<li>1. Note lorem ipsum</li>
-// 			</ul>
-// 		</aside>
-// 	</jp-sidenotes>
-// `;
-
+import remarkJPExternalLink from './remarkJPExternalLink.js';
 
 /**
  * Render markdown text to HTML
@@ -59,6 +33,7 @@ export default async function render(content, options = {}) {
 		.use(remarkRehype)
 		.use(remarkJPFootnotes, { renderFootnotes: footnotes })
 		.use(remarkJPInline, { renderInline: inline })
+		.use(remarkJPExternalLink)
 		.use(rehypeStringify)
 		.process(content);
 

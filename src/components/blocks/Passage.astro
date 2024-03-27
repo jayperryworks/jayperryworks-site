@@ -96,6 +96,7 @@ function htmlSerializer(type, element, content, children): string {
 		position: relative;
 	}
 
+	/* text wrap styles */
 	.balance {
 		text-wrap: balance;
 	}
@@ -104,6 +105,7 @@ function htmlSerializer(type, element, content, children): string {
 		text-wrap: pretty;
 	}
 
+	/* spacing */
 	.passage > :global(*) {
 		line-height: var(--type-leading-default);
 	}
