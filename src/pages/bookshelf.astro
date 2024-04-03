@@ -47,7 +47,7 @@ const booksResponse = await prismic.getAllByType('book', {
 	},
 });
 
-let books = await Promise.all(booksResponse.map(async ({
+const books = await Promise.all(booksResponse.map(async ({
 	uid,
 	tags,
 	data,
@@ -61,11 +61,24 @@ let books = await Promise.all(booksResponse.map(async ({
 		title,
 	} = data;
 
-	// fields populated by Open Library
-	let publishDate, publisher, cover, infoURL;
-
 	// query the Open Library API with the book's ISBN number
 	if (isbn || olid) {
+		let bookData = {
+			actions: [
+				{
+					label: 'Purchase',
+					url: prismicHelpers.asLink(purchaseURL),
+					type: 'external'
+				},
+			],
+			tags: tags || [],
+			author,
+			relatedContent,
+			title,
+			uid,
+		};
+
+		// try to fetch additional data from OpenLibrary
 		const queryParams = {
 			bibkeys: isbn ? `ISBN:${isbn}` : `OLID:${olid}`,
 			format: 'json',
@@ -77,43 +90,33 @@ let books = await Promise.all(booksResponse.map(async ({
 
 		// Open Library API docs: https://openlibrary.org/dev/docs/api/books
 		const openLibraryResponse = await fetch(`http://openlibrary.org/api/books?${queryString}`);
-		const openLibraryData = await openLibraryResponse.json();
 
-		const {
-			publish_date,
-			publishers,
-			cover: coverList,
-			url,
-		} = openLibraryData[queryParams.bibkeys];
+		if (openLibraryResponse.status === 200) {
+			const openLibraryData = await openLibraryResponse.json();
 
-		publishDate = publish_date && format(new Date(publish_date), 'yyyy');
-		cover = coverList && Object.values(coverList).pop();
-		infoURL = url;
+			const {
+				publish_date,
+				publishers,
+				cover: coverList,
+				url: infoURL,
+			} = openLibraryData[queryParams.bibkeys];
 
-		publisher = publishers?.length > 0 && publishers[0].name;
-	}
+			bookData.publishDate = publish_date && format(new Date(publish_date), 'yyyy');
+			bookData.cover = coverList && Object.values(coverList).pop();
 
-	return {
-		actions: [
-			{
+			bookData.publisher = publishers?.length > 0 && publishers[0].name;
+
+			bookData.actions.unshift({
 				label: 'Open Library',
 				url: infoURL,
 				type: 'external'
-			},
-			{
-				label: 'Purchase',
-				url: prismicHelpers.asLink(purchaseURL),
-				type: 'external'
-			},
-		],
-		author,
-		cover,
-		publishDate,
-		publisher,
-		relatedContent,
-		tags,
-		title,
-		uid,
+			});
+
+			return bookData;
+		}
+
+		// if the request to OL fails, just use the data we have from the CMS
+		return bookData;
 	}
 }));
 ---
@@ -145,16 +148,16 @@ let books = await Promise.all(booksResponse.map(async ({
 
 		<div class="wrapper">
 			<Gallery gutter="wide">
-				{books.map((book) => (
+				{books.filter((b) => b !== undefined).map((book) => (
 					<li
 						class="item"
-						data-tags={book.tags.join(' ')}
+						data-tags={book?.tags?.join(' ')}
 						id={book.uid}
 					>
 						<BookCard
 							title={book.title}
 							author={book.author}
-							cover={{ src: book.cover }}
+							cover={book.cover ? { src: book.cover } : undefined}
 							actions={book.actions}
 						>
 							{book.publisher && book.publishDate && (
