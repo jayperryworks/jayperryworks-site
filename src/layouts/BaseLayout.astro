@@ -82,6 +82,13 @@ const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer,
 		<link rel="author" href="/about/" title="My story">
 		<link rel="me" href="mailto:hi@jayperryworks.com">
 
+		<link
+				rel="alternate"
+				type="application/rss+xml"
+				title={SITE_TITLE}
+				href={`${Astro.site}/rss/feed.xml`}
+		/>
+
 		<!-- social/seo markup -->
 		<!-- hat tip to https://meiert.com/en/blog/minimal-social-markup/ -->
 		<meta name="twitter:card" content={seo.image ? 'summary_large_image' : 'summary'}>
