@@ -16,7 +16,7 @@ import type { TypeScale, FormattedText } from '@lib/types';
 export interface Props {
 	text: FormattedText;
 	class?: string;
-	foonotes?: boolean;
+	footnotes?: boolean;
 	typeFace?: 'body' | 'display' | 'accent';
 	typeSize?: TypeScale;
 	wrap?: 'none' | 'pretty' | 'balance';
@@ -78,6 +78,7 @@ function htmlSerializer(type, element, content, children): string {
 ---
 
 <script src="@scripts/SideNoteMarkdown.js"></script>
+<script src="@scripts/SideNote.js"></script>
 
 <div class={classList}>
 	<slot>
