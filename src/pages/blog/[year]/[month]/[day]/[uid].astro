@@ -203,13 +203,15 @@ const {
 
 			{link && (
 				<footer class="link">
-					<Button
-						href={link}
-						iconRight={externalLink}
-						target="_blank"
-					>
-						Direct link
-					</Button>
+					<div class="wrapper">
+						<Button
+							href={link}
+							iconRight={externalLink}
+							target="_blank"
+						>
+							Direct link
+						</Button>
+					</div>
 				</footer>
 			)}
 		</article>
@@ -277,9 +279,13 @@ const {
 	}
 
 	.link {
+		padding-block-start: var(--space-wide);
+		padding-inline: var(--space-outside);
+	}
+
+	.wrapper {
 		margin-inline: auto;
 		max-width: var(--content-width-default);
-		padding-block-start: var(--space-wide);
 	}
 
 	/* add some extra space above this */
