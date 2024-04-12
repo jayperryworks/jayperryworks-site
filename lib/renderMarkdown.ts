@@ -1,58 +1,43 @@
 // Global markdown renderer for the 'generate' utils
-import markdown from 'markdown-it';
-import footnotes from 'markdown-it-footnote';
+import { unified } from 'unified';
+import rehypeStringify from 'rehype-stringify';
+import remarkGFM from 'remark-gfm';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import remarkSmartypants from 'remark-smartypants';
+import remarkJPFootnotes from './remarkJPFootnotes.js';
+import remarkJPInline from './remarkJPInline.js';
+import remarkJPExternalLink from './remarkJPExternalLink.js';
 
-export default function render(
-	content: string,
-	{
+/**
+ * Render markdown text to HTML
+ * @date 3/1/2024 - 4:53:14 PM
+ *
+ * @export
+ * @async
+ * @param {string} content - markdown-formatted text
+ * @param {Object} [options={}] - options object
+ * @param {boolean} [options.inline=false] if 'inline' is true, surrounding p tags will be removed.
+ * @param {boolean} [options.footnotes=false] if 'footnotes' is true, footnotes will be added
+ * @returns {Promise<string>} HTML template
+ */
+
+export default async function render(content, options = {}) {
+	const {
 		inline = false,
-		html = false,
-	} = {},
-): string {
-	// markdown-it options
-	const renderOptions = {
-		typographer: true,
-		html,
-	};
+		footnotes = false,
+	} = options;
 
-	// Modify the output rules for footnotes
-	const blockRenderer = markdown(renderOptions).use(footnotes);
+	const result = await unified()
+		.use(remarkParse)
+		.use(remarkGFM)
+		.use(remarkRehype)
+		.use(remarkJPFootnotes, { renderFootnotes: footnotes })
+		.use(remarkJPInline, { renderInline: inline })
+		.use(remarkJPExternalLink)
+		.use(remarkSmartypants)
+		.use(rehypeStringify)
+		.process(content);
 
-	// Remember old renderer, if overridden, or proxy to default renderer
-	function proxyRenderer(tokens, idx, options, env, self) {
-		return self.renderToken(tokens, idx, options);
-	}
-
-	const defaultRender = blockRenderer.renderer.rules.link_open || proxyRenderer;
-
-	// add target="_blank" to external links
-	blockRenderer.renderer.rules.link_open = (tokens, idx, options, env, self) => {
-		// If you are sure other plugins can't add `target` - drop check below
-		const url = tokens[idx].attrGet('href');
-		const targetIndex = tokens[idx].attrIndex('target');
-
-		// if the link uses an absolute url...
-		if (url.includes('http')) {
-			if (targetIndex < 0) {
-				// add new attribute
-				tokens[idx].attrPush(['target', '_blank']);
-			} else {
-				// replace value of existing attr
-				/* eslint-disable no-param-reassign */
-				// -> this is code pulled from markdown-it's documentation,
-				// 		assuming this is a legit reassignment case
-				tokens[idx].attrs[targetIndex][1] = '_blank';
-				/* eslint-enable no-param-reassign */
-			}
-		}
-
-		// pass token to default renderer.
-		return defaultRender(tokens, idx, options, env, self);
-	};
-
-	// if the 'inline' option is true, render without surrounding p tag
-	// and leave out block-level plugins (e.g. footnotes)
-	return inline
-		? markdown(renderOptions).renderInline(content)
-		: blockRenderer.render(content);
+	return result.toString();
 }

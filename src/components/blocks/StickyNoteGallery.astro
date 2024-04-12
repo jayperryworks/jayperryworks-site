@@ -16,6 +16,7 @@ import {
 } from '@lib/types';
 
 import { TitleField } from '@prismicio/types';
+import RenderedText from '@components/elements/RenderedText.astro';
 
 export interface Props {
 	notes: StickyNote[],
@@ -30,17 +31,6 @@ const {
 	description,
 	subtitle,
 } = Astro.props as Props;
-
-const formattedNotes = notes.map((note) => {
-	return Object.keys(note).map((key, index) => {
-		if (note[key]) {
-			const value = renderMarkdown(note[key], { inline: true });
-
-			if (index === 0) return `<strong>${value}</strong>`;
-			return value;
-		}
-	}).join(' ');
-});
 ---
 
 <section class="sticky-note-gallery">
@@ -59,13 +49,17 @@ const formattedNotes = notes.map((note) => {
 		<Passage text={description} />
 	)}
 	<Gallery gutter="medium">
-		{formattedNotes.map((note) => (
+		{notes.map(({ shortStatement, extendedStatement }) => (
 			<li class="sticky-note-item">
 				<RevealOnScroll
 					class="sticky-note-text | type-role-accent type-scale-epsilon"
-					set:html={note}
 					tag="p"
-				/>
+				>
+					<strong><RenderedText markdown={shortStatement} inline={true} /></strong>
+					{extendedStatement && (
+						<RenderedText markdown={extendedStatement} inline={true} />
+					)}
+				</RevealOnScroll>
 			</li>
 		))}
 	</Gallery>

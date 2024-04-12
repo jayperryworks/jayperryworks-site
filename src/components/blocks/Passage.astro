@@ -16,6 +16,7 @@ import type { TypeScale, FormattedText } from '@lib/types';
 export interface Props {
 	text: FormattedText;
 	class?: string;
+	footnotes?: boolean;
 	typeFace?: 'body' | 'display' | 'accent';
 	typeSize?: TypeScale;
 	wrap?: 'none' | 'pretty' | 'balance';
@@ -25,8 +26,9 @@ export interface Props {
 const {
 	text,
 	class: className = '',
-	typeSize = 'epsilon',
+	footnotes = true,
 	typeFace = 'body',
+	typeSize = 'epsilon',
 	wrap = 'pretty',
 } = Astro.props as Props;
 
@@ -47,7 +49,7 @@ function htmlSerializer(type, element, content, children): string {
 	if (element.data) {
 		const { label } = element.data;
 
-		if (label === 'note') {
+		if (label === 'note' && footnotes) {
 			// remove the fallback parentheses around the label text
 			// -> https://stackoverflow.com/questions/19134860/javascript-remove-strings-in-beginning-and-end#19135220
 			let note = children.toString().trim().replace(/(^\(|\)$)/mg, '');
@@ -75,24 +77,27 @@ function htmlSerializer(type, element, content, children): string {
 }
 ---
 
-<script src="@scripts/SideNote.ts"></script>
+<script src="@scripts/SideNoteMarkdown.js"></script>
+<script src="@scripts/SideNote.js"></script>
 
 <div class={classList}>
 	<slot>
 		<RenderedText
-			allowHTML={true}
 			{htmlSerializer}
 			{...text}
+			{footnotes}
 		/>
 	</slot>
 </div>
 
 <style>
 	.passage {
-		overflow: visible;
+		clear: both;
+		overflow: hidden;
 		position: relative;
 	}
 
+	/* text wrap styles */
 	.balance {
 		text-wrap: balance;
 	}
@@ -101,6 +106,7 @@ function htmlSerializer(type, element, content, children): string {
 		text-wrap: pretty;
 	}
 
+	/* spacing */
 	.passage > :global(*) {
 		line-height: var(--type-leading-default);
 	}
@@ -131,5 +137,42 @@ function htmlSerializer(type, element, content, children): string {
 			vertical-align: baseline;
 			width: var(--size);
 		}
+	}
+
+	/* Footnotes/sidenotes */
+	:global([data-footnote-ref]),
+	:global(.sidenote-label) {
+		--size: 1.6em;
+		--color: var(--color-secondary);
+
+		background-color: transparent;
+		border-radius: 1000px;
+		border: 2px solid var(--color);
+		color: var(--color);
+		cursor: pointer;
+		display: inline-block;
+		font-family: var(--type-font-accent);
+		font-size: var(--type-scale-eta);
+		line-height: var(--size);
+		margin-inline: 0.35rem;
+		min-height: var(--size);
+		min-width: var(--size);
+		padding: 0 0.45rem;
+		position: relative;
+		text-align: center;
+		text-decoration: none;
+		transform: translateY(10%); /* scoot down a little */
+		transition: color 0.25s ease, border-color 0.25s ease;
+		vertical-align: top;
+	}
+
+	:global(.sidenote-label):hover,
+	:global(.sidenote-label):active,
+	:global(.sidenote-label).is-active {
+		--color: var(--color-highlight);
+	}
+
+	:global([data-supports~='js'] [data-footnotes]) {
+		display: none;
 	}
 </style>

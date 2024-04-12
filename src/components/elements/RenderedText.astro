@@ -16,19 +16,20 @@ export interface Props {
 	markdown?: string;
 	prismicText?: RichTextField;
 	allowHTML?: boolean;
+	footnotes?: boolean;
 	htmlSerializer?: Function;
 	inline?: boolean;
 }
 
 const {
-	allowHTML = false,
-	htmlSerializer = null,
-	inline = false,
 	markdown,
 	prismicText,
+	htmlSerializer = null,
+	inline = false,
+	footnotes = false,
 } = Astro.props as Props;
 
-let renderedText: string;
+let renderedText: string | Promise<string>;
 
 if (prismicHelpers.isFilled.richText(prismicText)) {
 	renderedText = prismicHelpers.asHTML(
@@ -37,8 +38,9 @@ if (prismicHelpers.isFilled.richText(prismicText)) {
 		htmlSerializer as prismicHelpers.HTMLFunctionSerializer,
 	);
 }
+
 if (markdown) {
-	renderedText = renderMarkdown(markdown, { html: allowHTML, inline });
+	renderedText = await renderMarkdown(markdown, { inline, footnotes });
 }
 ---
 
