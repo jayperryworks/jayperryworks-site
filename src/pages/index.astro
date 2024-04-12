@@ -69,16 +69,6 @@ const seo = {
 			</div>
 		</section>
 
-		<section style="
-			margin-inline: auto;
-			padding-block: var(--space-wide);
-			max-width: var(--content-width-default);
-		">
-			<Passage text={{
-				markdown: `Here "is a _footnote_ test[^1]" **and** 'another[^2]'. An [external link](https://google.com).\n\n[^1]: The note.\n\n[^2]: Another note.`
-			}} />
-		</section>
-
 		<!-- TOC panels -->
 		<section id="toc">
 			<BlockList {body} numbered />
