@@ -4,6 +4,7 @@ import rehypeStringify from 'rehype-stringify';
 import remarkGFM from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
+import remarkSmartypants from 'remark-smartypants';
 import remarkJPFootnotes from './remarkJPFootnotes.js';
 import remarkJPInline from './remarkJPInline.js';
 import remarkJPExternalLink from './remarkJPExternalLink.js';
@@ -34,6 +35,7 @@ export default async function render(content, options = {}) {
 		.use(remarkJPFootnotes, { renderFootnotes: footnotes })
 		.use(remarkJPInline, { renderInline: inline })
 		.use(remarkJPExternalLink)
+		.use(remarkSmartypants)
 		.use(rehypeStringify)
 		.process(content);
 
