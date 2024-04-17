@@ -36,6 +36,8 @@ const {
 	description,
 	class: className = ''
 } = Astro.props as Props;
+
+console.log(actions)
 ---
 
 <aside class={['callout', className].join(' ')}>
@@ -51,7 +53,7 @@ const {
 		/>
 	</slot>
 
-	{actions && (
+	{actions?.length > 0 && (
 		<footer>
 			{actions.map(({label, link}) => (
 				<Button
@@ -69,19 +71,19 @@ const {
 	.callout {
 		--color-bg: var(--color-well);
 
+		background-color: var(--color-well);
+		border-radius: var(--border-radius);
 		display: flex;
 		flex-direction: column;
-		border-radius: var(--border-radius);
-		padding: var(--space-medium);
-		background-color: var(--color-well);
 		gap: var(--space-xnarrow);
+		padding: var(--space-medium);
 	}
 
 	footer {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: flex-end;
 		gap: var(--space-xnarrow);
+		justify-content: flex-end;
 		padding-block-start: var(--space-medium);
 	}
 </style>

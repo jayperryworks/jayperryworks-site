@@ -75,8 +75,14 @@ export async function getStaticPaths({ paginate }) {
 		const callouts = data.body.map(({ primary, items }) => ({
 			title: primary.heading,
 			description: { prismicText: primary.description },
-			actions: items.map(({ call_to_action_label: label, link }) => ({ label, link, })),
+			placement: primary.placement,
+			actions: items?.length > 0
+				? items.map(({ call_to_action_label: label, link }) => ({ label, link, }))
+				: undefined,
 		}));
+
+		const bottomCallouts = callouts.filter(({ placement }) => (placement === 'Bottom'));
+		const topCallouts = callouts.filter(({ placement }) => (placement === 'Top'));
 
 		const chapters = data.chapters.map(({ chapter }) => {
 			const {
@@ -94,7 +100,8 @@ export async function getStaticPaths({ paginate }) {
 				title,
 				subtitle,
 				body,
-				callouts,
+				bottomCallouts,
+				topCallouts,
 				project: {
 					uid,
 					title: data.title,
@@ -147,7 +154,8 @@ const {
 	subtitle,
 	theme,
 	title,
-	callouts,
+	bottomCallouts,
+	topCallouts,
 } = data[0];
 
 // if no title was given for SEO content, make a default one using the page data above
@@ -247,6 +255,18 @@ const nextChapter = project.chapterList[currentPage] ? {
 				</div>
 			</header>
 
+			<!-- Top callouts -->
+			{topCallouts?.length > 0 && (
+				<div class="support">
+					{topCallouts.map((callout: Callout) => (
+						<Callout
+							{...callout}
+							class="support-box"
+						/>
+					))}
+				</div>
+			)}
+
 			<!-- body -->
 			<BlockList {body} showLedeStyle />
 		</article>
@@ -282,18 +302,18 @@ const nextChapter = project.chapterList[currentPage] ? {
 		</nav>
 	</main>
 
-	<!-- Callouts -->
-		{callouts?.length > 0 && (
-			<div class="support">
-				{callouts.map((callout: Callout) => (
-					<Callout
-						{...callout}
-						class="support-box"
-					/>
-				))}
-			</div>
-		)}
-		<MainFooter />
+	<!-- Bottom callouts -->
+	{bottomCallouts?.length > 0 && (
+		<div class="support bottom">
+			{bottomCallouts.map((callout: Callout) => (
+				<Callout
+					{...callout}
+					class="support-box"
+				/>
+			))}
+		</div>
+	)}
+	<MainFooter />
 </Layout>
 
 <style>
@@ -348,6 +368,9 @@ const nextChapter = project.chapterList[currentPage] ? {
 
 	.support {
 		padding-inline: var(--space-outside);
+	}
+
+	.support.bottom {
 		padding-block-end: var(--space-xwide);
 	}
 
