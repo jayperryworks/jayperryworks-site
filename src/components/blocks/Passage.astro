@@ -159,7 +159,6 @@ function htmlSerializer(type, element, content, children): string {
 		font-family: var(--type-font-accent);
 		font-size: var(--type-scale-eta);
 		line-height: var(--size);
-		margin-block-start: 0.25em;
 		margin-inline: 0.35rem;
 		min-height: var(--size);
 		min-width: var(--size);
@@ -167,8 +166,9 @@ function htmlSerializer(type, element, content, children): string {
 		position: relative;
 		text-align: center;
 		text-decoration: none;
-		transform: translateY(10%); /* scoot down a little */
+		transform: translateY(20%); /* scoot down a little */
 		transition: color 0.25s ease, border-color 0.25s ease;
+		vertical-align: top;
 	}
 
 	:global(.sidenote-label):hover,
