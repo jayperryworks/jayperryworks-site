@@ -23,6 +23,8 @@ const style = `
 
 			display: inline;
 			font-size: 0; /* eliminate whitespace rendering */
+			vertical-align: top;
+			height: 1rem;
 		}
 
 		.content {
@@ -50,6 +52,47 @@ const style = `
 			position: relative;
 			white-space: nowrap;
 			width: 0;
+			padding: 0;
+		}
+
+		/*
+		 * Needed to repeat this global base type CSS because shadow DOM doesn't inherit.
+		 * - Really don't like this but no other obvious solution presents itself for now
+		 * - Maybe see if I can rework this without using shadow DOM?
+		 * - But then how/where should I handle the wrapper styles below?
+		 */
+		a {
+			--underline-w: 0.125em;
+
+			color: inherit;
+			cursor: pointer;
+			text-decoration-color: var(--color-highlight);
+			text-decoration-style: solid;
+			text-decoration-thickness: var(--underline-w);
+			text-underline-position: under;
+			transition: color 0.25s ease;
+		}
+
+		a:hover,
+		a:active {
+			color: var(--color-highlight);
+		}
+
+		code {
+			background-color: var(--color-island);
+			border-radius: 0.2em;
+			display: inline-block;
+			font-family: "Menlo", "Monaco", "Consolas", "Lucida Console", monospace;
+			font-size: 0.8em;
+			padding: 0 0.25em;
+			color: var(--color-secondary);
+		}
+
+
+		a code {
+			background-color: transparent;
+			border-radius: 0;
+			display: inline;
 			padding: 0;
 		}
 

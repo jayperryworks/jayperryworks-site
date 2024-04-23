@@ -44,7 +44,6 @@
 	font-style: italic;
 	font-weight: 300 600;
 	src:
-		local('Figtree'),
 		url('/assets/fonts/Figtree-Italic.ttf') format('truetype') tech('variations'),
 		url('/assets/fonts/Figtree-Italic.ttf') format('truetype-variations');
 }
@@ -64,7 +63,7 @@
 	font-family: 'Iowan Old Style';
 	font-style: italic;
 	src:
-		local('Iowan Old Style'),
+		local('Iowan Old Style Italic'),
 		url('/assets/fonts/Iowan-Italic.woff2') format('woff2'),
 		url('/assets/fonts/Iowan-Italic.woff') format('woff');
 }
@@ -74,7 +73,7 @@
 	font-family: 'Iowan Old Style';
 	font-weight: bold;
 	src:
-		local('Iowan Old Style'),
+		local('Iowan Old Style Bold'),
 		url('/assets/fonts/Iowan-Bold.woff2') format('woff2'),
 		url('/assets/fonts/Iowan-Bold.woff') format('woff');
 }
@@ -85,7 +84,7 @@
 	font-style: italic;
 	font-weight: bold;
 	src:
-		local('Iowan Old Style'),
+		local('Iowan Old Style Bold Italic'),
 		url('/assets/fonts/Iowan-Bold-Italic.woff2') format('woff2'),
 		url('/assets/fonts/Iowan-Bold-Italic.woff') format('woff');
 }
@@ -187,10 +186,19 @@ em {
 }
 
 code {
-	background-color: var(--color-well);
+	background-color: var(--color-island);
 	border-radius: 0.2em;
 	display: inline-block;
 	font-family: "Menlo", "Monaco", "Consolas", "Lucida Console", monospace;
-	font-size: 0.75em;
+	font-size: 0.8em;
 	padding: 0 0.25em;
+	color: var(--color-secondary);
+}
+
+
+a code {
+	background-color: transparent;
+	border-radius: 0;
+	display: inline;
+	padding: 0;
 }
