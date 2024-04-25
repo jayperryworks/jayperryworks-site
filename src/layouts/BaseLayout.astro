@@ -49,6 +49,8 @@ function themeReducer(
 
 const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer, {}) : {};
 
+console.log(themeTokens)
+
 const RSSMetadata = [
 	{
 		path: '/rss/feed.xml',
