@@ -21,6 +21,9 @@ import BlockList from '@components/BlockList.astro';
 // --- layout
 import Layout from '@layouts/BaseLayout.astro';
 
+const booksEndpoint = await fetch('https://jayperry.works/.netlify/functions/books.mjs');
+console.log(booksEndpoint.status);
+
 const pageData = await prismic.getByUID('index_page', 'bookshelf');
 
 const {

@@ -49,6 +49,7 @@
 		"vite-svg-loader": "^3.1.2"
 	},
 	"dependencies": {
+		"@netlify/blobs": "^7.3.0",
 		"remark-smartypants": "^2.1.0"
 	}
 }
