@@ -10,6 +10,7 @@
 import * as prismicHelpers from '@prismicio/helpers';
 import * as prismic from '@prismicio/client';
 import { format } from 'date-fns';
+import { getStore } from '@netlify/blobs';
 
 export default async function (request, context) {
 	const prismicEndpoint = process.env.PRISMIC_REPOSITORY;
@@ -27,79 +28,88 @@ export default async function (request, context) {
 		},
 	});
 
-	// const books = await Promise.all(booksResponse.map(async ({
-	// 	uid,
-	// 	tags,
-	// 	data,
-	// }) => {
-	// 	const {
-	// 		author,
-	// 		isbn,
-	// 		olid,
-	// 		purchase_url: purchaseURL,
-	// 		related_content: relatedContent,
-	// 		title,
-	// 	} = data;
+	const books = await Promise.all(booksResponse.map(async ({
+		uid,
+		tags,
+		data,
+	}) => {
+		const {
+			author,
+			isbn,
+			olid,
+			purchase_url: purchaseURL,
+			related_content: relatedContent,
+			title,
+		} = data;
 
-	// 	// query the Open Library API with the book's ISBN number
-	// 	if (isbn || olid) {
-	// 		let bookData = {
-	// 			actions: [
-	// 				{
-	// 					label: 'Purchase',
-	// 					url: prismicHelpers.asLink(purchaseURL),
-	// 					type: 'external'
-	// 				},
-	// 			],
-	// 			tags: tags || [],
-	// 			author,
-	// 			relatedContent,
-	// 			title,
-	// 			uid,
-	// 		};
+		// query the Open Library API with the book's ISBN number
+		if (isbn || olid) {
+			let bookData = {
+				actions: [
+					{
+						label: 'Purchase',
+						url: prismicHelpers.asLink(purchaseURL),
+						type: 'external'
+					},
+				],
+				tags: tags || [],
+				author,
+				relatedContent,
+				title,
+				uid,
+			};
 
-	// 		// try to fetch additional data from OpenLibrary
-	// 		const queryParams = {
-	// 			bibkeys: isbn ? `ISBN:${isbn}` : `OLID:${olid}`,
-	// 			format: 'json',
-	// 			jscmd: 'data',
-	// 		}
-	// 		const queryString = Object.keys(queryParams)
-	// 			.map((key) => `${key}=${queryParams[key]}`)
-	// 			.join('&');
+			// try to fetch additional data from OpenLibrary
+			// const queryParams = {
+			// 	bibkeys: isbn ? `ISBN:${isbn}` : `OLID:${olid}`,
+			// 	format: 'json',
+			// 	jscmd: 'data',
+			// }
+			// const queryString = Object.keys(queryParams)
+			// 	.map((key) => `${key}=${queryParams[key]}`)
+			// 	.join('&');
 
-	// 		// Open Library API docs: https://openlibrary.org/dev/docs/api/books
-	// 		const openLibraryResponse = await fetch(`http://openlibrary.org/api/books?${queryString}`);
+			// Open Library API docs: https://openlibrary.org/dev/docs/api/books
+			// const openLibraryResponse = await fetch(`http://openlibrary.org/api/books?${queryString}`);
 
-	// 		if (openLibraryResponse.status === 200) {
-	// 			const openLibraryData = await openLibraryResponse.json();
+			// if (openLibraryResponse.status === 200) {
+			// 	const openLibraryData = await openLibraryResponse.json();
 
-	// 			const {
-	// 				publish_date,
-	// 				publishers,
-	// 				cover: coverList,
-	// 				url: infoURL,
-	// 			} = openLibraryData[queryParams.bibkeys];
+			// 	const {
+			// 		publish_date,
+			// 		publishers,
+			// 		cover: coverList,
+			// 		url: infoURL,
+			// 	} = openLibraryData[queryParams.bibkeys];
 
-	// 			bookData.publishDate = publish_date && format(new Date(publish_date), 'yyyy');
-	// 			bookData.cover = coverList && Object.values(coverList).pop();
+			// 	bookData.publishDate = publish_date && format(new Date(publish_date), 'yyyy');
+			// 	bookData.cover = coverList && Object.values(coverList).pop();
 
-	// 			bookData.publisher = publishers?.length > 0 && publishers[0].name;
+			// 	bookData.publisher = publishers?.length > 0 && publishers[0].name;
 
-	// 			bookData.actions.unshift({
-	// 				label: 'Open Library',
-	// 				url: infoURL,
-	// 				type: 'external'
-	// 			});
+			// 	bookData.actions.unshift({
+			// 		label: 'Open Library',
+			// 		url: infoURL,
+			// 		type: 'external'
+			// 	});
 
-	// 			return bookData;
-	// 		}
+			// 	return bookData;
+			// }
 
-	// 		// if the request to OL fails, just use the data we have from the CMS
-	// 		return bookData;
-	// 	}
-	// }));
+			// if the request to OL fails, just use the data we have from the CMS
+			return bookData;
+		}
+	}));
 
+	const bookStore = getStore('books');
+	const firstBook = books[0];
+	const firstStoreItem = await bookStore.get(firstBook.uid);
 
-	return new Response(JSON.stringify(booksResponse));
+	if (!firstStoreItem) {
+		await bookStore.setJSON(firstBook.uid, { ...firstBook });
+	}
+
+	console.log(bookStore);
+
+	return new Response(JSON.stringify(await bookStore.get(firstBook.uid)));
 }
