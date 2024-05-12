@@ -23,6 +23,7 @@
 		"@prismicio/helpers": "^2.2.1",
 		"@prismicio/types": "^0.1.27",
 		"@tinacms/cli": "^1.5.45",
+		"@types/node": "^20.12.11",
 		"@typescript-eslint/eslint-plugin": "^5.18.0",
 		"@typescript-eslint/parser": "^5.18.0",
 		"astro": "^4.0.7",
