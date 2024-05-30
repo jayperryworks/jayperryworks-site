@@ -1,6 +1,7 @@
 ---
 // assets
 import '@styles/utilities/type.css';
+import '@styles/tokens/spacing.css';
 
 // components
 import Dot from '@components/elements/Dot.astro';
@@ -53,15 +54,25 @@ if (next) highlight = 'flashing';
 <style>
 	.sequence-nav-item {
 		display: block;
-	}
-
-	.sequence-nav-item,
-	.sequence-nav-item + .sequence-nav-item {
 		margin-block-start: 0;
 	}
 
-	.sequence-nav-item :global(.link) {
-		--background-color: var(--color-bg);
+	.sequence-nav-item + .sequence-nav-item {
+		display: flex;
+		align-items: center;
+		flex: 1;
+	}
+
+	/* the connecting line between items */
+	.sequence-nav-item + .sequence-nav-item::before {
+		--thickness: 1px;
+
+		background-color: var(--color-secondary);
+		content: '';
+		display: block;
+		flex: 1;
+		height: var(--thickness);
+		min-width: var(--space-wide);
 	}
 
 	.sequence-nav-item :global(.link.current),
@@ -84,7 +95,7 @@ if (next) highlight = 'flashing';
 		--color: var(--color-primary);
 	}
 
-	/* reveal the tooltip when a a is hovered */
+	/* reveal the tooltip when a link is hovered */
 	:global(.link:hover .tooltip) {
 		--show: 1;
 	}

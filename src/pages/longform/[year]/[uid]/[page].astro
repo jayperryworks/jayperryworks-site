@@ -241,7 +241,11 @@ const nextChapter = project.chapterList[currentPage] ? {
 					<Heading level={1} text={project.title} />
 					{project.subtitle && <Heading level={1} subheading text={project.subtitle} />}
 					<!-- sequence nav -->
-					<div class="header-nav | wrapper">
+					<div class={[
+						'header-nav',
+						// if the sequence nav has a lot of items, make it wider
+						sequenceNavItems.length > 6 ? 'wrapper wide' : 'wrapper',
+					].join(' ')}>
 						<SequenceNav>
 							{sequenceNavItems.map((item) => (
 								<SequenceNavItem {...item}>{prismicHelpers.asText(item.title)}</SequenceNavItem>
@@ -251,7 +255,7 @@ const nextChapter = project.chapterList[currentPage] ? {
 					<!-- chapter title -->
 					<Heading level={3} subheading>{`${project.chapterLabel} ${currentPage}`}</Heading>
 					<Heading level={2} class="header-chapter" text={title} />
-					{subtitle && <Heading level={3} class="header-chapter" subheading text={subtitle} />}
+					{subtitle && <Heading level={3} subheading text={subtitle} />}
 				</div>
 			</header>
 
@@ -290,7 +294,7 @@ const nextChapter = project.chapterList[currentPage] ? {
 								link={nextChapter.href}
 								titleSize="beta"
 							>
-								<Fragment slot="eyebrow">{`${project.chapterLabel} ${currentPage + 1}`}</Fragment>
+								<Fragment slot="eyebrow">Next: {`${project.chapterLabel} ${currentPage + 1}`}</Fragment>
 								<Fragment slot="title">{prismicHelpers.asText(nextChapter.title)}</Fragment>
 							</ReadNextLink>
 						: <aside class="end | type-role-display type-scale-gamma">
@@ -344,11 +348,9 @@ const nextChapter = project.chapterList[currentPage] ? {
 
 	.header-nav {
 		padding-block: var(--space-wide);
-		margin-inline: auto;
-		max-width: var(--content-width-default);
 	}
 
-	.header-chapter {
+	.headline :global(.header-chapter) {
 		padding-block-start: var(--space-xxnarrow);
 	}
 

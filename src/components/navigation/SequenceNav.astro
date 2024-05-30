@@ -1,36 +1,33 @@
 ---
 import '@styles/tokens/borders.css';
 import '@styles/tokens/color.css';
+import '@styles/tokens/spacing.css';
 ---
-<ol class="sequence-nav">
-	<slot></slot>
-</ol>
+<div class="sequence-nav">
+	<div class="scroll-wrapper">
+		<ol class="list">
+			<slot></slot>
+		</ol>
+	</div>
+</div>
 
 <style>
 	.sequence-nav {
-		align-items: center;
-		display: flex;
-		justify-content: space-between;
-		list-style: none;
-		margin-block: 0;
-		margin-inline: 0;
-		padding-block: 0;
-		padding-inline: 0;
 		position: relative;
 	}
 
-	.sequence-nav::after {
-		--height: 1px;
+	.scroll-wrapper {
+		padding-block-end: 1.2rem; /* scrollbar thickness */
+		overflow-x: scroll;
+	}
 
-		content: '';
-		display: block;
-		left: 0;
-		height: var(--height);
-		margin-block-start: calc((var(--height) / 2) * -1);
-		position: absolute;
-		right: 0;
-		top: 50%;
-		z-index: -1;
-		background-color: var(--color-secondary);
+	.list {
+		align-items: center;
+		display: flex;
+		list-style: none;
+		margin: 0;
+		max-width: 100%;
+		overflow: visible;
+		padding: 0;
 	}
 </style>

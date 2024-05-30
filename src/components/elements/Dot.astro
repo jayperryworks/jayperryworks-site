@@ -39,15 +39,17 @@ const classList = [
 		--background-color: transparent;
 		--border-color: var(--color);
 		--size: 2em;
+		--border-width: 2px;
 		--transition-duration: 0.25s;
 
 		align-items: center;
 		background-color: var(--background-color);
 		border-radius: 10000px;
-		border: 2px solid var(--border-color);
+		border: var(--border-width) solid var(--border-color);
 		color: var(--color);
 		cursor: pointer;
 		display: flex;
+		position: static;
 		flex-direction: column;
 		font-family: var(--type-font-accent);
 		font-size: 0.6em;
@@ -56,7 +58,6 @@ const classList = [
 		min-height: var(--size);
 		min-width: var(--size);
 		padding: 0.25em;
-		position: relative;
 		text-align: center;
 		text-decoration: none;
 		transition: color 0.25s ease, border-color 0.25s ease;
@@ -70,16 +71,14 @@ const classList = [
 	}
 
 	.dot.highlight::before {
-		--margin: 0.3em;
+		--margin: 0.4em;
+		--dot-size: calc(var(--size) - var(--border-width) - (var(--margin) * 2));
 
 		background-color: var(--color);
 		border-radius: 10000px;
-		bottom: var(--margin);
+		width: var(--dot-size);
+		height: var(--dot-size);
 		content: '';
-		left: var(--margin);
-		position: absolute;
-		right: var(--margin);
-		top: var(--margin);
 		transition-duration: var(--transition-duration);
 		transition-property: opacity, background-color;
 		transition-timing-function: ease-in-out;
