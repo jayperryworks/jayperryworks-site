@@ -13,6 +13,7 @@ import {
 // utils
 import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
+import prismic from './prismic.ts';
 
 // link/relationship data to fetch from Prismic to resolve page routes
 // -> use in the config on the original query, e.g. prismic.getByUID(... { fetchLinks })
@@ -87,6 +88,30 @@ export function longform({ data, uid }: Partial<PrismicDocumentWithUID>): string
 	return `/longform/${getDateParams(data.date, ['year'])}/${uid}/1/`;
 }
 
+export function longformChapter({ id }: Partial<PrismicDocumentWithUID>): string {
+	prismic.getAllByType('longform').then((response) => {
+		let chapterNumber = 1;
+
+		const essay = response.find(({ data }) => {
+			return data.chapters.find(({ chapter }, index) => {
+				if (chapter.id === id) {
+					chapterNumber = index + 1;
+					return true;
+				}
+			});
+		});
+
+		console.log('essay', essay);
+		const { data, uid } = essay;
+
+		const url = `/longform/${getDateParams(data.date, ['year'])}/${uid}/${chapterNumber}/`;
+
+		console.log(url);
+
+		return url;
+	});
+}
+
 // picture series
 export function pictureSeries({ uid }: Partial<PrismicDocumentWithUID>): string {
 	return `/pictures#${uid}`;
@@ -99,6 +124,7 @@ export function linkResolver(doc: Partial<PrismicDocument>): string {
 	const contentTypes = {
 		homepage,
 		longform,
+		longform_chapter: longformChapter,
 		page,
 		picture,
 		blog_post: blogPost,
@@ -107,5 +133,5 @@ export function linkResolver(doc: Partial<PrismicDocument>): string {
 		picture_series: pictureSeries,
 	};
 
-	return contentTypes[type](doc) || null;
+	return contentTypes[type](doc);
 }
