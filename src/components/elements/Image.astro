@@ -40,9 +40,12 @@ const { src, srcset } = prismicHelpers.asImageWidthSrcSet(source, {
 	widths,
 });
 const alt = source.alt;
+const sizes = widths.map((width) => `(max-width: ${width}) ${width}px`).join(', ');
 
-const width = widths[0];
-const height = (source.dimensions.height / source.dimensions.width) * widths[0];
+const { width, height } = source.dimensions;
+
+// const width = widths[0];
+// const height = (source.dimensions.height / source.dimensions.width) * widths[0];
 
 const classList = [
 	'image',
@@ -52,7 +55,7 @@ const classList = [
 ].join(' ');
 
 const styleList = arrayToPunctatedString([
-	aspectRatio && `--aspect-ratio: ${aspectRatio}`,
+	`--aspect-ratio: ${aspectRatio || `${width} / ${height}`}`,
 	position && `--object-position: ${position}`,
 	style,
 ]);
@@ -64,19 +67,19 @@ const styleList = arrayToPunctatedString([
 	decoding="async"
 	loading="lazy"
 	{alt}
-	{src}
-	{srcset}
 	{width}
 	{height}
+	{src}
+	{srcset}
+	{sizes}
 />
 
 <style>
 	.image {
-		aspect-ratio: var(--aspect-ratio, auto);
+		aspect-ratio: var(--aspect-ratio);
+		background-color: var(--color-well);
 		content-visibility: auto;
 		display: inline-block;
-		max-width: 100%;
-		object-position: var(--position, 50% 50%);
 	}
 
 	.border {
@@ -85,8 +88,10 @@ const styleList = arrayToPunctatedString([
 
 	.fit,
 	[width][height].fit {
+		background-color: transparent;
 		display: block;
 		height: auto;
+		object-position: var(--position, 50% 50%);
 		width: 100%;
 	}
 
