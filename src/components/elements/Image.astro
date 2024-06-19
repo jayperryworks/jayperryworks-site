@@ -55,7 +55,7 @@ const classList = [
 ].join(' ');
 
 const styleList = arrayToPunctatedString([
-	`--aspect-ratio: ${aspectRatio || `${width} / ${height}`}`,
+	`--aspect-ratio: ${aspectRatio || `${width}/${height} auto`}`,
 	position && `--object-position: ${position}`,
 	style,
 ]);

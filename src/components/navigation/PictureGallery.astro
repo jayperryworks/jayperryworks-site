@@ -87,16 +87,13 @@ function matteThickness(picture) {
 
 	.has-aspect .link {
 		flex: 1;
-		align-content: center;
-		align-items: center;
-		display: flex;
-		justify-content: center;
 		max-height: 100%;
 	}
 
-	/* @media screen and (min-width: 40em) {
-		.featured {
-			grid-area: span 2 / span 2;
-		}
-	} */
+	.link > * {
+		position: relative;
+		inset-block-start: 50%;
+		inset-inline-start: 50%;
+		transform: translateX(-50%) translateY(-50%);
+	}
 </style>
