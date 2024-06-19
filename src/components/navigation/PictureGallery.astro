@@ -49,6 +49,7 @@ function matteThickness(picture) {
 	if (columnSize === 'large') return 4;
 	return 3;
 }
+
 ---
 
 <Gallery
@@ -70,7 +71,6 @@ function matteThickness(picture) {
 				href={permalink(picture)}
 			>
 				<PictureFrame
-					matteThickness={matteThickness(picture)}
 					source={picture.data.cover}
 					type={frameType(picture)}
 					{matteColor}
@@ -87,16 +87,13 @@ function matteThickness(picture) {
 
 	.has-aspect .link {
 		flex: 1;
-		align-content: center;
-		align-items: center;
-		display: flex;
-		justify-content: center;
 		max-height: 100%;
 	}
 
-	/* @media screen and (min-width: 40em) {
-		.featured {
-			grid-area: span 2 / span 2;
-		}
-	} */
+	.link > * {
+		position: relative;
+		inset-block-start: 50%;
+		inset-inline-start: 50%;
+		transform: translateX(-50%) translateY(-50%);
+	}
 </style>
