@@ -30,12 +30,12 @@ export interface Props {
 
 const types = {
 	frame: {
-		matte: 7,
+		matte: 20,
 		border: 0.25,
 	},
 	panel: {
-		matte: 0.2,
-		border: 0.1,
+		matte: 2,
+		border: 0.25,
 	},
 };
 
@@ -49,6 +49,16 @@ const {
 	matteColor,
 } = Astro.props as Props;
 
+
+const { width, height } = source.dimensions;
+
+const matteAndFrameInPx = ((matteThickness / 100) * width) + (frameThickness * 16);
+
+const aspectRatio = [
+	width + matteAndFrameInPx,
+	height + matteAndFrameInPx,
+].join(' / ');
+
 const classList = [
 	'picture',
 	type,
@@ -56,17 +66,19 @@ const classList = [
 ].filter(i => i).join(' ');
 
 const styleList = arrayToPunctatedString([
+	`--aspect-ratio: ${aspectRatio}`,
 	matteColor && `--matte-color: ${matteColor};`,
 	`--frame-thickness: ${frameThickness}em`,
-	`--matte-thickness: ${matteThickness}vmin`,
+	`--matte-thickness: ${matteThickness}%`,
 ]);
 ---
 
-<Image
+<figure
 	class={classList}
 	style={styleList}
-	{source}
-/>
+>
+	<Image class="image" {source} />
+</figure>
 
 <style is:global>
 	.picture.frame,
@@ -75,14 +87,24 @@ const styleList = arrayToPunctatedString([
 		--shadow-color: var(--color-shadow);
 		--matte-color: var(--color-island, #fff);
 
+		align-items: center;
+		aspect-ratio: var(--aspect-ratio);
 		background-color: var(--matte-color);
 		border: var(--frame-thickness) solid var(--frame-color);
 		box-shadow: 0 0.25em 0.5em var(--color-shadow);
-		padding: var(--matte-thickness);
+		display: flex;
+		flex-direction: column;
+		height: auto;
+		justify-content: center;
+		margin: 0;
 		max-height: 100%;
 	}
 
 	.picture.panel {
 		box-shadow: 0 0.7em 0.4em var(--color-shadow);
+	}
+
+	.picture .image {
+		width: calc(100% - var(--matte-thickness));
 	}
 </style>

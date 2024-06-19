@@ -40,7 +40,7 @@ const {
 
 <Figure
 	class={['image-gallery', className].join(' ')}
-	{caption}
+	caption={caption && { markdown: caption }}
 	{attribution}
 >
 	<Gallery
