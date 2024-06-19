@@ -30,12 +30,12 @@ export interface Props {
 
 const types = {
 	frame: {
-		matte: 7,
+		matte: 10,
 		border: 0.25,
 	},
 	panel: {
-		matte: 0.2,
-		border: 0.1,
+		matte: 1.5,
+		border: 0.25,
 	},
 };
 
@@ -49,6 +49,14 @@ const {
 	matteColor,
 } = Astro.props as Props;
 
+
+const { width, height } = source.dimensions;
+
+const aspectRatio = [
+	width + ((matteThickness / 100) * width) + (frameThickness * 16),
+	height + ((matteThickness / 100) * width) + (frameThickness * 16),
+].join(' / ');
+
 const classList = [
 	'picture',
 	type,
@@ -58,13 +66,14 @@ const classList = [
 const styleList = arrayToPunctatedString([
 	matteColor && `--matte-color: ${matteColor};`,
 	`--frame-thickness: ${frameThickness}em`,
-	`--matte-thickness: ${matteThickness}vmin`,
+	`--matte-thickness: ${matteThickness}%`,
 ]);
 ---
 
 <Image
 	class={classList}
 	style={styleList}
+	{aspectRatio}
 	{source}
 />
 

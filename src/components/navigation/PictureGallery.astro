@@ -49,6 +49,7 @@ function matteThickness(picture) {
 	if (columnSize === 'large') return 4;
 	return 3;
 }
+
 ---
 
 <Gallery
@@ -70,7 +71,6 @@ function matteThickness(picture) {
 				href={permalink(picture)}
 			>
 				<PictureFrame
-					matteThickness={matteThickness(picture)}
 					source={picture.data.cover}
 					type={frameType(picture)}
 					{matteColor}
