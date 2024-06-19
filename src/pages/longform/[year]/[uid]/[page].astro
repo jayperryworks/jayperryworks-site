@@ -93,14 +93,8 @@ export async function getStaticPaths({ paginate }) {
 				primary_foreground_color: primary,
 				secondary_foreground_color: secondary,
 				background_color: bg,
-				background_colors,
 				body,
 			} = chapter.data;
-
-
-			const bgGradient = background_colors?.length > 0
-				? background_colors.map(({ stop }) => stop)
-				: undefined;
 
 			return {
 				uid,
