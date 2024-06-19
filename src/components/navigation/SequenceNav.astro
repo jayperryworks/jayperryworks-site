@@ -1,36 +1,40 @@
 ---
 import '@styles/tokens/borders.css';
 import '@styles/tokens/color.css';
----
-<ol class="sequence-nav">
-	<slot></slot>
-</ol>
+import '@styles/tokens/spacing.css';
 
-<style>
+export interface Props {
+	class?: string;
+}
+
+const {
+	class: className = '',
+} = Astro.props as Props;
+
+const classList = [
+	'sequence-nav',
+	className,
+].join(' ');
+---
+<div class={classList}>
+	<ol class="list">
+		<slot></slot>
+	</ol>
+</div>
+
+<style is:global>
 	.sequence-nav {
-		align-items: center;
-		display: flex;
-		justify-content: space-between;
-		list-style: none;
-		margin-block: 0;
-		margin-inline: 0;
-		padding-block: 0;
-		padding-inline: 0;
-		position: relative;
+		container-name: sequence;
+		container-type: inline-size;
 	}
 
-	.sequence-nav::after {
-		--height: 1px;
-
-		content: '';
-		display: block;
-		left: 0;
-		height: var(--height);
-		margin-block-start: calc((var(--height) / 2) * -1);
-		position: absolute;
-		right: 0;
-		top: 50%;
-		z-index: -1;
-		background-color: var(--color-secondary);
+	.list {
+		align-items: center;
+		display: flex;
+		list-style: none;
+		margin: 0;
+		max-width: 100%;
+		overflow: visible;
+		padding: 0;
 	}
 </style>
