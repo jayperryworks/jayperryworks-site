@@ -51,28 +51,28 @@ const classList = [
 	background-color: var(--bg);
 	border-radius: 0.25em;
 	border: 1px solid var(--border);
-	bottom: calc(var(--parent-height) + var(--pointer-size) + 1em);
 	box-shadow: 0 0.05rem 0.5rem var(--color-shadow);
 	color: var(--color-primary);
 	content: attr(title);
 	display: block;
 	font-family: var(--type-font-accent);
 	font-size: var(--type-scale-zeta);
+	inset-block-end: calc(var(--parent-height) + var(--pointer-size) + 1em);
 	line-height: var(--type-leading-tight);
 	max-width: var(--max-width);
 	min-width: var(--min-width);
 	opacity: var(--show, 0);
 	padding: var(--space-xnarrow) var(--pointer-margin);
-	position: absolute;
 	pointer-events: none;
+	position: absolute;
 	transition: var(--transition-duration) opacity ease-in-out;
 	z-index: 4;
 }
 
 .tooltip::before,
 .tooltip::after {
-	border-left: var(--pointer-size) solid transparent;
-	border-right: var(--pointer-size) solid transparent;
+	border-inline-end: var(--pointer-size) solid transparent;
+	border-inline-start: var(--pointer-size) solid transparent;
 	content: "";
 	display: inline-block;
 	height: 0;
@@ -81,49 +81,49 @@ const classList = [
 }
 
 .tooltip.align-start {
-	left: calc(var(--pointer-margin) * -1);
+	inset-inline-start: calc(var(--pointer-margin) * -1);
 	text-align: left;
 }
 
 .tooltip.align-end {
-	right: calc(var(--pointer-margin) * -1);
+	inset-inline-end: calc(var(--pointer-margin) * -1);
 	text-align: right;
 }
 
 .tooltip.align-center {
-	left: 50%;
+	inset-inline-start: 50%;
 	text-align: center;
 	transform: translateX(-50%);
 }
 
 .tooltip::before {
-	border-top: var(--pointer-size) solid var(--border);
-	bottom: calc(var(--pointer-size) * -1);
+	border-block-start: var(--pointer-size) solid var(--border);
+	inset-block-end: calc(var(--pointer-size) * -1);
 }
 
 .tooltip::after {
-	border-top: var(--pointer-size) solid var(--bg);
-	bottom: calc((var(--pointer-size) - 0.1em) * -1);
+	border-block-start: var(--pointer-size) solid var(--bg);
+	inset-block-end: calc((var(--pointer-size) - 0.1em) * -1);
 }
 
 .tooltip.align-start::before,
 .tooltip.align-start::after {
-	left: var(--pointer-margin);
+	inset-inline-start: var(--pointer-margin);
 }
 
 .tooltip.align-end::before,
 .tooltip.align-end::after {
-	right: var(--pointer-margin);
+	inset-inline-end: var(--pointer-margin);
 }
 
 .tooltip.align-center::before,
 .tooltip.align-center::after {
-	left: 50%;
+	inset-inline-start: 50%;
 	transform: translateX(-50%);
 }
 
 .tooltip.align-center {
-	left: 50%;
+	inset-inline-start: 50%;
 	text-align: center;
 	transform: translateX(-50%);
 }
@@ -143,14 +143,14 @@ const classList = [
 @media screen and (min-width: 80em) {
 	/* move all tooltips to be centered on large screens */
 	.tooltip[class*='align'] {
-		left: 50%;
+		inset-inline-start: 50%;
 		text-align: center;
 		transform: translateX(-50%);
 	}
 
 	.tooltip[class*='align']::before,
 	.tooltip[class*='align']::after {
-		left: 50%;
+		inset-inline-start: 50%;
 		transform: translateX(-50%);
 	}
 }
