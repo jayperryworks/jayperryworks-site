@@ -4,24 +4,21 @@ import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
 ---
 <div class="sequence-nav">
-	<div class="scroll-wrapper">
-		<ol class="list">
-			<slot></slot>
-		</ol>
-	</div>
+	<ol class="list">
+		<slot></slot>
+	</ol>
 </div>
 
-<style>
+<style is:global>
 	.sequence-nav {
 		position: relative;
-	}
-
-	.scroll-wrapper {
-		padding-block-end: 1.2rem; /* scrollbar thickness */
-		overflow-x: scroll;
+		container-name: sequence;
+		container-type: inline-size;
 	}
 
 	.list {
+		--dot-size: 1em;
+
 		align-items: center;
 		display: flex;
 		list-style: none;
@@ -29,5 +26,11 @@ import '@styles/tokens/spacing.css';
 		max-width: 100%;
 		overflow: visible;
 		padding: 0;
+	}
+
+	@container sequence (min-width: 36rem) {
+		.list {
+			--dot-size: 2em;
+		}
 	}
 </style>

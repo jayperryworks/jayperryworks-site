@@ -42,8 +42,8 @@ if (next) highlight = 'flashing';
 	<Dot
 		el="a"
 		class={classList}
-		{href}
 		{highlight}
+		{href}
 	>
 		<Tooltip class="tooltip" align={tooltipAlign}>
 			<slot></slot>
@@ -72,7 +72,10 @@ if (next) highlight = 'flashing';
 		display: block;
 		flex: 1;
 		height: var(--thickness);
-		min-width: var(--space-wide);
+	}
+
+	.sequence-nav-item :global(.link) {
+		--size: var(--dot-size);
 	}
 
 	.sequence-nav-item :global(.link.current),
