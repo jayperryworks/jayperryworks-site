@@ -19,6 +19,7 @@ import MainNav from '@components/navigation/MainNav.astro';
 import ReadNextLink from '@components/navigation/ReadNextLink.astro';
 import SequenceNav from '@components/navigation/SequenceNav.astro';
 import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
+import ProgressBar from '@components/elements/ProgressBar.astro';
 
 // types
 import type {
@@ -98,8 +99,8 @@ export async function getStaticPaths({ paginate }) {
 
 
 			const bgGradient = background_colors?.length > 0
-			? background_colors.map(({ stop }) => stop)
-			: undefined;
+				? background_colors.map(({ stop }) => stop)
+				: undefined;
 
 			return {
 				uid,
@@ -239,18 +240,33 @@ const nextChapter = project.chapterList[currentPage] ? {
 >
 	<MainNav segment={uid} />
 	<main>
-		<article>
+		<article class="chapter">
 			<!-- titling -->
 			<header class="headline">
-				<div class="wrapper wide">
 					<!-- project title -->
 					<Heading level={1} text={project.title} />
-					{project.subtitle && <Heading level={1} subheading text={project.subtitle} />}
+					{prismicHelpers.isFilled.title(project.subtitle) && (
+						<Heading
+							level={2}
+							text={project.subtitle}
+							subheading
+						/>
+					)}
+
+					<!-- progress bar (for small screens) -->
+					<ProgressBar
+						class="progress"
+						value={currentPage}
+						range={sequenceNavItems.length}
+					>
+						Progress: You are currently reading Chapter {currentPage} of {sequenceNavItems.length}.
+					</ProgressBar>
+
 					<!-- sequence nav -->
 					<div class={[
-						'header-nav',
+						'sequence',
 						// if the sequence nav has a lot of items, make it wider
-						sequenceNavItems.length > 6 ? 'wrapper wide' : 'wrapper',
+						sequenceNavItems.length <= 6 ? 'wrapper' : 'wrapper wide'
 					].join(' ')}>
 						<SequenceNav>
 							{sequenceNavItems.map((item) => (
@@ -258,11 +274,13 @@ const nextChapter = project.chapterList[currentPage] ? {
 							))}
 						</SequenceNav>
 					</div>
+
 					<!-- chapter title -->
-					<Heading level={3} subheading>{`${project.chapterLabel} ${currentPage}`}</Heading>
-					<Heading level={2} class="header-chapter" text={title} />
-					{subtitle && <Heading level={3} subheading text={subtitle} />}
-				</div>
+					<div class="headline-chapter">
+						<Heading level={3} subheading>{`${project.chapterLabel} ${currentPage}`}</Heading>
+						<Heading level={2} class="header-chapter" text={title} />
+						{subtitle && <Heading level={3} subheading text={subtitle} />}
+					</div>
 			</header>
 
 			<!-- Top callouts -->
@@ -281,16 +299,28 @@ const nextChapter = project.chapterList[currentPage] ? {
 			<BlockList {body} showLedeStyle />
 		</article>
 
-		<!-- sequence nav -->
+		<!-- footer navigation -->
 		<nav class="footer-nav">
 			<div class={sequenceNavItems.length > 6 ? 'wrapper wide' : 'wrapper'}>
-				<SequenceNav>
+				<!-- progress bar (for small screens) -->
+				<ProgressBar
+					class="progress"
+					value={currentPage}
+					range={sequenceNavItems.length}
+				>
+					Progress: You are currently reading Chapter {currentPage} of {sequenceNavItems.length}.
+				</ProgressBar>
+
+				<!-- sequence nav -->
+				<SequenceNav class="sequence">
 					{sequenceNavItems.map((item) => (
 						<SequenceNavItem {...item} next={item.href === url.next}>
 							{prismicHelpers.asText(item.title)}
 						</SequenceNavItem>
 					))}
 				</SequenceNav>
+
+				<!-- next chapter -->
 				<div class="next">
 					{nextChapter
 						? <ReadNextLink
@@ -300,8 +330,12 @@ const nextChapter = project.chapterList[currentPage] ? {
 								link={nextChapter.href}
 								titleSize="beta"
 							>
-								<Fragment slot="eyebrow">Next: {`${project.chapterLabel} ${currentPage + 1}`}</Fragment>
-								<Fragment slot="title">{prismicHelpers.asText(nextChapter.title)}</Fragment>
+								<Fragment slot="eyebrow">
+									Next: {`${project.chapterLabel} ${currentPage + 1}`}
+								</Fragment>
+								<Fragment slot="title">
+									{prismicHelpers.asText(nextChapter.title)}
+								</Fragment>
 							</ReadNextLink>
 						: <aside class="end | type-role-display type-scale-gamma">
 								The end
@@ -327,7 +361,7 @@ const nextChapter = project.chapterList[currentPage] ? {
 </Layout>
 
 <style>
-	article {
+	.chapter {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-xwide);
@@ -336,6 +370,29 @@ const nextChapter = project.chapterList[currentPage] ? {
 
 	.headline {
 		text-align: center;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-wide);
+	}
+
+	.headline-chapter {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xxnarrow);
+	}
+
+	:global(.sequence) {
+		display: none;
+	}
+
+	@media screen and (min-width: 36em) {
+		:global(.progress) {
+			display: none;
+		}
+
+		:global(.sequence) {
+			display: block;
+		}
 	}
 
 	.headline,
@@ -345,19 +402,12 @@ const nextChapter = project.chapterList[currentPage] ? {
 
 	.wrapper {
 		margin-inline: auto;
-		max-width: var(--content-width-default);
+		width: var(--content-width-default);
+		max-width: 100%;
 	}
 
 	.wrapper.wide {
-		max-width: var(--content-width-wide);
-	}
-
-	.header-nav {
-		padding-block: var(--space-wide);
-	}
-
-	.headline :global(.header-chapter) {
-		padding-block-start: var(--space-xxnarrow);
+		width: var(--content-width-wide);
 	}
 
 	.footer-nav {

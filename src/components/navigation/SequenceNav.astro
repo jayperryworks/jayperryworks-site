@@ -2,8 +2,21 @@
 import '@styles/tokens/borders.css';
 import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
+
+export interface Props {
+	class?: string;
+}
+
+const {
+	class: className = '',
+} = Astro.props as Props;
+
+const classList = [
+	'sequence-nav',
+	className,
+].join(' ');
 ---
-<div class="sequence-nav">
+<div class={classList}>
 	<ol class="list">
 		<slot></slot>
 	</ol>
@@ -16,8 +29,6 @@ import '@styles/tokens/spacing.css';
 	}
 
 	.list {
-		--dot-size: 1em;
-
 		align-items: center;
 		display: flex;
 		list-style: none;
@@ -25,11 +36,5 @@ import '@styles/tokens/spacing.css';
 		max-width: 100%;
 		overflow: visible;
 		padding: 0;
-	}
-
-	@container sequence (min-width: 36rem) {
-		.list {
-			--dot-size: 2em;
-		}
 	}
 </style>

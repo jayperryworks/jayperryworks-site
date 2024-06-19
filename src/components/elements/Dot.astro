@@ -41,6 +41,7 @@ const classList = [
 		--size: 2em;
 		--border-width: 2px;
 		--transition-duration: 0.25s;
+		--highlight-margin: 0.4em;
 
 		align-items: center;
 		background-color: var(--background-color);
@@ -71,8 +72,7 @@ const classList = [
 	}
 
 	.dot.highlight::before {
-		--margin: 0.4em;
-		--dot-size: calc(var(--size) - var(--border-width) - (var(--margin) * 2));
+		--dot-size: calc(var(--size) - var(--border-width) - (var(--highlight-margin) * 2));
 
 		background-color: var(--color);
 		border-radius: 10000px;
