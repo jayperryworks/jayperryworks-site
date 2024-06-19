@@ -22,6 +22,7 @@ export interface Props {
 	fit?: ImageFit;
 	widths?: Array<number>;
 	position?: string;
+	style?: string;
 }
 
 const {
@@ -41,17 +42,18 @@ const { src, srcset } = prismicHelpers.asImageWidthSrcSet(source, {
 });
 const alt = source.alt;
 const sizes = widths.map((width) => `(max-width: ${width}) ${width}px`).join(', ');
-
 const { width, height } = source.dimensions;
 
-// const width = widths[0];
-// const height = (source.dimensions.height / source.dimensions.width) * widths[0];
+// check the source format and background prop to see if the image has transparency
+// -> use this to turn off the background 'loading' color
+const transparent = source.url.includes('.png') && source?.edit?.background === 'transparent';
 
 const classList = [
 	'image',
 	border ? 'border' : '',
 	className,
 	fit ? `fit ${fit}` : '',
+	transparent ? 'transparent' : '',
 ].join(' ');
 
 const styleList = arrayToPunctatedString([
@@ -80,6 +82,10 @@ const styleList = arrayToPunctatedString([
 		background-color: var(--color-well);
 		content-visibility: auto;
 		display: inline-block;
+	}
+
+	.transparent {
+		background-color: transparent;
 	}
 
 	.border {
