@@ -60,41 +60,43 @@ export default async function (request, context) {
 			};
 
 			// try to fetch additional data from OpenLibrary
-			// const queryParams = {
-			// 	bibkeys: isbn ? `ISBN:${isbn}` : `OLID:${olid}`,
-			// 	format: 'json',
-			// 	jscmd: 'data',
-			// }
-			// const queryString = Object.keys(queryParams)
-			// 	.map((key) => `${key}=${queryParams[key]}`)
-			// 	.join('&');
+			const queryParams = {
+				bibkeys: isbn ? `ISBN:${isbn}` : `OLID:${olid}`,
+				format: 'json',
+				jscmd: 'data',
+			};
+
+			const queryString = Object.keys(queryParams)
+				.map((key) => `${key}=${queryParams[key]}`)
+				.join('&');
 
 			// Open Library API docs: https://openlibrary.org/dev/docs/api/books
-			// const openLibraryResponse = await fetch(`http://openlibrary.org/api/books?${queryString}`);
+			const openLibraryResponse = await fetch(`http://openlibrary.org/api/books?${queryString}`);
 
-			// if (openLibraryResponse.status === 200) {
-			// 	const openLibraryData = await openLibraryResponse.json();
+			if (openLibraryResponse.status === 200) {
+				const openLibraryData = await openLibraryResponse.json();
+				console.log(openLibraryData);
 
-			// 	const {
-			// 		publish_date,
-			// 		publishers,
-			// 		cover: coverList,
-			// 		url: infoURL,
-			// 	} = openLibraryData[queryParams.bibkeys];
+				const {
+					publish_date,
+					publishers,
+					cover: coverList,
+					url: infoURL,
+				} = openLibraryData[queryParams.bibkeys];
 
-			// 	bookData.publishDate = publish_date && format(new Date(publish_date), 'yyyy');
-			// 	bookData.cover = coverList && Object.values(coverList).pop();
+				bookData.publishDate = publish_date && format(new Date(publish_date), 'yyyy');
+				bookData.cover = coverList && Object.values(coverList).pop();
 
-			// 	bookData.publisher = publishers?.length > 0 && publishers[0].name;
+				bookData.publisher = publishers?.length > 0 && publishers[0].name;
 
-			// 	bookData.actions.unshift({
-			// 		label: 'Open Library',
-			// 		url: infoURL,
-			// 		type: 'external'
-			// 	});
+				bookData.actions.unshift({
+					label: 'Open Library',
+					url: infoURL,
+					type: 'external'
+				});
 
-			// 	return bookData;
-			// }
+				return bookData;
+			}
 
 			// if the request to OL fails, just use the data we have from the CMS
 			return bookData;
@@ -109,7 +111,15 @@ export default async function (request, context) {
 		await bookStore.setJSON(firstBook.uid, { ...firstBook });
 	}
 
-	console.log(bookStore);
+	// console.log(bookStore);
 
-	return new Response(JSON.stringify(await bookStore.get(firstBook.uid)));
+	return new Response(
+		JSON.stringify(await bookStore.get(firstBook.uid)),
+		{
+			status: 200,
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		},
+	);
 }
