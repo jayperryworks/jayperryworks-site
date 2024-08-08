@@ -1,3 +1,5 @@
+// run `netlify dev` to test locally
+
 // On request:
 // 1. Pull books records from Prismic/CMS
 // 2. Loop through them and check to see if each has metadata in the blob
@@ -12,9 +14,10 @@ import * as prismic from '@prismicio/client';
 import { format } from 'date-fns';
 import { getStore } from '@netlify/blobs';
 
-export default async function (request, context) {
+export default async function () {
 	const prismicEndpoint = process.env.PRISMIC_REPOSITORY;
 	const prismicToken = process.env.PRISMIC_TOKEN;
+	const contactEmail = process.env.CONTACT_EMAIL;
 
 	const prismicClient = prismic.createClient(
 		prismic.getRepositoryEndpoint(prismicEndpoint),
@@ -71,11 +74,18 @@ export default async function (request, context) {
 				.join('&');
 
 			// Open Library API docs: https://openlibrary.org/dev/docs/api/books
-			const openLibraryResponse = await fetch(`http://openlibrary.org/api/books?${queryString}`);
+			const openLibraryResponse = await fetch(
+				`http://openlibrary.org/api/books?${queryString}`,
+				{
+					headers: {
+						'User-Agent': `JayPerryWebsite/5.0 (${contactEmail})`,
+					},
+				},
+			);
 
 			if (openLibraryResponse.status === 200) {
 				const openLibraryData = await openLibraryResponse.json();
-				console.log(openLibraryData);
+				// console.log(openLibraryData);
 
 				const {
 					publish_date,
