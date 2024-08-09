@@ -14,10 +14,56 @@ import * as prismic from '@prismicio/client';
 import { format } from 'date-fns';
 import { getStore } from '@netlify/blobs';
 
+const prismicEndpoint = process.env.PRISMIC_REPOSITORY;
+const prismicToken = process.env.PRISMIC_TOKEN;
+const contactEmail = process.env.CONTACT_EMAIL;
+
+async function queryOpenLibraryData(data = {}) {
+	const {
+		isbn,
+		olid,
+	} = data;
+
+	// try to fetch additional data from OpenLibrary
+	const openLibraryEndpoint = isbn
+		? `https://openlibrary.org/isbn/${isbn}.json`
+		: `https://openlibrary.org/books/${olid}.json`;
+
+	const openLibraryHeaders = {
+		'User-Agent': `JayPerryWebsite/5.0 (${contactEmail})`,
+	};
+
+	// Open Library API docs: https://openlibrary.org/dev/docs/api/books
+	const openLibraryResponse = await fetch(
+		openLibraryEndpoint,
+		{ headers: openLibraryHeaders },
+	);
+
+	if (openLibraryResponse.status === 200) {
+		const openLibraryData = await openLibraryResponse.json();
+
+		const {
+			publish_date,
+			publishers,
+			covers: coverList,
+			key,
+		} = openLibraryData;
+
+		return {
+			url: `https://openlibrary.org${key}`,
+			publishDate: publish_date && format(new Date(publish_date), 'yyyy'),
+			cover: coverList && coverList[0],
+			publisher: publishers?.length > 0 ? publishers[0] : undefined,
+			hasOpenLibraryData: true,
+		};
+	}
+
+	return { hasOpenLibraryData: false };
+}
+
 export default async function () {
-	const prismicEndpoint = process.env.PRISMIC_REPOSITORY;
-	const prismicToken = process.env.PRISMIC_TOKEN;
-	const contactEmail = process.env.CONTACT_EMAIL;
+	// store of cached book data
+	const bookStore = getStore('books');
 
 	const prismicClient = prismic.createClient(
 		prismic.getRepositoryEndpoint(prismicEndpoint),
@@ -36,6 +82,26 @@ export default async function () {
 		tags,
 		data,
 	}) => {
+		const cachedBook = await bookStore.getWithMetadata(uid);
+
+		if (cachedBook) {
+
+			if (!cachedBook.hasOpenLibraryData) {
+				// query openlibrary for data and add it
+				const openLibraryData = await queryOpenLibraryData(data);
+
+				// bookData.actions.openlibrary = openLibraryData.url;
+				// delete openLibraryData.url;
+
+				// bookData = {
+				// 	...bookData,
+				// 	...openLibraryData,
+				// };
+			}
+
+			return cachedBook;
+		}
+
 		const {
 			author,
 			isbn,
@@ -48,80 +114,43 @@ export default async function () {
 		// query the Open Library API with the book's ISBN number
 		if (isbn || olid) {
 			let bookData = {
-				actions: [
-					{
-						label: 'Purchase',
-						url: prismicHelpers.asLink(purchaseURL),
-						type: 'external'
-					},
-				],
+				isbn,
+				olid,
+				actions: {
+					purchase: prismicHelpers.asLink(purchaseURL),
+				},
 				tags: tags || [],
 				author,
 				relatedContent,
-				title,
+				title: prismicHelpers.asText(title),
 				uid,
 			};
 
-			// try to fetch additional data from OpenLibrary
-			const queryParams = {
-				bibkeys: isbn ? `ISBN:${isbn}` : `OLID:${olid}`,
-				format: 'json',
-				jscmd: 'data',
-			};
+			const openLibraryData = await queryOpenLibraryData(bookData);
 
-			const queryString = Object.keys(queryParams)
-				.map((key) => `${key}=${queryParams[key]}`)
-				.join('&');
+			if (openLibraryData) {
+				bookData.actions.openlibrary = openLibraryData.url;
+				delete openLibraryData.url;
 
-			// Open Library API docs: https://openlibrary.org/dev/docs/api/books
-			const openLibraryResponse = await fetch(
-				`http://openlibrary.org/api/books?${queryString}`,
-				{
-					headers: {
-						'User-Agent': `JayPerryWebsite/5.0 (${contactEmail})`,
-					},
-				},
-			);
-
-			if (openLibraryResponse.status === 200) {
-				const openLibraryData = await openLibraryResponse.json();
-				// console.log(openLibraryData);
-
-				const {
-					publish_date,
-					publishers,
-					cover: coverList,
-					url: infoURL,
-				} = openLibraryData[queryParams.bibkeys];
-
-				bookData.publishDate = publish_date && format(new Date(publish_date), 'yyyy');
-				bookData.cover = coverList && Object.values(coverList).pop();
-
-				bookData.publisher = publishers?.length > 0 && publishers[0].name;
-
-				bookData.actions.unshift({
-					label: 'Open Library',
-					url: infoURL,
-					type: 'external'
-				});
-
-				return bookData;
+				bookData = {
+					...bookData,
+					...openLibraryData,
+				};
 			}
 
+			console.log(bookData);
 			// if the request to OL fails, just use the data we have from the CMS
 			return bookData;
 		}
 	}));
 
-	const bookStore = getStore('books');
+
 	const firstBook = books[0];
 	const firstStoreItem = await bookStore.get(firstBook.uid);
 
 	if (!firstStoreItem) {
 		await bookStore.setJSON(firstBook.uid, { ...firstBook });
 	}
-
-	// console.log(bookStore);
 
 	return new Response(
 		JSON.stringify(await bookStore.get(firstBook.uid)),
