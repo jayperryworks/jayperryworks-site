@@ -145,15 +145,15 @@ export default async function(req) {
 	const cachedBook = await bookStore.getWithMetadata(uid);
 
 	// if the book exists in the cache (blob)...
-	// if (cachedBook && cachedBook.metadata.status == '200') {
-	// 	// console.log('cached', cachedBook);
-	// 	const { data, metadata } = cachedBook;
-	// 	// return the data in a response
-	// 	return new Response(
-	// 		JSON.stringify(data),
-	// 		metadata,
-	// 	);
-	// }
+	if (cachedBook && cachedBook.metadata.status == '200') {
+		// console.log('cached', cachedBook);
+		const { data, metadata } = cachedBook;
+		// return the data in a response
+		return new Response(
+			JSON.stringify(data),
+			metadata,
+		);
+	}
 
 	// if the book doesn't exist in the cache, query openlibrary for data and add it
 	const { data, metadata } = await queryOpenLibraryData({ isbn, olid });
