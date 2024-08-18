@@ -9,7 +9,7 @@
 // 7. Send the books data as JSON as response
 
 /**
- * @typedef {Object} OpenLibraryData
+ * @typedef {Object} Book
  * @property {String} url - OpenLibrary URL
  * @property {String} publishDate - publish date for this edition
  * @property {String} cover - url of the cover image
@@ -17,32 +17,57 @@
  * @property {Boolean} hasOpenLibraryData - flag: have we successfully loaded OL data?
  */
 
-/**
- * @typedef {Object} Book
- * @property {String} uid - unique identifier for the book
- * @property {Object} uid.actions - links to buy/view/borrow the book
- * @property {String} uid.actions.purchase - url to buy the book, e.g. Bookshop.org
- * @property {String} uid.actions.openLibrary - url to find the book on OpenLibrary
- * @property {Boolean} uid.hasOpenLibraryData - flag: have we successfully loaded OL data?
- * @property {Number} uid.isbn - ISBN number
- * @property {Object} uid.relatedContent - related content from Prismic
- * @property {String[]} uid.tags - list of tags for the book
- * @property {String} uid.author - author's name
- * @property {String} uid.cover - url of the cover image
- * @property {String} uid.olid - OpenLibrary ID
- * @property {String} uid.publishDate - publish date for this edition
- * @property {String} uid.publisher - name of the publisher
- * @property {String} uid.title - title of the book
- */
-
-import * as prismicHelpers from '@prismicio/helpers';
-import * as prismic from '@prismicio/client';
 import { format } from 'date-fns';
 import { getStore } from '@netlify/blobs';
 
-const prismicEndpoint = process.env.PRISMIC_REPOSITORY;
-const prismicToken = process.env.PRISMIC_TOKEN;
 const contactEmail = process.env.CONTACT_EMAIL;
+
+
+/**
+ * Get the query string parameters from a url
+ *
+ * @param {string} url - a full, valid url
+ * @returns {{ uid: string; isbn: string; olid: string; }}
+ */
+function getURLParams(url) {
+	const { searchParams } = new URL(url);
+	return {
+		uid: searchParams.get('uid'),
+		isbn: searchParams.get('isbn'),
+		olid: searchParams.get('olid'),
+	};
+}
+
+
+/**
+ * Format response headers as an object
+ *
+ * @param {*} headers - weird iterable format of response headers
+ * @returns {{*}} - an object with string keys and values
+ */
+function formatResponseHeaders(headers) {
+	let object = {};
+
+	headers.forEach((value, key) => {
+		object[key] = value;
+	});
+
+	return object;
+}
+
+function formatCoverList(covers) {
+	const sizes = {
+		small: 'S',
+		medium: 'M',
+		large: 'L',
+	};
+
+	return Object.keys(sizes).reduce((result, size) => {
+		const filename = `${covers[0]}-${sizes[size]}.jpg`;
+		result[size] = `https://covers.openlibrary.org/b/id/${filename}`;
+		return result;
+	}, {});
+}
 
 /**
  * Try to fetch book data from OpenLibrary
@@ -61,22 +86,24 @@ async function queryOpenLibraryData(data) {
 
 	// -> if there's an isbn number, use OL's ISBN api endpoint
 	// -> if not, use OL's ID number in their regular book search api
-	const openLibraryEndpoint = isbn
+	const endpoint = isbn
 		? `https://openlibrary.org/isbn/${isbn}.json`
 		: `https://openlibrary.org/books/${olid}.json`;
 
-	const openLibraryHeaders = {
+	const headers = {
 		'User-Agent': `JayPerryWebsite/5.0 (${contactEmail})`,
 	};
 
 	// Open Library API docs: https://openlibrary.org/dev/docs/api/books
 	const openLibraryResponse = await fetch(
-		openLibraryEndpoint,
-		{ headers: openLibraryHeaders },
+		endpoint,
+		{ headers },
 	);
 
 	if (openLibraryResponse.status === 200) {
 		const openLibraryData = await openLibraryResponse.json();
+		const status = Number(openLibraryResponse.status);
+		const headers = formatResponseHeaders(openLibraryResponse.headers);
 
 		const {
 			publish_date,
@@ -85,16 +112,22 @@ async function queryOpenLibraryData(data) {
 			key,
 		} = openLibraryData;
 
+		console.log(coverList);
+
 		return {
-			url: `https://openlibrary.org${key}`,
-			publishDate: publish_date && format(new Date(publish_date), 'yyyy'),
-			cover: coverList && coverList[0],
-			publisher: publishers?.length > 0 ? publishers[0] : undefined,
-			hasOpenLibraryData: true,
+			data: {
+				url: `https://openlibrary.org${key}`,
+				publishDate: publish_date && format(new Date(publish_date), 'yyyy'),
+				cover: coverList && formatCoverList(coverList),
+				publisher: publishers?.length > 0 ? publishers[0] : undefined,
+			},
+			metadata: { status, headers },
 		};
 	}
 
-	return { hasOpenLibraryData: false };
+	return {
+		metadata: { status, headers },
+	};
 }
 
 /**
@@ -102,114 +135,33 @@ async function queryOpenLibraryData(data) {
  *
  * @export
  * @async
- * @returns {Bookstore}
+ * @returns {Book}
  */
-export default async function() {
+export default async function(req) {
+	const { uid, isbn, olid } = getURLParams(req.url);
+
 	// store of cached book data
 	const bookStore = getStore('books');
+	const cachedBook = await bookStore.getWithMetadata(uid);
 
-	const prismicClient = prismic.createClient(
-		prismic.getRepositoryEndpoint(prismicEndpoint),
-		{ accessToken: prismicToken },
-	);
-
-	const booksResponse = await prismicClient.getAllByType('book', {
-		orderings: {
-			field: 'my.book.uid',
-			direction: 'asc',
-		},
-	});
-
-	await Promise.all(booksResponse.map(async ({
-		uid,
-		tags,
-		data,
-	}) => {
-		const cachedBook = await bookStore.get(uid);
-
-		// if the book already exists in the cache (blob)...
-		if (cachedBook) {
-			// if the book is cached but does not have OL data...
-			if (!cachedBook.hasOpenLibraryData) {
-				// query openlibrary for data and add it
-				const openLibraryData = await queryOpenLibraryData(data);
-				console.log('no OL data', cachedBook.data);
-
-				const actions = {
-					...cachedBook.actions,
-					openLibrary: openLibraryData.url,
-				};
-
-				delete openLibraryData.url;
-
-				await bookStore.setJSON(uid, {
-					...cachedBook,
-					...openLibraryData,
-					actions,
-				});
-			}
-
-			// stop and use the cached data
-			return;
-		}
-
-		const {
-			author,
-			isbn,
-			olid,
-			purchase_url: purchaseURL,
-			related_content: relatedContent,
-			title,
-		} = data;
-
-		// format the prismic data if there's an ISBN or OLID available
-		if (isbn || olid) {
-			let bookData = {
-				isbn,
-				olid,
-				actions: {
-					purchase: prismicHelpers.asLink(purchaseURL),
-				},
-				tags: tags || [],
-				author,
-				relatedContent,
-				title: prismicHelpers.asText(title),
-				uid,
-			};
-
-			// query the Open Library API
-			const openLibraryData = await queryOpenLibraryData(bookData);
-
-			if (openLibraryData) {
-				bookData.actions.openlibrary = openLibraryData.url;
-				delete openLibraryData.url;
-
-				await bookStore.setJSON(uid, {
-					...bookData,
-					...openLibraryData,
-				});
-			}
-
-			// if the request to OpenLibrary fails, just use the data we have
-			await bookStore.setJSON(uid, bookData);
-		}
-	}));
-
-
-	// const firstBook = books[0];
-	// const firstStoreItem = await bookStore.get(firstBook.uid);
-
-	// if (!firstStoreItem) {
-	// 	await bookStore.setJSON(firstBook.uid, { ...firstBook });
+	// if the book exists in the cache (blob)...
+	// if (cachedBook && cachedBook.metadata.status == '200') {
+	// 	// console.log('cached', cachedBook);
+	// 	const { data, metadata } = cachedBook;
+	// 	// return the data in a response
+	// 	return new Response(
+	// 		JSON.stringify(data),
+	// 		metadata,
+	// 	);
 	// }
 
+	// if the book doesn't exist in the cache, query openlibrary for data and add it
+	const { data, metadata } = await queryOpenLibraryData({ isbn, olid });
+	// console.log('not cached', metadata);
+	await bookStore.setJSON(uid, data, { metadata });
+
 	return new Response(
-		JSON.Stringify(await bookStore.list()),
-		{
-			status: 200,
-			headers: {
-				'Content-Type': 'application/json'
-			},
-		},
+		JSON.stringify(data),
+		metadata,
 	);
 }
