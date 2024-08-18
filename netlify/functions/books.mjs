@@ -9,10 +9,17 @@
 // 7. Send the books data as JSON as response
 
 /**
+ * @typedef {Object} Cover
+ * @property {string} small - url of the small cover image size
+ * @property {string} medium - url of the medium cover image size
+ * @property {string} large - url of the large cover image size
+ */
+
+/**
  * @typedef {Object} Book
  * @property {String} url - OpenLibrary URL
  * @property {String} publishDate - publish date for this edition
- * @property {String} cover - url of the cover image
+ * @property {Cover} cover - data for the cover image
  * @property {String} publisher - name of the publisher
  * @property {Boolean} hasOpenLibraryData - flag: have we successfully loaded OL data?
  */
@@ -55,7 +62,28 @@ function formatResponseHeaders(headers) {
 	return object;
 }
 
+
+/**
+ * Format the data for the book cover
+ *
+ * @param {String[]} covers
+ * @returns {{
+ * 	small: string;
+ * 	medium: string;
+ * 	large: string;
+ * }}
+ */
 function formatCoverList(covers) {
+	// TODO:
+	// - download each cover size, save to disk
+	// - get width/height for each file
+	// - output new url as well as original url
+	// [size]: {
+	//		original: [OL url],
+	// 		cached: [blob url],
+	// 		width: [number],
+	// 		height: [number],
+	// }
 	const sizes = {
 		small: 'S',
 		medium: 'M',
@@ -76,7 +104,7 @@ function formatCoverList(covers) {
  * @param {Object} data - book data needed to reach OL endpoints
  * @param {Number} [data.isbn] - the book's ISBN number
  * @param {String} [data.olid] - the book's Open Library ID
- * @returns {OpenLibraryData}
+ * @returns {Book}
  */
 async function queryOpenLibraryData(data) {
 	const {
