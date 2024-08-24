@@ -19,7 +19,7 @@ const style = `
 
 		:host {
 			--label-color: var(--color-secondary);
-			--label-bg: var(--color-bg);
+			--label-bg: var(--color-surface);
 
 			display: inline;
 			font-size: 0; /* eliminate whitespace rendering */
