@@ -14,7 +14,7 @@ import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import type { ImageField } from '@prismicio/types';
 
 import type {
-	Device,
+	Frame,
 	FormattedText,
 	ImageFit,
 } from '@lib/types';
@@ -24,7 +24,7 @@ export interface Props {
 	attribution?: FormattedText;
 	border?: boolean;
 	caption?: FormattedText;
-	frame?: Device;
+	frame?: Frame;
 	fit?: ImageFit;
 	class?: string;
 }
