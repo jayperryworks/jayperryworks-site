@@ -6,6 +6,7 @@ import '@styles/tokens/contentWidth.css';
 // child components
 import Image from '@components/elements/Image.astro';
 import DeviceFrame from '@components/elements/DeviceFrame.astro';
+import PictureFrame from '@components/elements/PictureFrame.astro';
 import Caption from '@components/blocks/FigureCaption.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
@@ -23,36 +24,86 @@ export interface Props {
 	attribution?: FormattedText;
 	border?: boolean;
 	caption?: FormattedText;
-	device?: Device;
+	frame?: Device;
 	fit?: ImageFit;
 	class?: string;
 }
 
+// props
 const {
 	source,
 	attribution,
 	border,
 	caption,
-	device = 'None',
+	frame = 'None',
 	class: className,
 	fit,
 } = Astro.props as Props;
+
+const frameComponents = {
+	'None': {
+		component: Image,
+		props: {
+			border,
+			fit,
+			source,
+		},
+	},
+	'Matte': {
+		component: PictureFrame,
+		props: {
+			type: 'matte',
+			source,
+		},
+	},
+	'Frame & matte': {
+		component: PictureFrame,
+		props: {
+			type: 'frame',
+			source,
+		},
+	},
+	'Panel': {
+		component: PictureFrame,
+		props: {
+			type: 'panel',
+			source,
+		},
+	},
+	'Phone': {
+		component: DeviceFrame,
+		props: {
+			type: 'Phone',
+			source,
+		},
+	},
+'Tablet (horizontal)': {
+		component: DeviceFrame,
+		props: {
+			type: 'Tablet (horizontal)',
+			source,
+		},
+	},
+'Tablet (portrait)': {
+		component: DeviceFrame,
+		props: {
+			type: 'Tablet (portrait)',
+			source,
+		},
+	},
+};
+
+const {
+	component: FrameComponent,
+	props,
+} = frameComponents[frame];
 ---
 
 <figure class={['figure', className].join(' ')}>
 	<RevealOnScroll>
 		<slot>
 			{source && (
-				device !== 'None'
-				? <DeviceFrame
-						type={device}
-						{source}
-					/>
-				: <Image
-						{border}
-						{fit}
-						{source}
-					/>
+				<FrameComponent {...props} />
 			)}
 		</slot>
 

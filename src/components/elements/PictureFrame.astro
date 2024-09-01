@@ -29,10 +29,19 @@ export interface Props {
 };
 
 const types = {
+	// matte only
+	matte: {
+		matte: 15,
+		border: 0,
+	},
+
+	// picture frame
 	frame: {
 		matte: 20,
 		border: 0.25,
 	},
+
+	// framed panel/canvas
 	panel: {
 		matte: 2,
 		border: 0.25,
@@ -47,6 +56,7 @@ const {
 	frameThickness = types[type].border,
 	matteThickness = types[type].matte,
 	matteColor,
+	el = 'figure',
 } = Astro.props as Props;
 
 
@@ -59,6 +69,8 @@ const aspectRatio = [
 	height + matteAndFrameInPx,
 ].join(' / ');
 
+const El = el;
+
 const classList = [
 	'picture',
 	type,
@@ -67,18 +79,18 @@ const classList = [
 
 const styleList = arrayToPunctatedString([
 	`--aspect-ratio: ${aspectRatio}`,
-	matteColor && `--matte-color: ${matteColor};`,
 	`--frame-thickness: ${frameThickness}em`,
 	`--matte-thickness: ${matteThickness}%`,
+	matteColor && `--matte-color: ${matteColor};`,
 ]);
 ---
 
-<figure
+<El
 	class={classList}
 	style={styleList}
 >
 	<Image class="image" {source} />
-</figure>
+</El>
 
 <style is:global>
 	.picture.frame,
