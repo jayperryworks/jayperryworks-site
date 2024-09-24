@@ -25,13 +25,13 @@ export interface Props {
 	frameThickness: number,
 	matteColor?: CSSVariable | HexColor | HSLColor | HSLAColor,
 	matteThickness?: number,
-	type?: 'frame' | 'panel',
+	type?: 'matte' | 'frame' | 'panel',
 };
 
 const types = {
 	// matte only
 	matte: {
-		matte: 15,
+		matte: 18,
 		border: 0,
 	},
 
@@ -63,6 +63,7 @@ const {
 const { width, height } = source.dimensions;
 
 const matteAndFrameInPx = ((matteThickness / 100) * width) + (frameThickness * 16);
+console.log(matteAndFrameInPx);
 
 const aspectRatio = [
 	width + matteAndFrameInPx,
@@ -79,7 +80,7 @@ const classList = [
 
 const styleList = arrayToPunctatedString([
 	`--aspect-ratio: ${aspectRatio}`,
-	`--frame-thickness: ${frameThickness}em`,
+	`--frame-thickness: ${frameThickness > 0 ? `${frameThickness}em` : 0}`,
 	`--matte-thickness: ${matteThickness}%`,
 	matteColor && `--matte-color: ${matteColor};`,
 ]);
@@ -93,17 +94,17 @@ const styleList = arrayToPunctatedString([
 </El>
 
 <style is:global>
+	.picture.matte,
 	.picture.frame,
 	.picture.panel {
 		--frame-color: var(--color-primary);
 		--shadow-color: var(--color-shadow);
-		--matte-color: var(--color-island, #fff);
+		--matte-color: var(--color-well, #fff);
 
 		align-items: center;
 		aspect-ratio: var(--aspect-ratio);
 		background-color: var(--matte-color);
 		border: var(--frame-thickness) solid var(--frame-color);
-		box-shadow: 0 0.25em 0.5em var(--color-shadow);
 		display: flex;
 		flex-direction: column;
 		height: auto;
@@ -112,11 +113,16 @@ const styleList = arrayToPunctatedString([
 		max-height: 100%;
 	}
 
+	.picture.frame,
+	.picture.panel {
+		box-shadow: 0 0.25em 0.5em var(--color-shadow);
+	}
+
 	.picture.panel {
 		box-shadow: 0 0.7em 0.4em var(--color-shadow);
 	}
 
-	.picture .image {
+	.picture .image[width][height] {
 		width: calc(100% - var(--matte-thickness));
 	}
 </style>
