@@ -9,13 +9,13 @@
 	import Image from '@components/elements/Image.astro';
 
 	// types
-	import type { Device } from '@lib/types';
+	import type { Frame } from '@lib/types';
 	import type { ImageField } from '@prismicio/types';
 
 	export interface Props {
 		source: ImageField,
 		class?: string,
-		type?: Device,
+		type?: Frame,
 	};
 
 	const {
@@ -25,7 +25,7 @@
 	} = Astro.props as Props;
 
 	const types = {
-		Phone: {
+		'Phone': {
 			className: 'phone',
 			ratio: '1/2',
 		},

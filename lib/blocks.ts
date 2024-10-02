@@ -205,13 +205,13 @@ function figure(slice: Slice): BlockType {
 		attribution,
 		caption,
 		image,
-		device = 'None',
 		border = false,
+		frame = 'None',
 	} = slice.primary;
 
 	const output = {
 		border,
-		device: device as Device,
+		frame,
 		source: image,
 		attribution: undefined,
 		caption: undefined,

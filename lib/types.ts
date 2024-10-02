@@ -34,7 +34,7 @@ export type SpaceScale = 'xxnarrow' | 'xnarrow' | 'narrow' | 'medium' | 'wide' |
 export type Prominence = 'Small' | 'Medium' | 'Large';
 export type GallerySize = 'small' | 'medium' | 'large';
 export type ImageFit = 'default' | 'contain' | 'cover';
-export type Device = 'None' | 'Phone' | 'Tablet (horizontal)' | 'Tablet (vertical)';
+export type Frame = 'None' | 'Matte' | 'Frame & matte' | 'Panel' | 'Phone' | 'Tablet (horizontal)' | 'Tablet (vertical)';
 
 // --- type ---
 export type TypeScale = 'alpha' | 'beta' | 'gamma' | 'delta' | 'epsilon' | 'zeta';
