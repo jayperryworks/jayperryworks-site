@@ -6,6 +6,7 @@ import '@styles/tokens/contentWidth.css';
 // child components
 import Image from '@components/elements/Image.astro';
 import DeviceFrame from '@components/elements/DeviceFrame.astro';
+import PictureFrame from '@components/elements/PictureFrame.astro';
 import Caption from '@components/blocks/FigureCaption.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
@@ -13,7 +14,7 @@ import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import type { ImageField } from '@prismicio/types';
 
 import type {
-	Device,
+	Frame,
 	FormattedText,
 	ImageFit,
 } from '@lib/types';
@@ -23,36 +24,90 @@ export interface Props {
 	attribution?: FormattedText;
 	border?: boolean;
 	caption?: FormattedText;
-	device?: Device;
+	frame?: Frame;
+	device?: Frame;
 	fit?: ImageFit;
 	class?: string;
 }
 
+// props
 const {
 	source,
 	attribution,
 	border,
 	caption,
+	frame = 'None',
 	device = 'None',
 	class: className,
 	fit,
 } = Astro.props as Props;
+
+console.log(`Figure: ${frame}, ${source?.alt}`)
+
+const frameComponents = {
+	'None': {
+		component: Image,
+		props: {
+			border,
+			fit,
+			source,
+		},
+	},
+	'Matte': {
+		component: PictureFrame,
+		props: {
+			type: 'matte',
+			source,
+		},
+	},
+	'Frame & matte': {
+		component: PictureFrame,
+		props: {
+			type: 'frame',
+			source,
+		},
+	},
+	'Panel': {
+		component: PictureFrame,
+		props: {
+			type: 'panel',
+			source,
+		},
+	},
+	'Phone': {
+		component: DeviceFrame,
+		props: {
+			type: 'Phone',
+			source,
+		},
+	},
+'Tablet (landscape)': {
+		component: DeviceFrame,
+		props: {
+			type: 'Tablet (landscape)',
+			source,
+		},
+	},
+'Tablet (portrait)': {
+		component: DeviceFrame,
+		props: {
+			type: 'Tablet (portrait)',
+			source,
+		},
+	},
+};
+
+const {
+	component: FrameComponent,
+	props,
+} = frameComponents[frame];
 ---
 
 <figure class={['figure', className].join(' ')}>
 	<RevealOnScroll>
 		<slot>
 			{source && (
-				device !== 'None'
-				? <DeviceFrame
-						type={device}
-						{source}
-					/>
-				: <Image
-						{border}
-						{fit}
-						{source}
-					/>
+				<FrameComponent {...props} />
 			)}
 		</slot>
 

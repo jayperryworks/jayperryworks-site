@@ -8,7 +8,7 @@ import Image from '@components/elements/Image.astro';
 import Figure from '@components/blocks/Figure.astro';
 
 // types
-import type { SpaceScale, FormattedText, ImageFit, Device } from '@lib/types';
+import type { SpaceScale, FormattedText, ImageFit, Frame } from '@lib/types';
 import type { ImageField } from '@prismicio/types';
 
 type CollageItemSize = 'Default' | 'Large' | 'XLarge';
@@ -16,7 +16,7 @@ type CollageItemPriority = '1' | '2' | '3';
 
 type CollageItem = {
 	source: ImageField,
-	device?: Device,
+	frame?: Frame,
 	priority?: CollageItemPriority,
 	relativeSize?: CollageItemSize,
 };
