@@ -76,16 +76,13 @@ export async function getStaticPaths({ paginate }) {
 		const callouts = data.body.map(({ primary, items }) => ({
 			title: primary.heading,
 			description: { prismicText: primary.description },
-			placement: primary.placement,
+			placement: primary.placement.toLowerCase(),
 			actions: items?.length > 0
 				? items.map(({ call_to_action_label: label, link }) => ({ label, link, }))
 				: undefined,
 		}));
 
-		const bottomCallouts = callouts.filter(({ placement }) => (placement === 'Bottom'));
-		const topCallouts = callouts.filter(({ placement }) => (placement === 'Top'));
-
-		const chapters = data.chapters.map(({ chapter }) => {
+		const chapters = data.chapters.map(({ chapter }, index) => {
 			const {
 				title,
 				subtitle,
@@ -101,8 +98,7 @@ export async function getStaticPaths({ paginate }) {
 				title,
 				subtitle,
 				body,
-				bottomCallouts,
-				topCallouts,
+				callouts,
 				project: {
 					uid,
 					title: data.title,
@@ -133,7 +129,6 @@ export async function getStaticPaths({ paginate }) {
 		});
 
 		return pages;
-
 	});
 }
 
@@ -156,8 +151,7 @@ const {
 	subtitle,
 	theme,
 	title,
-	bottomCallouts,
-	topCallouts,
+	callouts,
 } = data[0];
 
 // if no title was given for SEO content, make a default one using the page data above
@@ -203,6 +197,7 @@ function generatePageTheme(): Partial<Theme> {
 	return {};
 }
 
+// sequence nav
 function sequenceNavItemAlign(index: number): Align {
 	if (index === 0) return 'start';
 	if (index === lastPage - 1) return 'end';
@@ -220,12 +215,23 @@ const sequenceNavItems = project.chapterList.map(
 	})
 );
 
+// pagination nav
 const nextChapter = project.chapterList[currentPage] ? {
 	title: project.chapterList[currentPage],
 	number: currentPage + 1,
 	href: url.next,
 } : null;
 
+// callouts
+const topCallouts = callouts.filter(({ placement }) => {
+	if (currentPage === 0) return (placement === 'top' || placement === 'start');
+	return placement === 'top';
+});
+
+const bottomCallouts = callouts.filter(({ placement }) => {
+	if (currentPage === lastPage) return (placement === 'bottom' || placement === 'end');
+	return placement === 'bottom';
+});
 ---
 
 <Layout
