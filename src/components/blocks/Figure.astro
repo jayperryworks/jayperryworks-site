@@ -4,9 +4,7 @@ import '@styles/tokens/spacing.css';
 import '@styles/tokens/contentWidth.css';
 
 // child components
-import Image from '@components/elements/Image.astro';
-import DeviceFrame from '@components/elements/DeviceFrame.astro';
-import PictureFrame from '@components/elements/PictureFrame.astro';
+import ImageFrame from '@components/elements/ImageFrame.astro';
 import Caption from '@components/blocks/FigureCaption.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
@@ -37,77 +35,21 @@ const {
 	border,
 	caption,
 	frame = 'None',
-	device = 'None',
 	class: className,
 	fit,
 } = Astro.props as Props;
-
-console.log(`Figure: ${frame}, ${source?.alt}`)
-
-const frameComponents = {
-	'None': {
-		component: Image,
-		props: {
-			border,
-			fit,
-			source,
-		},
-	},
-	'Matte': {
-		component: PictureFrame,
-		props: {
-			type: 'matte',
-			source,
-		},
-	},
-	'Frame & matte': {
-		component: PictureFrame,
-		props: {
-			type: 'frame',
-			source,
-		},
-	},
-	'Panel': {
-		component: PictureFrame,
-		props: {
-			type: 'panel',
-			source,
-		},
-	},
-	'Phone': {
-		component: DeviceFrame,
-		props: {
-			type: 'Phone',
-			source,
-		},
-	},
-'Tablet (landscape)': {
-		component: DeviceFrame,
-		props: {
-			type: 'Tablet (landscape)',
-			source,
-		},
-	},
-'Tablet (portrait)': {
-		component: DeviceFrame,
-		props: {
-			type: 'Tablet (portrait)',
-			source,
-		},
-	},
-};
-
-const {
-	component: FrameComponent,
-	props,
-} = frameComponents[frame];
 ---
 
 <figure class={['figure', className].join(' ')}>
 	<RevealOnScroll>
 		<slot>
 			{source && (
-				<FrameComponent {...props} />
+				<ImageFrame
+					{border}
+					{fit}
+					{frame}
+					{source}
+				/>
 			)}
 		</slot>
 
