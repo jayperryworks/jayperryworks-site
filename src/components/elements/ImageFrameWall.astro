@@ -98,7 +98,6 @@ const styleList = arrayToPunctatedString([
 	.picture.panel {
 		--frame-color: var(--color-primary);
 		--shadow-color: var(--color-shadow);
-		--matte-color: var(--color-bg, #fff);
 
 		align-items: center;
 		aspect-ratio: var(--aspect-ratio);
@@ -112,13 +111,20 @@ const styleList = arrayToPunctatedString([
 		max-height: 100%;
 	}
 
-	.picture.frame,
-	.picture.panel {
+	.picture.frame {
+		--matte-color: var(--color-bg);
+
 		box-shadow: 0 0.25em 0.5em var(--color-shadow);
 	}
 
 	.picture.panel {
+		--matte-color: var(--color-bg);
+
 		box-shadow: 0 0.7em 0.4em var(--color-shadow);
+	}
+
+	.picture.matte {
+		--matte-color: va(--color-well);
 	}
 
 	.picture .image[width][height] {
