@@ -1,31 +1,32 @@
 ---
 // components
-import DeviceFrame from '@components/elements/DeviceFrame.astro';
-import Image from '@components/elements/Image.astro';
 import Figure from '@components/blocks/Figure.astro';
 import Gallery from '@components/layout/Gallery.astro';
+import ImageFrame from '@components/elements/ImageFrame.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // types
-import type { SpaceScale, FormattedText, ImageFit, Device } from '@lib/types';
+import type { SpaceScale, FormattedText, ImageFit, Frame } from '@lib/types';
 import type { ImageField } from '@prismicio/types';
 
 export type ImageGalleryItem = {
 	image: ImageField,
-	device: Device,
+	frame: Frame,
 };
 
 export interface Props {
 	images: ImageGalleryItem[];
 	attribution?: FormattedText;
 	border?: boolean;
-	caption?: FormattedText;
+	caption?: string;
 	class?: string;
 	columnSize?: 'small' | 'medium' | 'large';
 	fitImages?: ImageFit;
+	frame?: Frame;
 	gutter?: SpaceScale;
 }
 
+// props
 const {
 	images,
 	attribution,
@@ -34,6 +35,7 @@ const {
 	class: className = '',
 	columnSize = 'medium',
 	fitImages = 'default',
+	frame = 'None',
 	gutter = 'xnarrow',
 } = Astro.props as Props;
 ---
@@ -49,17 +51,12 @@ const {
 	>
 		{images.map((image) => (
 			<RevealOnScroll tag="li">
-				{image?.device !== 'None'
-					? <DeviceFrame
-							type={image.device}
-							source={image}
-						/>
-					: <Image
-							fit={fitImages}
-							source={image}
-							{border}
-						/>
-				}
+				<ImageFrame
+					source={image as ImageField}
+					fit={fitImages}
+					{border}
+					{frame}
+				/>
 			</RevealOnScroll>
 		))}
 	</Gallery>

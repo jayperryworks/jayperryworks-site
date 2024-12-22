@@ -4,8 +4,7 @@ import '@styles/tokens/spacing.css';
 import '@styles/tokens/contentWidth.css';
 
 // child components
-import Image from '@components/elements/Image.astro';
-import DeviceFrame from '@components/elements/DeviceFrame.astro';
+import ImageFrame from '@components/elements/ImageFrame.astro';
 import Caption from '@components/blocks/FigureCaption.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
@@ -13,7 +12,7 @@ import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 import type { ImageField } from '@prismicio/types';
 
 import type {
-	Device,
+	Frame,
 	FormattedText,
 	ImageFit,
 } from '@lib/types';
@@ -23,17 +22,19 @@ export interface Props {
 	attribution?: FormattedText;
 	border?: boolean;
 	caption?: FormattedText;
-	device?: Device;
+	frame?: Frame;
+	device?: Frame;
 	fit?: ImageFit;
 	class?: string;
 }
 
+// props
 const {
 	source,
 	attribution,
 	border,
 	caption,
-	device = 'None',
+	frame = 'None',
 	class: className,
 	fit,
 } = Astro.props as Props;
@@ -43,16 +44,12 @@ const {
 	<RevealOnScroll>
 		<slot>
 			{source && (
-				device !== 'None'
-				? <DeviceFrame
-						type={device}
-						{source}
-					/>
-				: <Image
-						{border}
-						{fit}
-						{source}
-					/>
+				<ImageFrame
+					{border}
+					{fit}
+					{frame}
+					{source}
+				/>
 			)}
 		</slot>
 

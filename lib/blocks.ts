@@ -3,10 +3,7 @@ import { camelCase } from 'change-case';
 import * as prismicHelpers from '@prismicio/helpers';
 
 // types
-import type {
-	Block as BlockType,
-	Device,
-} from '@lib/types';
+import type { Block as BlockType } from '@lib/types';
 
 import type {
 	ImageField,
@@ -91,7 +88,7 @@ function billboard(slice: Slice): BlockType {
 
 	const images = slice.items.reduce((result, item) => {
 		const {
-			device = 'None',
+			frame = 'None',
 			priority = '1',
 			relative_size: relativeSize,
 			cover_image: source,
@@ -100,7 +97,7 @@ function billboard(slice: Slice): BlockType {
 		if ((source as ImageField).url === '') return result;
 
 		result.push({
-			device,
+			frame,
 			priority,
 			relativeSize,
 			source,
@@ -151,14 +148,14 @@ function collage(slice: Slice): BlockType {
 
 	const images = slice.items.map((item) => {
 		const {
-			device = 'None',
+			frame = 'None',
 			priority = '1',
 			relative_size: relativeSize,
 			image: source,
 		} = item;
 
 		return {
-			device,
+			frame,
 			priority,
 			relativeSize,
 			source,
@@ -205,13 +202,13 @@ function figure(slice: Slice): BlockType {
 		attribution,
 		caption,
 		image,
-		device = 'None',
 		border = false,
+		frame = 'None',
 	} = slice.primary;
 
 	const output = {
 		border,
-		device: device as Device,
+		frame,
 		source: image,
 		attribution: undefined,
 		caption: undefined,
@@ -252,17 +249,16 @@ function imageGallery(slice: Slice): BlockType {
 		caption,
 		column_size: columnSize,
 		gutter,
+		frame = 'None',
 	} = slice.primary;
 
 	return {
 		attribution: markdownText(attribution as RichTextField),
 		caption: markdownText(caption as RichTextField),
 		columnSize,
+		frame,
 		gutter: gutterSize(gutter as string),
-		images: slice.items.map((item) => ({
-			...item.image as ImageField,
-			device: item.device || 'None',
-		})),
+		images: slice.items.map((item) => ({ ...item.image as ImageField })),
 		...sharedBlockFields(slice),
 	};
 }
