@@ -1,7 +1,6 @@
 ---
 // utilities
 import * as prismicHelpers from '@prismicio/helpers';
-import renderMarkdown from '@lib/renderMarkdown';
 
 // components
 import Gallery from '@components/layout/Gallery.astro';
@@ -34,10 +33,12 @@ const {
 ---
 
 <section class="sticky-note-gallery">
-	<Heading
-		level={2}
-		text={title}
-	/>
+	{prismicHelpers.isFilled.title(title) && (
+		<Heading
+			level={2}
+			text={title}
+		/>
+	)}
 	{prismicHelpers.isFilled.title(subtitle) && (
 		<Heading
 			level={4}
@@ -45,7 +46,7 @@ const {
 			subheading
 		/>
 	)}
-	{description && (
+	{prismicHelpers.isFilled.richText(description) && (
 		<Passage text={description} />
 	)}
 	<Gallery gutter="medium">
