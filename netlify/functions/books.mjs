@@ -34,7 +34,11 @@ const contactEmail = process.env.CONTACT_EMAIL;
  * Get the query string parameters from a url
  *
  * @param {string} url - a full, valid url
- * @returns {{ uid: string; isbn: string; olid: string; }}
+ * @returns {{
+ * 	uid: string;
+ * 	isbn?: string;
+ * 	olid?: string;
+ * }}
  */
 function getURLParams(url) {
 	const { searchParams } = new URL(url);
@@ -160,6 +164,12 @@ async function queryOpenLibraryData(data) {
  *
  * @export
  * @async
+ * @param {object} req - the request object
+ * @param {string} req.url - the full URL of the request; needs to contain these query params:
+ * 	- uid: UID of the book title, provided by Prismic
+ * 	- isbn: the book's ISBN number
+ * 		OR
+ * 	- olid: the book's OpenLibrary ID
  * @returns {Book}
  */
 export default async function(req) {
@@ -197,5 +207,5 @@ export default async function(req) {
 }
 
 export const config = {
-  path: '/books'
-}
+	path: '/books'
+};

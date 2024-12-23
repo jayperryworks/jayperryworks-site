@@ -8,7 +8,6 @@ import '@styles/utilities/type.css';
 // --- utils
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
-import { format } from 'date-fns';
 
 // --- components
 import Heading from '@components/blocks/Heading.astro';
@@ -49,7 +48,7 @@ const booksResponse = await prismic.getAllByType('book', {
 });
 
 // try to fetch additional data from OpenLibrary
-const { uid, data } = booksResponse[0];
+const { uid, data } = booksResponse[3];
 const { isbn, olid } = data;
 const queryParams = {
 	uid,
