@@ -1,4 +1,5 @@
 // run `netlify dev` to test locally
+// - use the netlify port, not the astro one
 
 // On request:
 // 1. Check to see if a blob exists for the book UID
@@ -29,7 +30,6 @@ import { getStore } from '@netlify/blobs';
 
 const contactEmail = process.env.CONTACT_EMAIL;
 
-
 /**
  * Get the query string parameters from a url
  *
@@ -44,7 +44,6 @@ function getURLParams(url) {
 		olid: searchParams.get('olid'),
 	};
 }
-
 
 /**
  * Format response headers as an object
@@ -61,7 +60,6 @@ function formatResponseHeaders(headers) {
 
 	return object;
 }
-
 
 /**
  * Format the data for the book cover
@@ -128,10 +126,13 @@ async function queryOpenLibraryData(data) {
 		{ headers },
 	);
 
+	const metadata = {
+		status: Number(openLibraryResponse.status),
+		headers: formatResponseHeaders(openLibraryResponse.headers),
+	};
+
 	if (openLibraryResponse.status === 200) {
 		const openLibraryData = await openLibraryResponse.json();
-		const status = Number(openLibraryResponse.status);
-		const headers = formatResponseHeaders(openLibraryResponse.headers);
 
 		const {
 			publish_date,
@@ -140,7 +141,7 @@ async function queryOpenLibraryData(data) {
 			key,
 		} = openLibraryData;
 
-		console.log(coverList);
+		console.log(openLibraryData);
 
 		return {
 			data: {
@@ -149,13 +150,11 @@ async function queryOpenLibraryData(data) {
 				cover: coverList && formatCoverList(coverList),
 				publisher: publishers?.length > 0 ? publishers[0] : undefined,
 			},
-			metadata: { status, headers },
+			metadata,
 		};
 	}
 
-	return {
-		metadata: { status, headers },
-	};
+	return { metadata };
 }
 
 /**
@@ -167,6 +166,7 @@ async function queryOpenLibraryData(data) {
  */
 export default async function(req) {
 	const { uid, isbn, olid } = getURLParams(req.url);
+	console.log(uid);
 
 	// store of cached book data
 	const bookStore = getStore('books');
@@ -174,7 +174,7 @@ export default async function(req) {
 
 	// if the book exists in the cache (blob)...
 	if (cachedBook && cachedBook.metadata.status == '200') {
-		// console.log('cached', cachedBook);
+		console.log('cached', cachedBook);
 		const { data, metadata } = cachedBook;
 		// return the data in a response
 		return new Response(
@@ -185,7 +185,7 @@ export default async function(req) {
 
 	// if the book doesn't exist in the cache, query openlibrary for data and add it
 	const { data, metadata } = await queryOpenLibraryData({ isbn, olid });
-	// console.log('not cached', metadata);
+	console.log('not cached', metadata);
 	await bookStore.setJSON(uid, data, { metadata });
 
 	return new Response(

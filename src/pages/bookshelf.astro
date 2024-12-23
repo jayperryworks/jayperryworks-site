@@ -21,9 +21,7 @@ import BlockList from '@components/BlockList.astro';
 // --- layout
 import Layout from '@layouts/BaseLayout.astro';
 
-const booksEndpoint = await fetch('https://jayperry.works/.netlify/functions/books.mjs');
-console.log(booksEndpoint.status);
-
+// const booksBlobEndpoint = `${import.meta.env.MODE === 'production' ? 'https:' 'http://localhost:8888' :
 const pageData = await prismic.getByUID('index_page', 'bookshelf');
 
 const {
@@ -49,6 +47,28 @@ const booksResponse = await prismic.getAllByType('book', {
 		direction: 'desc',
 	},
 });
+
+// try to fetch additional data from OpenLibrary
+const { uid, data } = booksResponse[0];
+const { isbn, olid } = data;
+const queryParams = {
+	uid,
+	isbn,
+	olid,
+}
+
+const queryString = Object.keys(queryParams)
+	.reduce((result, key) => {
+		if (queryParams[key]) result.push(`${key}=${queryParams[key]}`);
+		return result;
+	}, [])
+	.join('&');
+
+console.log(queryString);
+
+const booksBlobResponse = await fetch(`http://localhost:8888/.netlify/functions/books?${queryString}`);
+
+console.log(booksBlobResponse);
 
 const books = await Promise.all(booksResponse.map(async ({
 	uid,
@@ -81,42 +101,32 @@ const books = await Promise.all(booksResponse.map(async ({
 			uid,
 		};
 
-		// try to fetch additional data from OpenLibrary
-		const queryParams = {
-			bibkeys: isbn ? `ISBN:${isbn}` : `OLID:${olid}`,
-			format: 'json',
-			jscmd: 'data',
-		}
-		const queryString = Object.keys(queryParams)
-			.map((key) => `${key}=${queryParams[key]}`)
-			.join('&');
-
 		// Open Library API docs: https://openlibrary.org/dev/docs/api/books
-		const openLibraryResponse = await fetch(`http://openlibrary.org/api/books?${queryString}`);
+		// const openLibraryResponse = await fetch(`http://openlibrary.org/api/books?${queryString}`);
 
-		if (openLibraryResponse.status === 200) {
-			const openLibraryData = await openLibraryResponse.json();
+		// if (openLibraryResponse.status === 200) {
+		// 	const openLibraryData = await openLibraryResponse.json();
 
-			const {
-				publish_date,
-				publishers,
-				cover: coverList,
-				url: infoURL,
-			} = openLibraryData[queryParams.bibkeys];
+		// 	const {
+		// 		publish_date,
+		// 		publishers,
+		// 		cover: coverList,
+		// 		url: infoURL,
+		// 	} = openLibraryData[queryParams.bibkeys];
 
-			bookData.publishDate = publish_date && format(new Date(publish_date), 'yyyy');
-			bookData.cover = coverList && Object.values(coverList).pop();
+		// 	bookData.publishDate = publish_date && format(new Date(publish_date), 'yyyy');
+		// 	bookData.cover = coverList && Object.values(coverList).pop();
 
-			bookData.publisher = publishers?.length > 0 && publishers[0].name;
+		// 	bookData.publisher = publishers?.length > 0 && publishers[0].name;
 
-			bookData.actions.unshift({
-				label: 'Open Library',
-				url: infoURL,
-				type: 'external'
-			});
+		// 	bookData.actions.unshift({
+		// 		label: 'Open Library',
+		// 		url: infoURL,
+		// 		type: 'external'
+		// 	});
 
-			return bookData;
-		}
+		// 	return bookData;
+		// }
 
 		// if the request to OL fails, just use the data we have from the CMS
 		return bookData;
