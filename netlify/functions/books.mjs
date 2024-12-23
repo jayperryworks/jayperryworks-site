@@ -141,8 +141,6 @@ async function queryOpenLibraryData(data) {
 			key,
 		} = openLibraryData;
 
-		console.log(openLibraryData);
-
 		return {
 			data: {
 				url: `https://openlibrary.org${key}`,
@@ -166,7 +164,7 @@ async function queryOpenLibraryData(data) {
  */
 export default async function(req) {
 	const { uid, isbn, olid } = getURLParams(req.url);
-	console.log(uid);
+	const headers = { 'Content-Type': 'application/json' };
 
 	// store of cached book data
 	const bookStore = getStore('books');
@@ -174,22 +172,30 @@ export default async function(req) {
 
 	// if the book exists in the cache (blob)...
 	if (cachedBook && cachedBook.metadata.status == '200') {
-		console.log('cached', cachedBook);
 		const { data, metadata } = cachedBook;
 		// return the data in a response
 		return new Response(
 			JSON.stringify(data),
-			metadata,
+			{
+				headers,
+				...metadata,
+			},
 		);
 	}
 
 	// if the book doesn't exist in the cache, query openlibrary for data and add it
 	const { data, metadata } = await queryOpenLibraryData({ isbn, olid });
-	console.log('not cached', metadata);
 	await bookStore.setJSON(uid, data, { metadata });
 
 	return new Response(
 		JSON.stringify(data),
-		metadata,
+		{
+			headers,
+			...metadata,
+		},
 	);
+}
+
+export const config = {
+  path: '/books'
 }

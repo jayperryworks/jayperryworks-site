@@ -21,7 +21,7 @@ import BlockList from '@components/BlockList.astro';
 // --- layout
 import Layout from '@layouts/BaseLayout.astro';
 
-// const booksBlobEndpoint = `${import.meta.env.MODE === 'production' ? 'https:' 'http://localhost:8888' :
+// fetch data from Prismic
 const pageData = await prismic.getByUID('index_page', 'bookshelf');
 
 const {
@@ -64,11 +64,15 @@ const queryString = Object.keys(queryParams)
 	}, [])
 	.join('&');
 
-console.log(queryString);
+// books blob endpoint
+const booksBlobPath = 'books';
+const booksBlobEndpoint = import.meta.env.PROD
+	? `${import.meta.env.SITE}/${booksBlobPath}`
+	: `http://localhost:8888/${booksBlobPath}`;
 
-const booksBlobResponse = await fetch(`http://localhost:8888/.netlify/functions/books?${queryString}`);
-
-console.log(booksBlobResponse);
+const booksBlobResponse = await fetch(`${booksBlobEndpoint}?${queryString}`);
+const booksBlobData = await booksBlobResponse.json();
+console.log(booksBlobData);
 
 const books = await Promise.all(booksResponse.map(async ({
 	uid,
