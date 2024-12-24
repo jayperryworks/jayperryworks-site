@@ -25,8 +25,12 @@
  * @property {Boolean} hasOpenLibraryData - flag: have we successfully loaded OL data?
  */
 
+import { finished } from 'stream/promises';
 import { format } from 'date-fns';
 import { getStore } from '@netlify/blobs';
+import { Readable } from 'stream';
+import fs from 'fs';
+import path from 'path';
 
 const contactEmail = process.env.CONTACT_EMAIL;
 
@@ -46,6 +50,7 @@ function getURLParams(url) {
 		uid: searchParams.get('uid'),
 		isbn: searchParams.get('isbn'),
 		olid: searchParams.get('olid'),
+		update: searchParams.get('update'),
 	};
 }
 
@@ -66,6 +71,25 @@ function formatResponseHeaders(headers) {
 }
 
 /**
+ * Download a file and write it to a local folder
+ *
+ * @async
+ * @param {string} url - the file to download
+ * @param {string} outputPath - the path where the local file should be written
+ * @param {string} filename - name of the output file
+ * @returns {void}
+ */
+async function downloadFile(url, outputPath, filename) {
+	const destination = `${outputPath}/${filename}`;
+
+	if (!fs.existsSync(destination)) {
+		const response = await fetch(url);
+		const filestream = fs.createWriteStream(destination, { flags: 'wx' });
+		await finished(Readable.fromWeb(response.body).pipe(filestream));
+	}
+}
+
+/**
  * Format the data for the book cover
  *
  * @param {String[]} covers
@@ -75,7 +99,7 @@ function formatResponseHeaders(headers) {
  * 	large: string;
  * }}
  */
-function formatCoverList(covers) {
+async function getCover(covers) {
 	// TODO:
 	// - download each cover size, save to disk
 	// - get width/height for each file
@@ -86,17 +110,16 @@ function formatCoverList(covers) {
 	// 		width: [number],
 	// 		height: [number],
 	// }
-	const sizes = {
-		small: 'S',
-		medium: 'M',
-		large: 'L',
-	};
 
-	return Object.keys(sizes).reduce((result, size) => {
-		const filename = `${covers[0]}-${sizes[size]}.jpg`;
-		result[size] = `https://covers.openlibrary.org/b/id/${filename}`;
-		return result;
-	}, {});
+	const filename = `${covers[0]}-L.jpg`;
+	const original = `https://covers.openlibrary.org/b/id/${filename}`;
+	const outputPath = '.netlify/blobs/deploy';
+	const local = await downloadFile(original, outputPath, filename);
+
+	return {
+		original,
+		// local,
+	};
 }
 
 /**
@@ -149,7 +172,7 @@ async function queryOpenLibraryData(data) {
 			data: {
 				url: `https://openlibrary.org${key}`,
 				publishDate: publish_date && format(new Date(publish_date), 'yyyy'),
-				cover: coverList && formatCoverList(coverList),
+				cover: coverList && await getCover(coverList),
 				publisher: publishers?.length > 0 ? publishers[0] : undefined,
 			},
 			metadata,
@@ -173,7 +196,7 @@ async function queryOpenLibraryData(data) {
  * @returns {Book}
  */
 export default async function(req) {
-	const { uid, isbn, olid } = getURLParams(req.url);
+	const { uid, isbn, olid, update } = getURLParams(req.url);
 	const headers = { 'Content-Type': 'application/json' };
 
 	// store of cached book data
@@ -181,7 +204,7 @@ export default async function(req) {
 	const cachedBook = await bookStore.getWithMetadata(uid);
 
 	// if the book exists in the cache (blob)...
-	if (cachedBook && cachedBook.metadata.status == '200') {
+	if (!update && cachedBook?.metadata?.status == '200') {
 		const { data, metadata } = cachedBook;
 		// return the data in a response
 		return new Response(

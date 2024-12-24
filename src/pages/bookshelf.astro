@@ -48,7 +48,7 @@ const booksResponse = await prismic.getAllByType('book', {
 });
 
 // try to fetch additional data from OpenLibrary
-const { uid, data } = booksResponse[3];
+const { uid, data } = booksResponse[4];
 const { isbn, olid } = data;
 const queryParams = {
 	uid,
