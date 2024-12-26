@@ -48,15 +48,17 @@ async function setCover(uid, filename) {
 
 export default async function(request, context) {
 	const { isbn, olid } = context.params;
-	const key = isbn || olid;
+	const id = isbn || olid;
+	const { searchParams } = new URL(request.url);
+	const update = searchParams.get('update');
 	const headers = { 'Content-Type': 'image/jpeg' };
 
 	// store of cached book covers
 	const store = getStore({ name: 'bookCovers' });
-	const cachedCover = await store.get(key);
+	const cachedCover = await store.get(id);
 
 	// if the cover has already been stored
-	if (cachedCover.status === 200) {
+	if (!update && cachedCover.status === 200) {
 		return new Response(
 			cachedCover,
 			{ headers },
@@ -65,11 +67,11 @@ export default async function(request, context) {
 
 	// otherwise, download it, store, and return in the response
 	const url = isbn
-		? `https://covers.openlibrary.org/b/isbn/${isbn}`
-		: `https://covers.openlibrary.org/b/olid/${olid}`;
+		? `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`
+		: `https://covers.openlibrary.org/b/olid/${olid}-L.jpg`;
 
 	const file = await downloadFile(url);
-	await store.set(key, file);
+	await store.set(id, file);
 
 	return new Response(
 		file,

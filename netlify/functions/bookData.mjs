@@ -10,26 +10,6 @@ import { getStore } from '@netlify/blobs';
 const contactEmail = process.env.CONTACT_EMAIL;
 
 /**
- * Get the query string parameters from a url
- *
- * @param {string} url - a full, valid url
- * @returns {{
- * 	uid: string,
- * 	isbn?: string,
- * 	olid?: string,
- * 	update?: boolean,
- * }}
- */
-function getURLParams(url) {
-	const { searchParams } = new URL(url);
-	return {
-		isbn: searchParams.get('isbn'),
-		olid: searchParams.get('olid'),
-		update: searchParams.get('update'),
-	};
-}
-
-/**
  * Format response headers as an object
  *
  * @param {*} headers - weird iterable format of response headers
@@ -90,8 +70,12 @@ async function queryOpenLibraryData({ isbn, olid }) {
 
 	if (openLibraryResponse.status === 200) {
 		const openLibraryData = await openLibraryResponse.json();
+		console.log(openLibraryData);
 
 		const {
+			authors,
+			title,
+			number_of_pages: pageCount,
 			publish_date,
 			publishers,
 			key,
@@ -100,8 +84,11 @@ async function queryOpenLibraryData({ isbn, olid }) {
 		return {
 			data: {
 				url: `https://openlibrary.org${key}`,
+				title,
+				authors,
 				publishDate: publish_date && format(new Date(publish_date), 'yyyy'),
-				publisher: publishers?.length > 0 ? publishers[0] : undefined,
+				publishers,
+				pageCount,
 			},
 			metadata,
 		};
@@ -125,13 +112,13 @@ async function queryOpenLibraryData({ isbn, olid }) {
  */
 export default async function(request, context) {
 	const { isbn, olid } = context.params;
-	const { update } = getURLParams(request.url);
-	const key = isbn || olid;
-	const headers = { 'Content-Type': 'application/json' };
+	const { searchParams } = new URL(request.url);
+	const update = searchParams.get('update');
+	const id = isbn || olid;
 
 	// store of cached book data
 	const bookStore = getStore('books');
-	const cachedBook = await bookStore.getWithMetadata(key);
+	const cachedBook = await bookStore.getWithMetadata(id);
 
 	// if the book exists in the cache (blob)
 	// and OpenLibrary successfully responded with data...
@@ -140,24 +127,18 @@ export default async function(request, context) {
 		// ...return the cached data in a response
 		return new Response(
 			JSON.stringify(data),
-			{
-				...metadata,
-				headers,
-			},
+			metadata,
 		);
 	}
 
 	// if the book doesn't exist in the cache,
 	// query OpenLibrary for data and add it
 	const { data, metadata } = await queryOpenLibraryData({ isbn, olid });
-	await bookStore.setJSON(key, data, { metadata });
+	await bookStore.setJSON(id, data, { metadata });
 
 	return new Response(
 		JSON.stringify(data),
-		{
-			...metadata,
-			headers,
-		},
+		metadata,
 	);
 }
 
