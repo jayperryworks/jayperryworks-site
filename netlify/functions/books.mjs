@@ -9,6 +9,11 @@
 // 6. Download its cover image, make versions, and save to the blob
 // 7. Send the books data as JSON as response
 
+// /books/data/isbn/:isbn
+// /books/data/olid/:olid
+// /books/covers/isbn/:isbn
+// /books/covers/olid/:olid
+
 /**
  * @typedef {Object} Cover
  * @property {string} small - url of the small cover image size
@@ -25,12 +30,8 @@
  * @property {Boolean} hasOpenLibraryData - flag: have we successfully loaded OL data?
  */
 
-import { finished } from 'stream/promises';
 import { format } from 'date-fns';
 import { getStore } from '@netlify/blobs';
-import { Readable } from 'stream';
-import fs from 'fs';
-import path from 'path';
 
 const contactEmail = process.env.CONTACT_EMAIL;
 
@@ -79,13 +80,14 @@ function formatResponseHeaders(headers) {
  * @param {string} filename - name of the output file
  * @returns {void}
  */
-async function downloadFile(url, outputPath, filename) {
-	const destination = `${outputPath}/${filename}`;
-
-	if (!fs.existsSync(destination)) {
+async function downloadFile(url) {
+	// https://sabe.io/blog/node-download-image
+	try {
 		const response = await fetch(url);
-		const filestream = fs.createWriteStream(destination, { flags: 'wx' });
-		await finished(Readable.fromWeb(response.body).pipe(filestream));
+		const blob = await response.blob();
+		return await blob.arrayBuffer();
+	} catch(error) {
+		console.log(error);
 	}
 }
 
@@ -99,7 +101,7 @@ async function downloadFile(url, outputPath, filename) {
  * 	large: string;
  * }}
  */
-async function getCover(covers) {
+async function getCover(uid, covers) {
 	// TODO:
 	// - download each cover size, save to disk
 	// - get width/height for each file
@@ -113,12 +115,17 @@ async function getCover(covers) {
 
 	const filename = `${covers[0]}-L.jpg`;
 	const original = `https://covers.openlibrary.org/b/id/${filename}`;
-	const outputPath = '.netlify/blobs/deploy';
-	const local = await downloadFile(original, outputPath, filename);
+
+	// const file = await fetch(original);
+	const file = await downloadFile(original);
+	console.log(uid, file);
+
+	const coverStore = getStore({ name: 'bookCovers' });
+	await coverStore.set(uid, file);
 
 	return {
 		original,
-		// local,
+		filename,
 	};
 }
 
@@ -133,6 +140,7 @@ async function getCover(covers) {
  */
 async function queryOpenLibraryData(data) {
 	const {
+		uid,
 		isbn,
 		olid,
 	} = data;
@@ -172,7 +180,7 @@ async function queryOpenLibraryData(data) {
 			data: {
 				url: `https://openlibrary.org${key}`,
 				publishDate: publish_date && format(new Date(publish_date), 'yyyy'),
-				cover: coverList && await getCover(coverList),
+				cover: coverList && await getCover(uid, coverList),
 				publisher: publishers?.length > 0 ? publishers[0] : undefined,
 			},
 			metadata,
@@ -217,7 +225,7 @@ export default async function(req) {
 	}
 
 	// if the book doesn't exist in the cache, query openlibrary for data and add it
-	const { data, metadata } = await queryOpenLibraryData({ isbn, olid });
+	const { data, metadata } = await queryOpenLibraryData({ uid, isbn, olid });
 	await bookStore.setJSON(uid, data, { metadata });
 
 	return new Response(
