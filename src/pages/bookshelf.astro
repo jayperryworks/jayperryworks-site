@@ -48,30 +48,25 @@ const booksResponse = await prismic.getAllByType('book', {
 });
 
 // try to fetch additional data from OpenLibrary
-const { uid, data } = booksResponse[4];
-const { isbn, olid } = data;
-const queryParams = {
-	uid,
-	isbn,
-	olid,
-}
-
-const queryString = Object.keys(queryParams)
-	.reduce((result, key) => {
-		if (queryParams[key]) result.push(`${key}=${queryParams[key]}`);
-		return result;
-	}, [])
-	.join('&');
+// const { isbn, olid } = booksResponse[4].data;
 
 // books blob endpoint
-const booksBlobPath = 'books';
-const booksBlobEndpoint = import.meta.env.PROD
-	? `${import.meta.env.SITE}/${booksBlobPath}`
-	: `http://localhost:8888/${booksBlobPath}`;
+function getBooksBlobEndpoint({ isbn, olid, type = 'data' }) {
+	const paths = {
+		data: 'books/data',
+		covers: 'books/covers',
+	};
 
-const booksBlobResponse = await fetch(`${booksBlobEndpoint}?${queryString}`);
-const booksBlobData = await booksBlobResponse.json();
-console.log(booksBlobData);
+	if (isbn) {
+		return import.meta.env.PROD
+			? `${import.meta.env.SITE}/${paths[type]}/isbn/${isbn}/`
+			: `http://localhost:8888/${paths[type]}/isbn/${isbn}/`;
+	}
+
+	return import.meta.env.PROD
+		? `${import.meta.env.SITE}/${paths[type]}/olid/${olid}/`
+		: `http://localhost:8888/${paths[type]}/olid/${olid}/`;
+}
 
 const books = await Promise.all(booksResponse.map(async ({
 	uid,
@@ -104,32 +99,36 @@ const books = await Promise.all(booksResponse.map(async ({
 			uid,
 		};
 
-		// Open Library API docs: https://openlibrary.org/dev/docs/api/books
-		// const openLibraryResponse = await fetch(`http://openlibrary.org/api/books?${queryString}`);
+		const booksDataResponse = await fetch(getBooksBlobEndpoint({ isbn, olid }));
 
-		// if (openLibraryResponse.status === 200) {
-		// 	const openLibraryData = await openLibraryResponse.json();
+		if (booksDataResponse.status === 200) {
+			const booksBlobData = await booksDataResponse.json();
 
-		// 	const {
-		// 		publish_date,
-		// 		publishers,
-		// 		cover: coverList,
-		// 		url: infoURL,
-		// 	} = openLibraryData[queryParams.bibkeys];
+			const {
+				url: infoURL,
+				publishDate,
+				publishers,
+			} = booksBlobData;
 
-		// 	bookData.publishDate = publish_date && format(new Date(publish_date), 'yyyy');
-		// 	bookData.cover = coverList && Object.values(coverList).pop();
+			bookData.publishers = publishers;
+			bookData.publishDate = publishDate;
 
-		// 	bookData.publisher = publishers?.length > 0 && publishers[0].name;
+			bookData.cover = getBooksBlobEndpoint({
+				isbn,
+				olid,
+				type: 'covers',
+			});
 
-		// 	bookData.actions.unshift({
-		// 		label: 'Open Library',
-		// 		url: infoURL,
-		// 		type: 'external'
-		// 	});
+			console.log(bookData.cover);
 
-		// 	return bookData;
-		// }
+			bookData.actions.unshift({
+				label: 'Open Library',
+				url: infoURL,
+				type: 'external'
+			});
+
+			return bookData;
+		}
 
 		// if the request to OL fails, just use the data we have from the CMS
 		return bookData;
@@ -173,15 +172,15 @@ const books = await Promise.all(booksResponse.map(async ({
 						<BookCard
 							title={book.title}
 							author={book.author}
-							cover={book.cover ? { src: book.cover } : undefined}
+							cover={{ src: book.cover }}
 							actions={book.actions}
 						>
-							{book.publisher && book.publishDate && (
+							{book.publishers && book.publishDate && (
 								<p
 									slot="metadata"
 									class="metadata type-role-accent type-scale-zeta"
 								>
-									{[book.publisher, book.publishDate].join(', ')}
+									{[book.publishers[0], book.publishDate].join(', ')}
 								</p>
 							)}
 						</BookCard>

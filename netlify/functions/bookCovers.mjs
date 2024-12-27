@@ -1,7 +1,8 @@
 import { getStore } from '@netlify/blobs';
 
 /**
- * Download a file and write it to a local folder
+ * Download a file and convert it to an ArrayBuffer
+ * hat tip to https://sabe.io/blog/node-download-image
  *
  * @async
  * @param {string} url - the file to download
@@ -10,7 +11,6 @@ import { getStore } from '@netlify/blobs';
  * @returns {ArrayBuffer}
  */
 async function downloadFile(url) {
-	// https://sabe.io/blog/node-download-image
 	try {
 		const response = await fetch(url);
 		const blob = await response.blob();
@@ -46,6 +46,19 @@ async function setCover(uid, filename) {
 	};
 }
 
+
+/**
+ * Query OpenLibrary for a book's cover image and store it in a Netlify Blob
+ *
+ * @export
+ * @async
+ * @param {Object} request
+ * @param {String} request.url - the endpoint url, with query string
+ * @param {Object} context
+ * @param {Number} context.isbn - the book's ISBN number
+ * @param {String} context.olid - the book's OLID number
+ * @returns {unknown}
+ */
 export default async function(request, context) {
 	const { isbn, olid } = context.params;
 	const id = isbn || olid;
@@ -58,7 +71,7 @@ export default async function(request, context) {
 	const cachedCover = await store.get(id);
 
 	// if the cover has already been stored
-	if (!update && cachedCover.status === 200) {
+	if (!update && cachedCover?.status === 200) {
 		return new Response(
 			cachedCover,
 			{ headers },

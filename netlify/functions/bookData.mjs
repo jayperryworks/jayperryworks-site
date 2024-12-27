@@ -70,7 +70,6 @@ async function queryOpenLibraryData({ isbn, olid }) {
 
 	if (openLibraryResponse.status === 200) {
 		const openLibraryData = await openLibraryResponse.json();
-		console.log(openLibraryData);
 
 		const {
 			authors,
