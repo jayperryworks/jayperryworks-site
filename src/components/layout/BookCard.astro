@@ -14,6 +14,7 @@ import * as prismicHelpers from '@prismicio/helpers';
 import Button from '@components/elements/Button.astro';
 import Heading from '@components/blocks/Heading.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+import { Image } from 'astro:assets';
 
 // types
 import { TitleField } from '@prismicio/types';
@@ -25,8 +26,9 @@ type Action = {
 };
 
 type Cover = {
-	src: string,
-	srcset: string,
+	src: string;
+	height: number;
+	width: number;
 }
 
 export interface Props {
@@ -60,12 +62,13 @@ function getInitial(title) {
 		>
 			<slot name="cover">
 				{cover
-					? <img
+					? <Image
 							src={cover.src}
-							srcset={cover.srcset}
 							alt={`Cover for '${prismicHelpers.asText(title)}'`}
 							class="cover-image"
-						>
+							height={cover.height}
+							width={cover.width}
+						/>
 					: <div class="cover-image placeholder">
 							<p class="type-role-display type-scale-alpha">{getInitial(title)}</p>
 						</div>

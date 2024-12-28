@@ -1,51 +1,25 @@
 import { getStore } from '@netlify/blobs';
+import imageSize from 'image-size';
 
 /**
  * Download a file and convert it to an ArrayBuffer
  * hat tip to https://sabe.io/blog/node-download-image
  *
  * @async
- * @param {string} url - the file to download
+ * @param {string} url - the address of the file to download (w/o extension or size suffix)
  * @param {string} outputPath - the path where the local file should be written
  * @param {string} filename - name of the output file
  * @returns {ArrayBuffer}
  */
 async function downloadFile(url) {
 	try {
-		const response = await fetch(url);
+		const response = await fetch(`${url}-L.jpg`);
 		const blob = await response.blob();
 		return await blob.arrayBuffer();
 	} catch(error) {
 		console.log(error);
 	}
 }
-
-/**
- * Format the data for the book cover
- *
- * @param {String[]} covers
- * @returns {{
-* 	small: string;
-* 	medium: string;
-* 	large: string;
-* }}
-*/
-async function setCover(uid, filename) {
-	const original = `https://covers.openlibrary.org/b/id/${filename}`;
-
-	// const file = await fetch(original);
-	const file = await downloadFile(original);
-	console.log(uid, file);
-
-	const coverStore = getStore({ name: 'bookCovers' });
-	await coverStore.set(uid, file);
-
-	return {
-		original,
-		filename,
-	};
-}
-
 
 /**
  * Query OpenLibrary for a book's cover image and store it in a Netlify Blob
@@ -80,8 +54,8 @@ export default async function(request, context) {
 
 	// otherwise, download it, store, and return in the response
 	const url = isbn
-		? `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`
-		: `https://covers.openlibrary.org/b/olid/${olid}-L.jpg`;
+		? `https://covers.openlibrary.org/b/isbn/${isbn}`
+		: `https://covers.openlibrary.org/b/olid/${olid}`;
 
 	const file = await downloadFile(url);
 	await store.set(id, file);

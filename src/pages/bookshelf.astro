@@ -59,13 +59,13 @@ function getBooksBlobEndpoint({ isbn, olid, type = 'data' }) {
 
 	if (isbn) {
 		return import.meta.env.PROD
-			? `${import.meta.env.SITE}/${paths[type]}/isbn/${isbn}/`
-			: `http://localhost:8888/${paths[type]}/isbn/${isbn}/`;
+			? `${import.meta.env.SITE}/${paths[type]}/isbn/${isbn}?update=true`
+			: `http://localhost:8888/${paths[type]}/isbn/${isbn}?update=true`;
 	}
 
 	return import.meta.env.PROD
-		? `${import.meta.env.SITE}/${paths[type]}/olid/${olid}/`
-		: `http://localhost:8888/${paths[type]}/olid/${olid}/`;
+		? `${import.meta.env.SITE}/${paths[type]}/olid/${olid}?update=true`
+		: `http://localhost:8888/${paths[type]}/olid/${olid}?update=true`;
 }
 
 const books = await Promise.all(booksResponse.map(async ({
@@ -108,18 +108,24 @@ const books = await Promise.all(booksResponse.map(async ({
 				url: infoURL,
 				publishDate,
 				publishers,
+				cover,
 			} = booksBlobData;
+
+			console.log(cover)
 
 			bookData.publishers = publishers;
 			bookData.publishDate = publishDate;
 
-			bookData.cover = getBooksBlobEndpoint({
-				isbn,
-				olid,
-				type: 'covers',
-			});
+			bookData.cover = {
+				src: getBooksBlobEndpoint({
+					isbn,
+					olid,
+					type: 'covers',
+				}),
+				...cover,
+			};
 
-			console.log(bookData.cover);
+			// console.log(bookData.cover);
 
 			bookData.actions.unshift({
 				label: 'Open Library',
@@ -172,7 +178,6 @@ const books = await Promise.all(booksResponse.map(async ({
 						<BookCard
 							title={book.title}
 							author={book.author}
-							cover={{ src: book.cover }}
 							actions={book.actions}
 						>
 							{book.publishers && book.publishDate && (
