@@ -34,7 +34,7 @@
 		"cssnano": "^6.0.0",
 		"csv-parser": "^3.0.0",
 		"date-fns": "^2.28.0",
-		"eslint": "^8.12.0",
+		"eslint": "^9.0.0",
 		"eslint-config-airbnb": "^19.0.4",
 		"install": "^0.13.0",
 		"npm-run-all": "^4.1.5",
@@ -52,6 +52,7 @@
 		"vite-svg-loader": "^3.1.2"
 	},
 	"dependencies": {
+		"image-size": "^1.2.0",
 		"netlify-cli": "^17.33.4"
 	}
 }
