@@ -15,7 +15,7 @@
 		"prebuild": "run-s lint",
 		"build": "astro build",
 		"preview": "astro preview",
-		"netlify": "netlify dev"
+		"netlify": "netlify dev --no-open"
 	},
 	"devDependencies": {
 		"@astrojs/rss": "^4.0.6",

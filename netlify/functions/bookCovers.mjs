@@ -13,9 +13,14 @@ import imageSize from 'image-size';
  */
 async function downloadFile(url) {
 	try {
-		const response = await fetch(`${url}-L.jpg`);
-		const blob = await response.blob();
-		return await blob.arrayBuffer();
+		const response = await fetch(`${url}-L.jpg?default=false`);
+
+		if (response.status === 200) {
+			const blob = await response.blob();
+			return await blob.arrayBuffer();
+		}
+
+		return false;
 	} catch(error) {
 		console.log(error);
 	}
@@ -42,10 +47,10 @@ export default async function(request, context) {
 
 	// store of cached book covers
 	const store = getStore({ name: 'bookCovers' });
-	const cachedCover = await store.get(id);
+	const cachedCover = await store.get(id, { type: 'arrayBuffer' });
 
 	// if the cover has already been stored
-	if (!update && cachedCover?.status === 200) {
+	if (!update && cachedCover) {
 		return new Response(
 			cachedCover,
 			{ headers },
@@ -58,11 +63,25 @@ export default async function(request, context) {
 		: `https://covers.openlibrary.org/b/olid/${olid}`;
 
 	const file = await downloadFile(url);
-	await store.set(id, file);
 
+	if (file) {
+		await store.set(id, file);
+
+		return new Response(
+			file,
+			{ headers },
+		);
+	}
+
+	// if the image can't be downloaded from OpenLibrary, return an error
 	return new Response(
-		file,
-		{ headers },
+		'Error: this image is not available on OpenLibrary.',
+		{
+			status: 404,
+			headers: {
+				'Content-Type': 'text/plain',
+			},
+		}
 	);
 }
 

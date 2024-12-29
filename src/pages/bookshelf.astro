@@ -59,13 +59,13 @@ function getBooksBlobEndpoint({ isbn, olid, type = 'data' }) {
 
 	if (isbn) {
 		return import.meta.env.PROD
-			? `${import.meta.env.SITE}/${paths[type]}/isbn/${isbn}?update=true`
-			: `http://localhost:8888/${paths[type]}/isbn/${isbn}?update=true`;
+			? `${import.meta.env.SITE}/${paths[type]}/isbn/${isbn}`
+			: `http://localhost:8888/${paths[type]}/isbn/${isbn}`;
 	}
 
 	return import.meta.env.PROD
-		? `${import.meta.env.SITE}/${paths[type]}/olid/${olid}?update=true`
-		: `http://localhost:8888/${paths[type]}/olid/${olid}?update=true`;
+		? `${import.meta.env.SITE}/${paths[type]}/olid/${olid}`
+		: `http://localhost:8888/${paths[type]}/olid/${olid}`;
 }
 
 const books = await Promise.all(booksResponse.map(async ({
@@ -80,6 +80,7 @@ const books = await Promise.all(booksResponse.map(async ({
 		purchase_url: purchaseURL,
 		related_content: relatedContent,
 		title,
+		cover,
 	} = data;
 
 	// query the Open Library API with the book's ISBN number
@@ -108,24 +109,19 @@ const books = await Promise.all(booksResponse.map(async ({
 				url: infoURL,
 				publishDate,
 				publishers,
-				cover,
-			} = booksBlobData;
-
-			console.log(cover)
+				hasCover,
+			} = JSON.parse(booksBlobData);
 
 			bookData.publishers = publishers;
 			bookData.publishDate = publishDate;
 
-			bookData.cover = {
-				src: getBooksBlobEndpoint({
-					isbn,
-					olid,
-					type: 'covers',
-				}),
-				...cover,
-			};
-
-			// console.log(bookData.cover);
+			// if there's a cover image in Prismic, use that
+			if (prismicHelpers.isFilled.image(cover)) {
+				bookData.cover = cover.url;
+			// otherwise, if the cover is available on OpenLibrary, use that
+			} else if (hasCover) {
+				bookData.cover = getBooksBlobEndpoint({ isbn, olid, type: 'covers' });
+			}
 
 			bookData.actions.unshift({
 				label: 'Open Library',
@@ -178,6 +174,7 @@ const books = await Promise.all(booksResponse.map(async ({
 						<BookCard
 							title={book.title}
 							author={book.author}
+							cover={book.cover}
 							actions={book.actions}
 						>
 							{book.publishers && book.publishDate && (

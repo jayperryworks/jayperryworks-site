@@ -34,7 +34,7 @@ type Cover = {
 export interface Props {
 	actions?: Action[];
 	class?: string;
-	cover?: Cover;
+	cover?: string;
 	title?: TitleField;
 	author?: TitleField;
 }
@@ -47,6 +47,12 @@ const {
 	title,
 } = Astro.props as Props;
 
+/**
+ * Get the initial letter from the title of a book
+ *
+ * @param {string} title - the book's title
+ * @returns {string}
+ */
 function getInitial(title) {
 	return prismicHelpers.asText(title).split(' ').find((word) => (word !== 'A' && word !== 'The'))[0].charAt(0);
 }
@@ -63,11 +69,10 @@ function getInitial(title) {
 			<slot name="cover">
 				{cover
 					? <Image
-							src={cover.src}
+							src={cover}
 							alt={`Cover for '${prismicHelpers.asText(title)}'`}
 							class="cover-image"
-							height={cover.height}
-							width={cover.width}
+							inferSize
 						/>
 					: <div class="cover-image placeholder">
 							<p class="type-role-display type-scale-alpha">{getInitial(title)}</p>
@@ -161,7 +166,7 @@ function getInitial(title) {
 		justify-self: center;
 	}
 
-	.cover-image {
+	.book-card :global(.cover-image) {
 		box-shadow: 0.5em 0.5em 0.3em var(--color-shadow);
 		display: block;
 		height: 100%;

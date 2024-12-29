@@ -26,24 +26,6 @@ function formatResponseHeaders(headers) {
 }
 
 /**
- * Fetch the JSON metadata from the OpenLibrary covers API
- * associated with an image
- *
- * @async
- * @param {string} url - the url of the image (w/o extension)
- * @returns {string} - JSON-formatted OL metadata
- */
-async function getCoverMetadata(url) {
-	try {
-		const response = await fetch(`${url}.json`);
-		return await response.json();
-	}
-	catch(error) {
-		console.log(error);
-	}
-}
-
-/**
  * @typedef {Object} Book
  * @property {String} url - OpenLibrary URL
  * @property {String} publishDate - publish date for this edition
@@ -67,13 +49,9 @@ async function queryOpenLibraryData({ isbn, olid }) {
 
 	// -> if there's an isbn number, use OL's ISBN api endpoint
 	// -> if not, use OL's ID number in their regular book search api
-	const dataEndpoint = isbn
+	const endpoint = isbn
 		? `https://openlibrary.org/isbn/${isbn}.json`
 		: `https://openlibrary.org/books/${olid}.json`;
-
-	const coverEndpoint = isbn
-		? `https://covers.openlibrary.org/b/isbn/${isbn}`
-		: `https://covers.openlibrary.org/b/olid/${olid}`;
 
 	const headers = {
 		'User-Agent': `JayPerryWebsite/5.0 (${contactEmail})`,
@@ -81,7 +59,7 @@ async function queryOpenLibraryData({ isbn, olid }) {
 
 	// Open Library API docs: https://openlibrary.org/dev/docs/api/books
 	const openLibraryResponse = await fetch(
-		dataEndpoint,
+		endpoint,
 		{ headers },
 	);
 
@@ -92,12 +70,11 @@ async function queryOpenLibraryData({ isbn, olid }) {
 
 	if (openLibraryResponse.status === 200) {
 		const openLibraryData = await openLibraryResponse.json();
-		const coverResponse = await fetch(`${coverEndpoint}.json`);
-		const coverData = await coverResponse.json();
 
 		const {
 			authors,
 			title,
+			covers,
 			number_of_pages: pageCount,
 			publish_date,
 			publishers,
@@ -106,19 +83,13 @@ async function queryOpenLibraryData({ isbn, olid }) {
 
 		return {
 			data: {
-				url: `https://openlibrary.org${key}`,
-				title,
-				authors,
-				cover: coverData
-					? {
-						original: `${coverEndpoint}-L.jpg`,
-						width: coverData.width,
-						height: coverData.height,
-					}
-					: undefined,
+				hasCover: covers ? covers.length > 0 : false,
 				publishDate: publish_date && format(new Date(publish_date), 'yyyy'),
-				publishers,
+				url: `https://openlibrary.org${key}`,
+				authors,
 				pageCount,
+				publishers,
+				title,
 			},
 			metadata,
 		};
