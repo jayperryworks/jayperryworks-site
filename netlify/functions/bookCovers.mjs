@@ -1,6 +1,8 @@
 import { getStore } from '@netlify/blobs';
 import imageSize from 'image-size';
 
+const contactEmail = process.env.CONTACT_EMAIL;
+
 /**
  * Download a file and convert it to an ArrayBuffer
  * hat tip to https://sabe.io/blog/node-download-image
@@ -13,7 +15,12 @@ import imageSize from 'image-size';
  */
 async function downloadFile(url) {
 	try {
-		const response = await fetch(`${url}-L.jpg?default=false`);
+		const response = await fetch(
+			`${url}-L.jpg?default=false`,
+			{
+				headers: { 'User-Agent': `JayPerryWebsite/5.0 (${contactEmail})` }
+			}
+		);
 
 		if (response.status === 200) {
 			const blob = await response.blob();

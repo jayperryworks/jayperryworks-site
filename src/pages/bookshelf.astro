@@ -8,6 +8,7 @@ import '@styles/utilities/type.css';
 // --- utils
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
+import { removeArticles } from '@lib/stringHelpers';
 
 // --- components
 import Heading from '@components/blocks/Heading.astro';
@@ -40,11 +41,13 @@ const seo = {
 	title: seo_title || prismicHelpers.asText(title),
 };
 
-const booksResponse = await prismic.getAllByType('book', {
-	orderings: {
-		field: 'my.book.date_started',
-		direction: 'desc',
-	},
+const booksResponse = await prismic.getAllByType('book');
+
+const sortedBooks = booksResponse.sort((a, b) => {
+	const aTitle = removeArticles(prismicHelpers.asText(a.data.title));
+	const bTitle = removeArticles(prismicHelpers.asText(b.data.title));
+
+	return aTitle.localeCompare(bTitle);
 });
 
 // try to fetch additional data from OpenLibrary
@@ -68,7 +71,7 @@ function getBooksBlobEndpoint({ isbn, olid, type = 'data' }) {
 		: `http://localhost:8888/${paths[type]}/olid/${olid}`;
 }
 
-const books = await Promise.all(booksResponse.map(async ({
+const books = await Promise.all(sortedBooks.map(async ({
 	uid,
 	tags,
 	data,
@@ -83,7 +86,7 @@ const books = await Promise.all(booksResponse.map(async ({
 		cover,
 	} = data;
 
-	// query the Open Library API with the book's ISBN number
+	// query the Netlify blob cache for additional data (pulled from OpenLibrary)
 	if (isbn || olid) {
 		let bookData = {
 			actions: [
@@ -132,7 +135,7 @@ const books = await Promise.all(booksResponse.map(async ({
 			return bookData;
 		}
 
-		// if the request to OL fails, just use the data we have from the CMS
+		// if the request to the cache fails, just use the data we have from the CMS
 		return bookData;
 	}
 }));
