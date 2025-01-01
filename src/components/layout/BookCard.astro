@@ -8,12 +8,14 @@ import '@styles/utilities/type.css';
 import externalLink from '@icons/external-link.svg?raw';
 
 // utilities
+import { removeArticles } from '@lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
 
 // components
 import Button from '@components/elements/Button.astro';
 import Heading from '@components/blocks/Heading.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+import { Image } from 'astro:assets';
 
 // types
 import { TitleField } from '@prismicio/types';
@@ -25,14 +27,15 @@ type Action = {
 };
 
 type Cover = {
-	src: string,
-	srcset: string,
+	src: string;
+	height: number;
+	width: number;
 }
 
 export interface Props {
 	actions?: Action[];
 	class?: string;
-	cover?: Cover;
+	cover?: string;
 	title?: TitleField;
 	author?: TitleField;
 }
@@ -45,8 +48,17 @@ const {
 	title,
 } = Astro.props as Props;
 
+const widths = [240, 400, 800];
+const sizes = `(max-width: 360px) 240px, (max-width: 800px) 400px, 800px`;
+
+/**
+ * Get the initial letter from the title of a book
+ *
+ * @param {string} title - the book's title
+ * @returns {string}
+ */
 function getInitial(title) {
-	return prismicHelpers.asText(title).split(' ').find((word) => (word !== 'A' && word !== 'The'))[0].charAt(0);
+	return removeArticles(prismicHelpers.asText(title)).charAt(0).toUpperCase();
 }
 ---
 
@@ -60,12 +72,14 @@ function getInitial(title) {
 		>
 			<slot name="cover">
 				{cover
-					? <img
-							src={cover.src}
-							srcset={cover.srcset}
+					? <Image
+							src={cover}
 							alt={`Cover for '${prismicHelpers.asText(title)}'`}
 							class="cover-image"
-						>
+							{widths}
+							{sizes}
+							inferSize
+						/>
 					: <div class="cover-image placeholder">
 							<p class="type-role-display type-scale-alpha">{getInitial(title)}</p>
 						</div>
@@ -158,7 +172,7 @@ function getInitial(title) {
 		justify-self: center;
 	}
 
-	.cover-image {
+	.book-card :global(.cover-image) {
 		box-shadow: 0.5em 0.5em 0.3em var(--color-shadow);
 		display: block;
 		height: 100%;
