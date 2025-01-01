@@ -126,13 +126,17 @@ const books = await Promise.all(sortedBooks.map(async ({
 				bookData.cover = getBooksBlobEndpoint({ isbn, olid, type: 'covers' });
 			}
 
-			bookData.actions.unshift({
-				label: 'Open Library',
-				url: infoURL,
-				type: 'external'
-			});
+				bookData.actions.unshift({
+					label: 'Open Library',
+					url: infoURL,
+					type: 'external'
+				});
 
-			return bookData;
+				return bookData;
+			}
+		} catch (error) {
+			console.log('OpenLibrary API connection error. Moving on without the data.')
+			console.log(error);
 		}
 
 		// if the request to the cache fails, just use the data we have from the CMS

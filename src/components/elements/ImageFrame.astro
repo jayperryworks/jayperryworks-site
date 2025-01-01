@@ -1,0 +1,84 @@
+---
+// child components
+import Image from '@components/elements/Image.astro';
+import ImageFrameDevice from '@components/elements/ImageFrameDevice.astro';
+import ImageFrameWall from '@components/elements/ImageFrameWall.astro';
+
+// types
+import type { ImageField } from '@prismicio/types';
+import type { Frame, ImageFit } from '@lib/types';
+
+export interface Props {
+	source: ImageField;
+	border?: boolean;
+	fit?: ImageFit;
+	frame?: Frame;
+}
+
+const {
+	source,
+	border,
+	fit,
+	frame,
+} = Astro.props as Props;
+
+const imageComponents = {
+	'None': {
+		component: Image,
+		props: {
+			border,
+			fit,
+			source,
+		},
+	},
+	'Matte': {
+		component: ImageFrameWall,
+		props: {
+			type: 'matte',
+			source,
+		},
+	},
+	'Frame & matte': {
+		component: ImageFrameWall,
+		props: {
+			type: 'frame',
+			source,
+		},
+	},
+	'Panel': {
+		component: ImageFrameWall,
+		props: {
+			type: 'panel',
+			source,
+		},
+	},
+	'Phone': {
+		component: ImageFrameDevice,
+		props: {
+			type: 'Phone',
+			source,
+		},
+	},
+	'Tablet (landscape)': {
+		component: ImageFrameDevice,
+		props: {
+			type: 'Tablet (landscape)',
+			source,
+		},
+	},
+	'Tablet (portrait)': {
+		component: ImageFrameDevice,
+		props: {
+			type: 'Tablet (portrait)',
+			source,
+		},
+	},
+};
+
+const {
+	component: ImageComponent,
+	props,
+} = imageComponents[frame || 'None'];
+---
+
+<ImageComponent {...props} />

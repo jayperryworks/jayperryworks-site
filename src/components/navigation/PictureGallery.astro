@@ -4,7 +4,7 @@ import { picture as permalink } from '@lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 
 // components
-import PictureFrame from '@components/elements/PictureFrame.astro';
+import ImageFrameWall from '@components/elements/ImageFrameWall.astro';
 import Gallery from '@components/layout/Gallery.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
@@ -70,7 +70,7 @@ function matteThickness(picture) {
 				class="link | type-link-undecorated"
 				href={permalink(picture)}
 			>
-				<PictureFrame
+				<ImageFrameWall
 					source={picture.data.cover}
 					type={frameType(picture)}
 					{matteColor}

@@ -19,7 +19,7 @@
 		"@prismicio/client": "^6.4.1",
 		"@prismicio/helpers": "^2.2.1",
 		"@prismicio/types": "^0.1.27",
-		"astro": "^4.10.0",
+		"astro": "^4.16.18",
 		"astro-compress": "^2.2.5",
 		"autoprefixer": "^10.4.4",
 		"change-case": "^4.1.2",

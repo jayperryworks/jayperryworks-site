@@ -76,16 +76,13 @@ export async function getStaticPaths({ paginate }) {
 		const callouts = data.body.map(({ primary, items }) => ({
 			title: primary.heading,
 			description: { prismicText: primary.description },
-			placement: primary.placement,
+			placement: primary.placement.toLowerCase(),
 			actions: items?.length > 0
 				? items.map(({ call_to_action_label: label, link }) => ({ label, link, }))
 				: undefined,
 		}));
 
-		const bottomCallouts = callouts.filter(({ placement }) => (placement === 'Bottom'));
-		const topCallouts = callouts.filter(({ placement }) => (placement === 'Top'));
-
-		const chapters = data.chapters.map(({ chapter }) => {
+		const chapters = data.chapters.map(({ chapter }, index) => {
 			const {
 				title,
 				subtitle,
@@ -101,14 +98,14 @@ export async function getStaticPaths({ paginate }) {
 				title,
 				subtitle,
 				body,
-				bottomCallouts,
-				topCallouts,
+				callouts,
 				project: {
 					uid,
 					title: data.title,
 					subtitle: data.subtitle,
 					chapterLabel: data.chapter_label,
 					chapterList: data.chapters.map(({ chapter }) => chapter.data.title),
+					status: data.status,
 				},
 				seo: {
 					description: data.seo_description,
@@ -132,7 +129,6 @@ export async function getStaticPaths({ paginate }) {
 		});
 
 		return pages;
-
 	});
 }
 
@@ -155,8 +151,7 @@ const {
 	subtitle,
 	theme,
 	title,
-	bottomCallouts,
-	topCallouts,
+	callouts,
 } = data[0];
 
 // if no title was given for SEO content, make a default one using the page data above
@@ -202,6 +197,7 @@ function generatePageTheme(): Partial<Theme> {
 	return {};
 }
 
+// sequence nav
 function sequenceNavItemAlign(index: number): Align {
 	if (index === 0) return 'start';
 	if (index === lastPage - 1) return 'end';
@@ -219,12 +215,23 @@ const sequenceNavItems = project.chapterList.map(
 	})
 );
 
+// pagination nav
 const nextChapter = project.chapterList[currentPage] ? {
 	title: project.chapterList[currentPage],
 	number: currentPage + 1,
 	href: url.next,
 } : null;
 
+// callouts
+const topCallouts = callouts.filter(({ placement }) => {
+	if (currentPage === 0) return (placement === 'top' || placement === 'start');
+	return placement === 'top';
+});
+
+const bottomCallouts = callouts.filter(({ placement }) => {
+	if (currentPage === lastPage) return (placement === 'bottom' || placement === 'end');
+	return placement === 'bottom';
+});
 ---
 
 <Layout
@@ -247,27 +254,30 @@ const nextChapter = project.chapterList[currentPage] ? {
 						/>
 					)}
 
-					<!-- progress bar (for small screens) -->
-					<ProgressBar
-						class="progress"
-						value={currentPage}
-						range={sequenceNavItems.length}
-					>
-						Progress: You are currently reading Chapter {currentPage} of {sequenceNavItems.length}.
-					</ProgressBar>
-
 					<!-- sequence nav -->
-					<div class={[
-						'sequence',
-						// if the sequence nav has a lot of items, make it wider
-						sequenceNavItems.length <= 6 ? 'wrapper' : 'wrapper wide'
-					].join(' ')}>
-						<SequenceNav>
-							{sequenceNavItems.map((item) => (
-								<SequenceNavItem {...item}>{prismicHelpers.asText(item.title)}</SequenceNavItem>
-							))}
-						</SequenceNav>
-					</div>
+					{sequenceNavItems.length > 1 && (
+						<!-- progress bar (for small screens) -->
+						<ProgressBar
+							class="progress"
+							value={currentPage}
+							range={sequenceNavItems.length}
+						>
+							Progress: You are currently reading Chapter {currentPage} of {sequenceNavItems.length}.
+						</ProgressBar>
+
+						<!-- for larger screens -->
+						<div class={[
+							'sequence',
+							// if the sequence nav has a lot of items, make it wider
+							sequenceNavItems.length <= 6 ? 'wrapper' : 'wrapper wide'
+						].join(' ')}>
+							<SequenceNav>
+								{sequenceNavItems.map((item) => (
+									<SequenceNavItem {...item}>{prismicHelpers.asText(item.title)}</SequenceNavItem>
+								))}
+							</SequenceNav>
+						</div>
+					)}
 
 					<!-- chapter title -->
 					<div class="headline-chapter">
@@ -294,30 +304,32 @@ const nextChapter = project.chapterList[currentPage] ? {
 		</article>
 
 		<!-- footer navigation -->
-		<nav class="footer-nav">
-			<div class={sequenceNavItems.length > 6 ? 'wrapper wide' : 'wrapper'}>
-				<!-- progress bar (for small screens) -->
-				<ProgressBar
-					class="progress"
-					value={currentPage}
-					range={sequenceNavItems.length}
-				>
-					Progress: You are currently reading Chapter {currentPage} of {sequenceNavItems.length}.
-				</ProgressBar>
+		{sequenceNavItems.length > 1 && (
+			<nav class="footer-nav">
+				<div class={sequenceNavItems.length > 6 ? 'wrapper wide' : 'wrapper'}>
 
-				<!-- sequence nav -->
-				<SequenceNav class="sequence">
-					{sequenceNavItems.map((item) => (
-						<SequenceNavItem {...item} next={item.href === url.next}>
-							{prismicHelpers.asText(item.title)}
-						</SequenceNavItem>
-					))}
-				</SequenceNav>
+					<!-- progress bar (for small screens) -->
+					<ProgressBar
+						class="progress"
+						value={currentPage}
+						range={sequenceNavItems.length}
+						>
+						Progress: You are currently reading Chapter {currentPage} of {sequenceNavItems.length}.
+					</ProgressBar>
 
-				<!-- next chapter -->
-				<div class="next">
-					{nextChapter
-						? <ReadNextLink
+					<!-- sequence nav -->
+					<SequenceNav class="sequence">
+						{sequenceNavItems.map((item) => (
+							<SequenceNavItem {...item} next={item.href === url.next}>
+								{prismicHelpers.asText(item.title)}
+							</SequenceNavItem>
+						))}
+					</SequenceNav>
+
+					<!-- next chapter -->
+					<div class="next">
+						{nextChapter && (
+							<ReadNextLink
 								align="end"
 								class="next"
 								eyebrowSize="gamma"
@@ -331,13 +343,17 @@ const nextChapter = project.chapterList[currentPage] ? {
 									{prismicHelpers.asText(nextChapter.title)}
 								</Fragment>
 							</ReadNextLink>
-						: <aside class="end | type-role-display type-scale-gamma">
+						)}
+						{project.status === 'Finished' && !nextChapter && (
+							<aside class="end | type-role-display type-scale-gamma">
 								The end
 							</aside>
-					}
+						)}
+					</div>
 				</div>
-			</div>
-		</nav>
+			</nav>
+		)}
+
 	</main>
 
 	<!-- Bottom callouts -->
