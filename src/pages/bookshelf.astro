@@ -136,10 +136,10 @@ const books = await Promise.all(sortedBooks.map(async ({
 				return bookData;
 			}
 		} catch(error) {
-			// if the request to the cache fails, just use the data we have from the CMS
 			console.log(error);
 		}
 
+		// if the request to the cache fails, just use the data we have from the CMS
 		return bookData;
 	}
 }));
