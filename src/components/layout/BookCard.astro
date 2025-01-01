@@ -55,7 +55,7 @@ const {
  * @returns {string}
  */
 function getInitial(title) {
-	return removeArticles(prismicHelpers.asText(title)).charAt(0);
+	return removeArticles(prismicHelpers.asText(title)).charAt(0).toUpperCase();
 }
 ---
 
