@@ -103,28 +103,29 @@ const books = await Promise.all(sortedBooks.map(async ({
 			uid,
 		};
 
-		const booksDataResponse = await fetch(getBooksBlobEndpoint({ isbn, olid }));
+		try {
+			const booksDataResponse = await fetch(getBooksBlobEndpoint({ isbn, olid }));
 
-		if (booksDataResponse.status === 200) {
-			const booksBlobData = await booksDataResponse.json();
+			if (booksDataResponse?.status === 200) {
+				const booksBlobData = await booksDataResponse.json();
 
-			const {
-				url: infoURL,
-				publishDate,
-				publishers,
-				hasCover,
-			} = JSON.parse(booksBlobData);
+				const {
+					url: infoURL,
+					publishDate,
+					publishers,
+					hasCover,
+				} = JSON.parse(booksBlobData);
 
-			bookData.publishers = publishers;
-			bookData.publishDate = publishDate;
+				bookData.publishers = publishers;
+				bookData.publishDate = publishDate;
 
-			// if there's a cover image in Prismic, use that
-			if (prismicHelpers.isFilled.image(cover)) {
-				bookData.cover = cover.url;
-			// otherwise, if the cover is available on OpenLibrary, use that
-			} else if (hasCover) {
-				bookData.cover = getBooksBlobEndpoint({ isbn, olid, type: 'covers' });
-			}
+				// if there's a cover image in Prismic, use that
+				if (prismicHelpers.isFilled.image(cover)) {
+					bookData.cover = cover.url;
+				// otherwise, if the cover is available on OpenLibrary, use that
+				} else if (hasCover) {
+					bookData.cover = getBooksBlobEndpoint({ isbn, olid, type: 'covers' });
+				}
 
 				bookData.actions.unshift({
 					label: 'Open Library',
@@ -134,13 +135,11 @@ const books = await Promise.all(sortedBooks.map(async ({
 
 				return bookData;
 			}
-		} catch (error) {
-			console.log('OpenLibrary API connection error. Moving on without the data.')
+		} catch(error) {
+			// if the request to the cache fails, just use the data we have from the CMS
 			console.log(error);
+			return bookData;
 		}
-
-		// if the request to the cache fails, just use the data we have from the CMS
-		return bookData;
 	}
 }));
 ---
