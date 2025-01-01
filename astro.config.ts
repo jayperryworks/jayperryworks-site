@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
-// import compress from 'astro-compress';
+import compress from 'astro-compress';
 import sitemap from '@astrojs/sitemap';
 import svgLoader from 'vite-svg-loader';
 
@@ -15,14 +15,17 @@ export default defineConfig({
 			})
 		]
 	},
+	image: {
+    domains: ['jayperry.works', 'jayperryworks.com'],
+  },
 	integrations: [
-		// compress({
-		// 	svg: false,
-		// 	html: {
-		// 		removeComments: true,
-		// 		removeEmptyAttributes: true,
-		// 	},
-		// }),
+		compress({
+			svg: false,
+			html: {
+				removeComments: true,
+				removeEmptyAttributes: true,
+			},
+		}),
 		sitemap(),
 	]
 });

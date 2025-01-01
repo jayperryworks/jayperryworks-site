@@ -1,5 +1,4 @@
 import { getStore } from '@netlify/blobs';
-import imageSize from 'image-size';
 
 const contactEmail = process.env.CONTACT_EMAIL;
 
