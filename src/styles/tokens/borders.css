@@ -2,10 +2,7 @@
 
 :root {
 	/* --- default corner radius */
-	--border-radius: 0.45rem;
-
-	/* --- 'seam' border effect */
-	--border-seam-height: 0.5rem;
+	--border-radius: 0.4em;
 
 	/* --- standard border styles */
 	--border-default-width: 1px;

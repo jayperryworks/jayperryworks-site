@@ -39,17 +39,16 @@ const title = pageTitle ? `${SITE_TITLE} | ${pageTitle}` : SITE_TITLE;
 // const canonicalURL = `${import.meta.env.SITE.slice(0, -1)}${}`;
 
 // if a theme has been passed in, replace the default color tokens with the theme values
-function themeReducer(
-	result: ThemeTokens,
-	role: ColorRoles
-): ThemeTokens {
-	if (theme[role]) result[`color-${role}`] = theme[role];
+function themeReducer(result: ThemeTokens, role: ColorRoles): ThemeTokens {
+	if (theme[role]) {
+		// stopgap: make sure the role passed is 'surface'
+		// - 'bg' token is deprecated
+		result[`color-${role === 'bg' ? 'surface' : role}`] = theme[role]
+	};
 	return result;
 }
 
 const themeTokens: ThemeTokens = theme ? Object.keys(theme).reduce(themeReducer, {}) : {};
-
-console.log(themeTokens)
 
 const RSSMetadata = [
 	{

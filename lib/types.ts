@@ -6,7 +6,7 @@ import {
 } from '@prismicio/types';
 
 // --- color ---
-export type ColorRoles = 'primary' | 'secondary' | 'highlight' | 'bg' | 'island' | 'well' | 'border' | 'shadow';
+export type ColorRoles = 'primary' | 'secondary' | 'highlight' | 'surface' | 'island' | 'well' | 'border' | 'shadow';
 
 export type CSSVariable = `var(--${string})`;
 export type CSSHue = `${number | string}deg` | CSSVariable;
