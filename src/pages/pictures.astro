@@ -152,7 +152,7 @@ picturesBySeries.push({
 				role="feed"
 				class="series"
 				id={series.uid || 'other-work'}
-				style={series.color?.background ? `--color-bg: ${series.color.background}` : ''}
+				style={series.color?.background ? `--color-surface: ${series.color.background}` : ''}
 			>
 				<header class="series-header">
 					<Heading
@@ -205,7 +205,7 @@ picturesBySeries.push({
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-wide);
-		background-color: var(--color-bg);
+		background-color: var(--color-surface);
 		padding-block-end: var(--space-xwide);
 	}
 

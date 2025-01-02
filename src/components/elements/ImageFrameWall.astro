@@ -43,7 +43,7 @@ const types = {
 
 	// framed panel/canvas
 	panel: {
-		matte: 2,
+		matte: 3.5,
 		border: 0.25,
 	},
 };
@@ -96,7 +96,8 @@ const styleList = arrayToPunctatedString([
 	.picture.matte,
 	.picture.frame,
 	.picture.panel {
-		--frame-color: var(--color-primary);
+		/* don't use a global variable for the frame color because it should always be dark black, tinted very slightly to the current key hue */
+		--frame-color: oklch(30% 0.008 var(--key-h));
 		--shadow-color: var(--color-shadow);
 
 		align-items: center;
@@ -112,13 +113,14 @@ const styleList = arrayToPunctatedString([
 	}
 
 	.picture.frame {
-		--matte-color: var(--color-bg);
+		--matte-color: var(--color-island);
 
 		box-shadow: 0 0.25em 0.5em var(--color-shadow);
 	}
 
 	.picture.panel {
-		--matte-color: var(--color-bg);
+		/* the 'inset' area of a panel should always be absolute black */
+		--matte-color: oklch(0 0 0);
 
 		box-shadow: 0 0.7em 0.4em var(--color-shadow);
 	}

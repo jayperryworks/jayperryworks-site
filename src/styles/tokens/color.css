@@ -1,12 +1,12 @@
 :root {
 	--key-h: 264.48deg;
 
-	--color-primary: oklch(36% 0.0074 var(--key-h));
-	--color-secondary: oklch(47% 0.0712 var(--key-h));
-	--color-highlight: oklch(71% 0.1197 var(--key-h));
-	--color-surface: oklch(98% 0.0029 var(--key-h));
+	--color-primary: oklch(38% 0.008 var(--key-h));
+	--color-secondary: oklch(47% 0.07 var(--key-h));
+	--color-highlight: oklch(71% 0.11 var(--key-h));
+	--color-surface: oklch(98.5% 0.001 var(--key-h));
 	--color-island: oklch(100% 0 var(--key-h));
-	--color-well: oklch(94% 0.0071 var(--key-h));
-	--color-border: oklch(82% 0.0198 var(--key-h));
-	--color-shadow: oklch(84% 0.0172 var(--key-h));
+	--color-well: oklch(94% 0.007 var(--key-h));
+	--color-border: oklch(80% 0.03 var(--key-h));
+	--color-shadow: oklch(47% 0.07 var(--key-h) / 0.1);
 }
