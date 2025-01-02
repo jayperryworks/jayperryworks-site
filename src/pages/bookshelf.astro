@@ -8,7 +8,7 @@ import '@styles/utilities/type.css';
 // --- utils
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
-import { format } from 'date-fns';
+import { removeArticles } from '@lib/stringHelpers';
 
 // --- components
 import Heading from '@components/blocks/Heading.astro';
@@ -21,6 +21,7 @@ import BlockList from '@components/BlockList.astro';
 // --- layout
 import Layout from '@layouts/BaseLayout.astro';
 
+// fetch data from Prismic
 const pageData = await prismic.getByUID('index_page', 'bookshelf');
 
 const {
@@ -40,14 +41,37 @@ const seo = {
 	title: seo_title || prismicHelpers.asText(title),
 };
 
-const booksResponse = await prismic.getAllByType('book', {
-	orderings: {
-		field: 'my.book.date_started',
-		direction: 'desc',
-	},
+const booksResponse = await prismic.getAllByType('book');
+
+const sortedBooks = booksResponse.sort((a, b) => {
+	const aTitle = removeArticles(prismicHelpers.asText(a.data.title));
+	const bTitle = removeArticles(prismicHelpers.asText(b.data.title));
+
+	return aTitle.localeCompare(bTitle);
 });
 
-const books = await Promise.all(booksResponse.map(async ({
+// try to fetch additional data from OpenLibrary
+// const { isbn, olid } = booksResponse[4].data;
+
+// books blob endpoint
+function getBooksBlobEndpoint({ isbn, olid, type = 'data' }) {
+	const paths = {
+		data: 'books/data',
+		covers: 'books/covers',
+	};
+
+	if (isbn) {
+		return import.meta.env.PROD
+			? `${import.meta.env.SITE}/${paths[type]}/isbn/${isbn}`
+			: `http://localhost:8888/${paths[type]}/isbn/${isbn}`;
+	}
+
+	return import.meta.env.PROD
+		? `${import.meta.env.SITE}/${paths[type]}/olid/${olid}`
+		: `http://localhost:8888/${paths[type]}/olid/${olid}`;
+}
+
+const books = await Promise.all(sortedBooks.map(async ({
 	uid,
 	tags,
 	data,
@@ -59,9 +83,10 @@ const books = await Promise.all(booksResponse.map(async ({
 		purchase_url: purchaseURL,
 		related_content: relatedContent,
 		title,
+		cover,
 	} = data;
 
-	// query the Open Library API with the book's ISBN number
+	// query the Netlify blob cache for additional data (pulled from OpenLibrary)
 	if (isbn || olid) {
 		let bookData = {
 			actions: [
@@ -78,44 +103,43 @@ const books = await Promise.all(booksResponse.map(async ({
 			uid,
 		};
 
-		// try to fetch additional data from OpenLibrary
-		const queryParams = {
-			bibkeys: isbn ? `ISBN:${isbn}` : `OLID:${olid}`,
-			format: 'json',
-			jscmd: 'data',
+		try {
+			const booksDataResponse = await fetch(getBooksBlobEndpoint({ isbn, olid }));
+
+			if (booksDataResponse?.status === 200) {
+				const booksBlobData = await booksDataResponse.json();
+
+				const {
+					url: infoURL,
+					publishDate,
+					publishers,
+					hasCover,
+				} = JSON.parse(booksBlobData);
+
+				bookData.publishers = publishers;
+				bookData.publishDate = publishDate;
+
+				// if there's a cover image in Prismic, use that
+				if (prismicHelpers.isFilled.image(cover)) {
+					bookData.cover = cover.url;
+				// otherwise, if the cover is available on OpenLibrary, use that
+				} else if (hasCover) {
+					bookData.cover = getBooksBlobEndpoint({ isbn, olid, type: 'covers' });
+				}
+
+				bookData.actions.unshift({
+					label: 'Open Library',
+					url: infoURL,
+					type: 'external'
+				});
+
+				return bookData;
+			}
+		} catch(error) {
+			console.log(error);
 		}
-		const queryString = Object.keys(queryParams)
-			.map((key) => `${key}=${queryParams[key]}`)
-			.join('&');
 
-		// Open Library API docs: https://openlibrary.org/dev/docs/api/books
-		const openLibraryResponse = await fetch(`http://openlibrary.org/api/books?${queryString}`);
-
-		if (openLibraryResponse.status === 200) {
-			const openLibraryData = await openLibraryResponse.json();
-
-			const {
-				publish_date,
-				publishers,
-				cover: coverList,
-				url: infoURL,
-			} = openLibraryData[queryParams.bibkeys];
-
-			bookData.publishDate = publish_date && format(new Date(publish_date), 'yyyy');
-			bookData.cover = coverList && Object.values(coverList).pop();
-
-			bookData.publisher = publishers?.length > 0 && publishers[0].name;
-
-			bookData.actions.unshift({
-				label: 'Open Library',
-				url: infoURL,
-				type: 'external'
-			});
-
-			return bookData;
-		}
-
-		// if the request to OL fails, just use the data we have from the CMS
+		// if the request to the cache fails, just use the data we have from the CMS
 		return bookData;
 	}
 }));
@@ -157,15 +181,15 @@ const books = await Promise.all(booksResponse.map(async ({
 						<BookCard
 							title={book.title}
 							author={book.author}
-							cover={book.cover ? { src: book.cover } : undefined}
+							cover={book.cover}
 							actions={book.actions}
 						>
-							{book.publisher && book.publishDate && (
+							{book.publishers && book.publishDate && (
 								<p
 									slot="metadata"
 									class="metadata type-role-accent type-scale-zeta"
 								>
-									{[book.publisher, book.publishDate].join(', ')}
+									{[book.publishers[0], book.publishDate].join(', ')}
 								</p>
 							)}
 						</BookCard>

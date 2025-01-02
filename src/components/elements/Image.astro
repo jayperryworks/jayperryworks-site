@@ -22,6 +22,7 @@ export interface Props {
 	fit?: ImageFit;
 	widths?: Array<number>;
 	position?: string;
+	style?: string;
 }
 
 const {
@@ -40,19 +41,23 @@ const { src, srcset } = prismicHelpers.asImageWidthSrcSet(source, {
 	widths,
 });
 const alt = source.alt;
+const sizes = widths.map((width) => `(max-width: ${width}) ${width}px`).join(', ');
+const { width, height } = source.dimensions;
 
-const width = widths[0];
-const height = (source.dimensions.height / source.dimensions.width) * widths[0];
+// check the source format and background prop to see if the image has transparency
+// -> use this to turn off the background 'loading' color
+const transparent = source.url.includes('.png') && source?.edit?.background === 'transparent';
 
 const classList = [
 	'image',
 	border ? 'border' : '',
 	className,
 	fit ? `fit ${fit}` : '',
+	transparent ? 'transparent' : '',
 ].join(' ');
 
 const styleList = arrayToPunctatedString([
-	aspectRatio && `--aspect-ratio: ${aspectRatio}`,
+	`--aspect-ratio: ${aspectRatio || `${width}/${height} auto`}`,
 	position && `--object-position: ${position}`,
 	style,
 ]);
@@ -64,19 +69,23 @@ const styleList = arrayToPunctatedString([
 	decoding="async"
 	loading="lazy"
 	{alt}
-	{src}
-	{srcset}
 	{width}
 	{height}
+	{src}
+	{srcset}
+	{sizes}
 />
 
 <style>
 	.image {
-		aspect-ratio: var(--aspect-ratio, auto);
+		aspect-ratio: var(--aspect-ratio);
+		background-color: var(--color-well);
 		content-visibility: auto;
 		display: inline-block;
-		max-width: 100%;
-		object-position: var(--position, 50% 50%);
+	}
+
+	.transparent {
+		background-color: transparent;
 	}
 
 	.border {
@@ -85,8 +94,10 @@ const styleList = arrayToPunctatedString([
 
 	.fit,
 	[width][height].fit {
+		background-color: transparent;
 		display: block;
 		height: auto;
+		object-position: var(--position, 50% 50%);
 		width: 100%;
 	}
 

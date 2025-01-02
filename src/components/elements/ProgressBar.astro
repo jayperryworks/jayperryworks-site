@@ -1,0 +1,63 @@
+---
+import '@styles/tokens/color.css';
+import '@styles/utilities/visibility.css';
+
+export interface Props {
+	value: number;
+	range: number;
+	class?: string;
+}
+
+const {
+	value,
+	range,
+	class: className = '',
+} = Astro.props;
+
+const classList = [
+	'progress-bar',
+	className,
+].join(' ');
+
+const styleList = [
+	`--range: ${range}`,
+	`--value: ${value}`,
+].join('; ');
+---
+
+<!-- using a div here because the progress bar element is such a pain to style -->
+<div
+	class={classList}
+	style={styleList}
+>
+	<!-- fallback text for screen readers -->
+	<span class="hide-visually"><slot></slot></span>
+</div>
+
+<style>
+	.progress-bar {
+		--range: 10;
+		--value: 1;
+		--color-bg: var(--color-well);
+		--color-value: var(--color-highlight);
+
+		appearance: none;
+		background-color: var(--color-bg);
+		border-radius: 99999999px;
+		height: 4px;
+		overflow: hidden;
+		position: relative;
+
+		&::after {
+			content: '';
+			display: block;
+			position: absolute;
+			width: calc((var(--value) / var(--range)) * 100%);
+			inset-block: 0;
+			inset-inline-start: 0;
+			z-index: 1;
+			background-color: var(--color-value);
+			border-radius: 99999999px;
+		}
+	}
+</style>

@@ -1,14 +1,36 @@
 import { camelCase, paramCase } from 'change-case';
 
-// cheers to https://joshtronic.com/2016/02/14/how-to-capitalize-the-first-letter-in-a-string-in-javascript/
+/**
+ * Convert a string to Title Case
+ * - cheers to https://joshtronic.com/2016/02/14/how-to-capitalize-the-first-letter-in-a-string-in-javascript/
+ *
+ * @param {string} string - the string to convert to title case
+ * @returns {string}
+ */
+
 function titleCase(string: string): string {
 	return string.replace(/^\w/, (c) => c.toUpperCase());
 }
 
+
+/**
+ * Convert a string to Sentence case (inital letter capitalized)
+ *
+ * @param {string} string - the string to convert
+ * @returns {string}
+ */
 function sentenceCase(string: string): string {
 	return `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
 }
 
+
+/**
+ * Truncate a string to a given number of words
+ *
+ * @param {string} string - the string to shorten
+ * @param {number} [length=5] - how many words to display
+ * @returns {string}
+ */
 function truncate(string: string, length = 5): string {
 	if (string?.length > 0) {
 		return string.split(' ').splice(0, length).join(' ').concat('...');
@@ -17,15 +39,25 @@ function truncate(string: string, length = 5): string {
 	return '';
 }
 
-// convert an array to a sentence
+
+//
 // -> adds an oxford comma
 // -> ['first', 'Second'] => First and second
 // -> ['first', 'Second', 'THIRD'] => First, second, and third
+
 type arrayToSentenceOptions = {
 	period?: boolean; // add a period at the end
 	capitalize?: boolean;
 };
 
+/**
+ * Convert an array to a sentence with capitalization, commas, and punctuation.
+ * e.g. ['item', 'another item', 'a third item'] => Item, another item, and a third item.
+ *
+ * @param {string[]} array - the array to convert
+ * @param {arrayToSentenceOptions} [options] - configuration
+ * @returns {string}
+ */
 function arrayToSentence(
 	array: string[],
 	options: arrayToSentenceOptions = {},
@@ -58,7 +90,14 @@ function arrayToSentence(
 	}, []).join(array.length > 2 ? ', ' : ' ');
 }
 
-// add a non-breaking space between the last two words of a string
+
+/**
+ * Add a non-breaking space between the last two words of a string
+ *
+ * @param {string} string - the string to process
+ * @param {number} [minWordCount=4] - how many words are needed for a linebreak
+ * @returns {string}
+ */
 function removeWidows(string: string, minWordCount = 4): string {
 	const words = string.split(' ');
 
@@ -89,11 +128,37 @@ function arrayToPunctatedString(items: string[], separator = ';') {
 	}, []).join(' ');
 }
 
+/**
+ * Remove article words (a, the, etc.) from the beginning of a string
+ * - Helps with alphabetizing, e.g. book titles
+ * - Cheers to https://stackoverflow.com/questions/34347008/how-can-i-sort-a-javascript-array-while-ignoring-articles-a-an-the
+ *
+ * @param {string} string - the string to process
+ * @returns {string} - the string, with article words removed
+ */
+function removeArticles(string: string): string {
+	const articles = [
+		'a',
+		'the',
+		'an',
+	];
+	let words = string.toLowerCase().split(' ');
+
+	if (words.length <= 1) return string;
+
+	for (const article of articles) {
+		if (words[0] === article) words.shift();
+	}
+
+	return words.join(' ');
+}
+
 export {
 	arrayToPunctatedString,
 	arrayToSentence,
 	camelCase,
 	paramCase,
+	removeArticles,
 	removeWidows,
 	sentenceCase,
 	titleCase,

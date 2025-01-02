@@ -19,7 +19,7 @@ import { pictureDescription } from '@lib/pictureHelpers';
 // components
 import BlockList from '@components/BlockList.astro';
 import Button from '@components/elements/Button.astro';
-import PictureFrame from '@components/elements/PictureFrame.astro';
+import ImageFrameWall from '@components/elements/ImageFrameWall.astro';
 import Heading from '@components/blocks/Heading.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
 import MainNav from '@components/navigation/MainNav.astro';
@@ -261,6 +261,10 @@ const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) 
 	}
 	return result;
 }, []);
+
+const type = substrateName.includes('paper') ? 'frame' : 'panel';
+const matteThickness = type === 'frame' ? 25 : 1;
+const frameThickness = type === 'frame' ? 0.25 : 0.2;
 ---
 
 <Layout
@@ -272,10 +276,12 @@ const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) 
 	<main>
 		<!-- cover -->
 		<header class="cover">
-			<PictureFrame
-				source={cover as ImageField}
+			<ImageFrameWall
 				class="cover-image"
-				type={substrateName.includes('paper') ? 'frame' : 'panel'}
+				source={cover as ImageField}
+				{frameThickness}
+				{matteThickness}
+				{type}
 			/>
 			<div class="cover-info | type-scale-epsilon type-role-accent">
 				<Heading level={1} text={title} class="cover-info-item title" />
@@ -336,24 +342,23 @@ const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) 
 		grid-template-columns: var(--space-outside) 1fr var(--space-outside);
 		/* add a space above the top margin roughly the height of the main nav
 				to keep the cover image vertically centered */
-		grid-template-rows: 3.125rem var(--space-xwide) minmax(60dvh, 1fr) auto var(--space-wide);
+		grid-template-rows: var(--space-xwide) minmax(60svh, 1fr) auto var(--space-xwide);
 		grid-template-areas:
-			'nav-space nav-space nav-space'
 			'. . .'
 			'. image .'
 			'. info .'
 			'. . .';
-		height: 100vh;
-		height: 100svh;
+		height: calc(100svh - 3.4rem);
 		position: relative;
-		justify-content: center;
-		align-items: center;
 	}
 
 	.cover :global(.cover-image) {
 		grid-area: image;
 		max-height: 100%;
-		margin-inline: auto;
+		position: relative;
+		inset-block-start: 50%;
+		inset-inline-start: 50%;
+		transform: translateX(-50%) translateY(-50%);
 	}
 
 	.cover-info {
@@ -366,7 +371,7 @@ const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) 
 		gap: var(--gap);
 		grid-area: info;
 		justify-content: center;
-		padding-block-start: var(--space-xwide);
+		padding-block-start: var(--space-wide);
 	}
 
 	.cover :global(.cover-info-item) {

@@ -16,7 +16,6 @@ import MainNav from '@components/navigation/MainNav.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
 
 // types
-import { Props } from '@components/Block.astro';
 import { Slice, TitleField } from '@prismicio/types';
 import { SEOContent } from '@lib/types';
 
@@ -28,7 +27,7 @@ export interface Props {
 }
 
 // data & pagination
-export async function getStaticPaths({ paginate }): Promise<Function> {
+export async function getStaticPaths(): Promise<Function> {
 	const pages = await prismic.getAllByType('page', { fetchLinks });
 
 	return pages.map(({ uid, data }) => {
