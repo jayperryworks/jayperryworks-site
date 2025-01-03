@@ -5,7 +5,7 @@
 	--brand-lavendar-h: 263deg;
 	--brand-anemone-h: 303deg;
 
-	--key-h: var(--brand-mustard-h);
+	--key-h: var(--brand-lavendar-h);
 
 	--color-primary: oklch(38% 0.008 var(--key-h));
 	--color-secondary: oklch(47% 0.07 var(--key-h));
