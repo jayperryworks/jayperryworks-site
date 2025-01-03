@@ -1,4 +1,10 @@
 ---
+// assets
+import '@styles/tokens/color.css';
+import '@styles/tokens/elevation.css';
+import '@styles/tokens/spacing.css';
+import '@styles/utilities/type.css';
+
 // utilities
 import * as prismicHelpers from '@prismicio/helpers';
 
@@ -80,7 +86,7 @@ const {
 	.sticky-note-item {
 		background-color: var(--color-island);
 		border-radius: var(--border-radius);
-		box-shadow: 0 0.15em 0.5em var(--color-shadow);
+		box-shadow: var(--elevation-low);
 		padding: var(--space-medium);
 	}
 
