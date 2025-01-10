@@ -13,6 +13,7 @@ export interface Props {
 	border?: boolean;
 	fit?: ImageFit;
 	frame?: Frame;
+	maxHeight?: number;
 }
 
 const {
@@ -20,6 +21,7 @@ const {
 	border,
 	fit,
 	frame,
+	maxHeight,
 } = Astro.props as Props;
 
 const imageComponents = {
@@ -28,6 +30,7 @@ const imageComponents = {
 		props: {
 			border,
 			fit,
+			maxHeight,
 			source,
 		},
 	},
@@ -35,6 +38,7 @@ const imageComponents = {
 		component: ImageFrameWall,
 		props: {
 			type: 'matte',
+			maxHeight,
 			source,
 		},
 	},
@@ -42,6 +46,7 @@ const imageComponents = {
 		component: ImageFrameWall,
 		props: {
 			type: 'frame',
+			maxHeight,
 			source,
 		},
 	},
@@ -49,6 +54,7 @@ const imageComponents = {
 		component: ImageFrameWall,
 		props: {
 			type: 'panel',
+			maxHeight,
 			source,
 		},
 	},
@@ -56,6 +62,7 @@ const imageComponents = {
 		component: ImageFrameDevice,
 		props: {
 			type: 'Phone',
+			maxHeight,
 			source,
 		},
 	},
@@ -63,6 +70,7 @@ const imageComponents = {
 		component: ImageFrameDevice,
 		props: {
 			type: 'Tablet (landscape)',
+			maxHeight,
 			source,
 		},
 	},
@@ -70,6 +78,7 @@ const imageComponents = {
 		component: ImageFrameDevice,
 		props: {
 			type: 'Tablet (portrait)',
+			maxHeight,
 			source,
 		},
 	},

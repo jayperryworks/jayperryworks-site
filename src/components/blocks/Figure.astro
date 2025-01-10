@@ -22,10 +22,11 @@ export interface Props {
 	attribution?: FormattedText;
 	border?: boolean;
 	caption?: FormattedText;
-	frame?: Frame;
+	class?: string;
 	device?: Frame;
 	fit?: ImageFit;
-	class?: string;
+	frame?: Frame;
+	maxHeight?: number;
 }
 
 // props
@@ -37,11 +38,12 @@ const {
 	frame = 'None',
 	class: className,
 	fit,
+	maxHeight,
 } = Astro.props as Props;
 ---
 
 <figure class={['figure', className].join(' ')}>
-	<RevealOnScroll>
+	<RevealOnScroll class="wrapper">
 		<slot>
 			{source && (
 				<ImageFrame
@@ -49,6 +51,7 @@ const {
 					{fit}
 					{frame}
 					{source}
+					{maxHeight}
 				/>
 			)}
 		</slot>
@@ -64,9 +67,8 @@ const {
 </figure>
 
 <style>
-	.figure {
-		--max-height: 80;
-
+	.figure,
+	.figure :global(.wrapper) {
 		text-align: center;
 	}
 
