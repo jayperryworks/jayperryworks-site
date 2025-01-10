@@ -14,6 +14,7 @@ import { SpaceScale, TypeScale } from '@lib/types';
 export type DataItem = {
 	label: string,
 	value: string[] | string,
+	html?: boolean,
 };
 
 export interface Props {
@@ -51,13 +52,19 @@ const itemClassList = [
 				<span class={itemClassList}>{item.label}</span>
 			</dt>
 			{Array.isArray(item.value)
-				? item.value.map((valueItem) => (
+				? item.value.map((seriesItem) => (
 						<dd class={['item', item.value.length > 1 && 'series'].join(' ')}>
-							<span class={itemClassList}>{valueItem}</span>
+							{item.html
+							? <span class={itemClassList} set:html={seriesItem} />
+							: <span class={itemClassList}>{seriesItem}</span>
+						}
 						</dd>
 					))
 				: <dd class="item">
-						<span class={itemClassList}>{item.value}</span>
+						{item.html
+							? <span class={itemClassList} set:html={item.value} />
+							: <span class={itemClassList}>{item.value}</span>
+						}
 					</dd>
 				}
 		</div>
@@ -69,6 +76,10 @@ const itemClassList = [
 	  list-style: none;
 	  display: grid;
 		gap: var(--gutter);
+	}
+
+	.group {
+		line-height: var(--type-leading-tight);
 	}
 
 	.item {
@@ -84,9 +95,10 @@ const itemClassList = [
 	/* trick from https://codepen.io/ShadowShahriar/pen/LYyvVjo */
 	.item.series {
 		--separator: ',';
+
 		display: inline;
-		padding: 0;
 		margin: 0;
+		padding: 0;
 	}
 
 	.item.series > span::after {
