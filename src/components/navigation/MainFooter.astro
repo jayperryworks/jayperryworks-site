@@ -277,32 +277,27 @@ socialChannelList.join('');
 	}
 
 	footer :global(.about-portrait) {
-		--size: 6rem;
-
 		aspect-ratio: 1.2 / 1;
 		border-radius: var(--border-radius);
 		object-fit: cover;
-		width: var(--size);
 	}
 
 	@container about (min-width: 24em) {
 		.about-wrapper {
+		--portrait-width: 6rem;
+
 			display: grid;
 			gap: var(--space-medium);
-			grid-template-columns: auto 1fr;
+			grid-template-columns: var(--portrait-width) 1fr;
 			grid-template-rows: auto;
 			grid-template-areas:
 				'portrait blurb';
 		}
-
-		footer :global(.about-portrait) {
-			--size: 8rem;
-		}
 	}
 
 	@container about (min-width: 34em) {
-		footer :global(.about-portrait) {
-			--size: 12rem;
+		.about-wrapper {
+			--portrait-width: 12rem;
 		}
 	}
 

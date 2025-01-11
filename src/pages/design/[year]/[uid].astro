@@ -2,7 +2,7 @@
 // assets
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/contentWidth.css';
-import '@styles/utilities/borders.css';
+import '@styles/tokens/borders.css';
 
 // components
 import Layout from '@layouts/BaseLayout.astro';
@@ -34,6 +34,11 @@ export type Contribution = {
 	task: string,
 };
 
+export type Collaborator = {
+	name: string,
+	website: string,
+};
+
 export interface Props {
 	agency: string;
 	body: Slice[];
@@ -41,7 +46,7 @@ export interface Props {
 	role: string;
 	startDate: NumberField;
 	title: TitleField;
-	collaborators?: RelationField[];
+	collaborators?: Collaborator[];
 	contributions?: GroupField;
 	endDate?: NumberField;
 	next?: PaginationLink;
@@ -63,6 +68,7 @@ export async function getStaticPaths() {
 						collaborator {
 							...on collaborator {
 								name
+								website
 							}
 						}
 					}
@@ -96,7 +102,7 @@ export async function getStaticPaths() {
 					title: data.seo_title || prismicHelpers.asText(data.title),
 				},
 				collaborators: collaborators.map(
-					({ collaborator }) => collaborator.data.name
+					({ collaborator }) => collaborator.data
 				),
 				next: nextPost && {
 					title: nextPost.data.title,
@@ -146,7 +152,11 @@ const credits = [
 	{
 		label: 'Collaborators',
 		// need to resolve these links
-		value: collaborators,
+		value: collaborators.map(({ name, website }) => {
+			if (website) return `<a href="${website}" target="_blank">${name}</a>`;
+			return name;
+		}),
+		html: true,
 	},
 ];
 ---
@@ -168,7 +178,7 @@ const credits = [
 
 			<BlockList {body} showLedeStyle />
 
-			<aside class="border-seam-top credits">
+			<aside class="credits">
 				<div class="credits-wrapper">
 					<Heading
 						level={2}
@@ -178,7 +188,7 @@ const credits = [
 					</Heading>
 					<DataGrid
 						data={credits}
-						columnWidth={16}
+						columnWidth={20}
 						gutter="wide"
 					/>
 				</div>
@@ -219,8 +229,9 @@ const credits = [
 	}
 
 	.credits {
-		padding: var(--space-xwide) var(--space-outside);
+		border-block-start: var(--border-default);
 		margin-block-start: var(--space-xwide);
+		padding: var(--space-xwide) var(--space-outside);
 	}
 
 	.credits :global(.credits-heading) {

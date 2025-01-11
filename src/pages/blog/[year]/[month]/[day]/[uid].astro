@@ -294,15 +294,16 @@ const {
 		margin-block-start: var(--space-wide);
 	}
 
-	article :global(.tags) {
+	main :global(.tags) {
 		display: flex;
 		align-items: baseline;
 		gap: 0.25em;
 		flex-wrap: wrap;
+		padding-block-end: var(--space-wide);
 	}
 
 	@media screen and (min-width: 30em) {
-		article :global(.tags) {
+		main :global(.tags) {
 			gap: var(--space-xnarrow);
 			flex-wrap: nowrap;
 		}

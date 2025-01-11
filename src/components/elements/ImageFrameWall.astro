@@ -19,13 +19,14 @@ import type {
 } from '@lib/types';
 
 export interface Props {
-	source: ImageField,
-	class?: string,
-	el?: string,
-	frameThickness: number,
-	matteColor?: CSSVariable | HexColor | HSLColor | HSLAColor,
-	matteThickness?: number,
-	type?: 'matte' | 'frame' | 'panel',
+	source: ImageField;
+	class?: string;
+	el?: string;
+	frameThickness: number;
+	matteColor?: CSSVariable | HexColor | HSLColor | HSLAColor;
+	matteThickness?: number;
+	maxHeight: number;
+	type?: 'matte' | 'frame' | 'panel';
 };
 
 const types = {
@@ -56,6 +57,7 @@ const {
 	frameThickness = types[type].border,
 	matteThickness = types[type].matte,
 	matteColor,
+	maxHeight,
 	el = 'figure',
 } = Astro.props as Props;
 
@@ -89,7 +91,11 @@ const styleList = arrayToPunctatedString([
 	class={classList}
 	style={styleList}
 >
-	<Image class="image" {source} />
+	<Image
+		class="image"
+		{source}
+		{maxHeight}
+	/>
 </El>
 
 <style is:global>

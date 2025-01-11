@@ -20,9 +20,10 @@ export interface Props {
 	border?: boolean;
 	class?: string;
 	fit?: ImageFit;
-	widths?: Array<number>;
+	maxHeight?: number;
 	position?: string;
 	style?: string;
+	widths?: Array<number>;
 }
 
 const {
@@ -31,9 +32,10 @@ const {
 	border = false,
 	class: className = '',
 	fit,
+	maxHeight,
 	position,
-	widths = [ 800, 1200, 2000 ],
 	style,
+	widths = [ 800, 1200, 2000 ],
 } = Astro.props as Props;
 
 const { src, srcset } = prismicHelpers.asImageWidthSrcSet(source, {
@@ -53,12 +55,14 @@ const classList = [
 	border ? 'border' : '',
 	className,
 	fit ? `fit ${fit}` : '',
+	maxHeight ? 'limit-height' : '',
 	transparent ? 'transparent' : '',
 ].join(' ');
 
 const styleList = arrayToPunctatedString([
-	`--aspect-ratio: ${aspectRatio || `${width}/${height} auto`}`,
-	position && `--object-position: ${position}`,
+	`--aspect-ratio: ${aspectRatio || `${width}/${height}`};`,
+	maxHeight ? `--max-height: ${maxHeight};` : '',
+	position ? `--object-position: ${position};` : '',
 	style,
 ]);
 ---
@@ -84,6 +88,12 @@ const styleList = arrayToPunctatedString([
 		display: inline-block;
 	}
 
+	.limit-height {
+		max-width: 100%;
+		max-height: calc(var(--max-height) * 1vh);
+		max-height: calc(var(--max-height) * 1svh);
+	}
+
 	.transparent {
 		background-color: transparent;
 	}
@@ -95,10 +105,7 @@ const styleList = arrayToPunctatedString([
 	.fit,
 	[width][height].fit {
 		background-color: transparent;
-		display: block;
-		height: auto;
-		object-position: var(--position, 50% 50%);
-		width: 100%;
+		object-position: var(--object-position, center);
 	}
 
 	.fit.contain {

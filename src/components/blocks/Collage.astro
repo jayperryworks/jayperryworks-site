@@ -101,6 +101,14 @@ function getItemClassList(
 		}
 	}
 
+	li {
+		display: inline-block;
+	}
+
+	li > :global(*) {
+		margin-inline: auto;
+	}
+
 	li + li {
 		margin-top: 0;
 	}
@@ -117,7 +125,7 @@ function getItemClassList(
 
 	@media screen and (min-width: 40em) {
 		.priority-2 {
-			display: block;
+			display: inline-block;
 		}
 
 		.wide {
@@ -131,7 +139,7 @@ function getItemClassList(
 
 	@media screen and (min-width: 64em) {
 		.priority-3 {
-			display: block;
+			display: inline-block;
 		}
 	}
 </style>

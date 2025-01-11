@@ -1,59 +1,68 @@
 ---
-	// Add a frame around content that looks like a mobile device
-	// -> Phone, Tablet (horizontal and vertical)
+// Add a frame around content that looks like a mobile device
+// -> Phone, Tablet (horizontal and vertical)
 
-	// assets
-	import '@styles/tokens/color.css';
+// assets
+import '@styles/tokens/color.css';
 
-	// components
-	import Image from '@components/elements/Image.astro';
+// components
+import Image from '@components/elements/Image.astro';
 
-	// types
-	import type { Frame } from '@lib/types';
-	import type { ImageField } from '@prismicio/types';
+// types
+import type { Frame } from '@lib/types';
+import type { ImageField } from '@prismicio/types';
 
-	export interface Props {
-		source: ImageField,
-		class?: string,
-		type?: Frame,
-	};
+export interface Props {
+	source: ImageField;
+	useImageAspectRatio?: boolean;
+	class?: string;
+	el?: string;
+	maxHeight?: number;
+	type?: Frame;
+};
 
-	const {
-		source,
-		class: className = '',
-		type = 'Tablet (landscape)',
-	} = Astro.props as Props;
+const {
+	source,
+	useImageAspectRatio = false,
+	class: className = '',
+	el = 'div',
+	maxHeight = 75,
+	type = 'Tablet (landscape)',
+} = Astro.props as Props;
 
-	const types = {
-		'Phone': {
-			className: 'phone',
-			ratio: '1/2',
-		},
-		'Tablet (landscape)': {
-			className: 'tablet-landscape',
-			ratio: '4/3',
-		},
-		'Tablet (portrait)': {
-			className: 'tablet-portrait',
-			ratio: '3/4',
-		},
-	};
+const types = {
+	'Phone': 'phone',
+	'Tablet (landscape)': 'tablet-landscape',
+	'Tablet (portrait)': 'tablet-portrait',
+};
 
-	const classList = [
-		'device-frame',
-		types[type]?.className || '',
-		className,
-	].join(' ');
+const El = el;
+
+const classList = [
+	'device-frame',
+	types[type] || '',
+	className,
+].join(' ');
+
+function calculateOuterAspectRatio(source) {
+	const { width, height } = source.dimensions;
+	const autoAspectX = width + (width * 0.035);
+	const autoAspectY = height + (width * 0.11) + 16;
+	return `${autoAspectX} / ${autoAspectY}`;
+}
 ---
 
-<div class={classList}>
-	<Image
-		aspectRatio={types[type]?.ratio}
-		fit="cover"
-		position="y-start center"
-		{source}
-	/>
-</div>
+<El
+	class={classList}
+	style={[
+		maxHeight ? `--max-height: ${maxHeight};` : '',
+		useImageAspectRatio ? `--aspect-ratio: ${calculateOuterAspectRatio(source)};` : '',
+	].join(' ')}
+>
+	<div class="wrapper">
+		<Image {source} />
+	</div>
+</El>
 
 <style>
 	/*
@@ -64,19 +73,33 @@
 	@supports (aspect-ratio: 1/2) {
 		.device-frame {
 			/* use percentage units for the bezel and corners, so they scale fluidly with the image and aspect ratio */
+			--aspect-ratio: 4/3;
 			--bezel-radius: 4.5% / 6%;
 			--bezel-width-x: 5%;
 			--bezel-width-y: 5%;
 			--screen-radius:  0.75% / 1%;
 
+			aspect-ratio: var(--aspect-ratio);
 			background-color: var(--color-bg);
 			border-radius: var(--bezel-radius);
 			border: 1px solid var(--color-border);
-			display: block;
-			overflow: hidden;
-			position: relative;
-			padding: var(--bezel-width-y) var(--bezel-width-x);
 			box-shadow: 0 0.125em 0.25em var(--color-shadow);
+			display: flex;
+			max-height: calc(var(--max-height) * 1vh);
+			max-height: calc(var(--max-height) * 1svh);
+			max-width: 100%;
+			overflow: hidden;
+			padding: var(--bezel-width-y) var(--bezel-width-x);
+			position: relative;
+		}
+
+		.wrapper {
+			/* set the inner aspect ratio and crop the image
+			 * - Firefox bug distorts the image if we use object-fit and position here
+			*/
+			border-radius: var(--screen-radius);
+			border: 1px solid var(--color-border);
+			overflow: hidden;
 		}
 
 		@media screen and (min-width: 40em) {
@@ -85,22 +108,18 @@
 			}
 		}
 
-		.device-frame :global(img) {
-			border-radius: var(--screen-radius);
-			border: 1px solid var(--color-border);
-			object-fit: cover;
-			object-position: top center;
+		.device-frame.tablet-landscape {
+			--aspect-ratio: 4/3;
+			--screen-radius: 1%;
 		}
 
 		.device-frame.tablet-portrait {
-			--bezel-radius: 6% / 4.5%;
-		}
-
-		.device-frame.tablet-portrait {
-			--screen-radius: 1% / 0.75%;
+			--aspect-ratio: 3/4;
+			--bezel-radius: 6%;
 		}
 
 		.device-frame.phone {
+			--aspect-ratio: 1/2.05;
 			--bezel-radius: 10% / 5%;
 			--bezel-width-x: 3.5%;
 			--bezel-width-y: 11%;
