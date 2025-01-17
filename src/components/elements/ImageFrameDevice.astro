@@ -1,47 +1,64 @@
 ---
-	// Add a frame around content that looks like a mobile device
-	// -> Phone, Tablet (horizontal and vertical)
+// Add a frame around content that looks like a mobile device
+// -> Phone, Tablet (horizontal and vertical)
 
-	// assets
-	import '@styles/tokens/color.css';
+// assets
+import '@styles/tokens/color.css';
 
-	// components
-	import Image from '@components/elements/Image.astro';
+// components
+import Image from '@components/elements/Image.astro';
 
-	// types
-	import type { Frame } from '@lib/types';
-	import type { ImageField } from '@prismicio/types';
+// types
+import type { Frame } from '@lib/types';
+import type { ImageField } from '@prismicio/types';
 
-	export interface Props {
-		source: ImageField,
-		class?: string,
-		el?: string,
-		type?: Frame,
-	};
+export interface Props {
+	source: ImageField;
+	useImageAspectRatio?: boolean;
+	class?: string;
+	el?: string;
+	maxHeight?: number;
+	type?: Frame;
+};
 
-	const {
-		source,
-		el = 'div',
-		class: className = '',
-		type = 'Tablet (landscape)',
-	} = Astro.props as Props;
+const {
+	source,
+	useImageAspectRatio = false,
+	class: className = '',
+	el = 'div',
+	maxHeight = 75,
+	type = 'Tablet (landscape)',
+} = Astro.props as Props;
 
-	const types = {
-		'Phone': 'phone',
-		'Tablet (landscape)': 'tablet-landscape',
-		'Tablet (portrait)': 'tablet-portrait',
-	};
+const types = {
+	'Phone': 'phone',
+	'Tablet (landscape)': 'tablet-landscape',
+	'Tablet (portrait)': 'tablet-portrait',
+};
 
-	const El = el;
+const El = el;
 
-	const classList = [
-		'device-frame',
-		types[type] || '',
-		className,
-	].join(' ');
+const classList = [
+	'device-frame',
+	types[type] || '',
+	className,
+].join(' ');
+
+function calculateOuterAspectRatio(source) {
+	const { width, height } = source.dimensions;
+	const autoAspectX = width + (width * 0.035);
+	const autoAspectY = height + (width * 0.11) + 16;
+	return `${autoAspectX} / ${autoAspectY}`;
+}
 ---
 
-<El class={classList}>
+<El
+	class={classList}
+	style={[
+		maxHeight ? `--max-height: ${maxHeight};` : '',
+		useImageAspectRatio ? `--aspect-ratio: ${calculateOuterAspectRatio(source)};` : '',
+	].join(' ')}
+>
 	<div class="wrapper">
 		<Image {source} />
 	</div>
@@ -63,6 +80,7 @@
 			--screen-radius:  0.75% / 1%;
 
 			aspect-ratio: var(--aspect-ratio);
+<<<<<<< HEAD
 			background-color: var(--color-island);
 			border-radius: var(--bezel-radius);
 			border: 1px solid var(--color-border);
@@ -70,6 +88,15 @@
 			display: flex;
 			max-height: 60vh;
 			max-height: 60svh;
+=======
+			background-color: var(--color-bg);
+			border-radius: var(--bezel-radius);
+			border: 1px solid var(--color-border);
+			box-shadow: 0 0.125em 0.25em var(--color-shadow);
+			display: flex;
+			max-height: calc(var(--max-height) * 1vh);
+			max-height: calc(var(--max-height) * 1svh);
+>>>>>>> main
 			max-width: 100%;
 			overflow: hidden;
 			padding: var(--bezel-width-y) var(--bezel-width-x);
