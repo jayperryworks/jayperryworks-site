@@ -1,6 +1,6 @@
-@import './color.css';
+@import '@styles/tokens/color.css';
 
-:root {
+body {
 	/* --- default corner radius */
 	--border-radius: 0.4em;
 

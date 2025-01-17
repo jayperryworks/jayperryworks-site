@@ -4,7 +4,7 @@
  * - shadows that represent various 'heights' above the surface
  */
 
-:root {
+body {
 	--elevation-low: 0 0.1em 0.3em var(--color-shadow);
 	--elevation-medium: 0 0.25em 0.4em var(--color-shadow);
 	--elevation-high: 0 0.5em 0.5em var(--color-shadow);

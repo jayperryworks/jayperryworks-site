@@ -8,6 +8,9 @@ import {
 // --- color ---
 export type ColorRoles = 'primary' | 'secondary' | 'highlight' | 'surface' | 'island' | 'well' | 'border' | 'shadow';
 
+// names of the default color themes
+export type ThemeNames = 'cherry'| 'mustard'| 'mint'| 'lavendar'| 'anemone';
+
 export type CSSVariable = `var(--${string})`;
 export type CSSHue = `${number | string}deg` | CSSVariable;
 export type CSSPercentage = `${number | string}%` | CSSVariable;
