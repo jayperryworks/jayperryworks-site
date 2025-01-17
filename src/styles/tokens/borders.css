@@ -1,8 +1,10 @@
 @import '@styles/tokens/color.css';
 
 body {
-	/* --- default corner radius */
+	/* --- default corner radii */
+	--border-radius-sharp: 0.24em;
 	--border-radius: 0.4em;
+	--border-radius-round: 0.8em;
 
 	/* --- standard border styles */
 	--border-default-width: 1px;

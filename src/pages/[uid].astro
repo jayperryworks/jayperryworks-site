@@ -17,13 +17,14 @@ import MainFooter from '@components/navigation/MainFooter.astro';
 
 // types
 import { Slice, TitleField } from '@prismicio/types';
-import { SEOContent } from '@lib/types';
+import { SEOContent, Theme, ThemeNames } from '@lib/types';
 
 export interface Props {
 	body: Slice[];
-	seo?: SEOContent;
 	title: TitleField;
-	subtitle: TitleField;
+	seo?: SEOContent;
+	subtitle?: TitleField;
+	theme?: ThemeNames | Partial<Theme>;
 }
 
 // data & pagination
@@ -37,6 +38,7 @@ export async function getStaticPaths(): Promise<Function> {
 			seo_image,
 			seo_title,
 			title,
+			theme,
 		} = data;
 
 		const seo = {
@@ -53,6 +55,7 @@ export async function getStaticPaths(): Promise<Function> {
 			props: {
 				body,
 				seo,
+				theme,
 				title,
 			}
 		};
@@ -64,6 +67,7 @@ const {
 	body,
 	seo,
 	subtitle,
+	theme,
 	title,
 } = Astro.props as Props;
 

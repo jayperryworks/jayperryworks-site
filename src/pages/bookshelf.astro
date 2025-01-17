@@ -148,6 +148,7 @@ const books = await Promise.all(sortedBooks.map(async ({
 <Layout
 	pageTitle={shortTitle}
 	path="bookshelf"
+	theme="cherry"
 	{seo}
 >
 	<MainNav segment="bookshelf" />
@@ -171,7 +172,7 @@ const books = await Promise.all(sortedBooks.map(async ({
 		<BlockList {body} showLedeStyle />
 
 		<div class="wrapper">
-			<Gallery gutter="wide">
+			<Gallery gutter="xnarrow">
 				{books.filter((b) => b !== undefined).map((book) => (
 					<li
 						class="item"

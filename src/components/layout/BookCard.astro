@@ -92,7 +92,7 @@ function getInitial(title) {
 			<slot name="header">
 				{title && (
 					<Heading
-						class="type-scale-delta"
+						class="type-scale-epsilon"
 						level={2}
 						text={title}
 					/>
@@ -136,10 +136,13 @@ function getInitial(title) {
 	.book-card {
 		--cover-size: 12em;
 
+		background-color: var(--color-island);
+		border-radius: var(--border-radius-round);
 		container-type: inline-size;
 		display: flex;
 		flex-direction: column;
 		flex: 1;
+		padding: var(--space-medium) var(--space-xnarrow);
 	}
 
 	.wrapper {

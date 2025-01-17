@@ -159,7 +159,11 @@ const {
 } = Astro.props as Props;
 ---
 
-<Layout pageTitle={prismicHelpers.asText(title)} {seo}>
+<Layout
+	pageTitle={prismicHelpers.asText(title)}
+	theme="mustard"
+	{seo}
+>
 	<MainNav segment="blog" />
 	<main>
 		<article>

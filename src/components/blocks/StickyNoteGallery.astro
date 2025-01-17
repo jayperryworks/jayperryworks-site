@@ -24,16 +24,18 @@ import { TitleField } from '@prismicio/types';
 import RenderedText from '@components/elements/RenderedText.astro';
 
 export interface Props {
-	notes: StickyNote[],
-	title: TitleField,
-	description?: FormattedText,
-	subtitle?: TitleField,
+	notes: StickyNote[];
+	title: TitleField;
+	description?: FormattedText;
+	shadow?: boolean;
+	subtitle?: TitleField;
 }
 
 const {
 	notes,
 	title,
 	description,
+	shadow = false,
 	subtitle,
 } = Astro.props as Props;
 ---
@@ -55,9 +57,9 @@ const {
 	{prismicHelpers.isFilled.richText(description) && (
 		<Passage text={description} />
 	)}
-	<Gallery gutter="medium">
+	<Gallery gutter="narrow">
 		{notes.map(({ shortStatement, extendedStatement }) => (
-			<li class="sticky-note-item">
+			<li class={['sticky-note-item', shadow ? 'shadow' : ''].join(' ')}>
 				<RevealOnScroll
 					class="sticky-note-text | type-role-accent type-scale-epsilon"
 					tag="p"
@@ -86,8 +88,11 @@ const {
 	.sticky-note-item {
 		background-color: var(--color-island);
 		border-radius: var(--border-radius);
-		box-shadow: var(--elevation-low);
 		padding: var(--space-medium);
+	}
+
+	.sticky-note-item.shadow {
+		box-shadow: var(--elevation-low);
 	}
 
 	.sticky-note-item :global(p) {
