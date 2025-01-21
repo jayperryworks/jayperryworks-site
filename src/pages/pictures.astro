@@ -8,7 +8,7 @@ import '@styles/utilities/type.css';
 
 // --- utils
 import * as prismicHelpers from '@prismicio/helpers';
-import { convertHexToHSL } from '@lib/colorHelpers';
+import { oklch, formatCss } from 'culori';
 import { PrismicDocumentWithUID } from '@prismicio/types';
 import prismic from '@lib/prismic';
 
@@ -96,14 +96,19 @@ const seriesList = picturesData
 		} = series;
 
 		if (result.find((s) => s.uid === uid)) return result;
+		console.log(background)
 
 		result.push({
 			// if all the pictures in the series have the same aspect ratio, leave this prop undefined so the grid boxes will be whatever shape the pictures are
 			// if not, use the default aspect ratio so the grid boxes will be the same shape and will constrain the different-shaped pictures to equal areas
 			aspectRatio: sameAspectRatio ? undefined : DEFAULT_ASPECT_RATIO,
 			color: {
-				background: background ? convertHexToHSL(background) : null,
-				matte: matte ? convertHexToHSL(matte) : null,
+				background: background
+					? formatCss({ mode: 'oklch', ...oklch(background) })
+					: null,
+				matte: matte
+					? formatCss({ mode: 'oklch', ...oklch(background) })
+					: null,
 			},
 			columnSize,
 			description,

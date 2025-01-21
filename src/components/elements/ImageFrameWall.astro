@@ -104,7 +104,7 @@ const styleList = arrayToPunctatedString([
 	.picture.frame,
 	.picture.panel {
 		/* don't use a global variable for the frame color because it should always be dark black, tinted very slightly to the current key hue */
-		--frame-color: oklch(30% 0.008 var(--key-h));
+		--frame-color: oklch(30% 0.008 var(--base-h));
 		--shadow-color: var(--color-shadow);
 
 		align-items: center;

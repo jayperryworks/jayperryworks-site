@@ -28,7 +28,12 @@ type HSLChannel = 'h' | 's' | 'l' | 'a';
 export type HSLObject = Record<HSLChannel, number>;
 
 // a page theme with literal CSS values
-export type Theme = Record<ColorRoles, HexColor | HSLColor | CSSVariable>;
+export type Theme = {
+	[key in ColorRoles]: HexColor | CSSVariable;
+} & {
+	hue?: number;
+	name?: string;
+};
 
 // a page theme with HSLObject data
 export type ThemeData = Record<ColorRoles, HSLObject>;

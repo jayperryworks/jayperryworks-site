@@ -1,6 +1,12 @@
 ---
-// Color theme component
-// - Create color tokens to change the colors of child elements
+/**
+ * Color theme component
+ * Create color tokens to change the colors of child elements
+ *
+ * @param {string} [class] - classes to add to the container
+ * @param {string} [el=div] - the element to render for the container
+ * @param {Partial<Theme>} [theme] - a Theme object to create tokens from
+ */
 
 // --- utilities ---
 import { oklch, formatCss } from 'culori';
@@ -8,46 +14,42 @@ import { oklch, formatCss } from 'culori';
 // --- config ---
 const defaultHues = {
 	cherry: 7,
-	mustard: 12,
-	mint: 18,
-	lavendar: 23,
-	anemone: 33,
+	mustard: 102,
+	mint: 158,
+	lavendar: 263,
+	anemone: 303,
 };
 
 // --- types ---
-import { ColorRoles, CSSVariable, HexColor } from '@lib/types';
-
-export type Theme = {
-	[key in ColorRoles]: HexColor | CSSVariable;
-} & {
-	hue?: number;
-	name?: string;
-};
-
-export interface Props {
-	class?: string;
-	el?: string;
-	theme?: Partial<Theme>;
-}
+import { Theme } from '@lib/types';
 
 // --- props ---
 const {
 	class: className,
 	el = 'div',
 	theme,
-} = Astro.props as Props;
+} = Astro.props;
 
 const El = el;
 
-function setThemeStyle(): string[] {
+/**
+ * Create CSS variables from the data in the theme prop
+ *
+ * @returns {string[]} - an array of css variable definitions, e.g. --base-h: 100deg;
+ */
+function setThemeStyle() {
 	let styles = [];
 
 	if (theme) {
 		// if a theme name is included, assign a default hue to the base-h variable
 		if (theme.name) styles.push(`--base-h: ${defaultHues[theme.name]}deg;`);
+		// delete the property so we don't use it below for custom roles
+		delete theme.name;
 
 		// if a hue is included, assign it to the base-h variable
 		if (theme.hue) styles.push(`--base-h: ${theme.hue}deg;`);
+		// delete the property so we don't use it below for custom roles
+		delete theme.hue;
 
 		// if custom color roles are included, assign role variables for each
 		// - that match the tokens in src/styles/tokens/color.css
