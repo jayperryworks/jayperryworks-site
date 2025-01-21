@@ -1,5 +1,5 @@
 // utilities
-import convertColor from 'color-convert';
+import convertColor from 'better-color-tools';
 
 // types
 import {

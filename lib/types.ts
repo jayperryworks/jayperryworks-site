@@ -12,13 +12,15 @@ export type ColorRoles = 'primary' | 'secondary' | 'highlight' | 'surface' | 'is
 export type ThemeNames = 'cherry'| 'mustard'| 'mint'| 'lavendar'| 'anemone';
 
 export type CSSVariable = `var(--${string})`;
-export type CSSHue = `${number | string}deg` | CSSVariable;
+export type CSSDegree = `${number | string}deg` | CSSVariable;
 export type CSSPercentage = `${number | string}%` | CSSVariable;
 export type CSSAlpha = `/ ${number | string}`;
 
 export type HexColor = `#${number}`;
-export type HSLColor = `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage})`;
-export type HSLAColor = `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage} ${CSSAlpha})`;
+export type HSLColor = `hsl(${CSSDegree} ${CSSPercentage} ${CSSPercentage})`;
+export type HSLAColor = `hsl(${CSSDegree} ${CSSPercentage} ${CSSPercentage} ${CSSAlpha})`;
+export type OKLCHColor = `oklch(${CSSPercentage} ${number} ${CSSDegree})`
+	| `oklch(${CSSPercentage} ${number} ${CSSDegree} ${CSSAlpha})`;
 
 type HSLChannel = 'h' | 's' | 'l' | 'a';
 

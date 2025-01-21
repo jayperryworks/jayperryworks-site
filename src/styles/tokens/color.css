@@ -9,31 +9,32 @@ body {
 	 * Key hue variable
 	 * - change this to change the theme
 	 */
-	--key-h: var(--brand-lavendar-h);
+	--base-h: var(--brand-lavendar-h);
 
 	/*
 	 * Default theme
 	 * - shades of the key hue
 	 */
-	--color-primary: oklch(38% 0.008 var(--key-h));
-	--color-secondary: oklch(47% 0.07 var(--key-h));
-	--color-highlight: oklch(71% 0.11 var(--key-h));
-	--color-island: oklch(100% 0 var(--key-h));
-	--color-surface: oklch(98% 0.005 var(--key-h));
-	--color-well: oklch(95% 0.007 var(--key-h));
-	--color-border: oklch(80% 0.03 var(--key-h));
-	--color-shadow: oklch(42% 0.07 var(--key-h) / 0.2);
+	--color-primary: oklch(38% 0.008 var(--base-h));
+	--color-secondary: oklch(47% 0.07 var(--base-h));
+	--color-highlight: oklch(71% 0.11 var(--base-h));
+	--color-island: oklch(100% 0 var(--base-h));
+	--color-surface: oklch(98% 0.005 var(--base-h));
+	--color-well: oklch(95% 0.007 var(--base-h));
+	--color-border: oklch(80% 0.03 var(--base-h));
+	--color-shadow: oklch(42% 0.07 var(--base-h) / 0.2);
 }
 
+/* Default dark theme */
 @media (prefers-color-scheme: dark) {
 	body {
-		--color-primary: oklch(98% 0.002 var(--key-h));
-		--color-secondary: oklch(85% 0.05 var(--key-h));
-		--color-highlight: oklch(71% 0.12 var(--key-h));
-		--color-island: oklch(41% 0.01 var(--key-h));
-		--color-surface: oklch(36% 0.01 var(--key-h));
-		--color-well: oklch(31% 0.008 var(--key-h));
-		--color-border: oklch(8% 0.06 var(--key-h));
-		--color-shadow: oklch(5% 0.06 var(--key-h) / 0.2);
+		--color-primary: oklch(98% 0.002 var(--base-h));
+		--color-secondary: oklch(85% 0.05 var(--base-h));
+		--color-highlight: oklch(71% 0.12 var(--base-h));
+		--color-island: oklch(41% 0.01 var(--base-h));
+		--color-surface: oklch(36% 0.01 var(--base-h));
+		--color-well: oklch(31% 0.008 var(--base-h));
+		--color-border: oklch(8% 0.06 var(--base-h));
+		--color-shadow: oklch(5% 0.06 var(--base-h) / 0.2);
 	}
 }
