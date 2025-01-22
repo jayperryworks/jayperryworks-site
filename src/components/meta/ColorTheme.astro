@@ -5,21 +5,10 @@
  *
  * @param {string} [class] - classes to add to the container
  * @param {string} [el=div] - the element to render for the container
- * @param {ThemeNames} [name] - the name of a preset theme
  * @param {number} [hue] - custom hue number
- * @param {Partial<Theme>[]} [custom] - an array of Theme objects to create custom tokens from
+ * @param {ThemeNames} [name] - the name of a preset theme
+ * @param {Partial<Theme>[]} [custom] - color roles for custom themes
  */
-
-const themeExample = [
-	{
-		mode: 'light',
-		primary: '#000',
-	},
-	{
-		mode: 'dark',
-		primary: '#fff',
-	}
-];
 
 // --- utilities ---
 import { oklch, formatCss } from 'culori';
@@ -55,14 +44,14 @@ const El = el;
 function setThemeStyle() {
 	let styles = [];
 
-	// if a theme name is included, assign a default hue to the base-h variable
+	// if a theme name is passed as a prop, assign a default hue to the base-h variable
 	if (name) styles.push(`--base-h: ${defaultHues[name]}deg;`);
 
-	// if a hue is included, assign it to the base-h variable
+	// if a hue is passed as a prop, assign it to the base-h variable
 	if (hue) styles.push(`--base-h: ${hue}deg;`);
 
 	if (custom) {
-		// if custom color roles are included, assign role variables for each
+		// if custom color roles are passed as a prop, assign role variables for each
 		// - that match the tokens in src/styles/tokens/color.css
 		for (const object of custom) {
 			const { primary: theme } = object;
@@ -73,7 +62,7 @@ function setThemeStyle() {
 			for (const role in theme) {
 				// if the role value isn't undefined/false
 				if (theme[role]) {
-					// clean up the field name so it matches a color token
+					// clean up the field name (messy Prismic data) so it matches a color token
 					// - stopgap - hopefully won't need this with the new CMS
 					const name = role
 						.replaceAll('theme_', '')
@@ -115,9 +104,9 @@ function setThemeStyle() {
 		--base-h: var(--brand-lavendar-h);
 
 		/*
-		* Default theme
-		* - shades of the key hue
-		* - custom color themes define --brand-[mode]-[role] variables
+		* Default theme (light mode)
+		* - shades of the base hue
+		* - custom color themes define `--brand-[mode]-[role]` variables
 		* - if custom variables are not defined, fall back to default OKLCH values
 		*/
 		--color-highlight: var(--custom-light-highlight, oklch(71% 0.11 var(--base-h)));
@@ -130,7 +119,7 @@ function setThemeStyle() {
 		--color-shadow: var(--custom-light-shadow, oklch(42% 0.07 var(--base-h) / 0.2));
 	}
 
-	/* Default dark theme */
+	/* Default theme (dark mode) */
 	@media (prefers-color-scheme: dark) {
 		.theme {
 			--color-highlight: var(--custom-dark-highlight, oklch(71% 0.12 var(--base-h)));
