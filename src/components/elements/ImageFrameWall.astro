@@ -125,8 +125,8 @@ const styleList = arrayToPunctatedString([
 	}
 
 	.picture.panel {
-		/* the 'inset' area of a panel should always be absolute black */
-		--matte-color: oklch(0 0 0);
+		/* the 'inset' area of a panel should always be very dark */
+		--matte-color: oklch(20% 0.008 var(--base-h));
 
 		box-shadow: var(--elevation-high);
 	}
@@ -137,5 +137,18 @@ const styleList = arrayToPunctatedString([
 
 	.picture .image[width][height] {
 		width: calc(100% - var(--matte-thickness));
+	}
+
+	@media (prefers-color-scheme: dark) {
+		.picture.matte,
+		.picture.frame,
+		.picture.panel {
+			--frame-color: oklch(15% 0.008 var(--base-h));
+		}
+
+		/* a darker matte feels better with the images against a dark surface */
+		.picture.frame {
+			--matte-color: var(--color-well);
+		}
 	}
 </style>
