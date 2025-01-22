@@ -4,10 +4,10 @@ import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
 
 // utilities
-import { convertHexToHSLObject, convertHSLObjectToHSL } from '@lib/colorHelpers';
 import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
+import blocks from '@lib/blocks';
 
 // components
 import Layout from '@layouts/Layout.astro';
@@ -24,8 +24,6 @@ import ProgressBar from '@components/elements/ProgressBar.astro';
 // types
 import type {
 	Align,
-	Theme,
-	ThemeData,
 } from '@lib/types';
 
 import type { Props as SequenceNavItemProps } from '@components/navigation/SequenceNavItem.astro';
@@ -82,15 +80,19 @@ export async function getStaticPaths({ paginate }) {
 				: undefined,
 		}));
 
-		const chapters = data.chapters.map(({ chapter }, index) => {
+		const chapters = data.chapters.map(({ chapter }) => {
 			const {
 				title,
 				subtitle,
+				preset_theme,
+				base_hue,
+				// deprecated color data - remove
 				highlight_color: highlight,
 				primary_foreground_color: primary,
 				secondary_foreground_color: secondary,
-				background_color: bg,
+				background_color: surface,
 				body,
+				body1: colorThemes,
 			} = chapter.data;
 
 			return {
@@ -114,10 +116,9 @@ export async function getStaticPaths({ paginate }) {
 					title: data.seo_title,
 				},
 				theme: {
-					bg,
-					highlight,
-					primary,
-					secondary,
+					name: preset_theme,
+					hue: base_hue,
+					custom: colorThemes,
 				},
 			};
 		});
@@ -158,45 +159,6 @@ const {
 // -> locating it down here instead of in the pagination function above because currentPage is accessible from here
 if (!seo.title) seo.title = `${prismicHelpers.asText(project.title)}, Part ${currentPage}: ${prismicHelpers.asText(title)}`;
 
-// build a theme for this page based on the data from Prismic
-function generatePageTheme(): Partial<Theme> {
-	if (theme?.bg) {
-		// convert the theme values to objects
-		let generatedTheme: Partial<ThemeData> = Object.keys(theme).reduce((result, role) => {
-			if (theme[role]) {
-				result[role] = convertHexToHSLObject(theme[role]);
-			}
-			return result;
-		}, {});
-
-		// if these colors aren't specified in the Prismic data, derive each from the bg color
-		const themeFallbacks = {
-			primary: 25,
-			secondary: 35,
-			border: (generatedTheme?.bg?.l - 15) || 40,
-			shadow: (generatedTheme?.bg?.l - 10) || 10,
-			well: (generatedTheme?.bg?.l - 5) || 60,
-			island: (generatedTheme?.bg?.l + 5) || 70,
-		};
-
-		Object.keys(themeFallbacks).forEach((role) => {
-			if (!generatedTheme[role]) {
-				generatedTheme[role] = {
-					...generatedTheme.bg,
-					l: themeFallbacks[role],
-				}
-			}
-		});
-
-		return Object.keys(generatedTheme).reduce((result, role): Partial<Theme> => {
-			result[role] = convertHSLObjectToHSL(generatedTheme[role]);
-			return result;
-		}, {});
-	}
-
-	return {};
-}
-
 // sequence nav
 function sequenceNavItemAlign(index: number): Align {
 	if (index === 0) return 'start';
@@ -236,7 +198,7 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 
 <Layout
 	pageTitle={prismicHelpers.asText(project.title)}
-	theme={generatePageTheme()}
+	{theme}
 	{seo}
 >
 	<MainNav segment={uid} />

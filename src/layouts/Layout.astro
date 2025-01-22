@@ -51,7 +51,7 @@ function setTheme() {
 
 <html lang="en">
 	<Head title={seo?.title || pageTitle} {...seo} />
-	<ColorTheme theme={setTheme()} el="body">
+	<ColorTheme el="body" {...setTheme()}>
 		<slot />
 	</ColorTheme>
 </html>

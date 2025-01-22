@@ -5,8 +5,21 @@
  *
  * @param {string} [class] - classes to add to the container
  * @param {string} [el=div] - the element to render for the container
- * @param {Partial<Theme>} [theme] - a Theme object to create tokens from
+ * @param {ThemeNames} [name] - the name of a preset theme
+ * @param {number} [hue] - custom hue number
+ * @param {Partial<Theme>[]} [custom] - an array of Theme objects to create custom tokens from
  */
+
+const themeExample = [
+	{
+		mode: 'light',
+		primary: '#000',
+	},
+	{
+		mode: 'dark',
+		primary: '#fff',
+	}
+];
 
 // --- utilities ---
 import { oklch, formatCss } from 'culori';
@@ -27,7 +40,9 @@ import { Theme } from '@lib/types';
 const {
 	class: className,
 	el = 'div',
-	theme,
+	name,
+	hue,
+	custom,
 } = Astro.props;
 
 const El = el;
@@ -40,32 +55,46 @@ const El = el;
 function setThemeStyle() {
 	let styles = [];
 
-	if (theme) {
-		// if a theme name is included, assign a default hue to the base-h variable
-		if (theme.name) styles.push(`--base-h: ${defaultHues[theme.name]}deg;`);
-		// delete the property so we don't use it below for custom roles
-		delete theme.name;
+	// if a theme name is included, assign a default hue to the base-h variable
+	if (name) styles.push(`--base-h: ${defaultHues[name]}deg;`);
 
-		// if a hue is included, assign it to the base-h variable
-		if (theme.hue) styles.push(`--base-h: ${theme.hue}deg;`);
-		// delete the property so we don't use it below for custom roles
-		delete theme.hue;
+	// if a hue is included, assign it to the base-h variable
+	if (hue) styles.push(`--base-h: ${hue}deg;`);
 
+	if (custom) {
 		// if custom color roles are included, assign role variables for each
 		// - that match the tokens in src/styles/tokens/color.css
-		for (const role in theme) {
-			const formattedColor = formatCss({
-				mode: 'oklch',
-				...oklch(theme[role]),
-			});
-			// stopgap: make sure the role passed is 'surface'
-			// - 'bg' token is deprecated
-			styles.push(
-				`--color-${role !== 'bg' ? role : 'surface'}: ${formattedColor};`
-			);
+		for (const object of custom) {
+			const { primary: theme } = object;
+			const { mode } = theme;
+			delete theme.mode;
+
+
+			for (const role in theme) {
+				// if the role value isn't undefined/false
+				if (theme[role]) {
+					// clean up the field name so it matches a color token
+					// - stopgap - hopefully won't need this with the new CMS
+					const name = role
+						.replaceAll('theme_', '')
+						.replaceAll('_foreground', '')
+						.replaceAll('_color', '');
+
+					const formattedColor = formatCss({
+						mode: 'oklch',
+						...oklch(theme[role]),
+					});
+					// stopgap: make sure the role passed is 'surface'
+					// - 'bg' token is deprecated
+					styles.push(
+						`--custom-${mode.toLowerCase()}-${name}: ${formattedColor};`
+					);
+				}
+			}
 		}
 	}
 
+	// console.log('ColorTheme styles: ', styles)
 	return styles;
 }
 ---
@@ -88,28 +117,30 @@ function setThemeStyle() {
 		/*
 		* Default theme
 		* - shades of the key hue
+		* - custom color themes define --brand-[mode]-[role] variables
+		* - if custom variables are not defined, fall back to default OKLCH values
 		*/
-		--color-primary: oklch(38% 0.008 var(--base-h));
-		--color-secondary: oklch(47% 0.07 var(--base-h));
-		--color-highlight: oklch(71% 0.11 var(--base-h));
-		--color-island: oklch(100% 0 var(--base-h));
-		--color-surface: oklch(98% 0.005 var(--base-h));
-		--color-well: oklch(95% 0.007 var(--base-h));
-		--color-border: oklch(80% 0.03 var(--base-h));
-		--color-shadow: oklch(42% 0.07 var(--base-h) / 0.2);
+		--color-highlight: var(--custom-light-highlight, oklch(71% 0.11 var(--base-h)));
+		--color-primary: var(--custom-light-primary, oklch(38% 0.008 var(--base-h)));
+		--color-secondary: var(--custom-light-secondary, oklch(47% 0.07 var(--base-h)));
+		--color-island: var(--custom-light-island, oklch(100% 0 var(--base-h)));
+		--color-surface: var(--custom-light-surface, oklch(98% 0.005 var(--base-h)));
+		--color-well: var(--custom-light-well, oklch(95% 0.007 var(--base-h)));
+		--color-border: var(--custom-light-border, oklch(80% 0.03 var(--base-h)));
+		--color-shadow: var(--custom-light-shadow, oklch(42% 0.07 var(--base-h) / 0.2));
 	}
 
 	/* Default dark theme */
 	@media (prefers-color-scheme: dark) {
 		.theme {
-			--color-primary: oklch(98% 0.002 var(--base-h));
-			--color-secondary: oklch(85% 0.05 var(--base-h));
-			--color-highlight: oklch(71% 0.12 var(--base-h));
-			--color-island: oklch(41% 0.01 var(--base-h));
-			--color-surface: oklch(36% 0.01 var(--base-h));
-			--color-well: oklch(31% 0.008 var(--base-h));
-			--color-border: oklch(8% 0.06 var(--base-h));
-			--color-shadow: oklch(5% 0.06 var(--base-h) / 0.2);
+			--color-highlight: var(--custom-dark-highlight, oklch(71% 0.12 var(--base-h)));
+			--color-primary: var(--custom-dark-primary, oklch(98% 0.002 var(--base-h)));
+			--color-secondary: var(--custom-dark-secondary, oklch(85% 0.05 var(--base-h)));
+			--color-island: var(--custom-dark-island, oklch(41% 0.01 var(--base-h)));
+			--color-surface: var(--custom-dark-surface, oklch(36% 0.01 var(--base-h)));
+			--color-well: var(--custom-dark-well, oklch(31% 0.008 var(--base-h)));
+			--color-border: var(--custom-dark-border, oklch(8% 0.06 var(--base-h)));
+			--color-shadow: var(--custom-dark-shadow, oklch(5% 0.06 var(--base-h) / 0.2));
 		}
 	}
 </style>

@@ -12,31 +12,19 @@ export type ColorRoles = 'primary' | 'secondary' | 'highlight' | 'surface' | 'is
 export type ThemeNames = 'cherry'| 'mustard'| 'mint'| 'lavendar'| 'anemone';
 
 export type CSSVariable = `var(--${string})`;
-export type CSSDegree = `${number | string}deg` | CSSVariable;
-export type CSSPercentage = `${number | string}%` | CSSVariable;
+export type CSSDegree = (`${number | string}deg`) | CSSVariable;
+export type CSSPercentage = (`${number | string}%`) | CSSVariable;
 export type CSSAlpha = `/ ${number | string}`;
-
 export type HexColor = `#${number}`;
-export type HSLColor = `hsl(${CSSDegree} ${CSSPercentage} ${CSSPercentage})`;
-export type HSLAColor = `hsl(${CSSDegree} ${CSSPercentage} ${CSSPercentage} ${CSSAlpha})`;
-export type OKLCHColor = `oklch(${CSSPercentage} ${number} ${CSSDegree})`
-	| `oklch(${CSSPercentage} ${number} ${CSSDegree} ${CSSAlpha})`;
-
-type HSLChannel = 'h' | 's' | 'l' | 'a';
-
-// an object with HSL color data, used for generating theme values
-export type HSLObject = Record<HSLChannel, number>;
+export type OKLCHColor = (`oklch(${CSSPercentage} ${number} ${CSSDegree})`)
+	| (`oklch(${CSSPercentage} ${number} ${CSSDegree} ${CSSAlpha})`);
 
 // a page theme with literal CSS values
 export type Theme = {
-	[key in ColorRoles]: HexColor | CSSVariable;
+	[key in ColorRoles]: HexColor | CSSVariable | OKLCHColor;
 } & {
-	hue?: number;
-	name?: string;
+	mode: string;
 };
-
-// a page theme with HSLObject data
-export type ThemeData = Record<ColorRoles, HSLObject>;
 
 // --- layout and UI ---
 export type Align = 'start' | 'center' | 'end';
