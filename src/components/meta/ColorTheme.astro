@@ -1,4 +1,6 @@
 ---
+import { Theme } from '@lib/types';
+
 /**
  * Color theme component
  * Create color tokens to change the colors of child elements
@@ -14,7 +16,8 @@
 import { oklch, formatCss } from 'culori';
 
 // --- config ---
-const defaultHues = {
+// some brand colors (hues) that define preset themes
+const presetHues = {
 	cherry: 7,
 	mustard: 102,
 	mint: 158,
@@ -22,8 +25,8 @@ const defaultHues = {
 	anemone: 303,
 };
 
-// --- types ---
-import { Theme } from '@lib/types';
+// use this wherever a theme isn't defined
+const DEFAULT_HUE = presetHues.lavendar;
 
 // --- props ---
 const {
@@ -45,19 +48,19 @@ function setThemeStyle() {
 	let styles = [];
 
 	// if a theme name is passed as a prop, assign a default hue to the base-h variable
-	if (name) styles.push(`--base-h: ${defaultHues[name]}deg;`);
+	if (name) styles.push(`--base-h: ${presetHues[name]}deg;`);
 
-	// if a hue is passed as a prop, assign it to the base-h variable
+	// if a custom hue is passed as a prop, assign it to the base-h variable
 	if (hue) styles.push(`--base-h: ${hue}deg;`);
 
 	if (custom) {
 		// if custom color roles are passed as a prop, assign role variables for each
-		// - that match the tokens in the local styles below
+		// that match the tokens in the local styles below
 		for (const object of custom) {
 			const { primary: theme } = object;
 			const { mode } = theme;
+			// remove the mode property so we can loop through the rest
 			delete theme.mode;
-
 
 			for (const role in theme) {
 				// if the role value isn't undefined/false
@@ -73,8 +76,7 @@ function setThemeStyle() {
 						mode: 'oklch',
 						...oklch(theme[role]),
 					});
-					// stopgap: make sure the role passed is 'surface'
-					// - 'bg' token is deprecated
+
 					styles.push(
 						`--custom-${mode.toLowerCase()}-${name}: ${formattedColor};`
 					);
@@ -83,7 +85,9 @@ function setThemeStyle() {
 		}
 	}
 
-	// console.log('ColorTheme styles: ', styles)
+	// if all else fails (no props have been passed in), use the default base hue
+	if (styles.length === 0) styles.push(`--base-h: ${DEFAULT_HUE}deg;`);
+
 	return styles;
 }
 ---
@@ -98,16 +102,10 @@ function setThemeStyle() {
 <style>
 	.theme {
 		/*
-		* Key hue variable
-		* - change this to change the theme
-		*/
-		--base-h: var(--brand-lavendar-h);
-
-		/*
-		* Default theme (light mode)
-		* - shades of the base hue
-		* - custom color themes define `--brand-[mode]-[role]` variables
-		* - if custom variables are not defined, fall back to default OKLCH values
+		* Default theme tokens (light mode)
+		* - Various shades of the base hue
+		* - Custom color themes define `--brand-[mode]-[role]` variables
+		* - If custom variables are not defined, fall back to default OKLCH values
 		*/
 		--color-highlight: var(--custom-light-highlight, oklch(71% 0.11 var(--base-h)));
 		--color-primary: var(--custom-light-primary, oklch(38% 0.008 var(--base-h)));
@@ -119,7 +117,7 @@ function setThemeStyle() {
 		--color-shadow: var(--custom-light-shadow, oklch(42% 0.07 var(--base-h) / 0.2));
 	}
 
-	/* Default theme (dark mode) */
+	/* Default theme tokens (dark mode) */
 	@media (prefers-color-scheme: dark) {
 		.theme {
 			--color-highlight: var(--custom-dark-highlight, oklch(71% 0.12 var(--base-h)));
