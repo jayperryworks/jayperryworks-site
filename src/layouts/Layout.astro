@@ -1,42 +1,37 @@
 ---
-// assets
+/**
+ * Base layout for the whole site
+ *
+ * @param {string} [pageTitle] - title for this specific page
+ * @param {SEOContent} [seo] - SEO metadata
+ * @param {Partial<Theme> | ThemeNames} [theme] -
+ */
+
+// --- assets ---
 import '@styles/base/reset.css';
 import '@styles/base/type.css';
 import '@styles/tokens/borders.css';
 import '@styles/tokens/color.css';
 
+// --- components ---
 import ColorTheme from '@components/meta/ColorTheme.astro';
-
-// types
-import type {
-	CSSVariable,
-	HexColor,
-	HSLAColor,
-	HSLColor,
-} from '@lib/types';
-
-import type { SEOContent, ThemeNames, Theme } from '@lib/types';
 import Head from '@components/meta/Head.astro';
 
-export interface Props {
-	overlayNav?: boolean;
-	pageTitle?: string;
-	path?: string;
-	seo?: SEOContent;
-	theme?: Partial<Theme> | ThemeNames;
-}
+// --- types ---
+import type { SEOContent, ThemeNames, Theme } from '@lib/types';
 
-export type ThemeToken = HexColor | HSLColor | HSLAColor | CSSVariable;
-
-// props and data
+// --- props ---
 const {
 	pageTitle,
 	seo = {},
 	theme,
-} = Astro.props as Props;
+} = Astro.props;
 
-// create a color theme object for the Theme component
-function setTheme(): Partial<Theme> {
+/**
+ * Create a color theme object for the Theme component
+ * @returns {Partial<Theme>}
+ */
+function setTheme() {
 	if (theme) {
 		if (typeof theme === 'string') return { name: theme };
 		return theme;
