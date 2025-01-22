@@ -37,7 +37,7 @@ const {
 const El = el;
 
 /**
- * Create CSS variables from the data in the theme prop
+ * Create CSS variables from the name, hue, and/or custom props
  *
  * @returns {string[]} - an array of css variable definitions, e.g. --base-h: 100deg;
  */
@@ -52,7 +52,7 @@ function setThemeStyle() {
 
 	if (custom) {
 		// if custom color roles are passed as a prop, assign role variables for each
-		// - that match the tokens in src/styles/tokens/color.css
+		// - that match the tokens in the local styles below
 		for (const object of custom) {
 			const { primary: theme } = object;
 			const { mode } = theme;
