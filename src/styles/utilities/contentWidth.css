@@ -1,4 +1,4 @@
-@import url('../tokens/contentWidth.css');
+@import url('@styles/tokens/contentWidth.css');
 
 [class*="content-width"] {
 	margin-inline: auto;

@@ -1,5 +1,4 @@
-@import url('../tokens/borders.css');
-@import url('../tokens/color.css');
+@import url('@styles/tokens/borders.css');
 
 /* --- 'seam' border style */
 .border-seam-top {

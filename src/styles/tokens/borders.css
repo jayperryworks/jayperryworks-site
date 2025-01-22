@@ -1,5 +1,3 @@
-@import '@styles/tokens/color.css';
-
 body {
 	/* --- default corner radii */
 	--border-radius-sharp: 0.24em;
