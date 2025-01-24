@@ -3,10 +3,11 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import svgLoader from 'vite-svg-loader';
 
+// ignore 'unrecognized text' warnings in CSS triggered by new relative color syntax
+// https://github.com/vitejs/vite/issues/9597
 const logger = createLogger();
 const originalWarning = logger.warn;
 logger.warn = (msg, options) => {
-	// ignore 'unrecognized text' warnings in CSS triggered by new relative color syntax
   if (msg.includes('vite:css') && msg.includes(' Unrecognized text')) return;
   originalWarning(msg, options);
 };

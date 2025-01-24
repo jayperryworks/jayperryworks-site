@@ -1,31 +1,31 @@
 ---
-// Responsive image
-// -> renders an img tag with srcset from a Prismic image data object
-// -> uses Prismic/Imgix's default auto formatting
-
-// assets
-import '@styles/tokens/borders.css';
-
-// utilities
-import * as prismicHelpers from '@prismicio/helpers';
-import { arrayToPunctatedString } from '@lib/stringHelpers';
-
-// types
 import type { ImageField } from '@prismicio/types';
 import type { ImageFit } from '@lib/types';
 
-export interface Props {
-	source: ImageField;
-	aspectRatio?: string;
-	border?: boolean;
-	class?: string;
-	fit?: ImageFit;
-	maxHeight?: number;
-	position?: string;
-	style?: string;
-	widths?: Array<number>;
-}
+/**
+ * Responsive image component
+ * - renders an img tag with srcset from a Prismic image data object
+ * - uses Prismic/Imgix's default auto formatting
+ *
+ * @param {ImageField} [source] - image source field from Prismic
+ * @param {string} [aspectRatio] - specify an aspect ratio - defaults to image's  dimensions
+ * @param {boolean} [border] - add a border to the image
+ * @param {string} [class] - add classes to the container
+ * @param {ImageFit} [fit] - specify a way to crop the image to its frame
+ * @param {number} [maxHeight] - maximum height of the image
+ * @param {string} [position] - specify the object-position value (goes with fit above)
+ * @param {string} [style] - add style attributes to the container
+ * @param {number[]} [widths] - responsive widths to add to the srcset
+ */
 
+// --- assets ---
+import '@styles/tokens/borders.css';
+
+// --- utilities ---
+import * as prismicHelpers from '@prismicio/helpers';
+import { arrayToPunctatedString } from '@lib/stringHelpers';
+
+// --- props ---
 const {
 	source,
 	aspectRatio,
@@ -36,7 +36,7 @@ const {
 	position,
 	style,
 	widths = [ 800, 1200, 2000 ],
-} = Astro.props as Props;
+} = Astro.props;
 
 const { src, srcset } = prismicHelpers.asImageWidthSrcSet(source, {
 	fit: 'max',
