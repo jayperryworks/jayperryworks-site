@@ -68,7 +68,10 @@ function setThemeStyle() {
 		for (const item of custom) {
 			const { primary: theme } = item;
 			// Default to "Light" - the CMS may pass null if the field hasn't been modified
-			const mode = theme?.mode || 'Light';
+			let mode = theme?.mode || 'light';
+			// If there's only one item in the custom theme object,
+			// the mode is always 'light', because it must be used all the time
+			if (custom.length === 1) mode = 'light';
 
 			for (const role in theme) {
 				// if the role value isn't undefined/false
