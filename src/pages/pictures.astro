@@ -59,13 +59,17 @@ const picturesData = await prismic.getAllByType('picture', {
 				series {
 					...on picture_series {
 						aspect_ratios
+						body
+						custom_base_hue
 						date_started
 						description
 						grid_column_size
 						grid_gutter_width
+						matte_color1
+						preset_theme
 						title
 						uid
-						...picture_seriesFields
+						wall_color
 					}
 				}
 				substrate {
@@ -97,9 +101,10 @@ const seriesList = picturesData
 			title,
 			uid,
 			preset_theme: themeName,
-			custom_hue: themeHue,
+			custom_base_hue: themeHue,
 			matte_color1: matteColor,
 			wall_color: wallColor,
+			body: customTheme,
 		} = series;
 
 		if (result.find((s) => s.uid === uid)) return result;
@@ -115,6 +120,7 @@ const seriesList = picturesData
 			theme: {
 				name: themeName || undefined,
 				hue: themeHue || undefined,
+				custom: customTheme || undefined,
 			},
 			columnSize,
 			description,
