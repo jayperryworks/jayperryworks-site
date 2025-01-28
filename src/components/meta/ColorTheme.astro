@@ -9,7 +9,7 @@ import { Theme } from '@lib/types';
  * @param {string} [el=div] - the element to render for the container
  * @param {number} [hue] - custom hue number
  * @param {ThemeNames} [name] - the name of a preset theme
- * @param {Partial<Theme>[]} [custom] - color roles for custom themes
+ * @param {Partial<Theme>[]} [custom] - explicit color roles for custom themes
  */
 
 // --- utilities ---
@@ -35,6 +35,9 @@ const {
 	name,
 	hue,
 	custom,
+	inherit,
+	style,
+	...props
 } = Astro.props;
 
 const El = el;
@@ -57,7 +60,7 @@ function setThemeStyle() {
 	let styles = [];
 
 	// if a theme name is passed as a prop, assign a default hue to the base-h variable
-	if (name) styles.push(setBaseHue(presetHues[name]));
+	if (name) styles.push(setBaseHue(presetHues[name.toLowerCase()]));
 
 	// if a custom hue is passed as a prop, assign it to the base-h variable
 	if (hue) styles.push(setBaseHue(hue));
@@ -97,7 +100,7 @@ function setThemeStyle() {
 	}
 
 	// if all else fails (no props have been passed in), use the default base hue
-	if (styles.length === 0) styles.push(setBaseHue(DEFAULT_HUE));
+	if (styles.length === 0 && !inherit) styles.push(setBaseHue(DEFAULT_HUE));
 
 	return styles.join('');
 }
@@ -116,7 +119,6 @@ function hasDarkMode() {
 	// all the time, so we use no dark mode.
 	return custom?.length > 1;
 }
-console.log(hasDarkMode());
 
 const classList = [
 	'theme',
@@ -127,7 +129,8 @@ const classList = [
 
 <El
 	class={classList}
-	style={setThemeStyle()}
+	style={[setThemeStyle(), style || ''].join('')}
+	{...props}
 >
 	<slot></slot>
 </El>

@@ -1,28 +1,35 @@
 ---
-// --- assets
+/**
+ * Pictures index page
+ * - render all the pictures as thumbnails in grids, sorted by series
+ */
+
+// --- assets ---
 import '@styles/tokens/borders.css';
 import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
 import '@styles/utilities/type.css';
 
-// --- utils
+// --- utils ---
 import * as prismicHelpers from '@prismicio/helpers';
-import { oklch, formatCss } from 'culori';
-import { PrismicDocumentWithUID } from '@prismicio/types';
 import prismic from '@lib/prismic';
 
-// --- components
+// --- components ---
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
+import ColorTheme from '@components/meta/ColorTheme.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
 import MainNav from '@components/navigation/MainNav.astro';
 import PictureGallery from '@components/navigation/PictureGallery.astro';
 import Layout from '@layouts/Layout.astro';
+import { undefined } from 'astro:schema';
 
-// --- data
+// --- config ---
 // use this aspect ratio when none is specified for a given series
 const DEFAULT_ASPECT_RATIO = '1 / 1';
+const DEFAULT_PAGE_THEME = 'mint';
 
+// --- data ---
 const pageData = await prismic.getByUID('index_page', 'pictures');
 
 const {
@@ -52,14 +59,13 @@ const picturesData = await prismic.getAllByType('picture', {
 				series {
 					...on picture_series {
 						aspect_ratios
-						background_color
 						date_started
 						description
 						grid_column_size
 						grid_gutter_width
-						matte_color
 						title
 						uid
+						...picture_seriesFields
 					}
 				}
 				substrate {
@@ -84,30 +90,31 @@ const seriesList = picturesData
 
 		const {
 			aspect_ratios: sameAspectRatio,
-			background_color: background,
 			date_started: startDate,
 			description,
 			grid_column_size: columnSize,
 			grid_gutter_width: gutter,
-			matte_color: matte,
 			title,
 			uid,
+			preset_theme: themeName,
+			custom_hue: themeHue,
+			matte_color1: matteColor,
+			wall_color: wallColor,
 		} = series;
 
 		if (result.find((s) => s.uid === uid)) return result;
-		console.log(background)
 
 		result.push({
 			// if all the pictures in the series have the same aspect ratio, leave this prop undefined so the grid boxes will be whatever shape the pictures are
 			// if not, use the default aspect ratio so the grid boxes will be the same shape and will constrain the different-shaped pictures to equal areas
 			aspectRatio: sameAspectRatio ? undefined : DEFAULT_ASPECT_RATIO,
-			color: {
-				background: background
-					? formatCss({ mode: 'oklch', ...oklch(background) })
-					: null,
-				matte: matte
-					? formatCss({ mode: 'oklch', ...oklch(background) })
-					: null,
+			colors: {
+				wall: wallColor || undefined,
+				matte: matteColor || undefined,
+			},
+			theme: {
+				name: themeName || undefined,
+				hue: themeHue || undefined,
 			},
 			columnSize,
 			description,
@@ -135,12 +142,23 @@ picturesBySeries.push({
 	pictures: picturesData.filter((p) => !p.data.series.data),
 	aspectRatio: DEFAULT_ASPECT_RATIO,
 });
+
+/**
+ *
+ * @param {ColorRoles} wallColor - the 'wall' (background) color for the series section
+ * @returns {string} - inline style attribute with CSS variable definition
+ */
+function setSeriesWallColor(wallColor) {
+	if (wallColor) {
+		return `--color-wall: var(--color-${wallColor.toLowerCase()});`;
+	}
+}
 ---
 
 <Layout
 	pageTitle="Prints & paintings"
 	path="pictures"
-	theme="mint"
+	theme={DEFAULT_PAGE_THEME}
 	{seo}
 >
 	<MainNav segment="pictures" />
@@ -153,11 +171,14 @@ picturesBySeries.push({
 		</header>
 
 		{picturesBySeries.map((series) => (
-			<section
+			<ColorTheme
+				el="section"
 				role="feed"
 				class="series"
 				id={series.uid || 'other-work'}
-				style={series.color?.background ? `--color-surface: ${series.color.background}` : ''}
+				style={setSeriesWallColor(series?.colors?.wall)}
+				inherit
+				{...series?.theme}
 			>
 				<header class="series-header">
 					<Heading
@@ -177,13 +198,13 @@ picturesBySeries.push({
 				</header>
 
 				<PictureGallery
-					list={series.pictures as PrismicDocumentWithUID[]}
+					list={series.pictures}
 					aspectRatio={series.aspectRatio}
 					columnSize={series.columnSize?.toLowerCase()}
 					gutter={series.gutter?.toLowerCase()}
-					matteColor={series.color?.matte}
+					matteColor={series.colors?.matte}
 				/>
-			</section>
+			</ColorTheme>
 		))}
 	</main>
 	<MainFooter />
@@ -210,7 +231,7 @@ picturesBySeries.push({
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-wide);
-		background-color: var(--color-surface);
+		background-color: var(--color-wall, var(--color-surface));
 		padding-block-end: var(--space-xwide);
 	}
 
