@@ -91,11 +91,15 @@ const styleList = arrayToPunctatedString([
 	class={classList}
 	style={styleList}
 >
-	<Image
-		class="image"
-		{source}
-		{maxHeight}
-	/>
+	<slot>
+		{source && (
+			<Image
+				class="image"
+				{source}
+				{maxHeight}
+			/>
+		)}
+	</slot>
 </El>
 
 <style is:global>

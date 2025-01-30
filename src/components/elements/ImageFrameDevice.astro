@@ -57,7 +57,9 @@ function calculateOuterAspectRatio(source) {
 	].join(' ')}
 >
 	<div class="wrapper">
-		<Image {source} />
+		<slot>
+			{source && <Image {source} />}
+		</slot>
 	</div>
 </El>
 
