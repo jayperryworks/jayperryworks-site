@@ -34,6 +34,18 @@ export type GallerySize = 'small' | 'medium' | 'large';
 export type ImageFit = 'default' | 'contain' | 'cover';
 export type Frame = 'None' | 'Matte' | 'Frame & matte' | 'Panel' | 'Phone' | 'Tablet (horizontal)' | 'Tablet (vertical)';
 
+// collage block items
+export type CollageItemSize = 'Default' | 'Large' | 'XLarge';
+export type CollageItemPriority = '1' | '2' | '3';
+
+export interface CollageItem {
+	source: ImageField;
+	darkModeSource?: ImageField;
+	frame?: Frame;
+	priority?: CollageItemPriority;
+	relativeSize?: CollageItemSize;
+}
+
 // --- type ---
 export type TypeScale = 'alpha' | 'beta' | 'gamma' | 'delta' | 'epsilon' | 'zeta';
 

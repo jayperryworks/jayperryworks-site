@@ -53,8 +53,11 @@ function getSourceAttributes(imageField) {
 }
 
 const alt = source.alt;
-const sizes = widths.map((width) => `(max-width: ${width}) ${width}px`).join(', ');
 const { width, height } = source.dimensions;
+
+const sizes = widths.map((width) => {
+	return `(max-width: ${width}) ${width}px`;
+}).join(', ');
 
 // check the source format and background prop to see if the image has transparency
 // -> use this to turn off the background 'loading' color
@@ -78,6 +81,8 @@ const styleList = arrayToPunctatedString([
 ---
 
 {!darkModeSource
+	// if there's no dark mode version provided, just use a simple img tag
+	// - this is a the most common case
 	? (
 		<img
 			class={classList}
@@ -85,28 +90,30 @@ const styleList = arrayToPunctatedString([
 			decoding="async"
 			loading="lazy"
 			{alt}
-			{width}
 			{height}
 			{sizes}
+			{width}
 			{...getSourceAttributes(source)}
 			/>
 		)
+	// otherwise, use a picture tag with a media attribute
+	// https://larsmagnus.co/blog/how-to-make-images-react-to-light-and-dark-mode
 	: (
-			<picture>
+		<picture>
 			<source
-				srcset={darkModeSource.srcset}
+				srcset={getSourceAttributes(darkModeSource).srcset}
 				media="prefers-color-scheme: dark"
-				/>
+			/>
 			<img
+				src={getSourceAttributes(darkModeSource).src}
 				class={classList}
 				style={styleList}
 				decoding="async"
 				loading="lazy"
 				{alt}
-				{width}
 				{height}
 				{style}
-				{...getSourceAttributes(darkModeSource)}
+				{width}
 			/>
 		</picture>
 	)

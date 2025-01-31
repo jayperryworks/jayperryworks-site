@@ -11,6 +11,7 @@ import type { ImageField } from '@prismicio/types';
 
 export interface Props {
 	source: ImageField;
+	darkModeSource?: ImageField;
 	useImageAspectRatio?: boolean;
 	class?: string;
 	el?: string;
@@ -20,11 +21,12 @@ export interface Props {
 
 const {
 	source,
-	useImageAspectRatio = false,
 	class: className = '',
+	darkModeSource,
 	el = 'div',
 	maxHeight = 75,
 	type = 'Tablet (landscape)',
+	useImageAspectRatio = false,
 } = Astro.props as Props;
 
 const types = {
@@ -58,7 +60,7 @@ function calculateOuterAspectRatio(source) {
 >
 	<div class="wrapper">
 		<slot>
-			{source && <Image {source} />}
+			{source && <Image {source} {darkModeSource} />}
 		</slot>
 	</div>
 </El>

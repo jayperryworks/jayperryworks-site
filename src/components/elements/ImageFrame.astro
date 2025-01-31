@@ -11,6 +11,7 @@ import type { Frame, ImageFit } from '@lib/types';
 export interface Props {
 	source: ImageField;
 	border?: boolean;
+	darkModeSource?: ImageField;
 	fit?: ImageFit;
 	frame?: Frame;
 	maxHeight?: number;
@@ -19,6 +20,7 @@ export interface Props {
 const {
 	source,
 	border,
+	darkModeSource,
 	fit,
 	frame,
 	maxHeight,
@@ -29,6 +31,7 @@ const imageComponents = {
 		component: Image,
 		props: {
 			border,
+			darkModeSource,
 			fit,
 			maxHeight,
 			source,
@@ -38,6 +41,7 @@ const imageComponents = {
 		component: ImageFrameWall,
 		props: {
 			type: 'matte',
+			darkModeSource,
 			maxHeight,
 			source,
 		},
@@ -46,6 +50,7 @@ const imageComponents = {
 		component: ImageFrameWall,
 		props: {
 			type: 'frame',
+			darkModeSource,
 			maxHeight,
 			source,
 		},
@@ -54,6 +59,7 @@ const imageComponents = {
 		component: ImageFrameWall,
 		props: {
 			type: 'panel',
+			darkModeSource,
 			maxHeight,
 			source,
 		},
@@ -62,6 +68,7 @@ const imageComponents = {
 		component: ImageFrameDevice,
 		props: {
 			type: 'Phone',
+			darkModeSource,
 			maxHeight,
 			source,
 		},
@@ -70,6 +77,7 @@ const imageComponents = {
 		component: ImageFrameDevice,
 		props: {
 			type: 'Tablet (landscape)',
+			darkModeSource,
 			maxHeight,
 			source,
 		},
@@ -78,6 +86,7 @@ const imageComponents = {
 		component: ImageFrameDevice,
 		props: {
 			type: 'Tablet (portrait)',
+			darkModeSource,
 			maxHeight,
 			source,
 		},

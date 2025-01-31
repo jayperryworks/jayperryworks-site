@@ -1,32 +1,36 @@
 ---
-// components
+import type { SpaceScale, FormattedText, ImageFit, Frame } from '@lib/types';
+import type { ImageField } from '@prismicio/types';
+
+/**
+ * @typedef {Object} ImageGalleryItem - image objects for each grid item
+ * @property {ImageField} image - default image field
+ * @property {ImageField} darkModeImage - a dark-mode version of the image
+ */
+
+
+/**
+ * Image gallery block component
+ * - Display similar images in a fluid grid layout
+ *
+ * @param {ImageGalleryItem[]} images - array of image objects (Prismic data)
+ * @param {FormattedText} [attribution] - credit for the artist/photographer
+ * @param {boolean} [border] - dislay a border around each image
+ * @param {string} [caption] - a caption displayed below the grid
+ * @param {string} [class] - classes to append to the container
+ * @param {'small' | 'medium' | 'large'} [columnSize='medium'] - how wide the columns are
+ * @param {ImageFit} [fitImages='default'] - object-fit styles for each image
+ * @param {Frame} [frame='None'] - a frame or device for all images
+ * @param {SpaceScale} [gutter='xnarrow'] - how much space between items
+ */
+
+// --- components ---
 import Figure from '@components/blocks/Figure.astro';
 import Gallery from '@components/layout/Gallery.astro';
 import ImageFrame from '@components/elements/ImageFrame.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
-// types
-import type { SpaceScale, FormattedText, ImageFit, Frame } from '@lib/types';
-import type { ImageField } from '@prismicio/types';
-
-export type ImageGalleryItem = {
-	image: ImageField,
-	frame: Frame,
-};
-
-export interface Props {
-	images: ImageGalleryItem[];
-	attribution?: FormattedText;
-	border?: boolean;
-	caption?: string;
-	class?: string;
-	columnSize?: 'small' | 'medium' | 'large';
-	fitImages?: ImageFit;
-	frame?: Frame;
-	gutter?: SpaceScale;
-}
-
-// props
+// --- props ---
 const {
 	images,
 	attribution,
@@ -37,7 +41,7 @@ const {
 	fitImages = 'default',
 	frame = 'None',
 	gutter = 'xnarrow',
-} = Astro.props as Props;
+} = Astro.props;
 ---
 
 <Figure
@@ -49,10 +53,11 @@ const {
 		size={columnSize}
 		{gutter}
 	>
-		{images.map((image) => (
+		{images.map(({ image, darkModeImage }) => (
 			<RevealOnScroll tag="li">
 				<ImageFrame
-					source={image as ImageField}
+					source={image}
+					darkModeSource={darkModeImage}
 					fit={fitImages}
 					{border}
 					{frame}

@@ -1,5 +1,21 @@
 ---
-// A teaser that displays a blurb and cover image, links to other content
+import type { CollageItem } from '@lib/types';
+import type { RichTextField, LinkField } from '@prismicio/types';
+
+/**
+ * Billboard block component
+ * - A teaser that displays a blurb and cover image, links to other content
+ *
+ * @param {string} title - headline to display
+ * @param {Object} cta - the button
+ * @param {LinkField} cta.link - url to link to
+ * @param {string} cta.label - label for the button
+ * @param {CollageItem[]} [images] - image(s) to display
+ * @param {Object} [description] - descriptive text to display below the title
+ * @param {RichTextField} description.prismicText - formatted Prismic rich text
+ * @param {number} [number] - a "TOC" number to display (deprecated)
+ * @param {string} [subtitle] - subtitle to display below the title
+ */
 
 // assets
 import '@styles/tokens/spacing.css';
@@ -19,22 +35,6 @@ import Passage from '@components/blocks/Passage.astro';
 
 // types
 import { removeWidows } from '@lib/stringHelpers';
-import type { CollageItem } from '@components/blocks/Collage.astro';
-import type { RichTextField, LinkField } from '@prismicio/types';
-
-export interface Props {
-	title: string,
-	cta: {
-		link: LinkField,
-		label: string,
-	},
-	images?: CollageItem[],
-	description?: {
-		prismicText: RichTextField
-	},
-	number?: number,
-	subtitle?: string,
-}
 
 const {
 	images,
@@ -42,7 +42,7 @@ const {
 	description,
 	subtitle,
 	title,
-} = Astro.props as Props;
+} = Astro.props;
 
 const { link, label } = cta;
 const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
