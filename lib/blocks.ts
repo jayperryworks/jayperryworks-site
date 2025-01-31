@@ -92,6 +92,7 @@ function billboard(slice: Slice): BlockType {
 			priority = '1',
 			relative_size: relativeSize,
 			cover_image: source,
+			dark_mode_cover_image: darkModeSource,
 		} = item;
 
 		if ((source as ImageField).url === '') return result;
@@ -101,6 +102,7 @@ function billboard(slice: Slice): BlockType {
 			priority,
 			relativeSize,
 			source,
+			darkModeSource,
 		});
 		return result;
 	}, []);
@@ -202,6 +204,7 @@ function figure(slice: Slice): BlockType {
 		attribution,
 		caption,
 		image,
+		image_dark_mode,
 		border = false,
 		frame = 'None',
 	} = slice.primary;
@@ -210,6 +213,7 @@ function figure(slice: Slice): BlockType {
 		border,
 		frame,
 		source: image,
+		darkModeSource: image_dark_mode,
 		attribution: undefined,
 		caption: undefined,
 		...sharedBlockFields(slice),
@@ -258,7 +262,10 @@ function imageGallery(slice: Slice): BlockType {
 		columnSize,
 		frame,
 		gutter: gutterSize(gutter as string),
-		images: slice.items.map((item) => ({ ...item.image as ImageField })),
+		images: slice.items.map((item) => ({
+			image: item.image,
+			darkModeImage: item.dark_mode_image,
+		})),
 		...sharedBlockFields(slice),
 	};
 }
