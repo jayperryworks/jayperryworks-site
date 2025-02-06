@@ -65,7 +65,7 @@ function setThemeStyle() {
 	// if a custom hue is passed as a prop, assign it to the base-h variable
 	if (hue) styles.push(setBaseHue(hue));
 
-	if (custom) {
+	if (custom?.length > 0) {
 		// if custom color roles are passed as a prop, assign role variables for each
 		// that match the tokens in the local styles below
 		for (const item of custom) {
@@ -112,8 +112,10 @@ function setThemeStyle() {
 function hasDarkMode() {
 	// if a theme name or custom hue are provided, use the default dark theme tokens
 	if (name || hue) return true;
+
 	// if nothing is provided, use the default hue and the default dark theme tokens
-	if (!name && !hue && !custom) return true;
+	if (!name && !hue && (!custom || custom?.length == 0)) return true;
+
 	// if a custom theme is provided, we don't use any defaults (execept relative tokens).
 	// if the custom theme object has only one item, then that mode must apply
 	// all the time, so we use no dark mode.

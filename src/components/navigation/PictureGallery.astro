@@ -74,7 +74,7 @@ function matteThickness(picture) {
 				<ImageFrameWall
 					source={picture.data.cover}
 					type={frameType(picture)}
-					{matteColor}
+					matteColor={matteColor && `var(--color-${matteColor.toLowerCase()})`}
 				/>
 			</a>
 		</RevealOnScroll>
