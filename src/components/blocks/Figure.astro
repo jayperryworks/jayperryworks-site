@@ -1,12 +1,4 @@
 ---
-import type { ImageField } from '@prismicio/types';
-
-import type {
-	Frame,
-	FormattedText,
-	ImageFit,
-} from '@lib/types';
-
 /**
  * Figure block component
  * - Display an image with optional caption and/or attribution
@@ -24,6 +16,15 @@ import type {
 // --- styles ---
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/contentWidth.css';
+
+// --- types ---
+import type { ImageField } from '@prismicio/types';
+
+import type {
+	Frame,
+	FormattedText,
+	ImageFit,
+} from '@lib/types';
 
 // --- child components ---
 import ImageFrame from '@components/elements/ImageFrame.astro';
