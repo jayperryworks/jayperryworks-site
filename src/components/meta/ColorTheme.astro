@@ -1,6 +1,4 @@
 ---
-import { Theme } from '@lib/types';
-
 /**
  * Color theme component
  * Create color tokens to change the colors of child elements
@@ -11,6 +9,9 @@ import { Theme } from '@lib/types';
  * @param {ThemeNames} [name] - the name of a preset theme
  * @param {Partial<Theme>[]} [custom] - explicit color roles for custom themes
  */
+
+//  --- types ---
+import { Theme, ThemeNames } from '@lib/types';
 
 // --- utilities ---
 import { oklch, formatCss } from 'culori';
@@ -114,7 +115,7 @@ function hasDarkMode() {
 	if (name || hue) return true;
 
 	// if nothing is provided, use the default hue and the default dark theme tokens
-	if (!name && !hue && (!custom || custom?.length == 0)) return true;
+	if (!custom || custom?.length == 0) return true;
 
 	// if a custom theme is provided, we don't use any defaults (execept relative tokens).
 	// if the custom theme object has only one item, then that mode must apply
