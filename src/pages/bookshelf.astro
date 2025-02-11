@@ -1,6 +1,5 @@
 ---
 // --- assets
-import '@styles/tokens/color.css';
 import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
 import '@styles/utilities/type.css';
@@ -19,7 +18,7 @@ import MainFooter from '@components/navigation/MainFooter.astro';
 import BlockList from '@components/BlockList.astro';
 
 // --- layout
-import Layout from '@layouts/BaseLayout.astro';
+import Layout from '@layouts/Layout.astro';
 
 // fetch data from Prismic
 const pageData = await prismic.getByUID('index_page', 'bookshelf');
@@ -148,6 +147,7 @@ const books = await Promise.all(sortedBooks.map(async ({
 <Layout
 	pageTitle={shortTitle}
 	path="bookshelf"
+	theme="cherry"
 	{seo}
 >
 	<MainNav segment="bookshelf" />
@@ -171,7 +171,7 @@ const books = await Promise.all(sortedBooks.map(async ({
 		<BlockList {body} showLedeStyle />
 
 		<div class="wrapper">
-			<Gallery gutter="wide">
+			<Gallery gutter="xnarrow">
 				{books.filter((b) => b !== undefined).map((book) => (
 					<li
 						class="item"

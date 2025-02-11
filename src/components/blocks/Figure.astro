@@ -1,14 +1,4 @@
 ---
-// styles
-import '@styles/tokens/spacing.css';
-import '@styles/tokens/contentWidth.css';
-
-// child components
-import ImageFrame from '@components/elements/ImageFrame.astro';
-import Caption from '@components/blocks/FigureCaption.astro';
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
-
-// typescript
 import type { ImageField } from '@prismicio/types';
 
 import type {
@@ -17,21 +7,33 @@ import type {
 	ImageFit,
 } from '@lib/types';
 
-export interface Props {
-	source: ImageField;
-	attribution?: FormattedText;
-	border?: boolean;
-	caption?: FormattedText;
-	class?: string;
-	device?: Frame;
-	fit?: ImageFit;
-	frame?: Frame;
-	maxHeight?: number;
-}
+/**
+ * Figure block component
+ * - Display an image with optional caption and/or attribution
+ *
+* @param {ImageField} source - the image data from Prismic
+* @param {FormattedText} [attribution] - credit for the artist/photographer
+* @param {boolean} [border] - display a border around the image
+* @param {FormattedText} [caption] - a caption displayed below the image
+* @param {string} [class] - classes to append to the container
+* @param {ImageFit} [fit] - object-fit styles for the image
+* @param {Frame} [frame='None'] - a frame or device for the image
+* @param {number} [maxHeight] - constrain the image to a certain height, in vh units
+ */
 
-// props
+// --- styles ---
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/contentWidth.css';
+
+// --- child components ---
+import ImageFrame from '@components/elements/ImageFrame.astro';
+import Caption from '@components/blocks/FigureCaption.astro';
+import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+
+// --- props ---
 const {
 	source,
+	darkModeSource,
 	attribution,
 	border,
 	caption,
@@ -39,7 +41,7 @@ const {
 	class: className,
 	fit,
 	maxHeight,
-} = Astro.props as Props;
+} = Astro.props;
 ---
 
 <figure class={['figure', className].join(' ')}>
@@ -48,10 +50,11 @@ const {
 			{source && (
 				<ImageFrame
 					{border}
+					{darkModeSource}
 					{fit}
 					{frame}
-					{source}
 					{maxHeight}
+					{source}
 				/>
 			)}
 		</slot>

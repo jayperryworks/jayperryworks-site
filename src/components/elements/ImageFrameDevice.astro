@@ -2,9 +2,6 @@
 // Add a frame around content that looks like a mobile device
 // -> Phone, Tablet (horizontal and vertical)
 
-// assets
-import '@styles/tokens/color.css';
-
 // components
 import Image from '@components/elements/Image.astro';
 
@@ -14,6 +11,7 @@ import type { ImageField } from '@prismicio/types';
 
 export interface Props {
 	source: ImageField;
+	darkModeSource?: ImageField;
 	useImageAspectRatio?: boolean;
 	class?: string;
 	el?: string;
@@ -23,11 +21,12 @@ export interface Props {
 
 const {
 	source,
-	useImageAspectRatio = false,
 	class: className = '',
+	darkModeSource,
 	el = 'div',
 	maxHeight = 75,
 	type = 'Tablet (landscape)',
+	useImageAspectRatio = false,
 } = Astro.props as Props;
 
 const types = {
@@ -60,7 +59,9 @@ function calculateOuterAspectRatio(source) {
 	].join(' ')}
 >
 	<div class="wrapper">
-		<Image {source} />
+		<slot>
+			{source && <Image {source} {darkModeSource} />}
+		</slot>
 	</div>
 </El>
 
@@ -80,7 +81,7 @@ function calculateOuterAspectRatio(source) {
 			--screen-radius:  0.75% / 1%;
 
 			aspect-ratio: var(--aspect-ratio);
-			background-color: var(--color-bg);
+			background-color: var(--color-island);
 			border-radius: var(--bezel-radius);
 			border: 1px solid var(--color-border);
 			box-shadow: 0 0.125em 0.25em var(--color-shadow);
@@ -124,6 +125,8 @@ function calculateOuterAspectRatio(source) {
 			--bezel-width-x: 3.5%;
 			--bezel-width-y: 11%;
 			--screen-radius: 2% / 1%;
+
+			box-shadow: var(--elevation-low);
 		}
 	}
 </style>

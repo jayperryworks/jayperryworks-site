@@ -1,6 +1,7 @@
 ---
 // styles
-import '@styles/tokens/color.css';
+import '@styles/tokens/borders.css';
+import '@styles/tokens/elevation.css';
 import '@styles/tokens/type.css';
 
 // components
@@ -64,63 +65,60 @@ const classList = [
 
 <style>
   .button {
-    --color: var(--color-primary, currentColor);
-		--fill: transparent;
+		--border-width: 0.12em;
+		--color-border: var(--color-highlight);
+		--color-fill: transparent;
+		--shadow-opacity: 0;
+    --baseline-compensation: 0.05em;
+    --color-label: var(--color-primary, currentColor);
     --font-size: var(--type-scale-epsilon, 1rem);
     --icon-padding-offset: 0.3em;
     --icon-spacing: 0.8em;
-    --padding-x: 1.2em;
+    --padding-x: 1.4em;
     --padding-y: 0.88em;
-    --shadow-spread: 8px;
-    --baseline-compensation: 0.05em;
 
 		align-items: center;
-    background-color: var(--fill);
-    border-radius: 0.2em;
-    border: 0.15rem solid var(--color);
-    color: currentColor;
-    color: var(--color);
+		gap: 0.3em; /* add a space for elements in the slot, e.g. <strong> */
+		line-height: var(--type-leading-xtight);
+		overflow: visible;
+		padding-block-end: calc(var(--padding-y) - var(--baseline-compensation));
+		padding-inline: var(--padding-x);
+		text-decoration: none;
+		z-index: 1;
+    background-color: var(--color-fill);
+    border-radius: var(--border-radius);
+    border: var(--border-width) solid var(--color-border);
+    color: var(--color-label);
     cursor: pointer;
     display: inline-flex;
     font-family: var(--type-font-accent);
     font-size: var(--font-size);
     font-weight: 300;
-		gap: 0.3em; /* add a space for elements in the slot, e.g. <strong> */
-		line-height: var(--type-leading-xtight);
-		overflow: visible;
-		padding-block-end: calc(var(--padding-y) - var(--baseline-compensation));
     padding-block-start: var(--padding-y);
-		padding-inline: var(--padding-x);
     position: relative;
-		text-decoration: none;
     transition: all 0.25s ease;
-		z-index: 1;
   }
 
   /* pre-render a box shadow on a pseudo element, but hide it */
-  .button::before {
-    border-radius: 0.2em;
-    bottom: 0;
-    box-shadow: 0 0 var(--shadow-spread) var(--color-shadow);
+  .button::after {
+		border-radius: var(--border-radius);
+    box-shadow: var(--elevation-low);
     content: '';
     display: block;
-    left: 0;
-    opacity: 0;
+		/* extend outside the container by 95% of the border width so it appears flush */
+    inset: calc((var(--border-width) * 0.95) * -1);
+    opacity: var(--shadow-opacity);
     position: absolute;
-    right: 0;
-    top: 0;
     transition: opacity 0.25s ease-in-out;
     z-index: 0;
   }
 
   .button:hover,
   .button:active {
-    --color: var(--color-highlight);
-  }
-
-  /* show the pseudo element to smoothly animate the shadow */
-  .button:hover::before {
-    opacity: 1;
+		--color-border: oklch(from var(--color-highlight) calc(l + 0.1) calc(c - 0.01) h);
+		--color-fill: oklch( from var(--color-surface) calc(l + 0.03) c h);
+		--color-label: oklch(from var(--color-primary) calc(l + 0.1) c h);
+		--shadow-opacity: 1;
   }
 
   .button :global(sup) {
@@ -133,12 +131,15 @@ const classList = [
 
   /* --- sizes --- */
   .small {
+		--border-width: 0.1em;
     --font-size: var(--type-scale-zeta);
     --icon-padding-offset: 0.2em;
 		--icon-spacing: 0.6em;
 		--padding-x: 0.88em;
     --padding-y: 0.42em;
-  }
+
+		border-radius: var(--border-radius-sharp);
+  }=
 
   /* --- icons --- */
   .button.has-icon.left {

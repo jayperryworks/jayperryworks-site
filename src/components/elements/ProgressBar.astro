@@ -1,5 +1,4 @@
 ---
-import '@styles/tokens/color.css';
 import '@styles/utilities/visibility.css';
 
 export interface Props {
@@ -38,11 +37,11 @@ const styleList = [
 	.progress-bar {
 		--range: 10;
 		--value: 1;
-		--color-bg: var(--color-well);
+		--color-surface: var(--color-well);
 		--color-value: var(--color-highlight);
 
 		appearance: none;
-		background-color: var(--color-bg);
+		background-color: var(--color-surface);
 		border-radius: 99999999px;
 		height: 4px;
 		overflow: hidden;

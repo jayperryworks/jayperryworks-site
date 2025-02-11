@@ -1,11 +1,6 @@
-@import url('../tokens/borders.css');
-@import url('../tokens/color.css');
+@import url('@styles/tokens/borders.css');
 
 /* --- 'seam' border style */
-[class*='border-seam'] {
-	position: relative;
-}
-
 .border-seam-top {
 	border-block-start: var(--border-default);
 }

@@ -1,0 +1,84 @@
+---
+// HTML Head meta component
+// - Display HTML meta and SEO data
+
+// --- types ---
+export interface Props {
+	description?: string; // description for this page
+	image?: string; // url for an seo feature image
+	imageAlt?: string; // alt text for the seo feature image
+	themeColor?: string; // color used for the theme-color meta tag, e.g. safari browser
+	title?: string; // the page title
+}
+
+// --- props ---
+const {
+	description,
+	image,
+	imageAlt,
+	themeColor,
+	title: pageTitle,
+} = Astro.props as Props;
+
+// --- config ---
+const SITE_TITLE = 'Jay Perry';
+const title = pageTitle ? `${SITE_TITLE} | ${pageTitle}` : SITE_TITLE;
+
+const RSSMetadata = [
+	{
+		path: '/rss/feed.xml',
+	},
+	{
+		name: 'Blog posts',
+		path: '/rss/blog.xml',
+	},
+	{
+		name: 'Pictures',
+		path: '/rss/pictures.xml',
+	},
+];
+---
+
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+	<title>{title}</title>
+
+	<!-- favicon -->
+	<link rel="icon" hDOMRef="/favicon.ico" sizes="any">
+	<link rel="icon" hDOMRef="/icon.svg" type="image/svg+xml">
+	<link rel="apple-touch-icon" hDOMRef="/apple-touch-icon.png">
+	<link rel="manifest" hDOMRef="/manifest.webmanifest">
+
+	<!-- RSS metadata -->
+	{RSSMetadata.map(({ name, path }) => (
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title={name ? `${SITE_TITLE}: ${name}` : SITE_TITLE}
+			href={new URL(path, Astro.site)}
+		>
+	))}
+
+	<!-- microdata/profile -->
+	<link rel="author" href="/about/" title="My story">
+	<link rel="me" href="mailto:hi@jayperryworks.com">
+
+	<!-- social/seo markup -->
+	<!-- hat tip to https://meiert.com/en/blog/minimal-social-markup/ -->
+	<meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'}>
+	<meta property="og:title" content={title}>
+	<meta property="og:site_name" content={SITE_TITLE}>
+	<meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)}>
+	<meta property="og:locale" content="en_US">
+	<meta property="og:author" name="author" content="Jay Perry">
+	{description && (
+		<meta property="og:description" name="description" content={description}>
+	)}
+	{image && (
+		<meta property="og:image" content={image}>
+		<meta property="og:image:alt" content={imageAlt}>
+	)}
+	{themeColor && <meta name="theme-color" content={themeColor}>}
+</head>

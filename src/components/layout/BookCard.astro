@@ -1,7 +1,6 @@
 ---
 // assets
 import '@styles/tokens/borders.css';
-import '@styles/tokens/color.css';
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 import '@styles/utilities/type.css';
@@ -92,7 +91,7 @@ function getInitial(title) {
 			<slot name="header">
 				{title && (
 					<Heading
-						class="type-scale-delta"
+						class="type-scale-epsilon"
 						level={2}
 						text={title}
 					/>
@@ -136,10 +135,13 @@ function getInitial(title) {
 	.book-card {
 		--cover-size: 12em;
 
+		background-color: var(--color-island);
+		border-radius: var(--border-radius-round);
 		container-type: inline-size;
 		display: flex;
 		flex-direction: column;
 		flex: 1;
+		padding: var(--space-medium) var(--space-xnarrow);
 	}
 
 	.wrapper {
@@ -181,7 +183,7 @@ function getInitial(title) {
 	.cover-image.placeholder {
 		align-items: center;
 		aspect-ratio: 1 / 1.2;
-		background-color: var(--color-bg);
+		background-color: var(--color-surface);
 		border: var(--border-solid);
 		box-shadow: 0;
 		color: var(--color-border);

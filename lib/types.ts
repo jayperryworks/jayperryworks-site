@@ -6,27 +6,25 @@ import {
 } from '@prismicio/types';
 
 // --- color ---
-export type ColorRoles = 'primary' | 'secondary' | 'highlight' | 'bg' | 'island' | 'well' | 'border' | 'shadow';
+export type ColorRoles = 'primary' | 'secondary' | 'highlight' | 'surface' | 'island' | 'well' | 'border' | 'shadow';
+
+// names of the default color themes
+export type ThemeNames = 'cherry'| 'mustard'| 'mint'| 'lavendar'| 'anemone';
 
 export type CSSVariable = `var(--${string})`;
-export type CSSHue = `${number | string}deg` | CSSVariable;
-export type CSSPercentage = `${number | string}%` | CSSVariable;
+export type CSSDegree = (`${number | string}deg`) | CSSVariable;
+export type CSSPercentage = (`${number | string}%`) | CSSVariable;
 export type CSSAlpha = `/ ${number | string}`;
-
 export type HexColor = `#${number}`;
-export type HSLColor = `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage})`;
-export type HSLAColor = `hsl(${CSSHue} ${CSSPercentage} ${CSSPercentage} ${CSSAlpha})`;
-
-type HSLChannel = 'h' | 's' | 'l' | 'a';
-
-// an object with HSL color data, used for generating theme values
-export type HSLObject = Record<HSLChannel, number>;
+export type OKLCHColor = (`oklch(${CSSPercentage} ${number} ${CSSDegree})`)
+	| (`oklch(${CSSPercentage} ${number} ${CSSDegree} ${CSSAlpha})`);
 
 // a page theme with literal CSS values
-export type Theme = Record<ColorRoles, HexColor | HSLColor | CSSVariable>;
-
-// a page theme with HSLObject data
-export type ThemeData = Record<ColorRoles, HSLObject>;
+export type Theme = {
+	[key in ColorRoles]: HexColor | CSSVariable | OKLCHColor;
+} & {
+	mode: string;
+};
 
 // --- layout and UI ---
 export type Align = 'start' | 'center' | 'end';
@@ -35,6 +33,18 @@ export type Prominence = 'Small' | 'Medium' | 'Large';
 export type GallerySize = 'small' | 'medium' | 'large';
 export type ImageFit = 'default' | 'contain' | 'cover';
 export type Frame = 'None' | 'Matte' | 'Frame & matte' | 'Panel' | 'Phone' | 'Tablet (horizontal)' | 'Tablet (vertical)';
+
+// collage block items
+export type CollageItemSize = 'Default' | 'Large' | 'XLarge';
+export type CollageItemPriority = '1' | '2' | '3';
+
+export interface CollageItem {
+	source: ImageField;
+	darkModeSource?: ImageField;
+	frame?: Frame;
+	priority?: CollageItemPriority;
+	relativeSize?: CollageItemSize;
+}
 
 // --- type ---
 export type TypeScale = 'alpha' | 'beta' | 'gamma' | 'delta' | 'epsilon' | 'zeta';

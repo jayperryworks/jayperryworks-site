@@ -1,7 +1,4 @@
 ---
-// styles
-import '@styles/tokens/color.css';
-
 // types
 import type { ColorRoles } from '@lib/types';
 
@@ -11,7 +8,7 @@ export interface Props {
 }
 
 const {
-	primaryColor = 'bg',
+	primaryColor = 'island',
 	bgColor = 'primary',
 } = Astro.props as Props;
 
@@ -26,7 +23,7 @@ const bgStyle = `fill: var(--color-${bgColor});`
 	width="39"
 	xmlns="http://www.w3.org/2000/svg"
 >
-	<title class="p-name">Jay Perry</title>
+	<title>Jay Perry</title>
 
 	<!-- box -->
 	<path

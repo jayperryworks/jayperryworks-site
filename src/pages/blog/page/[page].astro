@@ -16,7 +16,7 @@ import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
 // components
-import Layout from '@layouts/BaseLayout.astro';
+import Layout from '@layouts/Layout.astro';
 import Button from '@components/elements/Button.astro';
 import Icon from '@components/elements/Icon.astro';
 import PostMetadata from '@components/elements/PostMetadata.astro';
@@ -75,7 +75,10 @@ const postList = page.data.map(({
 });
 ---
 
-<Layout pageTitle="Blog">
+<Layout
+	pageTitle="Blog"
+	theme="mustard"
+>
 	<MainNav segment="blog" />
 	<main>
 		<ul

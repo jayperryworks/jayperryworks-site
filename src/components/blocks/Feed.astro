@@ -1,7 +1,9 @@
 ---
 // assets
+import '@styles/tokens/borders.css';
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
+import '@styles/utilities/type.css';
 import arrowRight from '@icons/arrow-right.svg?raw';
 
 // utils
@@ -111,7 +113,10 @@ if (contentSource === 'blog_post') {
 		)}
 	</header>
 
-	<Gallery gutter="wide">
+	<Gallery
+		size="large"
+		gutter="narrow"
+	>
 		{feedItems.map((listing) => (
 			<li class="item">
 				<PostListing {...listing} />
@@ -143,7 +148,7 @@ if (contentSource === 'blog_post') {
 	}
 
 	header {
-		padding-block-end: var(--space-wide);
+		padding-block-end: var(--space-medium);
 	}
 
 	header > :global(.subtitle) {
@@ -152,6 +157,13 @@ if (contentSource === 'blog_post') {
 
 	header > :global(* + *) {
 		padding-block-start: var(--space-medium);
+	}
+
+	.item {
+		border-radius: var(--border-radius);
+		background-color: var(--color-island);
+		padding: var(--space-medium);
+		padding-block-start: var(--space-narrow);
 	}
 
 	.item > :global(* + *) {
