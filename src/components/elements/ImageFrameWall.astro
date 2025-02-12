@@ -106,8 +106,8 @@ const styleList = arrayToPunctatedString([
 	.picture.matte,
 	.picture.frame,
 	.picture.panel {
-		/* don't use a global variable for the frame color because it should always be dark black, tinted very slightly to the current key hue */
-		--frame-color: oklch(30% 0.008 var(--base-h));
+		/* don't use a global token for the frame color because it should always be dark black, tinted very slightly to the current key hue */
+		--frame-color: oklch(from var(--color-surface) 30% 0.008 h);
 		--shadow-color: var(--color-shadow);
 
 		align-items: center;
@@ -130,7 +130,7 @@ const styleList = arrayToPunctatedString([
 
 	.picture.panel {
 		/* the 'inset' area of a panel should always be very dark */
-		--matte-color: oklch(20% 0.008 var(--base-h));
+		--matte-color: oklch(from var(--color-surface) 20% 0.008 h);
 
 		box-shadow: var(--elevation-high);
 	}
@@ -147,7 +147,7 @@ const styleList = arrayToPunctatedString([
 		.picture.matte,
 		.picture.frame,
 		.picture.panel {
-			--frame-color: oklch(15% 0.008 var(--base-h));
+			--frame-color: oklch(from var(--color-surface) 15% 0.008 h);
 		}
 
 		/* a darker matte feels better with the images against a dark surface */

@@ -44,6 +44,7 @@ export interface CollageItem {
 	frame?: Frame;
 	priority?: CollageItemPriority;
 	relativeSize?: CollageItemSize;
+	useImageAspectRatio?: boolean;
 }
 
 // --- type ---

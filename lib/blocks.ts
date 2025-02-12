@@ -93,6 +93,7 @@ function billboard(slice: Slice): BlockType {
 			relative_size: relativeSize,
 			cover_image: source,
 			dark_mode_cover_image: darkModeSource,
+			use_image_aspect_ratio: useImageAspectRatio = false,
 		} = item;
 
 		if ((source as ImageField).url === '') return result;
@@ -103,6 +104,7 @@ function billboard(slice: Slice): BlockType {
 			relativeSize,
 			source,
 			darkModeSource,
+			useImageAspectRatio,
 		});
 		return result;
 	}, []);
@@ -154,6 +156,7 @@ function collage(slice: Slice): BlockType {
 			priority = '1',
 			relative_size: relativeSize,
 			image: source,
+			use_image_aspect_ratio: useImageAspectRatio = false,
 		} = item;
 
 		return {
@@ -161,6 +164,7 @@ function collage(slice: Slice): BlockType {
 			priority,
 			relativeSize,
 			source,
+			useImageAspectRatio,
 		};
 	});
 
@@ -207,6 +211,7 @@ function figure(slice: Slice): BlockType {
 		image_dark_mode,
 		border = false,
 		frame = 'None',
+		use_image_aspect_ratio = false,
 	} = slice.primary;
 
 	const output = {
@@ -216,6 +221,7 @@ function figure(slice: Slice): BlockType {
 		darkModeSource: image_dark_mode,
 		attribution: undefined,
 		caption: undefined,
+		useImageAspectRatio: use_image_aspect_ratio,
 		...sharedBlockFields(slice),
 	};
 
@@ -254,6 +260,7 @@ function imageGallery(slice: Slice): BlockType {
 		column_size: columnSize,
 		gutter,
 		frame = 'None',
+		use_image_aspect_ratio: useImageAspectRatio = false,
 	} = slice.primary;
 
 	return {
@@ -266,6 +273,7 @@ function imageGallery(slice: Slice): BlockType {
 			image: item.image,
 			darkModeImage: item.dark_mode_image,
 		})),
+		useImageAspectRatio,
 		...sharedBlockFields(slice),
 	};
 }

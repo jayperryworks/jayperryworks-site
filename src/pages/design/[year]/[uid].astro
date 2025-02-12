@@ -1,4 +1,22 @@
 ---
+/**
+ * Design case study page
+ *
+ * @param {Slice[]} body - block list
+ * @param {string} client - client's name
+ * @param {string} role - my specific role on this project
+ * @param {NumberField} startDate - year the project started, YYYY
+ * @param {TitleField} title - The project's title
+ * @param {string} [agency] - an agency I worked for/subcontracted to
+ * @param {Collaborator[]} [collaborators] - list of collaborator references
+ * @param {GroupField} [contributions] - list of jobs/tasks, e.g. 'art direction'
+ * @param {NumberField} [endDate] - year the project ended, YYYY
+ * @param {PaginationLink} [next] - data for the next post in the collection
+ * @param {SEOContent} [seo] - SEO data from Prismic
+ * @param {TitleField} [subtitle] - The project's subtitle
+ * @param {Theme} [theme] - Color theme data
+ */
+
 // assets
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/contentWidth.css';
@@ -23,12 +41,11 @@ import prismic from '@lib/prismic';
 import type {
 	GroupField,
 	NumberField,
-	RelationField,
 	Slice,
 	TitleField,
 } from '@prismicio/types';
 
-import type { PaginationLink, SEOContent } from '@lib/types';
+import type { PaginationLink, SEOContent, Theme } from '@lib/types';
 
 export type Contribution = {
 	task: string,
@@ -38,21 +55,6 @@ export type Collaborator = {
 	name: string,
 	website: string,
 };
-
-export interface Props {
-	agency: string;
-	body: Slice[];
-	client: string;
-	role: string;
-	startDate: NumberField;
-	title: TitleField;
-	collaborators?: Collaborator[];
-	contributions?: GroupField;
-	endDate?: NumberField;
-	next?: PaginationLink;
-	seo?: SEOContent;
-	subtitle?: TitleField;
-}
 
 export async function getStaticPaths() {
 	const projects = await prismic.getAllByType('design_project', {
@@ -83,7 +85,10 @@ export async function getStaticPaths() {
 		const {
 			start_date: startDate,
 			end_date: endDate,
-			collaborators
+			collaborators,
+			preset_theme,
+			base_hue,
+			body1: themes,
 		} = data;
 
 		return {
@@ -100,6 +105,11 @@ export async function getStaticPaths() {
 					image: data.seo_image?.url,
 					imageAlt: data.seo_image?.alt,
 					title: data.seo_title || prismicHelpers.asText(data.title),
+				},
+				theme: {
+					name: preset_theme,
+					hue: base_hue,
+					custom: themes,
 				},
 				collaborators: collaborators.map(
 					({ collaborator }) => collaborator.data
@@ -126,7 +136,8 @@ const {
 	endDate,
 	next,
 	seo,
-} = Astro.props as Props;
+	theme,
+} = Astro.props;
 
 const credits = [
 	{
@@ -165,6 +176,7 @@ const credits = [
 	pageTitle={prismicHelpers.asText(title)}
 	path="design"
 	{seo}
+	{theme}
 >
 	<MainNav segment="design" />
 	<main>
@@ -220,8 +232,7 @@ const credits = [
 	.headline {
 		max-width: var(--content-width-xwide);
 		margin-inline: auto;
-		padding-block-start: var(--space-wide);
-		padding-block-end: var(--space-xwide);
+		padding-block: var(--space-xwide);
 		text-align: center;
 		display: flex;
 		flex-direction: column;
