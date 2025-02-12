@@ -1,4 +1,16 @@
 ---
+/**
+ * Image Frame component
+ * - Display an image with a specific frame
+ *
+ * @param {ImageField} source - image source data from Prismic
+ * @param {boolean} [border] - flag to display a border
+ * @param {ImageField} [darkModeSource] - optional dark mode image source
+ * @param {ImageFit} [fit] - how to fit the image within its frame/container
+ * @param {Frame} [frame] - the frame/device to display around the image
+ * @param {number} [maxHeight] - how tall the image is allowed to be, in vh units
+ * @param {boolean} [useImageAspectRato=false] - for a device, use the image's own aspect ratio instead of of the default (e.g. 4/3 for a tablet)
+ */
 // child components
 import Image from '@components/elements/Image.astro';
 import ImageFrameDevice from '@components/elements/ImageFrameDevice.astro';
@@ -8,15 +20,6 @@ import ImageFrameWall from '@components/elements/ImageFrameWall.astro';
 import type { ImageField } from '@prismicio/types';
 import type { Frame, ImageFit } from '@lib/types';
 
-export interface Props {
-	source: ImageField;
-	border?: boolean;
-	darkModeSource?: ImageField;
-	fit?: ImageFit;
-	frame?: Frame;
-	maxHeight?: number;
-}
-
 const {
 	source,
 	border,
@@ -24,7 +27,8 @@ const {
 	fit,
 	frame,
 	maxHeight,
-} = Astro.props as Props;
+	useImageAspectRatio,
+} = Astro.props;
 
 const imageComponents = {
 	'None': {
@@ -71,6 +75,7 @@ const imageComponents = {
 			darkModeSource,
 			maxHeight,
 			source,
+			useImageAspectRatio,
 		},
 	},
 	'Tablet (landscape)': {
@@ -80,6 +85,7 @@ const imageComponents = {
 			darkModeSource,
 			maxHeight,
 			source,
+			useImageAspectRatio,
 		},
 	},
 	'Tablet (portrait)': {
@@ -89,6 +95,7 @@ const imageComponents = {
 			darkModeSource,
 			maxHeight,
 			source,
+			useImageAspectRatio,
 		},
 	},
 };

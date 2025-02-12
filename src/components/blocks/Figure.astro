@@ -11,6 +11,7 @@
 * @param {ImageFit} [fit] - object-fit styles for the image
 * @param {Frame} [frame='None'] - a frame or device for the image
 * @param {number} [maxHeight] - constrain the image to a certain height, in vh units
+* @param {boolean} [useImageAspectRato=false] - for a device, use the image's own aspect ratio instead of of the default (e.g. 4/3 for a tablet)
  */
 
 // --- styles ---
@@ -42,6 +43,7 @@ const {
 	class: className,
 	fit,
 	maxHeight,
+	useImageAspectRatio,
 } = Astro.props;
 ---
 
@@ -56,6 +58,7 @@ const {
 					{frame}
 					{maxHeight}
 					{source}
+					{useImageAspectRatio}
 				/>
 			)}
 		</slot>

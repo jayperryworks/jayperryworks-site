@@ -108,8 +108,6 @@ const seriesList = picturesData
 
 		if (result.find((s) => s.uid === uid)) return result;
 
-		console.log(uid, matteColor, wallColor);
-
 		result.push({
 			// if all the pictures in the series have the same aspect ratio, leave this prop undefined so the grid boxes will be whatever shape the pictures are
 			// if not, use the default aspect ratio so the grid boxes will be the same shape and will constrain the different-shaped pictures to equal areas

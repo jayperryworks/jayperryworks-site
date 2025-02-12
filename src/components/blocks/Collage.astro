@@ -72,7 +72,14 @@ function getItemClassList(relativeSize, priority = '1') {
 		class="collage"
 		style={`--gutter: var(--space-${gutter});`}
 	>
-		{images.map(({ source, darkModeSource, relativeSize, frame, priority }) => (
+		{images.map(({
+			source,
+			darkModeSource,
+			relativeSize,
+			frame,
+			priority,
+			useImageAspectRatio,
+		}) => (
 			<li class={getItemClassList(relativeSize, priority)}>
 				<ImageFrame
 					fit={fitImages}
@@ -80,6 +87,7 @@ function getItemClassList(relativeSize, priority = '1') {
 					{darkModeSource}
 					{border}
 					{frame}
+					{useImageAspectRatio}
 				/>
 			</li>
 		))}
