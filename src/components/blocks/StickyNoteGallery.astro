@@ -1,4 +1,16 @@
 ---
+/**
+ * Sticky note gallery block component
+ * - display short passages of text in a grid of cards
+ *
+ * @param {StickyNote} notes - the items to display
+ * @param {TitleField} [title] - optional heading to display
+ * @param {FormattedText} [description] - optional descriptive blurb
+ * @param {boolean} [margins] - display outside margins
+ * @param {boolean} [shadow] - display shadows under the cards
+ * @param {TitleField} [subtitle] - optional subheading to display
+ * @param {ContentWidth} [width] - how wide the container should be
+ */
 // assets
 import '@styles/tokens/elevation.css';
 import '@styles/tokens/spacing.css';
@@ -22,63 +34,70 @@ import {
 import { TitleField } from '@prismicio/types';
 import RenderedText from '@components/elements/RenderedText.astro';
 
-export interface Props {
-	notes: StickyNote[];
-	title: TitleField;
-	description?: FormattedText;
-	shadow?: boolean;
-	subtitle?: TitleField;
-}
-
 const {
 	notes,
+	class: className,
 	title,
 	description,
-	shadow = false,
+	margins,
+	shadow,
 	subtitle,
-} = Astro.props as Props;
+	width = 'xxwide',
+} = Astro.props;
+
+const classList = [
+	'sticky-note-gallery',
+	margins ? 'space-outside-margins' : '',
+	className,
+].join(' ');
 ---
 
-<section class="sticky-note-gallery">
-	{prismicHelpers.isFilled.title(title) && (
-		<Heading
-			level={2}
-			text={title}
-		/>
-	)}
-	{prismicHelpers.isFilled.title(subtitle) && (
-		<Heading
-			level={4}
-			text={subtitle}
-			subheading
-		/>
-	)}
-	{prismicHelpers.isFilled.richText(description) && (
-		<Passage text={description} />
-	)}
-	<Gallery gutter="narrow">
-		{notes.map(({ shortStatement, extendedStatement }) => (
-			<li class={['sticky-note-item', shadow ? 'shadow' : ''].join(' ')}>
-				<RevealOnScroll
-					class="sticky-note-text | type-role-accent type-scale-epsilon"
-					tag="p"
-				>
-					<strong><RenderedText markdown={shortStatement} inline={true} /></strong>
-					{extendedStatement && (
-						<RenderedText markdown={extendedStatement} inline={true} />
-					)}
-				</RevealOnScroll>
-			</li>
-		))}
-	</Gallery>
+<section class={classList}>
+	<div class={[
+		'wrapper',
+		'content-width centered',
+		width,
+	].join(' ')}>
+		{prismicHelpers.isFilled.title(title) && (
+			<Heading
+				level={2}
+				text={title}
+			/>
+		)}
+		{prismicHelpers.isFilled.title(subtitle) && (
+			<Heading
+				level={4}
+				text={subtitle}
+				subheading
+			/>
+		)}
+		{prismicHelpers.isFilled.richText(description) && (
+			<Passage text={description} />
+		)}
+		<Gallery gutter="narrow">
+			{notes.map(({ shortStatement, extendedStatement }) => (
+				<li class={['sticky-note-item', shadow ? 'shadow' : ''].join(' ')}>
+					<RevealOnScroll
+						class="sticky-note-text | type-role-accent type-scale-epsilon"
+						tag="p"
+					>
+						<strong><RenderedText markdown={shortStatement} inline={true} /></strong>
+						{extendedStatement && (
+							<RenderedText markdown={extendedStatement} inline={true} />
+						)}
+					</RevealOnScroll>
+				</li>
+			))}
+		</Gallery>
+	</div>
 </section>
 
 <style>
-	:global(.block.slide) .sticky-note-gallery {
+	:global(.slide) .sticky-note-gallery {
 		padding-block: var(--space-xwide);
 	}
 
-	.sticky-note-gallery {
+	.wrapper {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-medium);

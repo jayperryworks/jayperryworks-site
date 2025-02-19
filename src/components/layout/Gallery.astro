@@ -1,29 +1,31 @@
 ---
+/**
+ * Gallery component
+ * - display a list of things in a fluid grid
+ *
+ * @param {boolean} [alignContentHorizontally]
+ * @param {boolean} [alignContentVertically]
+ * @param {string} [class] - append classes to the container
+ * @param {boolean} [constrainContent] - constrain content to a default width
+ * @param {SpaceScale} [gutter] - the space between items
+ * @param {GallerySize} [size] - how wide the columns can get
+ * @param {boolean} [useFlexBox] - display with flexbox
+*/
 import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
 
 // types
 import type { SpaceScale, GallerySize } from '@lib/types';
 
-export interface Props {
-	alignContentHorizontally?: boolean;
-	alignContentVertically?: boolean;
-	class?: string;
-	constrainContent?: boolean;
-	gutter?: SpaceScale;
-	size?: GallerySize;
-	useFlexBox?: boolean;
-}
-
 const {
 	alignContentHorizontally = false,
 	alignContentVertically = false,
+	class: className = '',
 	constrainContent = false,
 	gutter = 'xnarrow',
 	size = 'medium',
 	useFlexBox = false,
-	class: className = '',
-} = Astro.props as Props;
+} = Astro.props;
 
 const classList = [
 	'gallery',

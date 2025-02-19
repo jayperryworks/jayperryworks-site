@@ -10,8 +10,10 @@
 * @param {string} [class] - classes to append to the container
 * @param {ImageFit} [fit] - object-fit styles for the image
 * @param {Frame} [frame='None'] - a frame or device for the image
+* @param {boolean} [margins] - display outside margins
 * @param {number} [maxHeight] - constrain the image to a certain height, in vh units
 * @param {boolean} [useImageAspectRato=false] - for a device, use the image's own aspect ratio instead of of the default (e.g. 4/3 for a tablet)
+* @param {ContentWidth} [width='xwide'] - how wide the image should be
  */
 
 // --- styles ---
@@ -22,14 +24,15 @@ import '@styles/tokens/contentWidth.css';
 import type { ImageField } from '@prismicio/types';
 
 import type {
-	Frame,
+	ContentWidth,
 	FormattedText,
+	Frame,
 	ImageFit,
 } from '@lib/types';
 
 // --- child components ---
 import ImageFrame from '@components/elements/ImageFrame.astro';
-import Caption from '@components/blocks/FigureCaption.astro';
+import Caption from '@components/elements/FigureCaption.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
 // --- props ---
@@ -42,13 +45,19 @@ const {
 	frame = 'None',
 	class: className,
 	fit,
+	margins,
 	maxHeight,
 	useImageAspectRatio,
+	width = 'xwide',
 } = Astro.props;
 ---
 
-<figure class={['figure', className].join(' ')}>
-	<RevealOnScroll class="wrapper">
+<figure class={[
+	'figure',
+	margins ? 'space-outside-margins' : '',
+	className || '',
+].join(' ')}>
+	<RevealOnScroll class={['wrapper', 'content-width centered', width].join(' ')}>
 		<slot>
 			{source && (
 				<ImageFrame
@@ -73,8 +82,7 @@ const {
 	</RevealOnScroll>
 </figure>
 
-<style>
-	.figure,
+<style>.figure,
 	.figure :global(.wrapper) {
 		text-align: center;
 	}

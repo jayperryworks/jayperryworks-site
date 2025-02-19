@@ -44,7 +44,7 @@ function getBlockClass(type: string, displayMode: string = 'flow'): string {
 	};
 
 	if (classes[type]) {
-		return `${classes[type]} ${displayMode}`;
+		return `block ${classes[type]} ${displayMode}`;
 	}
 
 	return displayMode;
@@ -148,6 +148,7 @@ const sectionList = body.reduce((result: Array<any>, slice: Slice) => {
 	/* --- spacing between blocks with different display modes --- */
 	.block-list > :global(.flow + .slide) {
 		margin-block-start: var(--space-xwide);
+		padding-block-start: 0;
 	}
 
 	/* --- spacing between different types of blocks --- */

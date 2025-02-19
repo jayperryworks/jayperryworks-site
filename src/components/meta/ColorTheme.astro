@@ -8,6 +8,8 @@
  * @param {number} [hue] - custom hue number
  * @param {ThemeNames} [name] - the name of a preset theme
  * @param {Partial<Theme>[]} [custom] - explicit color roles for custom themes
+ * @param {boolean} [inherit] - should this element inherit theme values from its parent?
+ * @param {string} [style] - inline styles to append to the container
  */
 
 //  --- types ---
@@ -183,6 +185,11 @@ const classList = [
 			var(--custom-light-shadow,
 			oklch(from var(--color-surface) calc(l - 0.5) c h / 0.2)
 		);
+
+		/* Animated color transitions */
+		transition-duration: 0.25s;
+		transition-property: color, background-color, border-color;
+		transition-timing-function: ease-in-out;
 	}
 
 	/* Default theme tokens (dark mode) */

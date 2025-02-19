@@ -1,41 +1,60 @@
 ---
-// assets
+/**
+ * Pullquote block component
+ * - display a stylized quote as a masked image
+ *
+ * @param {FormattedText} text - the text content, used as a fallback/alt
+ * @param {string} [class] - classes to append to the container
+ * @param {ColorRoles} [color] - the color for the image mask
+ * @param {ImageField} [image] - the image to display, e.g. handwriting scan
+ * @param {boolean} [margins] - display outside margins
+ * @param {ContentWidth} [width] - how wide the quote should be
+ */
+
+// --- assets ---
 import '@styles/tokens/spacing.css';
 import '@styles/utilities/visibility.css';
 
-// utilities
+// --- utilities ---
 import * as prismicHelpers from '@prismicio/helpers';
 
-// types
+// --- types ---
 import type { ColorRoles, FormattedText } from '@lib/types';
 import type { ImageField } from '@prismicio/types';
 
-// components
+// --- components ---
 import Passage from '@components/blocks/Passage.astro';
 import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
 
-export interface Props {
-	text: FormattedText;
-	class?: string;
-	color?: ColorRoles;
-	image?: ImageField;
-}
-
+// --- props ---
 const {
 	text,
 	class: className = '',
-	image,
 	color = 'primary',
-} = Astro.props as Props;
+	image,
+	margins,
+	width = '',
+} = Astro.props;
 
-function imageVersion(size: number): string {
+// --- helper functions ---
+
+/**
+ * Create a url for an image version at a given size
+ * @param {number} size - width in pixels of the image
+ * @returns {string} - url of the image source from Prismic
+ */
+function imageVersion(size) {
 	return prismicHelpers.asImageSrc(image, {
 		fit: 'max',
 		w: size,
 	});
 }
 
-function variables(): string {
+/**
+ * Create the CSS variables for the style attribute
+ * @returns {string}
+ */
+function variables() {
 	if (image) {
 		const { width, height } = image.dimensions;
 
@@ -52,9 +71,17 @@ function variables(): string {
 }
 ---
 
-<RevealOnScroll>
+<RevealOnScroll class:list={[
+	'pullquote',
+	{ 'space-outside-margins': margins },
+	className,
+]}>
 	<aside
-		class={['pullquote', className].join(' ')}
+		class={[
+			'wrapper',
+			'content-width centered',
+			width,
+		].join(' ')}
 		role="presentation"
 		style={variables()}
 	>
@@ -67,7 +94,7 @@ function variables(): string {
 </RevealOnScroll>
 
 <style>
-	.pullquote {
+	.wrapper {
 		--image: var(--image-small);
 
 		aspect-ratio: var(--aspect);
@@ -79,13 +106,13 @@ function variables(): string {
 	}
 
 	@media screen and (min-width: 37em) {
-		.pullquote {
+		.wrapper {
 			--image: var(--image-medium);
 		}
 	}
 
 	@media screen and (min-width: 100em) {
-		.pullquote {
+		.wrapper {
 			--image: var(--image-large);
 		}
 	}

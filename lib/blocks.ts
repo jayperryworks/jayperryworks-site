@@ -3,7 +3,7 @@ import { camelCase } from 'change-case';
 import * as prismicHelpers from '@prismicio/helpers';
 
 // types
-import type { Block as BlockType } from '@lib/types';
+import type { Block as BlockType, Prominence } from '@lib/types';
 
 import type {
 	ImageField,
@@ -39,6 +39,16 @@ function markdownText(text: RichTextField): string {
 	return undefined;
 }
 
+function getContentWidth(name: Prominence): string {
+	const widths = {
+		Small: 'narrow',
+		Large: 'xwide',
+		XLarge: 'xxwide',
+	};
+
+	return widths[name] || '';
+}
+
 function sharedBlockFields(slice: Slice): BlockType {
 	const {
 		prominence,
@@ -48,7 +58,7 @@ function sharedBlockFields(slice: Slice): BlockType {
 
 	return {
 		displayMode: (displayMode as string).toLowerCase(),
-		prominence: prominence as BlockType['prominence'],
+		width: getContentWidth(prominence as Prominence),
 		includeInExcerpt: Boolean(includeInExcerpt),
 		type: camelCase(slice.slice_type),
 	};

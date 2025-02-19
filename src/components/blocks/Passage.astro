@@ -1,47 +1,53 @@
 ---
-// --- assetsincrementsidenotes,
+/**
+ * Passage block component
+ * - display formatted, flowing body text
+ *
+ * @param {FormattedText} text - text content
+ * @param {string} [class] - classes to append to the container
+ * @param {boolean} [footnotes] - uses footnotes
+ * @param {boolean} [margins] - display outside margins
+ * @param {'body' | 'display' | 'accent'} [typeFace] - type role for the text
+ * @param {TypeScale} [typeSize] - size of the text
+ * @param {'none' | 'pretty' | 'balance'} [wrap] - how to handle line wraps
+ */
+
+// --- assets ---
 import '@styles/tokens/type.css';
 import '@styles/utilities/type.css';
 
-// --- utils
+// --- utils ---
 import { sentenceCase } from '@lib/stringHelpers';
 import * as sidenotes from '@lib/model/sidenotes';
 
-// --- components
+// --- components ---
 import RenderedText from '@components/elements/RenderedText.astro';
 
-// --- types
+// --- types ---
 import type { TypeScale, FormattedText } from '@lib/types';
 
-export interface Props {
-	text: FormattedText;
-	class?: string;
-	footnotes?: boolean;
-	typeFace?: 'body' | 'display' | 'accent';
-	typeSize?: TypeScale;
-	wrap?: 'none' | 'pretty' | 'balance';
-}
-
-// --- props and state
+// --- props and state ---
 const {
 	text,
 	class: className = '',
 	footnotes = true,
+	margins,
 	typeFace = 'body',
 	typeSize = 'epsilon',
 	wrap = 'pretty',
-} = Astro.props as Props;
+} = Astro.props;
 
 
 const classList = [
 	'passage',
+	margins ? 'space-outside-margins' : '',
 	typeFace !== 'body' ? `type-role-${typeFace}` : '',
 	`type-scale-${typeSize}`,
 	wrap !== 'none' ? wrap : '',
 	className,
 ].join(' ');
 
-// --- functions
+// --- functions ---
 // render special elements from Prismic text
 function htmlSerializer(type, element, content, children): string {
 
@@ -110,6 +116,8 @@ function htmlSerializer(type, element, content, children): string {
 	/* spacing */
 	.passage > :global(*) {
 		line-height: var(--type-leading-default);
+		margin-inline: auto;
+		max-width: var(--content-width-default);
 	}
 
   .passage > :global(* + *) {
