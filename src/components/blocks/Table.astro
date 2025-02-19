@@ -1,9 +1,23 @@
 ---
+/**
+ * Table block component
+ * - display CSV data as an HTML table
+ *
+ * @param {string} CSVFile - url/path to a CSV file containing the table data
+ * @param {string} class - classes to append to the container
+ * @param {boolean} [footer] - add a footer row to the table
+ * @param {number[]} [keyColumns] - header columns by col number
+ * @param {boolean} [margins] - display outside margins
+ * @param {ContentWidth} [width] - how wide the quote should be
+ */
 
 const {
 	CSVFile,
+	class: className,
+	footer,
 	keyColumns,
-	footer = false,
+	margins,
+	width = 'xwide',
 } = Astro.props;
 
 // https://stackoverflow.com/questions/64982528/is-is-possible-to-read-a-csv-file-with-javascript-fetch-api
@@ -37,10 +51,20 @@ try {
 } catch(error) {
 	throw new Error('Error receiving the CSV file', error);
 }
+
+const classList = [
+	'table',
+	margins ? 'space-outside-margins' : '',
+	className,
+].join(' ');
 ---
 
-<div class="table">
-	<table class="type-role-accent type-scale-zeta">
+<div class={classList}>
+	<table class:list={[
+		'type-role-accent type-scale-zeta',
+		'content-width centered',
+		width,
+	]}>
 		<thead>
 			<tr>{data.header.map((heading) => <th>{heading}</th>)}</tr>
 		</thead>

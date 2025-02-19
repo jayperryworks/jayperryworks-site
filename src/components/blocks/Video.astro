@@ -1,4 +1,18 @@
 ---
+/**
+ * Video block component
+ * - Display an embedded PeerTube video
+ *
+ * @param {string} id - ID string for the video on PeerTube
+ * @param {string} title - title for the video from PeerTube
+ * @param {string} [aspectRatio='16 / 9'] - aspect ratio of the container
+ * @param {FormattedText} [attribution] - optional credit
+ * @param {boolean} [border] - show a border around the container
+ * @param {FormattedText} [caption] - optional caption
+ * @param {string} [class] - classes to append to the container
+ * @param {boolean} [margins] - display outside margins
+ * @param {ContentWidth} [width] - how wide the container should be
+ */
 // assets
 import '@styles/tokens/borders.css';
 
@@ -11,16 +25,6 @@ import Figure from '@components/blocks/Figure.astro';
 // types
 import { FormattedText } from '@lib/types';
 
-export interface Props {
-	id: string;
-	title: string;
-	aspectRatio?: string;
-	attribution?: FormattedText;
-	border?: boolean;
-	caption?: FormattedText;
-	class?: string;
-}
-
 const {
 	id,
 	title,
@@ -29,7 +33,9 @@ const {
 	border,
 	caption,
 	class: className,
-} = Astro.props as Props;
+	margins,
+	width = 'xwide',
+} = Astro.props;
 
 const src = `https://tube.tchncs.de/videos/embed/${id}?title=0&warningTitle=0&peertubeLink=0&p2p=0`;
 
@@ -46,8 +52,10 @@ const styleList = arrayToPunctatedString([
 
 <Figure
 	class={className}
-	{caption}
 	{attribution}
+	{caption}
+	{margins}
+	{width}
 >
 	<div
 		class={classList}
