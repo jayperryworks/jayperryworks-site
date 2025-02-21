@@ -13,7 +13,6 @@
  * @param {RichTextField} description.prismicText - formatted Prismic rich text
  * @param {number} [number] - a "TOC" number to display (deprecated)
  * @param {string} [subtitle] - subtitle to display below the title
- * @param {Theme}
  */
 
 // --- assets ---
@@ -46,68 +45,61 @@ const {
 	description,
 	images,
 	subtitle,
-	theme,
 } = Astro.props;
 
 const { link, label } = cta;
 const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 ---
 
-<ColorTheme
-	class={['billboard', className].join(' ')}
-	el="article"
-	{...theme}
->
-	<div class="wrapper content-width xxwide centered">
-		<header>
-			<Heading level={2}>
+<article class={['billboard', className].join(' ')}>
+	<header>
+		<Heading level={2}>
+			<a
+				class="type-link-undecorated"
+				href={resolvedLink}
+			>
+				{title}
+			</a>
+		</Heading>
+		{subtitle && (
+			<Heading
+				class="subtitle"
+				level={3}
+				subheading
+			>
 				<a
 					class="type-link-undecorated"
 					href={resolvedLink}
 				>
-					{title}
+					{subtitle}
 				</a>
 			</Heading>
-			{subtitle && (
-				<Heading
-					class="subtitle"
-					level={3}
-					subheading
-				>
-					<a
-						class="type-link-undecorated"
-						href={resolvedLink}
-					>
-						{subtitle}
-					</a>
-				</Heading>
-			)}
-			<Passage
-				text={description}
-				typeSize="delta"
+		)}
+		<Passage
+			text={description}
+			typeSize="delta"
+		/>
+		<Button
+			class="cta"
+			href={resolvedLink}
+			iconRight={arrowRight}
+		>
+			{label || 'Read more'}
+		</Button>
+	</header>
+	{images?.length > 1
+		? <Collage
+				class="cover"
+				{images}
 			/>
-			<Button
-				class="cta"
-				href={resolvedLink}
-				iconRight={arrowRight}
-			>
-				{label || 'Read more'}
-			</Button>
-		</header>
-		{images?.length > 1
-			? <Collage
-					class="cover"
-					{images}
-				/>
-			: <Figure
-					class="cover"
-					fit="contain"
-					maxHeight="80"
-					{...images[0]}
-				/>
-		}
-	</div>
-</ColorTheme>
+		: <Figure
+				class="cover"
+				fit="contain"
+				maxHeight="80"
+				{...images[0]}
+			/>
+	}
+</article>
 
 <style>
 	header {
@@ -131,23 +123,20 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 		flex: 1;
 		min-height: 100svh;
 		padding-block: var(--space-xwide);
-		padding-inline: var(--space-outside);
-	}
-
-	.wrapper {
 		display: grid;
 		gap: var(--space-wide);
 		grid-template-rows: repeat(auto-fit, minmax(auto, 1fr));
+		width: 100%;
 	}
 
-	.wrapper > :global(.cover) {
+	.billboard > :global(.cover) {
 		justify-self: center;
 		align-self: center;
 		width: 100%;
 	}
 
 	@media screen and (min-width: 42em) {
-		.wrapper {
+		.billboard {
 			grid-template-columns: repeat(auto-fit, minmax(38rem, 1fr));
 			gap: var(--space-xwide);
 		}

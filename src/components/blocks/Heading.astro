@@ -7,11 +7,9 @@
  * @param {string} [class] - classes to append to the container
  * @param {string} [id] - ID attribute
  * @param {number} [level=2] - the level of the heading tag
- * @param {boolean} [margins] - display outside margins
  * @param {boolean} [subheading] - is this a subheading?
  * 	- If so, render as a 'p' tag and style the text differently
  * @param {TitleField} [text] - the title text, can also pass in the slot
- * @param {ContentWidth} [width='xxwide'] - how wide to display the heading
  */
 
 // --- assets ---
@@ -31,10 +29,8 @@ const {
 	class: className = '',
 	id,
 	level = 2,
-	margins,
 	subheading,
 	text,
-	width = 'xxwide',
 } = Astro.props;
 
 const levels = [
@@ -51,25 +47,16 @@ const El = !subheading ? `h${level}` : 'p';
 const classList = [
 	'heading',
 	subheading ? `sub type-role-accent type-scale-${levels[level - 1]}` : '',
-	margins ? 'space-outside-margins' : '',
 	align !== 'left' ? `align-${align}` : '',
 	className,
 ].join(' ');
 ---
 
-<div class={classList} id={id}>
-	<El class={['wrapper', 'content-width', 'centered', width].join(' ')}>
-		<slot>
-			{text && prismicHelpers.asText(text)}
-		</slot>
-	</El>
-</div>
+<El class={classList} id={id}>
+	<slot>{text && prismicHelpers.asText(text)}</slot>
+</El>
 
 <style>
-	.margins {
-		padding-inline: var(--space-outside);
-	}
-
 	.wrapper {
 		margin-block: 0;
 		text-wrap: balance;

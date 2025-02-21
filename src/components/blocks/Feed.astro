@@ -86,52 +86,50 @@ if (contentSource === 'blog_post') {
 ---
 
 <section class="feed">
-	<div class="content-width xxwide centered">
-		<header>
-			<Heading level={2}>
-				<a
-					class="type-link-undecorated"
-					href={resolvedLink}
-				>
-					{title}
-				</a>
-			</Heading>
-			{subtitle && (
-				<Heading
-					class="subtitle"
-					level={3}
-					subheading
-				>
-					{subtitle}
-				</Heading>
-			)}
-			{description && (
-				<Passage
-					text={description}
-					typeFace="display"
-					typeSize="delta"
-				/>
-			)}
-		</header>
-		<Gallery
-			size="large"
-			gutter="narrow"
-		>
-			{feedItems.map((listing) => (
-				<li class="item">
-					<PostListing {...listing} />
-				</li>
-			))}
-		</Gallery>
-		<footer>
-			<Button
+	<header>
+		<Heading level={2}>
+			<a
+				class="type-link-undecorated"
 				href={resolvedLink}
-				iconRight={arrowRight}
 			>
-				{label}
-			</Button>
-		</footer>
-	</div>
+				{title}
+			</a>
+		</Heading>
+		{subtitle && (
+			<Heading
+				class="subtitle"
+				level={3}
+				subheading
+			>
+				{subtitle}
+			</Heading>
+		)}
+		{description && (
+			<Passage
+				text={description}
+				typeFace="display"
+				typeSize="delta"
+			/>
+		)}
+	</header>
+	<Gallery
+		size="large"
+		gutter="narrow"
+	>
+		{feedItems.map((listing) => (
+			<li class="item">
+				<PostListing {...listing} />
+			</li>
+		))}
+	</Gallery>
+	<footer>
+		<Button
+			href={resolvedLink}
+			iconRight={arrowRight}
+		>
+			{label}
+		</Button>
+	</footer>
 </section>
 
 <style>
@@ -142,7 +140,6 @@ if (contentSource === 'blog_post') {
 		justify-content: center;
 		min-height: 100svh;
 		padding-block: var(--space-xwide);
-		padding-inline: var(--space-outside);
 	}
 
 	header {

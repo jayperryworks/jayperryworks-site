@@ -7,8 +7,6 @@
  * @param {string} [class] - classes to append to the container
  * @param {ColorRoles} [color] - the color for the image mask
  * @param {ImageField} [image] - the image to display, e.g. handwriting scan
- * @param {boolean} [margins] - display outside margins
- * @param {ContentWidth} [width] - how wide the quote should be
  */
 
 // --- assets ---
@@ -32,8 +30,6 @@ const {
 	class: className = '',
 	color = 'primary',
 	image,
-	margins,
-	width = '',
 } = Astro.props;
 
 // --- helper functions ---
@@ -71,17 +67,9 @@ function variables() {
 }
 ---
 
-<RevealOnScroll class:list={[
-	'pullquote',
-	{ 'space-outside-margins': margins },
-	className,
-]}>
+<RevealOnScroll>
 	<aside
-		class={[
-			'wrapper',
-			'content-width centered',
-			width,
-		].join(' ')}
+		class={['pullquote', className].join(' ')}
 		role="presentation"
 		style={variables()}
 	>
@@ -94,7 +82,7 @@ function variables() {
 </RevealOnScroll>
 
 <style>
-	.wrapper {
+	.pullquote {
 		--image: var(--image-small);
 
 		aspect-ratio: var(--aspect);
@@ -106,13 +94,13 @@ function variables() {
 	}
 
 	@media screen and (min-width: 37em) {
-		.wrapper {
+		.pullquote {
 			--image: var(--image-medium);
 		}
 	}
 
 	@media screen and (min-width: 100em) {
-		.wrapper {
+		.pullquote {
 			--image: var(--image-large);
 		}
 	}

@@ -23,6 +23,7 @@ import Pullquote from '@components/blocks/Pullquote.astro';
 import StickyNoteGallery from '@components/blocks/StickyNoteGallery.astro';
 import Table from '@components/blocks/Table.astro';
 import Video from '@components/blocks/Video.astro';
+import ColorTheme from '@components/meta/ColorTheme.astro';
 
 // --- types ---
 import type { Block } from '@lib/types';
@@ -32,6 +33,22 @@ const {
 	block,
 	class: className,
 } = Astro.props;
+
+/**
+ * Match the 'prominence' value to the corresponding width token
+ * @param {Block} block
+ * @returns {string}
+ */
+function getWidth(block) {
+	const widths = {
+		Small: 'narrow',
+		Large: 'xwide',
+		XLarge: 'xxwide',
+	};
+
+	if (block.displayMode === 'slide') return widths['XLarge'];
+	return widths[block.prominence] || '';
+}
 
 const displayModeClass = block.displayMode === 'slide' ? 'slide border-seam-top' : '';
 
@@ -52,11 +69,25 @@ const blocks = {
 };
 
 const Component = blocks[block.type];
-const classList = [displayModeClass, className].join(' ');
+const classList = [
+	'block',
+	'space-outside-margins',
+	displayModeClass,
+	className,
+].join(' ');
 ---
 
-<Component
+<ColorTheme
+	name="cherry"
 	class={classList}
-	{...block}
-	margins
-/>
+>
+	<div class={`content-width centered ${getWidth(block)}`}>
+		<Component {...block} />
+	</div>
+</ColorTheme>
+
+<style>
+	.block {
+		background-color: var(--color-surface);
+	}
+</style>

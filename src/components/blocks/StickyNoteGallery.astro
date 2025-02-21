@@ -6,10 +6,8 @@
  * @param {StickyNote} notes - the items to display
  * @param {TitleField} [title] - optional heading to display
  * @param {FormattedText} [description] - optional descriptive blurb
- * @param {boolean} [margins] - display outside margins
  * @param {boolean} [shadow] - display shadows under the cards
  * @param {TitleField} [subtitle] - optional subheading to display
- * @param {ContentWidth} [width] - how wide the container should be
  */
 // assets
 import '@styles/tokens/elevation.css';
@@ -39,57 +37,48 @@ const {
 	class: className,
 	title,
 	description,
-	margins,
 	shadow,
 	subtitle,
-	width = 'xxwide',
 } = Astro.props;
 
 const classList = [
 	'sticky-note-gallery',
-	margins ? 'space-outside-margins' : '',
 	className,
 ].join(' ');
 ---
 
 <section class={classList}>
-	<div class={[
-		'wrapper',
-		'content-width centered',
-		width,
-	].join(' ')}>
-		{prismicHelpers.isFilled.title(title) && (
-			<Heading
-				level={2}
-				text={title}
-			/>
-		)}
-		{prismicHelpers.isFilled.title(subtitle) && (
-			<Heading
-				level={4}
-				text={subtitle}
-				subheading
-			/>
-		)}
-		{prismicHelpers.isFilled.richText(description) && (
-			<Passage text={description} />
-		)}
-		<Gallery gutter="narrow">
-			{notes.map(({ shortStatement, extendedStatement }) => (
-				<li class={['sticky-note-item', shadow ? 'shadow' : ''].join(' ')}>
-					<RevealOnScroll
-						class="sticky-note-text | type-role-accent type-scale-epsilon"
-						tag="p"
-					>
-						<strong><RenderedText markdown={shortStatement} inline={true} /></strong>
-						{extendedStatement && (
-							<RenderedText markdown={extendedStatement} inline={true} />
-						)}
-					</RevealOnScroll>
-				</li>
-			))}
-		</Gallery>
-	</div>
+	{prismicHelpers.isFilled.title(title) && (
+		<Heading
+			level={2}
+			text={title}
+		/>
+	)}
+	{prismicHelpers.isFilled.title(subtitle) && (
+		<Heading
+			level={4}
+			text={subtitle}
+			subheading
+		/>
+	)}
+	{prismicHelpers.isFilled.richText(description) && (
+		<Passage text={description} />
+	)}
+	<Gallery gutter="narrow">
+		{notes.map(({ shortStatement, extendedStatement }) => (
+			<li class={['sticky-note-item', shadow ? 'shadow' : ''].join(' ')}>
+				<RevealOnScroll
+					class="sticky-note-text | type-role-accent type-scale-epsilon"
+					tag="p"
+				>
+					<strong><RenderedText markdown={shortStatement} inline={true} /></strong>
+					{extendedStatement && (
+						<RenderedText markdown={extendedStatement} inline={true} />
+					)}
+				</RevealOnScroll>
+			</li>
+		))}
+	</Gallery>
 </section>
 
 <style>
@@ -97,7 +86,7 @@ const classList = [
 		padding-block: var(--space-xwide);
 	}
 
-	.wrapper {
+	.sticky-note-gallery {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-medium);

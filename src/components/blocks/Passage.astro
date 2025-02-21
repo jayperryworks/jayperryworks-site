@@ -6,7 +6,6 @@
  * @param {FormattedText} text - text content
  * @param {string} [class] - classes to append to the container
  * @param {boolean} [footnotes] - uses footnotes
- * @param {boolean} [margins] - display outside margins
  * @param {'body' | 'display' | 'accent'} [typeFace] - type role for the text
  * @param {TypeScale} [typeSize] - size of the text
  * @param {'none' | 'pretty' | 'balance'} [wrap] - how to handle line wraps
@@ -40,7 +39,6 @@ const {
 
 const classList = [
 	'passage',
-	margins ? 'space-outside-margins' : '',
 	typeFace !== 'body' ? `type-role-${typeFace}` : '',
 	`type-scale-${typeSize}`,
 	wrap !== 'none' ? wrap : '',
@@ -116,7 +114,6 @@ function htmlSerializer(type, element, content, children): string {
 	/* spacing */
 	.passage > :global(*) {
 		line-height: var(--type-leading-default);
-		margin-inline: auto;
 		max-width: var(--content-width-default);
 	}
 

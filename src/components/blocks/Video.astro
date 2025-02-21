@@ -10,8 +10,6 @@
  * @param {boolean} [border] - show a border around the container
  * @param {FormattedText} [caption] - optional caption
  * @param {string} [class] - classes to append to the container
- * @param {boolean} [margins] - display outside margins
- * @param {ContentWidth} [width] - how wide the container should be
  */
 // assets
 import '@styles/tokens/borders.css';
@@ -33,8 +31,6 @@ const {
 	border,
 	caption,
 	class: className,
-	margins,
-	width = 'xwide',
 } = Astro.props;
 
 const src = `https://tube.tchncs.de/videos/embed/${id}?title=0&warningTitle=0&peertubeLink=0&p2p=0`;
@@ -54,8 +50,6 @@ const styleList = arrayToPunctatedString([
 	class={className}
 	{attribution}
 	{caption}
-	{margins}
-	{width}
 >
 	<div
 		class={classList}

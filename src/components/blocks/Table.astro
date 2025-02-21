@@ -7,8 +7,6 @@
  * @param {string} class - classes to append to the container
  * @param {boolean} [footer] - add a footer row to the table
  * @param {number[]} [keyColumns] - header columns by col number
- * @param {boolean} [margins] - display outside margins
- * @param {ContentWidth} [width] - how wide the quote should be
  */
 
 const {
@@ -16,8 +14,6 @@ const {
 	class: className,
 	footer,
 	keyColumns,
-	margins,
-	width = 'xwide',
 } = Astro.props;
 
 // https://stackoverflow.com/questions/64982528/is-is-possible-to-read-a-csv-file-with-javascript-fetch-api
@@ -54,17 +50,12 @@ try {
 
 const classList = [
 	'table',
-	margins ? 'space-outside-margins' : '',
 	className,
 ].join(' ');
 ---
 
 <div class={classList}>
-	<table class:list={[
-		'type-role-accent type-scale-zeta',
-		'content-width centered',
-		width,
-	]}>
+	<table class="type-role-accent type-scale-zeta">
 		<thead>
 			<tr>{data.header.map((heading) => <th>{heading}</th>)}</tr>
 		</thead>

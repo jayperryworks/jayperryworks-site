@@ -13,8 +13,6 @@
  * @param {string} [class] - classes to append to the container
  * @param {ImageFit} [fitImages='default'] - object-fit styles for each image
  * @param {SpaceScale} [gutter='medium'] - space between each item
- * @param {boolean} [margins] - display outside margins
- * @param {ContentWidth} [width] - how wide the container should be
  */
 
 // --- components ---
@@ -44,8 +42,6 @@ const {
 	class: className = '',
 	fitImages = 'default',
 	gutter = 'medium',
-	margins,
-	width = 'xxwide',
 } = Astro.props;
 
 /**
@@ -75,12 +71,11 @@ function getItemClassList(relativeSize, priority = '1') {
 	{caption}
 	class={[
 		'collage',
-		margins ? 'space-outside-margins' : '',
 		className,
 	].join(' ')}
 >
 	<ul
-		class={`wrapper content-width centered ${width}`}
+		class="wrapper"
 		style={`--gutter: var(--space-${gutter});`}
 	>
 		{images.map(({

@@ -6,7 +6,6 @@
  * @param {FormattedText} text - the text content
  * @param {string} [class] - append classes to the container
  * @param {KeyTextField} [label] - optional label, e.g. 'note'
- * @param {boolean} [margins] - display outside margins
  * @param {'Default' | 'Small'} [typeSize='Default'] - size of the body text
  */
 
@@ -29,7 +28,6 @@ const {
 	text,
 	class: className,
 	label,
-	margins,
 	typeSize = 'Default',
 } = Astro.props;
 
@@ -40,32 +38,29 @@ const typeScale = {
 
 const classList = [
 	'aside',
-	margins ? 'space-outside-margins' : '',
 	className,
 ].join(' ');
 ---
 
 <aside class={classList}>
-	<div class="wrapper content-width centered">
-		{label && (
-			<Heading
-				class="type-scale-epsilon"
-				level={2}
-			>
-				{label}
-			</Heading>
-		)}
-		<Passage
-			{text}
-			class="text"
-			typeSize={typeScale[typeSize]}
-			typeFace="accent"
-		/>
-	</div>
+	{label && (
+		<Heading
+			class="type-scale-epsilon"
+			level={2}
+		>
+			{label}
+		</Heading>
+	)}
+	<Passage
+		{text}
+		class="text"
+		typeSize={typeScale[typeSize]}
+		typeFace="accent"
+	/>
 </aside>
 
 <style>
-	.wrapper {
+	.aside {
 		background-color: var(--color-well);
 		border-radius: var(--border-radius-round);
 		color: var(--color-secondary);

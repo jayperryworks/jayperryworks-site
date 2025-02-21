@@ -18,9 +18,7 @@
  * @param {ImageFit} [fitImages='default'] - object-fit styles for each image
  * @param {Frame} [frame='None'] - a frame or device for all images
  * @param {SpaceScale} [gutter='xnarrow'] - how much space between items
- * @param {boolean} [margins] - display outside margins
  * @param {boolean} [useImageAspectRatio] - use the images' own aspect ratios for their frames
- * @param {ContentWidth} [width='xxwide'] - how wide the gallery should be
  */
 
 // --- components ---
@@ -50,9 +48,7 @@ const {
 	fitImages = 'default',
 	frame = 'None',
 	gutter = 'xnarrow',
-	margins,
 	useImageAspectRatio = false,
-	width = 'xxwide',
 } = Astro.props;
 ---
 
@@ -60,11 +56,9 @@ const {
 	caption={caption && { markdown: caption }}
 	class={[
 		'image-gallery',
-		margins ? 'space-outside-margins' : '',
 		className,
 	].join(' ')}
 	{attribution}
-	{width}
 >
 	<Gallery
 		size={columnSize}

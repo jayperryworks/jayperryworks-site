@@ -39,16 +39,6 @@ function markdownText(text: RichTextField): string {
 	return undefined;
 }
 
-function getContentWidth(name: Prominence): string {
-	const widths = {
-		Small: 'narrow',
-		Large: 'xwide',
-		XLarge: 'xxwide',
-	};
-
-	return widths[name] || '';
-}
-
 function sharedBlockFields(slice: Slice): BlockType {
 	const {
 		prominence,
@@ -58,8 +48,8 @@ function sharedBlockFields(slice: Slice): BlockType {
 
 	return {
 		displayMode: (displayMode as string).toLowerCase(),
-		width: getContentWidth(prominence as Prominence),
 		includeInExcerpt: Boolean(includeInExcerpt),
+		prominence: prominence as Prominence,
 		type: camelCase(slice.slice_type),
 	};
 }
