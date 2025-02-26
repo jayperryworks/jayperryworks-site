@@ -1,22 +1,26 @@
 ---
+/**
+ * Reveal on scroll wrapper component
+ * - Fade in child elements as they come into view during a scroll
+ *
+ * @param {string} [class]  - append classes to the container
+ * @param {boolean} [disabled]  - turn off animation effect, so this just becomes a div
+ * @param {string} [duration] - how long the animation lasts
+ * @param {string} [id] - ID attribute for the wrapper element
+ * @param {string} [style] - append styles to the style attribute on the wrapper element
+ * @param {string} [tag='div'] - HTML tag for the wrapper element
+ */
+
 import { arrayToPunctatedString } from '@lib/stringHelpers';
-export interface Props {
-	class?: string;
-	disabled?: boolean; // turn off animation effect, so this just becomes a div
-	duration?: string;
-	tag?: string;
-	id?: string;
-	style?: string;
-}
 
 const {
 	class: className = '',
 	disabled = false,
 	duration = '1.6s',
-	tag = 'div',
 	id = '',
 	style,
-} = Astro.props as Props;
+	tag = 'div',
+} = Astro.props;
 
 const El = tag;
 
