@@ -23,7 +23,7 @@ import Pullquote from '@components/blocks/Pullquote.astro';
 import StickyNoteGallery from '@components/blocks/StickyNoteGallery.astro';
 import Table from '@components/blocks/Table.astro';
 import Video from '@components/blocks/Video.astro';
-import ColorTheme from '@components/meta/ColorTheme.astro';
+import ColorTransition from '@components/meta/ColorTransition.astro';
 
 // --- types ---
 import type { Block } from '@lib/types';
@@ -77,14 +77,13 @@ const classList = [
 ].join(' ');
 ---
 
-<ColorTheme
-	name="cherry"
+<ColorTransition
 	class={classList}
 >
 	<div class={`content-width centered ${getWidth(block)}`}>
 		<Component {...block} />
 	</div>
-</ColorTheme>
+</ColorTransition>
 
 <style>
 	.block {

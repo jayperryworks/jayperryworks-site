@@ -11,12 +11,14 @@
  * @param {string} [tag='div'] - HTML tag for the wrapper element
  */
 
+// --- utilities ---
 import { arrayToPunctatedString } from '@lib/stringHelpers';
 
+// --- props ---
 const {
 	class: className = '',
 	disabled = false,
-	duration = '1.6s',
+	duration,
 	id = '',
 	style,
 	tag = 'div',
@@ -29,12 +31,8 @@ const classList = [
 	className,
 ].join(' ');
 
-const cssVariables = [
-	`--reveal-duration: ${duration};`,
-].join(' ');
-
 const styleList = arrayToPunctatedString([
-	cssVariables,
+	duration ? `--reveal-duration: ${duration}` : '',,
 	style,
 ]);
 ---
@@ -93,7 +91,7 @@ const styleList = arrayToPunctatedString([
 	}
 
 	:global([data-supports~='js']) .ready {
-		transition: opacity var(--reveal-duration) ease;
+		transition: opacity var(--reveal-duration, 1.6s) ease;
 	}
 
 	:global([data-supports~='js']) .visible {

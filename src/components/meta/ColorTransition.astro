@@ -1,0 +1,68 @@
+---
+// --- utilities ---
+import { arrayToPunctatedString } from '@lib/stringHelpers';
+
+// --- props ---
+const {
+	class: className,
+	disabled = false,
+	id,
+	style,
+	tag = 'div',
+} = Astro.props;
+
+const El = tag;
+
+const classList = [
+	!disabled ? 'color-transition' : '',
+	className || '',
+].join(' ');
+
+const theme = {
+	baseHue: '20',
+};
+---
+
+<El
+	class={classList}
+	data-hue={theme.baseHue}
+	{id}
+	{style}
+>
+	<slot></slot>
+</El>
+
+<script>
+	if ('IntersectionObserver' in window) {
+		// the element (usually body) with a color theme applied
+		// TODO what if there are multiple?
+		const themeElement = document.querySelector('.theme');
+		// Reference to the theme that exists when the page loads
+		const originalTheme = themeElement.style;
+
+		// all the elements on this page that trigger a color theme transition
+		const transitionedElements = Array.from(document.querySelectorAll('.color-transition'));
+
+		const colorTransitionObserver = new IntersectionObserver(
+			(entries) => {
+				// transition the page color theme as elements become visible
+				return entries.forEach((entry) => {
+					// if the element is visible, update the .theme element's style property
+					if (entry.isIntersecting) {
+						themeElement.style.setProperty('--base-h', entry.target.dataset.hue);
+					}
+				});
+			},
+			{
+				threshold: 1,
+			}
+		);
+
+		transitionedElements.forEach((element) => {
+			colorTransitionObserver.observe(element);
+		})
+	}
+</script>
+
+<style is:global>
+</style>

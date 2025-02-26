@@ -152,16 +152,16 @@ const classList = [
 			--custom-light-highlight,
 			oklch(71% 0.11 var(--base-h))
 		);
-		--color-primary:
-			var(--custom-light-primary,
+		--color-primary: var(
+			--custom-light-primary,
 			oklch(38% 0.008 var(--base-h))
 		);
-		--color-secondary:
-			var(--custom-light-secondary,
+		--color-secondary: var(
+			--custom-light-secondary,
 			oklch(47% 0.07 var(--base-h))
 		);
-		--color-surface:
-			var(--custom-light-surface,
+		--color-surface: var(
+			--custom-light-surface,
 			oklch(98% 0.005 var(--base-h))
 		);
 
@@ -169,25 +169,25 @@ const classList = [
 		 * Relative tokens
 		 * - Generated from the 'surface' token
 		 */
-		--color-island:
-			var(--custom-light-island,
+		--color-island: var(
+			--custom-light-island,
 			oklch(from var(--color-surface) calc(l + 0.04) c h)
 		);
-		--color-well:
-			var(--custom-light-well,
+		--color-well: var(
+			--custom-light-well,
 			oklch(from var(--color-surface) calc(l - 0.03) calc(c + 0.001) h)
 		);
-		--color-border:
-			var(--custom-light-border,
+		--color-border: var(
+			--custom-light-border,
 			oklch(from var(--color-surface) calc(l - 0.18) c h)
 		);
-		--color-shadow:
-			var(--custom-light-shadow,
+		--color-shadow: var(
+			--custom-light-shadow,
 			oklch(from var(--color-surface) calc(l - 0.5) c h / 0.2)
 		);
 
 		/* Animated color transitions */
-		transition-duration: 0.25s;
+		transition-duration: 0.5s;
 		transition-property: color, background-color, border-color;
 		transition-timing-function: ease-in-out;
 	}
