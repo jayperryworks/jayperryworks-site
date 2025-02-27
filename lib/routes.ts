@@ -21,6 +21,7 @@ export const fetchLinks = [
 	'design_project.start_date',
 	'longform.date',
 	'picture.date_completed',
+	'use_color_theme',
 ];
 
 // create a url string from a date object, e.g. year/month/day

@@ -1,6 +1,7 @@
 ---
 // --- utilities ---
-import { arrayToPunctatedString } from '@lib/stringHelpers';
+import prismic from '@lib/prismic';
+import { setThemeStyle } from '@lib/colorTheme';
 
 // --- props ---
 const {
@@ -9,6 +10,9 @@ const {
 	id,
 	style,
 	tag = 'div',
+	name,
+	hue,
+	link,
 } = Astro.props;
 
 const El = tag;
@@ -18,14 +22,32 @@ const classList = [
 	className || '',
 ].join(' ');
 
-const theme = {
-	baseHue: '20',
-};
+// --- helper functions ---
+
+/**
+ * Get values from the theme props (name, hue, and link)
+ * and format them into a string of CSS props to pass to the ColorTheme component
+ *
+ * @returns {string}
+ */
+async function getThemeValues() {
+	const theme = {
+		name,
+		hue,
+	};
+
+	if (link) {
+		const { data } = await prismic.getByID(link);
+		theme.custom = data.body1;
+	}
+
+	return setThemeStyle(theme);
+}
 ---
 
 <El
 	class={classList}
-	data-hue={theme.baseHue}
+	data-theme={await getThemeValues()}
 	{id}
 	{style}
 >
@@ -38,7 +60,7 @@ const theme = {
 		// TODO what if there are multiple?
 		const themeElement = document.querySelector('.theme');
 		// Reference to the theme that exists when the page loads
-		const originalTheme = themeElement.style;
+		const originalTheme = themeElement.getAttribute('style');
 
 		// all the elements on this page that trigger a color theme transition
 		const transitionedElements = Array.from(document.querySelectorAll('.color-transition'));
@@ -49,12 +71,14 @@ const theme = {
 				return entries.forEach((entry) => {
 					// if the element is visible, update the .theme element's style property
 					if (entry.isIntersecting) {
-						themeElement.style.setProperty('--base-h', entry.target.dataset.hue);
+						const { theme } = entry.target.dataset;
+
+						if (theme) themeElement.setAttribute('style', theme);
 					}
 				});
 			},
 			{
-				threshold: 1,
+				threshold: 0.5,
 			}
 		);
 

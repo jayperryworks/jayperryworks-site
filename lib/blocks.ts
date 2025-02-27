@@ -84,6 +84,8 @@ function billboard(slice: Slice): BlockType {
 		call_to_action_label: label,
 		link,
 		description: prismicText,
+		preset_color_theme,
+		use_color_theme,
 	} = slice.primary;
 
 	const images = slice.items.reduce((result, item) => {
@@ -123,6 +125,12 @@ function billboard(slice: Slice): BlockType {
 		displayMode: 'slide',
 		subtitle: headingText(subtitle as TitleField),
 		title: headingText(title1 as TitleField),
+		theme: {
+			name: preset_color_theme || undefined,
+			link: prismicHelpers.isFilled.contentRelationship(use_color_theme)
+				? use_color_theme.id
+				: undefined,
+		},
 	};
 }
 

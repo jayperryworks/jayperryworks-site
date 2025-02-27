@@ -16,20 +16,7 @@
 import type { Theme, ThemeNames } from '@lib/types';
 
 // --- utilities ---
-import { oklch, formatCss } from 'culori';
-
-// --- config ---
-// some brand colors (hues) that define preset themes
-const presetHues = {
-	cherry: 7,
-	mustard: 102,
-	mint: 158,
-	lavendar: 263,
-	anemone: 303,
-};
-
-// use this wherever a theme isn't defined
-const DEFAULT_HUE = presetHues.lavendar;
+import { setThemeStyle } from '@lib/colorTheme';
 
 // --- props ---
 const {
@@ -44,69 +31,6 @@ const {
 } = Astro.props;
 
 const El = el;
-
-/**
- * Render a CSS variable for a given base hue value (OKLCH)
- * @param {number | string} value - an OKLCH hue value, between 0 and 360
- * @returns {string}
- */
-function setBaseHue(value) {
-	return `--base-h: ${value}deg;`;
-}
-
-/**
- * Create CSS variables from the name, hue, and/or custom props
- *
- * @returns {string[]} - an array of css variable definitions, e.g. --base-h: 100deg;
- */
-function setThemeStyle() {
-	let styles = [];
-
-	// if a theme name is passed as a prop, assign a default hue to the base-h variable
-	if (name) styles.push(setBaseHue(presetHues[name.toLowerCase()]));
-
-	// if a custom hue is passed as a prop, assign it to the base-h variable
-	if (hue) styles.push(setBaseHue(hue));
-
-	if (custom?.length > 0) {
-		// if custom color roles are passed as a prop, assign role variables for each
-		// that match the tokens in the local styles below
-		for (const item of custom) {
-			const { primary: theme } = item;
-			// Default to "Light" - the CMS may pass null if the field hasn't been modified
-			let mode = theme?.mode || 'light';
-			// If there's only one item in the custom theme object,
-			// the mode is always 'light', because it must be used all the time
-			if (custom.length === 1) mode = 'light';
-
-			for (const role in theme) {
-				// if the role value isn't undefined/false
-				if (theme[role] && role !== 'mode') {
-					// clean up the field name (messy Prismic data) so it matches a color token
-					// - stopgap - hopefully won't need this with the new CMS
-					const name = role
-						.replaceAll('theme_', '')
-						.replaceAll('_foreground', '')
-						.replaceAll('_color', '');
-
-					const formattedColor = formatCss({
-						mode: 'oklch',
-						...oklch(theme[role]),
-					});
-
-					styles.push(
-						`--custom-${mode.toLowerCase()}-${name}: ${formattedColor};`
-					);
-				}
-			}
-		}
-	}
-
-	// if all else fails (no props have been passed in), use the default base hue
-	if (styles.length === 0 && !inherit) styles.push(setBaseHue(DEFAULT_HUE));
-
-	return styles.join('');
-}
 
 /**
  * Determine if the provided props allow for a dark mode in the theme

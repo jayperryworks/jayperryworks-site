@@ -79,6 +79,7 @@ const classList = [
 
 <ColorTransition
 	class={classList}
+	{...block.theme}
 >
 	<div class={`content-width centered ${getWidth(block)}`}>
 		<Component {...block} />
