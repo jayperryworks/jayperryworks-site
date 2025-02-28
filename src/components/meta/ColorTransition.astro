@@ -1,18 +1,34 @@
 ---
+/**
+ * Color transition meta component
+ * - trigger an animated transition in the page's color theme
+ * 	 when this element scrolls into view
+ *
+ * @param {string} [class] - append classes to the container
+ * @param {number} [hue] -number of a color theme base hue, 0 - 360
+ * @param {string} [id] - ID attribute for the container element
+ * @param {string} [link] - ID of a Prismic doc with a theme to use here
+ * @param {ThemeNames} [name] - the name of a preset theme, e.g. 'mustard'
+ * @param {string} [style] - add CSS rules to the container's style attribute
+ * @param {string} [tag='div'] - the HTML tag to use for the container element
+ */
+
 // --- utilities ---
 import prismic from '@lib/prismic';
 import { setThemeStyle } from '@lib/colorTheme';
 
+// --- types ---
+import type { ThemeNames } from '@lib/types';
+
 // --- props ---
 const {
 	class: className,
-	disabled = false,
+	hue,
 	id,
+	link,
+	name,
 	style,
 	tag = 'div',
-	name,
-	hue,
-	link,
 } = Astro.props;
 
 const El = tag;
@@ -21,7 +37,6 @@ const hasTheme = (name || hue || link) && true;
 
 const classList = [
 	'color-transition',
-	!disabled && hasTheme ? 'is-active' : '',
 	className || '',
 ].join(' ');
 
@@ -38,25 +53,21 @@ async function getThemeValues() {
 	 * @typedef {object} ThemeData
 	 * @property {string} name - name of a preset theme
 	 * @property {number} hue - number of a base hue
-	 * @property {string} link - ID of a Prismic doc with a theme to use here
+	 * @property {string} custom - CSS variables for a custom theme
 	 */
 
 	/** @type {ThemeData} */
-	const theme = {};
-
-	if (name) theme.name = name;
-	if (hue) theme.hue = hue;
+	const theme = {
+		name,
+		hue,
+	};
 
 	if (link) {
 		const { data } = await prismic.getByID(link);
 		theme.custom = data.body1;
 	}
 
-	// return a style attr value only if theme props are defined for this component
-	// - otherwise, this component can be 'invisible' and inherit the parent theme
-	if (Object.keys(theme).length > 0) {
-		return setThemeStyle({ ...theme });
-	}
+	return setThemeStyle(theme);
 }
 ---
 
@@ -77,11 +88,12 @@ async function getThemeValues() {
 		// Reference to the theme that exists when the page loads
 		const originalTheme = themeElement.getAttribute('style');
 
-		// all the elements on this page that trigger a color theme transition
+		// all the ColorTransition elements on this page
 		const transitionedElements = Array.from(document.querySelectorAll('.color-transition'));
-		// the elements with a custom theme also have an 'active' class
+		// all the elements that trigger a color transition
+		// - they are only 'active' if they have custom theming
 		const transitionedElementsActive = transitionedElements.filter((el) => {
-			return el.classList.contains('is-active');
+			return el.dataset.theme;
 		});
 
 		const colorTransitionObserver = new IntersectionObserver(
