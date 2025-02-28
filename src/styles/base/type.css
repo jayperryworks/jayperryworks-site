@@ -156,9 +156,9 @@ a {
 	--underline-w: 0.125em;
 
 	border-bottom: var(--underline-w) solid var(--color-highlight);
-	color: inherit;
+	color: var(--color-primary);
 	cursor: pointer;
-	transition: color 0.25s ease;
+	transition: all 0.25s ease;
 }
 
 @supports (text-decoration-thickness: var(--underline-w)) {

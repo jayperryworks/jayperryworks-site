@@ -18,9 +18,10 @@ import '@styles/utilities/type.css';
 import * as prismicHelpers from '@prismicio/helpers';
 
 // components
-import Gallery from '@components/layout/Gallery.astro';
+import RenderedText from '@components/elements/RenderedText.astro';
 import Passage from '@components/blocks/Passage.astro';
 import Heading from '@components/blocks/Heading.astro';
+import Gallery from '@components/layout/Gallery.astro';
 import RevealOnScroll from '@components/meta/RevealOnScroll.astro';
 
 // types
@@ -30,7 +31,6 @@ import {
 } from '@lib/types';
 
 import { TitleField } from '@prismicio/types';
-import RenderedText from '@components/elements/RenderedText.astro';
 
 const {
 	notes,
@@ -96,6 +96,7 @@ const classList = [
 		background-color: var(--color-island);
 		border-radius: var(--border-radius);
 		padding: var(--space-medium);
+		transition: background-color var(--color-transition) ease-in-out;
 	}
 
 	.sticky-note-item.shadow {

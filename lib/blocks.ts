@@ -193,6 +193,8 @@ function feed(slice: Slice): BlockType {
 		call_to_action_link: link,
 		description: prismicText,
 		content_source: contentSource,
+		preset_color_theme,
+		use_color_theme,
 	} = slice.primary;
 
 	return {
@@ -208,6 +210,12 @@ function feed(slice: Slice): BlockType {
 		displayMode: 'slide',
 		subtitle: headingText(subtitle as TitleField),
 		title: headingText(title as TitleField),
+		theme: {
+			name: preset_color_theme || undefined,
+			link: prismicHelpers.isFilled.contentRelationship(use_color_theme)
+				? use_color_theme.id
+				: undefined,
+		},
 	};
 }
 

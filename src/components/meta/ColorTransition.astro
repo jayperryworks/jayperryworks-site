@@ -17,8 +17,11 @@ const {
 
 const El = tag;
 
+const hasTheme = (name || hue || link) && true;
+
 const classList = [
-	!disabled ? 'color-transition' : '',
+	'color-transition',
+	!disabled && hasTheme ? 'is-active' : '',
 	className || '',
 ].join(' ');
 
@@ -31,23 +34,35 @@ const classList = [
  * @returns {string}
  */
 async function getThemeValues() {
-	const theme = {
-		name,
-		hue,
-	};
+	/**
+	 * @typedef {object} ThemeData
+	 * @property {string} name - name of a preset theme
+	 * @property {number} hue - number of a base hue
+	 * @property {string} link - ID of a Prismic doc with a theme to use here
+	 */
+
+	/** @type {ThemeData} */
+	const theme = {};
+
+	if (name) theme.name = name;
+	if (hue) theme.hue = hue;
 
 	if (link) {
 		const { data } = await prismic.getByID(link);
 		theme.custom = data.body1;
 	}
 
-	return setThemeStyle(theme);
+	// return a style attr value only if theme props are defined for this component
+	// - otherwise, this component can be 'invisible' and inherit the parent theme
+	if (Object.keys(theme).length > 0) {
+		return setThemeStyle({ ...theme });
+	}
 }
 ---
 
 <El
 	class={classList}
-	data-theme={await getThemeValues()}
+	data-theme={hasTheme && await getThemeValues()}
 	{id}
 	{style}
 >
@@ -64,6 +79,10 @@ async function getThemeValues() {
 
 		// all the elements on this page that trigger a color theme transition
 		const transitionedElements = Array.from(document.querySelectorAll('.color-transition'));
+		// the elements with a custom theme also have an 'active' class
+		const transitionedElementsActive = transitionedElements.filter((el) => {
+			return el.classList.contains('is-active');
+		});
 
 		const colorTransitionObserver = new IntersectionObserver(
 			(entries) => {
@@ -71,9 +90,15 @@ async function getThemeValues() {
 				return entries.forEach((entry) => {
 					// if the element is visible, update the .theme element's style property
 					if (entry.isIntersecting) {
+						console.log('intersecting')
 						const { theme } = entry.target.dataset;
 
-						if (theme) themeElement.setAttribute('style', theme);
+						if (theme) {
+							themeElement.setAttribute('style', theme);
+						} else {
+							// restore the original page theme
+							themeElement.setAttribute('style', originalTheme);
+						}
 					}
 				});
 			},
@@ -82,11 +107,10 @@ async function getThemeValues() {
 			}
 		);
 
-		transitionedElements.forEach((element) => {
-			colorTransitionObserver.observe(element);
-		})
+		if (transitionedElementsActive.length > 0) {
+			transitionedElements.forEach((element) => {
+				colorTransitionObserver.observe(element);
+			})
+		}
 	}
 </script>
-
-<style is:global>
-</style>
