@@ -6,7 +6,6 @@
  *
  * @param {string} [class] - append classes to the container
  * @param {number} [hue] -number of a color theme base hue, 0 - 360
- * @param {string} [id] - ID attribute for the container element
  * @param {string} [link] - ID of a Prismic doc with a theme to use here
  * @param {ThemeNames} [name] - the name of a preset theme, e.g. 'mustard'
  * @param {string} [style] - add CSS rules to the container's style attribute
@@ -24,15 +23,16 @@ import type { ThemeNames } from '@lib/types';
 const {
 	class: className,
 	hue,
-	id,
 	link,
 	name,
 	style,
 	el = 'div',
+	...props
 } = Astro.props;
 
 const El = el;
 
+// flag - have any theme props been passed in?
 const hasTheme = (name || hue || link) && true;
 
 const classList = [
@@ -74,8 +74,8 @@ async function getThemeValues() {
 <El
 	class={classList}
 	data-theme={hasTheme && await getThemeValues()}
-	{id}
 	{style}
+	{...props}
 >
 	<slot></slot>
 </El>
