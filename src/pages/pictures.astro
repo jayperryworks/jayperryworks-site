@@ -17,7 +17,7 @@ import prismic from '@lib/prismic';
 // --- components ---
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
-import ColorTheme from '@components/meta/ColorTheme.astro';
+import ColorTransition from '@components/meta/ColorThemeTransition.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
 import MainNav from '@components/navigation/MainNav.astro';
 import PictureGallery from '@components/navigation/PictureGallery.astro';
@@ -26,6 +26,8 @@ import Layout from '@layouts/Layout.astro';
 // --- config ---
 // use this aspect ratio when none is specified for a given series
 const DEFAULT_ASPECT_RATIO = '1 / 1';
+// color theme for the page when it loads
+// - series may each have their own color themes
 const DEFAULT_PAGE_THEME = 'mint';
 
 // --- data ---
@@ -176,13 +178,12 @@ function setSeriesWallColor(wallColor) {
 		</header>
 
 		{picturesBySeries.map((series) => (
-			<ColorTheme
+			<ColorTransition
 				el="section"
 				role="feed"
 				class="series"
 				id={series.uid || 'other-work'}
 				style={setSeriesWallColor(series?.colors?.wall)}
-				inherit
 				{...series?.theme}
 			>
 				<header class="series-header">
@@ -209,7 +210,7 @@ function setSeriesWallColor(wallColor) {
 					gutter={series.gutter?.toLowerCase()}
 					matteColor={series.colors?.matte}
 				/>
-			</ColorTheme>
+			</ColorTransition>
 		))}
 	</main>
 	<MainFooter />
@@ -217,12 +218,12 @@ function setSeriesWallColor(wallColor) {
 
 <style>
 	.title,
-	.series {
+	:global(.series) {
 		padding-inline: var(--space-outside);
 	}
 
 	.title > :global(h1),
-	.series > :global(*) {
+	:global(.series > *) {
 		max-width: var(--content-width-xxwide);
 		margin-inline: auto;
 		width: 100%;
@@ -232,7 +233,7 @@ function setSeriesWallColor(wallColor) {
 		padding-block: var(--space-xwide);
 	}
 
-	.series {
+	:global(.series) {
 		background-color: var(--color-wall, var(--color-surface));
 		display: flex;
 		flex-direction: column;
@@ -240,7 +241,7 @@ function setSeriesWallColor(wallColor) {
 		padding-block-end: var(--space-xwide);
 	}
 
-	.series:not(:first-of-type) {
+	:global(.series:not(:first-of-type)) {
 		border-block-start: var(--border-default);
 		padding-block-start: var(--space-xwide);
 	}

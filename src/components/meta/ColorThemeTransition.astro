@@ -28,10 +28,10 @@ const {
 	link,
 	name,
 	style,
-	tag = 'div',
+	el = 'div',
 } = Astro.props;
 
-const El = tag;
+const El = el;
 
 const hasTheme = (name || hue || link) && true;
 
