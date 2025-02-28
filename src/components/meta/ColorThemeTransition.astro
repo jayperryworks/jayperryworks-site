@@ -102,7 +102,6 @@ async function getThemeValues() {
 				return entries.forEach((entry) => {
 					// if the element is visible, update the .theme element's style property
 					if (entry.isIntersecting) {
-						console.log('intersecting')
 						const { theme } = entry.target.dataset;
 
 						if (theme) {
