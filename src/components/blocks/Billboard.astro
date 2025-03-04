@@ -7,6 +7,7 @@
  * @param {Object} cta - the button
  * @param {LinkField} cta.link - url to link to
  * @param {string} cta.label - label for the button
+ * @param {string} [class] - classes to append to the container
  * @param {CollageItem[]} [images] - image(s) to display
  * @param {Object} [description] - descriptive text to display below the title
  * @param {RichTextField} description.prismicText - formatted Prismic rich text
@@ -17,6 +18,7 @@
 // --- assets ---
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
+import '@styles/utilities/contentWidth.css';
 import arrowRight from '@icons/arrow-right.svg?raw';
 
 // --- utils ---
@@ -25,10 +27,11 @@ import * as prismicHelpers from '@prismicio/helpers';
 
 // --- components ---
 import Button from '@components/elements/Button.astro';
-import Figure from '@components/blocks/Figure.astro';
 import Collage from '@components/blocks/Collage.astro';
+import Figure from '@components/blocks/Figure.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
+import ColorTheme from '@components/meta/ColorTheme.astro';
 
 // --- types ---
 import type { CollageItem } from '@lib/types';
@@ -36,18 +39,19 @@ import type { RichTextField, LinkField } from '@prismicio/types';
 
 // --- props ---
 const {
-	images,
-	cta,
-	description,
-	subtitle,
 	title,
+	cta,
+	class: className,
+	description,
+	images,
+	subtitle,
 } = Astro.props;
 
 const { link, label } = cta;
 const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 ---
 
-<article class="billboard">
+<article class={['billboard', className].join(' ')}>
 	<header>
 		<Heading level={2}>
 			<a
@@ -57,7 +61,6 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 				{title}
 			</a>
 		</Heading>
-
 		{subtitle && (
 			<Heading
 				class="subtitle"
@@ -72,12 +75,10 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 				</a>
 			</Heading>
 		)}
-
 		<Passage
 			text={description}
 			typeSize="delta"
 		/>
-
 		<Button
 			class="cta"
 			href={resolvedLink}
@@ -85,9 +86,7 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 		>
 			{label || 'Read more'}
 		</Button>
-
 	</header>
-
 	{images?.length > 1
 		? <Collage
 				class="cover"
@@ -103,8 +102,11 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 </article>
 
 <style>
-	header > :global(* + *) {
-		padding-block-start: var(--space-medium);
+	header {
+		align-items: start;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-medium);
 	}
 
 	header :global(.subtitle) {
@@ -117,15 +119,13 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 
 	.billboard {
 		align-items: center;
-		display: grid;
 		flex: 1;
-		gap: var(--space-wide) var(--space-medium);
-		grid-template-rows: repeat(auto-fit, minmax(auto, 1fr));
-	}
-
-	:global(.block.slide) .billboard {
 		min-height: 100svh;
 		padding-block: var(--space-xwide);
+		display: grid;
+		gap: var(--space-wide);
+		grid-template-rows: repeat(auto-fit, minmax(auto, 1fr));
+		width: 100%;
 	}
 
 	.billboard > :global(.cover) {
@@ -137,7 +137,7 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 	@media screen and (min-width: 42em) {
 		.billboard {
 			grid-template-columns: repeat(auto-fit, minmax(38rem, 1fr));
-			gap: var(--space-wide);
+			gap: var(--space-xwide);
 		}
 	}
 </style>

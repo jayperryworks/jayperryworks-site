@@ -1,23 +1,27 @@
 @import url('@styles/tokens/contentWidth.css');
 
-[class*="content-width"] {
+.content-width {
 	margin-inline: auto;
 	max-width: var(--content-width-default);
 	width: 100%;
 }
 
-.content-width-narrow {
+.content-width.narrow {
 	max-width: var(--content-width-narrow);
 }
 
-.content-width-wide {
+.content-width.wide {
 	max-width: var(--content-width-wide);
 }
 
-.content-width-xwide {
+.content-width.xwide {
 	max-width: var(--content-width-xwide);
 }
 
-.content-width-xxwide {
+.content-width.xxwide {
 	max-width: var(--content-width-xxwide);
+}
+
+.content-width.centered {
+	margin-inline: auto;
 }

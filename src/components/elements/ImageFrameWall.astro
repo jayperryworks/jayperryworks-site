@@ -85,6 +85,7 @@ const styleList = arrayToPunctatedString([
 	`--matte-thickness: ${matteThickness}%`,
 	matteColor && `--matte-color: ${matteColor};`,
 ]);
+
 ---
 
 <El
@@ -120,6 +121,7 @@ const styleList = arrayToPunctatedString([
 		justify-content: center;
 		margin: 0;
 		max-height: 100%;
+		transition: background-color var(--color-transition, 0.25s) ease-in-out;
 	}
 
 	.picture.frame {

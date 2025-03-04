@@ -22,15 +22,16 @@ import '@styles/tokens/contentWidth.css';
 import type { ImageField } from '@prismicio/types';
 
 import type {
-	Frame,
+	ContentWidth,
 	FormattedText,
+	Frame,
 	ImageFit,
 } from '@lib/types';
 
 // --- child components ---
 import ImageFrame from '@components/elements/ImageFrame.astro';
-import Caption from '@components/blocks/FigureCaption.astro';
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+import Caption from '@components/elements/FigureCaption.astro';
+import RevealOnScroll from '@components/meta/RevealOnScroll.astro';
 
 // --- props ---
 const {
@@ -47,7 +48,10 @@ const {
 } = Astro.props;
 ---
 
-<figure class={['figure', className].join(' ')}>
+<figure class={[
+	'figure',
+	className || '',
+].join(' ')}>
 	<RevealOnScroll class="wrapper">
 		<slot>
 			{source && (
@@ -82,7 +86,7 @@ const {
 	.figure :global(.caption) {
 		margin-block-start: auto;
 		margin-inline: auto;
-		padding-block-start: var(--space-narrow);
 		max-width: var(--content-width-default);
+		padding-block-start: var(--space-narrow);
 	}
 </style>

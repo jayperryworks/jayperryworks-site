@@ -1,8 +1,15 @@
 ---
-// assets
+/**
+ * Block component
+ * - wrapper for all content blocks, passes props through
+ *
+ * @param {Block} block - block props from Prismic
+ */
+
+// --- assets ---
 import '@styles/tokens/contentWidth.css';
 
-// block components
+// --- components ---
 import Aside from '@components/blocks/Aside.astro';
 import Billboard from '@components/blocks/Billboard.astro';
 import BlockQuote from '@components/blocks/BlockQuote.astro';
@@ -16,29 +23,31 @@ import Pullquote from '@components/blocks/Pullquote.astro';
 import StickyNoteGallery from '@components/blocks/StickyNoteGallery.astro';
 import Table from '@components/blocks/Table.astro';
 import Video from '@components/blocks/Video.astro';
+import ColorTransition from '@components/meta/ColorThemeTransition.astro';
 
-// Typescript
+// --- types ---
 import type { Block } from '@lib/types';
 
-export interface Props {
-	block: Block;
-	class?: string;
-}
-
+// --- props ---
 const {
 	block,
 	class: className,
-} = Astro.props as Props;
+} = Astro.props;
 
-function getWidth(prominence) {
+/**
+ * Match the 'prominence' value to the corresponding width token
+ * @param {Block} block
+ * @returns {string}
+ */
+function getWidth(block) {
 	const widths = {
 		Small: 'narrow',
-		Medium: 'default',
 		Large: 'xwide',
 		XLarge: 'xxwide',
 	};
 
-	return widths[prominence] || 'default';
+	if (block.displayMode === 'slide') return widths['XLarge'];
+	return widths[block.prominence] || '';
 }
 
 const displayModeClass = block.displayMode === 'slide' ? 'slide border-seam-top' : '';
@@ -60,31 +69,19 @@ const blocks = {
 };
 
 const Component = blocks[block.type];
-const classList = ['block', displayModeClass, className].join(' ');
-const style = `--block-width: var(--content-width-${getWidth(block.prominence)});`;
+const classList = [
+	'block',
+	'space-outside-margins',
+	displayModeClass,
+	className,
+].join(' ');
 ---
 
-<div class={classList}>
-	<div class="wrapper" {style}>
+<ColorTransition
+	class={classList}
+	{...block.theme}
+>
+	<div class={`content-width centered ${getWidth(block)}`}>
 		<Component {...block} />
 	</div>
-</div>
-
-<style>
-	.block {
-		padding-inline: var(--space-outside);
-	}
-
-	.block.slide {
-		padding-block-start: 0;
-	}
-
-	.wrapper {
-		max-width: var(--block-width);
-		margin-inline: auto;
-	}
-
-	.slide .wrapper {
-		max-width: var(--content-width-xxwide);
-	}
-</style>
+</ColorTransition>

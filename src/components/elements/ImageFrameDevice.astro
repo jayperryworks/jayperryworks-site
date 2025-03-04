@@ -133,17 +133,20 @@ const styleList = [
 		.device-frame {
 			aspect-ratio: var(--aspect-ratio);
 			background-color: var(--color-island);
-			border: var(--border-solid);
 			border-radius: var(--bezel-radius);
+			border: var(--border-solid);
 			box-shadow: var(--elevation-medium);
-			justify-content: center;
 			display: flex;
+			justify-content: center;
 			margin-inline: auto;
-			max-height: calc(var(--max-height) * 1vh);
 			max-height: calc(var(--max-height) * 1svh);
+			max-height: calc(var(--max-height) * 1vh);
 			overflow: hidden;
 			padding: var(--bezel-width-y) var(--bezel-width-x);
 			position: relative;
+			transition: background-color var(--color-transition) ease-in-out;
+			height: 100%;
+			width: 100%;
 		}
 
 		.wrapper {

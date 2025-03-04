@@ -1,25 +1,29 @@
 ---
-// styles
+/**
+ * Figure caption component
+ * - display a caption below the image in a Figure block
+ *
+ * @param {FormattedText} text - the body text
+ * @param {FormattedText} [attribution] - optional credit for the creator
+ * @param {string} [class] - classes to append to the container
+ */
+
+// --- styles ---
 import '@styles/tokens/spacing.css';
 import '@styles/utilities/type.css';
 
-// components
+// --- components ---
 import RenderedText from "@components/elements/RenderedText.astro";
 
-// types
+// --- types ---
 import { FormattedText } from "@lib/types";
 
-export interface Props {
-	text: FormattedText;
-	attribution?: FormattedText;
-	class?: string;
-}
-
+// --- props ---
 const {
 	text,
 	attribution,
-	class: className = ''
-} = Astro.props as Props;
+	class: className = '',
+} = Astro.props;
 ---
 
 <figcaption class={`type-role-accent type-scale-zeta ${className}`}>

@@ -8,26 +8,15 @@
  * @param {number} [hue] - custom hue number
  * @param {ThemeNames} [name] - the name of a preset theme
  * @param {Partial<Theme>[]} [custom] - explicit color roles for custom themes
+ * @param {boolean} [inherit] - should this element inherit theme values from its parent?
+ * @param {string} [style] - inline styles to append to the container
  */
 
 //  --- types ---
 import type { Theme, ThemeNames } from '@lib/types';
 
 // --- utilities ---
-import { oklch, formatCss } from 'culori';
-
-// --- config ---
-// some brand colors (hues) that define preset themes
-const presetHues = {
-	cherry: 7,
-	mustard: 102,
-	mint: 158,
-	lavendar: 263,
-	anemone: 303,
-};
-
-// use this wherever a theme isn't defined
-const DEFAULT_HUE = presetHues.lavendar;
+import { setThemeStyle } from '@lib/colorTheme';
 
 // --- props ---
 const {
@@ -42,69 +31,6 @@ const {
 } = Astro.props;
 
 const El = el;
-
-/**
- * Render a CSS variable for a given base hue value (OKLCH)
- * @param {number | string} value - an OKLCH hue value, between 0 and 360
- * @returns {string}
- */
-function setBaseHue(value) {
-	return `--base-h: ${value}deg;`;
-}
-
-/**
- * Create CSS variables from the name, hue, and/or custom props
- *
- * @returns {string[]} - an array of css variable definitions, e.g. --base-h: 100deg;
- */
-function setThemeStyle() {
-	let styles = [];
-
-	// if a theme name is passed as a prop, assign a default hue to the base-h variable
-	if (name) styles.push(setBaseHue(presetHues[name.toLowerCase()]));
-
-	// if a custom hue is passed as a prop, assign it to the base-h variable
-	if (hue) styles.push(setBaseHue(hue));
-
-	if (custom?.length > 0) {
-		// if custom color roles are passed as a prop, assign role variables for each
-		// that match the tokens in the local styles below
-		for (const item of custom) {
-			const { primary: theme } = item;
-			// Default to "Light" - the CMS may pass null if the field hasn't been modified
-			let mode = theme?.mode || 'light';
-			// If there's only one item in the custom theme object,
-			// the mode is always 'light', because it must be used all the time
-			if (custom.length === 1) mode = 'light';
-
-			for (const role in theme) {
-				// if the role value isn't undefined/false
-				if (theme[role] && role !== 'mode') {
-					// clean up the field name (messy Prismic data) so it matches a color token
-					// - stopgap - hopefully won't need this with the new CMS
-					const name = role
-						.replaceAll('theme_', '')
-						.replaceAll('_foreground', '')
-						.replaceAll('_color', '');
-
-					const formattedColor = formatCss({
-						mode: 'oklch',
-						...oklch(theme[role]),
-					});
-
-					styles.push(
-						`--custom-${mode.toLowerCase()}-${name}: ${formattedColor};`
-					);
-				}
-			}
-		}
-	}
-
-	// if all else fails (no props have been passed in), use the default base hue
-	if (styles.length === 0 && !inherit) styles.push(setBaseHue(DEFAULT_HUE));
-
-	return styles.join('');
-}
 
 /**
  * Determine if the provided props allow for a dark mode in the theme
@@ -132,7 +58,10 @@ const classList = [
 
 <El
 	class={classList}
-	style={[setThemeStyle(), style || ''].join('')}
+	style={[
+		setThemeStyle({ name, hue, custom }),
+		style || '',
+	].join('')}
 	{...props}
 >
 	<slot></slot>
@@ -150,16 +79,16 @@ const classList = [
 			--custom-light-highlight,
 			oklch(71% 0.11 var(--base-h))
 		);
-		--color-primary:
-			var(--custom-light-primary,
+		--color-primary: var(
+			--custom-light-primary,
 			oklch(38% 0.008 var(--base-h))
 		);
-		--color-secondary:
-			var(--custom-light-secondary,
+		--color-secondary: var(
+			--custom-light-secondary,
 			oklch(47% 0.07 var(--base-h))
 		);
-		--color-surface:
-			var(--custom-light-surface,
+		--color-surface: var(
+			--custom-light-surface,
 			oklch(98% 0.005 var(--base-h))
 		);
 
@@ -167,22 +96,29 @@ const classList = [
 		 * Relative tokens
 		 * - Generated from the 'surface' token
 		 */
-		--color-island:
-			var(--custom-light-island,
+		--color-island: var(
+			--custom-light-island,
 			oklch(from var(--color-surface) calc(l + 0.04) c h)
 		);
-		--color-well:
-			var(--custom-light-well,
+		--color-well: var(
+			--custom-light-well,
 			oklch(from var(--color-surface) calc(l - 0.03) calc(c + 0.001) h)
 		);
-		--color-border:
-			var(--custom-light-border,
+		--color-border: var(
+			--custom-light-border,
 			oklch(from var(--color-surface) calc(l - 0.18) c h)
 		);
-		--color-shadow:
-			var(--custom-light-shadow,
+		--color-shadow: var(
+			--custom-light-shadow,
 			oklch(from var(--color-surface) calc(l - 0.5) c h / 0.2)
 		);
+
+		/* Color transition duration token */
+		--color-transition: 0.5s;
+
+		transition-duration: var(--color-transition);
+		transition-property: color, background-color, border-color;
+		transition-timing-function: ease-in-out;
 	}
 
 	/* Default theme tokens (dark mode) */

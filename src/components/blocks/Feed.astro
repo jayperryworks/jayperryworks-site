@@ -1,50 +1,50 @@
 ---
-// assets
+/**
+ * Feed block component
+ * - display a list of posts from a given content source (e.g. blog)
+ *
+ * @param {'blog_post' | 'picture' | 'longform'} contentSource - the content type to display
+ * @param {Object} [cta] - call to action
+ * @param {LinkField} [cta.link] - the link object for the CTA
+ * @param {string} [cta.label] - the label for the button
+ * @param {Object} [description] - short descriptive blurb
+ * @param {RichTextField} [description.prismicText] - formatted text
+ * @param {string} [subtitle]
+ * @param {string} [title]
+ */
+
+// --- assets ---
 import '@styles/tokens/borders.css';
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
+import '@styles/utilities/contentWidth.css';
 import '@styles/utilities/type.css';
 import arrowRight from '@icons/arrow-right.svg?raw';
 
-// utils
+// --- utils ---
 import { blogPost, linkResolver } from '@lib/routes';
 import { truncate } from '@lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
 
-// components
+// --- components ---
 import Gallery from '@components/layout/Gallery.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
 import Button from '@components/elements/Button.astro';
 import PostListing from '@components/navigation/BlogListingsItem.astro';
 
-// types
+// --- types ---
 import type { LinkField, RichTextField } from '@prismicio/types';
 
-type FeedSource = 'blog_post' | 'picture' | 'longform';
-
-export interface Props {
-	cta?: {
-		link: LinkField,
-		label: string,
-	};
-	description?: {
-		prismicText: RichTextField,
-	};
-	contentSource: FeedSource;
-	number?: number;
-	subtitle?: string;
-	title?: string;
-}
-
+// --- props ---
 const {
 	cta,
 	description,
 	contentSource,
 	subtitle,
 	title,
-} = Astro.props as Props;
+} = Astro.props;
 
 const { link, label } = cta;
 const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
@@ -112,7 +112,6 @@ if (contentSource === 'blog_post') {
 			/>
 		)}
 	</header>
-
 	<Gallery
 		size="large"
 		gutter="narrow"
@@ -123,7 +122,6 @@ if (contentSource === 'blog_post') {
 			</li>
 		))}
 	</Gallery>
-
 	<footer>
 		<Button
 			href={resolvedLink}
@@ -136,13 +134,10 @@ if (contentSource === 'blog_post') {
 
 <style>
 	.feed {
-		flex: 1;
-		justify-content: center;
 		display: flex;
 		flex-direction: column;
-	}
-
-	:global(.block.slide) .feed {
+		flex: 1;
+		justify-content: center;
 		min-height: 100svh;
 		padding-block: var(--space-xwide);
 	}
@@ -164,6 +159,7 @@ if (contentSource === 'blog_post') {
 		background-color: var(--color-island);
 		padding: var(--space-medium);
 		padding-block-start: var(--space-narrow);
+		transition: background-color var(--color-transition) ease-in-out;
 	}
 
 	.item > :global(* + *) {

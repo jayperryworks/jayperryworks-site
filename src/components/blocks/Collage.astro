@@ -1,15 +1,4 @@
 ---
-import type {
-	CollageItem,
-	CollageItemSize,
-	CollageItemPriority,
-	SpaceScale,
-	FormattedText,
-	ImageFit,
-	Frame
-} from '@lib/types';
-import type { ImageField } from '@prismicio/types';
-
 /**
  * Collage block component
  * - Display images or other content in a tight grid arrangement
@@ -29,6 +18,20 @@ import type { ImageField } from '@prismicio/types';
 // --- components ---
 import ImageFrame from '@components/elements/ImageFrame.astro';
 import Figure from '@components/blocks/Figure.astro';
+
+// --- types ---
+import type {
+	CollageItem,
+	CollageItemPriority,
+	CollageItemSize,
+	ContentWidth,
+	FormattedText,
+	Frame,
+	ImageFit,
+	Prominence,
+	SpaceScale,
+} from '@lib/types';
+import type { ImageField } from '@prismicio/types';
 
 // --- props ---
 const {
@@ -66,10 +69,13 @@ function getItemClassList(relativeSize, priority = '1') {
 <Figure
 	{attribution}
 	{caption}
-	class={className}
+	class={[
+		'collage',
+		className,
+	].join(' ')}
 >
 	<ul
-		class="collage"
+		class="wrapper"
 		style={`--gutter: var(--space-${gutter});`}
 	>
 		{images.map(({
@@ -96,7 +102,7 @@ function getItemClassList(relativeSize, priority = '1') {
 
 <style>
 	/* container */
-	.collage {
+	.wrapper {
 		align-items: center;
 		display: grid;
 		gap: var(--space-narrow);
@@ -108,7 +114,7 @@ function getItemClassList(relativeSize, priority = '1') {
 	}
 
 	@media screen and (min-width: 30em) {
-		.collage {
+		.wrapper {
 			gap: var(--gutter);
 		}
 	}

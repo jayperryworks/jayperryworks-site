@@ -29,6 +29,7 @@ export type Theme = {
 // --- layout and UI ---
 export type Align = 'start' | 'center' | 'end';
 export type SpaceScale = 'xxnarrow' | 'xnarrow' | 'narrow' | 'medium' | 'wide' | 'xwide';
+export type ContentWidth = 'narrow' | 'default' | 'wide' | 'xwide' | 'xxwide'
 export type Prominence = 'Small' | 'Medium' | 'Large';
 export type GallerySize = 'small' | 'medium' | 'large';
 export type ImageFit = 'default' | 'contain' | 'cover';

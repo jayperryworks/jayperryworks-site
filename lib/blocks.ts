@@ -3,7 +3,7 @@ import { camelCase } from 'change-case';
 import * as prismicHelpers from '@prismicio/helpers';
 
 // types
-import type { Block as BlockType } from '@lib/types';
+import type { Block as BlockType, Prominence } from '@lib/types';
 
 import type {
 	ImageField,
@@ -48,8 +48,8 @@ function sharedBlockFields(slice: Slice): BlockType {
 
 	return {
 		displayMode: (displayMode as string).toLowerCase(),
-		prominence: prominence as BlockType['prominence'],
 		includeInExcerpt: Boolean(includeInExcerpt),
+		prominence: prominence as Prominence,
 		type: camelCase(slice.slice_type),
 	};
 }
@@ -84,6 +84,8 @@ function billboard(slice: Slice): BlockType {
 		call_to_action_label: label,
 		link,
 		description: prismicText,
+		preset_color_theme,
+		use_color_theme,
 	} = slice.primary;
 
 	const images = slice.items.reduce((result, item) => {
@@ -123,6 +125,12 @@ function billboard(slice: Slice): BlockType {
 		displayMode: 'slide',
 		subtitle: headingText(subtitle as TitleField),
 		title: headingText(title1 as TitleField),
+		theme: {
+			name: preset_color_theme || undefined,
+			link: prismicHelpers.isFilled.contentRelationship(use_color_theme)
+				? use_color_theme.id
+				: undefined,
+		},
 	};
 }
 
@@ -185,6 +193,8 @@ function feed(slice: Slice): BlockType {
 		call_to_action_link: link,
 		description: prismicText,
 		content_source: contentSource,
+		preset_color_theme,
+		use_color_theme,
 	} = slice.primary;
 
 	return {
@@ -200,6 +210,12 @@ function feed(slice: Slice): BlockType {
 		displayMode: 'slide',
 		subtitle: headingText(subtitle as TitleField),
 		title: headingText(title as TitleField),
+		theme: {
+			name: preset_color_theme || undefined,
+			link: prismicHelpers.isFilled.contentRelationship(use_color_theme)
+				? use_color_theme.id
+				: undefined,
+		},
 	};
 }
 

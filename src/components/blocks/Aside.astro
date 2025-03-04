@@ -1,41 +1,45 @@
 ---
-	// styles
-	import '@styles/tokens/borders.css';
-	import '@styles/tokens/spacing.css';
-	import '@styles/tokens/type.css';
+/**
+ * Aside block component
+ * - display a note or callout with text
+ *
+ * @param {FormattedText} text - the text content
+ * @param {string} [class] - append classes to the container
+ * @param {KeyTextField} [label] - optional label, e.g. 'note'
+ * @param {'Default' | 'Small'} [typeSize='Default'] - size of the body text
+ */
 
-	// components
-	import Heading from '@components/blocks/Heading.astro';
-	import Passage from '@components/blocks/Passage.astro';
+// --- styles ---
+import '@styles/tokens/borders.css';
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+import '@styles/utilities/contentWidth.css';
 
-	// types
-	import { KeyTextField } from '@prismicio/types';
-	import type { FormattedText, TypeScale } from '@lib/types';
+// --- components ---
+import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
 
-	export interface Props {
-		text: FormattedText;
-		border?: boolean;
-		class?: string;
-		label?: KeyTextField;
-		typeSize?: 'Default' | 'Small';
-	}
+// --- types ---
+import { KeyTextField } from '@prismicio/types';
+import type { FormattedText } from '@lib/types';
 
-	const {
-		text,
-		class: className = '',
-		label,
-		typeSize = 'Default',
-	} = Astro.props as Props;
+// --- props ---
+const {
+	text,
+	class: className,
+	label,
+	typeSize = 'Default',
+} = Astro.props;
 
-	const typeScale = {
-		Default: 'epsilon',
-		Small: 'zeta',
-	};
+const typeScale = {
+	Default: 'epsilon',
+	Small: 'zeta',
+};
 
-	const classList = [
-		'aside',
-		className,
-	].join(' ');
+const classList = [
+	'aside',
+	className,
+].join(' ');
 ---
 
 <aside class={classList}>
@@ -50,7 +54,7 @@
 	<Passage
 		{text}
 		class="text"
-		typeSize={typeScale[typeSize] as TypeScale}
+		typeSize={typeScale[typeSize]}
 		typeFace="accent"
 	/>
 </aside>
@@ -62,7 +66,7 @@
 		color: var(--color-secondary);
 		display: flex;
 		flex-direction: column;
-		padding: var(--space-medium);
+		padding:  var(--space-medium);
 	}
 
 	.aside :global(.text) {

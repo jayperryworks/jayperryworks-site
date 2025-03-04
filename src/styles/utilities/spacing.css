@@ -1,0 +1,5 @@
+@import url('@styles/tokens/spacing.css');
+
+.space-outside-margins {
+	padding-inline: var(--space-outside);
+}

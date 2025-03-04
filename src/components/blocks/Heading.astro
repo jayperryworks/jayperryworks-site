@@ -1,31 +1,37 @@
 ---
-// Render a heading tag with the correct markup and classes
+/**
+ * Headling block component
+ * - render a heading tag with the correct markup and classes
+ *
+ * @param {'left' | 'center' | 'right'} [align='left'] - align the text
+ * @param {string} [class] - classes to append to the container
+ * @param {string} [id] - ID attribute
+ * @param {number} [level=2] - the level of the heading tag
+ * @param {boolean} [subheading] - is this a subheading?
+ * 	- If so, render as a 'p' tag and style the text differently
+ * @param {TitleField} [text] - the title text, can also pass in the slot
+ */
 
-// styles
+// --- assets ---
 import '@styles/utilities/type.css';
-import { removeWidows } from '@lib/stringHelpers';
+import '@styles/utilities/spacing.css';
+
+// --- helpers ----
 import * as prismicHelpers from '@prismicio/helpers';
 
-// types
-import { TitleField } from '@prismicio/types';
+// --- types ---
+import type { TitleField } from '@prismicio/types';
+import type { ContentWidth } from '@lib/types';
 
-export interface Props {
-	align?: 'left' | 'center' | 'right',
-	class?: string,
-	id?: string,
-	level?: number,
-	subheading?: boolean,
-	text?: TitleField,
-}
-
+// --- props ---
 const {
 	align = 'left',
 	class: className = '',
 	id,
 	level = 2,
-	subheading = false,
+	subheading,
 	text,
-} = Astro.props as Props;
+} = Astro.props;
 
 const levels = [
 	'alpha',
@@ -47,20 +53,18 @@ const classList = [
 ---
 
 <El class={classList} id={id}>
-	<slot>
-		{text && <Fragment set:html={removeWidows(prismicHelpers.asText(text))} />}
-	</slot>
+	<slot>{text && prismicHelpers.asText(text)}</slot>
 </El>
 
 <style>
 	.heading {
-		max-width: none;
 		margin-block: 0;
 		text-wrap: balance;
 	}
 
 	.sub {
 		color: var(--color-secondary);
+		max-width: none; /* override the default max width for paragraphs */
 	}
 
 	.align-center {

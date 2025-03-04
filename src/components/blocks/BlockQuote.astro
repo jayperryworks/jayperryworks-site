@@ -1,25 +1,31 @@
 ---
-// assets
-import '@styles/tokens/spacing.css';
+/**
+ * Block quote component
+ * - display a long quote in editorial text
+ *
+ * @param {FormattedText} text - body text
+ * @param {KeyTextField} [attribution] - optional credit for the author
+ * @param {string} [class] - append classes to the container
+ */
 
-// components
+// --- assets ---
+import '@styles/tokens/spacing.css';
+import '@styles/utilities/contentWidth.css';
+import '@styles/utilities/spacing.css';
+
+// --- components ---
 import Passage from '@components/blocks/Passage.astro';
 
-// types
+// --- types ---
 import type { FormattedText } from '@lib/types';
 import { KeyTextField } from '@prismicio/types';
 
-export interface Props {
-	text: FormattedText;
-	attribution?: KeyTextField;
-	class?: string;
-}
-
+// --- props ---
 const {
 	text,
 	attribution,
 	class: className = '',
-} = Astro.props as Props;
+} = Astro.props;
 ---
 
 <blockquote class={className}>
@@ -27,7 +33,6 @@ const {
 		class="text"
 		{text}
 	/>
-
 	{attribution && (
 		<cite class="type-role-accent type-scale-zeta">
 			&mdash; {attribution}
@@ -35,8 +40,8 @@ const {
 	)}
 </blockquote>
 
-<style>
-	blockquote {
+<style>blockquote :global(.text),
+	cite {
 		padding-inline-start: var(--space-medium);
 	}
 

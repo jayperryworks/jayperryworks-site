@@ -1,13 +1,9 @@
 ---
-import type { SpaceScale, FormattedText, ImageFit, Frame } from '@lib/types';
-import type { ImageField } from '@prismicio/types';
-
 /**
  * @typedef {Object} ImageGalleryItem - image objects for each grid item
  * @property {ImageField} image - default image field
  * @property {ImageField} darkModeImage - a dark-mode version of the image
  */
-
 
 /**
  * Image gallery block component
@@ -22,13 +18,24 @@ import type { ImageField } from '@prismicio/types';
  * @param {ImageFit} [fitImages='default'] - object-fit styles for each image
  * @param {Frame} [frame='None'] - a frame or device for all images
  * @param {SpaceScale} [gutter='xnarrow'] - how much space between items
+ * @param {boolean} [useImageAspectRatio] - use the images' own aspect ratios for their frames
  */
 
 // --- components ---
 import Figure from '@components/blocks/Figure.astro';
 import Gallery from '@components/layout/Gallery.astro';
 import ImageFrame from '@components/elements/ImageFrame.astro';
-import RevealOnScroll from '@components/layout/RevealOnScroll.astro';
+import RevealOnScroll from '@components/meta/RevealOnScroll.astro';
+
+// --- types ---
+import type { ImageField } from '@prismicio/types';
+import type {
+	ContentWidth,
+	FormattedText,
+	Frame,
+	ImageFit,
+	SpaceScale,
+} from '@lib/types';
 
 // --- props ---
 const {
@@ -46,8 +53,11 @@ const {
 ---
 
 <Figure
-	class={['image-gallery', className].join(' ')}
 	caption={caption && { markdown: caption }}
+	class={[
+		'image-gallery',
+		className,
+	].join(' ')}
 	{attribution}
 >
 	<Gallery
