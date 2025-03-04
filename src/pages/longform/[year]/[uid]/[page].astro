@@ -206,7 +206,10 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 			<!-- titling -->
 			<header class="headline">
 					<!-- project title -->
-					<Heading level={1} text={project.title} />
+					<Heading
+						level={1}
+						text={project.title}
+					/>
 					{prismicHelpers.isFilled.title(project.subtitle) && (
 						<Heading
 							level={2}
