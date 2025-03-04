@@ -89,7 +89,7 @@ async function getThemeValues() {
 		const originalTheme = themeElement.getAttribute('style');
 
 		// all the ColorTransition elements on this page
-		const transitionedElements = Array.from(document.querySelectorAll('.color-transition'));
+		const transitionedElements = Array.from(themeElement.querySelectorAll('.color-transition'));
 		// all the elements that trigger a color transition
 		// - they are only 'active' if they have custom theming
 		const transitionedElementsActive = transitionedElements.filter((el) => {
@@ -118,10 +118,30 @@ async function getThemeValues() {
 			}
 		);
 
-		if (transitionedElementsActive.length > 0) {
-			transitionedElements.forEach((element) => {
-				colorTransitionObserver.observe(element);
-			})
+		/**
+		 * Start the intersection observer
+		 * @returns {null}
+		 */
+		function startObserver() {
+			if (transitionedElementsActive.length > 0 && !reduceMotion.matches) {
+				transitionedElements.forEach((element) => {
+					colorTransitionObserver.observe(element);
+				})
+			}
 		}
+
+		// check if prefers-reduced-motion is set in the browser
+		// and kill the animations if it matches, or if the setting changes
+		const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+		reduceMotion.addEventListener('change', () => {
+			if (reduceMotion.matches) {
+				colorTransitionObserver.disconnect();
+				return;
+			}
+			startObserver();
+		})
+
+		// Start observing all the above
+		startObserver();
 	}
 </script>
