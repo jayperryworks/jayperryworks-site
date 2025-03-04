@@ -67,7 +67,7 @@ async function getThemeValues() {
 		theme.custom = data.body1;
 	}
 
-	return setThemeStyle(theme);
+	return setThemeStyle({ inherit: true, ...theme});
 }
 ---
 
@@ -125,14 +125,3 @@ async function getThemeValues() {
 		}
 	}
 </script>
-
-<style>
-	.color-transition {
-		/* Color transition duration token */
-		--color-transition: 0.5s;
-
-		transition-duration: var(--color-transition);
-		transition-property: color, background-color, border-color;
-		transition-timing-function: ease-in-out;
-	}
-</style>
