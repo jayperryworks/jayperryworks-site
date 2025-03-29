@@ -31,7 +31,6 @@ import Collage from '@components/blocks/Collage.astro';
 import Figure from '@components/blocks/Figure.astro';
 import Heading from '@components/blocks/Heading.astro';
 import Passage from '@components/blocks/Passage.astro';
-import ColorTheme from '@components/meta/ColorTheme.astro';
 
 // --- types ---
 import type { CollageItem } from '@lib/types';
@@ -61,20 +60,22 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 				{title}
 			</a>
 		</Heading>
-		{subtitle && (
-			<Heading
-				class="subtitle"
-				level={3}
-				subheading
-			>
-				<a
-					class="type-link-undecorated"
-					href={resolvedLink}
+		{
+			subtitle && (
+				<Heading
+					class="subtitle"
+					level={3}
+					subheading
 				>
-					{subtitle}
-				</a>
-			</Heading>
-		)}
+					<a
+						class="type-link-undecorated"
+						href={resolvedLink}
+					>
+						{subtitle}
+					</a>
+				</Heading>
+			)
+		}
 		<Passage
 			text={description}
 			typeSize="delta"
@@ -87,17 +88,20 @@ const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
 			{label || 'Read more'}
 		</Button>
 	</header>
-	{images?.length > 1
-		? <Collage
+	{
+		images?.length > 1 ? (
+			<Collage
 				class="cover"
 				{images}
 			/>
-		: <Figure
+		) : (
+			<Figure
 				class="cover"
 				fit="contain"
 				maxHeight="80"
 				{...images[0]}
 			/>
+		)
 	}
 </article>
 

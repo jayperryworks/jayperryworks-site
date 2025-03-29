@@ -29,10 +29,7 @@ import ColorTransition from '@components/meta/ColorThemeTransition.astro';
 import type { Block } from '@lib/types';
 
 // --- props ---
-const {
-	block,
-	class: className,
-} = Astro.props;
+const { block, class: className } = Astro.props;
 
 /**
  * Match the 'prominence' value to the corresponding width token
@@ -50,7 +47,8 @@ function getWidth(block) {
 	return widths[block.prominence] || '';
 }
 
-const displayModeClass = block.displayMode === 'slide' ? 'slide border-seam-top' : '';
+const displayModeClass =
+	block.displayMode === 'slide' ? 'slide border-seam-top' : '';
 
 const blocks = {
 	aside: Aside,
@@ -75,6 +73,8 @@ const classList = [
 	displayModeClass,
 	className,
 ].join(' ');
+
+console.log(block.theme);
 ---
 
 <ColorTransition

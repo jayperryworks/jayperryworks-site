@@ -48,20 +48,20 @@ import type {
 import type { PaginationLink, SEOContent, Theme } from '@lib/types';
 
 export type Contribution = {
-	task: string,
+	task: string;
 };
 
 export type Collaborator = {
-	name: string,
-	website: string,
+	name: string;
+	website: string;
 };
 
 export async function getStaticPaths() {
 	const projects = await prismic.getAllByType('design_project', {
 		orderings: {
- 			field: 'my.design_project.start_date',
- 			direction: 'desc',
- 		},
+			field: 'my.design_project.start_date',
+			direction: 'desc',
+		},
 		graphQuery: `
 			{
 				design_project {
@@ -87,7 +87,7 @@ export async function getStaticPaths() {
 			end_date: endDate,
 			collaborators,
 			preset_theme,
-			base_hue,
+			custom_base_hue,
 			body1: themes,
 		} = data;
 
@@ -108,7 +108,7 @@ export async function getStaticPaths() {
 				},
 				theme: {
 					name: preset_theme,
-					hue: base_hue,
+					hue: custom_base_hue,
 					custom: themes,
 				},
 				collaborators: collaborators.map(
@@ -142,22 +142,23 @@ const {
 const credits = [
 	{
 		label: 'Date',
-		value: startDate === endDate ? startDate : [ `${startDate} - ${endDate || 'present'}` ],
+		value:
+			startDate === endDate
+				? startDate
+				: [`${startDate} - ${endDate || 'present'}`],
 	},
 	{
 		label: 'Agency',
-		value: [ agency ],
+		value: [agency],
 	},
 	{
 		label: 'Role',
-		value: [ role ],
+		value: [role],
 	},
 	{
 		label: 'Contributions',
-		value: contributions.map(
-			(item: Contribution, index: number): string => (
-				index === 0 ? sentenceCase(item.task) : item.task
-			)
+		value: contributions.map((item: Contribution, index: number): string =>
+			index === 0 ? sentenceCase(item.task) : item.task
 		),
 	},
 	{
@@ -183,12 +184,22 @@ const credits = [
 		<article>
 			<header class="headline">
 				<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
-				{client && (
-					<Heading subheading level={3}>{client}</Heading>
-				)}
+				{
+					client && (
+						<Heading
+							subheading
+							level={3}
+						>
+							{client}
+						</Heading>
+					)
+				}
 			</header>
 
-			<BlockList {body} showLedeStyle />
+			<BlockList
+				{body}
+				showLedeStyle
+			/>
 
 			<aside class="credits">
 				<div class="credits-wrapper">
@@ -206,20 +217,24 @@ const credits = [
 				</div>
 			</aside>
 		</article>
-		{next && (
-			<nav class="border-seam-top">
-				<div class="nav-wrapper">
-					<ReadNextLink
-						align="end"
-						link={next.path}
-						titleSize="beta"
-					>
-						<Fragment slot="eyebrow">Next case study:</Fragment>
-						<Fragment slot="title">{prismicHelpers.asText(next.title)}</Fragment>
-					</ReadNextLink>
-				</div>
-			</nav>
-		)}
+		{
+			next && (
+				<nav class="border-seam-top">
+					<div class="nav-wrapper">
+						<ReadNextLink
+							align="end"
+							link={next.path}
+							titleSize="beta"
+						>
+							<Fragment slot="eyebrow">Next case study:</Fragment>
+							<Fragment slot="title">
+								{prismicHelpers.asText(next.title)}
+							</Fragment>
+						</ReadNextLink>
+					</div>
+				</nav>
+			)
+		}
 	</main>
 	<MainFooter />
 </Layout>

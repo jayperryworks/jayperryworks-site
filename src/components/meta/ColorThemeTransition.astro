@@ -44,7 +44,11 @@ const theme = {
 
 if (link) {
 	const { data } = await prismic.getByID(link);
-	theme.custom = data.body1;
+	const { preset_theme: name, custom_base_hue: hue, body1: custom } = data;
+
+	if (custom) theme.custom = custom;
+	if (hue) theme.hue = hue;
+	if (name) theme.name = name;
 }
 
 // classes to add to the container
