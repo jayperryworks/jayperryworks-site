@@ -14,10 +14,11 @@
 
 // --- utilities ---
 import prismic from '@lib/prismic';
-import { setThemeStyle } from '@lib/colorTheme';
+import { setThemeStyle, hasDarkMode } from '@lib/colorTheme';
 
 // --- types ---
 import type { ThemeNames } from '@lib/types';
+import { custom, undefined } from 'astro:schema';
 
 // --- props ---
 const {
@@ -35,61 +36,47 @@ const El = el;
 // flag - have any theme props been passed in?
 const hasTheme = (name || hue || link) && true;
 
-const classList = [
-	'color-transition',
-	className || '',
-].join(' ');
+// object for all theme data
+const theme = {
+	custom: undefined,
+	hue,
+	name,
+};
 
-// --- helper functions ---
-
-/**
- * Get values from the theme props (name, hue, and link)
- * and format them into a string of CSS props to pass to the ColorTheme component
- *
- * @returns {string}
- */
-async function getThemeValues() {
-	/**
-	 * @typedef {object} ThemeData
-	 * @property {string} name - name of a preset theme
-	 * @property {number} hue - number of a base hue
-	 * @property {string} custom - CSS variables for a custom theme
-	 */
-
-	/** @type {ThemeData} */
-	const theme = {
-		name,
-		hue,
-	};
-
-	if (link) {
-		const { data } = await prismic.getByID(link);
-		theme.custom = data.body1;
-	}
-
-	return setThemeStyle({ inherit: true, ...theme});
+if (link) {
+	const { data } = await prismic.getByID(link);
+	theme.custom = data.body1;
 }
+
+// classes to add to the container
+const classList = ['color-transition', className || ''].join(' ');
 ---
 
 <El
 	class={classList}
-	data-theme={hasTheme && await getThemeValues()}
+	data-dark-mode={hasDarkMode(theme)}
+	data-theme={hasTheme && setThemeStyle({ inherit: true, ...theme })}
 	{style}
 	{...props}
 >
-	<slot></slot>
+	<slot />
 </El>
 
 <script>
 	if ('IntersectionObserver' in window) {
+		// the class used to flag if a dark mode is available in the theme
+		const darkModeClass = 'has-dark-mode';
 		// the element (usually body) with a color theme applied
 		// TODO what if there are multiple?
 		const themeElement = document.querySelector('.theme');
 		// Reference to the theme that exists when the page loads
 		const originalTheme = themeElement.getAttribute('style');
+		const originalDarkMode = themeElement.classList.contains(darkModeClass);
 
 		// all the ColorTransition elements on this page
-		const transitionedElements = Array.from(themeElement.querySelectorAll('.color-transition'));
+		const transitionedElements = Array.from(
+			themeElement.querySelectorAll('.color-transition')
+		);
 		// all the elements that trigger a color transition
 		// - they are only 'active' if they have custom theming
 		const transitionedElementsActive = transitionedElements.filter((el) => {
@@ -102,12 +89,14 @@ async function getThemeValues() {
 				return entries.forEach((entry) => {
 					// if the element is visible, update the .theme element's style property
 					if (entry.isIntersecting) {
-						const { theme } = entry.target.dataset;
+						const { theme, darkMode } = entry.target.dataset;
 
 						if (theme) {
+							themeElement.classList.toggle(darkModeClass, darkMode === 'true');
 							themeElement.setAttribute('style', theme);
 						} else {
 							// restore the original page theme
+							themeElement.classList.toggle(darkModeClass, originalDarkMode);
 							themeElement.setAttribute('style', originalTheme);
 						}
 					}
@@ -126,7 +115,7 @@ async function getThemeValues() {
 			if (transitionedElementsActive.length > 0 && !reduceMotion.matches) {
 				transitionedElements.forEach((element) => {
 					colorTransitionObserver.observe(element);
-				})
+				});
 			}
 		}
 
@@ -139,7 +128,7 @@ async function getThemeValues() {
 				return;
 			}
 			startObserver();
-		})
+		});
 
 		// Start observing all the above
 		startObserver();

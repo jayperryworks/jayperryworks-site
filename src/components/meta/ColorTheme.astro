@@ -16,7 +16,7 @@
 import type { Theme, ThemeNames } from '@lib/types';
 
 // --- utilities ---
-import { setThemeStyle } from '@lib/colorTheme';
+import { setThemeStyle, hasDarkMode } from '@lib/colorTheme';
 
 // --- props ---
 const {
@@ -32,23 +32,6 @@ const {
 
 const El = el;
 
-/**
- * Determine if the provided props allow for a dark mode in the theme
- * @returns {boolean}
- */
-function hasDarkMode() {
-	// if a theme name or custom hue are provided, use the default dark theme tokens
-	if (name || hue) return true;
-
-	// if nothing is provided, use the default hue and the default dark theme tokens
-	if (!custom || custom?.length == 0) return true;
-
-	// if a custom theme is provided, we don't use any defaults (execept relative tokens).
-	// if the custom theme object has only one item, then that mode must apply
-	// all the time, so we use no dark mode.
-	return custom?.length > 1;
-}
-
 const classList = [
 	'theme',
 	hasDarkMode() ? 'has-dark-mode' : '',
@@ -58,13 +41,10 @@ const classList = [
 
 <El
 	class={classList}
-	style={[
-		setThemeStyle({ name, hue, custom }),
-		style || '',
-	].join('')}
+	style={[setThemeStyle({ name, hue, custom }), style || ''].join('')}
 	{...props}
 >
-	<slot></slot>
+	<slot />
 </El>
 
 <style>
@@ -83,10 +63,6 @@ const classList = [
 			--custom-light-primary,
 			oklch(38% 0.008 var(--base-h))
 		);
-		--color-secondary: var(
-			--custom-light-secondary,
-			oklch(47% 0.07 var(--base-h))
-		);
 		--color-surface: var(
 			--custom-light-surface,
 			oklch(98% 0.005 var(--base-h))
@@ -96,6 +72,11 @@ const classList = [
 		 * Relative tokens
 		 * - Generated from the 'surface' token
 		 */
+		--color-secondary: var(
+			--custom-light-secondary,
+			oklch(from var(--color-surface) 47% 0.07 h)
+		);
+
 		--color-island: var(
 			--custom-light-island,
 			oklch(from var(--color-surface) calc(l + 0.04) c h)
@@ -114,7 +95,7 @@ const classList = [
 		);
 
 		/* Color transition duration token */
-		--color-transition: 0.5s;
+		--color-transition: 0.75s;
 
 		transition-duration: var(--color-transition);
 		transition-property: color, background-color, border-color;
@@ -124,36 +105,36 @@ const classList = [
 	/* Default theme tokens (dark mode) */
 	@media (prefers-color-scheme: dark) {
 		.has-dark-mode {
-			--color-highlight:
-				var(--custom-dark-highlight,
+			--color-highlight: var(
+				--custom-dark-highlight,
 				oklch(71% 0.12 var(--base-h))
 			);
-			--color-primary:
-				var(--custom-dark-primary,
+			--color-primary: var(
+				--custom-dark-primary,
 				oklch(98% 0.002 var(--base-h))
 			);
-			--color-secondary:
-				var(--custom-dark-secondary,
-				oklch(85% 0.05 var(--base-h))
-			);
-			--color-surface:
-				var(--custom-dark-surface,
+			--color-surface: var(
+				--custom-dark-surface,
 				oklch(36% 0.01 var(--base-h))
 			);
-			--color-island:
-				var(--custom-dark-island,
+			--color-secondary: var(
+				--custom-dark-secondary,
+				oklch(from var(--color-surface) 85% 0.05 h)
+			);
+			--color-island: var(
+				--custom-dark-island,
 				oklch(from var(--color-surface) calc(l + 0.05) c h)
 			);
-			--color-well:
-				var(--custom-dark-well,
+			--color-well: var(
+				--custom-dark-well,
 				oklch(from var(--color-surface) calc(l - 0.04) c h)
 			);
-			--color-border:
-				var(--custom-dark-border,
+			--color-border: var(
+				--custom-dark-border,
 				oklch(from var(--color-surface) calc(l - 0.3) c h)
 			);
-			--color-shadow:
-				var(--custom-dark-shadow,
+			--color-shadow: var(
+				--custom-dark-shadow,
 				oklch(from var(--color-surface) calc(l - 0.5) c h / 0.2)
 			);
 		}
