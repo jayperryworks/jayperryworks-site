@@ -33,14 +33,7 @@ const {
 	text,
 } = Astro.props;
 
-const levels = [
-	'alpha',
-	'beta',
-	'gamma',
-	'delta',
-	'epsilon',
-	'zeta',
-];
+const levels = ['alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta'];
 
 const El = !subheading ? `h${level}` : 'p';
 
@@ -52,7 +45,10 @@ const classList = [
 ].join(' ');
 ---
 
-<El class={classList} id={id}>
+<El
+	class={classList}
+	id={id}
+>
 	<slot>{text && prismicHelpers.asText(text)}</slot>
 </El>
 
@@ -65,6 +61,11 @@ const classList = [
 	.sub {
 		color: var(--color-secondary);
 		max-width: none; /* override the default max width for paragraphs */
+	}
+
+	/* correct the color of links nested in a subheading */
+	.sub :global(a):not(:hover, :active) {
+		color: var(--color-secondary);
 	}
 
 	.align-center {
