@@ -43,6 +43,6 @@
 		"vite-svg-loader": "^3.1.2"
 	},
 	"devDependencies": {
-		"netlify-cli": "^17.33.4"
+		"netlify-cli": "^20.1.1"
 	}
 }
