@@ -21,7 +21,7 @@
 		"@prismicio/client": "^6.4.1",
 		"@prismicio/helpers": "^2.2.1",
 		"@prismicio/types": "^0.1.27",
-		"astro": "^5.3.1",
+		"astro": "^5.7.10",
 		"autoprefixer": "^10.4.4",
 		"change-case": "^4.1.2",
 		"cssnano": "^6.0.0",
@@ -43,6 +43,6 @@
 		"vite-svg-loader": "^3.1.2"
 	},
 	"devDependencies": {
-		"netlify-cli": "^17.33.4"
+		"netlify-cli": "^20.1.1"
 	}
 }
