@@ -30,18 +30,19 @@ const {
 	...props
 } = Astro.props;
 
+const theme = { name, hue, custom };
 const El = el;
 
 const classList = [
 	'theme',
-	hasDarkMode() ? 'has-dark-mode' : '',
+	hasDarkMode(theme) ? 'has-dark-mode' : '',
 	className || '',
 ].join(' ');
 ---
 
 <El
 	class={classList}
-	style={[setThemeStyle({ name, hue, custom }), style || ''].join('')}
+	style={[setThemeStyle(theme), style || ''].join('')}
 	{...props}
 >
 	<slot />
