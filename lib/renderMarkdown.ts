@@ -8,6 +8,8 @@ import remarkSmartypants from 'remark-smartypants';
 import remarkJPFootnotes from './remarkJPFootnotes.js';
 import remarkJPInline from './remarkJPInline.js';
 import remarkJPExternalLink from './remarkJPExternalLink.js';
+import rehypeRaw from 'rehype-raw';
+import rehypeSanitize from 'rehype-sanitize';
 
 /**
  * Render markdown text to HTML
@@ -33,10 +35,12 @@ export default async function render(content, options = {}) {
 		.use(remarkParse)
 		.use(remarkGFM)
 		.use(remarkRehype, { allowDangerousHtml: html })
+		.use(rehypeRaw)
 		.use(remarkJPFootnotes, { renderFootnotes: footnotes })
 		.use(remarkJPInline, { renderInline: inline })
 		.use(remarkJPExternalLink)
 		.use(remarkSmartypants)
+		.use(rehypeSanitize)
 		.use(rehypeStringify, { allowDangerousHtml: html })
 		.process(content);
 
