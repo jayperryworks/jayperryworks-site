@@ -41,7 +41,7 @@ export default async function render(content, options = {}) {
 		.use(remarkJPExternalLink)
 		.use(remarkSmartypants)
 		.use(rehypeSanitize)
-		.use(rehypeStringify, { allowDangerousHtml: html })
+		.use(rehypeStringify)
 		.process(content);
 
 	return result.toString();
