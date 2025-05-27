@@ -26,17 +26,18 @@ export default async function render(content, options = {}) {
 	const {
 		inline = false,
 		footnotes = false,
+		html = false,
 	} = options;
 
 	const result = await unified()
 		.use(remarkParse)
 		.use(remarkGFM)
-		.use(remarkRehype)
+		.use(remarkRehype, { allowDangerousHtml: html })
 		.use(remarkJPFootnotes, { renderFootnotes: footnotes })
 		.use(remarkJPInline, { renderInline: inline })
 		.use(remarkJPExternalLink)
 		.use(remarkSmartypants)
-		.use(rehypeStringify)
+		.use(rehypeStringify, { allowDangerousHtml: html })
 		.process(content);
 
 	return result.toString();

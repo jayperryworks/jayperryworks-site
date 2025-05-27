@@ -26,6 +26,7 @@ const {
 	htmlSerializer = null,
 	inline = false,
 	footnotes = false,
+	html = false,
 } = Astro.props as Props;
 
 let renderedText: string | Promise<string>;
@@ -34,12 +35,12 @@ if (prismicHelpers.isFilled.richText(prismicText)) {
 	renderedText = prismicHelpers.asHTML(
 		prismicText,
 		linkResolver,
-		htmlSerializer as prismicHelpers.HTMLFunctionSerializer,
+		htmlSerializer as prismicHelpers.HTMLFunctionSerializer
 	);
 }
 
 if (markdown) {
-	renderedText = await renderMarkdown(markdown, { inline, footnotes });
+	renderedText = await renderMarkdown(markdown, { inline, footnotes, html });
 }
 ---
 
