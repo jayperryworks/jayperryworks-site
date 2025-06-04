@@ -2,6 +2,7 @@ User-agent: AI2Bot
 User-agent: Ai2Bot-Dolma
 User-agent: aiHitBot
 User-agent: Amazonbot
+User-agent: Andibot
 User-agent: anthropic-ai
 User-agent: Applebot
 User-agent: Applebot-Extended
@@ -9,9 +10,10 @@ User-agent: Brightbot 1.0
 User-agent: Bytespider
 User-agent: CCBot
 User-agent: ChatGPT-User
-User-agent: ClaudeBot
-User-agent: Claude-User
 User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: Claude-Web
+User-agent: ClaudeBot
 User-agent: cohere-ai
 User-agent: cohere-training-data-crawler
 User-agent: Cotoyogi
@@ -32,7 +34,6 @@ User-agent: iaskspider/2.0
 User-agent: ICC-Crawler
 User-agent: ImagesiftBot
 User-agent: img2dataset
-User-agent: imgproxy
 User-agent: ISSCyberRiskCrawler
 User-agent: Kangaroo Bot
 User-agent: meta-externalagent
@@ -49,7 +50,9 @@ User-agent: PanguBot
 User-agent: Perplexity-User
 User-agent: PerplexityBot
 User-agent: PetalBot
+User-agent: PhindBot
 User-agent: QualifiedBot
+User-agent: SBIntuitionsBot
 User-agent: Scrapy
 User-agent: SemrushBot-OCOB
 User-agent: SemrushBot-SWA
@@ -59,6 +62,8 @@ User-agent: Timpibot
 User-agent: VelenPublicWebCrawler
 User-agent: Webzio-Extended
 User-agent: wpbot
+User-agent: YandexAdditional
+User-agent: YandexAdditionalBot
 User-agent: YouBot
 Disallow: /
 
