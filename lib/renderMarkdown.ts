@@ -34,14 +34,14 @@ export default async function render(content, options = {}) {
 	const result = await unified()
 		.use(remarkParse)
 		.use(remarkGFM)
+		.use(remarkSmartypants)
 		.use(remarkRehype, { allowDangerousHtml: html })
 		.use(rehypeRaw)
-		.use(remarkJPFootnotes, { renderFootnotes: footnotes })
-		.use(remarkJPInline, { renderInline: inline })
-		.use(remarkJPExternalLink)
-		.use(remarkSmartypants)
 		.use(rehypeSanitize)
 		.use(rehypeStringify)
+		.use(remarkJPExternalLink)
+		.use(remarkJPInline, { renderInline: inline })
+		.use(remarkJPFootnotes, { renderFootnotes: footnotes })
 		.process(content);
 
 	return result.toString();

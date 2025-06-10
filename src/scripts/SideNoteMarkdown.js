@@ -143,9 +143,8 @@ class SideNoteMarkdown extends HTMLElement {
 
 	connectedCallback() {
 		const button = this.querySelector('a[data-footnote-ref]');
-		this.#footnote = document.querySelector(`${button.getAttribute('href')} p`);
+		this.#footnote = document.querySelector(`#user-content-${button.getAttribute('href').slice(1)} p`);
 		this.#footnote.querySelector('[data-footnote-backref]').remove();
-
 		this.render();
 
 		const content = this.#shadowRoot.querySelector('.content');
