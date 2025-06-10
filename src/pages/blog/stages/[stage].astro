@@ -9,10 +9,7 @@ import { blogDevelopmentStage } from '@lib/routes';
 import { blogPost as permalink } from '@lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
-import {
-	sentenceCase,
-	truncate,
-} from '@lib/stringHelpers';
+import { sentenceCase, truncate } from '@lib/stringHelpers';
 
 // components
 import Layout from '@layouts/Layout.astro';
@@ -33,18 +30,18 @@ import {
 } from '@lib/types';
 
 export type Post = {
-	date: string,
-	path: string,
-	title: string,
-	stage?: string,
-	subtitle?: string,
+	date: string;
+	path: string;
+	title: string;
+	stage?: string;
+	subtitle?: string;
 };
 
 export type StaticPath = {
 	params: {
-		stage: DevelopmentStageUID,
-	},
-	props: Props,
+		stage: DevelopmentStageUID;
+	};
+	props: Props;
 };
 
 export interface Props {
@@ -88,7 +85,7 @@ export async function getStaticPaths(): Promise<StaticPath[]> {
 		const posts = allPosts
 			.filter(({ data }) => {
 				const name = data.stage || 'Note';
-				return name === stage.name
+				return name === stage.name;
 			})
 			.map((post) => {
 				const { title, subtitle, date, description, stage } = post.data;
@@ -127,39 +124,41 @@ export async function getStaticPaths(): Promise<StaticPath[]> {
 	}, []);
 }
 
-const {
-	stage,
-} = Astro.params;
+const { stage } = Astro.params;
 
-const {
-	subtitle,
-	posts,
-	description,
-	stages,
-} = Astro.props as Props;
+const { subtitle, posts, description, stages } = Astro.props as Props;
 ---
 
 <Layout
 	pageTitle={sentenceCase(stage)}
 	path="blog"
+	theme="mustard"
 >
 	<MainNav segment="blog" />
 	<main class="wrapper">
 		<nav>
 			<SequenceNav>
-				{stages.map((item, index) => (
-					<SequenceNavItem
-						href={blogDevelopmentStage({ uid: item.uid })}
-						current={item.uid === stage}
-						complete={index < stages.indexOf(stages.find(({ uid }) => uid === stage))}
-					>
-						{item.name}
-					</SequenceNavItem>
-				))}
+				{
+					stages.map((item, index) => (
+						<SequenceNavItem
+							href={blogDevelopmentStage({ uid: item.uid })}
+							current={item.uid === stage}
+							complete={
+								index < stages.indexOf(stages.find(({ uid }) => uid === stage))
+							}
+						>
+							{item.name}
+						</SequenceNavItem>
+					))
+				}
 			</SequenceNav>
 		</nav>
 		<header class="headline">
-			<Heading level={3} subheading>{prismicHelpers.asText(subtitle)}:</Heading>
+			<Heading
+				level={3}
+				subheading
+				>{prismicHelpers.asText(subtitle)}:</Heading
+			>
 			<Heading level={1}>{sentenceCase(stage)}</Heading>
 		</header>
 		<Passage
@@ -167,14 +166,16 @@ const {
 			typeSize="delta"
 		/>
 		<BlogListings class="post-list">
-			{posts.map((post) => (
-				<li class="post">
-					<BlogListingsItem
-						showStage={false}
-						{...post}
-					/>
-				</li>
-			))}
+			{
+				posts.map((post) => (
+					<li class="post">
+						<BlogListingsItem
+							showStage={false}
+							{...post}
+						/>
+					</li>
+				))
+			}
 		</BlogListings>
 	</main>
 	<MainFooter />

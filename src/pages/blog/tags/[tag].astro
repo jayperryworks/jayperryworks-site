@@ -19,18 +19,18 @@ import MainNav from '@components/navigation/MainNav.astro';
 
 // types
 export type Post = {
-	date: string,
-	path: string,
-	title: string,
-	stage?: string,
-	subtitle?: string,
+	date: string;
+	path: string;
+	title: string;
+	stage?: string;
+	subtitle?: string;
 };
 
 export type StaticPath = {
 	params: {
-		tag: string,
-	},
-	props: Props,
+		tag: string;
+	};
+	props: Props;
 };
 
 export interface Props {
@@ -50,7 +50,7 @@ export async function getStaticPaths(): Promise<StaticPath[]> {
 	const tags = allPosts.reduce((result, post) => {
 		post?.tags.forEach((tag) => {
 			if (!result.includes(tag)) result.push(tag);
-		})
+		});
 		return result;
 	}, []);
 
@@ -88,28 +88,33 @@ export async function getStaticPaths(): Promise<StaticPath[]> {
 	}, []);
 }
 
-const {
-	tag,
-} = Astro.params;
+const { tag } = Astro.params;
 
-const {
-	posts,
-} = Astro.props as Props;
+const { posts } = Astro.props as Props;
 ---
 
-<Layout pageTitle={sentenceCase(tag)}>
+<Layout
+	pageTitle={sentenceCase(tag)}
+	theme="mustard"
+>
 	<MainNav segment="blog" />
 	<main class="wrapper">
 		<header class="headline">
-			<Heading subheading level={3}>Posts filed under</Heading>
+			<Heading
+				subheading
+				level={3}
+				>Posts filed under</Heading
+			>
 			<Heading level={1}>{sentenceCase(tag)}</Heading>
 		</header>
 		<BlogListings>
-			{posts.map((post) => (
-				<li class="post">
-					<BlogListingsItem {...post} />
-				</li>
-			))}
+			{
+				posts.map((post) => (
+					<li class="post">
+						<BlogListingsItem {...post} />
+					</li>
+				))
+			}
 		</BlogListings>
 	</main>
 	<MainFooter />
