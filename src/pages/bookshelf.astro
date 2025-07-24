@@ -264,6 +264,7 @@ series.unshift({
 							{series.books.map((book) => (
 								<li
 									class="item"
+									data-series={book?.series}
 									data-tags={book?.tags?.join(', ')}
 									id={book.uid}
 								>
