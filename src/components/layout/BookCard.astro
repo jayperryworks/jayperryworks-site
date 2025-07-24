@@ -57,12 +57,7 @@ function getInitial(title) {
 }
 ---
 
-<article
-	class={['book-card', className].join(' ')}
-	data-title={prismicHelpers.asText(title)}
-	data-author={author}
-	data-tags={tags.join(', ')}
->
+<article class={['book-card', className].join(' ')}>
 	<div class="wrapper">
 		<!-- cover -->
 		<RevealOnScroll

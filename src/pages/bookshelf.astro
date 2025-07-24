@@ -133,8 +133,10 @@ const books = await Promise.all(
 				uid,
 			};
 
+			// If the book is in a series, add a prop with its UID
 			if (booksInSeries[uid]) bookData.series = booksInSeries[uid];
 
+			// Pull additional data from a blob with cached OpenLibrary data
 			try {
 				const booksDataResponse = await fetch(
 					getBooksBlobEndpoint({ isbn, olid })
@@ -183,22 +185,28 @@ const books = await Promise.all(
 	})
 );
 
-const series = sortAlphabetically(seriesResponse).map(
-	({ uid, data: series }) => {
+// sort all the book data by series
+const series = sortAlphabetically(seriesResponse).reduce(
+	(result, { uid, data: series }) => {
 		const seriesBooks = books.filter(({ series }) => series === uid);
 
-		return {
-			books: seriesBooks,
-			tags: aggregateBookTags(seriesBooks),
-			title: series.title,
-			uid: uid,
-		};
-	}
+		if (seriesBooks.length > 1) {
+			result.push({
+				books: seriesBooks,
+				tags: aggregateBookTags(seriesBooks),
+				title: series.title,
+				uid: uid,
+			});
+		}
+		return result;
+	},
+	[]
 );
 
-console.log(series);
-
-const standaloneBooks = books.filter(({ series }) => !series);
+// add standalone books to the series array
+series.unshift({
+	books: books.filter(({ series }) => !series),
+});
 
 // Sort by: title, author, series, tags
 ---
@@ -235,78 +243,52 @@ const standaloneBooks = books.filter(({ series }) => !series);
 		/>
 
 		<div class="wrapper">
-			<Gallery gutter="xnarrow">
-				{
-					standaloneBooks.map((book) => (
-						<li
-							class="item"
-							data-tags={book?.tags?.join(' ')}
-							id={book.uid}
-						>
-							<BookCard
-								actions={book.actions}
-								author={book.author}
-								cover={book.cover}
-								tags={book.tags}
-								title={book.title}
+			{
+				series.map((series) => (
+					<section
+						class="section"
+						id={series?.uid}
+						data-tags={series?.tags}
+					>
+						{series.title && (
+							<Heading
+								align="center"
+								class="type-scale-gamma"
 							>
-								{book.publishers && book.publishDate && (
-									<p
-										slot="metadata"
-										class="metadata type-role-accent type-scale-zeta"
-									>
-										{[book.publishers[0], book.publishDate].join(', ')}
-									</p>
-								)}
-							</BookCard>
-						</li>
-					))
-				}
-			</Gallery>
-		</div>
+								<span class="series-label">Series:</span>{' '}
+								{prismicHelpers.asText(series.title)}
+							</Heading>
+						)}
 
-		{
-			series.map((series) => (
-				<section
-					class="wrapper"
-					id={series.uid}
-					data-tags={series.tags}
-					data-title={prismicHelpers.asText(series.title)}
-				>
-					<Heading
-						level={3}
-						text={series.title}
-						align="center"
-					/>
-					<Gallery gutter="xnarrow">
-						{series.books.map((book) => (
-							<li
-								class="item"
-								data-tags={book?.tags?.join(', ')}
-								id={book.uid}
-							>
-								<BookCard
-									actions={book.actions}
-									author={book.author}
-									cover={book.cover}
-									tags={book.tags}
-									title={book.title}
+						<Gallery gutter="xnarrow">
+							{series.books.map((book) => (
+								<li
+									class="item"
+									data-tags={book?.tags?.join(', ')}
+									id={book.uid}
 								>
-									{book.publishers && book.publishDate && (
-										<p
-											slot="metadata"
-											class="metadata type-role-accent type-scale-zeta"
-										>
-											{[book.publishers[0], book.publishDate].join(', ')}
-										</p>
-									)}
-								</BookCard>
-							</li>
-						))}
-					</Gallery>
-				</section>
-			))
-		}
+									<BookCard
+										actions={book.actions}
+										author={book.author}
+										cover={book.cover}
+										title={book.title}
+									>
+										{book.publishers && book.publishDate && (
+											<p
+												slot="metadata"
+												class="metadata type-role-accent type-scale-zeta"
+											>
+												{[book.publishers[0], book.publishDate].join(', ')}
+											</p>
+										)}
+									</BookCard>
+								</li>
+							))}
+						</Gallery>
+					</section>
+				))
+			}
+		</div>
 	</main>
 	<MainFooter />
 </Layout>
@@ -325,8 +307,19 @@ const standaloneBooks = books.filter(({ series }) => !series);
 	}
 
 	.wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xwide);
 		max-width: var(--content-width-xxwide);
 		padding-block-end: var(--space-xwide);
+	}
+
+	.section > :global(* + *) {
+		padding-block-start: var(--space-wide);
+	}
+
+	.series-label {
+		color: var(--color-secondary);
 	}
 
 	.item {
