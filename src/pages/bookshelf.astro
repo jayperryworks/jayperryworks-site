@@ -41,16 +41,50 @@ const seo = {
 };
 
 const booksResponse = await prismic.getAllByType('book');
+const seriesResponse = await prismic.getAllByType('book_series');
 
-const sortedBooks = booksResponse.sort((a, b) => {
-	const aTitle = removeArticles(prismicHelpers.asText(a.data.title));
-	const bTitle = removeArticles(prismicHelpers.asText(b.data.title));
+const sortedBooks = sortAlphabetically(booksResponse).filter(
+	(b) => b !== undefined
+);
 
-	return aTitle.localeCompare(bTitle);
-});
+const booksInSeries = seriesResponse.reduce((result, series) => {
+	const { uid, data } = series;
 
-// try to fetch additional data from OpenLibrary
-// const { isbn, olid } = booksResponse[4].data;
+	for (const { book } of data.books) {
+		result[book.uid] = uid;
+	}
+
+	return result;
+}, {});
+
+// build an array of all the tags used in all the books
+const tags = aggregateBookTags(sortedBooks);
+
+/**
+ * Gather all unique tags used in an array of books
+ *
+ * @function
+ * @param {Object[]} books - book data to process
+ * @returns {string[]} - list of tags
+ */
+function aggregateBookTags(books: Object[]): string[] {
+	return books.reduce((result, { tags }) => {
+		for (const tag of tags) {
+			if (!result.includes(tag)) result.push(tag);
+		}
+
+		return result;
+	}, []);
+}
+
+function sortAlphabetically(list: object[]): object[] {
+	return list.sort((a, b) => {
+		const aTitle = removeArticles(prismicHelpers.asText(a.data.title));
+		const bTitle = removeArticles(prismicHelpers.asText(b.data.title));
+
+		return aTitle.localeCompare(bTitle);
+	});
+}
 
 // books blob endpoint
 function getBooksBlobEndpoint({ isbn, olid, type = 'data' }) {
@@ -70,78 +104,103 @@ function getBooksBlobEndpoint({ isbn, olid, type = 'data' }) {
 		: `http://localhost:8888/${paths[type]}/olid/${olid}`;
 }
 
-const books = await Promise.all(sortedBooks.map(async ({
-	uid,
-	tags,
-	data,
-}) => {
-	const {
-		author,
-		isbn,
-		olid,
-		purchase_url: purchaseURL,
-		related_content: relatedContent,
-		title,
-		cover,
-	} = data;
-
-	// query the Netlify blob cache for additional data (pulled from OpenLibrary)
-	if (isbn || olid) {
-		let bookData = {
-			actions: [
-				{
-					label: 'Purchase',
-					url: prismicHelpers.asLink(purchaseURL),
-					type: 'external'
-				},
-			],
-			tags: tags || [],
+const books = await Promise.all(
+	sortedBooks.map(async ({ uid, tags, data }) => {
+		const {
 			author,
-			relatedContent,
+			isbn,
+			olid,
+			purchase_url: purchaseURL,
+			related_content: relatedContent,
 			title,
-			uid,
-		};
+			cover,
+		} = data;
 
-		try {
-			const booksDataResponse = await fetch(getBooksBlobEndpoint({ isbn, olid }));
+		// query the Netlify blob cache for additional data (pulled from OpenLibrary)
+		if (isbn || olid) {
+			let bookData = {
+				actions: [
+					{
+						label: 'Purchase',
+						url: prismicHelpers.asLink(purchaseURL),
+						type: 'external',
+					},
+				],
+				tags: tags || [],
+				author,
+				relatedContent,
+				title,
+				uid,
+			};
 
-			if (booksDataResponse?.status === 200) {
-				const booksBlobData = await booksDataResponse.json();
+			if (booksInSeries[uid]) bookData.series = booksInSeries[uid];
 
-				const {
-					url: infoURL,
-					publishDate,
-					publishers,
-					hasCover,
-				} = JSON.parse(booksBlobData);
+			try {
+				const booksDataResponse = await fetch(
+					getBooksBlobEndpoint({ isbn, olid })
+				);
 
-				bookData.publishers = publishers;
-				bookData.publishDate = publishDate;
+				if (booksDataResponse?.status === 200) {
+					const booksBlobData = await booksDataResponse.json();
 
-				// if there's a cover image in Prismic, use that
-				if (prismicHelpers.isFilled.image(cover)) {
-					bookData.cover = cover.url;
-				// otherwise, if the cover is available on OpenLibrary, use that
-				} else if (hasCover) {
-					bookData.cover = getBooksBlobEndpoint({ isbn, olid, type: 'covers' });
+					const {
+						url: infoURL,
+						publishDate,
+						publishers,
+						hasCover,
+					} = JSON.parse(booksBlobData);
+
+					bookData.publishers = publishers;
+					bookData.publishDate = publishDate;
+
+					// if there's a cover image in Prismic, use that
+					if (prismicHelpers.isFilled.image(cover)) {
+						bookData.cover = cover.url;
+						// otherwise, if the cover is available on OpenLibrary, use that
+					} else if (hasCover) {
+						bookData.cover = getBooksBlobEndpoint({
+							isbn,
+							olid,
+							type: 'covers',
+						});
+					}
+
+					bookData.actions.unshift({
+						label: 'Open Library',
+						url: infoURL,
+						type: 'external',
+					});
+
+					return bookData;
 				}
-
-				bookData.actions.unshift({
-					label: 'Open Library',
-					url: infoURL,
-					type: 'external'
-				});
-
-				return bookData;
+			} catch (error) {
+				// console.log(error);
 			}
-		} catch(error) {
-			console.log(error);
-		}
 
-		// if the request to the cache fails, just use the data we have from the CMS
-		return bookData;
+			// if the request to the cache fails, just use the data we have from the CMS
+			return bookData;
+		}
+	})
+);
+
+const series = sortAlphabetically(seriesResponse).map(
+	({ uid, data: series }) => {
+		const seriesBooks = books.filter(({ series }) => series === uid);
+
+		return {
+			books: seriesBooks,
+			tags: aggregateBookTags(seriesBooks),
+			title: series.title,
+			uid: uid,
+		};
 	}
-}));
+);
+
+console.log(series);
+
+const standaloneBooks = books.filter(({ series }) => !series);
+
+// Sort by: title, author, series, tags
 ---
 
 <Layout
@@ -158,45 +217,96 @@ const books = await Promise.all(sortedBooks.map(async ({
 				level={1}
 				text={title}
 			/>
-			{subtitle && (
-				<Heading
-					align="center"
-					level={4}
-					subheading
-					text={subtitle}
-				/>
-			)}
+			{
+				subtitle && (
+					<Heading
+						align="center"
+						level={4}
+						subheading
+						text={subtitle}
+					/>
+				)
+			}
 		</header>
 
-		<BlockList {body} showLedeStyle />
+		<BlockList
+			{body}
+			showLedeStyle
+		/>
 
 		<div class="wrapper">
 			<Gallery gutter="xnarrow">
-				{books.filter((b) => b !== undefined).map((book) => (
-					<li
-						class="item"
-						data-tags={book?.tags?.join(' ')}
-						id={book.uid}
-					>
-						<BookCard
-							title={book.title}
-							author={book.author}
-							cover={book.cover}
-							actions={book.actions}
+				{
+					standaloneBooks.map((book) => (
+						<li
+							class="item"
+							data-tags={book?.tags?.join(' ')}
+							id={book.uid}
 						>
-							{book.publishers && book.publishDate && (
-								<p
-									slot="metadata"
-									class="metadata type-role-accent type-scale-zeta"
-								>
-									{[book.publishers[0], book.publishDate].join(', ')}
-								</p>
-							)}
-						</BookCard>
-					</li>
-				))}
+							<BookCard
+								actions={book.actions}
+								author={book.author}
+								cover={book.cover}
+								tags={book.tags}
+								title={book.title}
+							>
+								{book.publishers && book.publishDate && (
+									<p
+										slot="metadata"
+										class="metadata type-role-accent type-scale-zeta"
+									>
+										{[book.publishers[0], book.publishDate].join(', ')}
+									</p>
+								)}
+							</BookCard>
+						</li>
+					))
+				}
 			</Gallery>
 		</div>
+
+		{
+			series.map((series) => (
+				<section
+					class="wrapper"
+					id={series.uid}
+					data-tags={series.tags}
+					data-title={prismicHelpers.asText(series.title)}
+				>
+					<Heading
+						level={3}
+						text={series.title}
+						align="center"
+					/>
+					<Gallery gutter="xnarrow">
+						{series.books.map((book) => (
+							<li
+								class="item"
+								data-tags={book?.tags?.join(', ')}
+								id={book.uid}
+							>
+								<BookCard
+									actions={book.actions}
+									author={book.author}
+									cover={book.cover}
+									tags={book.tags}
+									title={book.title}
+								>
+									{book.publishers && book.publishDate && (
+										<p
+											slot="metadata"
+											class="metadata type-role-accent type-scale-zeta"
+										>
+											{[book.publishers[0], book.publishDate].join(', ')}
+										</p>
+									)}
+								</BookCard>
+							</li>
+						))}
+					</Gallery>
+				</section>
+			))
+		}
 	</main>
 	<MainFooter />
 </Layout>
