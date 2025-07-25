@@ -7,9 +7,10 @@ import '@styles/utilities/type.css';
 // --- utils
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
-import { removeArticles, sentenceCase } from '@lib/stringHelpers';
+import { removeArticles } from '@lib/stringHelpers';
 
 // --- components
+import Pill from '@components/elements/Pill.astro';
 import Heading from '@components/blocks/Heading.astro';
 import BookCard from '@components/layout/BookCard.astro';
 import Gallery from '@components/layout/Gallery.astro';
@@ -256,12 +257,10 @@ series.unshift({
 							{
 								tags.map((tag) => (
 									<li class="tag-item">
-										<button
-											class="tag"
-											data-tag={tag}
-										>
-											{tag}
-										</button>
+										<Pill
+											data={{ tag: tag }}
+											label={tag}
+										/>
 									</li>
 								))
 							}
@@ -330,14 +329,15 @@ series.unshift({
 			const template = this.querySelector('#controls');
 			this.prepend(template.content);
 
-			const tags = Array.from(this.querySelectorAll('.tag'));
+			const tags = Array.from(this.querySelectorAll('.pill'));
 			this.#items = Array.from(this.querySelectorAll('.item'));
 			this.#series = Array.from(this.querySelectorAll('.section[id]'));
 
 			for (const tag of tags) {
 				tag.addEventListener('click', (event) => {
 					const tagID = event.target.dataset.tag;
-					const selected = event.target.dataset.selected;
+					const selected = event.target.dataset.selected === 'true';
+					console.log(event.target.dataset.selected);
 
 					if (!selected) {
 						event.target.dataset.selected = true;
@@ -428,14 +428,10 @@ series.unshift({
 		align-items: start;
 		display: flex;
 		flex-wrap: wrap;
-		gap: var(--space-xnarrow);
+		gap: var(--space-xxnarrow);
 		justify-content: start;
 		list-style: none;
 		padding-inline-start: 0;
-	}
-
-	.tag[data-selected='true'] {
-		background-color: var(--color-highlight);
 	}
 
 	.section > :global(* + *) {
