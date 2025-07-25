@@ -7,7 +7,7 @@ import '@styles/utilities/type.css';
 // --- utils
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@lib/prismic';
-import { removeArticles } from '@lib/stringHelpers';
+import { removeArticles, sentenceCase } from '@lib/stringHelpers';
 
 // --- components
 import Heading from '@components/blocks/Heading.astro';
@@ -43,7 +43,7 @@ const seo = {
 const booksResponse = await prismic.getAllByType('book');
 const seriesResponse = await prismic.getAllByType('book_series');
 
-const sortedBooks = sortAlphabetically(booksResponse).filter(
+const sortedBooks = sortBooksAlphabetically(booksResponse).filter(
 	(b) => b !== undefined
 );
 
@@ -68,16 +68,18 @@ const tags = aggregateBookTags(sortedBooks);
  * @returns {string[]} - list of tags
  */
 function aggregateBookTags(books: Object[]): string[] {
-	return books.reduce((result, { tags }) => {
-		for (const tag of tags) {
-			if (!result.includes(tag)) result.push(tag);
-		}
+	return books
+		.reduce((result, { tags }) => {
+			for (const tag of tags) {
+				if (!result.includes(tag)) result.push(tag);
+			}
 
-		return result;
-	}, []);
+			return result;
+		}, [])
+		.sort((a, b) => a.localeCompare(b));
 }
 
-function sortAlphabetically(list: object[]): object[] {
+function sortBooksAlphabetically(list: object[]): object[] {
 	return list.sort((a, b) => {
 		const aTitle = removeArticles(prismicHelpers.asText(a.data.title));
 		const bTitle = removeArticles(prismicHelpers.asText(b.data.title));
@@ -186,7 +188,7 @@ const books = await Promise.all(
 );
 
 // sort all the book data by series
-const series = sortAlphabetically(seriesResponse).reduce(
+const series = sortBooksAlphabetically(seriesResponse).reduce(
 	(result, { uid, data: series }) => {
 		const seriesBooks = books.filter(({ series }) => series === uid);
 
@@ -243,56 +245,157 @@ series.unshift({
 		/>
 
 		<div class="wrapper">
-			{
-				series.map((series) => (
-					<section
-						class="section"
-						id={series?.uid}
-						data-tags={series?.tags}
+			<jp-filter-and-sort>
+				<template id="controls">
+					<details
+						class="expanding-filter"
+						open
 					>
-						{series.title && (
-							<Heading
-								align="center"
-								class="type-scale-gamma"
-							>
-								<span class="series-label">Series:</span>{' '}
-								{prismicHelpers.asText(series.title)}
-							</Heading>
-						)}
-
-						<Gallery gutter="xnarrow">
-							{series.books.map((book) => (
-								<li
-									class="item"
-									data-series={book?.series}
-									data-tags={book?.tags?.join(', ')}
-									id={book.uid}
+						<summary>Tags</summary>
+						<ul class="tags">
+							{
+								tags.map((tag) => (
+									<li class="tag-item">
+										<button
+											class="tag"
+											data-tag={tag}
+										>
+											{tag}
+										</button>
+									</li>
+								))
+							}
+						</ul>
+					</details>
+				</template>
+				{
+					series.map((series) => (
+						<section
+							class="section"
+							id={series?.uid}
+							data-tags={series?.tags?.join(', ')}
+						>
+							{series.title && (
+								<Heading
+									align="center"
+									class="type-scale-gamma"
 								>
-									<BookCard
-										actions={book.actions}
-										author={book.author}
-										cover={book.cover}
-										title={book.title}
+									<span class="series-label">Series:</span>{' '}
+									{prismicHelpers.asText(series.title)}
+								</Heading>
+							)}
+
+							<Gallery gutter="xnarrow">
+								{series.books.map((book) => (
+									<li
+										class="item"
+										data-series={book?.series}
+										data-tags={book?.tags?.join(', ')}
+										id={book.uid}
 									>
-										{book.publishers && book.publishDate && (
-											<p
-												slot="metadata"
-												class="metadata type-role-accent type-scale-zeta"
-											>
-												{[book.publishers[0], book.publishDate].join(', ')}
-											</p>
-										)}
-									</BookCard>
-								</li>
-							))}
-						</Gallery>
-					</section>
-				))
-			}
+										<BookCard
+											actions={book.actions}
+											author={book.author}
+											cover={book.cover}
+											title={book.title}
+										>
+											{book.publishers && book.publishDate && (
+												<p
+													slot="metadata"
+													class="metadata type-role-accent type-scale-zeta"
+												>
+													{[book.publishers[0], book.publishDate].join(', ')}
+												</p>
+											)}
+										</BookCard>
+									</li>
+								))}
+							</Gallery>
+						</section>
+					))
+				}
+			</jp-filter-and-sort>
 		</div>
 	</main>
 	<MainFooter />
 </Layout>
+
+<script>
+	class FilterAndSort extends HTMLElement {
+		#activeTags = [];
+		#items = [];
+		#series = [];
+
+		connectedCallback() {
+			const template = this.querySelector('#controls');
+			this.prepend(template.content);
+
+			const tags = Array.from(this.querySelectorAll('.tag'));
+			this.#items = Array.from(this.querySelectorAll('.item'));
+			this.#series = Array.from(this.querySelectorAll('.section[id]'));
+
+			for (const tag of tags) {
+				tag.addEventListener('click', (event) => {
+					const tagID = event.target.dataset.tag;
+					const selected = event.target.dataset.selected;
+
+					if (!selected) {
+						event.target.dataset.selected = true;
+						this.addActiveTag(tagID);
+					} else {
+						event.target.dataset.selected = false;
+						this.removeActiveTag(tagID);
+					}
+				});
+			}
+		}
+
+		addActiveTag(tag) {
+			this.activeTags.push(tag);
+			console.log(this.#activeTags);
+			this.render();
+		}
+
+		removeActiveTag(tag) {
+			const index = this.activeTags.indexOf(tag);
+
+			if (index !== -1) {
+				this.activeTags.splice(index, 1);
+				console.log(this.#activeTags);
+				this.render();
+			}
+		}
+
+		set activeTags(tags) {
+			this.#activeTags = tags;
+			this.render();
+		}
+
+		get activeTags() {
+			return this.#activeTags;
+		}
+
+		render() {
+			for (const item of [...this.#items, ...this.#series]) {
+				if (this.activeTags.length > 0) {
+					const itemTags = item.dataset.tags.split(', ');
+					const isActive =
+						this.activeTags.filter((tag) => itemTags.includes(tag)).length > 0;
+
+					if (isActive) {
+						item.removeAttribute('hidden');
+					} else {
+						item.setAttribute('hidden', '');
+					}
+				} else {
+					item.removeAttribute('hidden');
+				}
+			}
+		}
+	}
+
+	customElements.define('jp-filter-and-sort', FilterAndSort);
+</script>
 
 <style>
 	.headline,
@@ -315,6 +418,26 @@ series.unshift({
 		padding-block-end: var(--space-xwide);
 	}
 
+	.expanding-filter {
+		background-color: var(--color-well);
+		border-radius: var(--border-radius);
+		padding: var(--space-medium);
+	}
+
+	.tags {
+		align-items: start;
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xnarrow);
+		justify-content: start;
+		list-style: none;
+		padding-inline-start: 0;
+	}
+
+	.tag[data-selected='true'] {
+		background-color: var(--color-highlight);
+	}
+
 	.section > :global(* + *) {
 		padding-block-start: var(--space-wide);
 	}
@@ -327,5 +450,10 @@ series.unshift({
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-narrow);
+		transition: all 0.25s ease-in-out;
+	}
+
+	.item[hidden] {
+		display: none;
 	}
 </style>
