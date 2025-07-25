@@ -51,8 +51,12 @@ const sortedBooks = sortBooksAlphabetically(booksResponse).filter(
 const booksInSeries = seriesResponse.reduce((result, series) => {
 	const { uid, data } = series;
 
-	for (const { book } of data.books) {
-		result[book.uid] = uid;
+	// only mark as in a series if there's more than 1 book
+	if (data.books.length > 1) {
+		for (const { book } of data.books) {
+			// add to the aggregate object
+			result[book.uid] = uid;
+		}
 	}
 
 	return result;
@@ -337,7 +341,6 @@ series.unshift({
 				tag.addEventListener('click', (event) => {
 					const tagID = event.target.dataset.tag;
 					const selected = event.target.dataset.selected === 'true';
-					console.log(event.target.dataset.selected);
 
 					if (!selected) {
 						event.target.dataset.selected = true;
