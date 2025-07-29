@@ -395,6 +395,8 @@ const frameThickness = type === 'frame' ? 0.25 : 0.2;
 	}
 
 	.cover-image {
+		/* use object-fit and flexbox to constrain the cover image:
+		 * https://stackoverflow.com/questions/50281998/div-that-fits-into-parent-and-maintains-an-aspect-ratio#66786774 */
 		align-items: center;
 		display: flex;
 		grid-area: image;
