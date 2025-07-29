@@ -40,14 +40,10 @@ import type {
 	TitleField,
 } from '@prismicio/types';
 
-import type {
-	Edition,
-	PrintType,
-	SEOContent,
-} from '@lib/types';
+import type { Edition, PrintType, SEOContent } from '@lib/types';
 
 export async function getStaticPaths() {
- 	const pictures = await prismic.getAllByType('picture', {
+	const pictures = await prismic.getAllByType('picture', {
 		orderings: {
 			field: 'my.picture.date_completed',
 			direction: 'desc',
@@ -92,17 +88,11 @@ export async function getStaticPaths() {
 		`,
 	});
 
- 	return pictures.map(({ uid, data, tags }) => {
+	return pictures.map(({ uid, data, tags }) => {
 		const date = prismicHelpers.asDate(data.date_completed);
 
 		const editions: Edition[] = data.editions.map((edition) => {
-			const {
-				etsy_link: etsyLink,
-				image,
-				limit,
-				name,
-				size,
-			} = edition;
+			const { etsy_link: etsyLink, image, limit, name, size } = edition;
 
 			const {
 				border,
@@ -111,9 +101,10 @@ export async function getStaticPaths() {
 				print_type: printType,
 			} = size.data;
 
-			const dimensions = data.orientation === 'horizontal'
-				? [ longSide, shortSide ]
-				: [ shortSide, longSide ];
+			const dimensions =
+				data.orientation === 'horizontal'
+					? [longSide, shortSide]
+					: [shortSide, longSide];
 
 			return {
 				etsyLink,
@@ -129,7 +120,7 @@ export async function getStaticPaths() {
 				info: [
 					{
 						label: 'Print size',
-						value: dimensions.map(side => `${side}"`).join(' x '),
+						value: dimensions.map((side) => `${side}"`).join(' x '),
 					},
 					{
 						label: 'Border',
@@ -137,7 +128,9 @@ export async function getStaticPaths() {
 					},
 					{
 						label: 'Paper size',
-						value: dimensions.map(side => `${side + (border * 2)}"`).join(' x '),
+						value: dimensions
+							.map((side) => `${side + border * 2}"`)
+							.join(' x '),
 					},
 					{
 						label: 'Edition limit',
@@ -148,9 +141,9 @@ export async function getStaticPaths() {
 		});
 
 		const seriesUID = data.series?.data?.uid;
-		const seriesPictures = pictures.filter((pic) => (
-				pic.data.series?.data?.uid === seriesUID && pic.uid !== uid
-			));
+		const seriesPictures = pictures.filter(
+			(pic) => pic.data.series?.data?.uid === seriesUID && pic.uid !== uid
+		);
 		const { width, height } = seriesPictures[0].data.cover.dimensions;
 
 		const nav = {
@@ -159,27 +152,28 @@ export async function getStaticPaths() {
 			pictures: seriesPictures,
 		};
 
- 		return {
- 			params: {
- 				year: format(date, 'yyyy'),
- 				month: format(date, 'MM'),
- 				uid,
- 			},
- 			props: {
+		return {
+			params: {
+				year: format(date, 'yyyy'),
+				month: format(date, 'MM'),
+				uid,
+			},
+			props: {
 				...data,
 				editions,
 				nav,
 				seo: {
-					description: data.seo_description || pictureDescription({ data, tags }),
+					description:
+						data.seo_description || pictureDescription({ data, tags }),
 					image: data.seo_image?.url || data.cover.url,
 					imageAlt: data.seo_image?.alt || data.cover.alt,
 					title: data.seo_title || prismicHelpers.asText(data.title),
 				},
 				// TODO: remove this once edition slices are deleted
 				body: data.body.filter(({ slice_type }) => slice_type !== 'edition'),
- 			},
- 		};
- 	});
+			},
+		};
+	});
 }
 
 // --- types
@@ -188,9 +182,9 @@ interface EditionsByPrintType extends PrintType {
 }
 
 export type Nav = {
-	title?: TitleField,
-	aspectRatio?: string,
-	pictures: PrismicDocumentWithUID[],
+	title?: TitleField;
+	aspectRatio?: string;
+	pictures: PrismicDocumentWithUID[];
 };
 
 export interface Props {
@@ -202,7 +196,7 @@ export interface Props {
 	editions?: Edition[];
 	height?: number;
 	media?: GroupField;
-	seo: SEOContent,
+	seo: SEOContent;
 	substrate?: LinkField;
 	width?: number;
 }
@@ -230,7 +224,7 @@ const substrateName = prismicHelpers.isFilled.link(substrate)
 function createMediaString() {
 	// convert the list of media to a sentence
 	let string = arrayToSentence(
-		media.map(({ medium }) => (medium.data.name.toLowerCase())),
+		media.map(({ medium }) => medium.data.name.toLowerCase()),
 		{ period: false }
 	);
 
@@ -247,19 +241,24 @@ function createMediaString() {
 }
 
 // sort the editions by print type (giclee, etc.)
-const editionsByType: EditionsByPrintType[] = editions.reduce((result, edition) => {
-	const currentTypeInResult = result.length > 0 && result.find((item) => item.name === edition.type.name);
-	if (!currentTypeInResult) {
-		result.push({
-			...edition.type,
-			sizes: [ edition ],
-		});
-	} else {
-		delete edition.type;
-		currentTypeInResult.sizes.push(edition);
-	}
-	return result;
-}, []);
+const editionsByType: EditionsByPrintType[] = editions.reduce(
+	(result, edition) => {
+		const currentTypeInResult =
+			result.length > 0 &&
+			result.find((item) => item.name === edition.type.name);
+		if (!currentTypeInResult) {
+			result.push({
+				...edition.type,
+				sizes: [edition],
+			});
+		} else {
+			delete edition.type;
+			currentTypeInResult.sizes.push(edition);
+		}
+		return result;
+	},
+	[]
+);
 
 const type = substrateName.includes('paper') ? 'frame' : 'panel';
 const matteThickness = type === 'frame' ? 25 : 1;
@@ -276,49 +275,89 @@ const frameThickness = type === 'frame' ? 0.25 : 0.2;
 	<main>
 		<!-- cover -->
 		<header class="cover">
-			<ImageFrameWall
-				class="cover-image"
-				source={cover as ImageField}
-				{frameThickness}
-				{matteThickness}
-				{type}
-			/>
+			<div class="cover-image">
+				<ImageFrameWall
+					source={cover as ImageField}
+					{frameThickness}
+					{matteThickness}
+					{type}
+				/>
+			</div>
 			<div class="cover-info | type-scale-epsilon type-role-accent">
-				<Heading level={1} text={title} class="cover-info-item title" />
-				<time class="cover-info-item year" datetime={date.toString()}>{format(new Date(date), 'yyyy')}</time>
-				{prismicHelpers.isFilled.group(media) && (
-					<p class="cover-info-item media" set:html={createMediaString()}></p>
-				)}
+				<Heading
+					level={1}
+					text={title}
+					class="cover-info-item title"
+				/>
+				<time
+					class="cover-info-item year"
+					datetime={date.toString()}
+					>{format(new Date(date), 'yyyy')}</time
+				>
+				{
+					prismicHelpers.isFilled.group(media) && (
+						<p
+							class="cover-info-item media"
+							set:html={createMediaString()}
+						/>
+					)
+				}
 			</div>
 		</header>
 
 		<!-- back story -->
-		{prismicHelpers.isFilled.sliceZone(body) && (
-			<section class="wrapper | border-seam-top" id="backstory">
-				<Heading level={2} align="center">Back story</Heading>
-				<BlockList {body} />
-			</section>
-		)}
+		{
+			prismicHelpers.isFilled.sliceZone(body) && (
+				<section
+					class="wrapper | border-seam-top"
+					id="backstory"
+				>
+					<Heading
+						level={2}
+						align="center"
+					>
+						Back story
+					</Heading>
+					<BlockList {body} />
+				</section>
+			)
+		}
 
 		<!-- editions -->
-		<section class="wrapper | border-seam-top" id="editions">
-			<Heading level={2} align="center">
+		<section
+			class="wrapper | border-seam-top"
+			id="editions"
+		>
+			<Heading
+				level={2}
+				align="center"
+			>
 				Available editions
 			</Heading>
 
-			{editionsByType.map((type) => (
-				<PrintEdition {type} />
-			))}
+			{editionsByType.map((type) => <PrintEdition {type} />)}
 		</section>
 
 		<!-- Footer nav -->
 		<nav class="wrapper | border-seam-top">
 			<header class="nav-header">
-				{nav.title
-					? <Heading level={2} class="nav-header-title | type-scale-gamma">
-							More from the <em>{prismicHelpers.asText(nav.title)}</em>&nbsp;series
+				{
+					nav.title ? (
+						<Heading
+							level={2}
+							class="nav-header-title | type-scale-gamma"
+						>
+							More from the <em>{prismicHelpers.asText(nav.title)}</em>
+							&nbsp;series
 						</Heading>
-					: <Heading level={2} class="">More work</Heading>
+					) : (
+						<Heading
+							level={2}
+							class=""
+						>
+							More work
+						</Heading>
+					)
 				}
 				<Button
 					href={indexPage({ uid: 'pictures' } as PrismicDocument)}
@@ -340,25 +379,30 @@ const frameThickness = type === 'frame' ? 0.25 : 0.2;
 	.cover {
 		display: grid;
 		grid-template-columns: var(--space-outside) 1fr var(--space-outside);
-		/* add a space above the top margin roughly the height of the main nav
-				to keep the cover image vertically centered */
-		grid-template-rows: var(--space-xwide) minmax(60svh, 1fr) auto var(--space-xwide);
+		grid-template-rows:
+			var(--space-xwide)
+			minmax(60svh, 1fr)
+			auto
+			var(--space-xwide);
 		grid-template-areas:
 			'. . .'
 			'. image .'
 			'. info .'
 			'. . .';
-		height: calc(100svh - 3.4rem);
+		height: calc(100svh - 3.4rem); /* 100% - the main header */
+		overflow: hidden;
 		position: relative;
 	}
 
-	.cover :global(.cover-image) {
+	.cover-image {
+		align-items: center;
+		display: flex;
 		grid-area: image;
-		max-height: 100%;
-		position: relative;
-		inset-block-start: 50%;
-		inset-inline-start: 50%;
-		transform: translateX(-50%) translateY(-50%);
+		height: auto;
+		justify-content: center;
+		object-fit: contain;
+		overflow: hidden;
+		width: 100%;
 	}
 
 	.cover-info {
