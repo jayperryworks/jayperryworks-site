@@ -70,78 +70,82 @@ function getBooksBlobEndpoint({ isbn, olid, type = 'data' }) {
 		: `http://localhost:8888/${paths[type]}/olid/${olid}`;
 }
 
-const books = await Promise.all(sortedBooks.map(async ({
-	uid,
-	tags,
-	data,
-}) => {
-	const {
-		author,
-		isbn,
-		olid,
-		purchase_url: purchaseURL,
-		related_content: relatedContent,
-		title,
-		cover,
-	} = data;
-
-	// query the Netlify blob cache for additional data (pulled from OpenLibrary)
-	if (isbn || olid) {
-		let bookData = {
-			actions: [
-				{
-					label: 'Purchase',
-					url: prismicHelpers.asLink(purchaseURL),
-					type: 'external'
-				},
-			],
-			tags: tags || [],
+const books = await Promise.all(
+	sortedBooks.map(async ({ uid, tags, data }) => {
+		const {
 			author,
-			relatedContent,
+			isbn,
+			olid,
+			purchase_url: purchaseURL,
+			related_content: relatedContent,
 			title,
-			uid,
-		};
+			cover,
+		} = data;
 
-		try {
-			const booksDataResponse = await fetch(getBooksBlobEndpoint({ isbn, olid }));
+		// query the Netlify blob cache for additional data (pulled from OpenLibrary)
+		if (isbn || olid) {
+			let bookData = {
+				actions: [
+					{
+						label: 'Purchase',
+						url: prismicHelpers.asLink(purchaseURL),
+						type: 'external',
+					},
+				],
+				tags: tags || [],
+				author,
+				relatedContent,
+				title,
+				uid,
+			};
 
-			if (booksDataResponse?.status === 200) {
-				const booksBlobData = await booksDataResponse.json();
+			try {
+				const booksDataResponse = await fetch(
+					getBooksBlobEndpoint({ isbn, olid })
+				);
 
-				const {
-					url: infoURL,
-					publishDate,
-					publishers,
-					hasCover,
-				} = JSON.parse(booksBlobData);
+				if (booksDataResponse?.status === 200) {
+					const booksBlobData = await booksDataResponse.json();
 
-				bookData.publishers = publishers;
-				bookData.publishDate = publishDate;
+					const {
+						url: infoURL,
+						publishDate,
+						publishers,
+						hasCover,
+					} = JSON.parse(booksBlobData);
 
-				// if there's a cover image in Prismic, use that
-				if (prismicHelpers.isFilled.image(cover)) {
-					bookData.cover = cover.url;
-				// otherwise, if the cover is available on OpenLibrary, use that
-				} else if (hasCover) {
-					bookData.cover = getBooksBlobEndpoint({ isbn, olid, type: 'covers' });
+					bookData.publishers = publishers;
+					bookData.publishDate = publishDate;
+
+					// if there's a cover image in Prismic, use that
+					if (prismicHelpers.isFilled.image(cover)) {
+						bookData.cover = cover.url;
+						// otherwise, if the cover is available on OpenLibrary, use that
+					} else if (hasCover) {
+						bookData.cover = getBooksBlobEndpoint({
+							isbn,
+							olid,
+							type: 'covers',
+						});
+					}
+
+					bookData.actions.unshift({
+						label: 'Open Library',
+						url: infoURL,
+						type: 'external',
+					});
+
+					return bookData;
 				}
-
-				bookData.actions.unshift({
-					label: 'Open Library',
-					url: infoURL,
-					type: 'external'
-				});
-
-				return bookData;
+			} catch (error) {
+				console.log(error);
 			}
-		} catch(error) {
-			console.log(error);
-		}
 
-		// if the request to the cache fails, just use the data we have from the CMS
-		return bookData;
-	}
-}));
+			// if the request to the cache fails, just use the data we have from the CMS
+			return bookData;
+		}
+	})
+);
 ---
 
 <Layout
@@ -158,43 +162,52 @@ const books = await Promise.all(sortedBooks.map(async ({
 				level={1}
 				text={title}
 			/>
-			{subtitle && (
-				<Heading
-					align="center"
-					level={4}
-					subheading
-					text={subtitle}
-				/>
-			)}
+			{
+				subtitle && (
+					<Heading
+						align="center"
+						level={4}
+						subheading
+						text={subtitle}
+					/>
+				)
+			}
 		</header>
 
-		<BlockList {body} showLedeStyle />
+		<BlockList
+			{body}
+			showLedeStyle
+		/>
 
 		<div class="wrapper">
 			<Gallery gutter="xnarrow">
-				{books.filter((b) => b !== undefined).map((book) => (
-					<li
-						class="item"
-						data-tags={book?.tags?.join(' ')}
-						id={book.uid}
-					>
-						<BookCard
-							title={book.title}
-							author={book.author}
-							cover={book.cover}
-							actions={book.actions}
-						>
-							{book.publishers && book.publishDate && (
-								<p
-									slot="metadata"
-									class="metadata type-role-accent type-scale-zeta"
+				{
+					books
+						.filter((b) => b !== undefined)
+						.map((book) => (
+							<li
+								class="item"
+								data-tags={book?.tags?.join(' ')}
+								id={book.uid}
+							>
+								<BookCard
+									title={book.title}
+									author={book.author}
+									cover={book.cover}
+									actions={book.actions}
 								>
-									{[book.publishers[0], book.publishDate].join(', ')}
-								</p>
-							)}
-						</BookCard>
-					</li>
-				))}
+									{book.publishers && book.publishDate && (
+										<p
+											slot="metadata"
+											class="metadata type-role-accent type-scale-zeta"
+										>
+											{[book.publishers[0], book.publishDate].join(', ')}
+										</p>
+									)}
+								</BookCard>
+							</li>
+						))
+				}
 			</Gallery>
 		</div>
 	</main>
