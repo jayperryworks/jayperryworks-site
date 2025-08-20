@@ -3,6 +3,8 @@
 import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
 import '@styles/utilities/type.css';
+import collapse from '@icons/collapse.svg?raw';
+import expand from '@icons/expand.svg?raw';
 
 // --- utils
 import * as prismicHelpers from '@prismicio/helpers';
@@ -10,6 +12,7 @@ import prismic from '@lib/prismic';
 import { removeArticles } from '@lib/stringHelpers';
 
 // --- components
+import Button from '@components/elements/Button.astro';
 import Pill from '@components/elements/Pill.astro';
 import Heading from '@components/blocks/Heading.astro';
 import BookCard from '@components/layout/BookCard.astro';
@@ -256,7 +259,15 @@ series.unshift({
 						class="expanding-filter"
 						open
 					>
-						<summary>Tags</summary>
+						<summary>
+							<Button
+								as="button"
+								class="expanding-filter-button"
+								iconLeft={expand}
+							>
+								Tags
+							</Button>
+						</summary>
 						<ul class="tags">
 							{
 								tags.map((tag) => (
@@ -414,27 +425,35 @@ series.unshift({
 	}
 
 	.wrapper {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-xwide);
 		max-width: var(--content-width-xxwide);
 		padding-block-end: var(--space-xwide);
 	}
 
-	.expanding-filter {
-		background-color: var(--color-well);
-		border-radius: var(--border-radius);
-		padding: var(--space-medium);
+	summary::marker,
+	summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.expanding-filter :global(.expanding-filter-button) {
+		pointer-events: none;
 	}
 
 	.tags {
+		background-color: var(--color-well);
+		border-radius: var(--border-radius);
+		padding: var(--space-medium);
 		align-items: start;
 		display: flex;
 		flex-wrap: wrap;
 		gap: var(--space-xxnarrow);
 		justify-content: start;
 		list-style: none;
-		padding-inline-start: 0;
+	}
+
+	jp-filter-and-sort {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-wide);
 	}
 
 	.section > :global(* + *) {

@@ -8,7 +8,8 @@ import '@styles/tokens/type.css';
 import Icon from '@components/elements/Icon.astro';
 
 export interface Props {
-	href: string;
+	href?: string;
+	as?: 'a' | 'button';
 	class?: string;
 	iconLeft?: string;
 	iconRight?: string;
@@ -18,8 +19,9 @@ export interface Props {
 }
 
 const {
-	href,
+	as: El = 'a',
 	class: className = '',
+	href,
 	iconLeft = '',
 	iconRight = '',
 	role = '',
@@ -37,45 +39,49 @@ const classList = [
 ].join(' ');
 ---
 
-<a
-  {href}
-  {target}
-  class={classList}
+<El
+	{href}
+	{target}
+	class={classList}
 >
-  {iconLeft && (
-    <Icon
-			align="baseline"
-      class="icon left"
-      size={size}
-      svg={iconLeft}
-    />
-	)}
+	{
+		iconLeft && (
+			<Icon
+				align="baseline"
+				class="icon left"
+				size={size}
+				svg={iconLeft}
+			/>
+		)
+	}
 
-  <slot></slot>
+	<slot />
 
-	{iconRight && (
-    <Icon
-			align="baseline"
-      class="icon right"
-      size={size}
-      svg={iconRight}
-    />
-	)}
-</a>
+	{
+		iconRight && (
+			<Icon
+				align="baseline"
+				class="icon right"
+				size={size}
+				svg={iconRight}
+			/>
+		)
+	}
+</El>
 
 <style>
-  .button {
+	.button {
 		--border-width: 0.12em;
 		--color-border: var(--color-highlight);
 		--color-fill: transparent;
 		--shadow-opacity: 0;
-    --baseline-compensation: 0.05em;
-    --color-label: var(--color-primary, currentColor);
-    --font-size: var(--type-scale-epsilon, 1rem);
-    --icon-padding-offset: 0.3em;
-    --icon-spacing: 0.8em;
-    --padding-x: 1.4em;
-    --padding-y: 0.88em;
+		--baseline-compensation: 0.05em;
+		--color-label: var(--color-primary, currentColor);
+		--font-size: var(--type-scale-epsilon, 1rem);
+		--icon-padding-offset: 0.3em;
+		--icon-spacing: 0.8em;
+		--padding-x: 1.4em;
+		--padding-y: 0.88em;
 
 		align-items: center;
 		gap: 0.3em; /* add a space for elements in the slot, e.g. <strong> */
@@ -85,70 +91,72 @@ const classList = [
 		padding-inline: var(--padding-x);
 		text-decoration: none;
 		z-index: 1;
-    background-color: var(--color-fill);
-    border-radius: var(--border-radius);
-    border: var(--border-width) solid var(--color-border);
-    color: var(--color-label);
-    cursor: pointer;
-    display: inline-flex;
-    font-family: var(--type-font-accent);
-    font-size: var(--font-size);
-    font-weight: 300;
-    padding-block-start: var(--padding-y);
-    position: relative;
-    transition: all 0.25s ease;
-  }
-
-  /* pre-render a box shadow on a pseudo element, but hide it */
-  .button::after {
+		background-color: var(--color-fill);
 		border-radius: var(--border-radius);
-    box-shadow: var(--elevation-low);
-    content: '';
-    display: block;
-		/* extend outside the container by 95% of the border width so it appears flush */
-    inset: calc((var(--border-width) * 0.95) * -1);
-    opacity: var(--shadow-opacity);
-    position: absolute;
-    transition: opacity 0.25s ease-in-out;
-    z-index: 0;
-  }
+		border: var(--border-width) solid var(--color-border);
+		color: var(--color-label);
+		cursor: pointer;
+		display: inline-flex;
+		font-family: var(--type-font-accent);
+		font-size: var(--font-size);
+		font-weight: 300;
+		padding-block-start: var(--padding-y);
+		position: relative;
+		transition: all 0.25s ease;
+	}
 
-  .button:hover,
-  .button:active {
-		--color-border: oklch(from var(--color-highlight) calc(l + 0.1) calc(c - 0.01) h);
-		--color-fill: oklch( from var(--color-surface) calc(l + 0.03) c h);
+	/* pre-render a box shadow on a pseudo element, but hide it */
+	.button::after {
+		border-radius: var(--border-radius);
+		box-shadow: var(--elevation-low);
+		content: '';
+		display: block;
+		/* extend outside the container by 95% of the border width so it appears flush */
+		inset: calc((var(--border-width) * 0.95) * -1);
+		opacity: var(--shadow-opacity);
+		position: absolute;
+		transition: opacity 0.25s ease-in-out;
+		z-index: 0;
+	}
+
+	.button:hover,
+	.button:active {
+		--color-border: oklch(
+			from var(--color-highlight) calc(l + 0.1) calc(c - 0.01) h
+		);
+		--color-fill: oklch(from var(--color-surface) calc(l + 0.03) c h);
 		--color-label: oklch(from var(--color-primary) calc(l + 0.1) c h);
 		--shadow-opacity: 1;
-  }
+	}
 
-  .button :global(sup) {
-    font-size: 0.6em;
-  }
+	.button :global(sup) {
+		font-size: 0.6em;
+	}
 
-  .button :global(strong) {
-    font-weight: bold;
-  }
+	.button :global(strong) {
+		font-weight: bold;
+	}
 
-  /* --- sizes --- */
-  .small {
+	/* --- sizes --- */
+	.small {
 		--border-width: 0.1em;
-    --font-size: var(--type-scale-zeta);
-    --icon-padding-offset: 0.2em;
+		--font-size: var(--type-scale-zeta);
+		--icon-padding-offset: 0.2em;
 		--icon-spacing: 0.6em;
 		--padding-x: 0.88em;
-    --padding-y: 0.42em;
+		--padding-y: 0.42em;
 
 		border-radius: var(--border-radius-sharp);
-  }
+	}
 
-  /* --- icons --- */
-  .button.has-icon.left {
-    padding-inline-start: calc(var(--padding-x) - var(--icon-padding-offset));
-  }
+	/* --- icons --- */
+	.button.has-icon.left {
+		padding-inline-start: calc(var(--padding-x) - var(--icon-padding-offset));
+	}
 
-  .button.has-icon.right {
-    padding-inline-end: calc(var(--padding-x) - var(--icon-padding-offset));
-  }
+	.button.has-icon.right {
+		padding-inline-end: calc(var(--padding-x) - var(--icon-padding-offset));
+	}
 
 	.button :global(.icon.left) {
 		margin-inline-end: var(--icon-padding-offset);
