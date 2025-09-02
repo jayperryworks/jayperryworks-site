@@ -1,6 +1,7 @@
 ---
 // assets
 import '@styles/tokens/borders.css';
+import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 import '@styles/utilities/type.css';
@@ -147,6 +148,7 @@ function getInitial(title) {
 		display: flex;
 		flex-direction: column;
 		flex: 1;
+		max-width: var(--content-width-default);
 		padding: var(--space-medium) var(--space-xnarrow);
 	}
 

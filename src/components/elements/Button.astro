@@ -7,15 +7,21 @@ import '@styles/tokens/type.css';
 // components
 import Icon from '@components/elements/Icon.astro';
 
+interface ToggleIcon {
+	default: string;
+	toggled?: string;
+}
+
 export interface Props {
 	href?: string;
 	as?: 'a' | 'button';
 	class?: string;
-	iconLeft?: string;
-	iconRight?: string;
+	iconLeft?: string | ToggleIcon;
+	iconRight?: string | ToggleIcon;
 	role?: string;
 	size?: string;
 	target?: string;
+	toggled?: boolean;
 }
 
 const {
@@ -26,31 +32,38 @@ const {
 	iconRight = '',
 	role = '',
 	size = '',
-	target = '',
+	target,
+	toggled = false,
+	...attrs
 } = Astro.props as Props;
 
-const classList = [
-	'button',
-	iconLeft ? 'has-icon left' : '',
-	iconRight ? 'has-icon right' : '',
-	role,
-	size,
-	className,
-].join(' ');
+const classList = ['button', role, size, className].filter(Boolean).join(' ');
 ---
 
 <El
 	{href}
-	{target}
 	class={classList}
+	data-toggled={toggled || undefined}
+	target={target || undefined}
+	{...attrs}
 >
 	{
 		iconLeft && (
 			<Icon
 				align="baseline"
-				class="icon left"
+				class="icon left default"
 				size={size}
-				svg={iconLeft}
+				svg={iconLeft?.default || iconLeft}
+			/>
+		)
+	}
+	{
+		iconLeft.toggled && (
+			<Icon
+				align="baseline"
+				class="icon left toggled"
+				size={size}
+				svg={iconLeft.toggled}
 			/>
 		)
 	}
@@ -61,9 +74,19 @@ const classList = [
 		iconRight && (
 			<Icon
 				align="baseline"
-				class="icon right"
+				class="icon right default"
 				size={size}
 				svg={iconRight}
+			/>
+		)
+	}
+	{
+		iconRight.toggled && (
+			<Icon
+				align="baseline"
+				class="icon left toggled"
+				size={size}
+				svg={iconRight.toggled}
 			/>
 		)
 	}
@@ -84,13 +107,6 @@ const classList = [
 		--padding-y: 0.88em;
 
 		align-items: center;
-		gap: 0.3em; /* add a space for elements in the slot, e.g. <strong> */
-		line-height: var(--type-leading-xtight);
-		overflow: visible;
-		padding-block-end: calc(var(--padding-y) - var(--baseline-compensation));
-		padding-inline: var(--padding-x);
-		text-decoration: none;
-		z-index: 1;
 		background-color: var(--color-fill);
 		border-radius: var(--border-radius);
 		border: var(--border-width) solid var(--color-border);
@@ -100,9 +116,16 @@ const classList = [
 		font-family: var(--type-font-accent);
 		font-size: var(--font-size);
 		font-weight: 300;
+		gap: 0.3em; /* add a space for elements in the slot, e.g. <strong> */
+		line-height: var(--type-leading-xtight);
+		overflow: visible;
+		padding-block-end: calc(var(--padding-y) - var(--baseline-compensation));
 		padding-block-start: var(--padding-y);
+		padding-inline: var(--padding-x);
 		position: relative;
+		text-decoration: none;
 		transition: all 0.25s ease;
+		z-index: 1;
 	}
 
 	/* pre-render a box shadow on a pseudo element, but hide it */
@@ -149,12 +172,21 @@ const classList = [
 		border-radius: var(--border-radius-sharp);
 	}
 
+	.medium {
+		--border-width: 0.12em;
+		--font-size: var(--type-scale-zeta);
+		--icon-padding-offset: 0.3em;
+		--icon-spacing: 0.8em;
+		--padding-x: 1.4em;
+		--padding-y: 0.88em;
+	}
+
 	/* --- icons --- */
-	.button.has-icon.left {
+	.button:has(.icon.left) {
 		padding-inline-start: calc(var(--padding-x) - var(--icon-padding-offset));
 	}
 
-	.button.has-icon.right {
+	.button:has(.icon.right) {
 		padding-inline-end: calc(var(--padding-x) - var(--icon-padding-offset));
 	}
 
@@ -164,5 +196,31 @@ const classList = [
 
 	.button :global(.icon.right) {
 		margin-inline-start: var(--icon-padding-offset);
+	}
+
+	/* --- toggled state --- */
+	.button[data-toggled] {
+		--color-border: oklch(from var(--color-highlight) 55% c h);
+		--color-fill: var(--color-border);
+		--color-label: var(--color-island);
+	}
+
+	.button[data-toggled]:hover,
+	.button[data-toggled]:active {
+		--color-border: oklch(from var(--color-highlight) 60% c h);
+		--color-fill: var(--color-border);
+		--color-label: var(--color-island);
+	}
+
+	.button :global(.icon.toggled) {
+		display: none;
+	}
+
+	.button[data-toggled] :global(.icon.default) {
+		display: none;
+	}
+
+	.button[data-toggled] :global(.icon.toggled) {
+		display: initial;
 	}
 </style>

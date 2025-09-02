@@ -5,7 +5,7 @@
  *
  * @param {string} [label] - the text label it displays
  * @param {Object[]} [data] - data attributes to attach to the element
- * @param {boolean} [selected=false] - is the pill selected?
+ * @param {boolean} [toggled=false] - is the pill toggled?
  */
 
 // --- assets ---
@@ -15,7 +15,7 @@ import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 
 // --- props ---
-const { label, data, selected = false, class: className } = Astro.props;
+const { label, data, toggled = false, class: className } = Astro.props;
 
 const classList = ['pill', className].join(' ').trim();
 
@@ -27,7 +27,7 @@ const dataAttrs = Object.keys(data).reduce((result, key) => {
 
 <button
 	class={classList}
-	data-selected={selected}
+	data-toggled={toggled || undefined}
 	{...dataAttrs}
 >
 	<slot>{label}</slot>
@@ -77,10 +77,19 @@ const dataAttrs = Object.keys(data).reduce((result, key) => {
 		--shadow-opacity: 1;
 	}
 
-	.pill[data-selected='true'] {
-		--border-color: var(--color-highlight);
+	.pill[data-toggled='true'] {
+		/* modify the L value to make sure there's enough contrast with the label */
+		--border-color: oklch(from var(--color-highlight) 55% c h);
+		--color-fill: var(--border-color);
 		--color-label: var(--color-island);
-		--color-fill: var(--color-highlight);
 		--shadow-opacity: 1;
+	}
+
+	.pill[data-toggled='true']:hover,
+	.pill[data-toggled='true']:active {
+		/* modify the L value to make sure there's enough contrast with the label */
+		--border-color: oklch(from var(--color-highlight) 60% c h);
+		--color-fill: var(--border-color);
+		--color-label: var(--color-island);
 	}
 </style>

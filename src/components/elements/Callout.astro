@@ -19,30 +19,34 @@ import { LinkField, TitleField } from '@prismicio/types';
 import { FormattedText } from '@lib/types';
 
 export interface Action {
-	label: string,
-	link: LinkField,
-};
+	label: string;
+	link: LinkField;
+}
 
 export interface Props {
-	title: TitleField,
-	actions?: Action[],
+	title?: TitleField;
+	actions?: Action[];
 	description?: FormattedText;
-	class?: string,
-};
+	class?: string;
+}
 
 const {
 	title,
 	actions,
 	description,
-	class: className = ''
+	class: className = '',
 } = Astro.props as Props;
 ---
 
 <aside class={['callout', className].join(' ')}>
-	<Heading
-		class="type-scale-gamma"
-		text={title}
-	/>
+	{
+		title && (
+			<Heading
+				class="type-scale-gamma"
+				text={title}
+			/>
+		)
+	}
 
 	<slot>
 		<RenderedText
@@ -51,18 +55,20 @@ const {
 		/>
 	</slot>
 
-	{actions?.length > 0 && (
-		<footer>
-			{actions.map(({label, link}) => (
-				<Button
-					iconRight={arrow}
-					href={prismicHelpers.asLink(link, linkResolver)}
-				>
-					{label}
-				</Button>
-			))}
-		</footer>
-	)}
+	{
+		actions?.length > 0 && (
+			<footer>
+				{actions.map(({ label, link }) => (
+					<Button
+						iconRight={arrow}
+						href={prismicHelpers.asLink(link, linkResolver)}
+					>
+						{label}
+					</Button>
+				))}
+			</footer>
+		)
+	}
 </aside>
 
 <style>

@@ -12,14 +12,16 @@ import prismic from '@lib/prismic';
 import { removeArticles } from '@lib/stringHelpers';
 
 // --- components
-import Button from '@components/elements/Button.astro';
-import Pill from '@components/elements/Pill.astro';
-import Heading from '@components/blocks/Heading.astro';
-import BookCard from '@components/layout/BookCard.astro';
-import Gallery from '@components/layout/Gallery.astro';
-import MainNav from '@components/navigation/MainNav.astro';
-import MainFooter from '@components/navigation/MainFooter.astro';
 import BlockList from '@components/BlockList.astro';
+import BookCard from '@components/layout/BookCard.astro';
+import Button from '@components/elements/Button.astro';
+import Callout from '@components/elements/Callout.astro';
+import Gallery from '@components/layout/Gallery.astro';
+import Heading from '@components/blocks/Heading.astro';
+import MainFooter from '@components/navigation/MainFooter.astro';
+import MainNav from '@components/navigation/MainNav.astro';
+import Passage from '@components/blocks/Passage.astro';
+import Pill from '@components/elements/Pill.astro';
 
 // --- layout
 import Layout from '@layouts/Layout.astro';
@@ -255,79 +257,94 @@ series.unshift({
 		<div class="wrapper">
 			<jp-filter-and-sort>
 				<template id="controls">
-					<details
-						class="expanding-filter"
-						open
-					>
-						<summary>
-							<Button
-								as="button"
-								class="expanding-filter-button"
-								iconLeft={expand}
-							>
-								Tags
-							</Button>
-						</summary>
-						<ul class="tags">
+					<div class="expanding-filter">
+						<Button
+							as="button"
+							class="expanding-filter-button"
+							iconLeft={{ default: expand, toggled: collapse }}
+							size="medium"
+						>
+							Tags
+						</Button>
+						<ul
+							class="tags"
+							hidden
+						>
 							{
 								tags.map((tag) => (
 									<li class="tag-item">
 										<Pill
-											data={{ tag: tag }}
+											data={{ tag }}
 											label={tag}
 										/>
 									</li>
 								))
 							}
 						</ul>
-					</details>
+					</div>
 				</template>
-				{
-					series.map((series) => (
-						<section
-							class="section"
-							id={series?.uid}
-							data-tags={series?.tags?.join(', ')}
-						>
-							{series.title && (
-								<Heading
-									align="center"
-									class="type-scale-gamma"
-								>
-									<span class="series-label">Series:</span>{' '}
-									{prismicHelpers.asText(series.title)}
-								</Heading>
-							)}
 
-							<Gallery gutter="xnarrow">
-								{series.books.map((book) => (
-									<li
-										class="item"
-										data-series={book?.series}
-										data-tags={book?.tags?.join(', ')}
-										id={book.uid}
+				<template id="empty">
+					<Callout>
+						<Heading
+							class="type-scale-gamma"
+							subheading
+						>
+							Sorry, none of my favorite books have all of those tags.
+						</Heading>
+						<Passage>
+							But that sounds pretty interesting. I should try to find some.
+						</Passage>
+					</Callout>
+				</template>
+
+				<div class="books">
+					{
+						series.map((series) => (
+							<section
+								class="section"
+								id={series?.uid}
+								data-tags={series?.tags?.join(', ')}
+							>
+								{series.title && (
+									<Heading
+										align="center"
+										class="type-scale-gamma"
 									>
-										<BookCard
-											actions={book.actions}
-											author={book.author}
-											cover={book.cover}
-											title={book.title}
+										<span class="series-label">Series:</span>{' '}
+										{prismicHelpers.asText(series.title)}
+									</Heading>
+								)}
+								<Gallery gutter="xnarrow">
+									{series.books.map((book) => (
+										<li
+											class="item"
+											data-series={book?.series}
+											data-tags={book?.tags?.join(', ')}
+											id={book.uid}
 										>
-											{book.publishers && book.publishDate && (
-												<p
-													slot="metadata"
-													class="metadata type-role-accent type-scale-zeta"
-												>
-													{[book.publishers[0], book.publishDate].join(', ')}
-												</p>
-											)}
-										</BookCard>
-									</li>
-								))}
-							</Gallery>
-						</section>
-					))
-				}
+											<BookCard
+												actions={book.actions}
+												author={book.author}
+												cover={book.cover}
+												title={book.title}
+											>
+												{book.publishers && book.publishDate && (
+													<p
+														slot="metadata"
+														class="metadata type-role-accent type-scale-zeta"
+													>
+														{[book.publishers[0], book.publishDate].join(', ')}
+													</p>
+												)}
+											</BookCard>
+										</li>
+									))}
+								</Gallery>
+							</section>
+						))
+					}
+				</div>
 			</jp-filter-and-sort>
 		</div>
 	</main>
@@ -341,23 +358,30 @@ series.unshift({
 		#series = [];
 
 		connectedCallback() {
-			const template = this.querySelector('#controls');
-			this.prepend(template.content);
+			const controls = this.querySelector('#controls');
+			this.prepend(controls.content);
 
+			const tagsButton = this.querySelector('.expanding-filter-button');
+			const tagsContainer = this.querySelector('.tags');
 			const tags = Array.from(this.querySelectorAll('.pill'));
 			this.#items = Array.from(this.querySelectorAll('.item'));
 			this.#series = Array.from(this.querySelectorAll('.section[id]'));
 
+			tagsButton.addEventListener('click', () => {
+				tagsButton.toggleAttribute('data-toggled');
+				tagsContainer.toggleAttribute('hidden');
+			});
+
 			for (const tag of tags) {
 				tag.addEventListener('click', (event) => {
 					const tagID = event.target.dataset.tag;
-					const selected = event.target.dataset.selected === 'true';
+					const selected = event.target.dataset.toggled === 'true';
 
 					if (!selected) {
-						event.target.dataset.selected = true;
+						event.target.dataset.toggled = true;
 						this.addActiveTag(tagID);
 					} else {
-						event.target.dataset.selected = false;
+						event.target.dataset.toggled = false;
 						this.removeActiveTag(tagID);
 					}
 				});
@@ -366,7 +390,6 @@ series.unshift({
 
 		addActiveTag(tag) {
 			this.activeTags.push(tag);
-			console.log(this.#activeTags);
 			this.render();
 		}
 
@@ -375,7 +398,6 @@ series.unshift({
 
 			if (index !== -1) {
 				this.activeTags.splice(index, 1);
-				console.log(this.#activeTags);
 				this.render();
 			}
 		}
@@ -393,8 +415,9 @@ series.unshift({
 			for (const item of [...this.#items, ...this.#series]) {
 				if (this.activeTags.length > 0) {
 					const itemTags = item.dataset.tags.split(', ');
-					const isActive =
-						this.activeTags.filter((tag) => itemTags.includes(tag)).length > 0;
+					const isActive = this.activeTags.every((tag) =>
+						itemTags.includes(tag)
+					);
 
 					if (isActive) {
 						item.removeAttribute('hidden');
@@ -429,31 +452,41 @@ series.unshift({
 		padding-block-end: var(--space-xwide);
 	}
 
-	summary::marker,
-	summary::-webkit-details-marker {
-		display: none;
+	jp-filter-and-sort {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-medium);
 	}
 
-	.expanding-filter :global(.expanding-filter-button) {
-		pointer-events: none;
+	.expanding-filter {
+		display: flex;
+		flex-direction: column;
+		align-items: end;
+		gap: var(--space-narrow);
 	}
 
 	.tags {
+		align-items: start;
 		background-color: var(--color-well);
 		border-radius: var(--border-radius);
-		padding: var(--space-medium);
-		align-items: start;
 		display: flex;
 		flex-wrap: wrap;
 		gap: var(--space-xxnarrow);
 		justify-content: start;
 		list-style: none;
+		margin: 0;
+		padding: var(--space-medium);
 	}
 
-	jp-filter-and-sort {
+	.books {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-wide);
+		align-items: start;
+		gap: var(--space-xwide);
+	}
+
+	.section {
+		width: 100%;
 	}
 
 	.section > :global(* + *) {
@@ -471,7 +504,7 @@ series.unshift({
 		transition: all 0.25s ease-in-out;
 	}
 
-	.item[hidden] {
-		display: none;
+	[hidden] {
+		display: none !important;
 	}
 </style>
