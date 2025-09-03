@@ -188,7 +188,7 @@ const books = await Promise.all(
 					return bookData;
 				}
 			} catch (error) {
-				// console.log(error);
+				console.log(error);
 			}
 
 			// if the request to the cache fails, just use the data we have from the CMS
@@ -313,30 +313,34 @@ series.unshift({
 									</Heading>
 								)}
 								<Gallery gutter="xnarrow">
-									{series.books.map((book) => (
-										<li
-											class="item"
-											data-series={book?.series}
-											data-tags={book?.tags?.join(', ')}
-											id={book.uid}
-										>
-											<BookCard
-												actions={book.actions}
-												author={book.author}
-												cover={book.cover}
-												title={book.title}
+									{series.books
+										.filter((b) => b !== undefined)
+										.map((book) => (
+											<li
+												class="item"
+												data-series={book?.series}
+												data-tags={book?.tags?.join(', ')}
+												id={book.uid}
 											>
-												{book.publishers && book.publishDate && (
-													<p
-														slot="metadata"
-														class="metadata type-role-accent type-scale-zeta"
-													>
-														{[book.publishers[0], book.publishDate].join(', ')}
-													</p>
-												)}
-											</BookCard>
-										</li>
-									))}
+												<BookCard
+													actions={book.actions}
+													author={book.author}
+													cover={book.cover}
+													title={book.title}
+												>
+													{book.publishers && book.publishDate && (
+														<p
+															slot="metadata"
+															class="metadata type-role-accent type-scale-zeta"
+														>
+															{[book.publishers[0], book.publishDate].join(
+																', '
+															)}
+														</p>
+													)}
+												</BookCard>
+											</li>
+										))}
 								</Gallery>
 							</section>
 						))
