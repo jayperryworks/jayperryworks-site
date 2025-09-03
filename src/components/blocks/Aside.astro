@@ -29,6 +29,7 @@ const {
 	class: className,
 	label,
 	typeSize = 'Default',
+	...attrs
 } = Astro.props;
 
 const typeScale = {
@@ -36,27 +37,31 @@ const typeScale = {
 	Small: 'zeta',
 };
 
-const classList = [
-	'aside',
-	className,
-].join(' ');
+const classList = ['aside', className].join(' ');
 ---
 
-<aside class={classList}>
-	{label && (
-		<Heading
-			class="type-scale-epsilon"
-			level={2}
-		>
-			{label}
-		</Heading>
-	)}
-	<Passage
-		{text}
-		class="text"
-		typeSize={typeScale[typeSize]}
-		typeFace="accent"
-	/>
+<aside
+	class={classList}
+	{...attrs}
+>
+	{
+		label && (
+			<Heading
+				class="type-scale-epsilon"
+				level={2}
+			>
+				{label}
+			</Heading>
+		)
+	}
+	<slot>
+		<Passage
+			{text}
+			class="text"
+			typeSize={typeScale[typeSize]}
+			typeFace="accent"
+		/>
+	</slot>
 </aside>
 
 <style>
@@ -66,7 +71,8 @@ const classList = [
 		color: var(--color-secondary);
 		display: flex;
 		flex-direction: column;
-		padding:  var(--space-medium);
+		align-items: center;
+		padding: var(--space-medium);
 	}
 
 	.aside :global(.text) {

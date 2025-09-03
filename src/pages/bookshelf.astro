@@ -12,16 +12,16 @@ import prismic from '@lib/prismic';
 import { removeArticles } from '@lib/stringHelpers';
 
 // --- components
-import BlockList from '@components/BlockList.astro';
-import BookCard from '@components/layout/BookCard.astro';
+import Aside from '@components/blocks/Aside.astro';
 import Button from '@components/elements/Button.astro';
-import Callout from '@components/elements/Callout.astro';
-import Gallery from '@components/layout/Gallery.astro';
+import Pill from '@components/elements/Pill.astro';
 import Heading from '@components/blocks/Heading.astro';
+import Passage from '@components/blocks/Passage.astro';
+import BookCard from '@components/layout/BookCard.astro';
+import Gallery from '@components/layout/Gallery.astro';
 import MainFooter from '@components/navigation/MainFooter.astro';
 import MainNav from '@components/navigation/MainNav.astro';
-import Passage from '@components/blocks/Passage.astro';
-import Pill from '@components/elements/Pill.astro';
+import BlockList from '@components/BlockList.astro';
 
 // --- layout
 import Layout from '@layouts/Layout.astro';
@@ -285,17 +285,14 @@ series.unshift({
 				</template>
 
 				<template id="empty">
-					<Callout>
-						<Heading
-							class="type-scale-gamma"
-							subheading
-						>
-							Sorry, none of my favorite books have all of those tags.
-						</Heading>
+					<Aside
+						class="empty"
+						hidden
+					>
 						<Passage>
-							But that sounds pretty interesting. I should try to find some.
+							Sorry, I haven't read any books yet with all of those tags.
 						</Passage>
-					</Callout>
+					</Aside>
 				</template>
 
 				<div class="books">
@@ -356,10 +353,15 @@ series.unshift({
 		#activeTags = [];
 		#items = [];
 		#series = [];
+		#emptyMessage;
 
 		connectedCallback() {
 			const controls = this.querySelector('#controls');
 			this.prepend(controls.content);
+
+			const empty = this.querySelector('#empty');
+			this.append(empty.content);
+			this.#emptyMessage = this.querySelector('.empty');
 
 			const tagsButton = this.querySelector('.expanding-filter-button');
 			const tagsContainer = this.querySelector('.tags');
@@ -428,6 +430,16 @@ series.unshift({
 				} else {
 					item.removeAttribute('hidden');
 				}
+			}
+
+			// show the empty message if there are no results
+			const activeItems = this.#items.filter(
+				(item) => !item.hasAttribute('hidden')
+			);
+			if (activeItems.length === 0) {
+				this.#emptyMessage.removeAttribute('hidden');
+			} else {
+				this.#emptyMessage.setAttribute('hidden', '');
 			}
 		}
 	}
