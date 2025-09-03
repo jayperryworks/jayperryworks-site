@@ -1,6 +1,7 @@
 ---
 // assets
 import '@styles/tokens/borders.css';
+import '@styles/tokens/contentWidth.css';
 import '@styles/tokens/spacing.css';
 import '@styles/tokens/type.css';
 import '@styles/utilities/type.css';
@@ -25,18 +26,13 @@ type Action = {
 	type: 'external' | 'internal';
 };
 
-type Cover = {
-	src: string;
-	height: number;
-	width: number;
-}
-
 export interface Props {
 	actions?: Action[];
+	author?: TitleField;
 	class?: string;
 	cover?: string;
+	tags?: string[];
 	title?: TitleField;
-	author?: TitleField;
 }
 
 const {
@@ -44,6 +40,7 @@ const {
 	author,
 	class: className = '',
 	cover,
+	tags = [],
 	title,
 } = Astro.props as Props;
 
@@ -61,17 +58,17 @@ function getInitial(title) {
 }
 ---
 
-<article class={['book-card', className].join(' ')}>
+<article class={['book-card', className].join(' ').trim()}>
 	<div class="wrapper">
-
 		<!-- cover -->
 		<RevealOnScroll
 			tag="figure"
 			class="cover"
 		>
 			<slot name="cover">
-				{cover
-					? <Image
+				{
+					cover ? (
+						<Image
 							src={cover}
 							alt={`Cover for '${prismicHelpers.asText(title)}'`}
 							class="cover-image"
@@ -79,9 +76,13 @@ function getInitial(title) {
 							{sizes}
 							inferSize
 						/>
-					: <div class="cover-image placeholder">
-							<p class="type-role-display type-scale-alpha">{getInitial(title)}</p>
+					) : (
+						<div class="cover-image placeholder">
+							<p class="type-role-display type-scale-alpha">
+								{getInitial(title)}
+							</p>
 						</div>
+					)
 				}
 			</slot>
 		</RevealOnScroll>
@@ -89,45 +90,51 @@ function getInitial(title) {
 		<!-- title, author, etc. -->
 		<header>
 			<slot name="header">
-				{title && (
-					<Heading
-						class="type-scale-epsilon"
-						level={2}
-						text={title}
-					/>
-				)}
-				{author && (
-					<Heading
-						level={5}
-						subheading
-					>
-						{author}
-					</Heading>)
+				{
+					title && (
+						<Heading
+							class="type-scale-epsilon"
+							level={2}
+							text={title}
+						/>
+					)
+				}
+				{
+					author && (
+						<Heading
+							level={5}
+							subheading
+						>
+							{author}
+						</Heading>
+					)
 				}
 			</slot>
 		</header>
 
 		<!-- book metadata -->
 		<div class="metadata">
-			<slot name="metadata"></slot>
+			<slot name="metadata" />
 		</div>
 
 		<!-- actions -->
-		{actions && (
-			<footer class="actions">
-				{actions.map(({label, url}) => (
-					<Button
-						href={url}
-						iconRight={externalLink}
-						class="type-role-accent"
-						size="small"
-						target="_blank"
-					>
-						{label}
-					</Button>
-				))}
-			</footer>
-		)}
+		{
+			actions && (
+				<footer class="actions">
+					{actions.map(({ label, url }) => (
+						<Button
+							href={url}
+							iconRight={externalLink}
+							class="type-role-accent"
+							size="small"
+							target="_blank"
+						>
+							{label}
+						</Button>
+					))}
+				</footer>
+			)
+		}
 	</div>
 </article>
 
@@ -141,6 +148,7 @@ function getInitial(title) {
 		display: flex;
 		flex-direction: column;
 		flex: 1;
+		max-width: var(--content-width-default);
 		padding: var(--space-medium) var(--space-xnarrow);
 	}
 
