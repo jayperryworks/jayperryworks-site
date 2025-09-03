@@ -92,4 +92,22 @@ const dataAttrs = Object.keys(data).reduce((result, key) => {
 		--color-fill: var(--border-color);
 		--color-label: var(--color-island);
 	}
+
+	@media (prefers-color-scheme: dark) {
+		:global(.has-dark-mode) .pill[data-toggled='true'] {
+			/* modify the L value to make sure there's enough contrast with the label */
+			--border-color: oklch(from var(--color-highlight) 80% c h);
+			--color-fill: var(--border-color);
+			--color-label: var(--color-island);
+			--shadow-opacity: 1;
+		}
+
+		:global(.has-dark-mode) .pill[data-toggled='true']:hover,
+		:global(.has-dark-mode) .pill[data-toggled='true']:active {
+			/* modify the L value to make sure there's enough contrast with the label */
+			--border-color: oklch(from var(--color-highlight) 85% c h);
+			--color-fill: var(--border-color);
+			--color-label: var(--color-island);
+		}
+	}
 </style>

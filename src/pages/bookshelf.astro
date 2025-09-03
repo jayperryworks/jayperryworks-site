@@ -415,6 +415,7 @@ series.unshift({
 			for (const item of [...this.#items, ...this.#series]) {
 				if (this.activeTags.length > 0) {
 					const itemTags = item.dataset.tags.split(', ');
+					// https://stackoverflow.com/questions/53606337/check-if-array-contains-all-elements-of-another-array
 					const isActive = this.activeTags.every((tag) =>
 						itemTags.includes(tag)
 					);

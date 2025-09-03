@@ -212,6 +212,21 @@ const classList = ['button', role, size, className].filter(Boolean).join(' ');
 		--color-label: var(--color-island);
 	}
 
+	@media (prefers-color-scheme: dark) {
+		:global(.has-dark-mode) button[data-toggled] {
+			--color-border: oklch(from var(--color-highlight) 80% c h);
+			--color-fill: var(--color-border);
+			--color-label: var(--color-island);
+		}
+
+		:global(.has-dark-mode) button[data-toggled]:hover,
+		:global(.has-dark-mode) button[data-toggled]:active {
+			--color-border: oklch(from var(--color-highlight) 85% c h);
+			--color-fill: var(--color-border);
+			--color-label: var(--color-island);
+		}
+	}
+
 	.button :global(.icon.toggled) {
 		display: none;
 	}
