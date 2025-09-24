@@ -101,8 +101,8 @@ function htmlSerializer(type, element, content, children): string {
 <style>
 	.passage {
 		clear: both;
-		overflow: hidden;
 		position: relative;
+		/* May need `overflow: hidden` here for sidenotes appearing at the bottom of a passage - but having it cuts off hanging punctuation. Will see if it becomes an issue. */
 	}
 
 	/* text wrap styles */
