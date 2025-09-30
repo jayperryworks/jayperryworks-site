@@ -25,6 +25,7 @@ User-agent: cohere-training-data-crawler
 User-agent: Cotoyogi
 User-agent: Crawlspace
 User-agent: Datenbank Crawler
+User-agent: DeepSeekBot
 User-agent: Devin
 User-agent: Diffbot
 User-agent: DuckAssistBot
@@ -55,6 +56,7 @@ User-agent: meta-externalagent
 User-agent: Meta-ExternalAgent
 User-agent: meta-externalfetcher
 User-agent: Meta-ExternalFetcher
+User-agent: meta-webindexer
 User-agent: MistralAI-User
 User-agent: MistralAI-User/1.0
 User-agent: MyCentralAIScraperBot
@@ -82,6 +84,7 @@ User-agent: SemrushBot-OCOB
 User-agent: SemrushBot-SWA
 User-agent: ShapBot
 User-agent: Sidetrade indexer bot
+User-agent: TerraCotta
 User-agent: Thinkbot
 User-agent: TikTokSpider
 User-agent: Timpibot
@@ -95,4 +98,4 @@ User-agent: YandexAdditionalBot
 User-agent: YouBot
 Disallow: /
 
-Sitemap: https://jayperry.works/sitemap.xml
+Sitemap: https://jayperry.works/sitemap-index.xml
