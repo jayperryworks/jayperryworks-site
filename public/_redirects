@@ -4,3 +4,7 @@
 /rss/all.xml	/rss/feed.xml	302
 /blog/rss/*	/rss/blog.xml	302
 /pictures/rss/*	/rss/pictures.xml	302
+/blog/2018/01/26/.mail-recap/ /blog/2018/01/26/mail-recap/ 302
+/blog/2019/07/birchbark-louise-erdrich%E2%80%99s-bookstore/ /blog/2019/07/25/birchbark-louise-erdrichs-bookstore/ 302
+/blog/2019/07/fontsmith%E2%80%99s-guide-to-type-styles/ /blog/2019/07/16/fontsmiths-guide-to-type-styles/ 302
+/blog/2019/07/%E2%80%98mild%E2%80%99-peril/ /blog/2019/07/01/mild-peril/ 302
