@@ -41,6 +41,14 @@ const classList = [
 ---
 
 <header class={classList}>
+	{/* Skip link: allow screen-reader users to skip to the main content */}
+	<a
+		href="#main"
+		class="skip-link"
+	>
+		Skip to main content
+	</a>
+
 	<a
 		class="logo"
 		href="/"
@@ -175,6 +183,15 @@ const classList = [
 	}
 
   /* --- nav elements --- */
+	.skip-link:not(:focus):not(:active) {
+		clip-path: inset(50%);
+		height: 1px;
+		overflow: hidden;
+		position: absolute;
+		white-space: nowrap;
+		width: 1px;
+	}
+
   .logo {
     border: none;
     display: block;
