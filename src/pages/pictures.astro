@@ -33,12 +33,7 @@ const DEFAULT_PAGE_THEME = 'mint';
 // --- data ---
 const pageData = await prismic.getByUID('index_page', 'pictures');
 
-const {
-	seo_description,
-	seo_image,
-	seo_title,
-	title,
-} = pageData.data;
+const { seo_description, seo_image, seo_title, title } = pageData.data;
 
 const seo = {
 	description: seo_description,
@@ -169,7 +164,7 @@ function setSeriesWallColor(wallColor) {
 	{seo}
 >
 	<MainNav segment="pictures" />
-	<main>
+	<main id="main">
 		<header class="title">
 			<Heading
 				level={1}
@@ -177,41 +172,44 @@ function setSeriesWallColor(wallColor) {
 			/>
 		</header>
 
-		{picturesBySeries.map((series) => (
-			<ColorTransition
-				el="section"
-				role="feed"
-				class="series"
-				id={series.uid || 'other-work'}
-				style={setSeriesWallColor(series?.colors?.wall)}
-				{...series?.theme}
-			>
-				<header class="series-header">
-					<Heading
-						level={2}
-						class="type-scale-gamma"
-						set:html={
-							series.title
-								? `<em>${prismicHelpers.asText(series.title)}</em> series`
-								: 'Other recent work'
-						}
-					>
-					</Heading>
+		{
+			picturesBySeries.map((series) => (
+				<ColorTransition
+					el="section"
+					role="feed"
+					class="series"
+					id={series.uid || 'other-work'}
+					style={setSeriesWallColor(series?.colors?.wall)}
+					{...series?.theme}
+				>
+					<header class="series-header">
+						<Heading
+							level={2}
+							class="type-scale-gamma"
+							set:html={
+								series.title
+									? `<em>${prismicHelpers.asText(series.title)}</em> series`
+									: 'Other recent work'
+							}
+						></Heading>
 
-					{series.description && (
-						<Passage text={{ markdown: prismicHelpers.asText(series.description) }} />
-					)}
-				</header>
+						{series.description && (
+							<Passage
+								text={{ markdown: prismicHelpers.asText(series.description) }}
+							/>
+						)}
+					</header>
 
-				<PictureGallery
-					list={series.pictures}
-					aspectRatio={series.aspectRatio}
-					columnSize={series.columnSize?.toLowerCase()}
-					gutter={series.gutter?.toLowerCase()}
-					matteColor={series.colors?.matte}
-				/>
-			</ColorTransition>
-		))}
+					<PictureGallery
+						list={series.pictures}
+						aspectRatio={series.aspectRatio}
+						columnSize={series.columnSize?.toLowerCase()}
+						gutter={series.gutter?.toLowerCase()}
+						matteColor={series.colors?.matte}
+					/>
+				</ColorTransition>
+			))
+		}
 	</main>
 	<MainFooter />
 </Layout>

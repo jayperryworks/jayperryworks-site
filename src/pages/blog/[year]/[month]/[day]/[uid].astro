@@ -48,10 +48,10 @@ import type {
 import PostMetadata from '@components/elements/PostMetadata.astro';
 
 type Thread = {
-	posts: PrismicDocumentWithUID[],
-	uid: string,
-	description?: RichTextField,
-	title?: TitleField,
+	posts: PrismicDocumentWithUID[];
+	uid: string;
+	description?: RichTextField;
+	title?: TitleField;
 };
 
 export interface Props {
@@ -68,12 +68,12 @@ export interface Props {
 }
 
 export async function getStaticPaths() {
- 	const posts = await prismic.getAllByType('blog_post', {
+	const posts = await prismic.getAllByType('blog_post', {
 		fetchLinks,
- 		orderings: {
- 			field: 'my.blog_post.date',
- 			direction: 'desc',
- 		},
+		orderings: {
+			field: 'my.blog_post.date',
+			direction: 'desc',
+		},
 		graphQuery: `
 			{
 				blog_post {
@@ -88,74 +88,67 @@ export async function getStaticPaths() {
 				}
 			}
 		`,
- 	});
+	});
 
- 	return posts.map(({
-		uid,
-		tags,
-		data,
-		first_publication_date,
-		last_publication_date,
-	}, index) => {
-		const publishedDate = prismicHelpers.asDate(data.date);
-		const nextPost = posts[index + 1];
-		const { data: thread } = data.thread;
+	return posts.map(
+		(
+			{ uid, tags, data, first_publication_date, last_publication_date },
+			index
+		) => {
+			const publishedDate = prismicHelpers.asDate(data.date);
+			const nextPost = posts[index + 1];
+			const { data: thread } = data.thread;
 
-		// If this post is part of a thread, grab other posts that also belong to the thread
-		// -> these will be ordered by data, because the `posts` array already is
-		if (thread) {
-			thread.posts = posts.filter((post) => {
-				return post.data?.thread?.data?.uid === thread.uid;
-			}).reverse();
+			// If this post is part of a thread, grab other posts that also belong to the thread
+			// -> these will be ordered by data, because the `posts` array already is
+			if (thread) {
+				thread.posts = posts
+					.filter((post) => {
+						return post.data?.thread?.data?.uid === thread.uid;
+					})
+					.reverse();
+			}
+
+			return {
+				params: {
+					year: format(publishedDate, 'yyyy'),
+					month: format(publishedDate, 'MM'),
+					day: format(publishedDate, 'dd'),
+					uid,
+				},
+				props: {
+					...data,
+					stage: data.stage || 'Note',
+					date: {
+						publication: publishedDate,
+						posted: new Date(first_publication_date),
+						updated: new Date(last_publication_date),
+					},
+					tags,
+					link: prismicHelpers.asLink(data.link),
+					next: nextPost && {
+						title:
+							prismicHelpers.isFilled.title(nextPost.data.title) &&
+							prismicHelpers.asText(nextPost.data.title),
+						path: permalink(nextPost),
+					},
+					seo: {
+						description: data.seo_description || data.description,
+						image: data.seo_image?.url,
+						imageAlt: data.seo_image?.alt,
+						title: data.seo_title || prismicHelpers.asText(data.title),
+					},
+					thread,
+				},
+			};
 		}
-
- 		return {
- 			params: {
- 				year: format(publishedDate, 'yyyy'),
- 				month: format(publishedDate, 'MM'),
- 				day: format(publishedDate, 'dd'),
- 				uid,
- 			},
- 			props: {
- 				...data,
-				stage: data.stage || 'Note',
-				date: {
-					publication: publishedDate,
-					posted: new Date(first_publication_date),
-					updated: new Date(last_publication_date),
-				},
- 				tags,
-				link: prismicHelpers.asLink(data.link),
- 				next: nextPost && {
-					title: prismicHelpers.isFilled.title(nextPost.data.title) && prismicHelpers.asText(nextPost.data.title),
-					path: permalink(nextPost),
-				},
-				seo: {
-					description: data.seo_description || data.description,
-					image: data.seo_image?.url,
-					imageAlt: data.seo_image?.alt,
-					title: data.seo_title || prismicHelpers.asText(data.title),
-				},
-				thread,
- 			},
- 		};
- 	});
+	);
 }
 
 const { uid } = Astro.params;
 
-const {
-	body,
-	date,
-	link,
-	next,
-	seo,
-	thread,
-	subtitle,
-	tags,
-	title,
-	stage,
-} = Astro.props as Props;
+const { body, date, link, next, seo, thread, subtitle, tags, title, stage } =
+	Astro.props as Props;
 ---
 
 <Layout
@@ -164,15 +157,29 @@ const {
 	{seo}
 >
 	<MainNav segment="blog" />
-	<main>
+	<main id="main">
 		<article>
 			<header class="headline">
-				{prismicHelpers.isFilled.title(title) && (
-					<Heading level={1} class="title">{prismicHelpers.asText(title)}</Heading>
-				)}
-				{prismicHelpers.isFilled.title(subtitle) && (
-					<Heading class="type-scale-gamma" subheading>{prismicHelpers.asText(subtitle)} </Heading>
-				)}
+				{
+					prismicHelpers.isFilled.title(title) && (
+						<Heading
+							level={1}
+							class="title"
+						>
+							{prismicHelpers.asText(title)}
+						</Heading>
+					)
+				}
+				{
+					prismicHelpers.isFilled.title(subtitle) && (
+						<Heading
+							class="type-scale-gamma"
+							subheading
+						>
+							{prismicHelpers.asText(subtitle)}{' '}
+						</Heading>
+					)
+				}
 
 				<!-- date and stage info -->
 				<PostMetadata
@@ -183,78 +190,92 @@ const {
 				/>
 
 				<!-- list of posts in a thread, if applicable -->
-				{thread && (
-					<ThreadNav
-						title={thread.title && prismicHelpers.asText(thread.title)}
-						description={thread.description &&prismicHelpers.asText(thread.description)}
-						class="thread-nav | content-width"
-					>
-						{thread.posts.map((post) => (
-							<ThreadNavItem
-								current={post.uid === uid}
-								date={post.data.date}
-								href={permalink(post)}
-								label={prismicHelpers.asText(post.data.title)}
-							/>
-						))}
-					</ThreadNav>
-				)}
+				{
+					thread && (
+						<ThreadNav
+							title={thread.title && prismicHelpers.asText(thread.title)}
+							description={
+								thread.description && prismicHelpers.asText(thread.description)
+							}
+							class="thread-nav | content-width"
+						>
+							{thread.posts.map((post) => (
+								<ThreadNavItem
+									current={post.uid === uid}
+									date={post.data.date}
+									href={permalink(post)}
+									label={prismicHelpers.asText(post.data.title)}
+								/>
+							))}
+						</ThreadNav>
+					)
+				}
 			</header>
 
 			<!-- page body -->
-			<BlockList {body} showLedeStyle />
+			<BlockList
+				{body}
+				showLedeStyle
+			/>
 
-			{link && (
-				<footer class="link">
-					<div class="wrapper">
-						<Button
-							href={link}
-							iconRight={externalLink}
-							target="_blank"
-						>
-							Direct link
-						</Button>
-					</div>
-				</footer>
-			)}
+			{
+				link && (
+					<footer class="link">
+						<div class="wrapper">
+							<Button
+								href={link}
+								iconRight={externalLink}
+								target="_blank"
+							>
+								Direct link
+							</Button>
+						</div>
+					</footer>
+				)
+			}
 		</article>
 
 		<!-- pagination nav -->
-		{(next || tags.length > 0) && (
-			<nav>
-				{tags.length > 0 && (
-					<RevealOnScroll
-						tag="section"
-						class="nav-wrapper tags"
-					>
-						<h2 class="tag-label type-role-accent type-scale-epsilon">Filed&nbsp;under:</h2>
-						<ul class="tag-list type-role-accent">
-							{tags.map((tag) => (
-								<li>
-									<a href={`/blog/tags/${tag}/`}>{sentenceCase(tag)}</a>
-								</li>
-							))}
-						</ul>
-					</RevealOnScroll>
-				)}
-				{next && (
-					<RevealOnScroll
-						tag="section"
-						class="nav-wrapper"
-					>
-						{next.title
-							? <ReadNextLink link={next.path}>
+		{
+			(next || tags.length > 0) && (
+				<nav>
+					{tags.length > 0 && (
+						<RevealOnScroll
+							tag="section"
+							class="nav-wrapper tags"
+						>
+							<h2 class="tag-label type-role-accent type-scale-epsilon">
+								Filed&nbsp;under:
+							</h2>
+							<ul class="tag-list type-role-accent">
+								{tags.map((tag) => (
+									<li>
+										<a href={`/blog/tags/${tag}/`}>{sentenceCase(tag)}</a>
+									</li>
+								))}
+							</ul>
+						</RevealOnScroll>
+					)}
+					{next && (
+						<RevealOnScroll
+							tag="section"
+							class="nav-wrapper"
+						>
+							{next.title ? (
+								<ReadNextLink link={next.path}>
 									<Fragment slot="eyebrow">Next post:</Fragment>
 									<Fragment slot="title">{next.title}</Fragment>
 								</ReadNextLink>
-							: <ReadNextLink link={next.path}>
+							) : (
+								<ReadNextLink link={next.path}>
 									<Fragment slot="title">Next post</Fragment>
 								</ReadNextLink>
-						}
-					</RevealOnScroll>
-				)}
-			</nav>
-		)}
+							)}
+						</RevealOnScroll>
+					)}
+				</nav>
+			)
+		}
 	</main>
 	<MainFooter />
 </Layout>
@@ -326,7 +347,6 @@ const {
 		flex-wrap: wrap;
 		align-items: baseline;
 	}
-
 
 	.tag-list li {
 		font-size: 0; /* kill whitespace margins */

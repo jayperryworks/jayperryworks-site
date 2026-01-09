@@ -44,15 +44,25 @@ const seo = {
 	{seo}
 >
 	<MainNav segment="design" />
-	<main>
+	<main id="main">
 		<article>
 			<header class="headline">
 				<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
-				{subtitle && (
-					<Heading level={3} subheading>{prismicHelpers.asText(subtitle)}</Heading>
-				)}
+				{
+					subtitle && (
+						<Heading
+							level={3}
+							subheading
+						>
+							{prismicHelpers.asText(subtitle)}
+						</Heading>
+					)
+				}
 			</header>
-			<BlockList {body} showLedeStyle />
+			<BlockList
+				{body}
+				showLedeStyle
+			/>
 		</article>
 	</main>
 	<MainFooter />

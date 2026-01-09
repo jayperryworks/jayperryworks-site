@@ -43,9 +43,9 @@ const seo = {
 ---
 
 <Layout {seo}>
-	<MainNav segment='home' />
+	<MainNav segment="home" />
 
-	<main>
+	<main id="main">
 		<!-- intro -->
 		<section class="cover">
 			<div class="intro">
@@ -70,7 +70,10 @@ const seo = {
 
 		<!-- TOC panels -->
 		<section id="toc">
-			<BlockList {body} numbered />
+			<BlockList
+				{body}
+				numbered
+			/>
 		</section>
 	</main>
 	<MainFooter showAboutSection={false} />

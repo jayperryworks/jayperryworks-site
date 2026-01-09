@@ -32,14 +32,7 @@ export async function getStaticPaths(): Promise<Function> {
 	const pages = await prismic.getAllByType('page', { fetchLinks });
 
 	return pages.map(({ uid, data }) => {
-		const {
-			body,
-			seo_description,
-			seo_image,
-			seo_title,
-			title,
-			theme,
-		} = data;
+		const { body, seo_description, seo_image, seo_title, title, theme } = data;
 
 		const seo = {
 			description: seo_description,
@@ -57,23 +50,15 @@ export async function getStaticPaths(): Promise<Function> {
 				seo,
 				theme,
 				title,
-			}
+			},
 		};
 	});
 }
 
 // props
-const {
-	body,
-	seo,
-	subtitle,
-	theme,
-	title,
-} = Astro.props as Props;
+const { body, seo, subtitle, theme, title } = Astro.props as Props;
 
-const {
-	uid,
-} = Astro.params;
+const { uid } = Astro.params;
 ---
 
 <Layout
@@ -81,30 +66,35 @@ const {
 	{seo}
 >
 	<MainNav segment={uid} />
-	<main>
+	<main id="main">
 		<article>
 			<header class="title">
 				<Heading
 					level={1}
 					text={title}
 				/>
-				{subtitle && (
-					<Heading
-						class="type-scale-gamma"
-						text={subtitle}
-						subheading
-					/>
-				)}
+				{
+					subtitle && (
+						<Heading
+							class="type-scale-gamma"
+							text={subtitle}
+							subheading
+						/>
+					)
+				}
 			</header>
-			<BlockList {body} showLedeStyle />
+			<BlockList
+				{body}
+				showLedeStyle
+			/>
 		</article>
 	</main>
 	<MainFooter />
 </Layout>
 
 <style>
-  article {
-    padding-block: var(--space-xwide);
+	article {
+		padding-block: var(--space-xwide);
 	}
 
 	.title {

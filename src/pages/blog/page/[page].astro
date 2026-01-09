@@ -37,42 +37,40 @@ export async function getStaticPaths({ paginate }): Promise<Function> {
 	return paginate(posts, { pageSize: 10 });
 }
 
-const {
-	page
-} = Astro.props;
+const { page } = Astro.props;
 
 const { next, prev } = page.url;
 
-const postList = page.data.map(({
-	uid,
-	tags,
-	data,
-	first_publication_date,
-	last_publication_date,
-}) => {
-	// find the slices in each post marked as "include in excerpt"
-	const summary = data.body.filter(({ primary }) => primary.include_in_excerpt);
+const postList = page.data.map(
+	({ uid, tags, data, first_publication_date, last_publication_date }) => {
+		// find the slices in each post marked as "include in excerpt"
+		const summary = data.body.filter(
+			({ primary }) => primary.include_in_excerpt
+		);
 
-	if (summary.length > 0) {
-		return {
-			...data,
-			date: {
-				publication: prismicHelpers.asDate(data.date),
-				posted: new Date(first_publication_date),
-				updated: new Date(last_publication_date),
-			},
-			stage: data.stage || 'Note',
-			summary,
-			tags,
-			uid,
-			link: prismicHelpers.asLink(data.link),
-			path: blogPost({ uid, data }),
-			readMore: summary.length < data.body.length,
-		};
+		if (summary.length > 0) {
+			return {
+				...data,
+				date: {
+					publication: prismicHelpers.asDate(data.date),
+					posted: new Date(first_publication_date),
+					updated: new Date(last_publication_date),
+				},
+				stage: data.stage || 'Note',
+				summary,
+				tags,
+				uid,
+				link: prismicHelpers.asLink(data.link),
+				path: blogPost({ uid, data }),
+				readMore: summary.length < data.body.length,
+			};
+		}
+
+		throw new Error(
+			`Post missing a summary: ${prismicHelpers.asText(data.title)}, ${data.date}`
+		);
 	}
-
-	throw new Error(`Post missing a summary: ${prismicHelpers.asText(data.title)}, ${data.date}`);
-});
+);
 ---
 
 <Layout
@@ -80,91 +78,116 @@ const postList = page.data.map(({
 	theme="mustard"
 >
 	<MainNav segment="blog" />
-	<main>
+	<main id="main">
 		<ul
 			class="post-list"
 			role="feed"
 		>
-			{postList.map((post, index) => (
-				<li class={index > 0 ? 'border-seam-top' : ''}>
-					<article
-						class="post"
-						id={post.uid}
-					>
-						<header class="post-header">
-							{prismicHelpers.isFilled.title(post.title) && (
-								<Heading level={2} class="post-title">
-									<a
-										href={post.path}
-										class="type-link-undecorated"
-										>
-										{prismicHelpers.asText(post.title)}
-									</a>
-								</Heading>
-							)}
-							{prismicHelpers.isFilled.title(post.subtitle) && (
-								<Heading subheading level={3}>{prismicHelpers.asText(post.subtitle)}</Heading>
-							)}
-							<PostMetadata {...post} class="post-date | content-width" />
-						</header>
-						<BlockList body={post.summary} showLedeStyle />
-						{(post.readMore || post.link) && (
-							<footer class="post-footer">
-								<div class="post-buttons | wrapper">
-									{post.readMore && (
-										<Button
+			{
+				postList.map((post, index) => (
+					<li class={index > 0 ? 'border-seam-top' : ''}>
+						<article
+							class="post"
+							id={post.uid}
+						>
+							<header class="post-header">
+								{prismicHelpers.isFilled.title(post.title) && (
+									<Heading
+										level={2}
+										class="post-title"
+									>
+										<a
 											href={post.path}
-											iconRight={arrowRight}
+											class="type-link-undecorated"
 										>
-											Read more
-										</Button>
-									)}
-									{post.link && (
-										<Button
-											href={post.link}
-											iconRight={externalLink}
-											target="_blank"
-										>
-											Direct link
-										</Button>
-									)}
-								</div>
-							</footer>
-						)}
-					</article>
-				</li>
-			))}
+											{prismicHelpers.asText(post.title)}
+										</a>
+									</Heading>
+								)}
+								{prismicHelpers.isFilled.title(post.subtitle) && (
+									<Heading
+										subheading
+										level={3}
+									>
+										{prismicHelpers.asText(post.subtitle)}
+									</Heading>
+								)}
+								<PostMetadata
+									{...post}
+									class="post-date | content-width"
+								/>
+							</header>
+							<BlockList
+								body={post.summary}
+								showLedeStyle
+							/>
+							{(post.readMore || post.link) && (
+								<footer class="post-footer">
+									<div class="post-buttons | wrapper">
+										{post.readMore && (
+											<Button
+												href={post.path}
+												iconRight={arrowRight}
+											>
+												Read more
+											</Button>
+										)}
+										{post.link && (
+											<Button
+												href={post.link}
+												iconRight={externalLink}
+												target="_blank"
+											>
+												Direct link
+											</Button>
+										)}
+									</div>
+								</footer>
+							)}
+						</article>
+					</li>
+				))
+			}
 		</ul>
 		<nav class="border-seam-top">
 			<ul class="nav-list">
-				{prev && (
-					<li class="nav-item">
-						<a
-							class="nav-link | type-scale-delta"
-							href={prev}
-						>
-							<Icon svg={arrowLeft} class="nav-icon before" />
-							<span class="nav-label | type-role-accent">Newer posts</span>
-						</a>
-					</li>
-				)}
-				{next && (
-					<li class="nav-item">
-						<a
-							class="nav-link | type-scale-delta"
-							href={next}
-						>
-							<span class="nav-label | type-role-accent">Older posts</span>
-							<Icon svg={arrowRight} class="nav-icon after" />
-						</a>
-					</li>
-				)}
+				{
+					prev && (
+						<li class="nav-item">
+							<a
+								class="nav-link | type-scale-delta"
+								href={prev}
+							>
+								<Icon
+									svg={arrowLeft}
+									class="nav-icon before"
+								/>
+								<span class="nav-label | type-role-accent">Newer posts</span>
+							</a>
+						</li>
+					)
+				}
+				{
+					next && (
+						<li class="nav-item">
+							<a
+								class="nav-link | type-scale-delta"
+								href={next}
+							>
+								<span class="nav-label | type-role-accent">Older posts</span>
+								<Icon
+									svg={arrowRight}
+									class="nav-icon after"
+								/>
+							</a>
+						</li>
+					)
+				}
 			</ul>
 		</nav>
 	</main>
 	<MainFooter />
 </Layout>
-
 
 <style>
 	.post-list {
@@ -247,7 +270,7 @@ const postList = page.data.map(({
 		border: 0;
 		display: inline-grid;
 		gap: var(--space-xnarrow);
-		grid-template-columns: [start] 1em [label] minmax(0, 1fr)  [end] 1em;
+		grid-template-columns: [start] 1em [label] minmax(0, 1fr) [end] 1em;
 		justify-items: center;
 	}
 
