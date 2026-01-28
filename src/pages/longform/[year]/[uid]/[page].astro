@@ -156,7 +156,7 @@ const {
 
 // if no title was given for SEO content, make a default one using the page data above
 // -> locating it down here instead of in the pagination function above because currentPage is accessible from here
-if (!seo.title) seo.title = `${prismicHelpers.asText(project.title)}, Part ${currentPage}: ${prismicHelpers.asText(title)}`;
+if (!seo.title) seo.title = `${prismicHelpers.asText(project.title)}, ${project.chapterLabel} ${currentPage}: ${prismicHelpers.asText(title)}`;
 
 // sequence nav
 function sequenceNavItemAlign(index: number): Align {
@@ -226,7 +226,7 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 							value={currentPage}
 							range={sequenceNavItems.length}
 						>
-							Progress: You are currently reading Chapter {currentPage} of {sequenceNavItems.length}.
+							Progress: You are currently reading {`${project.chapterLabel} ${currentPage} of ${sequenceNavItems.length}`}.
 						</ProgressBar>
 
 						<!-- for larger screens -->
