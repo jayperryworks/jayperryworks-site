@@ -14,14 +14,14 @@
 		"netlify": "netlify dev --no-open"
 	},
 	"dependencies": {
-		"@astrojs/check": "^0.9.4",
-		"@astrojs/rss": "^4.0.12",
-		"@astrojs/sitemap": "^3.6.0",
+		"@astrojs/check": "^0.9.6",
+		"@astrojs/rss": "^4.0.15",
+		"@astrojs/sitemap": "^3.7.0",
 		"@netlify/blobs": "^7.3.0",
 		"@prismicio/client": "^6.4.1",
 		"@prismicio/helpers": "^2.2.1",
 		"@prismicio/types": "^0.1.27",
-		"astro": "^5.15.9",
+		"astro": "^5.16.16",
 		"autoprefixer": "^10.4.4",
 		"change-case": "^4.1.2",
 		"cssnano": "^6.0.0",
