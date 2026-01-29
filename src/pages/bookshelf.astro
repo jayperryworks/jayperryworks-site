@@ -50,7 +50,7 @@ const booksResponse = await prismic.getAllByType('book');
 const seriesResponse = await prismic.getAllByType('book_series');
 
 const sortedBooks = sortBooksAlphabetically(booksResponse).filter(
-	(b) => b !== undefined
+	(b) => b !== undefined,
 );
 
 const booksInSeries = seriesResponse.reduce((result, series) => {
@@ -151,7 +151,7 @@ const books = await Promise.all(
 			// Pull additional data from a blob with cached OpenLibrary data
 			try {
 				const booksDataResponse = await fetch(
-					getBooksBlobEndpoint({ isbn, olid })
+					getBooksBlobEndpoint({ isbn, olid }),
 				);
 
 				if (booksDataResponse?.status === 200) {
@@ -194,15 +194,21 @@ const books = await Promise.all(
 			// if the request to the cache fails, just use the data we have from the CMS
 			return bookData;
 		}
-	})
+	}),
 );
 
 // sort all the book data by series
 const series = sortBooksAlphabetically(seriesResponse).reduce(
-	(result, { uid, data: series }) => {
-		const seriesBooks = books.filter(({ series }) => series === uid);
+	(result, item) => {
+		const { uid, data: series } = item;
+		// loop through the books referenced in the series data
+		// and add the real book data
+		const seriesBooks = series.books.map(({ book }) => {
+			return books.find(({ uid }) => uid === book.uid);
+		});
 
-		if (seriesBooks.length > 1) {
+		// add to the series array if the series contains more than 1 book
+		if (series.books.length > 1) {
 			result.push({
 				books: seriesBooks,
 				tags: aggregateBookTags(seriesBooks),
@@ -212,7 +218,7 @@ const series = sortBooksAlphabetically(seriesResponse).reduce(
 		}
 		return result;
 	},
-	[]
+	[],
 );
 
 // add standalone books to the series array
@@ -334,7 +340,7 @@ series.unshift({
 															class="metadata type-role-accent type-scale-zeta"
 														>
 															{[book.publishers[0], book.publishDate].join(
-																', '
+																', ',
 															)}
 														</p>
 													)}
@@ -423,7 +429,7 @@ series.unshift({
 					const itemTags = item.dataset.tags.split(', ');
 					// https://stackoverflow.com/questions/53606337/check-if-array-contains-all-elements-of-another-array
 					const isActive = this.activeTags.every((tag) =>
-						itemTags.includes(tag)
+						itemTags.includes(tag),
 					);
 
 					if (isActive) {
@@ -438,7 +444,7 @@ series.unshift({
 
 			// show the empty message if there are no results
 			const activeItems = this.#items.filter(
-				(item) => !item.hasAttribute('hidden')
+				(item) => !item.hasAttribute('hidden'),
 			);
 			if (activeItems.length === 0) {
 				this.#emptyMessage.removeAttribute('hidden');
