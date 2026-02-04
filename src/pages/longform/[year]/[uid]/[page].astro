@@ -60,6 +60,13 @@ export async function getStaticPaths({ paginate }) {
 							}
 						}
 					}
+					appendices {
+						appendix {
+							...on longform_appendix {
+								...longform_appendixFields
+							}
+						}
+					}
 				}
 			}
 		`,
@@ -79,41 +86,44 @@ export async function getStaticPaths({ paginate }) {
 				: undefined,
 		}));
 
+		// capture project metadata to use for each chapter view
+		const project = {
+			uid,
+			title: data.title,
+			subtitle: data.subtitle,
+			chapterLabel: data.chapter_label,
+			chapterList: data.chapters.map(({ chapter }) => chapter.data.title),
+			appendixList: data.appendices.map(({ appendix }) => appendix.data.title),
+			status: data.status,
+		}
+
+		const seo = {
+			description: data.seo_description,
+			image: data.seo_image?.url,
+			imageAlt: data.seo_image?.alt,
+			title: data.seo_title,
+		};
+
+		// set up chapter data
 		const chapters = data.chapters.map(({ chapter }) => {
 			const {
 				title,
 				subtitle,
 				preset_theme,
 				base_hue,
-				// deprecated color data - remove
-				highlight_color: highlight,
-				primary_foreground_color: primary,
-				secondary_foreground_color: secondary,
-				background_color: surface,
 				body,
 				body1: colorThemes,
 			} = chapter.data;
 
 			return {
+				type: 'chapter',
 				uid,
 				title,
 				subtitle,
 				body,
 				callouts,
-				project: {
-					uid,
-					title: data.title,
-					subtitle: data.subtitle,
-					chapterLabel: data.chapter_label,
-					chapterList: data.chapters.map(({ chapter }) => chapter.data.title),
-					status: data.status,
-				},
-				seo: {
-					description: data.seo_description,
-					image: data.seo_image?.url,
-					imageAlt: data.seo_image?.alt,
-					title: data.seo_title,
-				},
+				project,
+				seo,
 				theme: {
 					name: preset_theme,
 					hue: base_hue,
@@ -122,11 +132,38 @@ export async function getStaticPaths({ paginate }) {
 			};
 		});
 
+		// set up appendix data, if any
+		const appendices = prismicHelpers.isFilled.group(data.appendices)
+			? data.appendices.map(({ appendix }) => {
+					const {
+						title,
+						subtitle,
+						body,
+					} = appendix.data;
+
+					return {
+						type: 'appendix',
+						uid,
+						title,
+						subtitle,
+						body,
+						callouts,
+						project: {
+							...project,
+							chapterLabel: 'Appendix',
+						},
+						seo,
+					}
+				})
+			: [];
+
 		// one chapter per page under the given project params
-		const pages = paginate(chapters, {
+		const pages = paginate([...chapters, ...appendices], {
 			pageSize: 1,
 			params: { year, uid },
 		});
+
+		console.log(pages);
 
 		return pages;
 	});
