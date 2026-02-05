@@ -31,6 +31,7 @@ import type { RichTextField, TitleField } from '@prismicio/types';
 
 export interface SequenceNavItemData extends SequenceNavItemProps {
 	title: TitleField;
+	type: 'chapter'|'appendix';
 }
 
 type Callout = {
@@ -92,8 +93,14 @@ export async function getStaticPaths({ paginate }) {
 			title: data.title,
 			subtitle: data.subtitle,
 			chapterLabel: data.chapter_label,
-			chapterList: data.chapters.map(({ chapter }) => chapter.data.title),
-			appendixList: data.appendices.map(({ appendix }) => appendix.data.title),
+			chapterList: data.chapters.map(({ chapter }) => ({
+				title: chapter.data.title,
+				type: 'chapter',
+			})),
+			appendixList: data.appendices.map(({ appendix }) => ({
+				title: appendix.data.title,
+				type: 'appendix',
+			})),
 			status: data.status,
 		}
 
@@ -105,7 +112,7 @@ export async function getStaticPaths({ paginate }) {
 		};
 
 		// set up chapter data
-		const chapters = data.chapters.map(({ chapter }) => {
+		const chapters = data.chapters.map(({ chapter }, index) => {
 			const {
 				title,
 				subtitle,
@@ -117,6 +124,7 @@ export async function getStaticPaths({ paginate }) {
 
 			return {
 				type: 'chapter',
+				number: index + 1,
 				uid,
 				title,
 				subtitle,
@@ -134,7 +142,7 @@ export async function getStaticPaths({ paginate }) {
 
 		// set up appendix data, if any
 		const appendices = prismicHelpers.isFilled.group(data.appendices)
-			? data.appendices.map(({ appendix }) => {
+			? data.appendices.map(({ appendix }, index) => {
 					const {
 						title,
 						subtitle,
@@ -143,6 +151,7 @@ export async function getStaticPaths({ paginate }) {
 
 					return {
 						type: 'appendix',
+						number: index + 1,
 						uid,
 						title,
 						subtitle,
@@ -163,8 +172,6 @@ export async function getStaticPaths({ paginate }) {
 			params: { year, uid },
 		});
 
-		console.log(pages);
-
 		return pages;
 	});
 }
@@ -183,12 +190,14 @@ const {
 
 const {
 	body,
+	callouts,
+	number,
 	project,
 	seo,
 	subtitle,
 	theme,
 	title,
-	callouts,
+	type,
 } = data[0];
 
 // if no title was given for SEO content, make a default one using the page data above
@@ -203,15 +212,25 @@ function sequenceNavItemAlign(index: number): Align {
 }
 
 // list of chapter links for the SequenceNav at the top and bottom of the page
-const sequenceNavItems = project.chapterList.map(
-	(title: TitleField, index: number): SequenceNavItemData => ({
+const sequenceNavItems = [...project.chapterList, ...project.appendixList].map(
+	({ title, type }, index: number): SequenceNavItemData => ({
 		title,
+		type,
 		href: `/longform/${year}/${uid}/${index + 1}`,
 		complete: currentPage > index + 1,
 		current: currentPage === index + 1,
 		tooltipAlign: sequenceNavItemAlign(index),
 	})
 );
+
+// page eyebrow ('chapter 1' etc)
+function pageEyebrowAndNumber({ type, chapterLabel, number }) {
+	if (type === 'appendix') {
+		return `Appendix ${number}`;
+	}
+
+	return `${chapterLabel} ${number}`;
+}
 
 // pagination nav
 const nextChapter = project.chapterList[currentPage] ? {
@@ -238,10 +257,12 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 	{seo}
 >
 	<MainNav segment={uid} />
+
 	<main id="main">
 		<article class="chapter">
 			<!-- titling -->
 			<header class="headline">
+
 					<!-- project title -->
 					<Heading
 						level={1}
@@ -263,7 +284,11 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 							value={currentPage}
 							range={sequenceNavItems.length}
 						>
-							Progress: You are currently reading {`${project.chapterLabel} ${currentPage} of ${sequenceNavItems.length}`}.
+							Progress: You are currently reading {
+								type === 'chapter'
+								? `${project.chapterLabel} ${number} of ${project.chaptersList.length}`
+								: `Appendix ${number} of ${project.appendixList.length}`
+							}.
 						</ProgressBar>
 
 						<!-- for larger screens -->
@@ -274,7 +299,13 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 						].join(' ')}>
 							<SequenceNav>
 								{sequenceNavItems.map((item) => (
-									<SequenceNavItem {...item}>{prismicHelpers.asText(item.title)}</SequenceNavItem>
+									<SequenceNavItem {...item}>
+										{
+											item.type === 'chapter'
+											? prismicHelpers.asText(item.title)
+											: `Appendix: ${prismicHelpers.asText(item.title)}`
+										}
+									</SequenceNavItem>
 								))}
 							</SequenceNav>
 						</div>
@@ -282,7 +313,9 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 
 					<!-- chapter title -->
 					<div class="headline-chapter">
-						<Heading level={3} subheading>{`${project.chapterLabel} ${currentPage}`}</Heading>
+						<Heading level={3} subheading>{
+							type === 'chapter' ? `${project.chapterLabel} ${number}` : 'Appendix'
+						}</Heading>
 						<Heading level={2} class="header-chapter" text={title} />
 						{subtitle && <Heading level={3} subheading text={subtitle} />}
 					</div>
@@ -314,15 +347,23 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 						class="progress"
 						value={currentPage}
 						range={sequenceNavItems.length}
-						>
-						Progress: You are currently reading Chapter {currentPage} of {sequenceNavItems.length}.
+					>
+						Progress: You are currently reading {
+							type === 'chapter'
+							? `${project.chapterLabel} ${number} of ${project.chaptersList.length}`
+							: `Appendix ${number} of ${project.appendixList.length}`
+						}.
 					</ProgressBar>
 
 					<!-- sequence nav -->
 					<SequenceNav class="sequence">
 						{sequenceNavItems.map((item) => (
-							<SequenceNavItem {...item} next={item.href === url.next}>
-								{prismicHelpers.asText(item.title)}
+							<SequenceNavItem {...item}>
+								{
+									item.type === 'chapter'
+									? prismicHelpers.asText(item.title)
+									: `Appendix: ${prismicHelpers.asText(item.title)}`
+								}
 							</SequenceNavItem>
 						))}
 					</SequenceNav>
