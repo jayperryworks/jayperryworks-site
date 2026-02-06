@@ -94,6 +94,7 @@ function bibliography(slice: Slice): BlockType {
 			})
 		),
 		...sharedBlockFields(slice),
+		prominence: "Large",
 	};
 }
 

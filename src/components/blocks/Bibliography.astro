@@ -7,7 +7,9 @@
  */
 
 // --- assets ---
+import '@styles/tokens/borders.css';
 import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
 import '@styles/utilities/type.css';
 
 // --- utilities ---
@@ -15,45 +17,63 @@ import * as prismicHelpers from '@prismicio/helpers';
 
 // --- components ---
 import Heading from '@components/blocks/Heading.astro';
+import Gallery from '@components/layout/Gallery.astro';
 
 // --- props ---
 const { items } = Astro.props;
 ---
 
-<ul class="bibliography">
-	{
-		items.map(({ author, link, media, series, title }) => (
-			<li>
-				{media && <p class="media">{media}</p>}
-				{series && <p class="series">{series}</p>}
-				<Heading
-					level={3}
-					class="type-scale-delta"
-				>
-					{link ? (
-						<a
-							href={prismicHelpers.asLink(link)}
-							target="_blank"
-						>
-							{title}
-						</a>
-					) : (
-						title
+<div class="bibliography">
+	<Gallery>
+		{
+			items.map(({ author, link, media, series, title }) => (
+				<li class="source">
+					{media && (
+						<p class="media | type-scale-eta type-role-accent">{media}</p>
 					)}
-				</Heading>
-				{author && <p class="author">By {author}</p>}
-			</li>
-		))
-	}
-</ul>
+					{series && <p class="series | type-scale-zeta">{series}</p>}
+					<Heading
+						level={3}
+						class="type-scale-epsilon"
+					>
+						{link ? (
+							<a
+								href={prismicHelpers.asLink(link)}
+								target="_blank"
+							>
+								{title}
+							</a>
+						) : (
+							title
+						)}
+					</Heading>
+					{author && (
+						<p class="author | type-role-accent type-scale-epsilon">{author}</p>
+					)}
+				</li>
+			))
+		}
+	</Gallery>
+</div>
 
 <style>
 	.bibliography {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-medium);
+		gap: var(--space-xnarrow);
 		list-style: none;
 		padding-inline-start: 0;
 		margin-block: 0;
+		color: var(--color-secondary);
+	}
+
+	.source {
+		background-color: var(--color-island);
+		border-radius: var(--border-radius-round);
+		padding: var(--space-xnarrow) var(--space-medium) var(--space-medium);
+	}
+
+	.series {
+		font-style: italic;
 	}
 </style>
