@@ -1,0 +1,59 @@
+---
+/**
+ * Bibliography block component
+ * @description - A list of linked sources (books, media, etc.)
+ *
+ * @prop {Object[]} items - the sources to display
+ */
+
+// --- assets ---
+import '@styles/tokens/spacing.css';
+import '@styles/utilities/type.css';
+
+// --- utilities ---
+import * as prismicHelpers from '@prismicio/helpers';
+
+// --- components ---
+import Heading from '@components/blocks/Heading.astro';
+
+// --- props ---
+const { items } = Astro.props;
+---
+
+<ul class="bibliography">
+	{
+		items.map(({ author, link, media, series, title }) => (
+			<li>
+				{media && <p class="media">{media}</p>}
+				{series && <p class="series">{series}</p>}
+				<Heading
+					level={3}
+					class="type-scale-delta"
+				>
+					{link ? (
+						<a
+							href={prismicHelpers.asLink(link)}
+							target="_blank"
+						>
+							{title}
+						</a>
+					) : (
+						title
+					)}
+				</Heading>
+				{author && <p class="author">By {author}</p>}
+			</li>
+		))
+	}
+</ul>
+
+<style>
+	.bibliography {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-medium);
+		list-style: none;
+		padding-inline-start: 0;
+		margin-block: 0;
+	}
+</style>

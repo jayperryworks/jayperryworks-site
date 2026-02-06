@@ -223,15 +223,6 @@ const sequenceNavItems = [...project.chapterList, ...project.appendixList].map(
 	})
 );
 
-// page eyebrow ('chapter 1' etc)
-function pageEyebrowAndNumber({ type, chapterLabel, number }) {
-	if (type === 'appendix') {
-		return `Appendix ${number}`;
-	}
-
-	return `${chapterLabel} ${number}`;
-}
-
 // pagination nav
 const nextChapter = project.chapterList[currentPage] ? {
 	title: project.chapterList[currentPage],
@@ -286,7 +277,7 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 						>
 							Progress: You are currently reading {
 								type === 'chapter'
-								? `${project.chapterLabel} ${number} of ${project.chaptersList.length}`
+								? `${project.chapterLabel} ${number} of ${project.chapterList.length}`
 								: `Appendix ${number} of ${project.appendixList.length}`
 							}.
 						</ProgressBar>
@@ -350,7 +341,7 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 					>
 						Progress: You are currently reading {
 							type === 'chapter'
-							? `${project.chapterLabel} ${number} of ${project.chaptersList.length}`
+							? `${project.chapterLabel} ${number} of ${project.chapterList.length}`
 							: `Appendix ${number} of ${project.appendixList.length}`
 						}.
 					</ProgressBar>
@@ -386,11 +377,16 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 								</Fragment>
 							</ReadNextLink>
 						)}
-						{project.status === 'Finished' && !nextChapter && (
-							<aside class="end | type-role-display type-scale-gamma">
-								The end
-							</aside>
-						)}
+						{
+							project.status === 'Finished'
+							&& type === 'chapter'
+							&& number === project.chapterList.length
+							&& (
+								<aside class="end | type-role-display type-scale-gamma">
+									The end
+								</aside>
+							)
+						}
 					</div>
 				</div>
 			</nav>
