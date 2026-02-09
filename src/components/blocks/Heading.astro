@@ -58,6 +58,13 @@ const classList = [
 		text-wrap: balance;
 	}
 
+	@supports (text-decoration-thickness: var(--underline-w)) {
+		.heading :global(a) {
+			text-decoration-thickness: var(--underline-w);
+			text-underline-position: auto;
+		}
+	}
+
 	.sub {
 		color: var(--color-secondary);
 		max-width: none; /* override the default max width for paragraphs */

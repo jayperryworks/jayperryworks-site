@@ -1,10 +1,14 @@
-@import url('../tokens/type.css');
+@import url("../tokens/type.css");
 
 /* --- display type (headings, etc.) --- */
 .type-role-display {
 	font-family: var(--type-font-display);
 	font-weight: normal;
 	line-height: var(--type-leading-tight);
+}
+
+.type-role-display.italic {
+	font-style: italic;
 }
 
 .type-role-display strong {
