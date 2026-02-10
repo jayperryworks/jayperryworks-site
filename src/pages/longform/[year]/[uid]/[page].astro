@@ -31,6 +31,7 @@ import type { RichTextField, TitleField } from '@prismicio/types';
 
 export interface SequenceNavItemData extends SequenceNavItemProps {
 	title: TitleField;
+	type: 'chapter'|'appendix';
 }
 
 type Callout = {
@@ -60,6 +61,13 @@ export async function getStaticPaths({ paginate }) {
 							}
 						}
 					}
+					appendices {
+						appendix {
+							...on longform_appendix {
+								...longform_appendixFields
+							}
+						}
+					}
 				}
 			}
 		`,
@@ -79,41 +87,51 @@ export async function getStaticPaths({ paginate }) {
 				: undefined,
 		}));
 
-		const chapters = data.chapters.map(({ chapter }) => {
+		// capture project metadata to use for each chapter view
+		const project = {
+			uid,
+			title: data.title,
+			subtitle: data.subtitle,
+			chapterLabel: data.chapter_label,
+			chapterList: data.chapters.map(({ chapter }) => ({
+				title: chapter.data.title,
+				type: 'chapter',
+			})),
+			appendixList: data.appendices.map(({ appendix }) => ({
+				title: appendix.data.title,
+				type: 'appendix',
+			})),
+			status: data.status,
+		}
+
+		const seo = {
+			description: data.seo_description,
+			image: data.seo_image?.url,
+			imageAlt: data.seo_image?.alt,
+			title: data.seo_title,
+		};
+
+		// set up chapter data
+		const chapters = data.chapters.map(({ chapter }, index) => {
 			const {
 				title,
 				subtitle,
 				preset_theme,
 				base_hue,
-				// deprecated color data - remove
-				highlight_color: highlight,
-				primary_foreground_color: primary,
-				secondary_foreground_color: secondary,
-				background_color: surface,
 				body,
 				body1: colorThemes,
 			} = chapter.data;
 
 			return {
+				type: 'chapter',
+				number: index + 1,
 				uid,
 				title,
 				subtitle,
 				body,
 				callouts,
-				project: {
-					uid,
-					title: data.title,
-					subtitle: data.subtitle,
-					chapterLabel: data.chapter_label,
-					chapterList: data.chapters.map(({ chapter }) => chapter.data.title),
-					status: data.status,
-				},
-				seo: {
-					description: data.seo_description,
-					image: data.seo_image?.url,
-					imageAlt: data.seo_image?.alt,
-					title: data.seo_title,
-				},
+				project,
+				seo,
 				theme: {
 					name: preset_theme,
 					hue: base_hue,
@@ -122,8 +140,34 @@ export async function getStaticPaths({ paginate }) {
 			};
 		});
 
+		// set up appendix data, if any
+		const appendices = prismicHelpers.isFilled.group(data.appendices)
+			? data.appendices.map(({ appendix }, index) => {
+					const {
+						title,
+						subtitle,
+						body,
+					} = appendix.data;
+
+					return {
+						type: 'appendix',
+						number: index + 1,
+						uid,
+						title,
+						subtitle,
+						body,
+						callouts,
+						project: {
+							...project,
+							chapterLabel: 'Appendix',
+						},
+						seo,
+					}
+				})
+			: [];
+
 		// one chapter per page under the given project params
-		const pages = paginate(chapters, {
+		const pages = paginate([...chapters, ...appendices], {
 			pageSize: 1,
 			params: { year, uid },
 		});
@@ -146,12 +190,14 @@ const {
 
 const {
 	body,
+	callouts,
+	number,
 	project,
 	seo,
 	subtitle,
 	theme,
 	title,
-	callouts,
+	type,
 } = data[0];
 
 // if no title was given for SEO content, make a default one using the page data above
@@ -165,10 +211,15 @@ function sequenceNavItemAlign(index: number): Align {
 	return 'center';
 }
 
+const pagesList = [...project.chapterList, ...project.appendixList];
+console.log(pagesList[currentPage])
+console.log(currentPage)
+
 // list of chapter links for the SequenceNav at the top and bottom of the page
-const sequenceNavItems = project.chapterList.map(
-	(title: TitleField, index: number): SequenceNavItemData => ({
+const sequenceNavItems = pagesList.map(
+	({ title, type }, index: number): SequenceNavItemData => ({
 		title,
+		type,
 		href: `/longform/${year}/${uid}/${index + 1}`,
 		complete: currentPage > index + 1,
 		current: currentPage === index + 1,
@@ -177,8 +228,9 @@ const sequenceNavItems = project.chapterList.map(
 );
 
 // pagination nav
-const nextChapter = project.chapterList[currentPage] ? {
-	title: project.chapterList[currentPage],
+const nextPage = pagesList[currentPage] ? {
+	title: pagesList[currentPage].title,
+	type: pagesList[currentPage].type,
 	number: currentPage + 1,
 	href: url.next,
 } : null;
@@ -201,10 +253,12 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 	{seo}
 >
 	<MainNav segment={uid} />
+
 	<main id="main">
 		<article class="chapter">
 			<!-- titling -->
 			<header class="headline">
+
 					<!-- project title -->
 					<Heading
 						level={1}
@@ -226,7 +280,11 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 							value={currentPage}
 							range={sequenceNavItems.length}
 						>
-							Progress: You are currently reading {`${project.chapterLabel} ${currentPage} of ${sequenceNavItems.length}`}.
+							Progress: You are currently reading {
+								type === 'chapter'
+								? `${project.chapterLabel} ${number} of ${project.chapterList.length}`
+								: `Appendix ${number} of ${project.appendixList.length}`
+							}.
 						</ProgressBar>
 
 						<!-- for larger screens -->
@@ -237,7 +295,13 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 						].join(' ')}>
 							<SequenceNav>
 								{sequenceNavItems.map((item) => (
-									<SequenceNavItem {...item}>{prismicHelpers.asText(item.title)}</SequenceNavItem>
+									<SequenceNavItem {...item}>
+										{
+											item.type === 'chapter'
+											? prismicHelpers.asText(item.title)
+											: `Appendix: ${prismicHelpers.asText(item.title)}`
+										}
+									</SequenceNavItem>
 								))}
 							</SequenceNav>
 						</div>
@@ -245,7 +309,9 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 
 					<!-- chapter title -->
 					<div class="headline-chapter">
-						<Heading level={3} subheading>{`${project.chapterLabel} ${currentPage}`}</Heading>
+						<Heading level={3} subheading>{
+							type === 'chapter' ? `${project.chapterLabel} ${number}` : 'Appendix'
+						}</Heading>
 						<Heading level={2} class="header-chapter" text={title} />
 						{subtitle && <Heading level={3} subheading text={subtitle} />}
 					</div>
@@ -277,42 +343,59 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 						class="progress"
 						value={currentPage}
 						range={sequenceNavItems.length}
-						>
-						Progress: You are currently reading Chapter {currentPage} of {sequenceNavItems.length}.
+					>
+						Progress: You are currently reading {
+							type === 'chapter'
+							? `${project.chapterLabel} ${number} of ${project.chapterList.length}`
+							: `Appendix ${number} of ${project.appendixList.length}`
+						}.
 					</ProgressBar>
 
 					<!-- sequence nav -->
 					<SequenceNav class="sequence">
 						{sequenceNavItems.map((item) => (
 							<SequenceNavItem {...item} next={item.href === url.next}>
-								{prismicHelpers.asText(item.title)}
+								{
+									item.type === 'chapter'
+									? prismicHelpers.asText(item.title)
+									: `Appendix: ${prismicHelpers.asText(item.title)}`
+								}
 							</SequenceNavItem>
 						))}
 					</SequenceNav>
 
 					<!-- next chapter -->
 					<div class="next">
-						{nextChapter && (
+						{nextPage && (
 							<ReadNextLink
 								align="end"
 								class="next"
 								eyebrowSize="gamma"
-								link={nextChapter.href}
+								link={nextPage.href}
 								titleSize="beta"
 							>
 								<Fragment slot="eyebrow">
-									Next: {`${project.chapterLabel} ${currentPage + 1}`}
+									Next: {
+										nextPage.type === 'chapter'
+										? `${project.chapterLabel} ${currentPage + 1}`
+										: 'Appendix'
+									}
 								</Fragment>
 								<Fragment slot="title">
-									{prismicHelpers.asText(nextChapter.title)}
+									{prismicHelpers.asText(nextPage.title)}
 								</Fragment>
 							</ReadNextLink>
 						)}
-						{project.status === 'Finished' && !nextChapter && (
-							<aside class="end | type-role-display type-scale-gamma">
-								The end
-							</aside>
-						)}
+						{
+							project.status === 'Finished'
+							&& type === 'chapter'
+							&& number === project.chapterList.length
+							&& (
+								<aside class="end | type-role-display type-scale-gamma">
+									The end
+								</aside>
+							)
+						}
 					</div>
 				</div>
 			</nav>

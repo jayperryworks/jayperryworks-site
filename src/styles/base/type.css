@@ -1,91 +1,82 @@
-@import url('@styles/tokens/borders.css');
-@import url('@styles/tokens/spacing.css');
-@import url('@styles/tokens/type.css');
-
+@import url("@styles/tokens/borders.css");
+@import url("@styles/tokens/spacing.css");
+@import url("@styles/tokens/type.css");
 
 /* --- webfonts --- */
 
 /* Display: Sanomat */
 @font-face {
 	font-display: swap;
-	font-family: 'Sanomat';
+	font-family: "Sanomat";
 	font-weight: 700;
-	src:
-		local('Sanomat'),
-		url('/assets/fonts/Sanomat-Bold.woff2') format('woff2'),
-		url('/assets/fonts/Sanomat-Bold.woff') format('woff');
+	src: local("Sanomat"), url("/assets/fonts/Sanomat-Bold.woff2") format("woff2"),
+		url("/assets/fonts/Sanomat-Bold.woff") format("woff");
 }
 
 @font-face {
 	font-display: swap;
-	font-family: 'Sanomat';
+	font-family: "Sanomat";
 	font-style: italic;
 	font-weight: 700;
-	src:
-		local('Sanomat'),
-		url('/assets/fonts/Sanomat-Bold-Italic.woff2') format('woff2'),
-		url('/assets/fonts/Sanomat-Bold-Italic.woff') format('woff');
+	src: local("Sanomat"),
+		url("/assets/fonts/Sanomat-Bold-Italic.woff2") format("woff2"),
+		url("/assets/fonts/Sanomat-Bold-Italic.woff") format("woff");
 }
 
 /* Accent: Figtree */
 @font-face {
 	font-display: swap;
-	font-family: 'Figtree';
+	font-family: "Figtree";
 	font-weight: 300 600;
-	src:
-		url('/assets/fonts/Figtree.ttf') format('truetype') tech('variations'),
-		url('/assets/fonts/Figtree.ttf') format('truetype-variations');
+	src: url("/assets/fonts/Figtree.ttf") format("truetype") tech("variations"),
+		url("/assets/fonts/Figtree.ttf") format("truetype-variations");
 }
 
 @font-face {
 	font-display: swap;
-	font-family: 'Figtree';
+	font-family: "Figtree";
 	font-style: italic;
 	font-weight: 300 600;
-	src:
-		url('/assets/fonts/Figtree-Italic.ttf') format('truetype') tech('variations'),
-		url('/assets/fonts/Figtree-Italic.ttf') format('truetype-variations');
+	src: url("/assets/fonts/Figtree-Italic.ttf") format("truetype")
+			tech("variations"),
+		url("/assets/fonts/Figtree-Italic.ttf") format("truetype-variations");
 }
 
 /* Text: Figtree */
 @font-face {
 	font-display: swap;
-	font-family: 'Iowan Old Style';
-	src:
-		local('Iowan Old Style'),
-		url('/assets/fonts/Iowan-Roman.woff2') format('woff2'),
-		url('/assets/fonts/Iowan-Roman.woff') format('woff');
+	font-family: "Iowan Old Style";
+	src: local("Iowan Old Style"),
+		url("/assets/fonts/Iowan-Roman.woff2") format("woff2"),
+		url("/assets/fonts/Iowan-Roman.woff") format("woff");
 }
 
 @font-face {
 	font-display: swap;
-	font-family: 'Iowan Old Style';
+	font-family: "Iowan Old Style";
 	font-style: italic;
-	src:
-		local('Iowan Old Style Italic'),
-		url('/assets/fonts/Iowan-Italic.woff2') format('woff2'),
-		url('/assets/fonts/Iowan-Italic.woff') format('woff');
+	src: local("Iowan Old Style Italic"),
+		url("/assets/fonts/Iowan-Italic.woff2") format("woff2"),
+		url("/assets/fonts/Iowan-Italic.woff") format("woff");
 }
 
 @font-face {
 	font-display: swap;
-	font-family: 'Iowan Old Style';
+	font-family: "Iowan Old Style";
 	font-weight: bold;
-	src:
-		local('Iowan Old Style Bold'),
-		url('/assets/fonts/Iowan-Bold.woff2') format('woff2'),
-		url('/assets/fonts/Iowan-Bold.woff') format('woff');
+	src: local("Iowan Old Style Bold"),
+		url("/assets/fonts/Iowan-Bold.woff2") format("woff2"),
+		url("/assets/fonts/Iowan-Bold.woff") format("woff");
 }
 
 @font-face {
 	font-display: swap;
-	font-family: 'Iowan Old Style';
+	font-family: "Iowan Old Style";
 	font-style: italic;
 	font-weight: bold;
-	src:
-		local('Iowan Old Style Bold Italic'),
-		url('/assets/fonts/Iowan-Bold-Italic.woff2') format('woff2'),
-		url('/assets/fonts/Iowan-Bold-Italic.woff') format('woff');
+	src: local("Iowan Old Style Bold Italic"),
+		url("/assets/fonts/Iowan-Bold-Italic.woff2") format("woff2"),
+		url("/assets/fonts/Iowan-Bold-Italic.woff") format("woff");
 }
 
 /* --- global type --- */
@@ -102,7 +93,12 @@ body {
 	hanging-punctuation: first last;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
 	font-family: var(--type-font-display);
 	font-weight: 700;
 	line-height: var(--type-leading-tight);
@@ -193,7 +189,6 @@ code {
 	padding: 0 0.25em;
 	color: var(--color-secondary);
 }
-
 
 a code {
 	background-color: transparent;

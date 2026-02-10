@@ -1,9 +1,9 @@
 // utils
-import { camelCase } from 'change-case';
-import * as prismicHelpers from '@prismicio/helpers';
+import { camelCase } from "change-case";
+import * as prismicHelpers from "@prismicio/helpers";
 
 // types
-import type { Block as BlockType, Prominence } from '@lib/types';
+import type { Block as BlockType, Prominence } from "@lib/types";
 
 import type {
 	ImageField,
@@ -12,7 +12,7 @@ import type {
 	SelectField,
 	Slice,
 	TitleField,
-} from '@prismicio/types';
+} from "@prismicio/types";
 
 // --- block fields ---
 function headingText(text: TitleField): string {
@@ -42,7 +42,7 @@ function markdownText(text: RichTextField): string {
 function sharedBlockFields(slice: Slice): BlockType {
 	const {
 		prominence,
-		display_mode: displayMode = 'flow',
+		display_mode: displayMode = "flow",
 		include_in_excerpt: includeInExcerpt,
 	} = slice.primary;
 
@@ -76,6 +76,28 @@ function aside(slice: Slice): BlockType {
 	};
 }
 
+function bibliography(slice: Slice): BlockType {
+	return {
+		items: slice.items.map(
+			({
+				link,
+				media_type: media,
+				series_title: series,
+				source_author: author,
+				source_title: title,
+			}) => ({
+				author,
+				link,
+				media,
+				series,
+				title,
+			})
+		),
+		...sharedBlockFields(slice),
+		prominence: "Large",
+	};
+}
+
 function billboard(slice: Slice): BlockType {
 	const {
 		cover_images_gutter: imagesGutter,
@@ -90,15 +112,15 @@ function billboard(slice: Slice): BlockType {
 
 	const images = slice.items.reduce((result, item) => {
 		const {
-			frame = 'None',
-			priority = '1',
+			frame = "None",
+			priority = "1",
 			relative_size: relativeSize,
 			cover_image: source,
 			dark_mode_cover_image: darkModeSource,
 			use_image_aspect_ratio: useImageAspectRatio = false,
 		} = item;
 
-		if ((source as ImageField).url === '') return result;
+		if ((source as ImageField).url === "") return result;
 
 		result.push({
 			frame,
@@ -122,7 +144,7 @@ function billboard(slice: Slice): BlockType {
 		description: {
 			prismicText,
 		},
-		displayMode: 'slide',
+		displayMode: "slide",
 		subtitle: headingText(subtitle as TitleField),
 		title: headingText(title1 as TitleField),
 		theme: {
@@ -135,11 +157,7 @@ function billboard(slice: Slice): BlockType {
 }
 
 function blockQuote(slice: Slice): BlockType {
-	const {
-		structured_text: prismicText,
-		attribution,
-		markdown,
-	} = slice.primary;
+	const { structured_text: prismicText, attribution, markdown } = slice.primary;
 
 	return {
 		text: {
@@ -152,16 +170,12 @@ function blockQuote(slice: Slice): BlockType {
 }
 
 function collage(slice: Slice): BlockType {
-	const {
-		caption,
-		attribution,
-		gutter,
-	} = slice.primary;
+	const { caption, attribution, gutter } = slice.primary;
 
 	const images = slice.items.map((item) => {
 		const {
-			frame = 'None',
-			priority = '1',
+			frame = "None",
+			priority = "1",
 			relative_size: relativeSize,
 			image: source,
 			use_image_aspect_ratio: useImageAspectRatio = false,
@@ -207,7 +221,7 @@ function feed(slice: Slice): BlockType {
 		description: {
 			prismicText,
 		},
-		displayMode: 'slide',
+		displayMode: "slide",
 		subtitle: headingText(subtitle as TitleField),
 		title: headingText(title as TitleField),
 		theme: {
@@ -226,7 +240,7 @@ function figure(slice: Slice): BlockType {
 		image,
 		image_dark_mode,
 		border = false,
-		frame = 'None',
+		frame = "None",
 		use_image_aspect_ratio = false,
 	} = slice.primary;
 
@@ -242,7 +256,9 @@ function figure(slice: Slice): BlockType {
 	};
 
 	if (prismicHelpers.isFilled.richText(attribution as RichTextField)) {
-		output.attribution = { markdown: markdownText(attribution as RichTextField) };
+		output.attribution = {
+			markdown: markdownText(attribution as RichTextField),
+		};
 	}
 
 	if (prismicHelpers.isFilled.richText(caption as RichTextField)) {
@@ -253,12 +269,7 @@ function figure(slice: Slice): BlockType {
 }
 
 function heading(slice: Slice): BlockType {
-	const {
-		level,
-		subheading,
-		title1: text,
-		id,
-	} = slice.primary;
+	const { level, subheading, title1: text, id } = slice.primary;
 
 	return {
 		...sharedBlockFields(slice),
@@ -275,7 +286,7 @@ function imageGallery(slice: Slice): BlockType {
 		caption,
 		column_size: columnSize,
 		gutter,
-		frame = 'None',
+		frame = "None",
 		use_image_aspect_ratio: useImageAspectRatio = false,
 	} = slice.primary;
 
@@ -295,10 +306,7 @@ function imageGallery(slice: Slice): BlockType {
 }
 
 function passage(slice: Slice): BlockType {
-	const {
-		structured_text: prismicText,
-		markdown,
-	} = slice.primary;
+	const { structured_text: prismicText, markdown } = slice.primary;
 
 	return {
 		text: {
@@ -310,11 +318,7 @@ function passage(slice: Slice): BlockType {
 }
 
 function pullquote(slice: Slice): BlockType {
-	const {
-		image,
-		structured_text: prismicText,
-		markdown,
-	} = slice.primary;
+	const { image, structured_text: prismicText, markdown } = slice.primary;
 
 	return {
 		image,
@@ -327,11 +331,7 @@ function pullquote(slice: Slice): BlockType {
 }
 
 function stickyNoteGallery(slice: Slice): BlockType {
-	const {
-		title,
-		subtitle,
-		description: prismicText,
-	} = slice.primary;
+	const { title, subtitle, description: prismicText } = slice.primary;
 
 	return {
 		title,
@@ -346,11 +346,7 @@ function stickyNoteGallery(slice: Slice): BlockType {
 }
 
 function table(slice: Slice): BlockType {
-	const {
-		csv_file: CSVFile,
-		key_columns: keyColumns,
-		footer,
-	} = slice.primary;
+	const { csv_file: CSVFile, key_columns: keyColumns, footer } = slice.primary;
 
 	return {
 		CSVFile: prismicHelpers.asLink(CSVFile as LinkField),
@@ -381,7 +377,9 @@ function video(slice: Slice): BlockType {
 	};
 
 	if (prismicHelpers.isFilled.richText(attribution as RichTextField)) {
-		output.attribution = { markdown: markdownText(attribution as RichTextField) };
+		output.attribution = {
+			markdown: markdownText(attribution as RichTextField),
+		};
 	}
 
 	if (prismicHelpers.isFilled.richText(caption as RichTextField)) {
@@ -396,6 +394,7 @@ export default {
 	image_gallery: imageGallery,
 	quote: blockQuote,
 	aside,
+	bibliography,
 	billboard,
 	collage,
 	feed,

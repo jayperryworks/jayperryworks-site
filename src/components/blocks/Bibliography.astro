@@ -1,0 +1,77 @@
+---
+/**
+ * Bibliography block component
+ * @description - A list of linked sources (books, media, etc.)
+ *
+ * @prop {Object[]} items - the sources to display
+ */
+
+// --- assets ---
+import '@styles/tokens/borders.css';
+import '@styles/tokens/spacing.css';
+import '@styles/tokens/type.css';
+import '@styles/utilities/type.css';
+
+// --- utilities ---
+import * as prismicHelpers from '@prismicio/helpers';
+
+// --- components ---
+import Heading from '@components/blocks/Heading.astro';
+import Gallery from '@components/layout/Gallery.astro';
+
+// --- props ---
+const { items } = Astro.props;
+---
+
+<div class="bibliography">
+	<Gallery>
+		{
+			items.map(({ author, link, media, series, title }) => (
+				<li class="source">
+					{media && (
+						<p class="media | type-scale-eta type-role-accent">{media}</p>
+					)}
+					<div class="group">
+						{series && (
+							<p class="series | type-role-display italic type-scale-zeta">
+								{series}
+							</p>
+						)}
+						<Heading
+							level={3}
+							class="type-scale-epsilon"
+						>
+							{link ? (
+								<a
+									href={prismicHelpers.asLink(link)}
+									target="_blank"
+								>
+									{title}
+								</a>
+							) : (
+								title
+							)}
+						</Heading>
+					</div>
+					{author && (
+						<p class="author | type-role-accent type-scale-epsilon">
+							By {author}
+						</p>
+					)}
+				</li>
+			))
+		}
+	</Gallery>
+</div>
+
+<style>
+	.source {
+		background-color: var(--color-island);
+		border-radius: var(--border-radius-round);
+		padding: var(--space-xnarrow) var(--space-medium) var(--space-medium);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xnarrow);
+		color: var(--color-secondary);
+	}
+</style>
