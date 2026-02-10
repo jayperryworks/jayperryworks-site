@@ -211,8 +211,12 @@ function sequenceNavItemAlign(index: number): Align {
 	return 'center';
 }
 
+const pagesList = [...project.chapterList, ...project.appendixList];
+console.log(pagesList[currentPage])
+console.log(currentPage)
+
 // list of chapter links for the SequenceNav at the top and bottom of the page
-const sequenceNavItems = [...project.chapterList, ...project.appendixList].map(
+const sequenceNavItems = pagesList.map(
 	({ title, type }, index: number): SequenceNavItemData => ({
 		title,
 		type,
@@ -224,8 +228,9 @@ const sequenceNavItems = [...project.chapterList, ...project.appendixList].map(
 );
 
 // pagination nav
-const nextChapter = project.chapterList[currentPage] ? {
-	title: project.chapterList[currentPage],
+const nextPage = pagesList[currentPage] ? {
+	title: pagesList[currentPage].title,
+	type: pagesList[currentPage].type,
 	number: currentPage + 1,
 	href: url.next,
 } : null;
@@ -349,7 +354,7 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 					<!-- sequence nav -->
 					<SequenceNav class="sequence">
 						{sequenceNavItems.map((item) => (
-							<SequenceNavItem {...item}>
+							<SequenceNavItem {...item} next={item.href === url.next}>
 								{
 									item.type === 'chapter'
 									? prismicHelpers.asText(item.title)
@@ -361,19 +366,23 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 
 					<!-- next chapter -->
 					<div class="next">
-						{nextChapter && (
+						{nextPage && (
 							<ReadNextLink
 								align="end"
 								class="next"
 								eyebrowSize="gamma"
-								link={nextChapter.href}
+								link={nextPage.href}
 								titleSize="beta"
 							>
 								<Fragment slot="eyebrow">
-									Next: {`${project.chapterLabel} ${currentPage + 1}`}
+									Next: {
+										nextPage.type === 'chapter'
+										? `${project.chapterLabel} ${currentPage + 1}`
+										: 'Appendix'
+									}
 								</Fragment>
 								<Fragment slot="title">
-									{prismicHelpers.asText(nextChapter.title)}
+									{prismicHelpers.asText(nextPage.title)}
 								</Fragment>
 							</ReadNextLink>
 						)}
