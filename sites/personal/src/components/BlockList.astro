@@ -10,7 +10,7 @@ import Block from '@components/Block.astro';
 
 // utils
 import blockTypes from '@lib/blocks';
-import { reset as resetSidenoteCount } from '@lib/model/sidenotes';
+import { reset as resetSidenoteCount } from '@lib/sidenotes';
 
 // types
 import type { Block as BlockType } from '@lib/types';
@@ -52,27 +52,20 @@ function getBlockClass(type: string, displayMode: string = 'flow'): string {
 
 // if the page body has a 'lede' (intro) paragraph,
 // add a 'lede' class to the first passage that appears in the list of blocks
-function getLedeClass(block: BlockType):string {
+function getLedeClass(block: BlockType): string {
 	if (showLedeStyle) {
 		const firstPassage = sectionList[0].blocks.find((block: BlockType) => {
 			return block.type === 'passage';
 		});
-		return (block === firstPassage) ? 'lede' : '';
+		return block === firstPassage ? 'lede' : '';
 	}
 }
 
 // --- build an array of blocks, sorted into sections ---
 const sectionList = body.reduce((result: Array<any>, slice: Slice) => {
-	const {
-		slice_type: type,
-		primary,
-	} = slice;
+	const { slice_type: type, primary } = slice;
 
-	const {
-		short_title: shortTitle,
-		marker,
-		uid,
-	} = primary;
+	const { short_title: shortTitle, marker, uid } = primary;
 
 	// if the block is a section, then add a new section to the array
 	if (type === 'section_start') {
@@ -96,7 +89,7 @@ const sectionList = body.reduce((result: Array<any>, slice: Slice) => {
 		const section = result[result.length - 1];
 		const block = blockTypes[type](slice);
 		// if the blocklist or section is marked as numbered, add a number prop to the block
-		block.number = (numbered || section.numbered) && (section.blocks.length + 1);
+		block.number = (numbered || section.numbered) && section.blocks.length + 1;
 
 		section.blocks.push(block);
 	}
@@ -104,18 +97,12 @@ const sectionList = body.reduce((result: Array<any>, slice: Slice) => {
 }, []);
 ---
 
-
-<div class={[
-	'block-list',
-	className,
-].join(' ')}>
-	{sectionList.map(({ uid, marker, blocks }) => (
-		uid
-			? <section
-					class={[
-						'block-list',
-						marker ? 'section-marker' : ''
-					].join(' ')}
+<div class={['block-list', className].join(' ')}>
+	{
+		sectionList.map(({ uid, marker, blocks }) =>
+			uid ? (
+				<section
+					class={['block-list', marker ? 'section-marker' : ''].join(' ')}
 					id={uid}
 				>
 					{blocks.map((block) => (
@@ -128,16 +115,19 @@ const sectionList = body.reduce((result: Array<any>, slice: Slice) => {
 						/>
 					))}
 				</section>
-			: blocks.map((block) => (
-				<Block
-					class={[
-						getBlockClass(block.type, block.displayMode),
-						getLedeClass(block),
-					].join(' ')}
-					{block}
-				/>
-			))
-	))}
+			) : (
+				blocks.map((block) => (
+					<Block
+						class={[
+							getBlockClass(block.type, block.displayMode),
+							getLedeClass(block),
+						].join(' ')}
+						{block}
+					/>
+				))
+			),
+		)
+	}
 </div>
 
 <style>

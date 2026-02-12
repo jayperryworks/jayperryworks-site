@@ -1,4 +1,5 @@
-import sharedConfig from "../shared/astro.config.shared";
+import { defineConfig } from "astro/config";
+import sharedConfig from "../../shared/shared.astro.config";
 
 // https://astro.build/config
 export default defineConfig({

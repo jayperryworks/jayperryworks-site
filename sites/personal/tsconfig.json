@@ -15,14 +15,14 @@
 		"types": ["astro/client"],
 		"baseUrl": ".",
 		"paths": {
-			"@lib/*": ["shared/utilities/*"],
-			"@components/*": ["personal/src/components/*"],
-			"@layouts/*": ["personal/src/layouts/*"],
-			"@icons/*": ["shared/public/assets/icons/*"],
-			"@styles/*": ["personal/src/styles/*"],
-			"@scripts/*": ["personal/src/scripts/*"]
+			"@lib/*": ["../../shared/utilities/*"],
+			"@components/*": ["./src/components/*"],
+			"@layouts/*": ["./src/layouts/*"],
+			"@icons/*": ["../../shared/public/assets/icons/*"],
+			"@styles/*": ["../../shared/styles/*"],
+			"@scripts/*": ["./src/scripts/*"]
 		}
 	},
-	"include": ["personal/src/**/*", "shared/utilities/**/*"],
-	"exclude": ["personal/node_modules"]
+	"include": ["./src/**/*", "../../shared/utilities/**/*"],
+	"exclude": ["node_modules", "dist"]
 }
