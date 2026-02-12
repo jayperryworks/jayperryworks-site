@@ -29,7 +29,6 @@
 		"culori": "^4.0.1",
 		"date-fns": "^2.28.0",
 		"install": "^0.13.0",
-		"onchange": "^7.1.0",
 		"prettier": "^2.6.0",
 		"rehype-raw": "^7.0.0",
 		"rehype-sanitize": "^6.0.0",

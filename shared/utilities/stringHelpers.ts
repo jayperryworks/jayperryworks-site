@@ -1,4 +1,4 @@
-import { camelCase, paramCase } from 'change-case';
+import { camelCase } from "change-case";
 
 /**
  * Convert a string to Title Case
@@ -12,7 +12,6 @@ function titleCase(string: string): string {
 	return string.replace(/^\w/, (c) => c.toUpperCase());
 }
 
-
 /**
  * Convert a string to Sentence case (inital letter capitalized)
  *
@@ -23,7 +22,6 @@ function sentenceCase(string: string): string {
 	return `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
 }
 
-
 /**
  * Truncate a string to a given number of words
  *
@@ -33,12 +31,11 @@ function sentenceCase(string: string): string {
  */
 function truncate(string: string, length = 5): string {
 	if (string?.length > 0) {
-		return string.split(' ').splice(0, length).join(' ').concat('...');
+		return string.split(" ").splice(0, length).join(" ").concat("...");
 	}
 
-	return '';
+	return "";
 }
-
 
 //
 // -> adds an oxford comma
@@ -63,33 +60,27 @@ function arrayToSentence(
 	options: arrayToSentenceOptions = {},
 ): string {
 	// default values for options argument
-	const {
-		period = true,
-		capitalize = true,
-	} = options;
+	const { period = true, capitalize = true } = options;
 
 	// Adjust the case for each string
-	return array.reduce((
-		result: string[],
-		string: string,
-		index: number,
-	) => {
-		if (index === 0) {
-			result.push(capitalize ? sentenceCase(string) : string);
-			return result;
-		}
+	return array
+		.reduce((result: string[], string: string, index: number) => {
+			if (index === 0) {
+				result.push(capitalize ? sentenceCase(string) : string);
+				return result;
+			}
 
-		if (index === array.length - 1) {
-			// prepend 'and' to the last item
-			result.push(`and ${string}${period ? '.' : ''}`);
-			return result;
-		}
+			if (index === array.length - 1) {
+				// prepend 'and' to the last item
+				result.push(`and ${string}${period ? "." : ""}`);
+				return result;
+			}
 
-		result.push(string);
-		return result;
-	}, []).join(array.length > 2 ? ', ' : ' ');
+			result.push(string);
+			return result;
+		}, [])
+		.join(array.length > 2 ? ", " : " ");
 }
-
 
 /**
  * Add a non-breaking space between the last two words of a string
@@ -99,17 +90,15 @@ function arrayToSentence(
  * @returns {string}
  */
 function removeWidows(string: string, minWordCount = 4): string {
-	const words = string.split(' ');
+	const words = string.split(" ");
 
 	if (words.length >= minWordCount) {
-		return words.reduce((
-			result: string,
-			word: string,
-			index: number,
-		): string => {
-			const separator = (index < words.length - 1) ? ' ' : '&nbsp;';
-			return result + separator + word;
-		});
+		return words.reduce(
+			(result: string, word: string, index: number): string => {
+				const separator = index < words.length - 1 ? " " : "&nbsp;";
+				return result + separator + word;
+			},
+		);
 	}
 
 	return string;
@@ -118,14 +107,18 @@ function removeWidows(string: string, minWordCount = 4): string {
 // convert an array to a string with 'separator' punctuation after each item
 // -> ['--variable: 1', '--another: 2'] -> '--variable: 1; --another: 2;'
 // -> removes any falsey or null items
-function arrayToPunctatedString(items: string[], separator = ';') {
-	return items.reduce((result, item) => {
-		if (item) {
-			result.push(item.slice(-1) !== separator ? item.concat(separator) : item);
-		}
+function arrayToPunctatedString(items: string[], separator = ";") {
+	return items
+		.reduce((result, item) => {
+			if (item) {
+				result.push(
+					item.slice(-1) !== separator ? item.concat(separator) : item,
+				);
+			}
 
-		return result;
-	}, []).join(' ');
+			return result;
+		}, [])
+		.join(" ");
 }
 
 /**
@@ -137,12 +130,8 @@ function arrayToPunctatedString(items: string[], separator = ';') {
  * @returns {string} - the string, with article words removed
  */
 function removeArticles(string: string): string {
-	const articles = [
-		'a',
-		'the',
-		'an',
-	];
-	let words = string.toLowerCase().split(' ');
+	const articles = ["a", "the", "an"];
+	let words = string.toLowerCase().split(" ");
 
 	if (words.length <= 1) return string;
 
@@ -150,14 +139,13 @@ function removeArticles(string: string): string {
 		if (words[0] === article) words.shift();
 	}
 
-	return words.join(' ');
+	return words.join(" ");
 }
 
 export {
 	arrayToPunctatedString,
 	arrayToSentence,
 	camelCase,
-	paramCase,
 	removeArticles,
 	removeWidows,
 	sentenceCase,
