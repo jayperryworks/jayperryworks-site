@@ -8,39 +8,42 @@ import {
 	DateField,
 	PrismicDocument,
 	PrismicDocumentWithUID,
-} from '@prismicio/types';
+} from "@prismicio/types";
 
 // utils
-import { format } from 'date-fns';
-import * as prismicHelpers from '@prismicio/helpers';
+import { format } from "date-fns";
+import * as prismicHelpers from "@prismicio/helpers";
 
 // link/relationship data to fetch from Prismic to resolve page routes
 // -> use in the config on the original query, e.g. prismic.getByUID(... { fetchLinks })
 export const fetchLinks = [
-	'blog_post.date',
-	'design_project.start_date',
-	'longform.date',
-	'picture.date_completed',
-	'use_color_theme',
+	"blog_post.date",
+	"design_project.start_date",
+	"longform.date",
+	"picture.date_completed",
+	"use_color_theme",
 ];
 
 // create a url string from a date object, e.g. year/month/day
 export function getDateParams(
 	value: DateField,
-	periods: Array<'year' | 'month' | 'day'>,
+	periods: Array<"year" | "month" | "day">,
 ): string {
 	const date = prismicHelpers.asDate(value);
 
 	const formats = {
-		year: 'yyyy',
-		month: 'MM',
-		day: 'dd',
+		year: "yyyy",
+		month: "MM",
+		day: "dd",
 	};
 
-	const formatString = periods.map((period: string): string[] => {
-		if (!formats[period]) throw new Error(`Time period '${period}' was not found.`);
-		return formats[period];
-	}).join('/');
+	const formatString = periods
+		.map((period: string): string[] => {
+			if (!formats[period])
+				throw new Error(`Time period '${period}' was not found.`);
+			return formats[period];
+		})
+		.join("/");
 
 	return format(date, formatString);
 }
@@ -48,7 +51,7 @@ export function getDateParams(
 // --- main pages
 // -> export each route as an individual function so it can be called individually as needed
 export function homepage(): string {
-	return '/';
+	return "/";
 }
 
 // top-level pages
@@ -57,39 +60,55 @@ export function page({ uid }: Partial<PrismicDocumentWithUID>): string {
 }
 
 export function indexPage({ uid }: Partial<PrismicDocumentWithUID>): string {
-	if (uid === 'blog') return '/blog/page/1/';
+	if (uid === "blog") return "/blog/page/1/";
 	return `/${uid}/`;
 }
 
 // blog posts
-export function blogPost({ data, uid }: Partial<PrismicDocumentWithUID>): string {
-	return `/blog/${getDateParams(data.date, ['year', 'month', 'day'])}/${uid}/`;
+export function blogPost({
+	data,
+	uid,
+}: Partial<PrismicDocumentWithUID>): string {
+	return `/blog/${getDateParams(data.date, ["year", "month", "day"])}/${uid}/`;
 }
 
 // development stage page
 // -> note this does not included in the linkResolver below
 // 		because there are no equivalent docs in Prismic, just a list of names
-export function blogDevelopmentStage({ uid }: Partial<PrismicDocumentWithUID>): string {
+export function blogDevelopmentStage({
+	uid,
+}: Partial<PrismicDocumentWithUID>): string {
 	return `/blog/stages/${uid}`;
 }
 
 // pictures
-export function picture({ data, uid }: Partial<PrismicDocumentWithUID>): string {
-	return `/pictures/${getDateParams(data.date_completed, ['year', 'month'])}/${uid}/`;
+export function picture({
+	data,
+	uid,
+}: Partial<PrismicDocumentWithUID>): string {
+	return `/pictures/${getDateParams(data.date_completed, ["year", "month"])}/${uid}/`;
 }
 
 // design
-export function designProject({ data, uid }: Partial<PrismicDocumentWithUID>): string {
-	return `/design/${data.start_date}/${uid}/`;
+export function designProject({
+	data,
+	uid,
+}: Partial<PrismicDocumentWithUID>): string {
+	return `/work/${data.start_date}/${uid}/`;
 }
 
 // longform
-export function longform({ data, uid }: Partial<PrismicDocumentWithUID>): string {
-	return `/longform/${getDateParams(data.date, ['year'])}/${uid}/1/`;
+export function longform({
+	data,
+	uid,
+}: Partial<PrismicDocumentWithUID>): string {
+	return `/longform/${getDateParams(data.date, ["year"])}/${uid}/1/`;
 }
 
 // picture series
-export function pictureSeries({ uid }: Partial<PrismicDocumentWithUID>): string {
+export function pictureSeries({
+	uid,
+}: Partial<PrismicDocumentWithUID>): string {
 	return `/pictures#${uid}`;
 }
 
