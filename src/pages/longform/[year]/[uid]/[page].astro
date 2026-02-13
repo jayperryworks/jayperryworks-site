@@ -342,6 +342,17 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 
 			<!-- body -->
 			<BlockList {body} showLedeStyle />
+
+			{
+				project.status === 'Finished'
+				&& type === 'chapter'
+				&& number === project.chapterList.length
+				&& (
+					<aside class="end | type-role-display type-scale-gamma">
+						The end
+					</aside>
+				)
+			}
 		</article>
 
 		<!-- footer navigation -->
@@ -397,16 +408,6 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 								</Fragment>
 							</ReadNextLink>
 						)}
-						{
-							project.status === 'Finished'
-							&& type === 'chapter'
-							&& number === project.chapterList.length
-							&& (
-								<aside class="end | type-role-display type-scale-gamma">
-									The end
-								</aside>
-							)
-						}
 					</div>
 				</div>
 			</nav>
@@ -483,13 +484,17 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 	}
 
 	.next {
+		display: flex;
+		justify-content: end;
 		padding-block-start: var(--space-wide);
 	}
 
 	.end {
-		text-align: end;
-		font-style: italic;
 		color: var(--color-secondary);
+		font-style: italic;
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+		width: 100%;
 	}
 
 	.support {
