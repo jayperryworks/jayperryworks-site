@@ -31,8 +31,12 @@ export interface Props {
 export async function getStaticPaths(): Promise<Function> {
 	const pages = await prismic.getAllByType('page', { fetchLinks });
 
-	return pages.map(({ uid, data }) => {
+	return pages.reduce((result, { uid, data }) => {
 		const { body, seo_description, seo_image, seo_title, title, theme } = data;
+
+		const site = data.site || 'Personal';
+
+		if (site !== 'Personal') return result;
 
 		const seo = {
 			description: seo_description,
@@ -41,7 +45,7 @@ export async function getStaticPaths(): Promise<Function> {
 			title: seo_title || prismicHelpers.asText(title),
 		};
 
-		return {
+		result.push({
 			params: {
 				uid,
 			},
@@ -51,8 +55,10 @@ export async function getStaticPaths(): Promise<Function> {
 				theme,
 				title,
 			},
-		};
-	});
+		});
+
+		return result;
+	}, []);
 }
 
 // props
@@ -64,6 +70,7 @@ const { uid } = Astro.params;
 <Layout
 	pageTitle={titleCase(uid)}
 	{seo}
+	{theme}
 >
 	<MainNav segment={uid} />
 	<main id="main">

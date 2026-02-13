@@ -4,7 +4,7 @@
  *
  * @param {string} [pageTitle] - title for this specific page
  * @param {SEOContent} [seo] - SEO metadata
- * @param {Partial<Theme> | ThemeNames} [theme] -
+ * @param {Partial<Theme> | ThemeNames} [theme] - color theme for this page
  */
 
 // --- assets ---
@@ -20,11 +20,7 @@ import Head from '@components/meta/Head.astro';
 import type { SEOContent, ThemeNames, Theme } from '@lib/types';
 
 // --- props ---
-const {
-	pageTitle,
-	seo = {},
-	theme,
-} = Astro.props;
+const { pageTitle, seo = {}, theme } = Astro.props;
 
 /**
  * Create a color theme object for the Theme component
@@ -42,15 +38,21 @@ function setTheme() {
 	// Add data attributes to the body element to confirm JS, touch, etc. is available
 	// -> used by the CSS for styling JS-dependent elements
 	let featureData = ['js'];
-	if ("ontouchstart" in document.body) featureData.push('touch');
+	if ('ontouchstart' in document.body) featureData.push('touch');
 
 	// Add a data attribute for each supported feature
 	document.body.dataset['supports'] = featureData.join(' ');
 </script>
 
 <html lang="en">
-	<Head title={seo?.title || pageTitle} {...seo} />
-	<ColorTheme el="body" {...setTheme()}>
+	<Head
+		title={seo?.title || pageTitle}
+		{...seo}
+	/>
+	<ColorTheme
+		el="body"
+		{...setTheme()}
+	>
 		<slot />
 	</ColorTheme>
 </html>
