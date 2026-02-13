@@ -1,0 +1,115 @@
+---
+// assets
+import '@styles/tokens/spacing.css';
+
+// helpers
+import { fetchLinks } from '@lib/routes';
+import { titleCase } from '@lib/stringHelpers';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@lib/prismic';
+
+// components
+import Layout from '@layouts/Layout.astro';
+import BlockList from '@components/BlockList.astro';
+import Heading from '@components/blocks/Heading.astro';
+import MainNav from '@components/navigation/MainNav.astro';
+import MainFooter from '@components/navigation/MainFooter.astro';
+
+// types
+import type { Slice, TitleField } from '@prismicio/types';
+import type { SEOContent, Theme, ThemeNames } from '@lib/types';
+
+export interface Props {
+	body: Slice[];
+	title: TitleField;
+	seo?: SEOContent;
+	subtitle?: TitleField;
+	theme?: ThemeNames | Partial<Theme>;
+}
+
+// data & pagination
+export async function getStaticPaths(): Promise<Function> {
+	const pages = await prismic.getAllByType('page', { fetchLinks });
+
+	return pages.reduce((result, { uid, data }) => {
+		const { body, seo_description, seo_image, seo_title, title, theme } = data;
+
+		const site = data.site || 'Design';
+
+		if (site !== 'Design') return result;
+
+		const seo = {
+			description: seo_description,
+			image: seo_image?.url,
+			imageAlt: seo_image?.alt,
+			title: seo_title || prismicHelpers.asText(title),
+		};
+
+		result.push({
+			params: {
+				uid,
+			},
+			props: {
+				body,
+				seo,
+				theme,
+				title,
+			},
+		});
+
+		return result;
+	}, []);
+}
+
+// props
+const { body, seo, subtitle, theme, title } = Astro.props as Props;
+
+const { uid } = Astro.params;
+---
+
+<Layout
+	pageTitle={titleCase(uid)}
+	{seo}
+	{theme}
+>
+	<MainNav segment={uid} />
+	<main id="main">
+		<article>
+			<header class="title">
+				<Heading
+					level={1}
+					text={title}
+				/>
+				{
+					subtitle && (
+						<Heading
+							class="type-scale-gamma"
+							text={subtitle}
+							subheading
+						/>
+					)
+				}
+			</header>
+			<BlockList
+				{body}
+				showLedeStyle
+			/>
+		</article>
+	</main>
+	<MainFooter />
+</Layout>
+
+<style>
+	article {
+		padding-block: var(--space-xwide);
+	}
+
+	.title {
+		padding-block-end: var(--space-wide);
+		padding-inline: var(--space-outside);
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-narrow);
+	}
+</style>

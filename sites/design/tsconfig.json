@@ -1,0 +1,18 @@
+{
+	"extends": "astro/tsconfigs/strict",
+	"include": [".astro/types.d.ts", "./src/**/*", "../../shared/utilities/**/*"],
+	"exclude": ["dist"],
+	"compilerOptions": {
+		"paths": {
+			// local
+			"@layouts/*": ["./src/layouts/*"],
+			"@styles/*": ["../../shared/styles/*"],
+			// shared
+			"@components/*": ["../../shared/components/*"],
+			"@fonts/*": ["../../shared/public/assets/fonts/*"],
+			"@icons/*": ["../../shared/public/assets/icons/*"],
+			"@lib/*": ["../../shared/utilities/*"],
+			"@scripts/*": ["../../shared/scripts/*"]
+		}
+	}
+}
