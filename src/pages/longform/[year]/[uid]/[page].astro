@@ -208,9 +208,14 @@ const {
 	type,
 } = data[0];
 
-// if no title was given for SEO content, make a default one using the page data above
+// Build a page title with the project and chapter/appendix name
 // -> locating it down here instead of in the pagination function above because currentPage is accessible from here
-if (!seo.title) seo.title = `${prismicHelpers.asText(project.title)}, ${project.chapterLabel} ${currentPage}: ${prismicHelpers.asText(title)}`;
+const pageTitle = type === 'chapter'
+? `${prismicHelpers.asText(project.title)}, ${project.chapterLabel} ${currentPage}: ${prismicHelpers.asText(title)}`
+: `${prismicHelpers.asText(project.title)}, Appendix: ${prismicHelpers.asText(title)}`;
+
+// if no title was given for SEO content, make a default one using the page data above
+if (!seo.title) seo.title = pageTitle;
 
 // sequence nav
 function sequenceNavItemAlign(index: number): Align {
@@ -254,7 +259,7 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 ---
 
 <Layout
-	pageTitle={prismicHelpers.asText(project.title)}
+	pageTitle={pageTitle}
 	{theme}
 	{seo}
 >
