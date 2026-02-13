@@ -102,7 +102,7 @@ export async function getStaticPaths({ paginate }) {
 				type: 'appendix',
 			})),
 			status: data.status,
-		}
+		};
 
 		const seo = {
 			description: data.seo_description,
@@ -208,9 +208,14 @@ const {
 	type,
 } = data[0];
 
-// if no title was given for SEO content, make a default one using the page data above
+// Build a page title with the project and chapter/appendix name
 // -> locating it down here instead of in the pagination function above because currentPage is accessible from here
-if (!seo.title) seo.title = `${prismicHelpers.asText(project.title)}, ${project.chapterLabel} ${currentPage}: ${prismicHelpers.asText(title)}`;
+const pageTitle = type === 'chapter'
+? `${prismicHelpers.asText(project.title)}, ${project.chapterLabel} ${number}: ${prismicHelpers.asText(title)}`
+: `${prismicHelpers.asText(project.title)}, Appendix: ${prismicHelpers.asText(title)}`;
+
+// if no title was given for SEO content, make a default one using the page data above
+if (!seo.title) seo.title = pageTitle;
 
 // sequence nav
 function sequenceNavItemAlign(index: number): Align {
@@ -254,7 +259,7 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 ---
 
 <Layout
-	pageTitle={prismicHelpers.asText(project.title)}
+	pageTitle={pageTitle}
 	{theme}
 	{seo}
 >
@@ -337,6 +342,17 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 
 			<!-- body -->
 			<BlockList {body} showLedeStyle />
+
+			{
+				project.status === 'Finished'
+				&& type === 'chapter'
+				&& number === project.chapterList.length
+				&& (
+					<aside class="end | type-role-display type-scale-gamma">
+						The end
+					</aside>
+				)
+			}
 		</article>
 
 		<!-- footer navigation -->
@@ -392,16 +408,6 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 								</Fragment>
 							</ReadNextLink>
 						)}
-						{
-							project.status === 'Finished'
-							&& type === 'chapter'
-							&& number === project.chapterList.length
-							&& (
-								<aside class="end | type-role-display type-scale-gamma">
-									The end
-								</aside>
-							)
-						}
 					</div>
 				</div>
 			</nav>
@@ -478,13 +484,17 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 	}
 
 	.next {
+		display: flex;
+		justify-content: end;
 		padding-block-start: var(--space-wide);
 	}
 
 	.end {
-		text-align: end;
-		font-style: italic;
 		color: var(--color-secondary);
+		font-style: italic;
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+		width: 100%;
 	}
 
 	.support {
