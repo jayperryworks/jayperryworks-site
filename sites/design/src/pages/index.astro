@@ -17,17 +17,9 @@ import MainFooter from '@components/navigation/MainFooter.astro';
 import BlockList from '@components/BlockList.astro';
 
 // fetch content
-const response = await prismic.getByUID('index_page', 'design', { fetchLinks });
+const response = await prismic.getByUID('home', 'home-design', { fetchLinks });
 
-const {
-	title,
-	subtitle,
-	short_title: shortTitle,
-	body,
-	seo_title,
-	seo_description,
-	seo_image,
-} = response.data;
+const { title, body, seo_title, seo_description, seo_image } = response.data;
 
 const seo = {
 	description: seo_description,
@@ -38,37 +30,21 @@ const seo = {
 ---
 
 <Layout
-	pageTitle={shortTitle}
-	path="design"
+	pageTitle={title}
 	theme="anemone"
 	{seo}
 >
 	<main id="main">
-		<article>
-			<header class="headline">
-				<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
-				{
-					subtitle && (
-						<Heading
-							level={3}
-							subheading
-						>
-							{prismicHelpers.asText(subtitle)}
-						</Heading>
-					)
-				}
-			</header>
-			<BlockList
-				{body}
-				showLedeStyle
-			/>
-		</article>
+		<BlockList
+			{body}
+			showLedeStyle
+		/>
 	</main>
 	<MainFooter />
 </Layout>
 
 <style>
-	article {
+	main {
 		padding-block: var(--space-xwide);
 	}
 
