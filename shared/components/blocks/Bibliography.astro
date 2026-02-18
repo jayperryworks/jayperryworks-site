@@ -7,17 +7,17 @@
  */
 
 // --- assets ---
-import '@styles/tokens/borders.css';
-import '@styles/tokens/spacing.css';
-import '@styles/tokens/type.css';
-import '@styles/utilities/type.css';
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/type.css';
+import '@shared/styles/utilities/type.css';
 
 // --- utilities ---
 import * as prismicHelpers from '@prismicio/helpers';
 
 // --- components ---
-import Heading from '@components/blocks/Heading.astro';
-import Gallery from '@components/layout/Gallery.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import Gallery from '@shared/components/layout/Gallery.astro';
 
 // --- props ---
 const { items } = Astro.props;

@@ -1,20 +1,20 @@
 ---
 // assets
-import '@styles/tokens/spacing.css';
-import '@styles/tokens/type.css';
-import '@styles/utilities/type.css';
-import '@styles/utilities/visibility.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/type.css';
+import '@shared/styles/utilities/type.css';
+import '@shared/styles/utilities/visibility.css';
 
 // utils
-import prismic from '@lib/prismic';
+import prismic from '@shared/lib/prismic';
 import * as prismicHelpers from '@prismicio/helpers';
-import { linkResolver, fetchLinks } from '@lib/routes';
+import { linkResolver, fetchLinks } from '@shared/lib/routes';
 
 // components
-import LogoJP from '@components/logos/LogoJP.astro';
+import LogoJP from '@shared/components/logos/LogoJP.astro';
 
 // types
-import { mainNavLink } from '@lib/types';
+import { mainNavLink } from '@shared/lib/types';
 
 export interface Props {
 	segment: string;
@@ -26,18 +26,12 @@ const routes = response.data.nav_item.map(
 	({ label, link }): mainNavLink => ({
 		label,
 		link: prismicHelpers.asLink(link, linkResolver),
-	})
+	}),
 );
 
-const {
-	segment,
-	class:className = '',
-} = Astro.props as Props;
+const { segment, class: className = '' } = Astro.props as Props;
 
-const classList = [
-	'main-header',
-	className,
-].join(' ');
+const classList = ['main-header', className].join(' ');
 ---
 
 <header class={classList}>
@@ -59,19 +53,27 @@ const classList = [
 
 	<!-- nav -->
 	<jp-hamburger-nav>
-		<nav class="type-align-right" id="nav-wrapper">
-			<ul class="is-hidden" id="nav-list">
-				{routes.map(({ label, link }) => (
-					<li>
-						<a
-							aria-current={link.includes(segment) && 'page'}
-							class="nav-item | type-link-undecorated"
-							href={link}
-						>
-							{label}
-						</a>
-					</li>
-				))}
+		<nav
+			class="type-align-right"
+			id="nav-wrapper"
+		>
+			<ul
+				class="is-hidden"
+				id="nav-list"
+			>
+				{
+					routes.map(({ label, link }) => (
+						<li>
+							<a
+								aria-current={link.includes(segment) && 'page'}
+								class="nav-item | type-link-undecorated"
+								href={link}
+							>
+								{label}
+							</a>
+						</li>
+					))
+				}
 			</ul>
 		</nav>
 	</jp-hamburger-nav>
@@ -182,7 +184,7 @@ const classList = [
 		justify-content: space-between;
 	}
 
-  /* --- nav elements --- */
+	/* --- nav elements --- */
 	.skip-link:not(:focus):not(:active) {
 		clip-path: inset(50%);
 		height: 1px;
@@ -192,57 +194,57 @@ const classList = [
 		width: 1px;
 	}
 
-  .logo {
-    border: none;
-    display: block;
-    max-width: 2.5rem;
-  }
+	.logo {
+		border: none;
+		display: block;
+		max-width: 2.5rem;
+	}
 
-  jp-hamburger-nav :global(.nav-button) {
+	jp-hamburger-nav :global(.nav-button) {
 		align-items: center;
 		color: var(--color-primary);
 		flex-direction: row;
 		gap: 0.5em;
 		position: relative;
 		z-index: 5;
-    background-color: transparent;
-    border: 0;
-    box-shadow: none;
-    cursor: pointer;
-    display: inline-flex;
-    outline: none;
-    padding: 0;
-    transition: color 0.25s ease-in-out;
-    will-change: color;
-  }
+		background-color: transparent;
+		border: 0;
+		box-shadow: none;
+		cursor: pointer;
+		display: inline-flex;
+		outline: none;
+		padding: 0;
+		transition: color 0.25s ease-in-out;
+		will-change: color;
+	}
 
-  jp-hamburger-nav :global(.nav-button:hover),
-  jp-hamburger-nav :global(.nav-button:active) {
-    color: var(--color-highlight);
-  }
+	jp-hamburger-nav :global(.nav-button:hover),
+	jp-hamburger-nav :global(.nav-button:active) {
+		color: var(--color-highlight);
+	}
 
-  jp-hamburger-nav :global(.nav-button.close) {
-    margin-inline-end: 1.5em;
-    margin-inline-end: var(--space-medium);
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
+	jp-hamburger-nav :global(.nav-button.close) {
+		margin-inline-end: 1.5em;
+		margin-inline-end: var(--space-medium);
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
 
 	jp-hamburger-nav :global(.icon) {
 		color: currentColor;
-    display: inline-block;
-    fill: currentColor;
-    height: 1em;
-    max-height: 100%;
-    max-width: 100%;
-    pointer-events: none;
-    vertical-align: middle;
-    width: 1em;
+		display: inline-block;
+		fill: currentColor;
+		height: 1em;
+		max-height: 100%;
+		max-width: 100%;
+		pointer-events: none;
+		vertical-align: middle;
+		width: 1em;
 	}
 
 	jp-hamburger-nav :global(.icon .open),
-	jp-hamburger-nav :global(.icon .close), {
+	jp-hamburger-nav :global(.icon .close) {
 		transition: 0.25s opacity ease;
 	}
 
@@ -258,50 +260,50 @@ const classList = [
 		opacity: 0;
 	}
 
-  /* --- small-screen nav --- */
-  #nav-list {
+	/* --- small-screen nav --- */
+	#nav-list {
 		align-items: center;
-    background-color: var(--color-surface);
-    bottom: 0;
+		background-color: var(--color-surface);
+		bottom: 0;
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-narrow);
 		justify-content: center;
-    left: 0;
+		left: 0;
 		list-style: none;
 		margin: 0;
-    opacity: 0;
+		opacity: 0;
 		overflow-y: scroll;
 		padding-block: var(--space-wide);
 		padding-inline: var(--space-outside);
-    position: fixed;
-    right: 0;
-    top: 0;
-    transition: opacity 0.25s ease;
-    z-index: 4;
-  }
+		position: fixed;
+		right: 0;
+		top: 0;
+		transition: opacity 0.25s ease;
+		z-index: 4;
+	}
 
-  /* closed (visually hidden) state */
-  #nav-list.is-hidden {
-    border: 0;
-    clip-path: inset(100%);
-    clip: rect(1px, 1px, 1px, 1px);
-    height: 1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-  }
+	/* closed (visually hidden) state */
+	#nav-list.is-hidden {
+		border: 0;
+		clip-path: inset(100%);
+		clip: rect(1px, 1px, 1px, 1px);
+		height: 1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+	}
 
-  /* open (transitioned) state */
-  #nav-list.is-open {
-    opacity: 1;
-  }
+	/* open (transitioned) state */
+	#nav-list.is-open {
+		opacity: 1;
+	}
 
-  #nav-list > li {
-    display: block;
-    margin-block-start: 0;
-  }
+	#nav-list > li {
+		display: block;
+		margin-block-start: 0;
+	}
 
 	/* prevent scrolling on the body when the overlay is displayed */
 	:global(.has-overlay) {
@@ -311,17 +313,17 @@ const classList = [
 	}
 
 	/* nav link elements */
-  .nav-item {
-    display: inline-block;
-    font-size: var(--type-scale-delta);
-    position: relative;
-    transition: color 0.25s ease-in-out;
-    will-change: color, font-size;
+	.nav-item {
+		display: inline-block;
+		font-size: var(--type-scale-delta);
+		position: relative;
+		transition: color 0.25s ease-in-out;
+		will-change: color, font-size;
 		font-family: var(--type-font-accent);
 		font-weight: 300;
-  }
+	}
 
-  .nav-item[aria-current="page"] {
+	.nav-item[aria-current='page'] {
 		--dot-size: 0.5em;
 		--dot-margin: 0.4em;
 
@@ -331,57 +333,57 @@ const classList = [
 		align-items: center;
 	}
 
-  .nav-item[aria-current="page"]::before {
-    background-color: var(--color-highlight);
-    border-radius: 1000px;
-    content: '';
-    display: block;
-    height: var(--dot-size);
-    width: var(--dot-size);
-  }
+	.nav-item[aria-current='page']::before {
+		background-color: var(--color-highlight);
+		border-radius: 1000px;
+		content: '';
+		display: block;
+		height: var(--dot-size);
+		width: var(--dot-size);
+	}
 
-  /* --- large-screen nav --- */
-  @media screen and (min-width: 43em) {
-    jp-hamburger-nav :global(.nav-button) {
-      display: none;
-    }
+	/* --- large-screen nav --- */
+	@media screen and (min-width: 43em) {
+		jp-hamburger-nav :global(.nav-button) {
+			display: none;
+		}
 
-    #nav-list {
+		#nav-list {
 			align-items: flex-start;
 			flex-direction: row;
 			gap: var(--space-narrow);
-      background-color: transparent;
-      display: inline-flex;
-      opacity: 1;
-      position: relative;
-    }
+			background-color: transparent;
+			display: inline-flex;
+			opacity: 1;
+			position: relative;
+		}
 
-    #nav-list.is-hidden {
-      clip-path: none;
-      clip: auto;
-      height: auto;
-      overflow: visible;
-      position: static;
-      width: auto;
-    }
+		#nav-list.is-hidden {
+			clip-path: none;
+			clip: auto;
+			height: auto;
+			overflow: visible;
+			position: static;
+			width: auto;
+		}
 
-    .nav-item {
-      font-size: var(--type-scale-zeta);
-      padding-block-start: 0.8em;
-      padding-block-start: var(--space-xnarrow);
-    }
+		.nav-item {
+			font-size: var(--type-scale-zeta);
+			padding-block-start: 0.8em;
+			padding-block-start: var(--space-xnarrow);
+		}
 
-    .nav-item:hover,
-    .nav-item:active {
+		.nav-item:hover,
+		.nav-item:active {
 			color: var(--color-highlight);
-    }
+		}
 
-		.nav-item[aria-current="page"] {
+		.nav-item[aria-current='page'] {
 			display: block;
 			margin-inline-start: 0;
 		}
 
-    .nav-item[aria-current="page"]::before {
+		.nav-item[aria-current='page']::before {
 			background-color: var(--color-highlight);
 			border-radius: 0;
 			bottom: -0.1em;
@@ -391,10 +393,10 @@ const classList = [
 			right: 0;
 			top: auto;
 			width: auto;
-    }
+		}
 
-    .nav-item.small-only {
-      display: none;
-    }
-  }
+		.nav-item.small-only {
+			display: none;
+		}
+	}
 </style>

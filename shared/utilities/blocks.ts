@@ -3,7 +3,7 @@ import { camelCase } from "change-case";
 import * as prismicHelpers from "@prismicio/helpers";
 
 // types
-import type { Block as BlockType, Prominence } from "@lib/types";
+import type { Block as BlockType, Prominence } from "@shared/lib/types";
 
 import type {
 	ImageField,
@@ -91,7 +91,7 @@ function bibliography(slice: Slice): BlockType {
 				media,
 				series,
 				title,
-			})
+			}),
 		),
 		...sharedBlockFields(slice),
 		prominence: "Large",
@@ -269,12 +269,13 @@ function figure(slice: Slice): BlockType {
 }
 
 function heading(slice: Slice): BlockType {
-	const { level, subheading, title1: text, id } = slice.primary;
+	const { id, level, size, subheading, title1: text } = slice.primary;
 
 	return {
 		...sharedBlockFields(slice),
 		level: level || 2,
 		id,
+		size,
 		subheading,
 		text,
 	};

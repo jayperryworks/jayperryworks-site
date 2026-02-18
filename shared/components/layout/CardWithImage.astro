@@ -1,11 +1,11 @@
 ---
 // assets
-import '@styles/tokens/spacing.css';
-import '@styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/contentWidth.css';
 
 // components
-import Image from '@components/elements/Image.astro';
-import RevealOnScroll from '@components/meta/RevealOnScroll.astro';
+import Image from '@shared/components/elements/Image.astro';
+import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
 
 // types
 import { ImageField } from '@prismicio/types';
@@ -15,10 +15,7 @@ export interface Props {
 	class?: string;
 }
 
-const {
-	image,
-	class: className = '',
-} = Astro.props as Props;
+const { image, class: className = '' } = Astro.props as Props;
 ---
 
 <figure class={['card-with-image', className].join(' ')}>
@@ -30,7 +27,7 @@ const {
 			/>
 		</RevealOnScroll>
 		<figcaption class="content">
-			<slot></slot>
+			<slot />
 		</figcaption>
 	</div>
 </figure>

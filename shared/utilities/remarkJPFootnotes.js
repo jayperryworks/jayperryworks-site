@@ -8,7 +8,7 @@
 import { visit, SKIP } from "unist-util-visit";
 
 // model
-import * as sidenotes from "@lib/sidenotes";
+import * as sidenotes from "@shared/lib/sidenotes";
 
 function removeFootnotes(node, index, parent) {
 	parent.children.splice(index, 1);

@@ -1,4 +1,4 @@
-@import url('@styles/tokens/borders.css');
+@import url("@shared/styles/tokens/borders.css");
 
 /* --- 'seam' border style */
 .border-seam-top {

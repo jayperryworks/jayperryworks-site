@@ -1,23 +1,23 @@
 ---
 // assets
-import '@styles/tokens/spacing.css';
+import '@shared/styles/tokens/spacing.css';
 
 // helpers
-import { fetchLinks } from '@lib/routes';
-import { titleCase } from '@lib/stringHelpers';
+import { fetchLinks } from '@shared/lib/routes';
+import { titleCase } from '@shared/lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
-import prismic from '@lib/prismic';
+import prismic from '@shared/lib/prismic';
 
 // components
 import Layout from '@layouts/Layout.astro';
-import BlockList from '@components/BlockList.astro';
-import Heading from '@components/blocks/Heading.astro';
-import MainNav from '@components/navigation/MainNav.astro';
-import MainFooter from '@components/navigation/MainFooter.astro';
+import BlockList from '@shared/components/BlockList.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import MainNav from '@shared/components/navigation/MainNav.astro';
+import MainFooter from '@shared/components/navigation/MainFooter.astro';
 
 // types
 import { Slice, TitleField } from '@prismicio/types';
-import { SEOContent, Theme, ThemeNames } from '@lib/types';
+import { SEOContent, Theme, ThemeNames } from '@shared/lib/types';
 
 export interface Props {
 	body: Slice[];

@@ -10,27 +10,22 @@
  */
 
 // --- assets ---
-import '@styles/tokens/spacing.css';
-import '@styles/utilities/visibility.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/visibility.css';
 
 // --- utilities ---
 import * as prismicHelpers from '@prismicio/helpers';
 
 // --- types ---
-import type { ColorRoles, FormattedText } from '@lib/types';
+import type { ColorRoles, FormattedText } from '@shared/lib/types';
 import type { ImageField } from '@prismicio/types';
 
 // --- components ---
-import Passage from '@components/blocks/Passage.astro';
-import RevealOnScroll from '@components/meta/RevealOnScroll.astro';
+import Passage from '@shared/components/blocks/Passage.astro';
+import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
 
 // --- props ---
-const {
-	text,
-	class: className = '',
-	color = 'primary',
-	image,
-} = Astro.props;
+const { text, class: className = '', color = 'primary', image } = Astro.props;
 
 // --- helper functions ---
 

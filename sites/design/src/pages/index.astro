@@ -1,20 +1,18 @@
 ---
-import '@styles/tokens/contentWidth.css';
-import '@styles/tokens/spacing.css';
-import '@styles/utilities/borders.css';
-import '@styles/utilities/type.css';
+import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/borders.css';
+import '@shared/styles/utilities/type.css';
 
 // utils
-import { fetchLinks } from '@lib/routes';
+import { fetchLinks } from '@shared/lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
-import prismic from '@lib/prismic';
+import prismic from '@shared/lib/prismic';
 
 // components
 import Layout from '@layouts/Layout.astro';
-import Heading from '@components/blocks/Heading.astro';
-import MainNav from '@components/navigation/MainNav.astro';
-import MainFooter from '@components/navigation/MainFooter.astro';
-import BlockList from '@components/BlockList.astro';
+import MainFooter from '@components/MainFooter.astro';
+import BlockList from '@shared/components/BlockList.astro';
 
 // fetch content
 const response = await prismic.getByUID('home', 'home-design', { fetchLinks });

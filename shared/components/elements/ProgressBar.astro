@@ -1,5 +1,5 @@
 ---
-import '@styles/utilities/visibility.css';
+import '@shared/styles/utilities/visibility.css';
 
 export interface Props {
 	value: number;
@@ -7,21 +7,11 @@ export interface Props {
 	class?: string;
 }
 
-const {
-	value,
-	range,
-	class: className = '',
-} = Astro.props;
+const { value, range, class: className = '' } = Astro.props;
 
-const classList = [
-	'progress-bar',
-	className,
-].join(' ');
+const classList = ['progress-bar', className].join(' ');
 
-const styleList = [
-	`--range: ${range}`,
-	`--value: ${value}`,
-].join('; ');
+const styleList = [`--range: ${range}`, `--value: ${value}`].join('; ');
 ---
 
 <!-- using a div here because the progress bar element is such a pain to style -->
@@ -30,7 +20,7 @@ const styleList = [
 	style={styleList}
 >
 	<!-- fallback text for screen readers -->
-	<span class="hide-visually"><slot></slot></span>
+	<span class="hide-visually"><slot /></span>
 </div>
 
 <style>

@@ -1,32 +1,32 @@
 ---
 // styles & assets
-import '@styles/tokens/contentWidth.css';
-import '@styles/tokens/spacing.css';
-import '@styles/tokens/type.css';
-import '@styles/utilities/borders.css';
-import '@styles/utilities/contentWidth.css';
-import '@styles/utilities/type.css';
-import '@styles/utilities/visibility.css';
-import externalLink from '@icons/external-link.svg?raw';
+import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/type.css';
+import '@shared/styles/utilities/borders.css';
+import '@shared/styles/utilities/contentWidth.css';
+import '@shared/styles/utilities/type.css';
+import '@shared/styles/utilities/visibility.css';
+import externalLink from '@shared/icons/external-link.svg?raw';
 
 // helpers
 import { format } from 'date-fns';
-import { blogPost as permalink, fetchLinks } from '@lib/routes';
-import { sentenceCase } from '@lib/stringHelpers';
+import { blogPost as permalink, fetchLinks } from '@shared/lib/routes';
+import { sentenceCase } from '@shared/lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
-import prismic from '@lib/prismic';
+import prismic from '@shared/lib/prismic';
 
 // components
 import Layout from '@layouts/Layout.astro';
-import BlockList from '@components/BlockList.astro';
-import Button from '@components/elements/Button.astro';
-import Heading from '@components/blocks/Heading.astro';
-import MainFooter from '@components/navigation/MainFooter.astro';
-import MainNav from '@components/navigation/MainNav.astro';
-import ReadNextLink from '@components/navigation/ReadNextLink.astro';
-import ThreadNav from '@components/navigation/ThreadNav.astro';
-import ThreadNavItem from '@components/navigation/ThreadNavItem.astro';
-import RevealOnScroll from '@components/meta/RevealOnScroll.astro';
+import BlockList from '@shared/components/BlockList.astro';
+import Button from '@shared/components/elements/Button.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import MainFooter from '@shared/components/navigation/MainFooter.astro';
+import MainNav from '@shared/components/navigation/MainNav.astro';
+import ReadNextLink from '@shared/components/navigation/ReadNextLink.astro';
+import ThreadNav from '@shared/components/navigation/ThreadNav.astro';
+import ThreadNavItem from '@shared/components/navigation/ThreadNavItem.astro';
+import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
 
 // types
 import type {
@@ -43,9 +43,9 @@ import type {
 	DevelopmentStageName,
 	PaginationLink,
 	SEOContent,
-} from '@lib/types';
+} from '@shared/lib/types';
 
-import PostMetadata from '@components/elements/PostMetadata.astro';
+import PostMetadata from '@shared/components/elements/PostMetadata.astro';
 
 type Thread = {
 	posts: PrismicDocumentWithUID[];
@@ -93,7 +93,7 @@ export async function getStaticPaths() {
 	return posts.map(
 		(
 			{ uid, tags, data, first_publication_date, last_publication_date },
-			index
+			index,
 		) => {
 			const publishedDate = prismicHelpers.asDate(data.date);
 			const nextPost = posts[index + 1];
@@ -141,7 +141,7 @@ export async function getStaticPaths() {
 					thread,
 				},
 			};
-		}
+		},
 	);
 }
 

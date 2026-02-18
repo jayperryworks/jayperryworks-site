@@ -1,22 +1,22 @@
 ---
 // assets
-import '@styles/tokens/borders.css';
-import '@styles/tokens/spacing.css';
-import '@styles/utilities/type.css';
-import arrow from '@icons/arrow-right.svg?raw';
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/type.css';
+import arrow from '@shared/icons/arrow-right.svg?raw';
 
 // utils
-import { linkResolver } from '@lib/routes';
+import { linkResolver } from '@shared/lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 
 // components
-import Heading from '@components/blocks/Heading.astro';
-import Button from '@components/elements/Button.astro';
-import RenderedText from '@components/elements/RenderedText.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import Button from '@shared/components/elements/Button.astro';
+import RenderedText from '@shared/components/elements/RenderedText.astro';
 
 // types
 import { LinkField, TitleField } from '@prismicio/types';
-import { FormattedText } from '@lib/types';
+import { FormattedText } from '@shared/lib/types';
 
 export interface Action {
 	label: string;

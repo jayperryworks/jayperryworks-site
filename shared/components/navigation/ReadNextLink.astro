@@ -1,22 +1,22 @@
 ---
 // assets
-import '@styles/tokens/spacing.css';
-import '@styles/utilities/type.css';
-import arrowRight from '@icons/arrow-right.svg?raw';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/type.css';
+import arrowRight from '@shared/icons/arrow-right.svg?raw';
 
 // components
-import Icon from '@components/elements/Icon.astro';
+import Icon from '@shared/components/elements/Icon.astro';
 
 // types
-import { Align, TypeScale } from '@lib/types';
+import { Align, TypeScale } from '@shared/lib/types';
 
 export interface Props {
 	link: string;
 	align?: Align;
 	class?: string;
-	eyebrowSize?: TypeScale,
+	eyebrowSize?: TypeScale;
 	icon?: string;
-	titleSize?: TypeScale,
+	titleSize?: TypeScale;
 }
 
 const {
@@ -28,24 +28,22 @@ const {
 	titleSize = 'gamma',
 } = Astro.props as Props;
 
-const classList = [
-	'read-next',
-	`align-${align}`,
-	className,
-].join(' ');
+const classList = ['read-next', `align-${align}`, className].join(' ');
 ---
 
 <p class={classList}>
-	{Astro.slots.has('eyebrow') && (
-		<span class={`eyebrow | type-role-accent type-scale-${eyebrowSize}`}>
-			<slot name="eyebrow"></slot>
-		</span>
-	)}
+	{
+		Astro.slots.has('eyebrow') && (
+			<span class={`eyebrow | type-role-accent type-scale-${eyebrowSize}`}>
+				<slot name="eyebrow" />
+			</span>
+		)
+	}
 	<a
 		class={`title | type-role-display type-scale-${titleSize} type-link-undecorated`}
 		href={link}
 	>
-		<slot name="title"></slot>
+		<slot name="title" />
 	</a>
 	<Icon
 		class="icon"
@@ -61,8 +59,8 @@ const classList = [
 		align-items: center;
 		gap: var(--gap);
 		grid-template-areas:
-		'eyebrow .'
-		'title icon';
+			'eyebrow .'
+			'title icon';
 		grid-template-columns: minmax(0, 1fr) auto;
 		grid-template-rows: auto;
 		padding: 0;

@@ -1,17 +1,17 @@
 ---
 // styles
-import '@styles/tokens/spacing.css';
-import '@styles/utilities/type.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/type.css';
 
 // utils
 import { format } from 'date-fns';
 
 // components
-import Heading from '@components/blocks/Heading.astro';
-import DevelopmentStageLabel from '@components/elements/DevelopmentStageLabel.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import DevelopmentStageLabel from '@shared/components/elements/DevelopmentStageLabel.astro';
 
 // types
-import { DevelopmentStageName } from '@lib/types';
+import { DevelopmentStageName } from '@shared/lib/types';
 
 export interface Props {
 	date: Date;
@@ -43,17 +43,28 @@ const {
 	</Heading>
 
 	<Heading level={3}>
-		<a class="type-link-undecorated" href={path}>{title}</a>
+		<a
+			class="type-link-undecorated"
+			href={path}
+			>{title}</a
+		>
 	</Heading>
 
-	{subtitle && (
-		<Heading
-			level={4}
-			subheading
-		>
-			<a class="type-link-undecorated" href={path}>{subtitle}</a>
-		</Heading>
-	)}
+	{
+		subtitle && (
+			<Heading
+				level={4}
+				subheading
+			>
+				<a
+					class="type-link-undecorated"
+					href={path}
+				>
+					{subtitle}
+				</a>
+			</Heading>
+		)
+	}
 </article>
 
 <style>

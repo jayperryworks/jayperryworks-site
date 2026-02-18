@@ -1,28 +1,26 @@
 ---
 // components
-import RevealOnScroll from "@components/meta/RevealOnScroll.astro";
-import ReadNextLink from "@components/navigation/ReadNextLink.astro";
+import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
+import ReadNextLink from '@shared/components/navigation/ReadNextLink.astro';
 
 export interface Props {
 	class?: string;
 }
 
-const {
-	class: className,
-} = Astro.props as Props;
+const { class: className } = Astro.props as Props;
 
-const classList = [
-	'posts',
-	className,
-].join(' ');
+const classList = ['posts', className].join(' ');
 ---
 
 <div class="blog-listings">
 	<ul class={classList}>
-		<slot></slot>
+		<slot />
 	</ul>
 
-	<RevealOnScroll tag="nav" class="footer-nav">
+	<RevealOnScroll
+		tag="nav"
+		class="footer-nav"
+	>
 		<slot name="footer-nav">
 			<ReadNextLink
 				eyebrowSize="delta"

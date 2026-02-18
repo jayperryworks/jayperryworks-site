@@ -14,14 +14,14 @@
  */
 
 // --- assets ---
-import '@styles/tokens/borders.css';
-import '@styles/tokens/elevation.css';
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/elevation.css';
 
 // --- components ---
-import Image from '@components/elements/Image.astro';
+import Image from '@shared/components/elements/Image.astro';
 
 // --- types ---
-import type { Frame } from '@lib/types';
+import type { Frame } from '@shared/lib/types';
 import type { ImageField } from '@prismicio/types';
 
 // --- props ---
@@ -38,7 +38,7 @@ const {
 // styling data for each device type
 // - keys are the values from the Prismic 'frame' field
 const types = {
-	'Phone': {
+	Phone: {
 		className: 'phone',
 		defaultAspectRatio: '1/2.05',
 		bezel: {
@@ -94,11 +94,7 @@ function calculateOuterAspectRatio(source) {
 
 const El = el;
 
-const classList = [
-	'device-frame',
-	device.className || '',
-	className,
-].join(' ');
+const classList = ['device-frame', device.className || '', className].join(' ');
 
 const styleList = [
 	maxHeight ? `--max-height: ${maxHeight};` : '',
@@ -118,7 +114,14 @@ const styleList = [
 >
 	<div class="wrapper">
 		<slot>
-			{source && <Image {source} {darkModeSource} />}
+			{
+				source && (
+					<Image
+						{source}
+						{darkModeSource}
+					/>
+				)
+			}
 		</slot>
 	</div>
 </El>

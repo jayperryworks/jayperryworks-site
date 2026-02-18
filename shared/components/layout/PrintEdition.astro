@@ -1,41 +1,34 @@
 ---
 // --- assets
-import '@styles/utilities/contentWidth.css';
-import '@styles/utilities/type.css';
-import '@styles/utilities/visibility.css';
-import arrowRight from '@icons/arrow-right.svg?raw';
+import '@shared/styles/utilities/contentWidth.css';
+import '@shared/styles/utilities/type.css';
+import '@shared/styles/utilities/visibility.css';
+import arrowRight from '@shared/icons/arrow-right.svg?raw';
 
 // --- helpers
-import { titleCase } from '@lib/stringHelpers';
+import { titleCase } from '@shared/lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
 
 // --- components
-import Button from '@components/elements/Button.astro';
-import Heading from '@components/blocks/Heading.astro';
-import Passage from '@components/blocks/Passage.astro';
-import CardWithImage from '@components/layout/CardWithImage.astro';
-import DataGrid from '@components/layout/DataGrid.astro';
-import Tabs from '@components/navigation/ScrollingTabs.astro';
+import Button from '@shared/components/elements/Button.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import Passage from '@shared/components/blocks/Passage.astro';
+import CardWithImage from '@shared/components/layout/CardWithImage.astro';
+import DataGrid from '@shared/components/layout/DataGrid.astro';
+import Tabs from '@shared/components/navigation/ScrollingTabs.astro';
 
 // --- types
-import type { PrintType } from '@lib/types';
+import type { PrintType } from '@shared/lib/types';
 
 export interface Props {
 	type: PrintType;
 	class?: string;
 }
 
-const {
-	type,
-	class: className,
-} = Astro.props as Props;
+const { type, class: className } = Astro.props as Props;
 ---
 
-<section class={[
-	'print-edition',
-	'content-width xwide',
-	className
-].join(' ')}>
+<section class={['print-edition', 'content-width xwide', className].join(' ')}>
 	<!-- tabs for edition sizes -->
 	<Tabs class="tabs">
 		<Heading
@@ -46,54 +39,60 @@ const {
 			{titleCase(type.name)} print{type.sizes.length > 1 && 's'}
 		</Heading>
 		<Fragment slot="labels">
-			{type.sizes.map(({ name }) => (
-				<a
-					class="type-role-accent"
-					href={(`#${type.name}-${name}`).toLowerCase()}
-				>
-					{name}
-				</a>
-			))}
+			{
+				type.sizes.map(({ name }) => (
+					<a
+						class="type-role-accent"
+						href={`#${type.name}-${name}`.toLowerCase()}
+					>
+						{name}
+					</a>
+				))
+			}
 		</Fragment>
 		<Fragment slot="content">
-			{type.sizes.map(({ name, image, info, etsyLink }) => (
-				<article id={`${type.name}-${name.toLowerCase()}`}>
-					<CardWithImage image={image}>
-						<div class="info">
-							<Heading
-								level={4}
-								align='left'
-								class="name | hide-visually@js"
-							>
-								{titleCase(name)}
-							</Heading>
-							<DataGrid
-								columnWidth={6}
-								data={info}
-								class="data"
-								gutter="narrow"
-							/>
-							<Button
-								href={prismicHelpers.asLink(etsyLink)}
-								iconRight={arrowRight}
-								class="cta"
-								target="_blank"
-							>
-								Buy on <strong>Etsy</strong>
-							</Button>
-						</div>
-					</CardWithImage>
-				</article>
-			))}
+			{
+				type.sizes.map(({ name, image, info, etsyLink }) => (
+					<article id={`${type.name}-${name.toLowerCase()}`}>
+						<CardWithImage image={image}>
+							<div class="info">
+								<Heading
+									level={4}
+									align="left"
+									class="name | hide-visually@js"
+								>
+									{titleCase(name)}
+								</Heading>
+								<DataGrid
+									columnWidth={6}
+									data={info}
+									class="data"
+									gutter="narrow"
+								/>
+								<Button
+									href={prismicHelpers.asLink(etsyLink)}
+									iconRight={arrowRight}
+									class="cta"
+									target="_blank"
+								>
+									Buy on <strong>Etsy</strong>
+								</Button>
+							</div>
+						</CardWithImage>
+					</article>
+				))
+			}
 		</Fragment>
 	</Tabs>
 
 	<!-- edition type description -->
-	{type.description && (
-		<div class="content-width">
-			<Passage text={type.description} />
-		</div>
-	)}
+	{
+		type.description && (
+			<div class="content-width">
+				<Passage text={type.description} />
+			</div>
+		)
+	}
 </section>
 
 <style>

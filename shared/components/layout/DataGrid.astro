@@ -3,25 +3,25 @@
 // Present data (key-value pairs or short strings) in a flowing grid layout
 
 // assets
-import '@styles/tokens/spacing.css';
-import '@styles/tokens/type.css';
-import '@styles/utilities/type.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/type.css';
+import '@shared/styles/utilities/type.css';
 
 // types
-import { SpaceScale, TypeScale } from '@lib/types';
+import { SpaceScale, TypeScale } from '@shared/lib/types';
 
 export type DataItem = {
-	label: string,
-	value: string[] | string,
-	html?: boolean,
+	label: string;
+	value: string[] | string;
+	html?: boolean;
 };
 
 export interface Props {
-	data: DataItem[],
-	class?: string,
-	columnWidth?: number,
-	gutter?: SpaceScale,
-	typeSize?: TypeScale,
+	data: DataItem[];
+	class?: string;
+	columnWidth?: number;
+	gutter?: SpaceScale;
+	typeSize?: TypeScale;
 }
 
 const {
@@ -32,10 +32,7 @@ const {
 	typeSize = 'zeta',
 } = Astro.props as Props;
 
-const itemClassList = [
-	'type-role-accent',
-	`type-scale-${typeSize}`,
-].join(' ');
+const itemClassList = ['type-role-accent', `type-scale-${typeSize}`].join(' ');
 ---
 
 <dl
@@ -45,35 +42,46 @@ const itemClassList = [
 		--col-size: ${columnWidth}rem;
 	`}
 >
-  {data.map((item) => (
-	  <div class="group">
-			<dt class="item label">
-				<span class={itemClassList}>{item.label}</span>
-			</dt>
-			{Array.isArray(item.value)
-				? item.value.map((seriesItem) => (
+	{
+		data.map((item) => (
+			<div class="group">
+				<dt class="item label">
+					<span class={itemClassList}>{item.label}</span>
+				</dt>
+				{Array.isArray(item.value) ? (
+					item.value.map((seriesItem) => (
 						<dd class={['item', item.value.length > 1 && 'series'].join(' ')}>
-							{item.html
-							? <span class={itemClassList} set:html={seriesItem} />
-							: <span class={itemClassList}>{seriesItem}</span>
-						}
+							{item.html ? (
+								<span
+									class={itemClassList}
+									set:html={seriesItem}
+								/>
+							) : (
+								<span class={itemClassList}>{seriesItem}</span>
+							)}
 						</dd>
 					))
-				: <dd class="item">
-						{item.html
-							? <span class={itemClassList} set:html={item.value} />
-							: <span class={itemClassList}>{item.value}</span>
-						}
+				) : (
+					<dd class="item">
+						{item.html ? (
+							<span
+								class={itemClassList}
+								set:html={item.value}
+							/>
+						) : (
+							<span class={itemClassList}>{item.value}</span>
+						)}
 					</dd>
-				}
-		</div>
-	))}
+				)}
+			</div>
+		))
+	}
 </dl>
 
 <style>
 	.data-grid {
-	  list-style: none;
-	  display: grid;
+		list-style: none;
+		display: grid;
 		gap: var(--gutter);
 	}
 
@@ -83,8 +91,8 @@ const itemClassList = [
 
 	.item {
 		line-height: var(--type-leading-tight);
-	  display: block;
-	  margin-inline-start: 0; /* reset dt/dd default indent */
+		display: block;
+		margin-inline-start: 0; /* reset dt/dd default indent */
 	}
 
 	.item > span {
@@ -120,7 +128,6 @@ const itemClassList = [
 
 	.item.label > span {
 		color: var(--color-secondary);
-
 	}
 
 	/* set up the grid template inside a media query to prevent sidescrolling on small mobile screens */

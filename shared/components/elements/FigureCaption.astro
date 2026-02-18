@@ -9,32 +9,33 @@
  */
 
 // --- styles ---
-import '@styles/tokens/spacing.css';
-import '@styles/utilities/type.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/type.css';
 
 // --- components ---
-import RenderedText from "@components/elements/RenderedText.astro";
+import RenderedText from '@shared/components/elements/RenderedText.astro';
 
 // --- types ---
-import { FormattedText } from "@lib/types";
+import { FormattedText } from '@shared/lib/types';
 
 // --- props ---
-const {
-	text,
-	attribution,
-	class: className = '',
-} = Astro.props;
+const { text, attribution, class: className = '' } = Astro.props;
 ---
 
 <figcaption class={`type-role-accent type-scale-zeta ${className}`}>
-  <slot>
+	<slot>
 		<RenderedText {...text} />
 
-		{attribution && (
-			<cite>
-				<RenderedText {...attribution} inline />
-			</cite>
-		)}
+		{
+			attribution && (
+				<cite>
+					<RenderedText
+						{...attribution}
+						inline
+					/>
+				</cite>
+			)
+		}
 	</slot>
 </figcaption>
 
@@ -50,7 +51,7 @@ const {
 	}
 
 	figcaption :global(p) {
-    font-style: normal;
+		font-style: normal;
 		max-width: none;
 	}
 

@@ -1,19 +1,19 @@
 ---
 // assets
-import '@styles/tokens/borders.css';
-import '@styles/tokens/contentWidth.css';
-import '@styles/tokens/spacing.css';
-import '@styles/tokens/type.css';
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/type.css';
 
 // components
-import Block from '@components/Block.astro';
+import Block from '@shared/components/Block.astro';
 
 // utils
-import blockTypes from '@lib/blocks';
-import { reset as resetSidenoteCount } from '@lib/sidenotes';
+import blockTypes from '@shared/lib/blocks';
+import { reset as resetSidenoteCount } from '@shared/lib/sidenotes';
 
 // types
-import type { Block as BlockType } from '@lib/types';
+import type { Block as BlockType } from '@shared/lib/types';
 import type { SliceZone } from '@prismicio/types';
 
 export interface Props {

@@ -12,7 +12,7 @@
  */
 
 // --- utilities ---
-import { arrayToPunctatedString } from '@lib/stringHelpers';
+import { arrayToPunctatedString } from '@shared/lib/stringHelpers';
 
 // --- props ---
 const {
@@ -26,13 +26,11 @@ const {
 
 const El = tag;
 
-const classList = [
-	!disabled ? 'reveal' : '',
-	className,
-].join(' ');
+const classList = [!disabled ? 'reveal' : '', className].join(' ');
 
 const styleList = arrayToPunctatedString([
-	duration ? `--reveal-duration: ${duration}` : '',,
+	duration ? `--reveal-duration: ${duration}` : '',
+	,
 	style,
 ]);
 ---
@@ -42,7 +40,7 @@ const styleList = arrayToPunctatedString([
 	style={styleList}
 	{id}
 >
-	<slot></slot>
+	<slot />
 </El>
 
 <script>
@@ -53,34 +51,35 @@ const styleList = arrayToPunctatedString([
 	let finishedElementsCount = 0;
 
 	if ('IntersectionObserver' in window) {
-		const revealObserver = new IntersectionObserver(
-			(entries) => {
-				// if all the elements have been revealed, disconnect the observer
-				if (finishedElementsCount === revealedElements.length) {
-					revealObserver.disconnect();
-					return;
+		const revealObserver = new IntersectionObserver((entries) => {
+			// if all the elements have been revealed, disconnect the observer
+			if (finishedElementsCount === revealedElements.length) {
+				revealObserver.disconnect();
+				return;
+			}
+
+			// otherwise, continue revealing elements as they become visible
+			return entries.forEach((entry) => {
+				// if the element is visible, add a class to it
+				if (
+					entry.isIntersecting &&
+					!entry.target.classList.contains('visible')
+				) {
+					entry.target.classList.add('visible');
+					finishedElementsCount++;
 				}
 
-				// otherwise, continue revealing elements as they become visible
-				return entries.forEach((entry) => {
-					// if the element is visible, add a class to it
-					if (entry.isIntersecting && !entry.target.classList.contains('visible')) {
-						entry.target.classList.add('visible');
-						finishedElementsCount++;
-					}
-
-					// if it's not yet visible, mark it as 'ready' with a class
-					// so it will be ready to transition
-					if (!entry.isIntersecting) {
-						entry.target.classList.add('ready');
-					}
-				});
-			},
-		);
+				// if it's not yet visible, mark it as 'ready' with a class
+				// so it will be ready to transition
+				if (!entry.isIntersecting) {
+					entry.target.classList.add('ready');
+				}
+			});
+		});
 
 		revealedElements.forEach((element) => {
 			revealObserver.observe(element);
-		})
+		});
 	}
 </script>
 

@@ -1,20 +1,20 @@
 ---
 // assets
-import '@styles/tokens/borders.css';
-import '@styles/tokens/contentWidth.css';
-import '@styles/tokens/spacing.css';
-import '@styles/tokens/type.css';
-import '@styles/utilities/type.css';
-import externalLink from '@icons/external-link.svg?raw';
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/type.css';
+import '@shared/styles/utilities/type.css';
+import externalLink from '@shared/icons/external-link.svg?raw';
 
 // utilities
-import { removeArticles } from '@lib/stringHelpers';
+import { removeArticles } from '@shared/lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
 
 // components
-import Button from '@components/elements/Button.astro';
-import Heading from '@components/blocks/Heading.astro';
-import RevealOnScroll from '@components/meta/RevealOnScroll.astro';
+import Button from '@shared/components/elements/Button.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
 import { Image } from 'astro:assets';
 
 // types

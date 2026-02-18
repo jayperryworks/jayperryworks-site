@@ -18,24 +18,24 @@
  */
 
 // assets
-import '@styles/tokens/spacing.css';
-import '@styles/tokens/contentWidth.css';
-import '@styles/tokens/borders.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/borders.css';
 
 // components
 import Layout from '@layouts/Layout.astro';
-import BlockList from '@components/BlockList.astro';
-import Heading from '@components/blocks/Heading.astro';
-import MainFooter from '@components/navigation/MainFooter.astro';
-import MainNav from '@components/navigation/MainNav.astro';
-import ReadNextLink from '@components/navigation/ReadNextLink.astro';
-import DataGrid from '@components/layout/DataGrid.astro';
+import BlockList from '@shared/components/BlockList.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import MainFooter from '@shared/components/navigation/MainFooter.astro';
+import MainNav from '@shared/components/navigation/MainNav.astro';
+import ReadNextLink from '@shared/components/navigation/ReadNextLink.astro';
+import DataGrid from '@shared/components/layout/DataGrid.astro';
 
 // utilities
-import { designProject as permalink } from '@lib/routes';
-import { sentenceCase } from '@lib/stringHelpers';
+import { designProject as permalink } from '@shared/lib/routes';
+import { sentenceCase } from '@shared/lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
-import prismic from '@lib/prismic';
+import prismic from '@shared/lib/prismic';
 
 // types
 import type {
@@ -45,7 +45,7 @@ import type {
 	TitleField,
 } from '@prismicio/types';
 
-import type { PaginationLink, SEOContent, Theme } from '@lib/types';
+import type { PaginationLink, SEOContent, Theme } from '@shared/lib/types';
 
 export type Contribution = {
 	task: string;
@@ -112,7 +112,7 @@ export async function getStaticPaths() {
 					custom: themes,
 				},
 				collaborators: collaborators.map(
-					({ collaborator }) => collaborator.data
+					({ collaborator }) => collaborator.data,
 				),
 				next: nextPost && {
 					title: nextPost.data.title,
@@ -158,7 +158,7 @@ const credits = [
 	{
 		label: 'Contributions',
 		value: contributions.map((item: Contribution, index: number): string =>
-			index === 0 ? sentenceCase(item.task) : item.task
+			index === 0 ? sentenceCase(item.task) : item.task,
 		),
 	},
 	{

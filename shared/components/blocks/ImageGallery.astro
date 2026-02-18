@@ -22,10 +22,10 @@
  */
 
 // --- components ---
-import Figure from '@components/blocks/Figure.astro';
-import Gallery from '@components/layout/Gallery.astro';
-import ImageFrame from '@components/elements/ImageFrame.astro';
-import RevealOnScroll from '@components/meta/RevealOnScroll.astro';
+import Figure from '@shared/components/blocks/Figure.astro';
+import Gallery from '@shared/components/layout/Gallery.astro';
+import ImageFrame from '@shared/components/elements/ImageFrame.astro';
+import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
 
 // --- types ---
 import type { ImageField } from '@prismicio/types';
@@ -35,7 +35,7 @@ import type {
 	Frame,
 	ImageFit,
 	SpaceScale,
-} from '@lib/types';
+} from '@shared/lib/types';
 
 // --- props ---
 const {
@@ -54,28 +54,27 @@ const {
 
 <Figure
 	caption={caption && { markdown: caption }}
-	class={[
-		'image-gallery',
-		className,
-	].join(' ')}
+	class={['image-gallery', className].join(' ')}
 	{attribution}
 >
 	<Gallery
 		size={columnSize}
 		{gutter}
 	>
-		{images.map(({ image, darkModeImage }) => (
-			<RevealOnScroll tag="li">
-				<ImageFrame
-					source={image}
-					darkModeSource={darkModeImage}
-					fit={fitImages}
-					{border}
-					{frame}
-					{useImageAspectRatio}
-				/>
-			</RevealOnScroll>
-		))}
+		{
+			images.map(({ image, darkModeImage }) => (
+				<RevealOnScroll tag="li">
+					<ImageFrame
+						source={image}
+						darkModeSource={darkModeImage}
+						fit={fitImages}
+						{border}
+						{frame}
+						{useImageAspectRatio}
+					/>
+				</RevealOnScroll>
+			))
+		}
 	</Gallery>
 </Figure>
 

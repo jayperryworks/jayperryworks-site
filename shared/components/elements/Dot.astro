@@ -1,13 +1,13 @@
 ---
-import '@styles/tokens/borders.css';
-import '@styles/tokens/spacing.css';
-import '@styles/tokens/type.css';
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/type.css';
 
 export interface Props {
 	el?: string;
 	class?: string;
-	highlight?: 'on' | 'hover' | 'flashing' | 'off',
-	href?: string,
+	highlight?: 'on' | 'hover' | 'flashing' | 'off';
+	href?: string;
 }
 
 const {
@@ -29,7 +29,7 @@ const classList = [
 	class={classList}
 	{href}
 >
-	<slot></slot>
+	<slot />
 </El>
 
 <style>
@@ -60,7 +60,9 @@ const classList = [
 		padding: 0.25em;
 		text-align: center;
 		text-decoration: none;
-		transition: color 0.25s ease, border-color 0.25s ease;
+		transition:
+			color 0.25s ease,
+			border-color 0.25s ease;
 		vertical-align: middle;
 	}
 
@@ -71,7 +73,9 @@ const classList = [
 	}
 
 	.dot.highlight::before {
-		--dot-size: calc(var(--size) - var(--border-width) - (var(--highlight-margin) * 2));
+		--dot-size: calc(
+			var(--size) - var(--border-width) - (var(--highlight-margin) * 2)
+		);
 
 		background-color: var(--color);
 		border-radius: 10000px;

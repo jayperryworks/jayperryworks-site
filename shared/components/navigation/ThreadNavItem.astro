@@ -1,14 +1,14 @@
 ---
 // assets
-import '@styles/tokens/borders.css';
-import '@styles/tokens/spacing.css';
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/spacing.css';
 
 // helpers
 import { format } from 'date-fns';
 
 // components
-import Dot from '@components/elements/Dot.astro';
-import Heading from '@components/blocks/Heading.astro';
+import Dot from '@shared/components/elements/Dot.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
 
 // types
 import type { DateField } from '@prismicio/types';
@@ -20,12 +20,7 @@ export interface Props {
 	date: DateField;
 }
 
-const {
-	label,
-	href,
-	date,
-	current = false,
-} = Astro.props as Props;
+const { label, href, date, current = false } = Astro.props as Props;
 ---
 
 <li class="thread-nav-item">
@@ -34,7 +29,7 @@ const {
 		el="a"
 		highlight={current ? 'on' : 'hover'}
 		{href}
-	></Dot>
+	/>
 	<Heading
 		class="date"
 		level={6}
@@ -62,8 +57,8 @@ const {
 		display: grid;
 		column-gap: var(--space-xnarrow);
 		grid-template-areas:
-			".		date"
-			"icon	title";
+			'.		date'
+			'icon	title';
 		grid-template-columns: auto 1fr;
 		grid-template-rows: auto;
 		position: relative;

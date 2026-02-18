@@ -12,16 +12,16 @@
  * @param {string} [class] - classes to append to the container
  */
 // assets
-import '@styles/tokens/borders.css';
+import '@shared/styles/tokens/borders.css';
 
 // utilities
-import { arrayToPunctatedString } from '@lib/stringHelpers';
+import { arrayToPunctatedString } from '@shared/lib/stringHelpers';
 
 // components
-import Figure from '@components/blocks/Figure.astro';
+import Figure from '@shared/components/blocks/Figure.astro';
 
 // types
-import { FormattedText } from '@lib/types';
+import { FormattedText } from '@shared/lib/types';
 
 const {
 	id,
@@ -35,11 +35,7 @@ const {
 
 const src = `https://tube.tchncs.de/videos/embed/${id}?title=0&warningTitle=0&peertubeLink=0&p2p=0`;
 
-const classList = [
-	'video',
-	'aspect',
-	border ? 'border' : '',
-].join(' ');
+const classList = ['video', 'aspect', border ? 'border' : ''].join(' ');
 
 const styleList = arrayToPunctatedString([
 	aspectRatio && `--aspect-ratio: ${aspectRatio}`,

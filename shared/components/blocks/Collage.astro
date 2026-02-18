@@ -16,8 +16,8 @@
  */
 
 // --- components ---
-import ImageFrame from '@components/elements/ImageFrame.astro';
-import Figure from '@components/blocks/Figure.astro';
+import ImageFrame from '@shared/components/elements/ImageFrame.astro';
+import Figure from '@shared/components/blocks/Figure.astro';
 
 // --- types ---
 import type {
@@ -30,7 +30,7 @@ import type {
 	ImageFit,
 	Prominence,
 	SpaceScale,
-} from '@lib/types';
+} from '@shared/lib/types';
 import type { ImageField } from '@prismicio/types';
 
 // --- props ---
@@ -52,51 +52,50 @@ const {
  * @returns {string}
  */
 function getItemClassList(relativeSize, priority = '1') {
-
 	const sizeClasses = {
 		Default: '',
 		Large: 'wide',
 		XLarge: 'xwide',
 	};
 
-	return [
-		`priority-${priority}`,
-		sizeClasses[relativeSize || 'Default'],
-	].join(' ');
+	return [`priority-${priority}`, sizeClasses[relativeSize || 'Default']].join(
+		' ',
+	);
 }
 ---
 
 <Figure
 	{attribution}
 	{caption}
-	class={[
-		'collage',
-		className,
-	].join(' ')}
+	class={['collage', className].join(' ')}
 >
 	<ul
 		class="wrapper"
 		style={`--gutter: var(--space-${gutter});`}
 	>
-		{images.map(({
-			source,
-			darkModeSource,
-			relativeSize,
-			frame,
-			priority,
-			useImageAspectRatio,
-		}) => (
-			<li class={getItemClassList(relativeSize, priority)}>
-				<ImageFrame
-					fit={fitImages}
-					{source}
-					{darkModeSource}
-					{border}
-					{frame}
-					{useImageAspectRatio}
-				/>
-			</li>
-		))}
+		{
+			images.map(
+				({
+					source,
+					darkModeSource,
+					relativeSize,
+					frame,
+					priority,
+					useImageAspectRatio,
+				}) => (
+					<li class={getItemClassList(relativeSize, priority)}>
+						<ImageFrame
+							fit={fitImages}
+							{source}
+							{darkModeSource}
+							{border}
+							{frame}
+							{useImageAspectRatio}
+						/>
+					</li>
+				),
+			)
+		}
 	</ul>
 </Figure>
 

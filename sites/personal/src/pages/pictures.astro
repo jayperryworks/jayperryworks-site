@@ -5,22 +5,22 @@
  */
 
 // --- assets ---
-import '@styles/tokens/borders.css';
-import '@styles/tokens/contentWidth.css';
-import '@styles/tokens/spacing.css';
-import '@styles/utilities/type.css';
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/type.css';
 
 // --- utils ---
 import * as prismicHelpers from '@prismicio/helpers';
-import prismic from '@lib/prismic';
+import prismic from '@shared/lib/prismic';
 
 // --- components ---
-import Heading from '@components/blocks/Heading.astro';
-import Passage from '@components/blocks/Passage.astro';
-import ColorTransition from '@components/meta/ColorThemeTransition.astro';
-import MainFooter from '@components/navigation/MainFooter.astro';
-import MainNav from '@components/navigation/MainNav.astro';
-import PictureGallery from '@components/navigation/PictureGallery.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import Passage from '@shared/components/blocks/Passage.astro';
+import ColorTransition from '@shared/components/meta/ColorThemeTransition.astro';
+import MainFooter from '@shared/components/navigation/MainFooter.astro';
+import MainNav from '@shared/components/navigation/MainNav.astro';
+import PictureGallery from '@shared/components/navigation/PictureGallery.astro';
 import Layout from '@layouts/Layout.astro';
 
 // --- config ---
@@ -191,7 +191,7 @@ function setSeriesWallColor(wallColor) {
 									? `<em>${prismicHelpers.asText(series.title)}</em> series`
 									: 'Other recent work'
 							}
-						></Heading>
+						/>
 
 						{series.description && (
 							<Passage

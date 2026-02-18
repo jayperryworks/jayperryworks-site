@@ -68,6 +68,10 @@
 	font-size: var(--type-scale-zeta);
 }
 
+.type-scale-eta {
+	font-size: var(--type-scale-eta);
+}
+
 /* --- links --- */
 .type-link-undecorated {
 	border-bottom: unset;

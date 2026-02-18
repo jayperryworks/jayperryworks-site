@@ -1,33 +1,33 @@
 ---
 // styles
-import '@styles/tokens/borders.css';
-import '@styles/tokens/contentWidth.css';
-import '@styles/tokens/spacing.css';
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/spacing.css';
 
 // utils
-import { blogDevelopmentStage } from '@lib/routes';
-import { blogPost as permalink } from '@lib/routes';
+import { blogDevelopmentStage } from '@shared/lib/routes';
+import { blogPost as permalink } from '@shared/lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
-import prismic from '@lib/prismic';
-import { sentenceCase, truncate } from '@lib/stringHelpers';
+import prismic from '@shared/lib/prismic';
+import { sentenceCase, truncate } from '@shared/lib/stringHelpers';
 
 // components
 import Layout from '@layouts/Layout.astro';
-import Heading from '@components/blocks/Heading.astro';
-import Passage from '@components/blocks/Passage.astro';
-import BlogListings from '@components/navigation/BlogListings.astro';
-import BlogListingsItem from '@components/navigation/BlogListingsItem.astro';
-import MainFooter from '@components/navigation/MainFooter.astro';
-import MainNav from '@components/navigation/MainNav.astro';
-import SequenceNav from '@components/navigation/SequenceNav.astro';
-import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import Passage from '@shared/components/blocks/Passage.astro';
+import BlogListings from '@shared/components/navigation/BlogListings.astro';
+import BlogListingsItem from '@shared/components/navigation/BlogListingsItem.astro';
+import MainFooter from '@shared/components/navigation/MainFooter.astro';
+import MainNav from '@shared/components/navigation/MainNav.astro';
+import SequenceNav from '@shared/components/navigation/SequenceNav.astro';
+import SequenceNavItem from '@shared/components/navigation/SequenceNavItem.astro';
 
 // types
 import {
 	DevelopmentStage,
 	DevelopmentStageUID,
 	FormattedText,
-} from '@lib/types';
+} from '@shared/lib/types';
 
 export type Post = {
 	date: string;

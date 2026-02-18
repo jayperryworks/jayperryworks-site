@@ -1,12 +1,12 @@
 ---
 // utilities
-import { picture as permalink } from '@lib/routes';
+import { picture as permalink } from '@shared/lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 
 // components
-import ImageFrameWall from '@components/elements/ImageFrameWall.astro';
-import Gallery from '@components/layout/Gallery.astro';
-import RevealOnScroll from '@components/meta/RevealOnScroll.astro';
+import ImageFrameWall from '@shared/components/elements/ImageFrameWall.astro';
+import Gallery from '@shared/components/layout/Gallery.astro';
+import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
 
 // types
 import {
@@ -16,7 +16,7 @@ import {
 	HSLAColor,
 	HSLColor,
 	SpaceScale,
-} from '@lib/types';
+} from '@shared/lib/types';
 import { PrismicDocumentWithUID } from '@prismicio/types';
 
 export interface Props {
@@ -24,7 +24,7 @@ export interface Props {
 	aspectRatio?: string;
 	columnSize?: GallerySize;
 	gutter?: SpaceScale;
-	matteColor?: CSSVariable | HexColor | HSLColor | HSLAColor,
+	matteColor?: CSSVariable | HexColor | HSLColor | HSLAColor;
 }
 
 const {
@@ -37,7 +37,9 @@ const {
 
 function frameType(picture) {
 	if (prismicHelpers.isFilled.link(picture.data.substrate)) {
-		return picture.data.substrate.data.name.includes('Paper') ? 'frame' : 'panel';
+		return picture.data.substrate.data.name.includes('Paper')
+			? 'frame'
+			: 'panel';
 	}
 }
 
@@ -49,7 +51,6 @@ function matteThickness(picture) {
 	if (columnSize === 'large') return 4;
 	return 3;
 }
-
 ---
 
 <Gallery
@@ -57,28 +58,32 @@ function matteThickness(picture) {
 	size={columnSize}
 	{gutter}
 >
-	{list.map((picture: PrismicDocumentWithUID) => (
-		<RevealOnScroll
-			tag="li"
-			class={[
-				picture.data.featured ? 'featured' : '',
-				aspectRatio ? 'has-aspect' : '',
-			].join(' ')}
-			style={ aspectRatio ? `--aspectRatio: ${aspectRatio};` : '' }
-		>
-			<a
-				class="link | type-link-undecorated"
-				href={permalink(picture)}
-				aria-label={prismicHelpers.asText(picture.data.title)}
+	{
+		list.map((picture: PrismicDocumentWithUID) => (
+			<RevealOnScroll
+				tag="li"
+				class={[
+					picture.data.featured ? 'featured' : '',
+					aspectRatio ? 'has-aspect' : '',
+				].join(' ')}
+				style={aspectRatio ? `--aspectRatio: ${aspectRatio};` : ''}
 			>
-				<ImageFrameWall
-					source={picture.data.cover}
-					type={frameType(picture)}
-					matteColor={matteColor && `var(--color-${matteColor.toLowerCase()})`}
-				/>
-			</a>
-		</RevealOnScroll>
-	))}
+				<a
+					class="link | type-link-undecorated"
+					href={permalink(picture)}
+					aria-label={prismicHelpers.asText(picture.data.title)}
+				>
+					<ImageFrameWall
+						source={picture.data.cover}
+						type={frameType(picture)}
+						matteColor={
+							matteColor && `var(--color-${matteColor.toLowerCase()})`
+						}
+					/>
+				</a>
+			</RevealOnScroll>
+		))
+	}
 </Gallery>
 
 <style is:global>

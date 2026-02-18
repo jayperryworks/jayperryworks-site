@@ -1,28 +1,25 @@
 ---
 // assets
-import '@styles/utilities/visibility.css';
+import '@shared/styles/utilities/visibility.css';
 
 // helpers
 import { format } from 'date-fns';
 
 // components
-import DevelopmentStageLabel from '@components/elements/DevelopmentStageLabel.astro';
+import DevelopmentStageLabel from '@shared/components/elements/DevelopmentStageLabel.astro';
 
 // types
-import {
-	DevelopmentStageName,
-	PublicationDates
-} from '@lib/types';
+import { DevelopmentStageName, PublicationDates } from '@shared/lib/types';
 
 type formattedDate = {
-	posted?: string,
-	updated?: string,
-	publication?: string,
+	posted?: string;
+	updated?: string;
+	publication?: string;
 };
 
 export interface Props {
 	date: PublicationDates;
-	class?: string,
+	class?: string;
 	showUpdatedDate?: boolean;
 	stage?: DevelopmentStageName;
 	dateFormat?: string;
@@ -30,11 +27,7 @@ export interface Props {
 
 // default value of `stage` prop is set in the template
 // because if a null value is passed in it will override a default here
-const {
-	date,
-	class: className = '',
-	stage,
-} = Astro.props as Props;
+const { date, class: className = '', stage } = Astro.props as Props;
 
 const formattedDate: formattedDate = Object.keys(date).reduce((result, key) => {
 	const year = format(date[key], 'yyyy');
@@ -42,8 +35,10 @@ const formattedDate: formattedDate = Object.keys(date).reduce((result, key) => {
 	const dateSuffix = [
 		format(date[key], 'd'),
 		// include the year if it's not the current year
-		format(new Date(), 'yyyy') !== year && year
-	].filter(Boolean).join(', ');
+		format(new Date(), 'yyyy') !== year && year,
+	]
+		.filter(Boolean)
+		.join(', ');
 
 	if (date[key]) {
 		// use the abbr element to display the short and full name of the month
@@ -60,10 +55,7 @@ const formattedDate: formattedDate = Object.keys(date).reduce((result, key) => {
 
 const showUpdate = formattedDate.posted !== formattedDate.updated;
 
-const classList = [
-	'post-metadata',
-	className,
-].join(' ');
+const classList = ['post-metadata', className].join(' ');
 ---
 
 <dl class={classList}>
@@ -76,17 +68,25 @@ const classList = [
 	<div class="item right group">
 		<dt>Published:</dt>
 		<dd>
-			<time datetime={date.publication} set:html={formattedDate.publication}></time>
+			<time
+				datetime={date.publication}
+				set:html={formattedDate.publication}
+			/>
 		</dd>
 	</div>
-	{showUpdate && (
-		<div class="item group">
-			<dt>Last updated:</dt>
-			<dd>
-				<time datetime={date.updated} set:html={formattedDate.updated}></time>
-			</dd>
-		</div>
-	)}
+	{
+		showUpdate && (
+			<div class="item group">
+				<dt>Last updated:</dt>
+				<dd>
+					<time
+						datetime={date.updated}
+						set:html={formattedDate.updated}
+					/>
+				</dd>
+			</div>
+		)
+	}
 </dl>
 
 <style>

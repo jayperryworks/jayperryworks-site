@@ -13,18 +13,18 @@
  */
 
 // --- assets ---
-import '@styles/tokens/type.css';
-import '@styles/utilities/type.css';
+import '@shared/styles/tokens/type.css';
+import '@shared/styles/utilities/type.css';
 
 // --- utils ---
-import { sentenceCase } from '@lib/stringHelpers';
-import * as sidenotes from '@lib/sidenotes';
+import { sentenceCase } from '@shared/lib/stringHelpers';
+import * as sidenotes from '@shared/lib/sidenotes';
 
 // --- components ---
-import RenderedText from '@components/elements/RenderedText.astro';
+import RenderedText from '@shared/components/elements/RenderedText.astro';
 
 // --- types ---
-import type { TypeScale, FormattedText } from '@lib/types';
+import type { TypeScale, FormattedText } from '@shared/lib/types';
 
 // --- props and state ---
 const {
@@ -95,8 +95,8 @@ function htmlSerializer(type, element, content, children): string {
 </div>
 
 <!-- Transitioning to markdown-rendered sidenotes instead of Prismic Rich Text. TODO: phase out the SideNote component. -->
-<script src="@scripts/SideNoteMarkdown.js"></script>
-<script src="@scripts/SideNote.ts"></script>
+<script src="@shared/scripts/SideNoteMarkdown.js"></script>
+<script src="@shared/scripts/SideNote.ts"></script>
 
 <style>
 	.passage {

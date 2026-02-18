@@ -1,32 +1,32 @@
 ---
 // assets
-import '@styles/tokens/contentWidth.css';
-import '@styles/tokens/spacing.css';
+import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/spacing.css';
 
 // utilities
 import { format } from 'date-fns';
 import * as prismicHelpers from '@prismicio/helpers';
-import prismic from '@lib/prismic';
+import prismic from '@shared/lib/prismic';
 
 // components
 import Layout from '@layouts/Layout.astro';
-import BlockList from '@components/BlockList.astro';
-import Callout from '@components/elements/Callout.astro';
-import Heading from '@components/blocks/Heading.astro';
-import MainFooter from '@components/navigation/MainFooter.astro';
-import MainNav from '@components/navigation/MainNav.astro';
-import ReadNextLink from '@components/navigation/ReadNextLink.astro';
-import SequenceNav from '@components/navigation/SequenceNav.astro';
-import SequenceNavItem from '@components/navigation/SequenceNavItem.astro';
-import ProgressBar from '@components/elements/ProgressBar.astro';
+import BlockList from '@shared/components/BlockList.astro';
+import Callout from '@shared/components/elements/Callout.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import MainFooter from '@shared/components/navigation/MainFooter.astro';
+import MainNav from '@shared/components/navigation/MainNav.astro';
+import ReadNextLink from '@shared/components/navigation/ReadNextLink.astro';
+import SequenceNav from '@shared/components/navigation/SequenceNav.astro';
+import SequenceNavItem from '@shared/components/navigation/SequenceNavItem.astro';
+import ProgressBar from '@shared/components/elements/ProgressBar.astro';
 
 // types
 import type {
 	Align,
-} from '@lib/types';
+} from '@shared/lib/types';
 
-import type { Props as SequenceNavItemProps } from '@components/navigation/SequenceNavItem.astro';
-import type { Action as CalloutAction } from '@components/elements/Callout.astro';
+import type { Props as SequenceNavItemProps } from '@shared/components/navigation/SequenceNavItem.astro';
+import type { Action as CalloutAction } from '@shared/components/elements/Callout.astro';
 import type { RichTextField, TitleField } from '@prismicio/types';
 
 export interface SequenceNavItemData extends SequenceNavItemProps {

@@ -16,24 +16,24 @@
  */
 
 // --- assets ---
-import '@styles/tokens/spacing.css';
-import '@styles/tokens/type.css';
-import '@styles/utilities/contentWidth.css';
-import arrowRight from '@icons/arrow-right.svg?raw';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/type.css';
+import '@shared/styles/utilities/contentWidth.css';
+import arrowRight from '@shared/icons/arrow-right.svg?raw';
 
 // --- utils ---
-import { linkResolver } from '@lib/routes';
+import { linkResolver } from '@shared/lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 
 // --- components ---
-import Button from '@components/elements/Button.astro';
-import Collage from '@components/blocks/Collage.astro';
-import Figure from '@components/blocks/Figure.astro';
-import Heading from '@components/blocks/Heading.astro';
-import Passage from '@components/blocks/Passage.astro';
+import Button from '@shared/components/elements/Button.astro';
+import Collage from '@shared/components/blocks/Collage.astro';
+import Figure from '@shared/components/blocks/Figure.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import Passage from '@shared/components/blocks/Passage.astro';
 
 // --- types ---
-import type { CollageItem } from '@lib/types';
+import type { CollageItem } from '@shared/lib/types';
 import type { RichTextField, LinkField } from '@prismicio/types';
 
 // --- props ---

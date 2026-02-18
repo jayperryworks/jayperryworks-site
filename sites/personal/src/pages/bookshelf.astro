@@ -1,27 +1,27 @@
 ---
 // --- assets
-import '@styles/tokens/contentWidth.css';
-import '@styles/tokens/spacing.css';
-import '@styles/utilities/type.css';
-import collapse from '@icons/collapse.svg?raw';
-import expand from '@icons/expand.svg?raw';
+import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/type.css';
+import collapse from '@shared/icons/collapse.svg?raw';
+import expand from '@shared/icons/expand.svg?raw';
 
 // --- utils
 import * as prismicHelpers from '@prismicio/helpers';
-import prismic from '@lib/prismic';
-import { removeArticles } from '@lib/stringHelpers';
+import prismic from '@shared/lib/prismic';
+import { removeArticles } from '@shared/lib/stringHelpers';
 
 // --- components
-import Aside from '@components/blocks/Aside.astro';
-import Button from '@components/elements/Button.astro';
-import Pill from '@components/elements/Pill.astro';
-import Heading from '@components/blocks/Heading.astro';
-import Passage from '@components/blocks/Passage.astro';
-import BookCard from '@components/layout/BookCard.astro';
-import Gallery from '@components/layout/Gallery.astro';
-import MainFooter from '@components/navigation/MainFooter.astro';
-import MainNav from '@components/navigation/MainNav.astro';
-import BlockList from '@components/BlockList.astro';
+import Aside from '@shared/components/blocks/Aside.astro';
+import Button from '@shared/components/elements/Button.astro';
+import Pill from '@shared/components/elements/Pill.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import Passage from '@shared/components/blocks/Passage.astro';
+import BookCard from '@shared/components/layout/BookCard.astro';
+import Gallery from '@shared/components/layout/Gallery.astro';
+import MainFooter from '@shared/components/navigation/MainFooter.astro';
+import MainNav from '@shared/components/navigation/MainNav.astro';
+import BlockList from '@shared/components/BlockList.astro';
 
 // --- layout
 import Layout from '@layouts/Layout.astro';

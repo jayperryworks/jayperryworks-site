@@ -1,11 +1,11 @@
 ---
 // styles
-import '@styles/tokens/spacing.css';
+import '@shared/styles/tokens/spacing.css';
 
 // utils
-import { linkResolver } from '@lib/routes';
+import { linkResolver } from '@shared/lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
-import renderMarkdown from '@lib/renderMarkdown';
+import renderMarkdown from '@shared/lib/renderMarkdown';
 
 // types
 import type { RichTextField } from '@prismicio/types';
@@ -35,7 +35,7 @@ if (prismicHelpers.isFilled.richText(prismicText)) {
 	renderedText = prismicHelpers.asHTML(
 		prismicText,
 		linkResolver,
-		htmlSerializer as prismicHelpers.HTMLFunctionSerializer
+		htmlSerializer as prismicHelpers.HTMLFunctionSerializer,
 	);
 }
 

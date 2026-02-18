@@ -13,11 +13,11 @@
  */
 
 // --- utilities ---
-import prismic from '@lib/prismic';
-import { setThemeStyle, hasDarkMode } from '@lib/colorTheme';
+import prismic from '@shared/lib/prismic';
+import { setThemeStyle, hasDarkMode } from '@shared/lib/colorTheme';
 
 // --- types ---
-import type { ThemeNames } from '@lib/types';
+import type { ThemeNames } from '@shared/lib/types';
 
 // --- props ---
 const {
@@ -78,7 +78,7 @@ const classList = ['color-transition', className || ''].join(' ');
 
 		// all the ColorTransition elements on this page
 		const transitionedElements = Array.from(
-			themeElement.querySelectorAll('.color-transition')
+			themeElement.querySelectorAll('.color-transition'),
 		);
 		// all the elements that trigger a color transition
 		// - they are only 'active' if they have custom theming
@@ -107,7 +107,7 @@ const classList = ['color-transition', className || ''].join(' ');
 			},
 			{
 				threshold: 0.5,
-			}
+			},
 		);
 
 		/**

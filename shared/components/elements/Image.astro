@@ -1,6 +1,6 @@
 ---
 import type { ImageField } from '@prismicio/types';
-import type { ImageFit } from '@lib/types';
+import type { ImageFit } from '@shared/lib/types';
 
 /**
  * Responsive image component
@@ -20,11 +20,11 @@ import type { ImageFit } from '@lib/types';
  */
 
 // --- assets ---
-import '@styles/tokens/borders.css';
+import '@shared/styles/tokens/borders.css';
 
 // --- utilities ---
 import * as prismicHelpers from '@prismicio/helpers';
-import { arrayToPunctatedString } from '@lib/stringHelpers';
+import { arrayToPunctatedString } from '@shared/lib/stringHelpers';
 
 // --- props ---
 const {

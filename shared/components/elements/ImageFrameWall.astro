@@ -1,12 +1,12 @@
 ---
 // assets
-import '@styles/tokens/elevation.css';
+import '@shared/styles/tokens/elevation.css';
 
 // utilities
-import { arrayToPunctatedString } from '@lib/stringHelpers';
+import { arrayToPunctatedString } from '@shared/lib/stringHelpers';
 
 // components
-import Image from '@components/elements/Image.astro';
+import Image from '@shared/components/elements/Image.astro';
 
 // types
 import type { ImageField } from '@prismicio/types';
@@ -16,7 +16,7 @@ import type {
 	HexColor,
 	HSLAColor,
 	HSLColor,
-} from '@lib/types';
+} from '@shared/lib/types';
 
 export interface Props {
 	source: ImageField;
@@ -27,7 +27,7 @@ export interface Props {
 	matteThickness?: number;
 	maxHeight: number;
 	type?: 'matte' | 'frame' | 'panel';
-};
+}
 
 const types = {
 	// matte only
@@ -61,10 +61,9 @@ const {
 	el = 'figure',
 } = Astro.props as Props;
 
-
 const { width, height } = source.dimensions;
 
-const matteAndFrameInPx = ((matteThickness / 100) * width) + (frameThickness * 16);
+const matteAndFrameInPx = (matteThickness / 100) * width + frameThickness * 16;
 
 const aspectRatio = [
 	width + matteAndFrameInPx,
@@ -73,11 +72,7 @@ const aspectRatio = [
 
 const El = el;
 
-const classList = [
-	'picture',
-	type,
-	className,
-].filter(i => i).join(' ');
+const classList = ['picture', type, className].filter((i) => i).join(' ');
 
 const styleList = arrayToPunctatedString([
 	`--aspect-ratio: ${aspectRatio}`,
@@ -85,7 +80,6 @@ const styleList = arrayToPunctatedString([
 	`--matte-thickness: ${matteThickness}%`,
 	matteColor && `--matte-color: ${matteColor};`,
 ]);
-
 ---
 
 <El
@@ -93,13 +87,15 @@ const styleList = arrayToPunctatedString([
 	style={styleList}
 >
 	<slot>
-		{source && (
-			<Image
-				class="image"
-				{source}
-				{maxHeight}
-			/>
-		)}
+		{
+			source && (
+				<Image
+					class="image"
+					{source}
+					{maxHeight}
+				/>
+			)
+		}
 	</slot>
 </El>
 

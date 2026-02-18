@@ -17,14 +17,16 @@
 		"baseUrl": ".",
 		"paths": {
 			// local
+			"@components/*": ["./src/components/*"],
 			"@layouts/*": ["./src/layouts/*"],
-			"@styles/*": ["../../shared/styles/*"],
+
 			// shared
-			"@components/*": ["../../shared/components/*"],
-			"@fonts/*": ["../../shared/public/assets/fonts/*"],
-			"@icons/*": ["../../shared/public/assets/icons/*"],
-			"@lib/*": ["../../shared/utilities/*"],
-			"@scripts/*": ["../../shared/scripts/*"]
+			"@shared/fonts/*": ["../../shared/public/assets/fonts/*"],
+			"@shared/icons/*": ["../../shared/public/assets/icons/*"],
+			"@shared/lib/*": ["../../shared/utilities/*"],
+			"@shared/scripts/*": ["../../shared/scripts/*"],
+			"@shared/components/*": ["../../shared/components/*"],
+			"@shared/styles/*": ["../../shared/styles/*"]
 		}
 	},
 	"include": [".astro/types.d.ts", "./src/**/*", "../../shared/utilities/**/*"],

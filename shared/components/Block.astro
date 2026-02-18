@@ -7,27 +7,27 @@
  */
 
 // --- assets ---
-import '@styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/contentWidth.css';
 
 // --- components ---
-import Aside from '@components/blocks/Aside.astro';
-import Bibliography from '@components/blocks/Bibliography.astro';
-import Billboard from '@components/blocks/Billboard.astro';
-import BlockQuote from '@components/blocks/BlockQuote.astro';
-import Collage from '@components/blocks/Collage.astro';
-import Feed from '@components/blocks/Feed.astro';
-import Figure from '@components/blocks/Figure.astro';
-import Heading from '@components/blocks/Heading.astro';
-import ImageGallery from '@components/blocks/ImageGallery.astro';
-import Passage from '@components/blocks/Passage.astro';
-import Pullquote from '@components/blocks/Pullquote.astro';
-import StickyNoteGallery from '@components/blocks/StickyNoteGallery.astro';
-import Table from '@components/blocks/Table.astro';
-import Video from '@components/blocks/Video.astro';
-import ColorTransition from '@components/meta/ColorThemeTransition.astro';
+import Aside from '@shared/components/blocks/Aside.astro';
+import Bibliography from '@shared/components/blocks/Bibliography.astro';
+import Billboard from '@shared/components/blocks/Billboard.astro';
+import BlockQuote from '@shared/components/blocks/BlockQuote.astro';
+import Collage from '@shared/components/blocks/Collage.astro';
+import Feed from '@shared/components/blocks/Feed.astro';
+import Figure from '@shared/components/blocks/Figure.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import ImageGallery from '@shared/components/blocks/ImageGallery.astro';
+import Passage from '@shared/components/blocks/Passage.astro';
+import Pullquote from '@shared/components/blocks/Pullquote.astro';
+import StickyNoteGallery from '@shared/components/blocks/StickyNoteGallery.astro';
+import Table from '@shared/components/blocks/Table.astro';
+import Video from '@shared/components/blocks/Video.astro';
+import ColorTransition from '@shared/components/meta/ColorThemeTransition.astro';
 
 // --- types ---
-import type { Block } from '@lib/types';
+import type { Block } from '@shared/lib/types';
 
 // --- props ---
 const { block, class: className } = Astro.props;

@@ -12,13 +12,13 @@
  * @param {boolean} [useImageAspectRato=false] - for a device, use the image's own aspect ratio instead of of the default (e.g. 4/3 for a tablet)
  */
 // child components
-import Image from '@components/elements/Image.astro';
-import ImageFrameDevice from '@components/elements/ImageFrameDevice.astro';
-import ImageFrameWall from '@components/elements/ImageFrameWall.astro';
+import Image from '@shared/components/elements/Image.astro';
+import ImageFrameDevice from '@shared/components/elements/ImageFrameDevice.astro';
+import ImageFrameWall from '@shared/components/elements/ImageFrameWall.astro';
 
 // types
 import type { ImageField } from '@prismicio/types';
-import type { Frame, ImageFit } from '@lib/types';
+import type { Frame, ImageFit } from '@shared/lib/types';
 
 const {
 	source,
@@ -31,7 +31,7 @@ const {
 } = Astro.props;
 
 const imageComponents = {
-	'None': {
+	None: {
 		component: Image,
 		props: {
 			border,
@@ -41,7 +41,7 @@ const imageComponents = {
 			source,
 		},
 	},
-	'Matte': {
+	Matte: {
 		component: ImageFrameWall,
 		props: {
 			type: 'matte',
@@ -59,7 +59,7 @@ const imageComponents = {
 			source,
 		},
 	},
-	'Panel': {
+	Panel: {
 		component: ImageFrameWall,
 		props: {
 			type: 'panel',
@@ -68,7 +68,7 @@ const imageComponents = {
 			source,
 		},
 	},
-	'Phone': {
+	Phone: {
 		component: ImageFrameDevice,
 		props: {
 			type: 'Phone',
@@ -100,10 +100,7 @@ const imageComponents = {
 	},
 };
 
-const {
-	component: ImageComponent,
-	props,
-} = imageComponents[frame || 'None'];
+const { component: ImageComponent, props } = imageComponents[frame || 'None'];
 ---
 
 <ImageComponent {...props} />
