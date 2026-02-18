@@ -51,6 +51,7 @@ const seo = {
 			<div class="intro">
 				<Heading
 					level={1}
+					size="gamma"
 					text={headline}
 				/>
 				<Passage
@@ -93,10 +94,6 @@ const seo = {
 		grid-template-rows: 1fr auto;
 		margin-inline: auto;
 		max-width: var(--content-width-xxwide);
-	}
-
-	.intro > :global(* + *) {
-		padding-block-start: var(--space-medium);
 	}
 
 	.intro :global(p + p) {
