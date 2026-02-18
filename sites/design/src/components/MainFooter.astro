@@ -9,9 +9,9 @@ import arrowRight from '@shared/icons/arrow-right.svg?raw';
 
 // --- helpers ---
 import { format } from 'date-fns';
+import { linkResolver, fetchLinks } from '@shared/lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@shared/lib/prismic';
-import { linkResolver, fetchLinks } from '@shared/lib/routes';
 
 // --- components ---
 import LogoJPW from '@shared/components/logos/LogoJPW.astro';
@@ -28,12 +28,6 @@ type Item = {
 	link: LinkField;
 	attributes?: string;
 };
-
-export interface Props {
-	showAboutSection?: boolean;
-}
-
-const { showAboutSection = true } = Astro.props as Props;
 
 // --- data ---
 
@@ -283,14 +277,6 @@ socialChannelList.join('');
 			display: grid;
 			grid-template-columns: repeat(2, 1fr);
 			grid-template-areas: 'social meta';
-		}
-	}
-
-	@media screen and (min-width: 130em) {
-		footer :global(.links) {
-			display: grid;
-			grid-template-columns: repeat(6, 1fr);
-			grid-template-areas: 'explore explore explore social social meta';
 		}
 	}
 </style>

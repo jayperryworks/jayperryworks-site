@@ -1,0 +1,48 @@
+---
+/**
+ * Main Header navigation component
+ * @description - display the logo and (if needed, later) the main nav
+ *
+ * @param {string} [class] - append classes to the container
+ */
+// assets
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/type.css';
+import '@shared/styles/utilities/type.css';
+import '@shared/styles/utilities/visibility.css';
+
+// components
+import LogoJP from '@shared/components/logos/LogoJP.astro';
+
+const { class: className = '' } = Astro.props;
+
+const classList = ['main-header', className].join(' ');
+---
+
+<header class={classList}>
+	<a
+		class="logo"
+		href="/"
+		rel="me"
+	>
+		<LogoJP />
+	</a>
+</header>
+
+<style>
+	/* --- layout --- */
+	.main-header {
+		--transition: 0.25s;
+
+		padding-inline: var(--space-outside);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.logo {
+		border: none;
+		display: block;
+		max-width: 2.5rem;
+	}
+</style>

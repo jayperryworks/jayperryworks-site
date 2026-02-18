@@ -12,6 +12,7 @@ import prismic from '@shared/lib/prismic';
 // components
 import Layout from '@layouts/Layout.astro';
 import MainFooter from '@components/MainFooter.astro';
+import MainHeader from '@components/MainHeader.astro';
 import BlockList from '@shared/components/BlockList.astro';
 
 // fetch content
@@ -32,11 +33,9 @@ const seo = {
 	theme="anemone"
 	{seo}
 >
+	<MainHeader />
 	<main id="main">
-		<BlockList
-			{body}
-			showLedeStyle
-		/>
+		<BlockList {body} />
 	</main>
 	<MainFooter />
 </Layout>
