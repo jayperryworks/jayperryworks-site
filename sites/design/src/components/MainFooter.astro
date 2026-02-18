@@ -15,10 +15,8 @@ import { linkResolver, fetchLinks } from '@shared/lib/routes';
 
 // --- components ---
 import LogoJPW from '@shared/components/logos/LogoJPW.astro';
-import Button from '@shared/components/elements/Button.astro';
-import Image from '@shared/components/elements/Image.astro';
+import RenderedText from '@shared/components/elements/RenderedText.astro';
 import Heading from '@shared/components/blocks/Heading.astro';
-import Passage from '@shared/components/blocks/Passage.astro';
 import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
 
 // --- types ---
@@ -40,15 +38,16 @@ const { showAboutSection = true } = Astro.props as Props;
 // --- data ---
 
 // footer content
-const contentResponse = await prismic.getSingle('main_footer', { fetchLinks });
+const contentResponse = await prismic.getSingle('design_main_footer', {
+	fetchLinks,
+});
+
 const {
-	portrait,
-	about,
+	availability_note: availability,
+	personal_site_note: personalSite,
 	meta_links_title: metaTitle,
 	meta_links,
 } = contentResponse.data;
-
-const blurb = { prismicText: about };
 
 const metaLinks = meta_links.map((item) => {
 	const { label, link } = item;
@@ -65,29 +64,11 @@ const metaLinks = meta_links.map((item) => {
 	`;
 });
 
-// routes for nav
-const routesResponse = await prismic.getSingle('main_nav', { fetchLinks });
-const routes = routesResponse.data.nav_item.reduce(
-	(result, item): mainNavLink[] => {
-		const { label, link } = item;
-
-		if (link.uid !== 'about') {
-			result.push({
-				label,
-				link: prismicHelpers.asLink(link, linkResolver),
-			});
-		}
-		return result;
-	},
-	[],
+const socialChannelsResponse = await prismic.getByUID(
+	'social_channels_new',
+	'social-channels-design',
 );
-
-routes.unshift({
-	label: 'Home',
-	link: '/',
-});
-
-const socialChannelsResponse = await prismic.getSingle('social_channels');
+console.log(socialChannelsResponse);
 const { channel } = socialChannelsResponse.data;
 
 const socialChannelList = channel.map((item: Item) => {
@@ -107,81 +88,20 @@ const socialChannelList = channel.map((item: Item) => {
 	`.trim();
 });
 
-// social channels
-socialChannelList.push(`
-	<li>
-		<a
-			class="links-item | type-role-accent"
-			href="/rss/feed.xml"
-			target="_blank"
-		>
-			RSS feed
-		</a>
-	</li>
-`);
-
 socialChannelList.join('');
 ---
 
 <footer>
-	<!-- About -->
-	{
-		showAboutSection && (
-			<RevealOnScroll
-				tag="section"
-				class="tier about"
-			>
-				<div class="about-wrapper">
-					<Image
-						source={portrait}
-						class="about-portrait"
-					/>
-					<div class="about-blurb">
-						<Passage text={blurb} />
-						<Button
-							href="/about/"
-							iconRight={arrowRight}
-						>
-							A bit more about me
-						</Button>
-					</div>
-				</div>
-			</RevealOnScroll>
-		)
-	}
+	<!-- Availability -->
+	<RevealOnScroll
+		tag="section"
+		class="tier availability type-role-accent"
+	>
+		<RenderedText markdown={prismicHelpers.asText(availability)} />
+	</RevealOnScroll>
 
 	<!-- Links -->
 	<nav class="tier links">
-		<!-- Main nav -->
-		<RevealOnScroll
-			class="links-section explore"
-			tag="section"
-		>
-			<Heading
-				class="type-scale-gamma"
-				level={2}
-			>
-				Explore
-			</Heading>
-			<ul
-				role="list"
-				class="links-list"
-			>
-				{
-					routes.map(({ label, link }) => (
-						<li>
-							<a
-								class="links-item | type-role-accent"
-								href={link}
-							>
-								{label}
-							</a>
-						</li>
-					))
-				}
-			</ul>
-		</RevealOnScroll>
-
 		<!-- Social links -->
 		<RevealOnScroll
 			class="links-section social"
@@ -246,8 +166,7 @@ socialChannelList.join('');
 		flex-direction: column;
 		flex-shrink: 0;
 		gap: var(--space-wide);
-		padding-block: var(--space-xwide) var(--space-wide);
-		padding-inline: var(--space-outside);
+		padding: var(--space-wide) var(--space-outside);
 		position: relative;
 	}
 
@@ -258,24 +177,9 @@ socialChannelList.join('');
 	}
 
 	/* --- about --- */
-	footer :global(.about) {
+	footer :global(.availability) {
 		border-block-end: var(--border-default);
-		container-name: about;
-		container-type: inline-size;
 		padding-block-end: var(--spacing);
-	}
-
-	footer :global(.about-blurb) {
-		align-items: flex-start;
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-narrow);
-	}
-
-	footer :global(.about-portrait) {
-		aspect-ratio: 1.2 / 1;
-		border-radius: var(--border-radius);
-		object-fit: cover;
 	}
 
 	@container about (min-width: 24em) {
@@ -361,9 +265,7 @@ socialChannelList.join('');
 		footer :global(.links) {
 			display: grid;
 			grid-template-columns: repeat(3, 1fr);
-			grid-template-areas:
-				'explore explore explore'
-				'social social meta';
+			grid-template-areas: 'social social meta';
 		}
 	}
 
@@ -371,9 +273,7 @@ socialChannelList.join('');
 		footer :global(.links) {
 			display: grid;
 			grid-template-columns: repeat(2, 1fr);
-			grid-template-areas:
-				'explore explore'
-				'social meta';
+			grid-template-areas: 'social meta';
 		}
 	}
 
