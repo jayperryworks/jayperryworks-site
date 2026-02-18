@@ -68,7 +68,7 @@ const socialChannelsResponse = await prismic.getByUID(
 	'social_channels_new',
 	'social-channels-design',
 );
-console.log(socialChannelsResponse);
+
 const { channel } = socialChannelsResponse.data;
 
 const socialChannelList = channel.map((item: Item) => {
@@ -95,9 +95,17 @@ socialChannelList.join('');
 	<!-- Availability -->
 	<RevealOnScroll
 		tag="section"
-		class="tier availability type-role-accent"
+		class="tier blurb type-role-accent"
 	>
 		<RenderedText markdown={prismicHelpers.asText(availability)} />
+	</RevealOnScroll>
+
+	<!-- Availability -->
+	<RevealOnScroll
+		tag="section"
+		class="tier blurb type-role-accent"
+	>
+		<RenderedText markdown={prismicHelpers.asText(personalSite)} />
 	</RevealOnScroll>
 
 	<!-- Links -->
@@ -177,9 +185,10 @@ socialChannelList.join('');
 	}
 
 	/* --- about --- */
-	footer :global(.availability) {
+	footer :global(.blurb) {
 		border-block-end: var(--border-default);
 		padding-block-end: var(--spacing);
+		line-height: var(--type-leading-default);
 	}
 
 	@container about (min-width: 24em) {
