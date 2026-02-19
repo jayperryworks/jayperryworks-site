@@ -8,33 +8,34 @@ import {
 	DateField,
 	PrismicDocument,
 	PrismicDocumentWithUID,
-} from "@prismicio/types";
+} from '@prismicio/types';
 
 // utils
-import { format } from "date-fns";
-import * as prismicHelpers from "@prismicio/helpers";
+import { format } from 'date-fns';
+import * as prismicHelpers from '@prismicio/helpers';
 
 // link/relationship data to fetch from Prismic to resolve page routes
 // -> use in the config on the original query, e.g. prismic.getByUID(... { fetchLinks })
 export const fetchLinks = [
-	"blog_post.date",
-	"design_project.start_date",
-	"longform.date",
-	"picture.date_completed",
-	"use_color_theme",
+	'blog_post.date',
+	'design_project.start_date',
+	'longform.date',
+	'picture.date_completed',
+	'use_color_theme',
+	'home.site',
 ];
 
 // create a url string from a date object, e.g. year/month/day
 export function getDateParams(
 	value: DateField,
-	periods: Array<"year" | "month" | "day">,
+	periods: Array<'year' | 'month' | 'day'>,
 ): string {
 	const date = prismicHelpers.asDate(value);
 
 	const formats = {
-		year: "yyyy",
-		month: "MM",
-		day: "dd",
+		year: 'yyyy',
+		month: 'MM',
+		day: 'dd',
 	};
 
 	const formatString = periods
@@ -43,15 +44,24 @@ export function getDateParams(
 				throw new Error(`Time period '${period}' was not found.`);
 			return formats[period];
 		})
-		.join("/");
+		.join('/');
 
 	return format(date, formatString);
 }
 
 // --- main pages
 // -> export each route as an individual function so it can be called individually as needed
+export function home({ uid, data }): string {
+	const { site } = data;
+
+	if (site === 'Design') return 'https://design.jayperry.works/';
+	return '/';
+}
+
+// --- main pages
+// -> export each route as an individual function so it can be called individually as needed
 export function homepage(): string {
-	return "/";
+	return '/';
 }
 
 // top-level pages
@@ -60,7 +70,7 @@ export function page({ uid }: Partial<PrismicDocumentWithUID>): string {
 }
 
 export function indexPage({ uid }: Partial<PrismicDocumentWithUID>): string {
-	if (uid === "blog") return "/blog/page/1/";
+	if (uid === 'blog') return '/blog/page/1/';
 	return `/${uid}/`;
 }
 
@@ -69,7 +79,7 @@ export function blogPost({
 	data,
 	uid,
 }: Partial<PrismicDocumentWithUID>): string {
-	return `/blog/${getDateParams(data.date, ["year", "month", "day"])}/${uid}/`;
+	return `/blog/${getDateParams(data.date, ['year', 'month', 'day'])}/${uid}/`;
 }
 
 // development stage page
@@ -86,7 +96,7 @@ export function picture({
 	data,
 	uid,
 }: Partial<PrismicDocumentWithUID>): string {
-	return `/pictures/${getDateParams(data.date_completed, ["year", "month"])}/${uid}/`;
+	return `/pictures/${getDateParams(data.date_completed, ['year', 'month'])}/${uid}/`;
 }
 
 // design
@@ -102,7 +112,7 @@ export function longform({
 	data,
 	uid,
 }: Partial<PrismicDocumentWithUID>): string {
-	return `/longform/${getDateParams(data.date, ["year"])}/${uid}/1/`;
+	return `/longform/${getDateParams(data.date, ['year'])}/${uid}/1/`;
 }
 
 // picture series
@@ -117,6 +127,7 @@ export function linkResolver(doc: Partial<PrismicDocument>): string {
 	const { type } = doc;
 
 	const contentTypes = {
+		home,
 		homepage,
 		longform,
 		page,
