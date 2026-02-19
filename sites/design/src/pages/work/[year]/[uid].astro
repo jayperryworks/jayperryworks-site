@@ -24,10 +24,10 @@ import '@shared/styles/tokens/borders.css';
 
 // components
 import Layout from '@layouts/Layout.astro';
+import MainFooter from '@components/MainFooter.astro';
+import MainHeader from '@components/MainHeader.astro';
 import BlockList from '@shared/components/BlockList.astro';
 import Heading from '@shared/components/blocks/Heading.astro';
-import MainFooter from '@shared/components/navigation/MainFooter.astro';
-import MainNav from '@shared/components/navigation/MainNav.astro';
 import ReadNextLink from '@shared/components/navigation/ReadNextLink.astro';
 import DataGrid from '@shared/components/layout/DataGrid.astro';
 
@@ -179,7 +179,7 @@ const credits = [
 	{seo}
 	{theme}
 >
-	<MainNav segment="design" />
+	<MainHeader segment="design" />
 	<main id="main">
 		<article>
 			<header class="headline">
