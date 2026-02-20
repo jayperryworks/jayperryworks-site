@@ -1,0 +1,47 @@
+---
+import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/borders.css';
+import '@shared/styles/utilities/type.css';
+
+// utils
+import { fetchLinks } from '@shared/lib/routes';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@shared/lib/prismic';
+
+// components
+import Layout from '@layouts/Layout.astro';
+import MainFooter from '@components/MainFooter.astro';
+import MainHeader from '@components/MainHeader.astro';
+import BlockList from '@shared/components/BlockList.astro';
+
+// fetch content
+const response = await prismic.getByUID('home', 'home-design', { fetchLinks });
+
+const { title, body, seo_title, seo_description, seo_image } = response.data;
+
+const seo = {
+	description: seo_description,
+	image: seo_image?.url,
+	imageAlt: seo_image?.alt,
+	title: seo_title || prismicHelpers.asText(title),
+};
+---
+
+<Layout
+	pageTitle={title}
+	theme="anemone"
+	{seo}
+>
+	<MainHeader />
+	<main id="main">
+		<BlockList {body} />
+	</main>
+	<MainFooter />
+</Layout>
+
+<style>
+	main {
+		padding-block: var(--space-xwide);
+	}
+</style>

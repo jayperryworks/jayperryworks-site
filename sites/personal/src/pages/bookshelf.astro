@@ -1,0 +1,531 @@
+---
+// --- assets
+import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/type.css';
+import collapse from '@shared/icons/collapse.svg?raw';
+import expand from '@shared/icons/expand.svg?raw';
+
+// --- utils
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@shared/lib/prismic';
+import { removeArticles } from '@shared/lib/stringHelpers';
+
+// --- components
+import Aside from '@shared/components/blocks/Aside.astro';
+import Button from '@shared/components/elements/Button.astro';
+import Pill from '@shared/components/elements/Pill.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import Passage from '@shared/components/blocks/Passage.astro';
+import BookCard from '@shared/components/layout/BookCard.astro';
+import Gallery from '@shared/components/layout/Gallery.astro';
+import MainFooter from '@shared/components/navigation/MainFooter.astro';
+import MainNav from '@shared/components/navigation/MainNav.astro';
+import BlockList from '@shared/components/BlockList.astro';
+
+// --- layout
+import Layout from '@layouts/Layout.astro';
+
+// fetch data from Prismic
+const pageData = await prismic.getByUID('index_page', 'bookshelf');
+
+const {
+	body,
+	seo_description,
+	seo_image,
+	seo_title,
+	short_title: shortTitle,
+	subtitle,
+	title,
+} = pageData.data;
+
+const seo = {
+	description: seo_description,
+	image: seo_image?.url,
+	imageAlt: seo_image?.alt,
+	title: seo_title || prismicHelpers.asText(title),
+};
+
+const booksResponse = await prismic.getAllByType('book');
+const seriesResponse = await prismic.getAllByType('book_series');
+
+const sortedBooks = sortBooksAlphabetically(booksResponse).filter(
+	(b) => b !== undefined,
+);
+
+const booksInSeries = seriesResponse.reduce((result, series) => {
+	const { uid, data } = series;
+
+	// only mark as in a series if there's more than 1 book
+	if (data.books.length > 1) {
+		for (const { book } of data.books) {
+			// add to the aggregate object
+			result[book.uid] = uid;
+		}
+	}
+
+	return result;
+}, {});
+
+// build an array of all the tags used in all the books
+const tags = aggregateBookTags(sortedBooks);
+
+/**
+ * Gather all unique tags used in an array of books
+ *
+ * @function
+ * @param {Object[]} books - book data to process
+ * @returns {string[]} - list of tags
+ */
+function aggregateBookTags(books: Object[]): string[] {
+	return books
+		.reduce((result, { tags }) => {
+			for (const tag of tags) {
+				if (!result.includes(tag)) result.push(tag);
+			}
+
+			return result;
+		}, [])
+		.sort((a, b) => a.localeCompare(b));
+}
+
+function sortBooksAlphabetically(list: object[]): object[] {
+	return list.sort((a, b) => {
+		const aTitle = removeArticles(prismicHelpers.asText(a.data.title));
+		const bTitle = removeArticles(prismicHelpers.asText(b.data.title));
+
+		return aTitle.localeCompare(bTitle);
+	});
+}
+
+// books blob endpoint
+function getBooksBlobEndpoint({ isbn, olid, type = 'data' }) {
+	const paths = {
+		data: 'books/data',
+		covers: 'books/covers',
+	};
+
+	if (isbn) {
+		return import.meta.env.PROD
+			? `${import.meta.env.SITE}/${paths[type]}/isbn/${isbn}`
+			: `http://localhost:8888/${paths[type]}/isbn/${isbn}`;
+	}
+
+	return import.meta.env.PROD
+		? `${import.meta.env.SITE}/${paths[type]}/olid/${olid}`
+		: `http://localhost:8888/${paths[type]}/olid/${olid}`;
+}
+
+const books = await Promise.all(
+	sortedBooks.map(async ({ uid, tags, data }) => {
+		const {
+			author,
+			isbn,
+			olid,
+			purchase_url: purchaseURL,
+			related_content: relatedContent,
+			title,
+			cover,
+		} = data;
+
+		// query the Netlify blob cache for additional data (pulled from OpenLibrary)
+		if (isbn || olid) {
+			let bookData = {
+				actions: [
+					{
+						label: 'Purchase',
+						url: prismicHelpers.asLink(purchaseURL),
+						type: 'external',
+					},
+				],
+				tags: tags || [],
+				author,
+				relatedContent,
+				title,
+				uid,
+			};
+
+			// If the book is in a series, add a prop with its UID
+			if (booksInSeries[uid]) bookData.series = booksInSeries[uid];
+
+			// Pull additional data from a blob with cached OpenLibrary data
+			// try {
+			// 	const booksDataResponse = await fetch(
+			// 		getBooksBlobEndpoint({ isbn, olid }),
+			// 	);
+
+			// 	if (booksDataResponse?.status === 200) {
+			// 		const booksBlobData = await booksDataResponse.json();
+
+			// 		const {
+			// 			url: infoURL,
+			// 			publishDate,
+			// 			publishers,
+			// 			hasCover,
+			// 		} = JSON.parse(booksBlobData);
+
+			// 		bookData.publishers = publishers;
+			// 		bookData.publishDate = publishDate;
+
+			// 		// if there's a cover image in Prismic, use that
+			// 		if (prismicHelpers.isFilled.image(cover)) {
+			// 			bookData.cover = cover.url;
+			// 			// otherwise, if the cover is available on OpenLibrary, use that
+			// 		} else if (hasCover) {
+			// 			bookData.cover = getBooksBlobEndpoint({
+			// 				isbn,
+			// 				olid,
+			// 				type: 'covers',
+			// 			});
+			// 		}
+
+			// 		bookData.actions.unshift({
+			// 			label: 'Open Library',
+			// 			url: infoURL,
+			// 			type: 'external',
+			// 		});
+
+			// 		return bookData;
+			// 	}
+			// } catch (error) {
+			// 	console.log(error);
+			// }
+
+			// if the request to the cache fails, just use the data we have from the CMS
+			return bookData;
+		}
+	}),
+);
+
+// sort all the book data by series
+const series = sortBooksAlphabetically(seriesResponse).reduce(
+	(result, item) => {
+		const { uid, data: series } = item;
+		// loop through the books referenced in the series data
+		// and add the real book data
+		const seriesBooks = series.books.map(({ book }) => {
+			return books.find(({ uid }) => uid === book.uid);
+		});
+
+		// add to the series array if the series contains more than 1 book
+		if (series.books.length > 1) {
+			result.push({
+				books: seriesBooks,
+				tags: aggregateBookTags(seriesBooks),
+				title: series.title,
+				uid: uid,
+			});
+		}
+		return result;
+	},
+	[],
+);
+
+// add standalone books to the series array
+series.unshift({
+	books: books.filter(({ series }) => !series),
+});
+---
+
+<Layout
+	pageTitle={shortTitle}
+	path="bookshelf"
+	theme="cherry"
+	{seo}
+>
+	<MainNav segment="bookshelf" />
+	<main id="main">
+		<header class="headline">
+			<Heading
+				align="center"
+				level={1}
+				text={title}
+			/>
+			{
+				subtitle && (
+					<Heading
+						align="center"
+						level={4}
+						subheading
+						text={subtitle}
+					/>
+				)
+			}
+		</header>
+
+		<BlockList
+			{body}
+			showLedeStyle
+		/>
+
+		<div class="wrapper">
+			<jp-filter-and-sort>
+				<template id="controls">
+					<div class="expanding-filter">
+						<Button
+							as="button"
+							class="expanding-filter-button"
+							iconLeft={{ default: expand, toggled: collapse }}
+							size="medium"
+						>
+							Tags
+						</Button>
+						<ul
+							class="tags"
+							hidden
+						>
+							{
+								tags.map((tag) => (
+									<li class="tag-item">
+										<Pill
+											data={{ tag }}
+											label={tag}
+										/>
+									</li>
+								))
+							}
+						</ul>
+					</div>
+				</template>
+
+				<template id="empty">
+					<Aside
+						class="empty"
+						hidden
+					>
+						<Passage>
+							Sorry, I haven't read any books yet with all of those tags.
+						</Passage>
+					</Aside>
+				</template>
+
+				<div class="books">
+					{
+						series.map((series) => (
+							<section
+								class="section"
+								id={series?.uid}
+								data-tags={series?.tags?.join(', ')}
+							>
+								{series.title && (
+									<Heading
+										align="center"
+										class="type-scale-gamma"
+									>
+										<span class="series-label">Series:</span>{' '}
+										{prismicHelpers.asText(series.title)}
+									</Heading>
+								)}
+								<Gallery gutter="xnarrow">
+									{series.books
+										.filter((b) => b !== undefined)
+										.map((book) => (
+											<li
+												class="item"
+												data-series={book?.series}
+												data-tags={book?.tags?.join(', ')}
+												id={book.uid}
+											>
+												<BookCard
+													actions={book.actions}
+													author={book.author}
+													cover={book.cover}
+													title={book.title}
+												>
+													{book.publishers && book.publishDate && (
+														<p
+															slot="metadata"
+															class="metadata type-role-accent type-scale-zeta"
+														>
+															{[book.publishers[0], book.publishDate].join(
+																', ',
+															)}
+														</p>
+													)}
+												</BookCard>
+											</li>
+										))}
+								</Gallery>
+							</section>
+						))
+					}
+				</div>
+			</jp-filter-and-sort>
+		</div>
+	</main>
+	<MainFooter />
+</Layout>
+
+<script>
+	class FilterAndSort extends HTMLElement {
+		#activeTags = [];
+		#items = [];
+		#series = [];
+		#emptyMessage;
+
+		connectedCallback() {
+			const controls = this.querySelector('#controls');
+			this.prepend(controls.content);
+
+			const empty = this.querySelector('#empty');
+			this.append(empty.content);
+			this.#emptyMessage = this.querySelector('.empty');
+
+			const tagsButton = this.querySelector('.expanding-filter-button');
+			const tagsContainer = this.querySelector('.tags');
+			const tags = Array.from(this.querySelectorAll('.pill'));
+			this.#items = Array.from(this.querySelectorAll('.item'));
+			this.#series = Array.from(this.querySelectorAll('.section[id]'));
+
+			tagsButton.addEventListener('click', () => {
+				tagsButton.toggleAttribute('data-toggled');
+				tagsContainer.toggleAttribute('hidden');
+			});
+
+			for (const tag of tags) {
+				tag.addEventListener('click', (event) => {
+					const tagID = event.target.dataset.tag;
+					const selected = event.target.dataset.toggled === 'true';
+
+					if (!selected) {
+						event.target.dataset.toggled = true;
+						this.addActiveTag(tagID);
+					} else {
+						event.target.dataset.toggled = false;
+						this.removeActiveTag(tagID);
+					}
+				});
+			}
+		}
+
+		addActiveTag(tag) {
+			this.activeTags.push(tag);
+			this.render();
+		}
+
+		removeActiveTag(tag) {
+			const index = this.activeTags.indexOf(tag);
+
+			if (index !== -1) {
+				this.activeTags.splice(index, 1);
+				this.render();
+			}
+		}
+
+		set activeTags(tags) {
+			this.#activeTags = tags;
+			this.render();
+		}
+
+		get activeTags() {
+			return this.#activeTags;
+		}
+
+		render() {
+			for (const item of [...this.#items, ...this.#series]) {
+				if (this.activeTags.length > 0) {
+					const itemTags = item.dataset.tags.split(', ');
+					// https://stackoverflow.com/questions/53606337/check-if-array-contains-all-elements-of-another-array
+					const isActive = this.activeTags.every((tag) =>
+						itemTags.includes(tag),
+					);
+
+					if (isActive) {
+						item.removeAttribute('hidden');
+					} else {
+						item.setAttribute('hidden', '');
+					}
+				} else {
+					item.removeAttribute('hidden');
+				}
+			}
+
+			// show the empty message if there are no results
+			const activeItems = this.#items.filter(
+				(item) => !item.hasAttribute('hidden'),
+			);
+			if (activeItems.length === 0) {
+				this.#emptyMessage.removeAttribute('hidden');
+			} else {
+				this.#emptyMessage.setAttribute('hidden', '');
+			}
+		}
+	}
+
+	customElements.define('jp-filter-and-sort', FilterAndSort);
+</script>
+
+<style>
+	.headline,
+	.wrapper {
+		margin-inline: auto;
+		padding-block-start: var(--space-xwide);
+		padding-inline: var(--space-outside);
+	}
+
+	.headline {
+		max-width: var(--content-width-wide);
+		padding-block-end: var(--space-wide);
+	}
+
+	.wrapper {
+		max-width: var(--content-width-xxwide);
+		padding-block-end: var(--space-xwide);
+	}
+
+	jp-filter-and-sort {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-medium);
+	}
+
+	.expanding-filter {
+		display: flex;
+		flex-direction: column;
+		align-items: end;
+		gap: var(--space-narrow);
+	}
+
+	.tags {
+		align-items: start;
+		background-color: var(--color-well);
+		border-radius: var(--border-radius);
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xxnarrow);
+		justify-content: start;
+		list-style: none;
+		margin: 0;
+		padding: var(--space-medium);
+	}
+
+	.books {
+		display: flex;
+		flex-direction: column;
+		align-items: start;
+		gap: var(--space-xwide);
+	}
+
+	.section {
+		width: 100%;
+	}
+
+	.section > :global(* + *) {
+		padding-block-start: var(--space-wide);
+	}
+
+	.series-label {
+		color: var(--color-secondary);
+	}
+
+	.item {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-narrow);
+		transition: all 0.25s ease-in-out;
+	}
+
+	[hidden] {
+		display: none !important;
+	}
+</style>

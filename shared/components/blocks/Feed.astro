@@ -1,0 +1,166 @@
+---
+/**
+ * Feed block component
+ * - display a list of posts from a given content source (e.g. blog)
+ *
+ * @param {'blog_post' | 'picture' | 'longform'} contentSource - the content type to display
+ * @param {Object} [cta] - call to action
+ * @param {LinkField} [cta.link] - the link object for the CTA
+ * @param {string} [cta.label] - the label for the button
+ * @param {Object} [description] - short descriptive blurb
+ * @param {RichTextField} [description.prismicText] - formatted text
+ * @param {string} [subtitle]
+ * @param {string} [title]
+ */
+
+// --- assets ---
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/type.css';
+import '@shared/styles/utilities/contentWidth.css';
+import '@shared/styles/utilities/type.css';
+import arrowRight from '@shared/icons/arrow-right.svg?raw';
+
+// --- utils ---
+import { blogPost, linkResolver } from '@shared/lib/routes';
+import { truncate } from '@shared/lib/stringHelpers';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@shared/lib/prismic';
+
+// --- components ---
+import Gallery from '@shared/components/layout/Gallery.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import Passage from '@shared/components/blocks/Passage.astro';
+import Button from '@shared/components/elements/Button.astro';
+import PostListing from '@shared/components/navigation/BlogListingsItem.astro';
+
+// --- types ---
+import type { LinkField, RichTextField } from '@prismicio/types';
+
+// --- props ---
+const { cta, description, contentSource, subtitle, title } = Astro.props;
+
+const { link, label } = cta;
+const resolvedLink = link && prismicHelpers.asLink(link, linkResolver);
+
+let feedItems = [];
+const pageSize = 8;
+
+if (contentSource === 'blog_post') {
+	const feedData = await prismic.getByType('blog_post', {
+		orderings: {
+			field: 'my.blog_post.date',
+			direction: 'desc',
+		},
+		pageSize,
+	});
+
+	if (feedData?.results.length > 0) {
+		feedItems = feedData.results.map((item) => {
+			const { date, description, stage, subtitle, title } = item.data;
+
+			return {
+				stage,
+				date: prismicHelpers.asDate(date),
+				path: blogPost(item),
+				subtitle: subtitle && prismicHelpers.asText(subtitle),
+				title: prismicHelpers.isFilled.title(title)
+					? prismicHelpers.asText(title)
+					: truncate(description, 5),
+			};
+		});
+	}
+}
+---
+
+<section class="feed">
+	<header>
+		<Heading level={2}>
+			<a
+				class="type-link-undecorated"
+				href={resolvedLink}
+			>
+				{title}
+			</a>
+		</Heading>
+		{
+			subtitle && (
+				<Heading
+					class="subtitle"
+					level={3}
+					subheading
+				>
+					{subtitle}
+				</Heading>
+			)
+		}
+		{
+			description && (
+				<Passage
+					text={description}
+					typeFace="display"
+					typeSize="delta"
+				/>
+			)
+		}
+	</header>
+	<Gallery
+		size="large"
+		gutter="narrow"
+	>
+		{
+			feedItems.map((listing) => (
+				<li class="item">
+					<PostListing {...listing} />
+				</li>
+			))
+		}
+	</Gallery>
+	<footer>
+		<Button
+			href={resolvedLink}
+			iconRight={arrowRight}
+		>
+			{label}
+		</Button>
+	</footer>
+</section>
+
+<style>
+	.feed {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		justify-content: center;
+		min-height: 100svh;
+		padding-block: var(--space-xwide);
+	}
+
+	header {
+		padding-block-end: var(--space-medium);
+	}
+
+	header > :global(.subtitle) {
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	header > :global(* + *) {
+		padding-block-start: var(--space-medium);
+	}
+
+	.item {
+		border-radius: var(--border-radius);
+		background-color: var(--color-island);
+		padding: var(--space-medium);
+		padding-block-start: var(--space-narrow);
+		transition: background-color var(--color-transition) ease-in-out;
+	}
+
+	.item > :global(* + *) {
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	footer {
+		padding-block-start: var(--space-xwide);
+	}
+</style>

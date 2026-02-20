@@ -1,0 +1,93 @@
+---
+/**
+ * Figure block component
+ * - Display an image with optional caption and/or attribution
+ *
+ * @param {ImageField} source - the image data from Prismic
+ * @param {FormattedText} [attribution] - credit for the artist/photographer
+ * @param {boolean} [border] - display a border around the image
+ * @param {FormattedText} [caption] - a caption displayed below the image
+ * @param {string} [class] - classes to append to the container
+ * @param {ImageFit} [fit] - object-fit styles for the image
+ * @param {Frame} [frame='None'] - a frame or device for the image
+ * @param {number} [maxHeight] - constrain the image to a certain height, in vh units
+ * @param {boolean} [useImageAspectRato=false] - for a device, use the image's own aspect ratio instead of of the default (e.g. 4/3 for a tablet)
+ */
+
+// --- styles ---
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/contentWidth.css';
+
+// --- types ---
+import type { ImageField } from '@prismicio/types';
+
+import type {
+	ContentWidth,
+	FormattedText,
+	Frame,
+	ImageFit,
+} from '@shared/lib/types';
+
+// --- child components ---
+import ImageFrame from '@shared/components/elements/ImageFrame.astro';
+import Caption from '@shared/components/elements/FigureCaption.astro';
+import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
+
+// --- props ---
+const {
+	source,
+	darkModeSource,
+	attribution,
+	border,
+	caption,
+	frame = 'None',
+	class: className,
+	fit,
+	maxHeight,
+	useImageAspectRatio,
+} = Astro.props;
+---
+
+<figure class={['figure', className || ''].join(' ')}>
+	<RevealOnScroll class="wrapper">
+		<slot>
+			{
+				source && (
+					<ImageFrame
+						{border}
+						{darkModeSource}
+						{fit}
+						{frame}
+						{maxHeight}
+						{source}
+						{useImageAspectRatio}
+					/>
+				)
+			}
+		</slot>
+
+		{
+			(caption || attribution) && (
+				<Caption
+					class="caption"
+					text={caption}
+					{attribution}
+				/>
+			)
+		}
+	</RevealOnScroll>
+</figure>
+
+<style>
+	.figure,
+	.figure :global(.wrapper) {
+		text-align: center;
+	}
+
+	.figure :global(.caption) {
+		margin-block-start: auto;
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+		padding-block-start: var(--space-narrow);
+	}
+</style>

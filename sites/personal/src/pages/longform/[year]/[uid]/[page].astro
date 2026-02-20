@@ -1,0 +1,512 @@
+---
+// assets
+import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/spacing.css';
+
+// utilities
+import { format } from 'date-fns';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@shared/lib/prismic';
+
+// components
+import Layout from '@layouts/Layout.astro';
+import BlockList from '@shared/components/BlockList.astro';
+import Callout from '@shared/components/elements/Callout.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import MainFooter from '@shared/components/navigation/MainFooter.astro';
+import MainNav from '@shared/components/navigation/MainNav.astro';
+import ReadNextLink from '@shared/components/navigation/ReadNextLink.astro';
+import SequenceNav from '@shared/components/navigation/SequenceNav.astro';
+import SequenceNavItem from '@shared/components/navigation/SequenceNavItem.astro';
+import ProgressBar from '@shared/components/elements/ProgressBar.astro';
+
+// types
+import type {
+	Align,
+} from '@shared/lib/types';
+
+import type { Props as SequenceNavItemProps } from '@shared/components/navigation/SequenceNavItem.astro';
+import type { Action as CalloutAction } from '@shared/components/elements/Callout.astro';
+import type { RichTextField, TitleField } from '@prismicio/types';
+
+export interface SequenceNavItemData extends SequenceNavItemProps {
+	title: TitleField;
+	type: 'chapter'|'appendix';
+}
+
+type Callout = {
+	title: TitleField,
+	description: RichTextField,
+	actions?: CalloutAction[],
+}
+
+// Using 'nested pagination' to generate 'chapter' pages for each longform project
+// -> https://docs.astro.build/en/core-concepts/routing/#nested-pagination
+export async function getStaticPaths({ paginate }) {
+	// query all longform projects
+	// -> use graphQuery to fetch linked Chapter data for each project
+	const projectsResponse = await prismic.getAllByType('longform', {
+		orderings: {
+			field: 'my.longform.date',
+			direction: 'desc',
+		},
+		graphQuery: `
+			{
+				longform {
+					...longformFields
+					chapters {
+						chapter {
+							...on longform_chapter {
+								...longform_chapterFields
+							}
+						}
+					}
+					appendices {
+						appendix {
+							...on longform_appendix {
+								...longform_appendixFields
+							}
+						}
+					}
+				}
+			}
+		`,
+	});
+
+
+	// loop over each project and create a massaged list of chapters to be paginated
+	return projectsResponse.flatMap(({ uid, data }) => {
+		const year = format(prismicHelpers.asDate(data.date), 'yyyy');
+
+		const callouts = data.body.map(({ primary, items }) => ({
+			title: primary.heading,
+			description: { prismicText: primary.description },
+			placement: primary.placement.toLowerCase(),
+			actions: items?.length > 0
+				? items.map(({ call_to_action_label: label, link }) => ({ label, link, }))
+				: undefined,
+		}));
+
+		// capture project metadata to use for each chapter view
+		const project = {
+			uid,
+			title: data.title,
+			subtitle: data.subtitle,
+			chapterLabel: data.chapter_label,
+			chapterList: data.chapters.map(({ chapter }) => ({
+				title: chapter.data.title,
+				type: 'chapter',
+			})),
+			appendixList: data.appendices.map(({ appendix }) => ({
+				title: appendix.data.title,
+				type: 'appendix',
+			})),
+			status: data.status,
+		};
+
+		const seo = {
+			description: data.seo_description,
+			image: data.seo_image?.url,
+			imageAlt: data.seo_image?.alt,
+			title: data.seo_title,
+		};
+
+		// set up chapter data
+		const chapters = data.chapters.map(({ chapter }, index) => {
+			const {
+				title,
+				subtitle,
+				preset_theme,
+				base_hue,
+				body,
+				body1: colorThemes,
+			} = chapter.data;
+
+			return {
+				type: 'chapter',
+				number: index + 1,
+				uid,
+				title,
+				subtitle,
+				body,
+				callouts,
+				project,
+				seo,
+				theme: {
+					name: preset_theme,
+					hue: base_hue,
+					custom: colorThemes,
+				},
+			};
+		});
+
+		// set up appendix data, if any
+		const appendices = prismicHelpers.isFilled.group(data.appendices)
+			? data.appendices.map(({ appendix }, index) => {
+					const {
+						title,
+						subtitle,
+						preset_theme,
+						base_hue,
+						body,
+						body1: colorThemes,
+					} = appendix.data;
+
+					return {
+						type: 'appendix',
+						number: index + 1,
+						uid,
+						title,
+						subtitle,
+						body,
+						callouts,
+						project: {
+							...project,
+							chapterLabel: 'Appendix',
+						},
+						seo,
+						theme: {
+							name: preset_theme,
+							hue: base_hue,
+							custom: colorThemes,
+						},
+					}
+				})
+			: [];
+
+		// one chapter per page under the given project params
+		const pages = paginate([...chapters, ...appendices], {
+			pageSize: 1,
+			params: { year, uid },
+		});
+
+		return pages;
+	});
+}
+
+const {
+	year,
+	uid,
+} = Astro.params;
+
+const {
+	url,
+	data,
+	currentPage,
+	lastPage,
+} = Astro.props.page;
+
+const {
+	body,
+	callouts,
+	number,
+	project,
+	seo,
+	subtitle,
+	theme,
+	title,
+	type,
+} = data[0];
+
+// Build a page title with the project and chapter/appendix name
+// -> locating it down here instead of in the pagination function above because currentPage is accessible from here
+const pageTitle = type === 'chapter'
+? `${prismicHelpers.asText(project.title)}, ${project.chapterLabel} ${number}: ${prismicHelpers.asText(title)}`
+: `${prismicHelpers.asText(project.title)}, Appendix: ${prismicHelpers.asText(title)}`;
+
+// if no title was given for SEO content, make a default one using the page data above
+if (!seo.title) seo.title = pageTitle;
+
+// sequence nav
+function sequenceNavItemAlign(index: number): Align {
+	if (index === 0) return 'start';
+	if (index === lastPage - 1) return 'end';
+	return 'center';
+}
+
+const pagesList = [...project.chapterList, ...project.appendixList];
+
+// list of chapter links for the SequenceNav at the top and bottom of the page
+const sequenceNavItems = pagesList.map(
+	({ title, type }, index: number): SequenceNavItemData => ({
+		title,
+		type,
+		href: `/longform/${year}/${uid}/${index + 1}`,
+		complete: currentPage > index + 1,
+		current: currentPage === index + 1,
+		tooltipAlign: sequenceNavItemAlign(index),
+	})
+);
+
+// pagination nav
+const nextPage = pagesList[currentPage] ? {
+	title: pagesList[currentPage].title,
+	type: pagesList[currentPage].type,
+	number: currentPage + 1,
+	href: url.next,
+} : null;
+
+// callouts
+const topCallouts = callouts.filter(({ placement }) => {
+	if (currentPage === 0) return (placement === 'top' || placement === 'start');
+	return placement === 'top';
+});
+
+const bottomCallouts = callouts.filter(({ placement }) => {
+	if (currentPage === lastPage) return (placement === 'bottom' || placement === 'end');
+	return placement === 'bottom';
+});
+---
+
+<Layout
+	pageTitle={pageTitle}
+	{theme}
+	{seo}
+>
+	<MainNav segment={uid} />
+
+	<main id="main">
+		<article class="chapter">
+			<!-- titling -->
+			<header class="headline">
+
+					<!-- project title -->
+					<Heading
+						level={1}
+						text={project.title}
+					/>
+					{prismicHelpers.isFilled.title(project.subtitle) && (
+						<Heading
+							level={2}
+							text={project.subtitle}
+							subheading
+						/>
+					)}
+
+					<!-- sequence nav -->
+					{sequenceNavItems.length > 1 && (
+						<!-- progress bar (for small screens) -->
+						<ProgressBar
+							class="progress"
+							value={currentPage}
+							range={sequenceNavItems.length}
+						>
+							Progress: You are currently reading {
+								type === 'chapter'
+								? `${project.chapterLabel} ${number} of ${project.chapterList.length}`
+								: `Appendix ${number} of ${project.appendixList.length}`
+							}.
+						</ProgressBar>
+
+						<!-- for larger screens -->
+						<div class={[
+							'sequence',
+							// if the sequence nav has a lot of items, make it wider
+							sequenceNavItems.length <= 6 ? 'wrapper' : 'wrapper wide'
+						].join(' ')}>
+							<SequenceNav>
+								{sequenceNavItems.map((item) => (
+									<SequenceNavItem {...item}>
+										{
+											item.type === 'chapter'
+											? prismicHelpers.asText(item.title)
+											: `Appendix: ${prismicHelpers.asText(item.title)}`
+										}
+									</SequenceNavItem>
+								))}
+							</SequenceNav>
+						</div>
+					)}
+
+					<!-- chapter title -->
+					<div class="headline-chapter">
+						<Heading level={3} subheading>{
+							type === 'chapter' ? `${project.chapterLabel} ${number}` : 'Appendix'
+						}</Heading>
+						<Heading level={2} class="header-chapter" text={title} />
+						{subtitle && <Heading level={3} subheading text={subtitle} />}
+					</div>
+			</header>
+
+			<!-- Top callouts -->
+			{topCallouts?.length > 0 && (
+				<div class="support">
+					{topCallouts.map((callout: Callout) => (
+						<Callout
+							{...callout}
+							class="support-box"
+						/>
+					))}
+				</div>
+			)}
+
+			<!-- body -->
+			<BlockList {body} showLedeStyle />
+
+			{
+				project.status === 'Finished'
+				&& type === 'chapter'
+				&& number === project.chapterList.length
+				&& (
+					<aside class="end | type-role-display type-scale-gamma">
+						The end
+					</aside>
+				)
+			}
+		</article>
+
+		<!-- footer navigation -->
+		{sequenceNavItems.length > 1 && (
+			<nav class="footer-nav">
+				<div class={sequenceNavItems.length > 6 ? 'wrapper wide' : 'wrapper'}>
+
+					<!-- progress bar (for small screens) -->
+					<ProgressBar
+						class="progress"
+						value={currentPage}
+						range={sequenceNavItems.length}
+					>
+						Progress: You are currently reading {
+							type === 'chapter'
+							? `${project.chapterLabel} ${number} of ${project.chapterList.length}`
+							: `Appendix ${number} of ${project.appendixList.length}`
+						}.
+					</ProgressBar>
+
+					<!-- sequence nav -->
+					<SequenceNav class="sequence">
+						{sequenceNavItems.map((item) => (
+							<SequenceNavItem {...item} next={item.href === url.next}>
+								{
+									item.type === 'chapter'
+									? prismicHelpers.asText(item.title)
+									: `Appendix: ${prismicHelpers.asText(item.title)}`
+								}
+							</SequenceNavItem>
+						))}
+					</SequenceNav>
+
+					<!-- next chapter -->
+					<div class="next">
+						{nextPage && (
+							<ReadNextLink
+								align="end"
+								class="next"
+								eyebrowSize="gamma"
+								link={nextPage.href}
+								titleSize="beta"
+							>
+								<Fragment slot="eyebrow">
+									Next: {
+										nextPage.type === 'chapter'
+										? `${project.chapterLabel} ${currentPage + 1}`
+										: 'Appendix'
+									}
+								</Fragment>
+								<Fragment slot="title">
+									{prismicHelpers.asText(nextPage.title)}
+								</Fragment>
+							</ReadNextLink>
+						)}
+					</div>
+				</div>
+			</nav>
+		)}
+
+	</main>
+
+	<!-- Bottom callouts -->
+	{bottomCallouts?.length > 0 && (
+		<div class="support bottom">
+			{bottomCallouts.map((callout: Callout) => (
+				<Callout
+					{...callout}
+					class="support-box"
+				/>
+			))}
+		</div>
+	)}
+	<MainFooter />
+</Layout>
+
+<style>
+	.chapter {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xwide);
+		padding-block: var(--space-xwide);
+	}
+
+	.headline {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-wide);
+	}
+
+	.headline-chapter {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xxnarrow);
+	}
+
+	:global(.sequence) {
+		display: none;
+	}
+
+	@media screen and (min-width: 36em) {
+		:global(.progress) {
+			display: none;
+		}
+
+		:global(.sequence) {
+			display: block;
+		}
+	}
+
+	.headline,
+	.footer-nav {
+		padding-inline: var(--space-outside);
+	}
+
+	.wrapper {
+		margin-inline: auto;
+		width: var(--content-width-default);
+		max-width: 100%;
+	}
+
+	.wrapper.wide {
+		width: var(--content-width-wide);
+	}
+
+	.footer-nav {
+		padding-block-end: var(--space-xwide);
+	}
+
+	.next {
+		display: flex;
+		justify-content: end;
+		padding-block-start: var(--space-wide);
+	}
+
+	.end {
+		color: var(--color-secondary);
+		font-style: italic;
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+		width: 100%;
+	}
+
+	.support {
+		padding-inline: var(--space-outside);
+	}
+
+	.support.bottom {
+		padding-block-end: var(--space-xwide);
+	}
+
+	.support :global(.support-box) {
+		max-width: var(--content-width-default);
+		margin-inline: auto;
+	}
+</style>

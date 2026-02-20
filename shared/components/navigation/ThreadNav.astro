@@ -1,0 +1,165 @@
+---
+// assets
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/type.css';
+import '@shared/styles/utilities/type.css';
+
+// components
+import Dot from '@shared/components/elements/Dot.astro';
+import Tooltip from '@shared/components/elements/Tooltip.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import Expander from '@shared/components/layout/Expander.astro';
+
+// types
+export interface Props {
+	title?: string;
+	class?: string;
+	currentNumber?: number;
+	description?: string;
+}
+
+const { title, class: className = '', description } = Astro.props as Props;
+
+const classList = ['thread-nav', className].join(' ');
+---
+
+<aside class={classList}>
+	<Heading
+		level={2}
+		class="label | type-role-accent type-scale-epsilon"
+	>
+		This post is part of a thread.
+		<Dot class="help">
+			?
+			<Tooltip
+				class="tooltip"
+				id="thread-tooltip"
+			>
+				A thread is a series of posts that explore a theme.
+			</Tooltip>
+		</Dot>
+	</Heading>
+	{
+		(title || description) && (
+			<div class="info">
+				{title && (
+					<Heading
+						level={3}
+						class="title | type-scale-epsilon"
+					>
+						{title}
+					</Heading>
+				)}
+				{description && (
+					<p class="description | type-role-accent type-scale-zeta">
+						{description}
+					</p>
+				)}
+			</div>
+		)
+	}
+	<Expander
+		class="list"
+		title="Posts in this thread"
+	>
+		<ol role="list">
+			<slot />
+		</ol>
+	</Expander>
+</aside>
+
+<script>
+	const SELECTOR = '.help';
+	const OPEN_CLASS = 'open';
+
+	const $threadNav = document.querySelector('.thread-nav');
+	const $button = $threadNav?.querySelector(SELECTOR);
+
+	if ($button) {
+		document.addEventListener('click', (event) => {
+			if (event.target.closest(SELECTOR)) {
+				$button.classList.toggle(OPEN_CLASS);
+				return;
+			}
+			$button.classList.remove(OPEN_CLASS);
+		});
+	}
+</script>
+
+<style>
+	.thread-nav {
+		background-color: var(--color-well);
+		border-radius: var(--border-radius-round);
+		padding: var(--space-medium);
+		text-align: left;
+	}
+
+	.thread-nav :global(.label) {
+		display: flex;
+		align-items: center;
+		gap: var(--space-xnarrow);
+		color: var(--color-primary);
+		font-weight: 300;
+	}
+
+	.description {
+		color: var(--color-secondary);
+		line-height: var(--type-leading-wide);
+		text-wrap: balance;
+	}
+
+	/* only show the help tooltip if JS is available */
+	.thread-nav :global(.help) {
+		display: none;
+	}
+
+	/* increase specificity so it overrides the child component */
+	:global([data-supports~='js'] .help) {
+		--size: 2em;
+		--color: var(--color-secondary);
+
+		margin-inline-start: 0.25em;
+		margin-block-start: calc((var(--size) / 4) * -1); /* scootch up a little */
+	}
+
+	.thread-nav :global(.help.open) {
+		--color: var(--color-highlight);
+	}
+
+	.thread-nav :global(.tooltip) {
+		--max-width: 24rem;
+		--min-width: 16rem;
+	}
+
+	.thread-nav :global(.help.open .tooltip) {
+		--show: 1;
+	}
+
+	.info {
+		border-block-start: var(--border-default);
+		margin-block-start: var(--space-xnarrow);
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	.info > :global(* + *) {
+		padding-block-start: var(--space-xxnarrow);
+	}
+
+	.thread-nav :global(.list) {
+		--spacing: var(--space-medium);
+		--title-color: var(--color-secondary);
+		--title-size: var(--type-scale-zeta);
+
+		border-block-start: var(--border-default);
+		margin-block-start: var(--space-narrow);
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	ol {
+		list-style: none;
+		margin-block: 0;
+		padding-inline-start: 0;
+		position: relative;
+	}
+</style>

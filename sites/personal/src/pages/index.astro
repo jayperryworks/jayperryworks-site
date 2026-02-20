@@ -1,0 +1,110 @@
+---
+// assets
+import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/borders.css';
+import '@shared/styles/utilities/type.css';
+import arrowRight from '@shared/icons/arrow-right.svg?raw';
+
+// utils
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@shared/lib/prismic';
+import { linkResolver, fetchLinks } from '@shared/lib/routes';
+
+// components
+import Layout from '@layouts/Layout.astro';
+import BlockList from '@shared/components/BlockList.astro';
+import Button from '@shared/components/elements/Button.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import Passage from '@shared/components/blocks/Passage.astro';
+import MainNav from '@shared/components/navigation/MainNav.astro';
+import MainFooter from '@shared/components/navigation/MainFooter.astro';
+
+// fetch content
+const response = await prismic.getSingle('homepage', { fetchLinks });
+
+const {
+	headline,
+	intro,
+	intro_link: link,
+	seo_title,
+	seo_description,
+	seo_image,
+	body,
+} = response.data;
+
+const introLink = prismicHelpers.asLink(link, linkResolver);
+const seo = {
+	description: seo_description,
+	image: seo_image?.url,
+	imageAlt: seo_image?.alt,
+	title: seo_title,
+};
+---
+
+<Layout {seo}>
+	<MainNav segment="home" />
+
+	<main id="main">
+		<!-- intro -->
+		<section class="cover">
+			<div class="intro">
+				<Heading
+					level={1}
+					text={headline}
+				/>
+				<Passage
+					text={{ prismicText: intro }}
+					typeSize="delta"
+				/>
+				<div class="intro-cta">
+					<Button
+						href={introLink}
+						iconRight={arrowRight}
+					>
+						A bit more about me
+					</Button>
+				</div>
+			</div>
+		</section>
+
+		<!-- TOC panels -->
+		<section id="toc">
+			<BlockList
+				{body}
+				numbered
+			/>
+		</section>
+	</main>
+	<MainFooter showAboutSection={false} />
+</Layout>
+
+<style>
+	.cover {
+		padding-block: var(--space-xwide);
+		padding-inline: var(--space-outside);
+	}
+
+	.intro {
+		align-items: center;
+		display: grid;
+		flex: 1;
+		gap: var(--space-medium);
+		grid-template-rows: 1fr auto;
+		margin-inline: auto;
+		max-width: var(--content-width-xxwide);
+	}
+
+	.intro :global(p + p) {
+		margin-block-start: var(--space-xnarrow);
+	}
+
+	.intro-cta {
+		padding-block-start: var(--space-wide);
+	}
+
+	.toc {
+		list-style: none;
+		padding-inline-start: 0;
+	}
+</style>

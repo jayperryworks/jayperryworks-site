@@ -1,0 +1,109 @@
+---
+// assets
+import '@shared/styles/utilities/type.css';
+import '@shared/styles/tokens/spacing.css';
+
+// components
+import Dot from '@shared/components/elements/Dot.astro';
+import Tooltip from '@shared/components/elements/Tooltip.astro';
+
+// types
+import type { Align } from '@shared/lib/types';
+
+export interface Props {
+	href: string;
+	complete?: boolean;
+	current?: boolean;
+	next?: boolean;
+	tooltipAlign?: Align;
+}
+
+const {
+	complete = false,
+	current = false,
+	next = false,
+	href,
+	tooltipAlign = 'center',
+} = Astro.props as Props;
+
+const classList = [
+	'link',
+	complete ? 'complete' : '',
+	current ? 'current' : '',
+	next ? 'next' : '',
+].join(' ');
+
+let highlight = 'hover';
+if (complete || current) highlight = 'on';
+if (next) highlight = 'flashing';
+---
+
+<li class="sequence-nav-item">
+	<Dot
+		el="a"
+		class={classList}
+		{highlight}
+		{href}
+	>
+		<Tooltip
+			class="tooltip"
+			align={tooltipAlign}
+		>
+			<slot />
+		</Tooltip>
+	</Dot>
+</li>
+
+<style>
+	.sequence-nav-item {
+		display: block;
+		margin-block-start: 0;
+	}
+
+	.sequence-nav-item + .sequence-nav-item {
+		display: flex;
+		align-items: center;
+		flex: 1;
+	}
+
+	/* the connecting line between items */
+	.sequence-nav-item + .sequence-nav-item::before {
+		--thickness: 1px;
+
+		background-color: var(--color-secondary);
+		content: '';
+		display: block;
+		flex: 1;
+		height: var(--thickness);
+	}
+
+	.sequence-nav-item :global(.link) {
+		--size: 2em;
+
+		position: relative;
+	}
+
+	.sequence-nav-item :global(.link.current),
+	.sequence-nav-item :global(.link.next) {
+		--color: var(--color-highlight);
+	}
+
+	.sequence-nav-item :global(.link.current),
+	.sequence-nav-item :global(.link.next) {
+		--border-color: var(--color-primary);
+	}
+
+	.sequence-nav-item :global(.link.complete) {
+		--color: var(--color-secondary);
+	}
+
+	.sequence-nav-item :global(.link:hover) {
+		--border-color: var(--color-primary);
+		--color: var(--color-primary);
+	}
+
+	/* reveal the tooltip when a link is hovered */
+	:global(.link:hover .tooltip) {
+		--show: 1;
+	}
+</style>

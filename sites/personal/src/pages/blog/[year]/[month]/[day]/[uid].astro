@@ -1,0 +1,384 @@
+---
+// styles & assets
+import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/type.css';
+import '@shared/styles/utilities/borders.css';
+import '@shared/styles/utilities/contentWidth.css';
+import '@shared/styles/utilities/type.css';
+import '@shared/styles/utilities/visibility.css';
+import externalLink from '@shared/icons/external-link.svg?raw';
+
+// helpers
+import { format } from 'date-fns';
+import { blogPost as permalink, fetchLinks } from '@shared/lib/routes';
+import { sentenceCase } from '@shared/lib/stringHelpers';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@shared/lib/prismic';
+
+// components
+import Layout from '@layouts/Layout.astro';
+import BlockList from '@shared/components/BlockList.astro';
+import Button from '@shared/components/elements/Button.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import MainFooter from '@shared/components/navigation/MainFooter.astro';
+import MainNav from '@shared/components/navigation/MainNav.astro';
+import ReadNextLink from '@shared/components/navigation/ReadNextLink.astro';
+import ThreadNav from '@shared/components/navigation/ThreadNav.astro';
+import ThreadNavItem from '@shared/components/navigation/ThreadNavItem.astro';
+import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
+
+// types
+import type {
+	LinkField,
+	PrismicDocumentWithUID,
+	RichTextField,
+	Slice,
+	Tags,
+	TitleField,
+} from '@prismicio/types';
+
+import type {
+	PublicationDates,
+	DevelopmentStageName,
+	PaginationLink,
+	SEOContent,
+} from '@shared/lib/types';
+
+import PostMetadata from '@shared/components/elements/PostMetadata.astro';
+
+type Thread = {
+	posts: PrismicDocumentWithUID[];
+	uid: string;
+	description?: RichTextField;
+	title?: TitleField;
+};
+
+export interface Props {
+	body: Array<Slice>;
+	date: PublicationDates;
+	title: TitleField;
+	link?: LinkField;
+	next?: PaginationLink;
+	seo?: SEOContent;
+	stage?: DevelopmentStageName;
+	subtitle?: TitleField;
+	tags?: Tags;
+	thread?: Thread;
+}
+
+export async function getStaticPaths() {
+	const posts = await prismic.getAllByType('blog_post', {
+		fetchLinks,
+		orderings: {
+			field: 'my.blog_post.date',
+			direction: 'desc',
+		},
+		graphQuery: `
+			{
+				blog_post {
+					...blog_postFields
+					thread {
+						...on blog_series {
+							uid
+							title
+							description
+						}
+					}
+				}
+			}
+		`,
+	});
+
+	return posts.map(
+		(
+			{ uid, tags, data, first_publication_date, last_publication_date },
+			index,
+		) => {
+			const publishedDate = prismicHelpers.asDate(data.date);
+			const nextPost = posts[index + 1];
+			const { data: thread } = data.thread;
+
+			// If this post is part of a thread, grab other posts that also belong to the thread
+			// -> these will be ordered by data, because the `posts` array already is
+			if (thread) {
+				thread.posts = posts
+					.filter((post) => {
+						return post.data?.thread?.data?.uid === thread.uid;
+					})
+					.reverse();
+			}
+
+			return {
+				params: {
+					year: format(publishedDate, 'yyyy'),
+					month: format(publishedDate, 'MM'),
+					day: format(publishedDate, 'dd'),
+					uid,
+				},
+				props: {
+					...data,
+					stage: data.stage || 'Note',
+					date: {
+						publication: publishedDate,
+						posted: new Date(first_publication_date),
+						updated: new Date(last_publication_date),
+					},
+					tags,
+					link: prismicHelpers.asLink(data.link),
+					next: nextPost && {
+						title:
+							prismicHelpers.isFilled.title(nextPost.data.title) &&
+							prismicHelpers.asText(nextPost.data.title),
+						path: permalink(nextPost),
+					},
+					seo: {
+						description: data.seo_description || data.description,
+						image: data.seo_image?.url,
+						imageAlt: data.seo_image?.alt,
+						title: data.seo_title || prismicHelpers.asText(data.title),
+					},
+					thread,
+				},
+			};
+		},
+	);
+}
+
+const { uid } = Astro.params;
+
+const { body, date, link, next, seo, thread, subtitle, tags, title, stage } =
+	Astro.props as Props;
+---
+
+<Layout
+	pageTitle={prismicHelpers.asText(title)}
+	theme="mustard"
+	{seo}
+>
+	<MainNav segment="blog" />
+	<main id="main">
+		<article>
+			<header class="headline">
+				{
+					prismicHelpers.isFilled.title(title) && (
+						<Heading
+							level={1}
+							class="title"
+						>
+							{prismicHelpers.asText(title)}
+						</Heading>
+					)
+				}
+				{
+					prismicHelpers.isFilled.title(subtitle) && (
+						<Heading
+							class="type-scale-gamma"
+							subheading
+						>
+							{prismicHelpers.asText(subtitle)}{' '}
+						</Heading>
+					)
+				}
+
+				<!-- date and stage info -->
+				<PostMetadata
+					class="metadata | content-width"
+					showUpdatedDate
+					{date}
+					{stage}
+				/>
+
+				<!-- list of posts in a thread, if applicable -->
+				{
+					thread && (
+						<ThreadNav
+							title={thread.title && prismicHelpers.asText(thread.title)}
+							description={
+								thread.description && prismicHelpers.asText(thread.description)
+							}
+							class="thread-nav | content-width"
+						>
+							{thread.posts.map((post) => (
+								<ThreadNavItem
+									current={post.uid === uid}
+									date={post.data.date}
+									href={permalink(post)}
+									label={prismicHelpers.asText(post.data.title)}
+								/>
+							))}
+						</ThreadNav>
+					)
+				}
+			</header>
+
+			<!-- page body -->
+			<BlockList
+				{body}
+				showLedeStyle
+			/>
+
+			{
+				link && (
+					<footer class="link">
+						<div class="wrapper">
+							<Button
+								href={link}
+								iconRight={externalLink}
+								target="_blank"
+							>
+								Direct link
+							</Button>
+						</div>
+					</footer>
+				)
+			}
+		</article>
+
+		<!-- pagination nav -->
+		{
+			(next || tags.length > 0) && (
+				<nav>
+					{tags.length > 0 && (
+						<RevealOnScroll
+							tag="section"
+							class="nav-wrapper tags"
+						>
+							<h2 class="tag-label type-role-accent type-scale-epsilon">
+								Filed&nbsp;under:
+							</h2>
+							<ul class="tag-list type-role-accent">
+								{tags.map((tag) => (
+									<li>
+										<a href={`/blog/tags/${tag}/`}>{sentenceCase(tag)}</a>
+									</li>
+								))}
+							</ul>
+						</RevealOnScroll>
+					)}
+					{next && (
+						<RevealOnScroll
+							tag="section"
+							class="nav-wrapper"
+						>
+							{next.title ? (
+								<ReadNextLink link={next.path}>
+									<Fragment slot="eyebrow">Next post:</Fragment>
+									<Fragment slot="title">{next.title}</Fragment>
+								</ReadNextLink>
+							) : (
+								<ReadNextLink link={next.path}>
+									<Fragment slot="title">Next post</Fragment>
+								</ReadNextLink>
+							)}
+						</RevealOnScroll>
+					)}
+				</nav>
+			)
+		}
+	</main>
+	<MainFooter />
+</Layout>
+
+<style>
+	article {
+		padding-block: var(--space-xwide);
+	}
+
+	.headline {
+		margin-inline: auto;
+		max-width: var(--content-width-xwide);
+		padding-block-end: var(--space-wide);
+		padding-inline: var(--space-outside);
+		text-align: center;
+	}
+
+	.headline :global(.title ~ .metadata) {
+		border-block-start: var(--border-default);
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	:global(.metadata) {
+		margin-block-start: var(--space-wide);
+	}
+
+	.link {
+		padding-block-start: var(--space-wide);
+		padding-inline: var(--space-outside);
+	}
+
+	.wrapper {
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+	}
+
+	/* add some extra space above this */
+	/* -> subtract the flex gap it already has */
+	article :global(.thread-nav) {
+		margin-block-start: var(--space-wide);
+	}
+
+	main :global(.tags) {
+		display: flex;
+		align-items: baseline;
+		gap: 0.25em;
+		flex-wrap: wrap;
+		padding-block-end: var(--space-wide);
+	}
+
+	@media screen and (min-width: 30em) {
+		main :global(.tags) {
+			gap: var(--space-xnarrow);
+			flex-wrap: nowrap;
+		}
+	}
+
+	.tag-label {
+		color: var(--color-secondary);
+	}
+
+	.tag-list {
+		list-style: none;
+		padding-inline-start: 0;
+		padding-block-start: var(--space-xxnarrow);
+		margin: 0;
+		display: flex;
+		gap: 0.5em;
+		flex-wrap: wrap;
+		align-items: baseline;
+	}
+
+	.tag-list li {
+		font-size: 0; /* kill whitespace margins */
+	}
+
+	.tag-list li::after {
+		content: ', ';
+		margin-inline-start: 0.1em;
+		font-size: var(--type-scale-epsilon);
+	}
+
+	.tag-list li:last-child::after {
+		content: '';
+	}
+
+	.tag-list a {
+		font-size: var(--type-scale-epsilon);
+	}
+
+	nav {
+		padding-block-end: var(--space-xwide);
+		padding-inline: var(--space-outside);
+	}
+
+	:global(.nav-wrapper) {
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+		border-top: var(--border-default);
+		padding-block-start: var(--space-wide);
+	}
+
+	:global(.nav-wrapper + .nav-wrapper) {
+		margin-block-start: var(--space-wide);
+	}
+</style>

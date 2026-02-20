@@ -1,0 +1,105 @@
+---
+// utilities
+import { picture as permalink } from '@shared/lib/routes';
+import * as prismicHelpers from '@prismicio/helpers';
+
+// components
+import ImageFrameWall from '@shared/components/elements/ImageFrameWall.astro';
+import Gallery from '@shared/components/layout/Gallery.astro';
+import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
+
+// types
+import {
+	CSSVariable,
+	GallerySize,
+	HexColor,
+	HSLAColor,
+	HSLColor,
+	SpaceScale,
+} from '@shared/lib/types';
+import { PrismicDocumentWithUID } from '@prismicio/types';
+
+export interface Props {
+	list: PrismicDocumentWithUID[];
+	aspectRatio?: string;
+	columnSize?: GallerySize;
+	gutter?: SpaceScale;
+	matteColor?: CSSVariable | HexColor | HSLColor | HSLAColor;
+}
+
+const {
+	aspectRatio,
+	columnSize = 'medium',
+	gutter = 'wide',
+	list,
+	matteColor,
+} = Astro.props as Props;
+
+function frameType(picture) {
+	if (prismicHelpers.isFilled.link(picture.data.substrate)) {
+		return picture.data.substrate.data.name.includes('Paper')
+			? 'frame'
+			: 'panel';
+	}
+}
+
+function matteThickness(picture) {
+	// use the default matte thickness for 'panel'-type pictures
+	if (frameType(picture) === 'panel') return undefined;
+
+	// otherwise, send values based on how wide the columns are
+	if (columnSize === 'large') return 4;
+	return 3;
+}
+---
+
+<Gallery
+	class="picture-gallery"
+	size={columnSize}
+	{gutter}
+>
+	{
+		list.map((picture: PrismicDocumentWithUID) => (
+			<RevealOnScroll
+				tag="li"
+				class={[
+					picture.data.featured ? 'featured' : '',
+					aspectRatio ? 'has-aspect' : '',
+				].join(' ')}
+				style={aspectRatio ? `--aspectRatio: ${aspectRatio};` : ''}
+			>
+				<a
+					class="link | type-link-undecorated"
+					href={permalink(picture)}
+					aria-label={prismicHelpers.asText(picture.data.title)}
+				>
+					<ImageFrameWall
+						source={picture.data.cover}
+						type={frameType(picture)}
+						matteColor={
+							matteColor && `var(--color-${matteColor.toLowerCase()})`
+						}
+					/>
+				</a>
+			</RevealOnScroll>
+		))
+	}
+</Gallery>
+
+<style is:global>
+	.has-aspect {
+		aspect-ratio: var(--aspectRatio, none);
+	}
+
+	.has-aspect .link {
+		flex: 1;
+		max-height: 100%;
+	}
+
+	.link > * {
+		position: relative;
+		inset-block-start: 50%;
+		inset-inline-start: 50%;
+		transform: translateX(-50%) translateY(-50%);
+	}
+</style>

@@ -1,0 +1,10 @@
+@import url("@shared/styles/tokens/borders.css");
+
+/* --- 'seam' border style */
+.border-seam-top {
+	border-block-start: var(--border-default);
+}
+
+.border-seam-bottom {
+	border-block-end: var(--border-default);
+}

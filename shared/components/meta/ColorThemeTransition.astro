@@ -1,0 +1,139 @@
+---
+/**
+ * Color transition meta component
+ * - trigger an animated transition in the page's color theme
+ * 	 when this element scrolls into view
+ *
+ * @param {string} [class] - append classes to the container
+ * @param {number} [hue] -number of a color theme base hue, 0 - 360
+ * @param {string} [link] - ID of a Prismic doc with a theme to use here
+ * @param {ThemeNames} [name] - the name of a preset theme, e.g. 'mustard'
+ * @param {string} [style] - add CSS rules to the container's style attribute
+ * @param {string} [tag='div'] - the HTML tag to use for the container element
+ */
+
+// --- utilities ---
+import prismic from '@shared/lib/prismic';
+import { setThemeStyle, hasDarkMode } from '@shared/lib/colorTheme';
+
+// --- types ---
+import type { ThemeNames } from '@shared/lib/types';
+
+// --- props ---
+const {
+	class: className,
+	hue,
+	link,
+	name,
+	style,
+	el = 'div',
+	...props
+} = Astro.props;
+
+const El = el;
+
+// flag - have any theme props been passed in?
+const hasTheme = (name || hue || link) && true;
+
+// object for all theme data
+const theme = {
+	custom: undefined,
+	hue,
+	name,
+};
+
+if (link) {
+	const { data } = await prismic.getByID(link);
+	const { preset_theme: name, custom_base_hue: hue, body1: custom } = data;
+
+	if (custom) theme.custom = custom;
+	if (hue) theme.hue = hue;
+	if (name) theme.name = name;
+}
+
+// classes to add to the container
+const classList = ['color-transition', className || ''].join(' ');
+---
+
+<El
+	class={classList}
+	data-dark-mode={hasDarkMode(theme)}
+	data-theme={hasTheme && setThemeStyle({ inherit: true, ...theme })}
+	{style}
+	{...props}
+>
+	<slot />
+</El>
+
+<script>
+	if ('IntersectionObserver' in window) {
+		// the class used to flag if a dark mode is available in the theme
+		const darkModeClass = 'has-dark-mode';
+		// the element (usually body) with a color theme applied
+		// TODO what if there are multiple?
+		const themeElement = document.querySelector('.theme');
+		// Reference to the theme that exists when the page loads
+		const originalTheme = themeElement.getAttribute('style');
+		const originalDarkMode = themeElement.classList.contains(darkModeClass);
+
+		// all the ColorTransition elements on this page
+		const transitionedElements = Array.from(
+			themeElement.querySelectorAll('.color-transition'),
+		);
+		// all the elements that trigger a color transition
+		// - they are only 'active' if they have custom theming
+		const transitionedElementsActive = transitionedElements.filter((el) => {
+			return el.dataset.theme;
+		});
+
+		const colorTransitionObserver = new IntersectionObserver(
+			(entries) => {
+				// transition the page color theme as elements become visible
+				return entries.forEach((entry) => {
+					// if the element is visible, update the .theme element's style property
+					if (entry.isIntersecting) {
+						const { theme, darkMode } = entry.target.dataset;
+
+						if (theme) {
+							themeElement.classList.toggle(darkModeClass, darkMode === 'true');
+							themeElement.setAttribute('style', theme);
+						} else {
+							// restore the original page theme
+							themeElement.classList.toggle(darkModeClass, originalDarkMode);
+							themeElement.setAttribute('style', originalTheme);
+						}
+					}
+				});
+			},
+			{
+				threshold: 0.5,
+			},
+		);
+
+		/**
+		 * Start the intersection observer
+		 * @returns {null}
+		 */
+		function startObserver() {
+			if (transitionedElementsActive.length > 0 && !reduceMotion.matches) {
+				transitionedElements.forEach((element) => {
+					colorTransitionObserver.observe(element);
+				});
+			}
+		}
+
+		// check if prefers-reduced-motion is set in the browser
+		// and kill the animations if it matches, or if the setting changes
+		const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+		reduceMotion.addEventListener('change', () => {
+			if (reduceMotion.matches) {
+				colorTransitionObserver.disconnect();
+				return;
+			}
+			startObserver();
+		});
+
+		// Start observing all the above
+		startObserver();
+	}
+</script>

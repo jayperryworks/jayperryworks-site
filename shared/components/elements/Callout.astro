@@ -1,0 +1,93 @@
+---
+// assets
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/type.css';
+import arrow from '@shared/icons/arrow-right.svg?raw';
+
+// utils
+import { linkResolver } from '@shared/lib/routes';
+import * as prismicHelpers from '@prismicio/helpers';
+
+// components
+import Heading from '@shared/components/blocks/Heading.astro';
+import Button from '@shared/components/elements/Button.astro';
+import RenderedText from '@shared/components/elements/RenderedText.astro';
+
+// types
+import { LinkField, TitleField } from '@prismicio/types';
+import { FormattedText } from '@shared/lib/types';
+
+export interface Action {
+	label: string;
+	link: LinkField;
+}
+
+export interface Props {
+	title?: TitleField;
+	actions?: Action[];
+	description?: FormattedText;
+	class?: string;
+}
+
+const {
+	title,
+	actions,
+	description,
+	class: className = '',
+} = Astro.props as Props;
+---
+
+<aside class={['callout', className].join(' ')}>
+	{
+		title && (
+			<Heading
+				class="type-scale-gamma"
+				text={title}
+			/>
+		)
+	}
+
+	<slot>
+		<RenderedText
+			allowHTML={true}
+			{...description}
+		/>
+	</slot>
+
+	{
+		actions?.length > 0 && (
+			<footer>
+				{actions.map(({ label, link }) => (
+					<Button
+						iconRight={arrow}
+						href={prismicHelpers.asLink(link, linkResolver)}
+					>
+						{label}
+					</Button>
+				))}
+			</footer>
+		)
+	}
+</aside>
+
+<style>
+	.callout {
+		--color-surface: var(--color-well);
+
+		background-color: var(--color-well);
+		border-radius: var(--border-radius-round);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xnarrow);
+		padding: var(--space-wide);
+	}
+
+	footer {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xnarrow);
+		justify-content: flex-end;
+		padding-block-start: var(--space-medium);
+	}
+</style>

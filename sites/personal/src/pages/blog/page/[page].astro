@@ -1,0 +1,318 @@
+---
+// styles
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/utilities/borders.css';
+import '@shared/styles/utilities/type.css';
+import '@shared/styles/utilities/contentWidth.css';
+
+// assets
+import arrowLeft from '@shared/icons/arrow-left.svg?raw';
+import arrowRight from '@shared/icons/arrow-right.svg?raw';
+import externalLink from '@shared/icons/external-link.svg?raw';
+
+// helpers
+import { blogPost, fetchLinks } from '@shared/lib/routes';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@shared/lib/prismic';
+
+// components
+import Layout from '@layouts/Layout.astro';
+import Button from '@shared/components/elements/Button.astro';
+import Icon from '@shared/components/elements/Icon.astro';
+import PostMetadata from '@shared/components/elements/PostMetadata.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import MainNav from '@shared/components/navigation/MainNav.astro';
+import MainFooter from '@shared/components/navigation/MainFooter.astro';
+import BlockList from '@shared/components/BlockList.astro';
+
+export async function getStaticPaths({ paginate }): Promise<Function> {
+	const posts = await prismic.getAllByType('blog_post', {
+		fetchLinks,
+		orderings: {
+			field: 'my.blog_post.date',
+			direction: 'desc',
+		},
+	});
+
+	return paginate(posts, { pageSize: 10 });
+}
+
+const { page } = Astro.props;
+
+const { next, prev } = page.url;
+
+const postList = page.data.map(
+	({ uid, tags, data, first_publication_date, last_publication_date }) => {
+		// find the slices in each post marked as "include in excerpt"
+		const summary = data.body.filter(
+			({ primary }) => primary.include_in_excerpt,
+		);
+
+		if (summary.length > 0) {
+			return {
+				...data,
+				date: {
+					publication: prismicHelpers.asDate(data.date),
+					posted: new Date(first_publication_date),
+					updated: new Date(last_publication_date),
+				},
+				stage: data.stage || 'Note',
+				summary,
+				tags,
+				uid,
+				link: prismicHelpers.asLink(data.link),
+				path: blogPost({ uid, data }),
+				readMore: summary.length < data.body.length,
+			};
+		}
+
+		throw new Error(
+			`Post missing a summary: ${prismicHelpers.asText(data.title)}, ${data.date}`,
+		);
+	},
+);
+---
+
+<Layout
+	pageTitle="Blog"
+	theme="mustard"
+>
+	<MainNav segment="blog" />
+	<main id="main">
+		<ul
+			class="post-list"
+			role="feed"
+		>
+			{
+				postList.map((post, index) => (
+					<li class={index > 0 ? 'border-seam-top' : ''}>
+						<article
+							class="post"
+							id={post.uid}
+						>
+							<header class="post-header">
+								{prismicHelpers.isFilled.title(post.title) && (
+									<Heading
+										level={2}
+										class="post-title"
+									>
+										<a
+											href={post.path}
+											class="type-link-undecorated"
+										>
+											{prismicHelpers.asText(post.title)}
+										</a>
+									</Heading>
+								)}
+								{prismicHelpers.isFilled.title(post.subtitle) && (
+									<Heading
+										subheading
+										level={3}
+									>
+										{prismicHelpers.asText(post.subtitle)}
+									</Heading>
+								)}
+								<PostMetadata
+									{...post}
+									class="post-date | content-width"
+								/>
+							</header>
+							<BlockList
+								body={post.summary}
+								showLedeStyle
+							/>
+							{(post.readMore || post.link) && (
+								<footer class="post-footer">
+									<div class="post-buttons | wrapper">
+										{post.readMore && (
+											<Button
+												href={post.path}
+												iconRight={arrowRight}
+											>
+												Read more
+											</Button>
+										)}
+										{post.link && (
+											<Button
+												href={post.link}
+												iconRight={externalLink}
+												target="_blank"
+											>
+												Direct link
+											</Button>
+										)}
+									</div>
+								</footer>
+							)}
+						</article>
+					</li>
+				))
+			}
+		</ul>
+		<nav class="border-seam-top">
+			<ul class="nav-list">
+				{
+					prev && (
+						<li class="nav-item">
+							<a
+								class="nav-link | type-scale-delta"
+								href={prev}
+							>
+								<Icon
+									svg={arrowLeft}
+									class="nav-icon before"
+								/>
+								<span class="nav-label | type-role-accent">Newer posts</span>
+							</a>
+						</li>
+					)
+				}
+				{
+					next && (
+						<li class="nav-item">
+							<a
+								class="nav-link | type-scale-delta"
+								href={next}
+							>
+								<span class="nav-label | type-role-accent">Older posts</span>
+								<Icon
+									svg={arrowRight}
+									class="nav-icon after"
+								/>
+							</a>
+						</li>
+					)
+				}
+			</ul>
+		</nav>
+	</main>
+	<MainFooter />
+</Layout>
+
+<style>
+	.post-list {
+		list-style: none;
+		display: block;
+		padding-inline-start: 0;
+		padding-block: var(--space-xwide);
+	}
+
+	.post-list > li + li {
+		margin-block-start: var(--space-xwide);
+		padding-block-start: var(--space-xwide);
+	}
+
+	.post-header {
+		margin-inline: auto;
+		max-width: var(--content-width-xwide);
+		padding-block-end: var(--space-wide);
+		padding-inline: var(--space-outside);
+		text-align: center;
+	}
+
+	.post-header > time {
+		padding-block-start: var(--space-medium);
+	}
+
+	.post-link {
+		border-block-end: var(--border-default);
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+		padding-block-end: var(--space-medium);
+		padding-block-start: var(--space-wide);
+		text-align: start;
+	}
+
+	.post-footer {
+		padding-block-start: var(--space-wide);
+		padding-inline: var(--space-outside);
+	}
+
+	.post-buttons {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-narrow);
+		justify-content: space-between;
+	}
+
+	.wrapper {
+		margin-inline: auto;
+		max-width: var(--content-width-default);
+	}
+
+	.post-header :global(.post-date) {
+		margin-block-start: var(--space-wide);
+	}
+
+	.post-header :global(.post-title ~ .post-date) {
+		border-block-start: var(--border-default);
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	nav {
+		padding-block: var(--space-wide);
+		padding-inline: var(--space-outside);
+	}
+
+	.nav-list {
+		--gap-vertical: var(--space-narrow);
+		--gap-horizontal: var(--space-wide);
+
+		display: flex;
+		flex-direction: column;
+		gap: var(--gap-vertical);
+		list-style: none;
+		padding-inline-start: 0;
+	}
+
+	.nav-link {
+		align-items: center;
+		border: 0;
+		display: inline-grid;
+		gap: var(--space-xnarrow);
+		grid-template-columns: [start] 1em [label] minmax(0, 1fr) [end] 1em;
+		justify-items: center;
+	}
+
+	.nav-item {
+		display: block;
+		text-align: center;
+	}
+
+	.nav-label {
+		border-bottom: var(--border-link);
+		color: var(--color-primary);
+		display: inline-block;
+		grid-area: label;
+		transition: color 0.25s ease-in-out;
+	}
+
+	.nav-label:hover,
+	.nav-label:active {
+		color: var(--color-highlight);
+	}
+
+	.nav-link :global(.nav-icon.before) {
+		grid-area: start;
+	}
+
+	.nav-link :global(.nav-icon.after) {
+		grid-area: end;
+	}
+
+	@media screen and (min-width: 32em) {
+		.nav-list {
+			align-items: flex-start;
+			flex-direction: row;
+			gap: var(--gap-horizontal);
+			justify-content: space-between;
+		}
+
+		/* push the last nav link to the right/end of line */
+		/* -> use this in addition to justify-content because it works with only one child */
+		.nav-item:last-child {
+			margin-inline-start: auto;
+			text-align: right;
+		}
+	}
+</style>

@@ -1,49 +1,75 @@
 {
-  "version": "3",
+  "version": "5",
   "remote": {
-    "https://edge.netlify.com/": "ff84a16f192fdb43db8b9dff869889f555c05857d075044d2a7cfa54c283a0a0",
-    "https://edge.netlify.com/bootstrap/config.ts": "0aa0a225d978b89e0e62cbd853701605199e7a84095e55eeb70147faf1a24803",
-    "https://edge.netlify.com/bootstrap/context.ts": "8f99269eeeeccf9b852e6089cc648c962a0ea20b2198b8b38b38e3b2ce2b9143",
+    "https://edge.netlify.com/": "fd941d61d88673d5f28aab283fb86fcc50f08a3bc80ee5470498fcfa88c65cfb",
+    "https://edge.netlify.com/bootstrap/config.ts": "6a2ce0e544e15e8f8883a5c18da5948e37fd0f2619f68cb31f3af53c51817025",
+    "https://edge.netlify.com/bootstrap/context.ts": "e97240232121e2f369f6546ce961490f34d961ea1ea54be3ff09633e3f08373f",
     "https://edge.netlify.com/bootstrap/cookie.ts": "8b0baae708989ca183c6f3b4ab3d029e6abcbc2e43f93edeb0ff447b3bbc3a05",
     "https://edge.netlify.com/bootstrap/edge_function.ts": "b8253e86aa83c67341f5cfedeba5049d77fbf84dcab7eceff7566b7728ae9b39",
-    "https://edge.netlify.com/bootstrap/globals.ts": "38f9e0be6c2c78206bf14d2387d41964d38bbe81644b3668e203c6f6473408a7"
+    "https://edge.netlify.com/bootstrap/globals/types.ts": "eaa6148ded3121d8dee62dd91c86e7fe76601df0f3ca8d7962243a30f4c8935f"
   },
   "workspace": {
-    "packageJson": {
-      "dependencies": [
-        "npm:@astrojs/rss@^4.0.6",
-        "npm:@astrojs/sitemap@^3.1.5",
-        "npm:@netlify/blobs@^7.3.0",
-        "npm:@prismicio/client@^6.4.1",
-        "npm:@prismicio/helpers@^2.2.1",
-        "npm:@prismicio/types@^0.1.27",
-        "npm:@typescript-eslint/eslint-plugin@^5.18.0",
-        "npm:@typescript-eslint/parser@^5.18.0",
-        "npm:astro-compress@^2.2.5",
-        "npm:astro@^4.10.0",
-        "npm:autoprefixer@^10.4.4",
-        "npm:change-case@^4.1.2",
-        "npm:color-convert@^2.0.1",
-        "npm:cssnano@^6.0.0",
-        "npm:csv-parser@^3.0.0",
-        "npm:date-fns@^2.28.0",
-        "npm:eslint-config-airbnb@^19.0.4",
-        "npm:eslint@^8.12.0",
-        "npm:install@^0.13.0",
-        "npm:npm-run-all@^4.1.5",
-        "npm:onchange@^7.1.0",
-        "npm:prettier@^2.6.0",
-        "npm:rehype-stringify@^10.0.0",
-        "npm:remark-gfm@^4.0.0",
-        "npm:remark-parse@^11.0.0",
-        "npm:remark-rehype@^11.1.0",
-        "npm:remark-smartypants@^2.1.0",
-        "npm:remark@^15.0.1",
-        "npm:typescript@^5.2.2",
-        "npm:unified@^11.0.4",
-        "npm:unist-util-visit@^5.0.0",
-        "npm:vite-svg-loader@^3.1.2"
-      ]
+    "members": {
+      "shared": {
+        "packageJson": {
+          "dependencies": [
+            "npm:@astrojs/sitemap@^3.7.0",
+            "npm:@prismicio/client@^7.21.6",
+            "npm:@prismicio/helpers@^2.3.9",
+            "npm:@prismicio/types@~0.2.9",
+            "npm:change-case@^5.4.4",
+            "npm:culori@^4.0.2",
+            "npm:date-fns@^4.1.0",
+            "npm:rehype-raw@7",
+            "npm:rehype-sanitize@6",
+            "npm:rehype-stringify@10",
+            "npm:remark-gfm@4",
+            "npm:remark-parse@11",
+            "npm:remark-rehype@^11.1.0",
+            "npm:remark-smartypants@^2.1.0",
+            "npm:remark@^15.0.1",
+            "npm:unified@^11.0.4",
+            "npm:unist-util-visit@^5.1.0",
+            "npm:vite-svg-loader@^5.1.0",
+            "npm:vite@^7.3.1"
+          ]
+        }
+      },
+      "sites/design": {
+        "packageJson": {
+          "dependencies": [
+            "npm:@astrojs/sitemap@^3.7.0",
+            "npm:@prismicio/helpers@^2.3.9",
+            "npm:@prismicio/types@~0.2.9",
+            "npm:astro@^5.17.1",
+            "npm:date-fns@^4.1.0",
+            "npm:vite-svg-loader@^5.1.0"
+          ]
+        }
+      },
+      "sites/personal": {
+        "packageJson": {
+          "dependencies": [
+            "npm:@astrojs/check@~0.9.6",
+            "npm:@astrojs/rss@^4.0.15",
+            "npm:@astrojs/sitemap@^3.7.0",
+            "npm:@netlify/blobs@^7.3.0",
+            "npm:@prismicio/client@^7.21.6",
+            "npm:@prismicio/helpers@^2.3.9",
+            "npm:@prismicio/types@~0.2.9",
+            "npm:astro@^5.16.16",
+            "npm:autoprefixer@^10.4.4",
+            "npm:change-case@^5.4.4",
+            "npm:cssnano@6",
+            "npm:csv-parser@3",
+            "npm:culori@^4.0.2",
+            "npm:date-fns@^4.1.0",
+            "npm:install@0.13",
+            "npm:netlify-cli@^23.15.1",
+            "npm:vite-svg-loader@^5.1.0"
+          ]
+        }
+      }
     }
   }
 }

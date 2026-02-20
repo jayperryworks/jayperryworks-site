@@ -1,0 +1,162 @@
+---
+/**
+ * Collage block component
+ * - Display images or other content in a tight grid arrangement
+ * 	that acts like a self-contained composition
+ * - layout does not change with screen sizes, but some images are hidden
+ * 	if their priority is lower than 1
+ *
+ * @param {CollageItem[]} images - items to display (see above)
+ * @param {FormattedText} [attribution] - credit for the artist/photographer
+ * @param {boolean} [border=false] - display a border around each item
+ * @param {FormattedText} [caption] - caption to display under the collage
+ * @param {string} [class] - classes to append to the container
+ * @param {ImageFit} [fitImages='default'] - object-fit styles for each image
+ * @param {SpaceScale} [gutter='medium'] - space between each item
+ */
+
+// --- components ---
+import ImageFrame from '@shared/components/elements/ImageFrame.astro';
+import Figure from '@shared/components/blocks/Figure.astro';
+
+// --- types ---
+import type {
+	CollageItem,
+	CollageItemPriority,
+	CollageItemSize,
+	ContentWidth,
+	FormattedText,
+	Frame,
+	ImageFit,
+	Prominence,
+	SpaceScale,
+} from '@shared/lib/types';
+import type { ImageField } from '@prismicio/types';
+
+// --- props ---
+const {
+	images,
+	attribution,
+	border = false,
+	caption,
+	class: className = '',
+	fitImages = 'default',
+	gutter = 'medium',
+} = Astro.props;
+
+/**
+ * Generate classes for each collage item
+ *
+ * @param {CollageItemSize} relativeSize
+ * @param {CollageItemPriority} priority
+ * @returns {string}
+ */
+function getItemClassList(relativeSize, priority = '1') {
+	const sizeClasses = {
+		Default: '',
+		Large: 'wide',
+		XLarge: 'xwide',
+	};
+
+	return [`priority-${priority}`, sizeClasses[relativeSize || 'Default']].join(
+		' ',
+	);
+}
+---
+
+<Figure
+	{attribution}
+	{caption}
+	class={['collage', className].join(' ')}
+>
+	<ul
+		class="wrapper"
+		style={`--gutter: var(--space-${gutter});`}
+	>
+		{
+			images.map(
+				({
+					source,
+					darkModeSource,
+					relativeSize,
+					frame,
+					priority,
+					useImageAspectRatio,
+				}) => (
+					<li class={getItemClassList(relativeSize, priority)}>
+						<ImageFrame
+							fit={fitImages}
+							{source}
+							{darkModeSource}
+							{border}
+							{frame}
+							{useImageAspectRatio}
+						/>
+					</li>
+				),
+			)
+		}
+	</ul>
+</Figure>
+
+<style>
+	/* container */
+	.wrapper {
+		align-items: center;
+		display: grid;
+		gap: var(--space-narrow);
+		grid-auto-flow: dense;
+		grid-template-columns: repeat(auto-fit, minmax(3rem, 1fr));
+		justify-content: center;
+		list-style: none;
+		padding-inline-start: 0;
+	}
+
+	@media screen and (min-width: 30em) {
+		.wrapper {
+			gap: var(--gutter);
+		}
+	}
+
+	li {
+		display: inline-block;
+	}
+
+	li > :global(*) {
+		margin-inline: auto;
+	}
+
+	li + li {
+		margin-top: 0;
+	}
+
+	/* items */
+	.priority-2,
+	.priority-3 {
+		display: none;
+	}
+
+	.xwide {
+		grid-column: span 2;
+	}
+
+	@media screen and (min-width: 40em) {
+		.priority-2 {
+			display: inline-block;
+		}
+
+		.wide {
+			grid-column: span 2;
+		}
+
+		.xwide {
+			grid-column: span 5;
+		}
+	}
+
+	@media screen and (min-width: 64em) {
+		.priority-3 {
+			display: inline-block;
+		}
+	}
+</style>

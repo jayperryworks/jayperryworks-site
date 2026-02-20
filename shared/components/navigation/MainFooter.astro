@@ -1,0 +1,387 @@
+---
+// --- assets ---
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/type.css';
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/utilities/type.css';
+import '@shared/styles/utilities/borders.css';
+import arrowRight from '@shared/icons/arrow-right.svg?raw';
+
+// --- helpers ---
+import { format } from 'date-fns';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@shared/lib/prismic';
+import { linkResolver, fetchLinks } from '@shared/lib/routes';
+
+// --- components ---
+import LogoJPW from '@shared/components/logos/LogoJPW.astro';
+import Button from '@shared/components/elements/Button.astro';
+import Image from '@shared/components/elements/Image.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import Passage from '@shared/components/blocks/Passage.astro';
+import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
+
+// --- types ---
+import { mainNavLink } from '@shared/lib/types';
+import { LinkField } from '@prismicio/types';
+
+type Item = {
+	name: string;
+	link: LinkField;
+	attributes?: string;
+};
+
+export interface Props {
+	showAboutSection?: boolean;
+}
+
+const { showAboutSection = true } = Astro.props as Props;
+
+// --- data ---
+
+// footer content
+const contentResponse = await prismic.getSingle('main_footer', { fetchLinks });
+const {
+	portrait,
+	about,
+	meta_links_title: metaTitle,
+	meta_links,
+} = contentResponse.data;
+
+const blurb = { prismicText: about };
+
+const metaLinks = meta_links.map((item) => {
+	const { label, link } = item;
+
+	return `
+		<li>
+			<a
+				class="type-role-accent"
+				href="${prismicHelpers.asLink(link, linkResolver)}"
+			>
+				${label}
+			</a>
+		</li>
+	`;
+});
+
+// routes for nav
+const routesResponse = await prismic.getSingle('main_nav', { fetchLinks });
+const routes = routesResponse.data.nav_item.reduce(
+	(result, item): mainNavLink[] => {
+		const { label, link } = item;
+
+		if (link.uid !== 'about') {
+			result.push({
+				label,
+				link: prismicHelpers.asLink(link, linkResolver),
+			});
+		}
+		return result;
+	},
+	[],
+);
+
+routes.unshift({
+	label: 'Home',
+	link: '/',
+});
+
+const socialChannelsResponse = await prismic.getSingle('social_channels');
+const { channel } = socialChannelsResponse.data;
+
+const socialChannelList = channel.map((item: Item) => {
+	const { name, link, attributes } = item;
+
+	return `
+		<li>
+			<a
+				class="links-item | type-role-accent"
+				href="${prismicHelpers.asLink(link)}"
+				target="_blank"
+				${attributes || ''}
+			>
+				${name}
+			</a>
+		</li>
+	`.trim();
+});
+
+// social channels
+socialChannelList.push(`
+	<li>
+		<a
+			class="links-item | type-role-accent"
+			href="/rss/feed.xml"
+			target="_blank"
+		>
+			RSS feed
+		</a>
+	</li>
+`);
+
+socialChannelList.join('');
+---
+
+<footer>
+	<!-- About -->
+	{
+		showAboutSection && (
+			<RevealOnScroll
+				tag="section"
+				class="tier about"
+			>
+				<div class="about-wrapper">
+					<Image
+						source={portrait}
+						class="about-portrait"
+					/>
+					<div class="about-blurb">
+						<Passage text={blurb} />
+						<Button
+							href="/about/"
+							iconRight={arrowRight}
+						>
+							A bit more about me
+						</Button>
+					</div>
+				</div>
+			</RevealOnScroll>
+		)
+	}
+
+	<!-- Links -->
+	<nav class="tier links">
+		<!-- Main nav -->
+		<RevealOnScroll
+			class="links-section explore"
+			tag="section"
+		>
+			<Heading
+				class="type-scale-gamma"
+				level={2}
+			>
+				Explore
+			</Heading>
+			<ul
+				role="list"
+				class="links-list"
+			>
+				{
+					routes.map(({ label, link }) => (
+						<li>
+							<a
+								class="links-item | type-role-accent"
+								href={link}
+							>
+								{label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</RevealOnScroll>
+
+		<!-- Social links -->
+		<RevealOnScroll
+			class="links-section social"
+			tag="section"
+		>
+			<Heading
+				class="type-scale-gamma"
+				level={2}
+			>
+				Keep in touch
+			</Heading>
+			<ul
+				class="links-list"
+				role="list"
+				set:html={socialChannelList}
+			/>
+		</RevealOnScroll>
+
+		<!-- Meta links -->
+		<RevealOnScroll
+			class="links-section meta"
+			tag="section"
+		>
+			<Heading
+				class="type-scale-gamma"
+				level={2}
+			>
+				{metaTitle}
+			</Heading>
+			<ul
+				class="links-list"
+				role="list"
+				set:html={metaLinks}
+			/>
+		</RevealOnScroll>
+	</nav>
+
+	<!-- Copyright -->
+	<RevealOnScroll
+		tag="aside"
+		class="tier signoff"
+	>
+		<a
+			class="logo | type-link-undecorated"
+			href="/"
+		>
+			<LogoJPW />
+		</a>
+		<small class="copyright | type-role-accent type-scale-zeta">
+			&copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
+		</small>
+	</RevealOnScroll>
+</footer>
+
+<style>
+	/* --- container  --- */
+	footer {
+		--spacing: var(--space-wide);
+
+		background-color: var(--color-well);
+		display: flex;
+		flex-direction: column;
+		flex-shrink: 0;
+		gap: var(--space-wide);
+		padding-block: var(--space-xwide) var(--space-wide);
+		padding-inline: var(--space-outside);
+		position: relative;
+	}
+
+	footer :global(.tier) {
+		margin-inline: auto;
+		max-width: var(--content-width-xxwide);
+		width: 100%;
+	}
+
+	/* --- about --- */
+	footer :global(.about) {
+		border-block-end: var(--border-default);
+		container-name: about;
+		container-type: inline-size;
+		padding-block-end: var(--spacing);
+	}
+
+	footer :global(.about-blurb) {
+		align-items: flex-start;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-narrow);
+	}
+
+	footer :global(.about-portrait) {
+		aspect-ratio: 1.2 / 1;
+		border-radius: var(--border-radius);
+		object-fit: cover;
+	}
+
+	@container about (min-width: 24em) {
+		.about-wrapper {
+			--portrait-width: 6rem;
+
+			display: grid;
+			gap: var(--space-medium);
+			grid-template-columns: var(--portrait-width) 1fr;
+			grid-template-rows: auto;
+			grid-template-areas: 'portrait blurb';
+		}
+	}
+
+	@container about (min-width: 34em) {
+		.about-wrapper {
+			--portrait-width: 12rem;
+		}
+	}
+
+	/* --- links --- */
+	.links {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing);
+	}
+
+	.links :global(.links-list) {
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xnarrow) var(--space-medium);
+	}
+
+	.link :global(.links-item) {
+		flex: 1 0 20rem;
+	}
+
+	.links :global(.explore) {
+		grid-area: explore;
+	}
+
+	.links :global(.social) {
+		grid-area: social;
+	}
+
+	.links :global(.meta) {
+		grid-area: meta;
+	}
+
+	/* --- signoff --- */
+	footer :global(.signoff) {
+		align-items: center;
+		border-block-start: var(--border-default);
+		display: flex;
+		flex-flow: wrap;
+		gap: var(--space-narrow);
+		justify-content: space-between;
+		overflow: hidden;
+		padding-block-start: var(--spacing);
+	}
+
+	.logo {
+		/* size of the svg viewbox */
+		--width: 141;
+		--height: 23;
+
+		aspect-ratio: var(--width) / var(--height);
+		display: block;
+		max-width: 12rem;
+		overflow: hidden;
+	}
+
+	.copyright {
+		display: flex;
+		color: var(--color-secondary);
+		align-items: center;
+	}
+
+	/* --- large screen layout --- */
+	@media screen and (min-width: 54em) {
+		footer :global(.links) {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			grid-template-areas:
+				'explore explore explore'
+				'social social meta';
+		}
+	}
+
+	@media screen and (min-width: 90em) {
+		footer :global(.links) {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			grid-template-areas:
+				'explore explore'
+				'social meta';
+		}
+	}
+
+	@media screen and (min-width: 130em) {
+		footer :global(.links) {
+			display: grid;
+			grid-template-columns: repeat(6, 1fr);
+			grid-template-areas: 'explore explore explore social social meta';
+		}
+	}
+</style>

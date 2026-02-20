@@ -1,0 +1,35 @@
+---
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/spacing.css';
+
+export interface Props {
+	class?: string;
+}
+
+const { class: className = '' } = Astro.props as Props;
+
+const classList = ['sequence-nav', className].join(' ');
+---
+
+<div class={classList}>
+	<ol class="list">
+		<slot />
+	</ol>
+</div>
+
+<style is:global>
+	.sequence-nav {
+		container-name: sequence;
+		container-type: inline-size;
+	}
+
+	.list {
+		align-items: center;
+		display: flex;
+		list-style: none;
+		margin: 0;
+		max-width: 100%;
+		overflow: visible;
+		padding: 0;
+	}
+</style>

@@ -1,0 +1,34 @@
+{
+	"extends": "astro/tsconfigs/strict",
+	"compilerOptions": {
+		// Enable top-level await and other modern ESM features.
+		"target": "ESNext",
+		"module": "ESNext",
+		// Enable node-style module resolution, for things like npm package imports.
+		"moduleResolution": "node",
+		// Enable JSON imports.
+		"resolveJsonModule": true,
+		// Enable stricter transpilation for better output.
+		"isolatedModules": true,
+		// Astro will directly run your TypeScript code, no transpilation needed.
+		"noEmit": true,
+		// Add type definitions for our Vite runtime.
+		"types": ["astro/client"],
+		"baseUrl": ".",
+		"paths": {
+			// local
+			"@components/*": ["./src/components/*"],
+			"@layouts/*": ["./src/layouts/*"],
+
+			// shared
+			"@shared/fonts/*": ["../../shared/public/assets/fonts/*"],
+			"@shared/icons/*": ["../../shared/public/assets/icons/*"],
+			"@shared/lib/*": ["../../shared/utilities/*"],
+			"@shared/scripts/*": ["../../shared/scripts/*"],
+			"@shared/components/*": ["../../shared/components/*"],
+			"@shared/styles/*": ["../../shared/styles/*"]
+		}
+	},
+	"include": [".astro/types.d.ts", "./src/**/*", "../../shared/utilities/**/*"],
+	"exclude": ["node_modules", "dist"]
+}

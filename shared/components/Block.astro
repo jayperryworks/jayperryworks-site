@@ -1,0 +1,87 @@
+---
+/**
+ * Block component
+ * - wrapper for all content blocks, passes props through
+ *
+ * @param {Block} block - block props from Prismic
+ */
+
+// --- assets ---
+import '@shared/styles/tokens/contentWidth.css';
+
+// --- components ---
+import Aside from '@shared/components/blocks/Aside.astro';
+import Bibliography from '@shared/components/blocks/Bibliography.astro';
+import Billboard from '@shared/components/blocks/Billboard.astro';
+import BlockQuote from '@shared/components/blocks/BlockQuote.astro';
+import Collage from '@shared/components/blocks/Collage.astro';
+import Feed from '@shared/components/blocks/Feed.astro';
+import Figure from '@shared/components/blocks/Figure.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import ImageGallery from '@shared/components/blocks/ImageGallery.astro';
+import Passage from '@shared/components/blocks/Passage.astro';
+import Pullquote from '@shared/components/blocks/Pullquote.astro';
+import StickyNoteGallery from '@shared/components/blocks/StickyNoteGallery.astro';
+import Table from '@shared/components/blocks/Table.astro';
+import Video from '@shared/components/blocks/Video.astro';
+import ColorTransition from '@shared/components/meta/ColorThemeTransition.astro';
+
+// --- types ---
+import type { Block } from '@shared/lib/types';
+
+// --- props ---
+const { block, class: className } = Astro.props;
+
+/**
+ * Match the 'prominence' value to the corresponding width token
+ * @param {Block} block
+ * @returns {string}
+ */
+function getWidth(block) {
+	const widths = {
+		Small: 'narrow',
+		Large: 'xwide',
+		XLarge: 'xxwide',
+	};
+
+	if (block.displayMode === 'slide') return widths['XLarge'];
+	return widths[block.prominence] || '';
+}
+
+const displayModeClass =
+	block.displayMode === 'slide' ? 'slide border-seam-top' : '';
+
+const blocks = {
+	aside: Aside,
+	bibliography: Bibliography,
+	billboard: Billboard,
+	quote: BlockQuote,
+	collage: Collage,
+	feed: Feed,
+	figure: Figure,
+	heading: Heading,
+	imageGallery: ImageGallery,
+	passage: Passage,
+	pullquote: Pullquote,
+	stickyNoteGrid: StickyNoteGallery,
+	table: Table,
+	video: Video,
+};
+
+const Component = blocks[block.type];
+const classList = [
+	'block',
+	'space-outside-margins',
+	displayModeClass,
+	className,
+].join(' ');
+---
+
+<ColorTransition
+	class={classList}
+	{...block.theme}
+>
+	<div class={`content-width centered ${getWidth(block)}`}>
+		<Component {...block} />
+	</div>
+</ColorTransition>

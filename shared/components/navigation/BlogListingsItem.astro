@@ -1,0 +1,89 @@
+---
+// styles
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/type.css';
+
+// utils
+import { format } from 'date-fns';
+
+// components
+import Heading from '@shared/components/blocks/Heading.astro';
+import DevelopmentStageLabel from '@shared/components/elements/DevelopmentStageLabel.astro';
+
+// types
+import { DevelopmentStageName } from '@shared/lib/types';
+
+export interface Props {
+	date: Date;
+	path: string;
+	title: string;
+	showStage?: boolean;
+	stage?: DevelopmentStageName;
+	subtitle?: string;
+}
+
+const {
+	date,
+	path,
+	title,
+	showStage = true,
+	stage,
+	subtitle,
+} = Astro.props as Props;
+---
+
+<article class="blog-listings-item">
+	<Heading
+		class="eyebrow"
+		level={6}
+		subheading
+	>
+		{showStage && <DevelopmentStageLabel name={stage} />}
+		<time datetime={date.toString()}>{format(date, 'yyyy.MM.dd')}</time>
+	</Heading>
+
+	<Heading level={3}>
+		<a
+			class="type-link-undecorated"
+			href={path}
+			>{title}</a
+		>
+	</Heading>
+
+	{
+		subtitle && (
+			<Heading
+				level={4}
+				subheading
+			>
+				<a
+					class="type-link-undecorated"
+					href={path}
+				>
+					{subtitle}
+				</a>
+			</Heading>
+		)
+	}
+</article>
+
+<style>
+	/* reset the flow styling from the .block-list parent container */
+	.blog-listings-item > :global(.heading + .heading) {
+		padding-block-start: 0;
+	}
+
+	.blog-listings-item :global(.eyebrow) {
+		--gap: 0.5em;
+		display: inline-flex;
+		gap: var(--gap);
+		padding-block-end: var(--space-xnarrow);
+	}
+
+	.blog-listings-item :global(.eyebrow > * + *::before) {
+		content: '\2022';
+		font-weight: bold;
+		line-height: 0.5;
+		margin-inline-end: var(--gap);
+	}
+</style>

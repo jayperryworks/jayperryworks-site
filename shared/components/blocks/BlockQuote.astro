@@ -1,0 +1,60 @@
+---
+/**
+ * Block quote component
+ * - display a long quote in editorial text
+ *
+ * @param {FormattedText} text - body text
+ * @param {KeyTextField} [attribution] - optional credit for the author
+ * @param {string} [class] - append classes to the container
+ */
+
+// --- assets ---
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/contentWidth.css';
+import '@shared/styles/utilities/spacing.css';
+
+// --- components ---
+import Passage from '@shared/components/blocks/Passage.astro';
+
+// --- types ---
+import type { FormattedText } from '@shared/lib/types';
+import type { KeyTextField } from '@prismicio/types';
+
+// --- props ---
+const { text, attribution, class: className = '' } = Astro.props;
+---
+
+<blockquote class={className}>
+	{/* allow raw HTML so <br> tags get rendered */}
+	<Passage
+		class="text"
+		allowHTML={true}
+		{text}
+	/>
+	{
+		attribution && (
+			<cite class="type-role-accent type-scale-zeta">
+				&mdash; {attribution}
+			</cite>
+		)
+	}
+</blockquote>
+
+<style>
+	blockquote :global(.text),
+	cite {
+		padding-inline-start: var(--space-medium);
+	}
+
+	blockquote :global(.text) {
+		font-size: 0.89em;
+		font-style: italic;
+		overflow: visible;
+	}
+
+	cite {
+		display: block;
+		padding-block-start: var(--space-medium);
+		color: var(--color-secondary);
+	}
+</style>

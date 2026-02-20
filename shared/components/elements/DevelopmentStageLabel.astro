@@ -1,0 +1,42 @@
+---
+// assets
+import '@shared/styles/utilities/type.css';
+import stageIcon from '@shared/icons/stage.svg?raw';
+
+// components
+import Icon from '@shared/components/elements/Icon.astro';
+
+// types
+import { DevelopmentStageName } from '@shared/lib/types';
+
+export interface Props {
+	class?: string;
+	name?: DevelopmentStageName;
+}
+
+const { name, class: className } = Astro.props as Props;
+
+const classList = [
+	'development-stage-label',
+	'type-role-accent',
+	className,
+].join(' ');
+---
+
+<a
+	class={classList}
+	href={`/blog/stages/${name ? name.toLowerCase() : 'note'}`}
+>
+	<Icon
+		align="baseline"
+		margin="right"
+		svg={stageIcon}
+	/>
+	{name || 'Note'}
+</a>
+
+<style>
+	.development-stage-label {
+		color: var(--color-secondary);
+	}
+</style>

@@ -1,0 +1,285 @@
+---
+/**
+ * Design case study page
+ *
+ * @param {Slice[]} body - block list
+ * @param {string} client - client's name
+ * @param {string} role - my specific role on this project
+ * @param {NumberField} startDate - year the project started, YYYY
+ * @param {TitleField} title - The project's title
+ * @param {string} [agency] - an agency I worked for/subcontracted to
+ * @param {Collaborator[]} [collaborators] - list of collaborator references
+ * @param {GroupField} [contributions] - list of jobs/tasks, e.g. 'art direction'
+ * @param {NumberField} [endDate] - year the project ended, YYYY
+ * @param {PaginationLink} [next] - data for the next post in the collection
+ * @param {SEOContent} [seo] - SEO data from Prismic
+ * @param {TitleField} [subtitle] - The project's subtitle
+ * @param {Theme} [theme] - Color theme data
+ */
+
+// assets
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/borders.css';
+
+// components
+import Layout from '@layouts/Layout.astro';
+import MainFooter from '@components/MainFooter.astro';
+import MainHeader from '@components/MainHeader.astro';
+import BlockList from '@shared/components/BlockList.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import ReadNextLink from '@shared/components/navigation/ReadNextLink.astro';
+import DataGrid from '@shared/components/layout/DataGrid.astro';
+
+// utilities
+import { designProject as permalink } from '@shared/lib/routes';
+import { sentenceCase } from '@shared/lib/stringHelpers';
+import * as prismicHelpers from '@prismicio/helpers';
+import prismic from '@shared/lib/prismic';
+
+// types
+import type {
+	GroupField,
+	NumberField,
+	Slice,
+	TitleField,
+} from '@prismicio/types';
+
+import type { PaginationLink, SEOContent, Theme } from '@shared/lib/types';
+
+export type Contribution = {
+	task: string;
+};
+
+export type Collaborator = {
+	name: string;
+	website: string;
+};
+
+export async function getStaticPaths() {
+	const projects = await prismic.getAllByType('design_project', {
+		orderings: {
+			field: 'my.design_project.start_date',
+			direction: 'desc',
+		},
+		graphQuery: `
+			{
+				design_project {
+					...design_projectFields
+					collaborators {
+						collaborator {
+							...on collaborator {
+								name
+								website
+							}
+						}
+					}
+				}
+			}
+		`,
+	});
+
+	return projects.map(({ uid, data }, index) => {
+		const nextPost = projects[index + 1];
+
+		const {
+			start_date: startDate,
+			end_date: endDate,
+			collaborators,
+			preset_theme,
+			custom_base_hue,
+			body1: themes,
+		} = data;
+
+		return {
+			params: {
+				year: startDate.toString(),
+				uid,
+			},
+			props: {
+				...data,
+				startDate,
+				endDate,
+				seo: {
+					description: data.seo_description,
+					image: data.seo_image?.url,
+					imageAlt: data.seo_image?.alt,
+					title: data.seo_title || prismicHelpers.asText(data.title),
+				},
+				theme: {
+					name: preset_theme,
+					hue: custom_base_hue,
+					custom: themes,
+				},
+				collaborators: collaborators.map(
+					({ collaborator }) => collaborator.data,
+				),
+				next: nextPost && {
+					title: nextPost.data.title,
+					subtitle: nextPost.data.subtitle,
+					path: permalink(nextPost),
+				},
+			},
+		};
+	});
+}
+
+const {
+	agency,
+	body,
+	client,
+	role,
+	startDate,
+	title,
+	collaborators,
+	contributions,
+	endDate,
+	next,
+	seo,
+	theme,
+} = Astro.props;
+
+const credits = [
+	{
+		label: 'Date',
+		value:
+			startDate === endDate
+				? startDate
+				: [`${startDate} - ${endDate || 'present'}`],
+	},
+	{
+		label: 'Agency',
+		value: [agency],
+	},
+	{
+		label: 'Role',
+		value: [role],
+	},
+	{
+		label: 'Contributions',
+		value: contributions.map((item: Contribution, index: number): string =>
+			index === 0 ? sentenceCase(item.task) : item.task,
+		),
+	},
+	{
+		label: 'Collaborators',
+		// need to resolve these links
+		value: collaborators.map(({ name, website }) => {
+			if (website) return `<a href="${website}" target="_blank">${name}</a>`;
+			return name;
+		}),
+		html: true,
+	},
+];
+---
+
+<Layout
+	pageTitle={prismicHelpers.asText(title)}
+	path="design"
+	{seo}
+	{theme}
+>
+	<MainHeader segment="design" />
+	<main id="main">
+		<article>
+			<header class="headline">
+				<Heading level={1}>{prismicHelpers.asText(title)}</Heading>
+				{
+					client && (
+						<Heading
+							subheading
+							level={3}
+						>
+							{client}
+						</Heading>
+					)
+				}
+			</header>
+
+			<BlockList
+				{body}
+				showLedeStyle
+			/>
+
+			<aside class="credits">
+				<div class="credits-wrapper">
+					<Heading
+						level={2}
+						class="credits-heading"
+					>
+						Credits
+					</Heading>
+					<DataGrid
+						data={credits}
+						columnWidth={20}
+						gutter="wide"
+					/>
+				</div>
+			</aside>
+		</article>
+		{
+			next && (
+				<nav class="border-seam-top">
+					<div class="nav-wrapper">
+						<ReadNextLink
+							align="end"
+							link={next.path}
+							titleSize="beta"
+						>
+							<Fragment slot="eyebrow">Next case study:</Fragment>
+							<Fragment slot="title">
+								{prismicHelpers.asText(next.title)}
+							</Fragment>
+						</ReadNextLink>
+					</div>
+				</nav>
+			)
+		}
+	</main>
+	<MainFooter />
+</Layout>
+
+<style>
+	article {
+		padding-block-end: var(--space-xwide);
+	}
+
+	.headline {
+		max-width: var(--content-width-xwide);
+		margin-inline: auto;
+		padding-block: var(--space-xwide);
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xxnarrow);
+	}
+
+	.credits {
+		border-block-start: var(--border-default);
+		margin-block-start: var(--space-xwide);
+		padding: var(--space-xwide) var(--space-outside);
+	}
+
+	.credits :global(.credits-heading) {
+		text-align: center;
+		padding-block-end: var(--space-wide);
+	}
+
+	.credits-wrapper {
+		max-width: var(--content-width-wide);
+		margin-inline: auto;
+	}
+
+	nav {
+		padding-block: var(--space-xwide);
+		padding-inline: var(--space-outside);
+	}
+
+	.nav-wrapper {
+		margin-inline: auto;
+		max-width: var(--content-width-wide);
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
+	}
+</style>

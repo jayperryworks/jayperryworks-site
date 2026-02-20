@@ -1,0 +1,139 @@
+---
+// Data Grid component
+// Present data (key-value pairs or short strings) in a flowing grid layout
+
+// assets
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/type.css';
+import '@shared/styles/utilities/type.css';
+
+// types
+import { SpaceScale, TypeScale } from '@shared/lib/types';
+
+export type DataItem = {
+	label: string;
+	value: string[] | string;
+	html?: boolean;
+};
+
+export interface Props {
+	data: DataItem[];
+	class?: string;
+	columnWidth?: number;
+	gutter?: SpaceScale;
+	typeSize?: TypeScale;
+}
+
+const {
+	data,
+	class: className,
+	columnWidth = 8,
+	gutter = 'medium',
+	typeSize = 'zeta',
+} = Astro.props as Props;
+
+const itemClassList = ['type-role-accent', `type-scale-${typeSize}`].join(' ');
+---
+
+<dl
+	class={['data-grid', className].join(' ')}
+	style={`
+		--gutter: var(--space-${gutter});
+		--col-size: ${columnWidth}rem;
+	`}
+>
+	{
+		data.map((item) => (
+			<div class="group">
+				<dt class="item label">
+					<span class={itemClassList}>{item.label}</span>
+				</dt>
+				{Array.isArray(item.value) ? (
+					item.value.map((seriesItem) => (
+						<dd class={['item', item.value.length > 1 && 'series'].join(' ')}>
+							{item.html ? (
+								<span
+									class={itemClassList}
+									set:html={seriesItem}
+								/>
+							) : (
+								<span class={itemClassList}>{seriesItem}</span>
+							)}
+						</dd>
+					))
+				) : (
+					<dd class="item">
+						{item.html ? (
+							<span
+								class={itemClassList}
+								set:html={item.value}
+							/>
+						) : (
+							<span class={itemClassList}>{item.value}</span>
+						)}
+					</dd>
+				)}
+			</div>
+		))
+	}
+</dl>
+
+<style>
+	.data-grid {
+		list-style: none;
+		display: grid;
+		gap: var(--gutter);
+	}
+
+	.group {
+		line-height: var(--type-leading-tight);
+	}
+
+	.item {
+		line-height: var(--type-leading-tight);
+		display: block;
+		margin-inline-start: 0; /* reset dt/dd default indent */
+	}
+
+	.item > span {
+		color: var(--color-primary);
+	}
+
+	/* trick from https://codepen.io/ShadowShahriar/pen/LYyvVjo */
+	.item.series {
+		--separator: ',';
+
+		display: inline;
+		margin: 0;
+		padding: 0;
+	}
+
+	.item.series > span::after {
+		content: var(--separator) ' ';
+		font-size: var(--type-size);
+		white-space: nowrap;
+	}
+
+	/* .item.series:last-of-type > span::before {
+		content: 'and ';
+	} */
+
+	.item.series:last-of-type > span::after {
+		content: '';
+	}
+
+	.item.label {
+		padding-block-end: var(--space-xxnarrow);
+	}
+
+	.item.label > span {
+		color: var(--color-secondary);
+	}
+
+	/* set up the grid template inside a media query to prevent sidescrolling on small mobile screens */
+	@media screen and (min-width: 18em) {
+		.data-grid {
+			grid-template-columns: repeat(auto-fit, minmax(var(--col-size), 1fr));
+		}
+	}
+</style>

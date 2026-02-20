@@ -1,0 +1,262 @@
+---
+// assets
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/type.css';
+import '@shared/styles/utilities/type.css';
+import externalLink from '@shared/icons/external-link.svg?raw';
+
+// utilities
+import { removeArticles } from '@shared/lib/stringHelpers';
+import * as prismicHelpers from '@prismicio/helpers';
+
+// components
+import Button from '@shared/components/elements/Button.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
+import { Image } from 'astro:assets';
+
+// types
+import { TitleField } from '@prismicio/types';
+
+type Action = {
+	label: string;
+	url: string;
+	type: 'external' | 'internal';
+};
+
+export interface Props {
+	actions?: Action[];
+	author?: TitleField;
+	class?: string;
+	cover?: string;
+	tags?: string[];
+	title?: TitleField;
+}
+
+const {
+	actions,
+	author,
+	class: className = '',
+	cover,
+	tags = [],
+	title,
+} = Astro.props as Props;
+
+const widths = [240, 400, 800];
+const sizes = `(max-width: 360px) 240px, (max-width: 800px) 400px, 800px`;
+
+/**
+ * Get the initial letter from the title of a book
+ *
+ * @param {string} title - the book's title
+ * @returns {string}
+ */
+function getInitial(title) {
+	return removeArticles(prismicHelpers.asText(title)).charAt(0).toUpperCase();
+}
+---
+
+<article class={['book-card', className].join(' ').trim()}>
+	<div class="wrapper">
+		<!-- cover -->
+		<RevealOnScroll
+			tag="figure"
+			class="cover"
+		>
+			<slot name="cover">
+				{
+					cover ? (
+						<Image
+							src={cover}
+							alt={`Cover for '${prismicHelpers.asText(title)}'`}
+							class="cover-image"
+							{widths}
+							{sizes}
+							inferSize
+						/>
+					) : (
+						<div class="cover-image placeholder">
+							<p class="type-role-display type-scale-alpha">
+								{getInitial(title)}
+							</p>
+						</div>
+					)
+				}
+			</slot>
+		</RevealOnScroll>
+
+		<!-- title, author, etc. -->
+		<header>
+			<slot name="header">
+				{
+					title && (
+						<Heading
+							class="type-scale-epsilon"
+							level={2}
+							text={title}
+						/>
+					)
+				}
+				{
+					author && (
+						<Heading
+							level={5}
+							subheading
+						>
+							{author}
+						</Heading>
+					)
+				}
+			</slot>
+		</header>
+
+		<!-- book metadata -->
+		<div class="metadata">
+			<slot name="metadata" />
+		</div>
+
+		<!-- actions -->
+		{
+			actions && (
+				<footer class="actions">
+					{actions.map(({ label, url }) => (
+						<Button
+							href={url}
+							iconRight={externalLink}
+							class="type-role-accent"
+							size="small"
+							target="_blank"
+						>
+							{label}
+						</Button>
+					))}
+				</footer>
+			)
+		}
+	</div>
+</article>
+
+<style>
+	.book-card {
+		--cover-size: 12em;
+
+		background-color: var(--color-island);
+		border-radius: var(--border-radius-round);
+		container-type: inline-size;
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		max-width: var(--content-width-default);
+		padding: var(--space-medium) var(--space-xnarrow);
+	}
+
+	.wrapper {
+		align-items: center;
+		justify-content: center;
+		display: grid;
+		flex: 1;
+		grid-template-areas:
+			'cover'
+			'header'
+			'metadata'
+			'actions';
+		grid-template-rows:
+			var(--cover-size)
+			auto
+			auto
+			1fr;
+		text-align: center;
+	}
+
+	.book-card :global(.cover) {
+		height: 100%;
+		width: 100%;
+		align-items: center;
+		align-self: stretch;
+		aspect-ratio: 1 / 1;
+		display: flex;
+		grid-area: cover;
+		justify-content: center;
+		justify-self: center;
+	}
+
+	.book-card :global(.cover-image) {
+		box-shadow: 0.5em 0.5em 0.3em var(--color-shadow);
+		display: block;
+		height: 100%;
+	}
+
+	.cover-image.placeholder {
+		align-items: center;
+		aspect-ratio: 1 / 1.2;
+		background-color: var(--color-surface);
+		border: var(--border-solid);
+		box-shadow: 0;
+		color: var(--color-border);
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		justify-content: center;
+		padding-block-start: 0.8rem; /* scoot the initial down a little to optically align it/compensate for line height */
+	}
+
+	header {
+		grid-area: header;
+		padding-block-start: var(--space-medium);
+	}
+
+	.metadata {
+		grid-area: metadata;
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	.actions {
+		align-items: center;
+		align-self: end;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: var(--space-xnarrow);
+		grid-area: actions;
+		justify-content: center;
+		padding-block-start: var(--space-narrow);
+	}
+
+	@container (min-width: 28em) {
+		.wrapper {
+			align-items: start;
+			justify-content: start;
+			gap: var(--space-xnarrow) var(--space-narrow);
+			grid-template-areas:
+				'cover header'
+				'cover metadata'
+				'cover actions';
+			grid-template-columns: var(--cover-size) 1fr;
+			grid-template-rows:
+				auto
+				auto
+				1fr;
+			flex: 1;
+			text-align: start;
+		}
+
+		.cover {
+			align-self: start;
+			height: 100%;
+			justify-content: center;
+			width: 100%;
+		}
+
+		header,
+		.metadata,
+		.actions {
+			padding-block-start: 0;
+		}
+
+		.actions {
+			justify-content: start;
+		}
+	}
+</style>

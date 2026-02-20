@@ -1,0 +1,174 @@
+---
+/**
+ * Image Frame: Device component
+ * - Add a frame around content that looks like a mobile device
+ *
+ * @param {ImageField} source - the primary image
+ * @param {ImageField} [darkModeSource] - the image used for dark mode
+ * @param {boolean} [useImageAspectRatio=false] - use the image's own aspect ratio
+ * 	- instead of a standard device aspect ratio (e.g. 4/3 for tablets)
+ * @param {string} [class] - classes to append to the container
+ * @param {string} [el='div'] - HTML tag for the container element
+ * @param {number} [maxHeight] - how tall the image is allowed to be, in vh units
+ * @param {Frame} [type] - the device 'frame' to display
+ */
+
+// --- assets ---
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/elevation.css';
+
+// --- components ---
+import Image from '@shared/components/elements/Image.astro';
+
+// --- types ---
+import type { Frame } from '@shared/lib/types';
+import type { ImageField } from '@prismicio/types';
+
+// --- props ---
+const {
+	source,
+	class: className = '',
+	darkModeSource,
+	el = 'div',
+	maxHeight = 75,
+	type = 'Tablet (landscape)',
+	useImageAspectRatio = false,
+} = Astro.props;
+
+// styling data for each device type
+// - keys are the values from the Prismic 'frame' field
+const types = {
+	Phone: {
+		className: 'phone',
+		defaultAspectRatio: '1/2.05',
+		bezel: {
+			radius: { x: 10, y: 5 },
+			width: { x: 3.5, y: 11 },
+		},
+		screen: {
+			radius: { x: 2, y: 1 },
+		},
+	},
+	'Tablet (landscape)': {
+		className: 'tablet-landscape',
+		defaultAspectRatio: '4/3',
+		bezel: {
+			radius: { x: 4.5, y: 6 },
+			width: { x: 5, y: 5 },
+		},
+		screen: {
+			radius: { x: 0.75, y: 1 },
+		},
+	},
+	'Tablet (portrait)': {
+		className: 'tablet-portrait',
+		defaultAspectRatio: '3/4',
+		bezel: {
+			radius: { x: 6, y: 6 },
+			width: { x: 5, y: 5 },
+		},
+		screen: {
+			radius: { x: 1, y: 0.75 },
+		},
+	},
+};
+
+const device = types[type];
+
+/**
+ * Calculate the aspect ratio of the frame/container from the image dimensions
+ * @param {ImageField} source - the image data from Prismic
+ * @returns {string} - aspect ratio CSS value, e.g. '4/3'
+ */
+function calculateOuterAspectRatio(source) {
+	const { width, height } = source.dimensions;
+	// calculate the padding percentage in each axis
+	const paddingX = width * (device.bezel.width.x / 100);
+	const paddingY = width * (device.bezel.width.y / 100);
+	// find the dimensions with the padding for the bezel
+	const autoAspectX = width + paddingX;
+	const autoAspectY = height + paddingY;
+	// create the aspect ratio CSS string
+	return `${autoAspectX} / ${autoAspectY}`;
+}
+
+const El = el;
+
+const classList = ['device-frame', device.className || '', className].join(' ');
+
+const styleList = [
+	maxHeight ? `--max-height: ${maxHeight};` : '',
+	useImageAspectRatio
+		? `--aspect-ratio: ${calculateOuterAspectRatio(source)};`
+		: `--aspect-ratio: ${device.defaultAspectRatio};`,
+	`--bezel-radius: ${device.bezel.radius.x}% / ${device.bezel.radius.y}%;`,
+	`--screen-radius: ${device.screen.radius.x}% / ${device.screen.radius.y}%;`,
+	`--bezel-width-x: ${device.bezel.width.x}%;`,
+	`--bezel-width-y: ${device.bezel.width.y}%;`,
+].join('');
+---
+
+<El
+	class={classList}
+	style={styleList}
+>
+	<div class="wrapper">
+		<slot>
+			{
+				source && (
+					<Image
+						{source}
+						{darkModeSource}
+					/>
+				)
+			}
+		</slot>
+	</div>
+</El>
+
+<style>
+	/*
+		Only display the device frame if aspect-ratio is supported
+		otherwise it will look super wonky.
+		- default/fallback is showing the image by itself
+	*/
+	@supports (aspect-ratio: 1/2) {
+		.device-frame {
+			aspect-ratio: var(--aspect-ratio);
+			background-color: var(--color-island);
+			border-radius: var(--bezel-radius);
+			border: var(--border-solid);
+			box-shadow: var(--elevation-medium);
+			display: flex;
+			justify-content: center;
+			margin-inline: auto;
+			max-height: calc(var(--max-height) * 1svh);
+			max-height: calc(var(--max-height) * 1vh);
+			overflow: hidden;
+			padding: var(--bezel-width-y) var(--bezel-width-x);
+			position: relative;
+			transition: background-color var(--color-transition) ease-in-out;
+			height: 100%;
+			width: 100%;
+		}
+
+		.wrapper {
+			/* set the inner aspect ratio and crop the image
+			 * - Firefox bug distorts the image if we use object-fit and position here
+			*/
+			border: var(--border-solid);
+			border-radius: var(--screen-radius);
+			overflow: hidden;
+		}
+
+		@media screen and (min-width: 40em) {
+			.device-frame {
+				border-width: 2px;
+			}
+		}
+
+		.device-frame.phone {
+			box-shadow: var(--elevation-low);
+		}
+	}
+</style>

@@ -1,0 +1,94 @@
+---
+/**
+ * Headling block component
+ * - render a heading tag with the correct markup and classes
+ *
+ * @param {'left' | 'center' | 'right'} [align='left'] - align the text
+ * @param {string} [class] - classes to append to the container
+ * @param {string} [id] - ID attribute
+ * @param {number} [level=2] - the level of the heading tag
+ * @param {boolean} [subheading] - is this a subheading?
+ * 	- If so, render as a 'p' tag and style the text differently
+ * @param {TitleField} [text] - the title text, can also pass in the slot
+ */
+
+// --- assets ---
+import '@shared/styles/utilities/type.css';
+import '@shared/styles/utilities/spacing.css';
+
+// --- helpers ----
+import * as prismicHelpers from '@prismicio/helpers';
+
+// --- types ---
+import type { TitleField } from '@prismicio/types';
+import type { ContentWidth } from '@shared/lib/types';
+
+// --- props ---
+const {
+	align = 'left',
+	class: className = '',
+	id,
+	level = 2,
+	subheading,
+	size,
+	text,
+} = Astro.props;
+
+const levels = ['alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta'];
+
+const El = !subheading ? `h${level}` : 'p';
+
+const classList = [
+	subheading
+		? `type-role-accent type-scale-${level ? levels[level] : size.toLowerCase()}`
+		: '',
+	prismicHelpers.isFilled.select(size)
+		? `type-scale-${size.toLowerCase()}`
+		: '',
+	className,
+]
+	.join(' ')
+	.trim();
+---
+
+<El
+	class={classList}
+	data-role={subheading ? 'subheading' : 'heading'}
+	data-align={align}
+	id={id}
+>
+	<slot>{text && prismicHelpers.asText(text)}</slot>
+</El>
+
+<style>
+	/* Applies to both heading and subheading roles b/c of the *= operator */
+	[data-role*='heading'] {
+		margin-block: 0;
+		text-wrap: balance;
+	}
+
+	@supports (text-decoration-thickness: var(--underline-w)) {
+		[data-role*='heading'] :global(a) {
+			text-decoration-thickness: var(--underline-w);
+			text-underline-position: auto;
+		}
+	}
+
+	[data-role~='subheading'] {
+		color: var(--color-secondary);
+		max-width: none; /* override the default max width for paragraphs */
+	}
+
+	/* correct the color of links nested in a subheading */
+	[data-role~='subheading'] :global(a):not(:hover, :active) {
+		color: var(--color-secondary);
+	}
+
+	[data-align~='center'] {
+		text-align: center;
+	}
+
+	[data-align~='right'] {
+		text-align: right;
+	}
+</style>

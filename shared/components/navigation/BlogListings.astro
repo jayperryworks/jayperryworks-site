@@ -1,0 +1,55 @@
+---
+// components
+import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
+import ReadNextLink from '@shared/components/navigation/ReadNextLink.astro';
+
+export interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props as Props;
+
+const classList = ['posts', className].join(' ');
+---
+
+<div class="blog-listings">
+	<ul class={classList}>
+		<slot />
+	</ul>
+
+	<RevealOnScroll
+		tag="nav"
+		class="footer-nav"
+	>
+		<slot name="footer-nav">
+			<ReadNextLink
+				eyebrowSize="delta"
+				link="/blog/page/1"
+				titleSize="beta"
+			>
+				<Fragment slot="eyebrow">More blog posts:</Fragment>
+				<Fragment slot="title">Archive</Fragment>
+			</ReadNextLink>
+		</slot>
+	</RevealOnScroll>
+</div>
+
+<style>
+	.blog-listings {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-xwide);
+	}
+	.posts {
+		list-style: none;
+		padding-inline-start: 0;
+		margin-block: 0;
+	}
+
+	.blog-listings .footer-nav {
+		border-top: var(--border-default);
+		padding-block: var(--space-xwide);
+		margin-block-start: var(--space-xwide);
+	}
+</style>

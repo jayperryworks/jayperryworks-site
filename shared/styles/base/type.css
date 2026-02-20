@@ -1,0 +1,207 @@
+@import url("@shared/styles/tokens/borders.css");
+@import url("@shared/styles/tokens/spacing.css");
+@import url("@shared/styles/tokens/type.css");
+
+/* --- webfonts --- */
+
+/* Display: Sanomat */
+@font-face {
+	font-display: swap;
+	font-family: "Sanomat";
+	font-weight: 700;
+	src:
+		local("Sanomat"),
+		url("/assets/fonts/Sanomat-Bold.woff2") format("woff2"),
+		url("/assets/fonts/Sanomat-Bold.woff") format("woff");
+}
+
+@font-face {
+	font-display: swap;
+	font-family: "Sanomat";
+	font-style: italic;
+	font-weight: 700;
+	src:
+		local("Sanomat"),
+		url("/assets/fonts/Sanomat-Bold-Italic.woff2") format("woff2"),
+		url("/assets/fonts/Sanomat-Bold-Italic.woff") format("woff");
+}
+
+/* Accent: Figtree */
+@font-face {
+	font-display: swap;
+	font-family: "Figtree";
+	font-weight: 300 600;
+	src:
+		url("/assets/fonts/Figtree.ttf") format("truetype") tech("variations"),
+		url("/assets/fonts/Figtree.ttf") format("truetype-variations");
+}
+
+@font-face {
+	font-display: swap;
+	font-family: "Figtree";
+	font-style: italic;
+	font-weight: 300 600;
+	src:
+		url("/assets/fonts/Figtree-Italic.ttf") format("truetype")
+			tech("variations"),
+		url("/assets/fonts/Figtree-Italic.ttf") format("truetype-variations");
+}
+
+/* Text: Figtree */
+@font-face {
+	font-display: swap;
+	font-family: "Iowan Old Style";
+	src:
+		local("Iowan Old Style"),
+		url("/assets/fonts/Iowan-Roman.woff2") format("woff2"),
+		url("/assets/fonts/Iowan-Roman.woff") format("woff");
+}
+
+@font-face {
+	font-display: swap;
+	font-family: "Iowan Old Style";
+	font-style: italic;
+	src:
+		local("Iowan Old Style Italic"),
+		url("/assets/fonts/Iowan-Italic.woff2") format("woff2"),
+		url("/assets/fonts/Iowan-Italic.woff") format("woff");
+}
+
+@font-face {
+	font-display: swap;
+	font-family: "Iowan Old Style";
+	font-weight: bold;
+	src:
+		local("Iowan Old Style Bold"),
+		url("/assets/fonts/Iowan-Bold.woff2") format("woff2"),
+		url("/assets/fonts/Iowan-Bold.woff") format("woff");
+}
+
+@font-face {
+	font-display: swap;
+	font-family: "Iowan Old Style";
+	font-style: italic;
+	font-weight: bold;
+	src:
+		local("Iowan Old Style Bold Italic"),
+		url("/assets/fonts/Iowan-Bold-Italic.woff2") format("woff2"),
+		url("/assets/fonts/Iowan-Bold-Italic.woff") format("woff");
+}
+
+/* --- global type --- */
+html {
+	font-size: 100%;
+}
+
+body {
+	font-family: var(--type-font-body);
+	font-size: 1.2rem;
+	font-size: var(--type-scale-epsilon);
+	line-height: var(--type-leading-default);
+	font-weight: 300;
+	hanging-punctuation: first last;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--type-font-display);
+	font-weight: 700;
+	line-height: var(--type-leading-tight);
+	max-width: none;
+	text-wrap: balance; /* https: //robinrendle.com/notes/an-end-to-typographic-widows-on-the-web/ */
+}
+
+:is(h1, h2, h3, h4, h5, h6) strong,
+:is(h1, h2, h3, h4, h5, h6) em {
+	font-style: italic;
+}
+
+h1 {
+	font-size: 2.83rem;
+	font-size: var(--type-scale-alpha);
+	line-height: var(--type-leading-xtight);
+}
+
+h2 {
+	font-size: 2.36rem;
+	font-size: var(--type-scale-beta);
+	line-height: var(--type-leading-xtight);
+}
+
+h3 {
+	font-size: 1.75rem;
+	font-size: var(--type-scale-gamma);
+}
+
+h4 {
+	font-size: 1.32rem;
+	font-size: var(--type-scale-delta);
+}
+
+h5 {
+	font-size: 1.2rem;
+	font-size: var(--type-scale-epsilon);
+}
+
+h6 {
+	font-size: 1rem;
+	font-size: var(--type-scale-zeta);
+}
+
+p {
+	margin-block: 0;
+	max-width: 70ch;
+}
+
+a {
+	--underline-w: 0.125em;
+
+	border-bottom: var(--underline-w) solid var(--color-highlight);
+	color: var(--color-primary);
+	cursor: pointer;
+	transition: all 0.25s ease;
+}
+
+@supports (text-decoration-thickness: var(--underline-w)) {
+	a {
+		border-bottom: 0;
+		text-decoration-color: var(--color-highlight);
+		text-decoration-style: solid;
+		text-decoration-thickness: var(--underline-w);
+		text-underline-position: under;
+	}
+}
+
+a:hover,
+a:active {
+	color: var(--color-highlight);
+}
+
+strong {
+	font-weight: bold;
+}
+
+em {
+	font-style: italic;
+}
+
+code {
+	background-color: var(--color-island);
+	border-radius: 0.2em;
+	display: inline-block;
+	font-family: "Menlo", "Monaco", "Consolas", "Lucida Console", monospace;
+	font-size: 0.8em;
+	padding: 0 0.25em;
+	color: var(--color-secondary);
+}
+
+a code {
+	background-color: transparent;
+	border-radius: 0;
+	display: inline;
+	padding: 0;
+}

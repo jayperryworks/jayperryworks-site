@@ -1,0 +1,102 @@
+---
+/**
+ * Pullquote block component
+ * - display a stylized quote as a masked image
+ *
+ * @param {FormattedText} text - the text content, used as a fallback/alt
+ * @param {string} [class] - classes to append to the container
+ * @param {ColorRoles} [color] - the color for the image mask
+ * @param {ImageField} [image] - the image to display, e.g. handwriting scan
+ */
+
+// --- assets ---
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/visibility.css';
+
+// --- utilities ---
+import * as prismicHelpers from '@prismicio/helpers';
+
+// --- types ---
+import type { ColorRoles, FormattedText } from '@shared/lib/types';
+import type { ImageField } from '@prismicio/types';
+
+// --- components ---
+import Passage from '@shared/components/blocks/Passage.astro';
+import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
+
+// --- props ---
+const { text, class: className = '', color = 'primary', image } = Astro.props;
+
+// --- helper functions ---
+
+/**
+ * Create a url for an image version at a given size
+ * @param {number} size - width in pixels of the image
+ * @returns {string} - url of the image source from Prismic
+ */
+function imageVersion(size) {
+	return prismicHelpers.asImageSrc(image, {
+		fit: 'max',
+		w: size,
+	});
+}
+
+/**
+ * Create the CSS variables for the style attribute
+ * @returns {string}
+ */
+function variables() {
+	if (image) {
+		const { width, height } = image.dimensions;
+
+		return [
+			`--aspect: ${width} / ${height};`,
+			`--color: var(--color-${color});`,
+			`--image-small: url('${imageVersion(800)}');`,
+			`--image-medium: url('${imageVersion(1600)}');`,
+			`--image-large: url('${imageVersion(2400)}');`,
+		].join('');
+	}
+
+	return '';
+}
+---
+
+<RevealOnScroll>
+	<aside
+		class={['pullquote', className].join(' ')}
+		role="presentation"
+		style={variables()}
+	>
+		<Passage
+			class={image ? 'hide-visually' : ''}
+			typeSize="delta"
+			{text}
+		/>
+	</aside>
+</RevealOnScroll>
+
+<style>
+	.pullquote {
+		--image: var(--image-small);
+
+		aspect-ratio: var(--aspect);
+		background-color: var(--color, currentColor);
+		mask-image: var(--image);
+		mask-position: 50% 50%;
+		mask-repeat: no-repeat;
+		mask-size: contain;
+	}
+
+	@media screen and (min-width: 37em) {
+		.pullquote {
+			--image: var(--image-medium);
+		}
+	}
+
+	@media screen and (min-width: 100em) {
+		.pullquote {
+			--image: var(--image-large);
+		}
+	}
+</style>
