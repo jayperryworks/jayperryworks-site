@@ -12,8 +12,8 @@ import prismic from '@shared/lib/prismic';
 import Layout from '@layouts/Layout.astro';
 import BlockList from '@shared/components/BlockList.astro';
 import Heading from '@shared/components/blocks/Heading.astro';
-import MainNav from '@shared/components/navigation/MainNav.astro';
-import MainFooter from '@shared/components/navigation/MainFooter.astro';
+import MainHeader from '@components/MainHeader.astro';
+import MainFooter from '@components/MainFooter.astro';
 
 // types
 import type { Slice, TitleField } from '@prismicio/types';
@@ -36,7 +36,8 @@ export async function getStaticPaths(): Promise<Function> {
 
 		const site = data.site || 'Design';
 
-		if (site !== 'Design') return result;
+		// If this page is only for the personal site, don't include it
+		if (site === 'Personal') return result;
 
 		const seo = {
 			description: seo_description,
@@ -72,7 +73,7 @@ const { uid } = Astro.params;
 	{seo}
 	{theme}
 >
-	<MainNav segment={uid} />
+	<MainHeader segment={uid} />
 	<main id="main">
 		<article>
 			<header class="title">
