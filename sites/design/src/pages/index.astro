@@ -1,21 +1,24 @@
 ---
+// --- assets ---
 import '@shared/styles/tokens/contentWidth.css';
 import '@shared/styles/tokens/spacing.css';
 import '@shared/styles/utilities/borders.css';
 import '@shared/styles/utilities/type.css';
+import '@shared/styles/utilities/visibility.css';
 
-// utils
+// --- utils ---
 import { fetchLinks } from '@shared/lib/routes';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@shared/lib/prismic';
 
-// components
+// --- components ---
 import Layout from '@layouts/Layout.astro';
+import LogoDesign from '@components/LogoDesign.astro';
 import MainFooter from '@components/MainFooter.astro';
 import MainHeader from '@components/MainHeader.astro';
 import BlockList from '@shared/components/BlockList.astro';
 
-// fetch content
+// --- data ---
 const response = await prismic.getByUID('home', 'home-design', { fetchLinks });
 
 const { title, body, seo_title, seo_description, seo_image } = response.data;
@@ -35,12 +38,28 @@ const seo = {
 >
 	<MainHeader />
 	<main id="main">
+		<h1 class="logo">
+			<span class="hide-visually">Jay Perry Design</span>
+			<LogoDesign
+				aria-hidden="true"
+				focusable="false"
+				role="presentation"
+			/>
+		</h1>
 		<BlockList {body} />
 	</main>
 	<MainFooter />
 </Layout>
 
 <style>
+	.logo {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+		padding-inline: var(--space-outside);
+		padding-block-end: var(--space-xwide);
+	}
+
 	main {
 		padding-block: var(--space-xwide);
 	}
