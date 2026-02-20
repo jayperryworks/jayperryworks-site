@@ -1,4 +1,17 @@
 ---
+/**
+ * Main Footer navigation component
+ *
+ * @param {boolean} [showAboutSection=true] - show the short bio blurb about me
+ */
+
+/**
+ * @typedef {object} Item
+ * @property {string} name - label for the social channel/link
+ * @property {LinkField} link - link to the url/document
+ * @property {string} [attributes] - attributes like `rel=me` for the link
+ */
+
 // --- assets ---
 import '@shared/styles/tokens/spacing.css';
 import '@shared/styles/tokens/type.css';
@@ -22,20 +35,11 @@ import Passage from '@shared/components/blocks/Passage.astro';
 import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
 
 // --- types ---
-import { mainNavLink } from '@shared/lib/types';
-import { LinkField } from '@prismicio/types';
+import type { mainNavLink } from '@shared/lib/types';
+import type { LinkField } from '@prismicio/types';
 
-type Item = {
-	name: string;
-	link: LinkField;
-	attributes?: string;
-};
-
-export interface Props {
-	showAboutSection?: boolean;
-}
-
-const { showAboutSection = true } = Astro.props as Props;
+// --- props ---
+const { showAboutSection = true } = Astro.props;
 
 // --- data ---
 
@@ -340,14 +344,8 @@ socialChannelList.join('');
 	}
 
 	.logo {
-		/* size of the svg viewbox */
-		--width: 141;
-		--height: 23;
-
-		aspect-ratio: var(--width) / var(--height);
 		display: block;
 		max-width: 12rem;
-		overflow: hidden;
 	}
 
 	.copyright {

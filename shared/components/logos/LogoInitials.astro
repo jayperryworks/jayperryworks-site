@@ -4,21 +4,29 @@
  *
  * @param {ColorRoles} [color='island'] - color for the lettering
  * @param {ColorRoles} [bgColor='primary'] - color for the box
+ * @param {string} [class] - append classes to the container
+ * @param {object} [attrs] - append attributes to the container
  */
 
 // --- types ---
 import type { ColorRoles } from '@shared/utilities/types';
 
 // --- props ---
-const { color = 'surface', bgColor = 'secondary' } = Astro.props;
+const {
+	color = 'surface',
+	bgColor = 'secondary',
+	class: className = '',
+	...attrs
+} = Astro.props;
 ---
 
 <svg
-	class="u-logo"
+	class={className}
 	height="50"
 	viewBox="0 0 230 250"
 	width="46"
 	xmlns="http://www.w3.org/2000/svg"
+	{...attrs}
 >
 	<title>Jay Perry</title>
 
@@ -31,7 +39,7 @@ const { color = 'surface', bgColor = 'secondary' } = Astro.props;
 	<!-- JP -->
 	<path
 		d="M115.548 60.323c-.296 6.095-.443 16.865-.443 23.353v70.625c0 30.686-22.36 40.093-40.71 40.093-4.009 0-11.411-.771-14.804-1.696-.925-.155-.771-16.809 0-16.809h1.388c3.701 2.93 7.71 6.014 12.028 7.865 2.313 1.079 5.243 1.85 7.556 1.85 6.631 0 9.098-3.546 9.098-12.336V59.774l-10.486-1.388c-.308 0 0-4.78.309-4.78h38.555c40.473 0 57.007 14.467 57.007 37.201 0 27.9-31.517 38.578-49.773 39.095-.517 0-.861-5.683-.172-5.856 9.816-1.722 22.044-7.233 22.044-30.828 0-20.839-4.994-32.895-31-32.895zm21.148 117.397c-6.281 0-11.384-4.58-11.384-10.729 0-6.15 5.103-10.73 11.384-10.73 6.149 0 11.253 4.58 11.253 10.73 0 6.149-5.104 10.729-11.253 10.729"
-		style={`fill: var(--color-${color});`}
+		style={`fill: var(--color-${color}, currentColor);`}
 	></path>
 </svg>
 

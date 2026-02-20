@@ -150,7 +150,7 @@ socialChannelList.join('');
 			class="logo | type-link-undecorated"
 			href="/"
 		>
-			<LogoJPW />
+			<LogoJPW class="logo" />
 		</a>
 		<small class="copyright | type-role-accent type-scale-zeta">
 			&copy; Copyright {format(new Date(), 'yyyy')} Jay Perry Works, all rights reserved.
@@ -236,7 +236,7 @@ socialChannelList.join('');
 
 	/* --- signoff --- */
 	footer :global(.signoff) {
-		align-items: center;
+		align-items: start;
 		border-block-start: var(--border-default);
 		display: flex;
 		flex-flow: wrap;
@@ -247,14 +247,8 @@ socialChannelList.join('');
 	}
 
 	.logo {
-		/* size of the svg viewbox */
-		--width: 141;
-		--height: 23;
-
-		aspect-ratio: var(--width) / var(--height);
 		display: block;
 		max-width: 12rem;
-		overflow: hidden;
 	}
 
 	.copyright {
