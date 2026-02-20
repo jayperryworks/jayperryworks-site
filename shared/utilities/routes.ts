@@ -51,7 +51,7 @@ export function getDateParams(
 
 // --- main pages
 // -> export each route as an individual function so it can be called individually as needed
-export function home({ uid, data }): string {
+export function home({ data }): string {
 	const { site } = data;
 
 	if (site === 'Design') return 'https://design.jayperry.works/';
