@@ -38,11 +38,7 @@ export function hexToOKLCH(hex) {
  * @returns {boolean}
  */
 export function hasDarkMode(theme = {}) {
-	const {
-		custom,
-		hue,
-		name,
-	} = theme;
+	const { custom, hue, name } = theme;
 
 	// if a theme name or custom hue are provided, use the default dark theme tokens
 	if (name || hue) return true;
@@ -64,12 +60,7 @@ export function hasDarkMode(theme = {}) {
  * @returns {string[]} - an array of css variable definitions, e.g. --base-h: 100deg;
  */
 export function setThemeStyle(options = {}) {
-	const {
-		name,
-		hue,
-		custom,
-		inherit = false,
-	} = options;
+	const { name, hue, custom, inherit = false } = options;
 	let styles = [];
 
 	// if a theme name is passed as a prop, assign a default hue to the base-h variable
@@ -102,7 +93,7 @@ export function setThemeStyle(options = {}) {
 					const formattedColor = hexToOKLCH(theme[role]);
 
 					styles.push(
-						`--custom-${mode.toLowerCase()}-${name}: ${formattedColor};`
+						`--custom-${mode.toLowerCase()}-${name}: ${formattedColor};`,
 					);
 				}
 			}

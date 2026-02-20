@@ -17,8 +17,8 @@ import BlockList from '@shared/components/BlockList.astro';
 import Button from '@shared/components/elements/Button.astro';
 import Heading from '@shared/components/blocks/Heading.astro';
 import Passage from '@shared/components/blocks/Passage.astro';
-import MainNav from '@shared/components/navigation/MainNav.astro';
-import MainFooter from '@shared/components/navigation/MainFooter.astro';
+import MainNav from '@components/MainNav.astro';
+import MainFooter from '@components/MainFooter.astro';
 
 // fetch content
 const response = await prismic.getSingle('homepage', { fetchLinks });

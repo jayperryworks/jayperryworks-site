@@ -11,7 +11,7 @@ import * as prismicHelpers from '@prismicio/helpers';
 import { linkResolver, fetchLinks } from '@shared/lib/routes';
 
 // components
-import LogoJP from '@shared/components/logos/LogoJP.astro';
+import LogoInitials from '@shared/components/logos/LogoInitials.astro';
 
 // types
 import { mainNavLink } from '@shared/lib/types';
@@ -48,7 +48,7 @@ const classList = ['main-header', className].join(' ');
 		href="/"
 		rel="me"
 	>
-		<LogoJP />
+		<LogoInitials />
 	</a>
 
 	<!-- nav -->
@@ -197,7 +197,11 @@ const classList = ['main-header', className].join(' ');
 	.logo {
 		border: none;
 		display: block;
-		max-width: 2.5rem;
+		max-width: 2.25rem;
+	}
+
+	.logo > :global(svg) {
+		width: 100%;
 	}
 
 	jp-hamburger-nav :global(.nav-button) {
