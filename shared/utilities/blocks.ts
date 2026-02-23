@@ -182,6 +182,8 @@ function callToAction(slice: Slice): BlockType {
 			trailingIcon,
 		};
 	});
+
+	return { align, buttons, ...sharedBlockFields(slice) };
 }
 
 function collage(slice: Slice): BlockType {
@@ -412,6 +414,7 @@ export default {
 	aside,
 	bibliography,
 	billboard,
+	call_to_action: callToAction,
 	collage,
 	feed,
 	figure,

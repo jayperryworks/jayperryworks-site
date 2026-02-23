@@ -10,7 +10,7 @@
 
 // --- assets ---
 import '@shared/styles/tokens/spacing.css';
-import rightArrow from '@shared/icons/right-arrow.svg?raw';
+import rightArrow from '@shared/icons/arrow-right.svg?raw';
 import externalLink from '@shared/icons/external-link.svg?raw';
 
 // --- utilities ---
@@ -32,7 +32,7 @@ import { LinkField } from '@prismicio/types';
 import Button from '@shared/components/elements/Button.astro';
 
 // --- props ---
-const { align = 'start', buttons, class: className } = Astro.props;
+const { align, buttons, class: className = '' } = Astro.props;
 
 // match the icon name from Prismic to the svg
 const icons = {
@@ -43,7 +43,7 @@ const icons = {
 
 <div
 	class={`call-to-action ${className}`}
-	data-align={align}
+	data-align={align?.toLowerCase() || 'start'}
 >
 	<slot>
 		{
@@ -67,18 +67,14 @@ const icons = {
 		flex-wrap: wrap;
 		gap: var(--space-narrow);
 		align-items: center;
-		justify-content: center;
+		justify-content: start;
 	}
 
-	[data-align] {
-		justify-content: attr(data-align);
-	}
-
-	/* [data-align~='center'] {
+	[data-align~='center'] {
 		justify-content: center;
 	}
 
 	[data-align~='end'] {
 		justify-content: end;
-	} */
+	}
 </style>
