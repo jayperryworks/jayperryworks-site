@@ -1,0 +1,84 @@
+---
+/**
+ * Call to action block component
+ * @description - Display one or more links as buttons
+ *
+ * @param {CTAItem[]} [buttons] - the buttons to display
+ * @param {'start' | 'center' | 'end'} [align='start'] - horizontally align the buttons
+ * @param {string} [class] - append classes to the container
+ */
+
+// --- assets ---
+import '@shared/styles/tokens/spacing.css';
+import rightArrow from '@shared/icons/right-arrow.svg?raw';
+import externalLink from '@shared/icons/external-link.svg?raw';
+
+// --- utilities ---
+import * as prismicHelpers from '@prismicio/helpers';
+import { linkResolver } from '@shared/lib/routes.js';
+
+// --- types ---
+/**
+ * @typedef {object} CTAItem
+ * @property {string} label - the label text to display
+ * @property {LinkField} link - the link url
+ * @property {'Large' | 'Medium' | 'Small'} [size] - size of the button
+ * @property {'Right arrow' | 'External link'} [trailingIcon] - icon to display
+ */
+
+import { LinkField } from '@prismicio/types';
+
+//--- components ---
+import Button from '@shared/components/elements/Button.astro';
+
+// --- props ---
+const { align = 'start', buttons, class: className } = Astro.props;
+
+// match the icon name from Prismic to the svg
+const icons = {
+	'External link': externalLink,
+	'Right arrow': rightArrow,
+};
+---
+
+<div
+	class={`call-to-action ${className}`}
+	data-align={align}
+>
+	<slot>
+		{
+			buttons &&
+				buttons.map(({ link, label, size, trailingIcon }) => (
+					<Button
+						href={prismicHelpers.asLink(link, linkResolver)}
+						iconRight={trailingIcon && icons[trailingIcon]}
+						{size}
+					>
+						{label}
+					</Button>
+				))
+		}
+	</slot>
+</div>
+
+<style>
+	.call-to-action {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-narrow);
+		align-items: center;
+		justify-content: center;
+	}
+
+	[data-align] {
+		justify-content: attr(data-align);
+	}
+
+	/* [data-align~='center'] {
+		justify-content: center;
+	}
+
+	[data-align~='end'] {
+		justify-content: end;
+	} */
+</style>

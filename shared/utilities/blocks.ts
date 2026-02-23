@@ -1,9 +1,9 @@
 // utils
-import { camelCase } from "change-case";
-import * as prismicHelpers from "@prismicio/helpers";
+import { camelCase } from 'change-case';
+import * as prismicHelpers from '@prismicio/helpers';
 
 // types
-import type { Block as BlockType, Prominence } from "@shared/lib/types";
+import type { Block as BlockType, Prominence } from '@shared/lib/types';
 
 import type {
 	ImageField,
@@ -12,7 +12,7 @@ import type {
 	SelectField,
 	Slice,
 	TitleField,
-} from "@prismicio/types";
+} from '@prismicio/types';
 
 // --- block fields ---
 function headingText(text: TitleField): string {
@@ -42,7 +42,7 @@ function markdownText(text: RichTextField): string {
 function sharedBlockFields(slice: Slice): BlockType {
 	const {
 		prominence,
-		display_mode: displayMode = "flow",
+		display_mode: displayMode = 'flow',
 		include_in_excerpt: includeInExcerpt,
 	} = slice.primary;
 
@@ -94,7 +94,7 @@ function bibliography(slice: Slice): BlockType {
 			}),
 		),
 		...sharedBlockFields(slice),
-		prominence: "Large",
+		prominence: 'Large',
 	};
 }
 
@@ -112,15 +112,15 @@ function billboard(slice: Slice): BlockType {
 
 	const images = slice.items.reduce((result, item) => {
 		const {
-			frame = "None",
-			priority = "1",
+			frame = 'None',
+			priority = '1',
 			relative_size: relativeSize,
 			cover_image: source,
 			dark_mode_cover_image: darkModeSource,
 			use_image_aspect_ratio: useImageAspectRatio = false,
 		} = item;
 
-		if ((source as ImageField).url === "") return result;
+		if ((source as ImageField).url === '') return result;
 
 		result.push({
 			frame,
@@ -144,7 +144,7 @@ function billboard(slice: Slice): BlockType {
 		description: {
 			prismicText,
 		},
-		displayMode: "slide",
+		displayMode: 'slide',
 		subtitle: headingText(subtitle as TitleField),
 		title: headingText(title1 as TitleField),
 		theme: {
@@ -169,13 +169,28 @@ function blockQuote(slice: Slice): BlockType {
 	};
 }
 
+function callToAction(slice: Slice): BlockType {
+	const { align } = slice.primary;
+
+	const buttons = slice.items.map((button) => {
+		const { link, label, size, trailing_icon: trailingIcon } = button;
+
+		return {
+			link,
+			label,
+			size,
+			trailingIcon,
+		};
+	});
+}
+
 function collage(slice: Slice): BlockType {
 	const { caption, attribution, gutter } = slice.primary;
 
 	const images = slice.items.map((item) => {
 		const {
-			frame = "None",
-			priority = "1",
+			frame = 'None',
+			priority = '1',
 			relative_size: relativeSize,
 			image: source,
 			use_image_aspect_ratio: useImageAspectRatio = false,
@@ -221,7 +236,7 @@ function feed(slice: Slice): BlockType {
 		description: {
 			prismicText,
 		},
-		displayMode: "slide",
+		displayMode: 'slide',
 		subtitle: headingText(subtitle as TitleField),
 		title: headingText(title as TitleField),
 		theme: {
@@ -240,7 +255,7 @@ function figure(slice: Slice): BlockType {
 		image,
 		image_dark_mode,
 		border = false,
-		frame = "None",
+		frame = 'None',
 		use_image_aspect_ratio = false,
 	} = slice.primary;
 
@@ -287,7 +302,7 @@ function imageGallery(slice: Slice): BlockType {
 		caption,
 		column_size: columnSize,
 		gutter,
-		frame = "None",
+		frame = 'None',
 		use_image_aspect_ratio: useImageAspectRatio = false,
 	} = slice.primary;
 
