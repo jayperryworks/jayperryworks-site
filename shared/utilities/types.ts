@@ -6,18 +6,27 @@ import {
 } from '@prismicio/types';
 
 // --- color ---
-export type ColorRoles = 'primary' | 'secondary' | 'highlight' | 'surface' | 'island' | 'well' | 'border' | 'shadow';
+export type ColorRoles =
+	| 'primary'
+	| 'secondary'
+	| 'highlight'
+	| 'surface'
+	| 'island'
+	| 'well'
+	| 'border'
+	| 'shadow';
 
 // names of the default color themes
-export type ThemeNames = 'cherry'| 'mustard'| 'mint'| 'lavendar'| 'anemone';
+export type ThemeNames = 'cherry' | 'mustard' | 'mint' | 'lavendar' | 'anemone';
 
 export type CSSVariable = `var(--${string})`;
-export type CSSDegree = (`${number | string}deg`) | CSSVariable;
-export type CSSPercentage = (`${number | string}%`) | CSSVariable;
+export type CSSDegree = `${number | string}deg` | CSSVariable;
+export type CSSPercentage = `${number | string}%` | CSSVariable;
 export type CSSAlpha = `/ ${number | string}`;
 export type HexColor = `#${number}`;
-export type OKLCHColor = (`oklch(${CSSPercentage} ${number} ${CSSDegree})`)
-	| (`oklch(${CSSPercentage} ${number} ${CSSDegree} ${CSSAlpha})`);
+export type OKLCHColor =
+	| `oklch(${CSSPercentage} ${number} ${CSSDegree})`
+	| `oklch(${CSSPercentage} ${number} ${CSSDegree} ${CSSAlpha})`;
 
 // a page theme with literal CSS values
 export type Theme = {
@@ -28,12 +37,25 @@ export type Theme = {
 
 // --- layout and UI ---
 export type Align = 'start' | 'center' | 'end';
-export type SpaceScale = 'xxnarrow' | 'xnarrow' | 'narrow' | 'medium' | 'wide' | 'xwide';
-export type ContentWidth = 'narrow' | 'default' | 'wide' | 'xwide' | 'xxwide'
+export type SpaceScale =
+	| 'xxnarrow'
+	| 'xnarrow'
+	| 'narrow'
+	| 'medium'
+	| 'wide'
+	| 'xwide';
+export type ContentWidth = 'narrow' | 'default' | 'wide' | 'xwide' | 'xxwide';
 export type Prominence = 'Small' | 'Medium' | 'Large';
 export type GallerySize = 'small' | 'medium' | 'large';
 export type ImageFit = 'default' | 'contain' | 'cover';
-export type Frame = 'None' | 'Matte' | 'Frame & matte' | 'Panel' | 'Phone' | 'Tablet (horizontal)' | 'Tablet (vertical)';
+export type Frame =
+	| 'None'
+	| 'Matte'
+	| 'Frame & matte'
+	| 'Panel'
+	| 'Phone'
+	| 'Tablet (horizontal)'
+	| 'Tablet (vertical)';
 
 // collage block items
 export type CollageItemSize = 'Default' | 'Large' | 'XLarge';
@@ -49,7 +71,13 @@ export interface CollageItem {
 }
 
 // --- type ---
-export type TypeScale = 'alpha' | 'beta' | 'gamma' | 'delta' | 'epsilon' | 'zeta';
+export type TypeScale =
+	| 'alpha'
+	| 'beta'
+	| 'gamma'
+	| 'delta'
+	| 'epsilon'
+	| 'zeta';
 
 export interface FormattedText {
 	prismicText?: RichTextField;
@@ -82,14 +110,15 @@ export interface PublicationDates {
 
 // --- components ---
 export type mainNavLink = {
-	label: string,
-	link: string,
+	label: string;
+	link: string;
+	divider: boolean;
 };
 
 export type PaginationLink = {
-	path: string,
-	title: TitleField,
-	subtitle?: TitleField,
+	path: string;
+	title: TitleField;
+	subtitle?: TitleField;
 };
 
 export interface Block {
@@ -107,20 +136,20 @@ export interface PrintType {
 }
 
 export type EditionInfo = {
-	label: string,
-	value: string,
+	label: string;
+	value: string;
 };
 
 export type Edition = {
-	etsyLink: LinkField,
-	image: ImageField,
-	info: EditionInfo[],
-	name: string,
-	limit?: number,
-	type?: PrintType,
+	etsyLink: LinkField;
+	image: ImageField;
+	info: EditionInfo[];
+	name: string;
+	limit?: number;
+	type?: PrintType;
 };
 
 export type StickyNote = {
-	shortStatement: string,
-	extendedStatement: string,
-}
+	shortStatement: string;
+	extendedStatement: string;
+};

@@ -1,35 +1,41 @@
 ---
-// assets
+/**
+ * Main navigation component
+ *
+ * @param {string} segment - uid of the current page
+ * @param {string} [class] - append classes to the container
+ */
+
+// --- assets ---
 import '@shared/styles/tokens/spacing.css';
 import '@shared/styles/tokens/type.css';
 import '@shared/styles/utilities/type.css';
 import '@shared/styles/utilities/visibility.css';
 
-// utils
+// --- utils ---
 import prismic from '@shared/lib/prismic';
 import * as prismicHelpers from '@prismicio/helpers';
 import { linkResolver, fetchLinks } from '@shared/lib/routes';
 
-// components
+// --- components ---
 import LogoInitials from '@shared/components/logos/LogoInitials.astro';
 
-// types
-import { mainNavLink } from '@shared/lib/types';
+// --- types ---
+import type { mainNavLink } from '@shared/lib/types';
 
-export interface Props {
-	segment: string;
-	class?: string;
-}
-
+// --- data ---
 const response = await prismic.getSingle('main_nav', { fetchLinks });
+
 const routes = response.data.nav_item.map(
-	({ label, link }): mainNavLink => ({
+	({ add_leading_divider: divider, label, link }): mainNavLink => ({
+		divider,
 		label,
 		link: prismicHelpers.asLink(link, linkResolver),
 	}),
 );
 
-const { segment, class: className = '' } = Astro.props as Props;
+// --- props ---
+const { segment, class: className = '' } = Astro.props;
 
 const classList = ['main-header', className].join(' ');
 ---
@@ -62,12 +68,13 @@ const classList = ['main-header', className].join(' ');
 				id="nav-list"
 			>
 				{
-					routes.map(({ label, link }) => (
+					routes.map(({ divider, label, link }) => (
 						<li>
 							<a
 								aria-current={link.includes(segment) && 'page'}
 								class="nav-item | type-link-undecorated"
 								href={link}
+								data-divider={divider ? 'leading' : ''}
 							>
 								{label}
 							</a>
@@ -266,12 +273,14 @@ const classList = ['main-header', className].join(' ');
 
 	/* --- small-screen nav --- */
 	#nav-list {
+		--item-spacing: var(--space-narrow);
+
 		align-items: center;
 		background-color: var(--color-surface);
 		bottom: 0;
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-narrow);
+		gap: var(--item-spacing);
 		justify-content: center;
 		left: 0;
 		list-style: none;
@@ -327,6 +336,11 @@ const classList = ['main-header', className].join(' ');
 		font-weight: 300;
 	}
 
+	.nav-item[data-divider='leading'] {
+		border-block-start: 1px solid var(--color-border);
+		padding-block-start: var(--item-spacing);
+	}
+
 	.nav-item[aria-current='page'] {
 		--dot-size: 0.5em;
 		--dot-margin: 0.4em;
@@ -347,13 +361,19 @@ const classList = ['main-header', className].join(' ');
 	}
 
 	/* --- large-screen nav --- */
-	@media screen and (min-width: 43em) {
+	@media screen and (min-width: 46em) {
+		.main-header {
+			align-items: start;
+		}
+
 		jp-hamburger-nav :global(.nav-button) {
 			display: none;
 		}
 
 		#nav-list {
-			align-items: flex-start;
+			--item-top-spacing: var(--space-xxnarrow);
+
+			align-items: start;
 			flex-direction: row;
 			gap: var(--space-narrow);
 			background-color: transparent;
@@ -373,13 +393,19 @@ const classList = ['main-header', className].join(' ');
 
 		.nav-item {
 			font-size: var(--type-scale-zeta);
-			padding-block-start: 0.8em;
-			padding-block-start: var(--space-xnarrow);
+			padding-block-start: var(--item-top-spacing);
 		}
 
 		.nav-item:hover,
 		.nav-item:active {
 			color: var(--color-highlight);
+		}
+
+		.nav-item[data-divider='leading'] {
+			border-block-start: 0;
+			padding-block-start: var(--item-top-spacing);
+			border-inline-start: 1px solid var(--color-border);
+			padding-inline-start: var(--item-spacing);
 		}
 
 		.nav-item[aria-current='page'] {
