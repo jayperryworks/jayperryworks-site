@@ -1,6 +1,11 @@
 body {
-	--content-width-narrow: 36rem;
-	--content-width-default: 54rem;
+	/* Use ch units for narrower widths, b/c these are typically for type */
+	--content-width-narrow: 45ch;
+	--content-width-default: 70ch;
+
+	/* Use rem units for larger widths
+	 * -> more predictable, and these typically wrap graphics instead of type
+	 */
 	--content-width-wide: 75rem;
 	--content-width-xwide: 90rem;
 	--content-width-xxwide: 120rem;

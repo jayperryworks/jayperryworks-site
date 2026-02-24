@@ -141,12 +141,18 @@ function billboard(slice: Slice): BlockType {
 			link,
 			label,
 		},
-		description: {
-			prismicText,
-		},
+		description: prismicHelpers.isFilled.richText(prismicText as RichTextField)
+			? {
+					prismicText,
+				}
+			: undefined,
 		displayMode: 'slide',
-		subtitle: headingText(subtitle as TitleField),
-		title: headingText(title1 as TitleField),
+		subtitle: prismicHelpers.isFilled.title(subtitle as TitleField)
+			? headingText(subtitle as TitleField)
+			: undefined,
+		title: prismicHelpers.isFilled.title(title1 as TitleField)
+			? headingText(title1 as TitleField)
+			: undefined,
 		theme: {
 			name: preset_color_theme || undefined,
 			link: prismicHelpers.isFilled.contentRelationship(use_color_theme)

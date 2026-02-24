@@ -1,12 +1,84 @@
+/*
+ * --- spacing scale ---
+ * -> Major second (1.125) to minor third (1.2) scales (small to large screens)
+ */
+
 body {
-	--space-xxnarrow: clamp(0.25rem, calc(0.21rem + 0.18vw), 0.38rem);
+	--space-xxnarrow: clamp(
+		0.313rem,
+		calc(0.281rem + 0.156vw),
+		0.375rem
+	); /* min: 5px, max: 6px */
+	--space-xnarrow: clamp(
+		0.625rem,
+		calc(0.594rem + 0.156vw),
+		0.688rem
+	); /* min: 10px, max: 11px */
+	--space-narrow: clamp(
+		0.875rem,
+		calc(0.813rem + 0.313vw),
+		1rem
+	); /* min: 14px, max: 16px */
+	--space-medium: clamp(
+		1.125rem,
+		calc(0.969rem + 0.781vw),
+		1.438rem
+	); /* min: 18px, max: 23px */
+	--space-wide: clamp(
+		1.438rem,
+		calc(1.156rem + 1.406vw),
+		2rem
+	); /* min: 23px, max: 32px */
+	--space-xwide: clamp(
+		2rem,
+		calc(1.375rem + 3.125vw),
+		3.25rem
+	); /* min: 32px, max: 52px */
+
+	/* --space-xxnarrow: clamp(0.25rem, calc(0.21rem + 0.18vw), 0.38rem);
 	--space-xnarrow: clamp(0.69rem, calc(0.65rem + 0.18vw), 0.81rem);
 	--space-narrow: clamp(1rem, calc(0.93rem + 0.36vw), 1.25rem);
 	--space-medium: clamp(1.13rem, calc(0.93rem + 0.98vw), 1.81rem);
-	--space-wide: clamp(1.44rem, calc(0.96rem + 2.41vw),3.13rem);
-	--space-xwide: clamp(2.06rem, calc(0.81rem + 6.25vw), 6.44rem);
+	--space-wide: clamp(1.44rem, calc(0.96rem + 2.41vw), 3.13rem);
+	--space-xwide: clamp(2.06rem, calc(0.81rem + 6.25vw), 6.44rem); */
 
 	/* outside spacing */
 	/* -> starts at 'xnarrow' min value and expands to 'xwide' max value */
 	--space-outside: clamp(1rem, calc(7.77vw - 0.55rem), 6.44rem);
+}
+
+@media screen and (min-width: 60em) {
+	/* Increase contrast in the scale on wider screens (go to minor third) */
+	body {
+		--space-xxnarrow: clamp(
+			0.375rem,
+			calc(0.26rem + 0.192vw),
+			0.5rem
+		); /* min: 6px, max: 8px */
+		--space-xnarrow: clamp(
+			0.688rem,
+			calc(0.572rem + 0.192vw),
+			0.813rem
+		); /* min: 11px, max: 13px */
+		--space-narrow: clamp(
+			1rem,
+			calc(0.596rem + 0.673vw),
+			1.438rem
+		); /* min: 16px, max: 23px */
+		--space-medium: clamp(
+			1.438rem,
+			calc(0.861rem + 0.962vw),
+			2.063rem
+		); /* min: 23px, max: 33px */
+		--space-wide: clamp(
+			2rem,
+			calc(0.558rem + 2.404vw),
+			3.563rem
+		); /* min: 32px, max: 57px */
+		--space-xwide: clamp(
+			3.25rem,
+			calc(0.538rem + 4.519vw),
+			6.188rem
+		); /* min: 52px, max: 99px */
+	}
 }
