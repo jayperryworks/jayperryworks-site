@@ -16,6 +16,9 @@ export type ColorRoles =
 	| 'border'
 	| 'shadow';
 
+export type InkColorRoles = 'primary' | 'secondary' | 'highlight';
+export type SurfaceColorRoles = 'surface' | 'island' | 'well';
+
 // names of the default color themes
 export type ThemeNames = 'cherry' | 'mustard' | 'mint' | 'lavendar' | 'anemone';
 

@@ -1,0 +1,111 @@
+---
+/**
+ * Text card block component
+ * @description - display text in a box
+ *
+ * @param {TitleField} [headline] - optional heading to display
+ * @param {string} [text] - descriptive/body text for the card
+ * @param {CardLink} [link] - optional link to display in a button
+ * @param {headingLevel} [number=3] - level of the heading, 1-6
+ * @param {TypeScale} [headingSize] - visual size of the heading
+ * @param {TypeScale} [textSize] - visual size of the text
+ * @param {string} [as='article'] - html element for the container
+ * @param {string} [class] - append classes to the container
+ * @param {SurfaceColorRoles} [surfaceColor='island'] - background color of the card
+ */
+
+// --- assets ---
+import '@shared/styles/tokens/spacing.css';
+
+// --- types ---
+/**
+ * @typedef {Object} CardLink
+ * @property {string} label - label for the button
+ * @property {LinkField} href - link to doc or url
+ */
+
+import type { TitleField } from '@prismicio/types';
+import type { TypeScale, SurfaceColorRoles } from '@shared/lib/types.ts';
+
+// --- utilities ---
+import * as prismicHelpers from '@prismicio/helpers';
+import { linkResolver } from '@shared/lib/routes.ts';
+
+// --- components ---
+import Button from '@shared/components/elements/Button.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+import Passage from '@shared/components/blocks/Passage.astro';
+
+// --- props ---
+const {
+	as: El = 'article',
+	class: className,
+	headline,
+	text,
+	headingLevel = 3,
+	headingSize,
+	textSize = 'epsilon',
+	link,
+	surfaceColor = 'island',
+	padding = 'medium',
+	spacing = 'xnarrow',
+} = Astro.props;
+---
+
+<El
+	class={`card ${className}`}
+	style={`
+		--card-color: var(--color-${surfaceColor});
+		--card-padding: var(--space-${padding});
+		--card-spacing: var(--space-${spacing});
+	`}
+>
+	<slot>
+		{
+			headline && (
+				<Heading
+					class="headline"
+					text={headline}
+					level={headingLevel || 3}
+					size={headingSize}
+				/>
+			)
+		}
+		{
+			text && (
+				<Passage
+					class="text"
+					text={{ markdown: text }}
+					typeFace="accent"
+					typeSize={textSize}
+				/>
+			)
+		}
+		{
+			link && (
+				<Button
+					class="action"
+					href={prismicHelpers.asLink(link.href, linkResolver)}
+				>
+					{link.label}
+				</Button>
+			)
+		}
+	</slot>
+</El>
+
+<style>
+	.card {
+		background-color: var(--card-color, var(--color-island));
+		border-radius: var(--border-radius);
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		gap: var(--card-spacing, var(--space-xnarrow));
+		padding: var(--card-padding, var(--space-medium));
+	}
+
+	.card :global(.action) {
+		margin-block-start: auto;
+	}
+</style>
