@@ -1,6 +1,6 @@
 body {
 	/* Use ch units for narrower widths, b/c these are typically for type */
-	--content-width-narrow: 45ch;
+	--content-width-narrow: 50ch;
 	--content-width-default: 70ch;
 
 	/* Use rem units for larger widths
