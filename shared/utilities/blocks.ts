@@ -1,9 +1,9 @@
 // utils
-import { camelCase } from "change-case";
-import * as prismicHelpers from "@prismicio/helpers";
+import { camelCase } from 'change-case';
+import * as prismicHelpers from '@prismicio/helpers';
 
 // types
-import type { Block as BlockType, Prominence } from "@shared/lib/types";
+import type { Block as BlockType, Prominence } from '@shared/lib/types';
 
 import type {
 	ImageField,
@@ -12,7 +12,7 @@ import type {
 	SelectField,
 	Slice,
 	TitleField,
-} from "@prismicio/types";
+} from '@prismicio/types';
 
 // --- block fields ---
 function headingText(text: TitleField): string {
@@ -42,7 +42,7 @@ function markdownText(text: RichTextField): string {
 function sharedBlockFields(slice: Slice): BlockType {
 	const {
 		prominence,
-		display_mode: displayMode = "flow",
+		display_mode: displayMode = 'flow',
 		include_in_excerpt: includeInExcerpt,
 	} = slice.primary;
 
@@ -94,7 +94,7 @@ function bibliography(slice: Slice): BlockType {
 			}),
 		),
 		...sharedBlockFields(slice),
-		prominence: "Large",
+		prominence: 'Large',
 	};
 }
 
@@ -112,15 +112,15 @@ function billboard(slice: Slice): BlockType {
 
 	const images = slice.items.reduce((result, item) => {
 		const {
-			frame = "None",
-			priority = "1",
+			frame = 'None',
+			priority = '1',
 			relative_size: relativeSize,
 			cover_image: source,
 			dark_mode_cover_image: darkModeSource,
 			use_image_aspect_ratio: useImageAspectRatio = false,
 		} = item;
 
-		if ((source as ImageField).url === "") return result;
+		if ((source as ImageField).url === '') return result;
 
 		result.push({
 			frame,
@@ -144,7 +144,7 @@ function billboard(slice: Slice): BlockType {
 		description: {
 			prismicText,
 		},
-		displayMode: "slide",
+		displayMode: 'slide',
 		subtitle: headingText(subtitle as TitleField),
 		title: headingText(title1 as TitleField),
 		theme: {
@@ -169,13 +169,30 @@ function blockQuote(slice: Slice): BlockType {
 	};
 }
 
+function callToAction(slice: Slice): BlockType {
+	const { align } = slice.primary;
+
+	const buttons = slice.items.map((button) => {
+		const { link, label, size, trailing_icon: trailingIcon } = button;
+
+		return {
+			link,
+			label,
+			size,
+			trailingIcon,
+		};
+	});
+
+	return { align, buttons, ...sharedBlockFields(slice) };
+}
+
 function collage(slice: Slice): BlockType {
 	const { caption, attribution, gutter } = slice.primary;
 
 	const images = slice.items.map((item) => {
 		const {
-			frame = "None",
-			priority = "1",
+			frame = 'None',
+			priority = '1',
 			relative_size: relativeSize,
 			image: source,
 			use_image_aspect_ratio: useImageAspectRatio = false,
@@ -221,7 +238,7 @@ function feed(slice: Slice): BlockType {
 		description: {
 			prismicText,
 		},
-		displayMode: "slide",
+		displayMode: 'slide',
 		subtitle: headingText(subtitle as TitleField),
 		title: headingText(title as TitleField),
 		theme: {
@@ -240,7 +257,7 @@ function figure(slice: Slice): BlockType {
 		image,
 		image_dark_mode,
 		border = false,
-		frame = "None",
+		frame = 'None',
 		use_image_aspect_ratio = false,
 	} = slice.primary;
 
@@ -287,7 +304,7 @@ function imageGallery(slice: Slice): BlockType {
 		caption,
 		column_size: columnSize,
 		gutter,
-		frame = "None",
+		frame = 'None',
 		use_image_aspect_ratio: useImageAspectRatio = false,
 	} = slice.primary;
 
@@ -357,6 +374,74 @@ function table(slice: Slice): BlockType {
 	};
 }
 
+function textCard(slice: Slice): BlockType {
+	const {
+		as,
+		headline,
+		link_label,
+		link: href,
+		padding,
+		spacing,
+		surface_color: surfaceColor,
+		text,
+	} = slice.primary;
+
+	const link = prismicHelpers.isFilled.keyText(link_label)
+		? {
+				label: link_label,
+				href,
+			}
+		: null;
+
+	return {
+		as,
+		headline: prismicHelpers.isFilled.title(headline) ? headline : undefined,
+		text: prismicHelpers.isFilled.richText(text) ? text : undefined,
+		link,
+		surfaceColor,
+		padding,
+		spacing,
+		...sharedBlockFields(slice),
+	};
+}
+
+function textCardGallery(slice: Slice): BlockType {
+	const {
+		card_heading_level: cardHeadingLevel,
+		card_heading_size: cardHeadingSize,
+		card_padding: cardPadding,
+		card_spacing: cardSpacing,
+		gutter,
+		size,
+	} = slice.primary;
+
+	const cards = slice.items.map((card) => {
+		const { headline, text, link_label, link: href } = card;
+
+		return {
+			headline: prismicHelpers.isFilled.title(headline) ? headline : undefined,
+			text: prismicHelpers.isFilled.richText(text) ? text : undefined,
+			link: prismicHelpers.isFilled.keyText(link_label)
+				? {
+						label: link_label,
+						href,
+					}
+				: undefined,
+		};
+	});
+
+	return {
+		gutter: gutterSize(gutter as string),
+		cardHeadingLevel,
+		cardHeadingSize,
+		cardPadding,
+		cards,
+		cardSpacing,
+		size,
+		...sharedBlockFields(slice),
+	};
+}
+
 function video(slice: Slice): BlockType {
 	const {
 		aspect_ratio: aspectRatio,
@@ -392,18 +477,21 @@ function video(slice: Slice): BlockType {
 
 // list of block types with functions for each
 export default {
-	image_gallery: imageGallery,
-	quote: blockQuote,
 	aside,
 	bibliography,
 	billboard,
+	call_to_action: callToAction,
 	collage,
 	feed,
 	figure,
 	heading,
+	image_gallery: imageGallery,
 	passage,
 	pullquote,
+	quote: blockQuote,
 	sticky_note_grid: stickyNoteGallery,
 	table,
+	text_card_gallery: textCardGallery,
+	text_card: textCard,
 	video,
 };

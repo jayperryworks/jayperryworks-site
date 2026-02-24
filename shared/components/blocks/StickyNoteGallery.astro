@@ -64,10 +64,10 @@ const classList = ['sticky-note-gallery', className].join(' ');
 			<Passage text={description} />
 		)
 	}
-	<Gallery gutter="narrow">
+	<Gallery gutter="xnarrow">
 		{
 			notes.map(({ shortStatement, extendedStatement }) => (
-				<li class={['sticky-note-item', shadow ? 'shadow' : ''].join(' ')}>
+				<li class="sticky-note-item">
 					<RevealOnScroll
 						class="sticky-note-text | type-role-accent type-scale-epsilon"
 						tag="p"
@@ -107,10 +107,7 @@ const classList = ['sticky-note-gallery', className].join(' ');
 		border-radius: var(--border-radius);
 		padding: var(--space-medium);
 		transition: background-color var(--color-transition) ease-in-out;
-	}
-
-	.sticky-note-item.shadow {
-		box-shadow: var(--elevation-low);
+		box-shadow: var(--elevation-xlow);
 	}
 
 	.sticky-note-item :global(p) {

@@ -16,6 +16,9 @@ export type ColorRoles =
 	| 'border'
 	| 'shadow';
 
+export type InkColorRoles = 'primary' | 'secondary' | 'highlight';
+export type SurfaceColorRoles = 'surface' | 'island' | 'well';
+
 // names of the default color themes
 export type ThemeNames = 'cherry' | 'mustard' | 'mint' | 'lavendar' | 'anemone';
 
@@ -152,4 +155,21 @@ export type Edition = {
 export type StickyNote = {
 	shortStatement: string;
 	extendedStatement: string;
+};
+
+export type ToggleIcon = {
+	default: string;
+	toggled?: string;
+};
+
+export type Button = {
+	href?: string;
+	as?: 'a' | 'button';
+	class?: string;
+	iconLeft?: string | ToggleIcon;
+	iconRight?: string | ToggleIcon;
+	role?: string;
+	size?: string;
+	target?: string;
+	toggled?: boolean;
 };
