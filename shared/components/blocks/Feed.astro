@@ -15,6 +15,7 @@
 
 // --- assets ---
 import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/elevation.css';
 import '@shared/styles/tokens/spacing.css';
 import '@shared/styles/tokens/type.css';
 import '@shared/styles/utilities/contentWidth.css';
@@ -154,6 +155,7 @@ if (contentSource === 'blog_post') {
 		padding: var(--space-medium);
 		padding-block-start: var(--space-narrow);
 		transition: background-color var(--color-transition) ease-in-out;
+		box-shadow: var(--elevation-xlow);
 	}
 
 	.item > :global(* + *) {

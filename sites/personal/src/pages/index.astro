@@ -54,8 +54,10 @@ const seo = {
 					text={headline}
 				/>
 				<Passage
+					class="intro-blurb"
 					text={{ prismicText: intro }}
 					typeSize="delta"
+					wrap="balance"
 				/>
 				<div class="intro-cta">
 					<Button
@@ -86,7 +88,6 @@ const seo = {
 		align-items: center;
 		display: grid;
 		flex: 1;
-		gap: var(--space-medium);
 		grid-template-rows: 1fr auto;
 		margin-inline: auto;
 		max-width: var(--content-width-xxwide);
@@ -94,6 +95,10 @@ const seo = {
 
 	.intro :global(p + p) {
 		margin-block-start: var(--space-xnarrow);
+	}
+
+	.intro :global(.intro-blurb) {
+		padding-block-start: var(--space-narrow);
 	}
 
 	.intro-cta {

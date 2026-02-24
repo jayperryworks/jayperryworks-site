@@ -13,9 +13,10 @@ import type { ColorRoles } from '@shared/utilities/types';
 
 // --- props ---
 const {
+	class: className = '',
 	primaryColor = 'primary',
 	secondaryColor = 'secondary',
-	class: className = '',
+	maxWidth,
 	...attrs
 } = Astro.props;
 ---
@@ -26,6 +27,7 @@ const {
 	viewBox={`0 0 301 43`}
 	width="602"
 	xmlns="http://www.w3.org/2000/svg"
+	style={maxWidth && `--max-width: ${maxWidth};`}
 	{...attrs}
 >
 	<title>Jay Perry</title>

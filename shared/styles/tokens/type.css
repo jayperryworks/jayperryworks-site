@@ -1,36 +1,109 @@
 body {
 	/* --- type scale ---
-	 * -> based on Utopia's fluid type scales, with my own tweaks
-	 * -> major second (1.125) to minor third (1.2) scales (small to large screens)
+	 * -> Major second (1.125) to minor third (1.2) scales (small to large screens)
 	 * -> I used scales with fine intervals and skipped steps to create more contrast, esp. on large screens
 	 */
-	--type-scale-alpha: clamp(2.06rem, calc(1.37rem + 3.48vw), 4.50rem);
-	--type-scale-beta: clamp(1.81rem, calc(1.26rem + 2.77vw), 3.75rem);
-	--type-scale-gamma: clamp(1.44rem, calc(1.12rem + 1.61vw), 2.56rem);
-	--type-scale-delta: clamp(1.25rem, calc(1.09rem + 0.80vw), 1.81rem);
-	--type-scale-epsilon: clamp(1.13rem, calc(1.02rem + 0.54vw), 1.5rem);
-	--type-scale-zeta: clamp(0.88rem, calc(0.82rem + 0.27vw), 1.06rem);
-	--type-scale-eta: clamp(0.69rem, calc(0.67rem + 0.09vw), 0.75rem);
+	--type-scale-alpha: clamp(
+		2rem,
+		calc(1.563rem + 2.188vw),
+		2.875rem
+	); /* min: 32px, max: 46px */
+	--type-scale-beta: clamp(
+		1.813rem,
+		calc(1.594rem + 1.094vw),
+		2.25rem
+	); /* min: 29px, max: 36px */
+	--type-scale-gamma: clamp(
+		1.438rem,
+		calc(1.25rem + 0.938vw),
+		1.813rem
+	); /* min: 23px, max: 29px */
+	--type-scale-delta: clamp(
+		1.25rem,
+		calc(1.156rem + 0.469vw),
+		1.438rem
+	); /* min: 20px, max: 23px */
+	--type-scale-epsilon: clamp(
+		1rem,
+		calc(0.938rem + 0.313vw),
+		1.125rem
+	); /* min: 16px, max: 18px */
+	--type-scale-zeta: clamp(
+		0.875rem,
+		calc(0.813rem + 0.313vw),
+		1rem
+	); /* min: 14px, max: 16px */
+	--type-scale-eta: clamp(
+		0.688rem,
+		calc(0.625rem + 0.313vw),
+		0.813rem
+	); /* min: 11px, max: 13px */
 
 	/* --- fonts --- */
-	--type-font-display: 'Sanomat', 'Charter', 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
-	--type-font-body: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
-	--type-font-accent: 'Figtree', 'System', system-ui, -apple-system, BlinkMacSystemFont, 'Avenir Next', 'Avenir', 'Segoe UI', 'Lucida Grande', 'Helvetica Neue', 'Helvetica', 'Fira Sans', 'Roboto', 'Noto', 'Droid Sans', 'Cantarell', 'Oxygen', 'Ubuntu', 'Franklin Gothic Medium', 'Century Gothic', 'Liberation Sans', sans-serif;
+	--type-font-display:
+		'Sanomat', 'Charter', 'Iowan Old Style', 'Palatino Linotype',
+		'URW Palladio L', P052, serif;
+	--type-font-body:
+		'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
+	--type-font-accent:
+		'Figtree', 'System', system-ui, -apple-system, BlinkMacSystemFont,
+		'Avenir Next', 'Avenir', 'Segoe UI', 'Lucida Grande', 'Helvetica Neue',
+		'Helvetica', 'Fira Sans', 'Roboto', 'Noto', 'Droid Sans', 'Cantarell',
+		'Oxygen', 'Ubuntu', 'Franklin Gothic Medium', 'Century Gothic',
+		'Liberation Sans', sans-serif;
 
 	/* --- leading --- */
 	--type-leading-xtight: 1.2;
 	--type-leading-tight: 1.3;
 	--type-leading-default: 1.7;
+}
 
-	@media screen and (min-width: 40em) {
+@media screen and (min-width: 40em) {
+	body {
 		--type-leading-default: 1.8;
 	}
+}
 
-	@media screen and (min-width: 60em) {
+@media screen and (min-width: 60em) {
+	body {
 		--type-leading-default: 1.9;
-	}
 
-	@media screen and (min-width: 90em) {
+		/* Shift type scale to higher contrast (minor third scale) on wider screens */
+		--type-scale-alpha: clamp(
+			2.875rem,
+			calc(1.548rem + 2.212vw),
+			4.313rem
+		); /* min: 46px, max: 69px */
+		--type-scale-beta: clamp(
+			2.25rem,
+			calc(1.038rem + 2.019vw),
+			3.563rem
+		); /* min: 36px, max: 57px */
+		--type-scale-gamma: clamp(
+			1.813rem,
+			calc(1.178rem + 1.058vw),
+			2.5rem
+		); /* min: 29px, max: 40px */
+		--type-scale-delta: clamp(
+			1.438rem,
+			calc(1.149rem + 0.481vw),
+			1.75rem
+		); /* min: 23px, max: 28px */
+		--type-scale-epsilon: clamp(
+			1.125rem,
+			calc(0.837rem + 0.481vw),
+			1.438rem
+		); /* min: 18px, max: 23px */
+		--type-scale-zeta: clamp(
+			1rem,
+			calc(0.885rem + 0.192vw),
+			1.125rem
+		); /* min: 16px, max: 18px */
+	}
+}
+
+@media screen and (min-width: 90em) {
+	body {
 		--type-leading-default: 2;
 	}
 }
