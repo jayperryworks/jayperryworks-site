@@ -374,6 +374,33 @@ function table(slice: Slice): BlockType {
 	};
 }
 
+function textCard(slice: Slice): BlockType {
+	const {
+		as,
+		headline,
+		link_label,
+		link,
+		padding,
+		spacing,
+		surface_color: surfaceColor,
+		text,
+	} = slice.primary;
+
+	return {
+		as,
+		headline,
+		text,
+		link: {
+			label: link_label,
+			href: link,
+		},
+		surfaceColor,
+		padding,
+		spacing,
+		...sharedBlockFields(slice),
+	};
+}
+
 function video(slice: Slice): BlockType {
 	const {
 		aspect_ratio: aspectRatio,
@@ -422,6 +449,7 @@ export default {
 	passage,
 	pullquote,
 	sticky_note_grid: stickyNoteGallery,
+	text_card: textCard,
 	table,
 	video,
 };

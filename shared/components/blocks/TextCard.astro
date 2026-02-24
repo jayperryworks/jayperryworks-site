@@ -9,12 +9,15 @@
  * @param {headingLevel} [number=3] - level of the heading, 1-6
  * @param {TypeScale} [headingSize] - visual size of the heading
  * @param {TypeScale} [textSize] - visual size of the text
+ * @param {SpaceScale} [padding='medium'] - padding inside the box
+ * @param {SpaceScale} [spacing='medium'] - spacing between elements in the box
+ * @param {SurfaceColorRoles} [surfaceColor='island'] - background color of the card
  * @param {string} [as='article'] - html element for the container
  * @param {string} [class] - append classes to the container
- * @param {SurfaceColorRoles} [surfaceColor='island'] - background color of the card
  */
 
 // --- assets ---
+import '@shared/styles/tokens/borders.css';
 import '@shared/styles/tokens/spacing.css';
 
 // --- types ---
@@ -25,7 +28,11 @@ import '@shared/styles/tokens/spacing.css';
  */
 
 import type { TitleField } from '@prismicio/types';
-import type { TypeScale, SurfaceColorRoles } from '@shared/lib/types.ts';
+import type {
+	SpaceScale,
+	SurfaceColorRoles,
+	TypeScale,
+} from '@shared/lib/types.ts';
 
 // --- utilities ---
 import * as prismicHelpers from '@prismicio/helpers';
@@ -75,14 +82,14 @@ const {
 			text && (
 				<Passage
 					class="text"
-					text={{ markdown: text }}
+					text={{ markdown: prismicHelpers.asText(text) }}
 					typeFace="accent"
 					typeSize={textSize}
 				/>
 			)
 		}
 		{
-			link && (
+			link?.label && (
 				<Button
 					class="action"
 					href={prismicHelpers.asLink(link.href, linkResolver)}
