@@ -379,24 +379,65 @@ function textCard(slice: Slice): BlockType {
 		as,
 		headline,
 		link_label,
-		link,
+		link: href,
 		padding,
 		spacing,
 		surface_color: surfaceColor,
 		text,
 	} = slice.primary;
 
+	const link = prismicHelpers.isFilled.keyText(link_label)
+		? {
+				label: link_label,
+				href,
+			}
+		: null;
+
 	return {
 		as,
-		headline,
-		text,
-		link: {
-			label: link_label,
-			href: link,
-		},
+		headline: prismicHelpers.isFilled.title(headline) ? headline : undefined,
+		text: prismicHelpers.isFilled.richText(text) ? text : undefined,
+		link,
 		surfaceColor,
 		padding,
 		spacing,
+		...sharedBlockFields(slice),
+	};
+}
+
+function textCardGallery(slice: Slice): BlockType {
+	const {
+		card_heading_level: cardHeadingLevel,
+		card_heading_size: cardHeadingSize,
+		card_padding: cardPadding,
+		card_spacing: cardSpacing,
+		gutter,
+		size,
+	} = slice.primary;
+
+	const cards = slice.items.map((card) => {
+		const { headline, text, link_label, link: href } = card;
+
+		return {
+			headline: prismicHelpers.isFilled.title(headline) ? headline : undefined,
+			text: prismicHelpers.isFilled.richText(text) ? text : undefined,
+			link: prismicHelpers.isFilled.keyText(link_label)
+				? {
+						label: link_label,
+						href,
+					}
+				: undefined,
+		};
+	});
+
+	return {
+		gutter: gutterSize(gutter as string),
+		cardHeadingLevel,
+		cardHeadingSize,
+		cardPadding,
+		cards,
+		cardSpacing,
+		size,
 		...sharedBlockFields(slice),
 	};
 }
@@ -436,8 +477,6 @@ function video(slice: Slice): BlockType {
 
 // list of block types with functions for each
 export default {
-	image_gallery: imageGallery,
-	quote: blockQuote,
 	aside,
 	bibliography,
 	billboard,
@@ -446,10 +485,13 @@ export default {
 	feed,
 	figure,
 	heading,
+	image_gallery: imageGallery,
 	passage,
 	pullquote,
+	quote: blockQuote,
 	sticky_note_grid: stickyNoteGallery,
-	text_card: textCard,
 	table,
+	text_card_gallery: textCardGallery,
+	text_card: textCard,
 	video,
 };

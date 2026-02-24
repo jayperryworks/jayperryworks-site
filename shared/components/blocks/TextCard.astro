@@ -6,7 +6,7 @@
  * @param {TitleField} [headline] - optional heading to display
  * @param {string} [text] - descriptive/body text for the card
  * @param {CardLink} [link] - optional link to display in a button
- * @param {headingLevel} [number=3] - level of the heading, 1-6
+ * @param {number} [headingLevel=3] - level of the heading, 1-6
  * @param {TypeScale} [headingSize] - visual size of the heading
  * @param {TypeScale} [textSize] - visual size of the text
  * @param {SpaceScale} [padding='medium'] - padding inside the box
@@ -42,10 +42,11 @@ import { linkResolver } from '@shared/lib/routes.ts';
 import Button from '@shared/components/elements/Button.astro';
 import Heading from '@shared/components/blocks/Heading.astro';
 import Passage from '@shared/components/blocks/Passage.astro';
+import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
 
 // --- props ---
 const {
-	as: El = 'article',
+	as: tag = 'article',
 	class: className,
 	headline,
 	text,
@@ -59,60 +60,66 @@ const {
 } = Astro.props;
 ---
 
-<El
+<RevealOnScroll
 	class={`card ${className}`}
 	style={`
 		--card-color: var(--color-${surfaceColor});
 		--card-padding: var(--space-${padding});
 		--card-spacing: var(--space-${spacing});
 	`}
+	{tag}
 >
-	<slot>
+	<div class="wrapper">
+		<slot>
+			{
+				headline && (
+					<Heading
+						text={headline}
+						level={headingLevel || 3}
+						size={headingSize}
+					/>
+				)
+			}
+			{
+				text && (
+					<Passage
+						allowHTML={true}
+						text={{ markdown: prismicHelpers.asText(text) }}
+						typeFace="accent"
+						typeSize={textSize}
+					/>
+				)
+			}
+		</slot>
 		{
-			headline && (
-				<Heading
-					class="headline"
-					text={headline}
-					level={headingLevel || 3}
-					size={headingSize}
-				/>
-			)
-		}
-		{
-			text && (
-				<Passage
-					class="text"
-					text={{ markdown: prismicHelpers.asText(text) }}
-					typeFace="accent"
-					typeSize={textSize}
-				/>
-			)
-		}
-		{
-			link?.label && (
+			link && (
 				<Button
 					class="action"
+					size="small"
 					href={prismicHelpers.asLink(link.href, linkResolver)}
 				>
 					{link.label}
 				</Button>
 			)
 		}
-	</slot>
-</El>
+	</div>
+</RevealOnScroll>
 
 <style>
-	.card {
+	.wrapper {
+		align-items: start;
 		background-color: var(--card-color, var(--color-island));
-		border-radius: var(--border-radius);
+		border-radius: var(--border-radius-round);
 		display: flex;
 		flex-direction: column;
 		flex: 1;
 		gap: var(--card-spacing, var(--space-xnarrow));
 		padding: var(--card-padding, var(--space-medium));
+		box-shadow: var(--elevation-xlow);
 	}
 
 	.card :global(.action) {
+		align-self: end;
 		margin-block-start: auto;
 	}
 </style>

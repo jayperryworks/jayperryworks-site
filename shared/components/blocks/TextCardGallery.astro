@@ -1,0 +1,64 @@
+---
+/**
+ * Text card gallery block component
+ * @description Displays a series of text cards in a grid layout
+ *
+ * @param {Card[]} cards - Array of card data
+ * @param {GallerySize} [size] - Number of columns in the grid
+ * @param {SpaceScale} [gutter] - Space between the cards
+ * @param {number} [cardHeadingLevel=3] - level of the heading, 1-6
+ * @param {TypeScale} [cardHeadingSize] - visual size of the heading
+ * @param {SpaceScale} [cardPadding='medium'] - Padding in each card
+ * @param {SpaceScale} [cardSpacing='xnarrow'] - Spacing between elements in each card
+ * @param {SurfaceColorRoles} [cardColor='island'] - background color of the cards
+ */
+
+// --- types ---
+/**
+ * @typedef Card
+ * @property {TitleField} [headline] - optional heading to display
+ * @property {string} [text] - descriptive/body text for the card
+ * @property {CardLink} [link] - optional link to display in a button
+ */
+
+import type { TitleField } from '@prismicio/types';
+import type {
+	GallerySize,
+	SpaceScale,
+	SurfaceColorRoles,
+	TypeScale,
+} from '@shared/lib/types.ts';
+
+// --- components ---
+import TextCard from '@shared/components/blocks/TextCard.astro';
+import Gallery from '@shared/components/layout/Gallery.astro';
+
+// --- props ---
+const {
+	cards,
+	cardHeadingLevel,
+	cardHeadingSize,
+	cardPadding,
+	cardSpacing,
+	gutter,
+	size,
+} = Astro.props;
+---
+
+<Gallery
+	{size}
+	{gutter}
+>
+	{
+		cards.map((card) => (
+			<TextCard
+				{...card}
+				as="li"
+				headingLevel={cardHeadingLevel}
+				headingSize={cardHeadingSize}
+				padding={cardPadding}
+				spacing={cardSpacing}
+			/>
+		))
+	}
+</Gallery>
