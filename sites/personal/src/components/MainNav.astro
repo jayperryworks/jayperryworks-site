@@ -69,12 +69,11 @@ const classList = ['main-header', className].join(' ');
 			>
 				{
 					routes.map(({ divider, label, link }) => (
-						<li>
+						<li data-divider={divider ? 'leading' : ''}>
 							<a
 								aria-current={link.includes(segment) && 'page'}
 								class="nav-item | type-link-undecorated"
 								href={link}
-								data-divider={divider ? 'leading' : ''}
 							>
 								{label}
 							</a>
@@ -318,6 +317,11 @@ const classList = ['main-header', className].join(' ');
 		margin-block-start: 0;
 	}
 
+	[data-divider='leading'] {
+		border-block-start: 1px solid var(--color-border);
+		padding-block-start: var(--item-spacing);
+	}
+
 	/* prevent scrolling on the body when the overlay is displayed */
 	:global(.has-overlay) {
 		height: 100vh;
@@ -334,11 +338,6 @@ const classList = ['main-header', className].join(' ');
 		will-change: color, font-size;
 		font-family: var(--type-font-accent);
 		font-weight: 300;
-	}
-
-	.nav-item[data-divider='leading'] {
-		border-block-start: 1px solid var(--color-border);
-		padding-block-start: var(--item-spacing);
 	}
 
 	.nav-item[aria-current='page'] {
@@ -391,6 +390,13 @@ const classList = ['main-header', className].join(' ');
 			width: auto;
 		}
 
+		[data-divider='leading'] {
+			border-block-start: 0;
+			padding-block-start: var(--item-top-spacing);
+			border-inline-start: 1px solid var(--color-border);
+			padding-inline-start: var(--item-spacing);
+		}
+
 		.nav-item {
 			font-size: var(--type-scale-zeta);
 			padding-block-start: var(--item-top-spacing);
@@ -399,13 +405,6 @@ const classList = ['main-header', className].join(' ');
 		.nav-item:hover,
 		.nav-item:active {
 			color: var(--color-highlight);
-		}
-
-		.nav-item[data-divider='leading'] {
-			border-block-start: 0;
-			padding-block-start: var(--item-top-spacing);
-			border-inline-start: 1px solid var(--color-border);
-			padding-inline-start: var(--item-spacing);
 		}
 
 		.nav-item[aria-current='page'] {
