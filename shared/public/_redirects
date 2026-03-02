@@ -1,4 +1,5 @@
 /blog /blog/page/1
+/design https://design.jayperry.works
 /work/prints/*	/pictures/:splat	302
 /writing/* /blog/:splat 302
 /rss/all.xml	/rss/feed.xml	302
