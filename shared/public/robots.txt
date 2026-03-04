@@ -135,3 +135,4 @@ User-agent: ZanistaBot
 Disallow: /
 
 Sitemap: https://jayperry.works/sitemap-index.xml
+License: https://jayperry.works/license.xml
