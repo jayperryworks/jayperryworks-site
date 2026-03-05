@@ -1,3 +1,4 @@
+export default `
 User-agent: AddSearchBot
 User-agent: AI2Bot
 User-agent: AI2Bot-DeepResearchEval
@@ -131,8 +132,4 @@ User-agent: YaK
 User-agent: YandexAdditional
 User-agent: YandexAdditionalBot
 User-agent: YouBot
-User-agent: ZanistaBot
-Disallow: /
-
-Sitemap: https://jayperry.works/sitemap-index.xml
-License: https://jayperry.works/license.xml
+User-agent: ZanistaBot`;
