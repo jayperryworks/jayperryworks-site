@@ -5,6 +5,7 @@ import '@shared/styles/tokens/spacing.css';
 import '@shared/styles/utilities/borders.css';
 import '@shared/styles/utilities/type.css';
 import '@shared/styles/utilities/visibility.css';
+import dotGrid from '@images/dotGrid.svg';
 
 // --- utils ---
 import { fetchLinks } from '@shared/lib/routes';
@@ -34,6 +35,9 @@ const seo = {
 <Layout
 	pageTitle={title}
 	theme="anemone"
+	style={`
+		--bg-pattern: url(${dotGrid.src});
+`}
 	{seo}
 >
 	<MainHeader />
@@ -45,7 +49,7 @@ const seo = {
 				focusable="false"
 				role="presentation"
 				{/* min: 240px, max: 500px */}
-				maxWidth="clamp(15rem, calc(10.938rem + 20.313vw), 31.25rem);"
+				maxWidth="clamp(15rem, calc(10.938rem + 20.313vw), 31.25rem)"
 			/>
 		</h1>
 		<BlockList {body} />
@@ -54,15 +58,33 @@ const seo = {
 </Layout>
 
 <style>
+	:global(body)::after {
+		/* prettier-ignore */
+		background-image:
+			linear-gradient(
+				180deg,
+				oklch(from var(--color-surface) l c h / 0) 0%,
+				var(--color-surface) 100%
+			),
+			var(--bg-pattern);
+		background-position: top center;
+		content: '';
+		display: block;
+		position: absolute;
+		width: 100%;
+		height: 90svh;
+		z-index: -1;
+	}
+
+	main {
+		padding-block: var(--space-xwide);
+	}
+
 	.logo {
 		display: flex;
 		justify-content: center;
 		width: 100%;
 		padding-inline: var(--space-outside);
 		padding-block-end: var(--space-xwide);
-	}
-
-	main {
-		padding-block: var(--space-xwide);
 	}
 </style>

@@ -7,6 +7,7 @@
 			// local
 			"@components/*": ["./src/components/*"],
 			"@layouts/*": ["./src/layouts/*"],
+			"@images/*": ["./src/images/*"],
 
 			// shared
 			"@shared/fonts/*": ["../../shared/public/assets/fonts/*"],

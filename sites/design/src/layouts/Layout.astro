@@ -20,7 +20,7 @@ import Head from '@shared/components/meta/Head.astro';
 import type { SEOContent, ThemeNames, Theme } from '@shared/lib/types';
 
 // --- props ---
-const { pageTitle, seo = {}, theme } = Astro.props;
+const { pageTitle, seo = {}, theme, ...attr } = Astro.props;
 
 /**
  * Create a color theme object for the Theme component
@@ -52,6 +52,7 @@ function setTheme() {
 	<ColorTheme
 		el="body"
 		{...setTheme()}
+		{...attr}
 	>
 		<slot />
 	</ColorTheme>
