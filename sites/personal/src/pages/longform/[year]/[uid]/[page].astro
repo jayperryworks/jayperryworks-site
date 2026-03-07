@@ -349,7 +349,7 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 				&& number === project.chapterList.length
 				&& (
 					<aside class="end | type-role-display type-scale-gamma">
-						The end
+						<p>The end</p>
 					</aside>
 				)
 			}
@@ -490,11 +490,14 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 	}
 
 	.end {
-		color: var(--color-secondary);
-		font-style: italic;
-		margin-inline: auto;
-		max-width: var(--content-width-default);
-		width: 100%;
+		padding-inline: var(--space-outside);
+
+		> p {
+			color: var(--color-secondary);
+			font-style: italic;
+			margin-inline: auto;
+			max-width: var(--content-width-default);
+		}
 	}
 
 	.support {
