@@ -10,6 +10,7 @@ import expand from '@shared/icons/expand.svg?raw';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@shared/lib/prismic';
 import { removeArticles } from '@shared/lib/stringHelpers';
+import fetchContent from '@shared/lib/fetchContent';
 
 // --- components
 import Aside from '@shared/components/blocks/Aside.astro';
@@ -25,6 +26,8 @@ import BlockList from '@shared/components/BlockList.astro';
 
 // --- layout
 import Layout from '@layouts/Layout.astro';
+
+console.log(await fetchContent('books'));
 
 // fetch data from Prismic
 const pageData = await prismic.getByUID('index_page', 'bookshelf');
