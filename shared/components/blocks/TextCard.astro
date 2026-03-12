@@ -20,6 +20,7 @@
 import '@shared/styles/tokens/borders.css';
 import '@shared/styles/tokens/elevation.css';
 import '@shared/styles/tokens/spacing.css';
+import arrowRight from '@shared/icons/arrow-right.svg?raw';
 
 // --- types ---
 /**
@@ -72,25 +73,27 @@ const {
 >
 	<div class="wrapper">
 		<slot>
-			{
-				headline && (
-					<Heading
-						text={headline}
-						level={headingLevel || 3}
-						size={headingSize}
-					/>
-				)
-			}
-			{
-				text && (
-					<Passage
-						allowHTML={true}
-						text={{ markdown: prismicHelpers.asText(text) }}
-						typeFace="accent"
-						typeSize={textSize}
-					/>
-				)
-			}
+			<div class="text">
+				{
+					headline && (
+						<Heading
+							text={headline}
+							level={headingLevel || 3}
+							size={headingSize}
+						/>
+					)
+				}
+				{
+					text && (
+						<Passage
+							allowHTML={true}
+							text={{ markdown: prismicHelpers.asText(text) }}
+							typeFace="accent"
+							typeSize={textSize}
+						/>
+					)
+				}
+			</div>
 		</slot>
 		{
 			link && (
@@ -98,6 +101,7 @@ const {
 					class="action"
 					size="small"
 					href={prismicHelpers.asLink(link.href, linkResolver)}
+					iconRight={arrowRight}
 				>
 					{link.label}
 				</Button>
@@ -108,7 +112,7 @@ const {
 
 <style>
 	.wrapper {
-		align-items: start;
+		align-items: stretch;
 		background-color: var(--card-color, var(--color-island));
 		border-radius: var(--border-radius-round);
 		display: flex;
@@ -119,7 +123,14 @@ const {
 		box-shadow: var(--elevation-xlow);
 	}
 
-	.card :global(.action) {
+	.text {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xxnarrow);
+		width: 100%;
+	}
+
+	.wrapper :global(.action) {
 		align-self: end;
 		margin-block-start: auto;
 	}

@@ -22,6 +22,21 @@ import type { SEOContent, ThemeNames, Theme } from '@shared/lib/types';
 // --- props ---
 const { pageTitle, seo = {}, theme } = Astro.props;
 
+// Available RSS feeds
+const RSS = [
+	{
+		path: '/rss/feed.xml',
+	},
+	{
+		name: 'Blog posts',
+		path: '/rss/blog.xml',
+	},
+	{
+		name: 'Pictures',
+		path: '/rss/pictures.xml',
+	},
+];
+
 /**
  * Create a color theme object for the Theme component
  * @returns {Partial<Theme>}
@@ -47,6 +62,7 @@ function setTheme() {
 <html lang="en">
 	<Head
 		title={pageTitle}
+		{RSS}
 		{...seo}
 	/>
 	<ColorTheme
