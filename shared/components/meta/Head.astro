@@ -1,58 +1,49 @@
 ---
-// HTML Head meta component
-// - Display HTML meta and SEO data
-
-// --- types ---
-export interface Props {
-	description?: string; // description for this page
-	image?: string; // url for an seo feature image
-	imageAlt?: string; // alt text for the seo feature image
-	themeColor?: string; // color used for the theme-color meta tag, e.g. safari browser
-	title?: string; // the page title
-}
+/**
+ * HTML Head meta component
+ * @description - Display HTML meta and SEO data
+ * @param {string} [description] - description for this page
+ * @param {string} [image] - url for an seo feature image
+ * @param {string} [imageAlt] - alt text for the seo feature image
+ * @param {object[]} [RSS] - include the RSS meta tags
+ * @param {string} [RSS.path] - path to the RSS xml file
+ * @property {string} [RSS.name] - name for the feed, used in the title attr
+ * @param {string} [themeColor] - color used for the theme-color meta tag, e.g. safari browsers
+ * @param {string} [title] - the page title
+ */
 
 // --- props ---
 const {
 	description,
 	image,
 	imageAlt,
+	RSS,
 	themeColor,
 	title: pageTitle,
-} = Astro.props as Props;
+} = Astro.props;
 
 // --- config ---
 const SITE_TITLE = 'Jay Perry';
 const title = pageTitle ? `${SITE_TITLE} | ${pageTitle}` : SITE_TITLE;
 
-const RSSMetadata = [
-	{
-		path: '/rss/feed.xml',
-	},
-	{
-		name: 'Blog posts',
-		path: '/rss/blog.xml',
-	},
-	{
-		name: 'Pictures',
-		path: '/rss/pictures.xml',
-	},
-];
+
 ---
 
 <head>
 	<meta charset='utf-8'>
 	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+	{themeColor && <meta name="theme-color" content={themeColor}>}
 
 	<title>{title}</title>
 
-	<!-- favicon -->
+	{/* favicon */}
 	<link rel="icon" hDOMRef="/favicon.ico" sizes="any">
 	<link rel="icon" hDOMRef="/icon.svg" type="image/svg+xml">
 	<link rel="apple-touch-icon" hDOMRef="/apple-touch-icon.png">
 	<link rel="manifest" hDOMRef="/manifest.webmanifest">
 
-	<!-- RSS metadata -->
-	{RSSMetadata.map(({ name, path }) => (
+	{/* RSS metadata */}
+	{RSS && RSS.map(({ name, path }) => (
 		<link
 			rel="alternate"
 			type="application/rss+xml"
@@ -61,12 +52,16 @@ const RSSMetadata = [
 		>
 	))}
 
-	<!-- microdata/profile -->
+	{/* microdata/profile */}
 	<link type="text/plain" rel="author" href="/humans.txt">
 	<link rel="me" href="mailto:hi@jayperryworks.com">
 
-	<!-- social/seo markup -->
-	<!-- hat tip to https://meiert.com/en/blog/minimal-social-markup/ -->
+	{
+		/*
+		 * social/seo markup
+		 * hat tip to https://meiert.com/en/blog/minimal-social-markup/
+		 */
+	}
 	<meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'}>
 	<meta property="og:title" content={title}>
 	<meta property="og:type" content="website">
@@ -81,8 +76,7 @@ const RSSMetadata = [
 		<meta property="og:image" content={image}>
 		<meta property="og:image:alt" content={imageAlt}>
 	)}
-	{themeColor && <meta name="theme-color" content={themeColor}>}
 
-	{/* Analytics */}
+	{/* analytics */}
 	<script defer src="https://cloud.umami.is/script.js" data-website-id="2168c7f3-345a-477b-bf83-e040000ff811"></script>
 </head>
