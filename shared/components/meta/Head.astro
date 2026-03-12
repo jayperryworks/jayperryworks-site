@@ -62,13 +62,14 @@ const RSSMetadata = [
 	))}
 
 	<!-- microdata/profile -->
-	<link rel="author" href="/about/" title="My story">
+	<link type="text/plain" rel="author" href="/humans.txt">
 	<link rel="me" href="mailto:hi@jayperryworks.com">
 
 	<!-- social/seo markup -->
 	<!-- hat tip to https://meiert.com/en/blog/minimal-social-markup/ -->
 	<meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'}>
 	<meta property="og:title" content={title}>
+	<meta property="og:type" content="website">
 	<meta property="og:site_name" content={SITE_TITLE}>
 	<meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)}>
 	<meta property="og:locale" content="en_US">
