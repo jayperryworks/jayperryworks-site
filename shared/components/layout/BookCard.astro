@@ -1,5 +1,17 @@
 ---
-// assets
+/**
+ * Book Card layout component
+ * -> display a cover image and info about a book
+ *
+ * @param {object} [links] - info/purchase links to display
+ * @param {string} [author] - the author's name
+ * @param {string} [class] - append classes to the container
+ * @param {Cover} [cover] - the cover image url
+ * @param {string[]} [tags] - category tags for the book
+ * @param {string} [title] - the book's title
+ */
+
+// --- assets ---
 import '@shared/styles/tokens/borders.css';
 import '@shared/styles/tokens/contentWidth.css';
 import '@shared/styles/tokens/spacing.css';
@@ -7,43 +19,45 @@ import '@shared/styles/tokens/type.css';
 import '@shared/styles/utilities/type.css';
 import externalLink from '@shared/icons/external-link.svg?raw';
 
-// utilities
+// --- utilities ---
 import { removeArticles } from '@shared/lib/stringHelpers';
-import * as prismicHelpers from '@prismicio/helpers';
 
-// components
+// --- components ---
 import Button from '@shared/components/elements/Button.astro';
 import Heading from '@shared/components/blocks/Heading.astro';
 import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
 import { Image } from 'astro:assets';
 
-// types
-import { TitleField } from '@prismicio/types';
+// --- types ---
+/** @typedef {object} Action
+ * @prop {string} label - text label to display on the button
+ * @prop {string} url
+ * @prop {'external' | 'internal'} type - does the url link to a page or another site?
+ */
 
-type Action = {
-	label: string;
-	url: string;
-	type: 'external' | 'internal';
-};
+/**
+ * @typedef {object} Cover
+ * @prop {number} height - height of the image in pixels
+ * @prop {string} uuid - permalink on server
+ * @prop {string} url - current location on server
+ * @prop {number} width - width of the image in pixels
+ * @prop {number} [rank] - preference for which cover to use (lower = better)
+ */
 
-export interface Props {
-	actions?: Action[];
-	author?: TitleField;
-	class?: string;
-	cover?: string;
-	tags?: string[];
-	title?: TitleField;
-}
-
+// --- props ---
 const {
-	actions,
 	author,
 	class: className = '',
 	cover,
+	links,
 	tags = [],
 	title,
-} = Astro.props as Props;
+} = Astro.props;
 
+const actions = Object.keys(links).map((label) => ({
+	url: links[label],
+	label,
+}));
 const widths = [240, 400, 800];
 const sizes = `(max-width: 360px) 240px, (max-width: 800px) 400px, 800px`;
 
@@ -54,7 +68,7 @@ const sizes = `(max-width: 360px) 240px, (max-width: 800px) 400px, 800px`;
  * @returns {string}
  */
 function getInitial(title) {
-	return removeArticles(prismicHelpers.asText(title)).charAt(0).toUpperCase();
+	return removeArticles(title).charAt(0).toUpperCase();
 }
 ---
 
@@ -69,12 +83,13 @@ function getInitial(title) {
 				{
 					cover ? (
 						<Image
-							src={cover}
-							alt={`Cover for '${prismicHelpers.asText(title)}'`}
+							src={cover.url}
+							alt={`Cover for '${title}'`}
 							class="cover-image"
+							height={cover.height}
+							width={cover.width}
 							{widths}
 							{sizes}
-							inferSize
 						/>
 					) : (
 						<div class="cover-image placeholder">
@@ -95,8 +110,9 @@ function getInitial(title) {
 						<Heading
 							class="type-scale-epsilon"
 							level={2}
-							text={title}
-						/>
+						>
+							{title}
+						</Heading>
 					)
 				}
 				{

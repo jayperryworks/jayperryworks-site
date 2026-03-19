@@ -1,18 +1,30 @@
 ---
-// --- assets
+// --- assets ---
 import '@shared/styles/tokens/contentWidth.css';
 import '@shared/styles/tokens/spacing.css';
 import '@shared/styles/utilities/type.css';
 import collapse from '@shared/icons/collapse.svg?raw';
 import expand from '@shared/icons/expand.svg?raw';
 
-// --- utils
-import * as prismicHelpers from '@prismicio/helpers';
-import prismic from '@shared/lib/prismic';
-import { removeArticles } from '@shared/lib/stringHelpers';
+// --- types ---
+/**
+ * @typedef {object} Book
+ * @property {string} author
+ * @property {string[]} tags - category/genre tags
+ * @property {string} title
+ * @property {string} uuid - unique, url-safe ID string
+ * @property {object[]} [covers] - list of available cover images
+ * @property {string} [isbn]
+ * @property {object} [links] - urls to key links
+ * @property {string} [links.purchase] - link to purchase the book, usually Bookshop.org
+ * @property {string} [links.info] - link to info about the book, usually OpenLibrary
+ * @property {string} [olid] - OpenLibrary ID number
+ */
+
+// --- utils ---
 import fetchContent from '@shared/lib/fetchContent';
 
-// --- components
+// --- components ---
 import Aside from '@shared/components/blocks/Aside.astro';
 import Button from '@shared/components/elements/Button.astro';
 import Pill from '@shared/components/elements/Pill.astro';
@@ -24,214 +36,41 @@ import MainFooter from '@components/MainFooter.astro';
 import MainNav from '@components/MainNav.astro';
 import BlockList from '@shared/components/BlockList.astro';
 
-// --- layout
+// --- layout ---
 import Layout from '@layouts/Layout.astro';
 
-console.log(await fetchContent('books'));
-
-// fetch data from Prismic
-const pageData = await prismic.getByUID('index_page', 'bookshelf');
-
-const {
-	body,
-	seo_description,
-	seo_image,
-	seo_title,
-	short_title: shortTitle,
-	subtitle,
-	title,
-} = pageData.data;
-
-const seo = {
-	description: seo_description,
-	image: seo_image?.url,
-	imageAlt: seo_image?.alt,
-	title: seo_title || prismicHelpers.asText(title),
-};
-
-const booksResponse = await prismic.getAllByType('book');
-const seriesResponse = await prismic.getAllByType('book_series');
-
-const sortedBooks = sortBooksAlphabetically(booksResponse).filter(
-	(b) => b !== undefined,
-);
-
-const booksInSeries = seriesResponse.reduce((result, series) => {
-	const { uid, data } = series;
-
-	// only mark as in a series if there's more than 1 book
-	if (data.books.length > 1) {
-		for (const { book } of data.books) {
-			// add to the aggregate object
-			result[book.uid] = uid;
-		}
-	}
-
-	return result;
-}, {});
+// fetch data from content server
+const response = await fetchContent('books', { env: 'dev' });
+const { colorTheme, seo, series, subtitle, title, uuid } = response;
 
 // build an array of all the tags used in all the books
-const tags = aggregateBookTags(sortedBooks);
+const tags = aggregateBookTags(series);
 
 /**
  * Gather all unique tags used in an array of books
  *
  * @function
- * @param {Object[]} books - book data to process
+ * @param {Object[]} series - book series data to process
+ * @param {Book[]} series.books - books in the series
  * @returns {string[]} - list of tags
  */
-function aggregateBookTags(books: Object[]): string[] {
-	return books
-		.reduce((result, { tags }) => {
-			for (const tag of tags) {
-				if (!result.includes(tag)) result.push(tag);
+function aggregateBookTags(series) {
+	return series
+		.reduce((result, { books }) => {
+			for (const book of books) {
+				for (const tag of book.tags) {
+					if (!result.includes(tag)) result.push(tag);
+				}
 			}
 
 			return result;
 		}, [])
 		.sort((a, b) => a.localeCompare(b));
 }
-
-function sortBooksAlphabetically(list: object[]): object[] {
-	return list.sort((a, b) => {
-		const aTitle = removeArticles(prismicHelpers.asText(a.data.title));
-		const bTitle = removeArticles(prismicHelpers.asText(b.data.title));
-
-		return aTitle.localeCompare(bTitle);
-	});
-}
-
-// books blob endpoint
-function getBooksBlobEndpoint({ isbn, olid, type = 'data' }) {
-	const paths = {
-		data: 'books/data',
-		covers: 'books/covers',
-	};
-
-	if (isbn) {
-		return import.meta.env.PROD
-			? `${import.meta.env.SITE}/${paths[type]}/isbn/${isbn}`
-			: `http://localhost:8888/${paths[type]}/isbn/${isbn}`;
-	}
-
-	return import.meta.env.PROD
-		? `${import.meta.env.SITE}/${paths[type]}/olid/${olid}`
-		: `http://localhost:8888/${paths[type]}/olid/${olid}`;
-}
-
-const books = await Promise.all(
-	sortedBooks.map(async ({ uid, tags, data }) => {
-		const {
-			author,
-			isbn,
-			olid,
-			purchase_url: purchaseURL,
-			related_content: relatedContent,
-			title,
-			cover,
-		} = data;
-
-		// query the Netlify blob cache for additional data (pulled from OpenLibrary)
-		if (isbn || olid) {
-			let bookData = {
-				actions: [
-					{
-						label: 'Purchase',
-						url: prismicHelpers.asLink(purchaseURL),
-						type: 'external',
-					},
-				],
-				tags: tags || [],
-				author,
-				relatedContent,
-				title,
-				uid,
-			};
-
-			// If the book is in a series, add a prop with its UID
-			if (booksInSeries[uid]) bookData.series = booksInSeries[uid];
-
-			// Pull additional data from a blob with cached OpenLibrary data
-			// try {
-			// 	const booksDataResponse = await fetch(
-			// 		getBooksBlobEndpoint({ isbn, olid }),
-			// 	);
-
-			// 	if (booksDataResponse?.status === 200) {
-			// 		const booksBlobData = await booksDataResponse.json();
-
-			// 		const {
-			// 			url: infoURL,
-			// 			publishDate,
-			// 			publishers,
-			// 			hasCover,
-			// 		} = JSON.parse(booksBlobData);
-
-			// 		bookData.publishers = publishers;
-			// 		bookData.publishDate = publishDate;
-
-			// 		// if there's a cover image in Prismic, use that
-			// 		if (prismicHelpers.isFilled.image(cover)) {
-			// 			bookData.cover = cover.url;
-			// 			// otherwise, if the cover is available on OpenLibrary, use that
-			// 		} else if (hasCover) {
-			// 			bookData.cover = getBooksBlobEndpoint({
-			// 				isbn,
-			// 				olid,
-			// 				type: 'covers',
-			// 			});
-			// 		}
-
-			// 		bookData.actions.unshift({
-			// 			label: 'Open Library',
-			// 			url: infoURL,
-			// 			type: 'external',
-			// 		});
-
-			// 		return bookData;
-			// 	}
-			// } catch (error) {
-			// 	console.log(error);
-			// }
-
-			// if the request to the cache fails, just use the data we have from the CMS
-			return bookData;
-		}
-	}),
-);
-
-// sort all the book data by series
-const series = sortBooksAlphabetically(seriesResponse).reduce(
-	(result, item) => {
-		const { uid, data: series } = item;
-		// loop through the books referenced in the series data
-		// and add the real book data
-		const seriesBooks = series.books.map(({ book }) => {
-			return books.find(({ uid }) => uid === book.uid);
-		});
-
-		// add to the series array if the series contains more than 1 book
-		if (series.books.length > 1) {
-			result.push({
-				books: seriesBooks,
-				tags: aggregateBookTags(seriesBooks),
-				title: series.title,
-				uid: uid,
-			});
-		}
-		return result;
-	},
-	[],
-);
-
-// add standalone books to the series array
-series.unshift({
-	books: books.filter(({ series }) => !series),
-});
 ---
 
 <Layout
-	pageTitle={shortTitle}
+	pageTitle={title}
 	path="bookshelf"
 	theme="cherry"
 	{seo}
@@ -242,24 +81,30 @@ series.unshift({
 			<Heading
 				align="center"
 				level={1}
-				text={title}
-			/>
+			>
+				{title}
+			</Heading>
 			{
 				subtitle && (
 					<Heading
 						align="center"
 						level={4}
 						subheading
-						text={subtitle}
-					/>
+					>
+						{subtitle}
+					</Heading>
 				)
 			}
 		</header>
 
+		{
+			/*
 		<BlockList
 			{body}
 			showLedeStyle
 		/>
+		*/
+		}
 
 		<div class="wrapper">
 			<jp-filter-and-sort>
@@ -315,8 +160,7 @@ series.unshift({
 										align="center"
 										class="type-scale-gamma"
 									>
-										<span class="series-label">Series:</span>{' '}
-										{prismicHelpers.asText(series.title)}
+										<span class="series-label">Series:</span> {series.title}
 									</Heading>
 								)}
 								<Gallery gutter="xnarrow">
@@ -330,9 +174,9 @@ series.unshift({
 												id={book.uid}
 											>
 												<BookCard
-													actions={book.actions}
 													author={book.author}
-													cover={book.cover}
+													cover={book.covers?.[0]}
+													links={book.links}
 													title={book.title}
 												>
 													{book.publishers && book.publishDate && (
