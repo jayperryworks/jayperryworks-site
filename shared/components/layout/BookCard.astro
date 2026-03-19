@@ -58,8 +58,6 @@ const actions = Object.keys(links).map((label) => ({
 	url: links[label],
 	label,
 }));
-const widths = [240, 400, 800];
-const sizes = `(max-width: 360px) 240px, (max-width: 800px) 400px, 800px`;
 
 /**
  * Get the initial letter from the title of a book
@@ -88,8 +86,6 @@ function getInitial(title) {
 							class="cover-image"
 							height={cover.height}
 							width={cover.width}
-							{widths}
-							{sizes}
 						/>
 					) : (
 						<div class="cover-image placeholder">
