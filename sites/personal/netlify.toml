@@ -1,0 +1,62 @@
+[build]
+	base = "/"
+	publish = "sites/personal/dist"
+	command = "npm run personal build"
+
+[[headers]]
+	for = "/*"
+
+  [headers.values]
+		X-Frame-Options = "DENY"
+		X-XSS-Protection = "1; mode=block"
+		X-Content-Type-Options = "nosniff"
+		Referrer-Policy = "same-origin"
+
+[images]
+	remote_images = [
+		'https://content.jayperry.works/.*',
+		'http://jpw-api.test/.*',
+	]
+
+[[redirects]]
+	from = "/blog"
+	to = "/blog/page/1"
+[[redirects]]
+	from = "/design"
+	to = "https://design.jayperry.works"
+[[redirects]]
+	from = "/work/prints/*"
+	to = "/pictures/:splat"
+	stats = 302
+[[redirects]]
+	from = "/writing/*"
+	to = "/blog/:splat"
+	stats = 302
+[[redirects]]
+	from = "/rss/all.xml"
+	to = "/rss/feed.xml"
+	stats = 302
+[[redirects]]
+	from = "/blog/rss/*"
+	to = "/rss/blog.xml"
+	status = 302
+[[redirects]]
+	from = "/pictures/rss/*"
+	to = "/rss/pictures.xml"
+	status = 302
+[[redirects]]
+	from = "/blog/2018/01/26/.mail-recap/"
+	to = "/blog/2018/01/26/mail-recap/"
+	status = 302
+[[redirects]]
+	from = "/blog/2019/07/birchbark-louise-erdrich%E2%80%99s-bookstore/"
+	to = "/blog/2019/07/25/birchbark-louise-erdrichs-bookstore/"
+	status = 302
+[[redirects]]
+	from = "/blog/2019/07/fontsmith%E2%80%99s-guide-to-type-styles/"
+	to = "/blog/2019/07/16/fontsmiths-guide-to-type-styles/"
+	status = 302
+[[redirects]]
+	from = "/blog/2019/07/%E2%80%98mild%E2%80%99-peril/"
+	to = "/blog/2019/07/01/mild-peril/"
+	status = 302

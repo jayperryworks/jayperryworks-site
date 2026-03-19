@@ -14,5 +14,8 @@
 		"design": "npm run --workspace=sites/design",
 		"personal": "npm run --workspace=sites/personal",
 		"shared": "npm run --workspace=shared"
+	},
+	"dependencies": {
+		"@astrojs/netlify": "^7.0.3"
 	}
 }
