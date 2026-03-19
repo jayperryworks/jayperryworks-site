@@ -29,19 +29,20 @@ import Aside from '@shared/components/blocks/Aside.astro';
 import Button from '@shared/components/elements/Button.astro';
 import Pill from '@shared/components/elements/Pill.astro';
 import Heading from '@shared/components/blocks/Heading.astro';
-import Passage from '@shared/components/blocks/Passage.astro';
+import Passage from '@local/components/blocks/Passage.astro';
 import BookCard from '@shared/components/layout/BookCard.astro';
 import Gallery from '@shared/components/layout/Gallery.astro';
-import MainFooter from '@components/MainFooter.astro';
-import MainNav from '@components/MainNav.astro';
-import BlockList from '@shared/components/BlockList.astro';
+import MainFooter from '@local/components/navigation/MainFooter.astro';
+import MainNav from '@local/components/navigation/MainNav.astro';
+import BlockList from '@local/components/BlockList.astro';
 
 // --- layout ---
-import Layout from '@layouts/Layout.astro';
+import Layout from '@local/layouts/Layout.astro';
 
 // fetch data from content server
 const response = await fetchContent('books', { env: 'dev' });
-const { colorTheme, seo, series, subtitle, title, uuid } = response;
+const { body, colorTheme, seo, series, subtitle, title } = response;
+const { preset: name, customBase: hue, customThemes: custom } = colorTheme;
 
 // build an array of all the tags used in all the books
 const tags = aggregateBookTags(series);
@@ -72,7 +73,11 @@ function aggregateBookTags(series) {
 <Layout
 	pageTitle={title}
 	path="bookshelf"
-	theme="cherry"
+	theme={{
+		custom,
+		hue,
+		name,
+	}}
 	{seo}
 >
 	<MainNav segment="bookshelf" />
@@ -97,14 +102,10 @@ function aggregateBookTags(series) {
 			}
 		</header>
 
-		{
-			/*
 		<BlockList
 			{body}
 			showLedeStyle
 		/>
-		*/
-		}
 
 		<div class="wrapper">
 			<jp-filter-and-sort>

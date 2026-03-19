@@ -12,13 +12,13 @@ import prismic from '@shared/lib/prismic';
 import { linkResolver, fetchLinks } from '@shared/lib/routes';
 
 // components
-import Layout from '@layouts/Layout.astro';
+import Layout from '@local/layouts/Layout.astro';
 import BlockList from '@shared/components/BlockList.astro';
 import Button from '@shared/components/elements/Button.astro';
 import Heading from '@shared/components/blocks/Heading.astro';
 import Passage from '@shared/components/blocks/Passage.astro';
-import MainNav from '@components/MainNav.astro';
-import MainFooter from '@components/MainFooter.astro';
+import MainNav from '@local/components/navigation/MainNav.astro';
+import MainFooter from '@local/components/navigation/MainFooter.astro';
 
 // fetch content
 const response = await prismic.getSingle('homepage', { fetchLinks });

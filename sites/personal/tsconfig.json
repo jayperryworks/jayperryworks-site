@@ -5,8 +5,8 @@
 	"compilerOptions": {
 		"paths": {
 			// local
-			"@components/*": ["./src/components/*"],
-			"@layouts/*": ["./src/layouts/*"],
+			"@local/components/*": ["./src/components/*"],
+			"@local/layouts/*": ["./src/layouts/*"],
 
 			// shared
 			"@shared/fonts/*": ["../../shared/public/assets/fonts/*"],

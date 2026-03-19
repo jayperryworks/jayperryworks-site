@@ -11,11 +11,11 @@ import { sentenceCase, truncate } from '@shared/lib/stringHelpers';
 
 // components
 import Heading from '@shared/components/blocks/Heading.astro';
-import Layout from '@layouts/Layout.astro';
+import Layout from '@local/layouts/Layout.astro';
 import BlogListings from '@shared/components/navigation/BlogListings.astro';
 import BlogListingsItem from '@shared/components/navigation/BlogListingsItem.astro';
-import MainFooter from '@components/MainFooter.astro';
-import MainNav from '@components/MainNav.astro';
+import MainFooter from '@local/components/navigation/MainFooter.astro';
+import MainNav from '@local/components/navigation/MainNav.astro';
 
 // types
 export type Post = {
