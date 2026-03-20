@@ -24,13 +24,13 @@ const {
 	text,
 	class: className,
 	label,
-	typeSize = 'Default',
+	typeSize = 'default',
 	...attrs
 } = Astro.props;
 
 const typeScale = {
-	Default: 'epsilon',
-	Small: 'zeta',
+	default: 'epsilon',
+	small: 'zeta',
 };
 
 const classList = ['aside', className].join(' ');
