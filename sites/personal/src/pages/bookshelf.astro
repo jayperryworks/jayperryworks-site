@@ -153,7 +153,7 @@ function aggregateBookTags(series) {
 						series.map((series) => (
 							<section
 								class="section"
-								id={series?.uid}
+								id={series.uuid && series.uuid.split('/').pop()}
 								data-tags={series?.tags?.join(', ')}
 							>
 								{series.title && (
@@ -225,6 +225,8 @@ function aggregateBookTags(series) {
 			this.#items = Array.from(this.querySelectorAll('.item'));
 			this.#series = Array.from(this.querySelectorAll('.section[id]'));
 
+			console.log(this.#series);
+
 			tagsButton.addEventListener('click', () => {
 				tagsButton.toggleAttribute('data-toggled');
 				tagsContainer.toggleAttribute('hidden');
@@ -272,7 +274,9 @@ function aggregateBookTags(series) {
 		render() {
 			for (const item of [...this.#items, ...this.#series]) {
 				if (this.activeTags.length > 0) {
-					const itemTags = item.dataset.tags.split(', ');
+					const itemTags = item.dataset.tags
+						? item.dataset.tags.split(', ')
+						: [];
 					// https://stackoverflow.com/questions/53606337/check-if-array-contains-all-elements-of-another-array
 					const isActive = this.activeTags.every((tag) =>
 						itemTags.includes(tag),
