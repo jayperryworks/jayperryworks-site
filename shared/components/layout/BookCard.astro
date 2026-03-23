@@ -54,6 +54,7 @@ const {
 	title,
 } = Astro.props;
 
+// set up data for the ButtonCard's actions prop
 const actions = Object.keys(links).map((label) => ({
 	url: links[label],
 	label,
@@ -101,8 +102,10 @@ function setImageStyle({ width, height }) {
 							alt={`Cover for '${title}'`}
 							class="cover-image"
 							height={cover.height}
-							width={cover.width}
+							sizes={`(min-width: 1200px) 600px, (min-width: 600px) 300px, 180px`}
 							style={setImageStyle(cover)}
+							width={cover.width}
+							widths={[180, 300, 600]}
 						/>
 					) : (
 						<div class="cover-image placeholder">
@@ -213,7 +216,7 @@ function setImageStyle({ width, height }) {
 	}
 
 	.book-card :global(.cover-image) {
-		box-shadow: 0.5em 0.5em 0.3em var(--color-shadow);
+		box-shadow: 0.25em 0.3em 0.4em var(--color-shadow);
 		display: block;
 	}
 

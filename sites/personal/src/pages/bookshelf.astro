@@ -40,7 +40,7 @@ import BlockList from '@local/components/BlockList.astro';
 import Layout from '@local/layouts/Layout.astro';
 
 // fetch data from content server
-const response = await fetchContent('books', { env: 'dev' });
+const response = await fetchContent('books');
 const { body, colorTheme, seo, series, subtitle, title } = response;
 const { preset: name, customBase: hue, customThemes: custom } = colorTheme;
 
