@@ -6,5 +6,4 @@ export default {
 		layout: 'constrained',
 	},
 	publicDir: `../../shared/public`,
-	security: { csp: true },
 };
