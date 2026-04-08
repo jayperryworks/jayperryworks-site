@@ -2,7 +2,12 @@
 export default {
 	compressHTML: true,
 	image: {
-		domains: ['jayperry.works', 'jayperryworks.com', 'jpw-api.test'],
+		domains: [
+			'content.jayperry.works',
+			'jayperry.works',
+			'jayperryworks.com',
+			'jpw-api.test',
+		],
 		layout: 'constrained',
 	},
 	publicDir: `../../shared/public`,
