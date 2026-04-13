@@ -1,0 +1,35 @@
+---
+/**
+ * Rendered text component
+ * @description Simple wrapper component, renders formatted text (e.g. markdown) to HTML
+ *
+ * @param {string} markdown - markdown text to render
+ * @param {boolean} [allowHTML=false] - allow HTML tags to pass through
+ * @param {boolean} [footnotes=false] - allow footnotes
+ * @param {boolean} [inline=false] - render inline, without wrapping in p tags
+ */
+
+// --- styles ---
+import '@shared/styles/tokens/spacing.css';
+
+// --- utils ---
+// TODO: figure out how to resolve links in markdown renderer
+import { linkResolver } from '@shared/lib/routes';
+import renderMarkdown from '@shared/lib/renderMarkdown';
+
+// --- props ---
+const {
+	markdown,
+	inline = false,
+	footnotes = false,
+	allowHTML: html = false,
+} = Astro.props;
+
+const renderedText = await renderMarkdown(markdown, {
+	inline,
+	footnotes,
+	html,
+});
+---
+
+<Fragment set:html={renderedText} />

@@ -1,0 +1,172 @@
+---
+/**
+ * Passage block component
+ * - display formatted, flowing body text
+ *
+ * @param {string} text - text content
+ * @param {boolean} [allowHTML=false] - render embedded html in markdown
+ * @param {string} [class] - classes to append to the container
+ * @param {boolean} [footnotes] - uses footnotes
+ * @param {'body' | 'display' | 'accent'} [typeFace] - type role for the text
+ * @param {TypeScale} [typeSize] - size of the text
+ * @param {'none' | 'pretty' | 'balance'} [wrap] - how to handle line wraps
+ */
+
+// --- assets ---
+import '@shared/styles/tokens/type.css';
+import '@shared/styles/utilities/type.css';
+
+// --- components ---
+import RenderedText from '@local/components/elements/RenderedText.astro';
+
+// --- types ---
+import type { TypeScale } from '@shared/lib/types';
+
+// --- props and state ---
+const {
+	text: markdown,
+	allowHTML = false,
+	class: className = '',
+	footnotes = true,
+	typeFace = 'body',
+	typeSize = 'epsilon',
+	wrap = 'pretty',
+} = Astro.props;
+
+const classList = [
+	'passage',
+	typeFace !== 'body' ? `type-role-${typeFace}` : '',
+	`type-scale-${typeSize}`,
+	wrap !== 'none' ? wrap : '',
+	className,
+].join(' ');
+---
+
+<div class={classList}>
+	<slot>
+		<RenderedText
+			{markdown}
+			{allowHTML}
+			{footnotes}
+		/>
+	</slot>
+</div>
+
+<!-- Markdown-rendered sidenotes -->
+<script src="@shared/scripts/SideNoteMarkdown.js"></script>
+
+<style>
+	.passage {
+		clear: both;
+		position: relative;
+		/* May need `overflow: hidden` here for sidenotes appearing at the bottom of a passage - but having it cuts off hanging punctuation. Will see if it becomes an issue. */
+	}
+
+	/* text wrap styles */
+	.balance {
+		text-wrap: balance;
+	}
+
+	.pretty {
+		text-wrap: pretty;
+	}
+
+	/* spacing */
+	.passage > :global(*) {
+		line-height: var(--type-leading-default);
+		max-width: var(--content-width-default);
+	}
+
+	.passage > :global(* + *) {
+		margin-block-start: 1em;
+	}
+
+	.passage :global(li + li) {
+		margin-block-start: 1em;
+	}
+
+	/* add an icon after external links */
+	@supports (mask: url('/assets/icons/external-link.svg') no-repeat 50% 50%) {
+		/* display an 'external link' icon on any anchor with an absolute url */
+		/* -> except for full urls pointing to my own domain (jayperry.works, jayperryworks.com) */
+		.passage :global(a[href^='http']:not([href*='jayperry'])::after) {
+			--size: 0.6em;
+
+			background-color: currentColor;
+			content: '';
+			display: inline-block;
+			height: var(--size);
+			line-height: var(--type-leading-default);
+			margin: 0 0.1em 0 0.25em;
+			mask: url('/assets/icons/external-link.svg') no-repeat 50% 50%;
+			position: relative;
+			vertical-align: baseline;
+			width: var(--size);
+		}
+	}
+
+	/* Footnotes/sidenotes */
+	:global([data-supports~='js']) .passage :global(sup) {
+		vertical-align: baseline;
+	}
+
+	:global([data-footnote-ref]),
+	:global(.sidenote-label) {
+		--size: 1.6em;
+		--color: var(--color-secondary);
+
+		background-color: transparent;
+		border-radius: 1000px;
+		border: 2px solid var(--color);
+		color: var(--color);
+		cursor: pointer;
+		display: inline-block;
+		font-family: var(--type-font-accent);
+		font-size: var(--type-scale-eta);
+		line-height: var(--size);
+		margin-inline: 0.35rem;
+		min-height: var(--size);
+		min-width: var(--size);
+		padding: 0 0.45rem;
+		position: relative;
+		text-align: center;
+		text-decoration: none;
+		transform: translateY(20%); /* scoot down a little */
+		transition:
+			color 0.25s ease,
+			border-color 0.25s ease;
+		vertical-align: top;
+	}
+
+	:global(.sidenote-label):hover,
+	:global(.sidenote-label):active,
+	:global(.sidenote-label).is-active {
+		--color: var(--color-highlight);
+	}
+
+	:global(.footnotes) {
+		border-radius: var(--border-radius);
+		background-color: var(--color-well);
+		padding: var(--space-medium);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-narrow);
+	}
+
+	:global(.footnotes h2) {
+		font-size: var(--type-scale-delta);
+	}
+
+	:global(.footnotes ol) {
+		margin: 0;
+	}
+
+	:global(.footnotes p),
+	:global(.footnotes ol) {
+		font-size: var(--type-scale-zeta);
+	}
+
+	:global([data-supports~='js'] [data-footnotes]) {
+		display: none;
+	}
+</style>

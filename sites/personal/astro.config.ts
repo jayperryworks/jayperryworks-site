@@ -1,7 +1,8 @@
-import { defineConfig } from 'astro/config';
 import { createLogger } from 'vite';
-import sitemap from '@astrojs/sitemap';
+import { defineConfig } from 'astro/config';
+import netlify from '@astrojs/netlify';
 import sharedConfig from '../../shared/shared.astro.config';
+import sitemap from '@astrojs/sitemap';
 import svgLoader from 'vite-svg-loader';
 
 // ignore 'unrecognized text' warnings in CSS triggered by new relative color syntax
@@ -17,6 +18,9 @@ logger.warn = (msg, options) => {
 export default defineConfig({
 	...sharedConfig,
 
+	adapter: netlify({
+		imageCDN: false,
+	}),
 	integrations: [sitemap()],
 	site: 'https://jayperry.works',
 	vite: {
