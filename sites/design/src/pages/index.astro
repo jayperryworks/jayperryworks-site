@@ -5,7 +5,8 @@ import '@shared/styles/tokens/spacing.css';
 import '@shared/styles/utilities/borders.css';
 import '@shared/styles/utilities/type.css';
 import '@shared/styles/utilities/visibility.css';
-import dotGrid from '@images/dotGrid.svg';
+import dotGridLight from '@images/dotGridLight.svg';
+import dotGridDark from '@images/dotGridDark.svg';
 
 // --- utils ---
 import { fetchLinks } from '@shared/lib/routes';
@@ -36,7 +37,8 @@ const seo = {
 	pageTitle={title}
 	theme="anemone"
 	style={`
-		--bg-pattern: url(${dotGrid.src});
+		--bg-pattern-light: url(${dotGridLight.src});
+		--bg-pattern-dark: url(${dotGridDark.src});
 `}
 	{seo}
 >
@@ -59,12 +61,14 @@ const seo = {
 
 <style>
 	:global(body)::after {
+		--bg-pattern: var(--bg-pattern-light);
+
 		/* prettier-ignore */
 		background-image:
-			linear-gradient(
-				180deg,
-				oklch(from var(--color-surface) l c h / 0) 0%,
-				var(--color-surface) 100%
+		linear-gradient(
+			180deg,
+			oklch(from var(--color-surface) l c h / 0) 0%,
+			var(--color-surface) 100%
 			),
 			var(--bg-pattern);
 		background-position: top center;
@@ -74,6 +78,12 @@ const seo = {
 		width: 100%;
 		height: 90svh;
 		z-index: -1;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:global(body)::after {
+			--bg-pattern: var(--bg-pattern-dark);
+		}
 	}
 
 	main {
