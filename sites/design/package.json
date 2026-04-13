@@ -15,7 +15,7 @@
 		"@astrojs/sitemap": "^3.7.0",
 		"@prismicio/helpers": "^2.3.9",
 		"@prismicio/types": "^0.2.9",
-		"astro": "^6.0.0",
+		"astro": "^6.0.8",
 		"date-fns": "^4.1.0",
 		"vite-svg-loader": "^5.1.0"
 	},
