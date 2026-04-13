@@ -20,14 +20,13 @@
 		"@prismicio/client": "^7.21.6",
 		"@prismicio/helpers": "^2.3.9",
 		"@prismicio/types": "^0.2.9",
-		"astro": "^6.0.8",
+		"astro": "^6.1.0",
 		"autoprefixer": "^10.4.4",
 		"change-case": "^5.4.4",
 		"cssnano": "^6.0.0",
 		"csv-parser": "^3.0.0",
 		"culori": "^4.0.2",
 		"date-fns": "^4.1.0",
-		"install": "^0.13.0",
 		"vite-svg-loader": "^5.1.0"
 	},
 	"devDependencies": {
@@ -35,5 +34,12 @@
 		"@types/react-dom": "^19.2.3",
 		"@types/react": "^19.2.14",
 		"netlify-cli": "^23.15.1"
+	},
+	"optionalDependencies": {
+		"@rollup/rollup-android-arm-eabi": "4.52.2",
+		"@rollup/rollup-darwin-arm64": "^4.32.0",
+		"@rollup/rollup-darwin-x64": "^4.32.0",
+		"@rollup/rollup-linux-arm64-gnu": "^4.32.0",
+		"@rollup/rollup-linux-x64-gnu": "^4.32.0"
 	}
 }
