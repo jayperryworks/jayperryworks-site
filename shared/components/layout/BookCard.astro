@@ -119,8 +119,8 @@ function setImageStyle({ width, height }) {
 		</RevealOnScroll>
 
 		<!-- title, author, etc. -->
-		<header>
-			<slot name="header">
+		<div class="title-lockup">
+			<slot name="title">
 				{
 					title && (
 						<Heading
@@ -142,12 +142,16 @@ function setImageStyle({ width, height }) {
 					)
 				}
 			</slot>
-		</header>
+		</div>
 
 		<!-- book metadata -->
-		<div class="metadata">
-			<slot name="metadata" />
-		</div>
+		{
+			Astro.slots.has() && (
+				<div class="metadata">
+					<slot name="metadata" />
+				</div>
+			)
+		}
 
 		<!-- actions -->
 		{
@@ -233,7 +237,7 @@ function setImageStyle({ width, height }) {
 		padding-block-start: 0.8rem; /* scoot the initial down a little to optically align it/compensate for line height */
 	}
 
-	header {
+	.title-lockup {
 		grid-area: header;
 		padding-block-start: var(--space-medium);
 	}

@@ -12,12 +12,6 @@
 		X-Content-Type-Options = "nosniff"
 		Referrer-Policy = "same-origin"
 
-[images]
-	remote_images = [
-		'https://content.jayperry.works/.*',
-		'http://jpw-api.test/.*',
-	]
-
 [[redirects]]
 	from = "/blog"
 	to = "/blog/page/1"

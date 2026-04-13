@@ -2,11 +2,31 @@
 export default {
 	compressHTML: true,
 	image: {
-		domains: [
-			'content.jayperry.works',
-			'jayperry.works',
-			'jayperryworks.com',
-			'jpw-api.test',
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: '*.jayperry.works',
+			},
+			{
+				protocol: 'https',
+				hostname: '*.jayperryworks.com',
+			},
+			{
+				protocol: 'https',
+				hostname: 'jayperryworks-design.netlify.app',
+			},
+			{
+				protocol: 'https',
+				hostname: 'jayperryworks.netlify.app',
+			},
+			{
+				protocol: 'http',
+				hostname: 'jpw-api.test',
+			},
+			{
+				protocol: 'https',
+				hostname: 'placehold.co',
+			},
 		],
 		layout: 'constrained',
 	},

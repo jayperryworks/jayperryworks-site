@@ -38,10 +38,11 @@
       "sites/design": {
         "packageJson": {
           "dependencies": [
+            "npm:@astrojs/netlify@^7.0.3",
             "npm:@astrojs/sitemap@^3.7.0",
             "npm:@prismicio/helpers@^2.3.9",
             "npm:@prismicio/types@~0.2.9",
-            "npm:astro@^5.17.1",
+            "npm:astro@6",
             "npm:date-fns@^4.1.0",
             "npm:vite-svg-loader@^5.1.0"
           ]
@@ -51,13 +52,14 @@
         "packageJson": {
           "dependencies": [
             "npm:@astrojs/check@~0.9.6",
+            "npm:@astrojs/netlify@^7.0.3",
             "npm:@astrojs/rss@^4.0.15",
             "npm:@astrojs/sitemap@^3.7.0",
             "npm:@netlify/blobs@^7.3.0",
             "npm:@prismicio/client@^7.21.6",
             "npm:@prismicio/helpers@^2.3.9",
             "npm:@prismicio/types@~0.2.9",
-            "npm:astro@^5.16.16",
+            "npm:astro@^6.0.8",
             "npm:autoprefixer@^10.4.4",
             "npm:change-case@^5.4.4",
             "npm:cssnano@6",

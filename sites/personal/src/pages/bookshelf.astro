@@ -39,8 +39,11 @@ import BlockList from '@local/components/BlockList.astro';
 // --- layout ---
 import Layout from '@local/layouts/Layout.astro';
 
+import { Image } from 'astro:assets';
+import testImage from '@local/images/DSCF2642.JPG';
+
 // fetch data from content server
-const response = await fetchContent('books');
+const response = await fetchContent('books', { env: 'dev' });
 const { body, colorTheme, seo, series, subtitle, title } = response;
 const { preset: name, customBase: hue, customThemes: custom } = colorTheme;
 
@@ -224,8 +227,6 @@ function aggregateBookTags(series) {
 			const tags = Array.from(this.querySelectorAll('.pill'));
 			this.#items = Array.from(this.querySelectorAll('.item'));
 			this.#series = Array.from(this.querySelectorAll('.section[id]'));
-
-			console.log(this.#series);
 
 			tagsButton.addEventListener('click', () => {
 				tagsButton.toggleAttribute('data-toggled');

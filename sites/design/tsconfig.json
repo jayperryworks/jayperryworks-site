@@ -3,6 +3,7 @@
 	"include": [".astro/types.d.ts", "./src/**/*", "../../shared/utilities/**/*"],
 	"exclude": ["dist"],
 	"compilerOptions": {
+		"jsx": "react-jsx",
 		"paths": {
 			// local
 			"@components/*": ["./src/components/*"],
