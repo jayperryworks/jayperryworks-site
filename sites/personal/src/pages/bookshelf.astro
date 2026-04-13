@@ -39,9 +39,6 @@ import BlockList from '@local/components/BlockList.astro';
 // --- layout ---
 import Layout from '@local/layouts/Layout.astro';
 
-import { Image } from 'astro:assets';
-import testImage from '@local/images/DSCF2642.JPG';
-
 // fetch data from content server
 const response = await fetchContent('books');
 const { body, colorTheme, seo, series, subtitle, title } = response;
