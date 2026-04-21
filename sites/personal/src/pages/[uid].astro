@@ -1,33 +1,40 @@
 ---
-// assets
+/**
+ * Top-level page template
+ *
+ * @param {object[]} body - the body blocks of the page
+ * @param {string} title
+ * @param {SEOContent} [seo] - SEO/metadata fields
+ * @param {ThemeNames | Partial<Theme>} [theme] - color theme
+ */
+
+// --- assets ---
 import '@shared/styles/tokens/spacing.css';
 
-// helpers
+// --- utils ---
+import fetchContent from '@shared/lib/fetchContent';
+
+// --- helpers ---
 import { fetchLinks } from '@shared/lib/routes';
 import { titleCase } from '@shared/lib/stringHelpers';
 import * as prismicHelpers from '@prismicio/helpers';
 import prismic from '@shared/lib/prismic';
 
-// components
+// --- components ---
 import Layout from '@local/layouts/Layout.astro';
 import BlockList from '@shared/components/BlockList.astro';
 import Heading from '@shared/components/blocks/Heading.astro';
 import MainNav from '@local/components/navigation/MainNav.astro';
 import MainFooter from '@local/components/navigation/MainFooter.astro';
 
-// types
-import { Slice, TitleField } from '@prismicio/types';
+// --- types ---
 import { SEOContent, Theme, ThemeNames } from '@shared/lib/types';
 
-export interface Props {
-	body: Slice[];
-	title: TitleField;
-	seo?: SEOContent;
-	subtitle?: TitleField;
-	theme?: ThemeNames | Partial<Theme>;
-}
+// --- data & pagination ---
+// fetch data from content server
+const response = await fetchContent('about', { env: 'dev' });
+console.log(response);
 
-// data & pagination
 export async function getStaticPaths(): Promise<Function> {
 	const pages = await prismic.getAllByType('page', { fetchLinks });
 
@@ -36,7 +43,7 @@ export async function getStaticPaths(): Promise<Function> {
 
 		const site = data.site || 'Personal';
 
-		if (site !== 'Personal') return result;
+		if (site === 'Design') return result;
 
 		const seo = {
 			description: seo_description,
@@ -61,9 +68,8 @@ export async function getStaticPaths(): Promise<Function> {
 	}, []);
 }
 
-// props
-const { body, seo, subtitle, theme, title } = Astro.props as Props;
-
+// --- props ---
+const { body, seo, subtitle, theme, title } = Astro.props;
 const { uid } = Astro.params;
 ---
 
