@@ -36,7 +36,7 @@ export async function getStaticPaths(): Promise<Function> {
 
 		const site = data.site || 'Personal';
 
-		if (site !== 'Personal') return result;
+		if (site === 'Design') return result;
 
 		const seo = {
 			description: seo_description,
