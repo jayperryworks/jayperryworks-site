@@ -33,7 +33,7 @@
 		"@netlify/blobs": "^7.3.0",
 		"@types/react-dom": "^19.2.3",
 		"@types/react": "^19.2.14",
-		"netlify-cli": "^23.15.1"
+		"netlify-cli": "^25.3.0"
 	},
 	"optionalDependencies": {
 		"@rollup/rollup-android-arm-eabi": "4.52.2",
