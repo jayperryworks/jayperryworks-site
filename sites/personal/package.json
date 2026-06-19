@@ -14,7 +14,7 @@
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.6",
-		"@astrojs/netlify": "^7.0.3",
+		"@astrojs/netlify": "^7.0.13",
 		"@astrojs/rss": "^4.0.15",
 		"@astrojs/sitemap": "^3.7.0",
 		"@prismicio/client": "^7.21.6",
