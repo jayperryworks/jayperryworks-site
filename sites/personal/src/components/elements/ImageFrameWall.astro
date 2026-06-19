@@ -1,4 +1,17 @@
 ---
+/**
+ * Image frame: wall block component
+ * - display an image in a 'wall' frame effect (e.g. matte, wooden frame, etc.)
+ *
+ * @param {ImageField} source
+ * @param {string} [class]
+ * @param {string} [el='figure']
+ * @param {number} [frameThickness]
+ * @param {CSSVariable | HexColor | OKLCHColor} [matteColor]
+ * @param {number} [matteThickness]
+ * @param {number} [maxHeight]
+ * @param {'matte' | 'frame' | 'panel'} [type='frame']
+ */
 // assets
 import '@shared/styles/tokens/elevation.css';
 
@@ -9,25 +22,8 @@ import { arrayToPunctatedString } from '@shared/lib/stringHelpers';
 import Image from '@local/components/elements/Image.astro';
 
 // types
-import type { ImageField } from '@prismicio/types';
-
-import type {
-	CSSVariable,
-	HexColor,
-	HSLAColor,
-	HSLColor,
-} from '@shared/lib/types';
-
-export interface Props {
-	source: ImageField;
-	class?: string;
-	el?: string;
-	frameThickness: number;
-	matteColor?: CSSVariable | HexColor | HSLColor | HSLAColor;
-	matteThickness?: number;
-	maxHeight: number;
-	type?: 'matte' | 'frame' | 'panel';
-}
+import type { CSSVariable, HexColor, OKLCHColor } from '@shared/lib/types';
+import type { ImageSource } from '@shared/lib/kirby.types';
 
 const types = {
 	// matte only
@@ -59,7 +55,7 @@ const {
 	matteColor,
 	maxHeight,
 	el = 'figure',
-} = Astro.props as Props;
+} = Astro.props;
 
 const { width, height } = source.dimensions;
 
