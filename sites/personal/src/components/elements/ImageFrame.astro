@@ -12,12 +12,11 @@
  * @param {boolean} [useImageAspectRato=false] - for a device, use the image's own aspect ratio instead of of the default (e.g. 4/3 for a tablet)
  */
 // child components
-import Image from '@shared/components/elements/Image.astro';
-import ImageFrameDevice from '@shared/components/elements/ImageFrameDevice.astro';
-import ImageFrameWall from '@shared/components/elements/ImageFrameWall.astro';
+import Image from '@local/components/elements/Image.astro';
+import ImageFrameDevice from '@local/components/elements/ImageFrameDevice.astro';
+import ImageFrameWall from '@local/components/elements/ImageFrameWall.astro';
 
 // types
-import type { ImageField } from '@prismicio/types';
 import type { Frame, ImageFit } from '@shared/lib/types';
 
 const {
@@ -31,8 +30,9 @@ const {
 } = Astro.props;
 
 /**
- * @typedef {object} Frame
+ * @typedef {object} FrameComponent
  * @property {'Image' | 'ImageFrameWall' | 'ImageFrameDevice'} component
+ * 	- name of the component to use for a given frame type
  * @property {object} props
  * @property {object} props.source
  * @property {string} props.source.id
@@ -41,6 +41,8 @@ const {
  * @property {'cover'|'contain'} [props.fit='cover']
  * @property {number} [props.maxHeight] - constrain height, in svh units
  */
+
+/** @type {FrameComponent} */
 const imageComponents = {
 	None: {
 		component: Image,

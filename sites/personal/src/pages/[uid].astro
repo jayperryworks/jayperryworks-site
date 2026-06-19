@@ -22,8 +22,8 @@ import prismic from '@shared/lib/prismic';
 
 // --- components ---
 import Layout from '@local/layouts/Layout.astro';
-import BlockList from '@shared/components/BlockList.astro';
-import Heading from '@shared/components/blocks/Heading.astro';
+import BlockList from '@local/components/BlockList.astro';
+import Heading from '@local/components/blocks/Heading.astro';
 import MainNav from '@local/components/navigation/MainNav.astro';
 import MainFooter from '@local/components/navigation/MainFooter.astro';
 
@@ -32,25 +32,14 @@ import { SEOContent, Theme, ThemeNames } from '@shared/lib/types';
 
 // --- data & pagination ---
 // fetch data from content server
-const response = await fetchContent('about', { env: 'dev' });
-console.log(response);
 
 export async function getStaticPaths(): Promise<Function> {
-	const pages = await prismic.getAllByType('page', { fetchLinks });
+	const pages = await fetchContent('pages', { env: 'dev' });
 
-	return pages.reduce((result, { uid, data }) => {
-		const { body, seo_description, seo_image, seo_title, title, theme } = data;
+	return pages.reduce((result, page) => {
+		const { body, colorTheme: theme, seo, sites, title, uuid: uid } = page;
 
-		const site = data.site || 'Personal';
-
-		if (site === 'Design') return result;
-
-		const seo = {
-			description: seo_description,
-			image: seo_image?.url,
-			imageAlt: seo_image?.alt,
-			title: seo_title || prismicHelpers.asText(title),
-		};
+		if (!sites.includes('personal')) return result;
 
 		result.push({
 			params: {
@@ -96,10 +85,10 @@ const { uid } = Astro.params;
 					)
 				}
 			</header>
-			<BlockList
+			<!-- <BlockList
 				{body}
 				showLedeStyle
-			/>
+			/> -->
 		</article>
 	</main>
 	<MainFooter />

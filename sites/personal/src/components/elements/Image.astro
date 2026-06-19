@@ -1,14 +1,10 @@
 ---
-import type { ImageField } from '@prismicio/types';
-import type { ImageFit } from '@shared/lib/types';
-
 /**
  * Responsive image component
  * - renders an img tag with srcset from a Prismic image data object
  * - uses Prismic/Imgix's default auto formatting
  *
- * @param {ImageField} [source] - image source field from Prismic
- * @param {ImageField} [darkModeSource] - image source field from Prismic for dark mode
+ * @param {ImageSource} [source] - image source field from Prismic
  * @param {string} [aspectRatio] - specify an aspect ratio - defaults to image's  dimensions
  * @param {boolean} [border] - add a border to the image
  * @param {string} [class] - add classes to the container
@@ -19,15 +15,12 @@ import type { ImageFit } from '@shared/lib/types';
  * @param {number[]} [widths] - responsive widths to add to the srcset
  */
 
-/**
- * @typedef {object} Source
- * @property {string} id - unique ID for the image
- * @property {number} height
- * @property {number} width
- */
-
 // --- assets ---
 import '@shared/styles/tokens/borders.css';
+
+// --- types ---
+import type { ImageFit } from '@shared/lib/types';
+import type { ImageSource } from '@shared/lib/kirby.types.ts';
 
 // --- utilities ---
 import { arrayToPunctatedString } from '@shared/lib/stringHelpers';
