@@ -74,7 +74,7 @@ const styleList = arrayToPunctatedString([
 <img
 	class={classList}
 	data-fit={[fit || '', maxHeight ? 'limit-height' : ''].join(' ').trim()}
-	data-border={border ? 'true' : undefined}
+	data-border={border === true ? 'true' : undefined}
 	decoding="async"
 	loading="lazy"
 	src={getImageUrl(widths[0])}

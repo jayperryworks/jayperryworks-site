@@ -6,8 +6,8 @@
  * @param {'left' | 'center' | 'right'} [align='left'] - align the text
  * @param {string} [class] - classes to append to the container
  * @param {string} [id] - ID attribute
- * @param {number} [level=2] - the level of the heading tag
- * @param {boolean} [subheading] - is this a subheading?
+ * @param {string} [level='h2'] - the level of the heading tag
+ * @param {boolean|string} [subheading] - is this a subheading?
  * 	- If so, render as a 'p' tag and style the text differently
  * @param {TitleField} [text] - the title text, can also pass in the slot
  */
@@ -27,15 +27,24 @@ const {
 	align = 'left',
 	class: className = '',
 	id,
-	level = 2,
-	subheading,
+	level = 'h2',
 	size,
 	text,
 } = Astro.props;
 
-const levels = ['alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta'];
+let subheading =
+	!Astro.props.subheading || Astro.props.subheading === 'false' ? false : true;
 
-const El = !subheading ? `h${level}` : 'p';
+const levels = {
+	h1: 'alpha',
+	h2: 'beta',
+	h3: 'gamma',
+	h4: 'delta',
+	h5: 'epsilon',
+	h6: 'zeta',
+};
+
+const El = !subheading ? level : 'p';
 
 const classList = [
 	subheading

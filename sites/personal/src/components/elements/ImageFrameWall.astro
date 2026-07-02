@@ -53,7 +53,6 @@ const {
 	frameThickness = types[type].border,
 	matteThickness = types[type].matte,
 	matteColor,
-	maxHeight,
 	el = 'figure',
 } = Astro.props;
 
@@ -88,7 +87,6 @@ const styleList = arrayToPunctatedString([
 				<Image
 					class="image"
 					{source}
-					{maxHeight}
 				/>
 			)
 		}

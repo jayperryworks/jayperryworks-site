@@ -17,7 +17,7 @@ import Aside from '@local/components/blocks/Aside.astro';
 // import CallToAction from '@shared/components/blocks/CallToAction.astro';
 // import Collage from '@shared/components/blocks/Collage.astro';
 // import Feed from '@shared/components/blocks/Feed.astro';
-// import Figure from '@shared/components/blocks/Figure.astro';
+import Figure from '@local/components/blocks/Figure.astro';
 import Heading from '@local/components/blocks/Heading.astro';
 // import ImageGallery from '@shared/components/blocks/ImageGallery.astro';
 import Passage from '@local/components/blocks/Passage.astro';
@@ -37,14 +37,15 @@ const { block, class: className } = Astro.props;
 
 /**
  * Match the 'prominence' value to the corresponding width token
+ * @function
  * @param {Block} block
  * @returns {string}
  */
 function getWidth(block) {
 	const widths = {
-		Small: 'narrow',
-		Large: 'xwide',
-		XLarge: 'xxwide',
+		small: 'narrow',
+		large: 'xwide',
+		xlarge: 'xxwide',
 	};
 
 	if (block.displayMode === 'slide') return widths['XLarge'];
@@ -61,7 +62,7 @@ const blocks = {
 	// callToAction: CallToAction,
 	// collage: Collage,
 	// feed: Feed,
-	// figure: Figure,
+	figure: Figure,
 	heading: Heading,
 	// imageGallery: ImageGallery,
 	passage: Passage,
@@ -73,6 +74,8 @@ const blocks = {
 	// textCardGallery: TextCardGallery,
 	// video: Video,
 };
+
+if (!blocks[block.type]) return;
 
 const Component = blocks[block.type];
 const classList = [

@@ -113,14 +113,7 @@ const styleList = [
 >
 	<div class="wrapper">
 		<slot>
-			{
-				source && (
-					<Image
-						{source}
-						{darkModeSource}
-					/>
-				)
-			}
+			{source && <Image {source} />}
 		</slot>
 	</div>
 </El>

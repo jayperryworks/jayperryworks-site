@@ -70,25 +70,10 @@ const { uid } = Astro.params;
 	<MainNav segment={uid} />
 	<main id="main">
 		<article>
-			<header class="title">
-				<Heading
-					level={1}
-					text={title}
-				/>
-				{
-					subtitle && (
-						<Heading
-							class="type-scale-gamma"
-							text={subtitle}
-							subheading
-						/>
-					)
-				}
-			</header>
-			<!-- <BlockList
+			<BlockList
 				{body}
 				showLedeStyle
-			/> -->
+			/>
 		</article>
 	</main>
 	<MainFooter />
