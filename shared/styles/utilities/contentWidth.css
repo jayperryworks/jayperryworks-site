@@ -1,6 +1,7 @@
 @import url("@shared/styles/tokens/contentWidth.css");
 
-.content-width {
+.content-width,
+.content-width.default {
 	margin-inline: auto;
 	max-width: var(--content-width-default);
 	width: 100%;

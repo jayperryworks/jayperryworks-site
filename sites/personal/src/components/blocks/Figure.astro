@@ -3,7 +3,7 @@
  * Figure block component
  * - Display an image with optional caption and/or attribution
  *
- * @param {ImageField} source - the image data from Prismic
+ * @param {ImageSource} image - the image data from Prismic
  * @param {FormattedText} [attribution] - credit for the artist/photographer
  * @param {boolean} [border] - display a border around the image
  * @param {FormattedText} [caption] - a caption displayed below the image
@@ -11,15 +11,17 @@
  * @param {ImageFit} [fit] - object-fit styles for the image
  * @param {Frame} [frame='None'] - a frame or device for the image
  * @param {number} [maxHeight] - constrain the image to a certain height, in vh units
+ * @param {ContentWidth} [width='xwide'] - how wide to make the heading
  * @param {boolean} [useImageAspectRato=false] - for a device, use the image's own aspect ratio instead of of the default (e.g. 4/3 for a tablet)
  */
 
 // --- styles ---
 import '@shared/styles/tokens/spacing.css';
-import '@shared/styles/tokens/contentWidth.css';
+import '@shared/styles/utilities/contentWidth.css';
 
 // --- types ---
 import type { ImageSource } from '@shared/lib/kirby.types';
+import type { ContentWidth } from '@shared/lib/types';
 
 import type {
 	ContentWidth,
@@ -43,11 +45,14 @@ const {
 	class: className,
 	fit,
 	useImageAspectRatio,
+	width = 'wide',
 } = Astro.props;
 ---
 
 <figure class={['figure', className || ''].join(' ')}>
-	<RevealOnScroll class="wrapper">
+	<RevealOnScroll
+		class={['wrapper', `content-width ${width} centered`].join(' ')}
+	>
 		<slot>
 			{
 				image && (
@@ -65,7 +70,7 @@ const {
 		{
 			(caption || attribution) && (
 				<Caption
-					class="caption"
+					class="caption content-width centered"
 					text={caption}
 					{attribution}
 				/>
@@ -82,8 +87,6 @@ const {
 
 	.figure :global(.caption) {
 		margin-block-start: auto;
-		margin-inline: auto;
-		max-width: var(--content-width-default);
 		padding-block-start: var(--space-narrow);
 	}
 </style>

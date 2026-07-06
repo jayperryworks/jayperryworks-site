@@ -10,14 +10,13 @@
  * @param {boolean|string} [subheading] - is this a subheading?
  * 	- If so, render as a 'p' tag and style the text differently
  * @param {TitleField} [text] - the title text, can also pass in the slot
+ * @param {ContentWidth} [width='xwide'] - how wide to make the heading
  */
 
 // --- assets ---
+import '@shared/styles/utilities/contentWidth.css';
 import '@shared/styles/utilities/type.css';
 import '@shared/styles/utilities/spacing.css';
-
-// --- helpers ----
-import * as prismicHelpers from '@prismicio/helpers';
 
 // --- types ---
 import type { ContentWidth } from '@shared/lib/types';
@@ -30,6 +29,7 @@ const {
 	level = 'h2',
 	size,
 	text,
+	width = 'xwide',
 } = Astro.props;
 
 let subheading =
@@ -50,9 +50,8 @@ const classList = [
 	subheading
 		? `type-role-accent type-scale-${level ? levels[level] : size.toLowerCase()}`
 		: '',
-	prismicHelpers.isFilled.select(size)
-		? `type-scale-${size.toLowerCase()}`
-		: '',
+	size ? `type-scale-${size.toLowerCase()}` : '',
+	`content-width ${width} centered`,
 	className,
 ]
 	.join(' ')
