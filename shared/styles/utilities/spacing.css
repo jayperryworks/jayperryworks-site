@@ -1,5 +1,6 @@
-@import url("@shared/styles/tokens/spacing.css");
+@import url('@shared/styles/tokens/spacing.css');
 
-.space-outside-margins {
+.space-outside-margins,
+[data-space='outside'][data-space='inline'] {
 	padding-inline: var(--space-outside);
 }

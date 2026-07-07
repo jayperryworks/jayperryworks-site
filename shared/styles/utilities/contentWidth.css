@@ -1,28 +1,39 @@
-@import url("@shared/styles/tokens/contentWidth.css");
+@import url('@shared/styles/tokens/contentWidth.css');
 
 .content-width,
-.content-width.default {
+.content-width.default,
+[data-width],
+[data-width~='default'] {
 	margin-inline: auto;
 	max-width: var(--content-width-default);
 	width: 100%;
 }
 
-.content-width.narrow {
+.content-width.narrow,
+[data-width~='narrow'] {
 	max-width: var(--content-width-narrow);
 }
 
-.content-width.wide {
+.content-width.wide,
+[data-width~='wide'] {
 	max-width: var(--content-width-wide);
 }
 
-.content-width.xwide {
+.content-width.xwide,
+[data-width~='xwide'] {
 	max-width: var(--content-width-xwide);
 }
 
-.content-width.xxwide {
+.content-width.xxwide,
+[data-width~='xxwide'] {
 	max-width: var(--content-width-xxwide);
 }
 
-.content-width.centered {
+.content-width.centered,
+[data-width~='centered'] {
 	margin-inline: auto;
+}
+
+[data-width~='start'] {
+	margin-inline: 0;
 }

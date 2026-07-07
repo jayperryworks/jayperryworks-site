@@ -157,7 +157,8 @@ p {
 	max-width: 70ch;
 }
 
-a {
+a,
+[data-type~='link'] {
 	--underline-w: 0.125em;
 
 	border-bottom: var(--underline-w) solid var(--color-highlight);
@@ -167,7 +168,8 @@ a {
 }
 
 @supports (text-decoration-thickness: var(--underline-w)) {
-	a {
+	a,
+	[data-type~='link'] {
 		border-bottom: 0;
 		text-decoration-color: var(--color-highlight);
 		text-decoration-style: solid;
@@ -176,7 +178,9 @@ a {
 }
 
 a:hover,
-a:active {
+a:active,
+[data-type~='link']:hover,
+[data-type~='link']:active {
 	color: var(--color-highlight);
 }
 
@@ -198,7 +202,8 @@ code {
 	color: var(--color-secondary);
 }
 
-a code {
+a code,
+[data-type~='link'] code {
 	background-color: transparent;
 	border-radius: 0;
 	display: inline;

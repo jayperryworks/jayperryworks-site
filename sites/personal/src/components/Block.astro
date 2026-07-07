@@ -20,6 +20,7 @@ import Aside from '@local/components/blocks/Aside.astro';
 import Figure from '@local/components/blocks/Figure.astro';
 import Heading from '@local/components/blocks/Heading.astro';
 // import ImageGallery from '@shared/components/blocks/ImageGallery.astro';
+import PageHeadline from '@local/components/blocks/PageHeadline.astro';
 import Passage from '@local/components/blocks/Passage.astro';
 // import Pullquote from '@shared/components/blocks/Pullquote.astro';
 // import StickyNoteGallery from '@shared/components/blocks/StickyNoteGallery.astro';
@@ -49,7 +50,7 @@ function getWidth(block) {
 	};
 
 	if (block.displayMode === 'slide') return widths['XLarge'];
-	return widths[block.prominence] || '';
+	return widths[block.prominence] || undefined;
 }
 
 const displayModeClass =
@@ -65,6 +66,7 @@ const blocks = {
 	figure: Figure,
 	heading: Heading,
 	// imageGallery: ImageGallery,
+	pageHeadline: PageHeadline,
 	passage: Passage,
 	// pullquote: Pullquote,
 	// quote: BlockQuote,
@@ -78,16 +80,12 @@ const blocks = {
 if (!blocks[block.type]) return;
 
 const Component = blocks[block.type];
-const classList = [
-	'block',
-	'space-outside-margins',
-	displayModeClass,
-	className,
-].join(' ');
+const classList = ['block', displayModeClass, className].join(' ');
 ---
 
 <ColorTransition
 	class={classList}
+	data-space="outside inline"
 	{...block.theme}
 >
 	<Component

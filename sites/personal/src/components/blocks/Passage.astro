@@ -5,6 +5,7 @@
  *
  * @param {string} text - text content
  * @param {boolean} [allowHTML=false] - render embedded html in markdown
+ * @param {boolean} [centered=true] - center the passage in the available space
  * @param {string} [class] - classes to append to the container
  * @param {boolean} [footnotes] - uses footnotes
  * @param {'body' | 'display' | 'accent'} [typeFace] - type role for the text
@@ -27,6 +28,7 @@ import type { TypeScale } from '@shared/lib/types';
 const {
 	text: markdown,
 	allowHTML = false,
+	centered = true,
 	class: className = '',
 	footnotes = true,
 	typeFace = 'body',
@@ -34,16 +36,20 @@ const {
 	wrap = 'pretty',
 } = Astro.props;
 
-const classList = [
-	'passage',
-	typeFace !== 'body' ? `type-role-${typeFace}` : '',
-	`type-scale-${typeSize}`,
-	wrap !== 'none' ? wrap : '',
-	className,
-].join(' ');
+const classList = ['passage', className].join(' ').trim();
 ---
 
-<div class={classList}>
+<div
+	class={classList}
+	data-width={`default${centered ? ' centered' : ''}`}
+	data-type={[
+		`scale-${typeSize}`,
+		typeFace !== 'body' ? `role-${typeFace}` : undefined,
+		`wrap-${wrap}`,
+	]
+		.join(' ')
+		.trim()}
+>
 	<slot>
 		<RenderedText
 			{markdown}
@@ -61,15 +67,6 @@ const classList = [
 		clear: both;
 		position: relative;
 		/* May need `overflow: hidden` here for sidenotes appearing at the bottom of a passage - but having it cuts off hanging punctuation. Will see if it becomes an issue. */
-	}
-
-	/* text wrap styles */
-	.balance {
-		text-wrap: balance;
-	}
-
-	.pretty {
-		text-wrap: pretty;
 	}
 
 	/* spacing */
