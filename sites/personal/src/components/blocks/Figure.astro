@@ -21,18 +21,11 @@ import '@shared/styles/utilities/contentWidth.css';
 
 // --- types ---
 import type { ImageSource } from '@shared/lib/kirby.types';
-import type { ContentWidth } from '@shared/lib/types';
-
-import type {
-	ContentWidth,
-	FormattedText,
-	Frame,
-	ImageFit,
-} from '@shared/lib/types';
+import type { ContentWidth, Frame, ImageFit } from '@shared/lib/types';
 
 // --- child components ---
 import ImageFrame from '@local/components/elements/ImageFrame.astro';
-import Caption from '@shared/components/elements/FigureCaption.astro';
+import Caption from '@local/components/elements/FigureCaption.astro';
 import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
 
 // --- props ---
@@ -47,6 +40,8 @@ const {
 	useImageAspectRatio,
 	width = 'wide',
 } = Astro.props;
+
+console.log(Astro.props);
 ---
 
 <figure class={['figure', className || ''].join(' ')}>
@@ -70,7 +65,7 @@ const {
 		{
 			(caption || attribution) && (
 				<Caption
-					class="caption content-width centered"
+					class="caption"
 					text={caption}
 					{attribution}
 				/>

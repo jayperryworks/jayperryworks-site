@@ -1,0 +1,69 @@
+---
+/**
+ * Figure caption component
+ * - display a caption below the image in a Figure block
+ *
+ * @param {string} text - the body text
+ * @param {string} [attribution] - optional credit for the creator
+ * @param {string} [class] - classes to append to the container
+ */
+
+// --- styles ---
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/type.css';
+
+// --- components ---
+import RenderedText from '@local/components/elements/RenderedText.astro';
+
+// --- props ---
+const {
+	text,
+	attribution,
+	class: className = '',
+	width = 'default',
+	...attrs
+} = Astro.props;
+---
+
+<figcaption
+	class={['caption', className].join(' ').trim()}
+	data-type="role-accent scale-zeta"
+	data-width={`${width} centered`}
+	{...attrs}
+>
+	<slot>
+		<RenderedText markdown={text} />
+
+		{
+			attribution && (
+				<cite class="attribution">
+					<RenderedText
+						markdown={attribution}
+						inline
+					/>
+				</cite>
+			)
+		}
+	</slot>
+</figcaption>
+
+<style>
+	.caption,
+	.attribution {
+		text-align: left;
+		color: var(--color-secondary);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xnarrow);
+	}
+
+	.caption :global(p) {
+		font-style: normal;
+		max-width: none;
+	}
+
+	.attribution {
+		font-style: italic;
+		align-self: end;
+	}
+</style>
