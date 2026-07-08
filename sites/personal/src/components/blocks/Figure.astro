@@ -4,14 +4,14 @@
  * - Display an image with optional caption and/or attribution
  *
  * @param {ImageSource} image - the image data from Prismic
- * @param {FormattedText} [attribution] - credit for the artist/photographer
+ * @param {string} [attribution] - credit for the artist/photographer
  * @param {boolean} [border] - display a border around the image
- * @param {FormattedText} [caption] - a caption displayed below the image
+ * @param {string} [caption] - a caption displayed below the image
  * @param {string} [class] - classes to append to the container
  * @param {ImageFit} [fit] - object-fit styles for the image
- * @param {Frame} [frame='None'] - a frame or device for the image
+ * @param {Frame} [frame='none'] - a frame or device for the image
  * @param {number} [maxHeight] - constrain the image to a certain height, in vh units
- * @param {ContentWidth} [width='xwide'] - how wide to make the heading
+ * @param {ContentWidth} [width='wide'] - how wide to make the heading
  * @param {boolean} [useImageAspectRato=false] - for a device, use the image's own aspect ratio instead of of the default (e.g. 4/3 for a tablet)
  */
 
@@ -25,7 +25,7 @@ import type { ContentWidth, Frame, ImageFit } from '@shared/lib/types';
 
 // --- child components ---
 import ImageFrame from '@local/components/elements/ImageFrame.astro';
-import Caption from '@local/components/elements/FigureCaption.astro';
+import Caption from '@local/components/blocks/FigureCaption.astro';
 import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
 
 // --- props ---
@@ -34,14 +34,12 @@ const {
 	attribution,
 	border,
 	caption,
-	frame = 'None',
+	frame = 'none',
 	class: className,
 	fit,
 	useImageAspectRatio,
 	width = 'wide',
 } = Astro.props;
-
-console.log(Astro.props);
 ---
 
 <figure class={['figure', className || ''].join(' ')}>

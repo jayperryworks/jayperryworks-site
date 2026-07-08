@@ -24,24 +24,21 @@ const {
 	constrainContent = false,
 	gutter = 'xnarrow',
 	size = 'medium',
-	useFlexBox = false,
 } = Astro.props;
 
-const classList = [
-	'gallery',
-	alignContentHorizontally ? 'center-justify' : '',
-	alignContentVertically ? 'center-align' : '',
-	className,
-	constrainContent ? 'constrain-content' : '',
-	size,
-	useFlexBox ? 'flex' : '',
-]
-	.join(' ')
-	.trim();
+const classList = ['gallery', className].join(' ').trim();
 ---
 
 <ul
 	class={classList}
+	data-align={[
+		alignContentHorizontally ? 'center justify' : '',
+		alignContentVertically ? 'center' : '',
+	]
+		.join(' ')
+		.trim()}
+	data-column-width={size}
+	data-constrain={constrainContent || undefined}
 	style={`--gutter: var(--space-${gutter});`}
 >
 	<slot>Add list items here</slot>
@@ -66,17 +63,17 @@ const classList = [
 		}
 	}
 
-	.small {
+	[data-column-width~='small'] {
 		--min-width: 180px;
 	}
 
-	.large {
+	[data-column-width~='small'] {
 		--min-width: 500px;
 		grid-template-columns: 1fr;
 	}
 
 	@media screen and (min-width: 40em) {
-		.large {
+		[data-column-width~='small'] {
 			grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
 		}
 	}
@@ -89,27 +86,19 @@ const classList = [
 		position: relative;
 	}
 
-	.gallery.constrain-content :global(li) {
+	.gallery[data-constrain] :global(li) {
 		max-width: var(--content-width-default);
 	}
 
-	.gallery :global(li.wide) {
-		grid-column: span 2;
-	}
-
-	.gallery :global(li.xwide) {
-		grid-column: span 3;
-	}
-
-	.large.constrain-content :global(li) {
+	[data-column-width~='small'][data-constrain] :global(li) {
 		max-width: var(--content-width-wide);
 	}
 
-	.alignCenter {
+	[data-align~='center'] {
 		align-items: center;
 	}
 
-	.justifyCenter {
+	[data-align~='center'][data-align~='justify'] {
 		justify-content: center;
 	}
 </style>

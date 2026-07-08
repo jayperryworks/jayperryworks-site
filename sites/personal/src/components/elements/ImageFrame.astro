@@ -30,6 +30,8 @@ const {
 	useImageAspectRatio,
 } = Astro.props;
 
+console.log(frame, source);
+
 /**
  * @typedef {object} FrameComponent
  * @property {'Image' | 'ImageFrameWall' | 'ImageFrameDevice'} component
@@ -45,7 +47,7 @@ const {
 
 /** @type {FrameComponent} */
 const imageComponents = {
-	None: {
+	none: {
 		component: Image,
 		props: {
 			border,
@@ -55,7 +57,7 @@ const imageComponents = {
 			source,
 		},
 	},
-	Matte: {
+	matte: {
 		component: ImageFrameWall,
 		props: {
 			type: 'matte',
@@ -64,7 +66,7 @@ const imageComponents = {
 			source,
 		},
 	},
-	'Frame & matte': {
+	frameAndMatte: {
 		component: ImageFrameWall,
 		props: {
 			type: 'frame',
@@ -73,7 +75,7 @@ const imageComponents = {
 			source,
 		},
 	},
-	Panel: {
+	panel: {
 		component: ImageFrameWall,
 		props: {
 			type: 'panel',
@@ -82,7 +84,7 @@ const imageComponents = {
 			source,
 		},
 	},
-	Phone: {
+	phone: {
 		component: ImageFrameDevice,
 		props: {
 			type: 'Phone',
@@ -92,7 +94,7 @@ const imageComponents = {
 			useImageAspectRatio,
 		},
 	},
-	'Tablet (landscape)': {
+	tabetLandscape: {
 		component: ImageFrameDevice,
 		props: {
 			type: 'Tablet (landscape)',
@@ -102,7 +104,7 @@ const imageComponents = {
 			useImageAspectRatio,
 		},
 	},
-	'Tablet (portrait)': {
+	tabletPortrait: {
 		component: ImageFrameDevice,
 		props: {
 			type: 'Tablet (portrait)',
@@ -114,7 +116,7 @@ const imageComponents = {
 	},
 };
 
-const { component: ImageComponent, props } = imageComponents[frame || 'None'];
+const { component: ImageComponent, props } = imageComponents[frame || 'none'];
 ---
 
 <ImageComponent {...props} />
