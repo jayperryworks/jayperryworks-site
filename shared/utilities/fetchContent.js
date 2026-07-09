@@ -11,6 +11,8 @@ export default async function (endpoint, options = {}) {
 		env === 'prod'
 			? import.meta.env.CONTENT_API_URL
 			: import.meta.env.LOCAL_DEV_URL;
+
+	console.log(apiURL);
 	const apiToken = import.meta.env.CONTENT_API_TOKEN;
 
 	try {
@@ -21,6 +23,6 @@ export default async function (endpoint, options = {}) {
 		});
 		return await request.json();
 	} catch (error) {
-		console.error('Failed to fetch book data:', error);
+		console.error('Failed to fetch data:', error);
 	}
 }
