@@ -12,7 +12,6 @@ export default async function (endpoint, options = {}) {
 			? import.meta.env.CONTENT_API_URL
 			: import.meta.env.LOCAL_DEV_URL;
 
-	console.log(apiURL);
 	const apiToken = import.meta.env.CONTENT_API_TOKEN;
 
 	try {

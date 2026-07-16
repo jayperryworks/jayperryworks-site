@@ -4,3 +4,8 @@ export interface ImageSource {
 	permalink: string;
 	url: string;
 }
+
+export interface Footnote {
+	id: string | number;
+	text: string; // markdown with HTML entities/punctuation
+}

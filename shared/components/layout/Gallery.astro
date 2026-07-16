@@ -67,13 +67,13 @@ const classList = ['gallery', className].join(' ').trim();
 		--min-width: 180px;
 	}
 
-	[data-column-width~='small'] {
+	[data-column-width~='large'] {
 		--min-width: 500px;
 		grid-template-columns: 1fr;
 	}
 
 	@media screen and (min-width: 40em) {
-		[data-column-width~='small'] {
+		[data-column-width~='large'] {
 			grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
 		}
 	}
@@ -90,7 +90,7 @@ const classList = ['gallery', className].join(' ').trim();
 		max-width: var(--content-width-default);
 	}
 
-	[data-column-width~='small'][data-constrain] :global(li) {
+	[data-column-width~='large'][data-constrain] :global(li) {
 		max-width: var(--content-width-wide);
 	}
 

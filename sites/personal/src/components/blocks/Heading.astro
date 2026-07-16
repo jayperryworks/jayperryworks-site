@@ -64,7 +64,7 @@ const classList = [
 	data-align={align}
 	id={id}
 >
-	<slot>{text}</slot>
+	<slot><Fragment set:html={text} /></slot>
 </El>
 
 <style>

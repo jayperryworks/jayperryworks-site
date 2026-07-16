@@ -12,24 +12,24 @@ import rehypeRaw from 'rehype-raw';
 import rehypeSanitize from 'rehype-sanitize';
 
 /**
+ * @typedef {object} Options
+ * @prop {boolean} [inline=false] - if 'inline' is true, surrounding p tags will be removed.
+ * @param {boolean} [footnotes=false] if 'footnotes' is true, footnotes will be added
+ * @param {boolean} [html=false] all unescaped, inline html markup
+ */
+
+/**
  * Render markdown text to HTML
- * @date 3/1/2024 - 4:53:14 PM
  *
+ * @function
  * @export
  * @async
  * @param {string} content - markdown-formatted text
- * @param {Object} [options={}] - options object
- * @param {boolean} [options.inline=false] if 'inline' is true, surrounding p tags will be removed.
- * @param {boolean} [options.footnotes=false] if 'footnotes' is true, footnotes will be added
+ * @param {Options} [options={}] - options object
  * @returns {Promise<string>} HTML template
  */
-
 export default async function render(content, options = {}) {
-	const {
-		inline = false,
-		footnotes = false,
-		html = false,
-	} = options;
+	const { inline = false, footnotes = false, html = false } = options;
 
 	const result = await unified()
 		.use(remarkParse)
@@ -41,7 +41,7 @@ export default async function render(content, options = {}) {
 		.use(rehypeStringify)
 		.use(remarkJPExternalLink)
 		.use(remarkJPInline, { renderInline: inline })
-		.use(remarkJPFootnotes, { renderFootnotes: footnotes })
+		// .use(remarkJPFootnotes, { renderFootnotes: footnotes })
 		.process(content);
 
 	return result.toString();

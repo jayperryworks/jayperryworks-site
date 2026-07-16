@@ -6,6 +6,7 @@
  * @param {string} title
  * @param {SEOContent} [seo] - SEO/metadata fields
  * @param {ThemeNames | Partial<Theme>} [theme] - color theme
+ * @param {Footnote[]} [footnotes = []] - footnotes the body references
  */
 
 // --- assets ---
@@ -15,38 +16,48 @@ import '@shared/styles/tokens/spacing.css';
 import fetchContent from '@shared/lib/fetchContent';
 
 // --- helpers ---
-import { fetchLinks } from '@shared/lib/routes';
 import { titleCase } from '@shared/lib/stringHelpers';
-import * as prismicHelpers from '@prismicio/helpers';
-import prismic from '@shared/lib/prismic';
 
 // --- components ---
 import Layout from '@local/layouts/Layout.astro';
 import BlockList from '@local/components/BlockList.astro';
 import MainNav from '@local/components/navigation/MainNav.astro';
 import MainFooter from '@local/components/navigation/MainFooter.astro';
+import RenderedText from '@local/components/elements/RenderedText.astro';
 
 // --- types ---
-import { SEOContent, Theme, ThemeNames } from '@shared/lib/types';
+import type { SEOContent, Theme, ThemeNames } from '@shared/lib/types';
+import type { Footnote } from '@shared/lib/kirby.types';
 
 // --- data & pagination ---
 // fetch data from content server
 
-export async function getStaticPaths(): Promise<Function> {
+export async function getStaticPaths() {
 	const pages = await fetchContent('pages', { env: 'dev' });
 
 	return pages.reduce((result, page) => {
-		const { body, colorTheme: theme, seo, sites, title, uuid: uid } = page;
-		console.log(body);
+		// if this isn't a personal page, bail out
+		if (!page.sites.includes('personal')) return result;
 
-		if (!sites.includes('personal')) return result;
+		// otherwise, return the data
+		const {
+			body,
+			colorTheme: theme,
+			footnotes,
+			seo,
+			sites,
+			title,
+			uuid: uid,
+		} = page;
 
+		// otherwise
 		result.push({
 			params: {
 				uid,
 			},
 			props: {
 				body,
+				footnotes,
 				seo,
 				theme,
 				title,
@@ -58,12 +69,12 @@ export async function getStaticPaths(): Promise<Function> {
 }
 
 // --- props ---
-const { body, seo, subtitle, theme, title } = Astro.props;
+const { body, footnotes, seo, theme, title } = Astro.props;
 const { uid } = Astro.params;
 ---
 
 <Layout
-	pageTitle={titleCase(uid)}
+	pageTitle={title}
 	{seo}
 	{theme}
 >
@@ -75,6 +86,32 @@ const { uid } = Astro.params;
 				showLedeStyle
 			/>
 		</article>
+		{
+			footnotes && (
+				<aside>
+					<ol
+						class="footnotes"
+						data-width
+					>
+						{footnotes.map(({ id, text }) => (
+							<li class="item">
+								<RenderedText
+									markdown={text}
+									inline={true}
+									allowHTML={true}
+								/>
+								<a
+									href={`#${id}`}
+									class="return"
+								>
+									Back
+								</a>
+							</li>
+						))}
+					</ol>
+				</aside>
+			)
+		}
 	</main>
 	<MainFooter />
 </Layout>
