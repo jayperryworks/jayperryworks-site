@@ -27,12 +27,13 @@
 		"csv-parser": "^3.0.0",
 		"culori": "^4.0.2",
 		"date-fns": "^4.1.0",
+		"satteri": "^0.9.5",
 		"vite-svg-loader": "^5.1.0"
 	},
 	"devDependencies": {
 		"@netlify/blobs": "^7.3.0",
-		"@types/react-dom": "^19.2.3",
 		"@types/react": "^19.2.14",
+		"@types/react-dom": "^19.2.3",
 		"netlify-cli": "^26.0.2"
 	},
 	"optionalDependencies": {

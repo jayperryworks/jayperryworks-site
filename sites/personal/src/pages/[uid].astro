@@ -94,18 +94,22 @@ const { uid } = Astro.params;
 						data-width
 					>
 						{footnotes.map(({ id, text }) => (
-							<li class="item">
-								<RenderedText
-									markdown={text}
-									inline={true}
-									allowHTML={true}
-								/>
-								<a
-									href={`#${id}`}
-									class="return"
-								>
-									Back
-								</a>
+							<li
+								class="item"
+								id={id}
+							>
+								<p>
+									<RenderedText
+										markdown={text}
+										inline={true}
+									/>
+									<a
+										href={`#note-${id}`}
+										class="return"
+									>
+										Back
+									</a>
+								</p>
 							</li>
 						))}
 					</ol>
