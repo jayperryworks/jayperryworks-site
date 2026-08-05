@@ -1,10 +1,13 @@
 export default `
 User-agent: AddSearchBot
+User-agent: AgentTimes
 User-agent: AI2Bot
 User-agent: AI2Bot-DeepResearchEval
 User-agent: Ai2Bot-Dolma
 User-agent: aiHitBot
+User-agent: AIWebIndex
 User-agent: amazon-kendra
+User-agent: amazon-QBusiness
 User-agent: Amazonbot
 User-agent: AmazonBuyForMe
 User-agent: Amzn-SearchBot
@@ -43,8 +46,10 @@ User-agent: Code
 User-agent: cohere-ai
 User-agent: cohere-training-data-crawler
 User-agent: Cotoyogi
+User-agent: CragCrawler
 User-agent: Crawl4AI
 User-agent: Crawlspace
+User-agent: Cursor
 User-agent: Datenbank Crawler
 User-agent: DeepSeekBot
 User-agent: Devin
@@ -58,6 +63,7 @@ User-agent: facebookexternalhit
 User-agent: Factset_spyderbot
 User-agent: FirecrawlAgent
 User-agent: FriendlyCrawler
+User-agent: GeistHaus-PageFetcher
 User-agent: Gemini-Deep-Research
 User-agent: Google-Agent
 User-agent: Google-CloudVertexBot
@@ -66,6 +72,7 @@ User-agent: Google-Firebase
 User-agent: Google-Gemini-CLI
 User-agent: Google-NotebookLM
 User-agent: GoogleAgent-Mariner
+User-agent: GoogleAgent-URLContext
 User-agent: GoogleOther
 User-agent: GoogleOther-Image
 User-agent: GoogleOther-Video
@@ -74,7 +81,6 @@ User-agent: HenkBot
 User-agent: iAskBot
 User-agent: iaskspider
 User-agent: iaskspider/2.0
-User-agent: IbouBot
 User-agent: ICC-Crawler
 User-agent: ImagesiftBot
 User-agent: imageSpider
@@ -82,6 +88,7 @@ User-agent: img2dataset
 User-agent: ISSCyberRiskCrawler
 User-agent: kagi-fetcher
 User-agent: Kangaroo Bot
+User-agent: Kimi-User
 User-agent: KlaviyoAIBot
 User-agent: KunatoCrawler
 User-agent: laion-huggingface-processor
@@ -98,6 +105,7 @@ User-agent: Meta-ExternalFetcher
 User-agent: meta-webindexer
 User-agent: MistralAI-User
 User-agent: MistralAI-User/1.0
+User-agent: Mozilla-Tabstack
 User-agent: MyCentralAIScraperBot
 User-agent: NagetBot
 User-agent: netEstate Imprint Crawler
@@ -120,12 +128,15 @@ User-agent: PhindBot
 User-agent: Poggio-Citations
 User-agent: Poseidon Research Crawler
 User-agent: QualifiedBot
+User-agent: Querit-SearchBot
+User-agent: QueritBot
 User-agent: QuillBot
 User-agent: quillbot.com
 User-agent: SBIntuitionsBot
 User-agent: Scrapy
 User-agent: SemrushBot-OCOB
 User-agent: SemrushBot-SWA
+User-agent: Shap-User
 User-agent: ShapBot
 User-agent: Sidetrade indexer bot
 User-agent: Spider
@@ -135,8 +146,10 @@ User-agent: TerraCotta
 User-agent: Thinkbot
 User-agent: TikTokSpider
 User-agent: Timpibot
+User-agent: TongyiBot
 User-agent: Trae
 User-agent: TwinAgent
+User-agent: UseAI
 User-agent: VelenPublicWebCrawler
 User-agent: WARDBot
 User-agent: Webzio-Extended
@@ -146,5 +159,6 @@ User-agent: WRTNBot
 User-agent: YaK
 User-agent: YandexAdditional
 User-agent: YandexAdditionalBot
+User-agent: YiyanBot
 User-agent: YouBot
 User-agent: ZanistaBot`;

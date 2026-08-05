@@ -69,7 +69,7 @@ export async function getStaticPaths() {
 }
 
 // --- props ---
-const { body, footnotes, seo, theme, title } = Astro.props;
+const { body, footnotes = [], seo, theme, title } = Astro.props;
 const { uid } = Astro.params;
 ---
 
@@ -85,37 +85,37 @@ const { uid } = Astro.params;
 				{body}
 				showLedeStyle
 			/>
+			{
+				footnotes?.length > 0 && (
+					<aside>
+						<ol
+							class="footnotes"
+							data-width
+						>
+							{footnotes.map(({ id, text }) => (
+								<li
+									class="item"
+									id={id}
+								>
+									<p>
+										<RenderedText
+											markdown={text}
+											inline={true}
+										/>
+										<a
+											href={`#note-${id}`}
+											class="return"
+										>
+											Back
+										</a>
+									</p>
+								</li>
+							))}
+						</ol>
+					</aside>
+				)
+			}
 		</article>
-		{
-			footnotes && (
-				<aside>
-					<ol
-						class="footnotes"
-						data-width
-					>
-						{footnotes.map(({ id, text }) => (
-							<li
-								class="item"
-								id={id}
-							>
-								<p>
-									<RenderedText
-										markdown={text}
-										inline={true}
-									/>
-									<a
-										href={`#note-${id}`}
-										class="return"
-									>
-										Back
-									</a>
-								</p>
-							</li>
-						))}
-					</ol>
-				</aside>
-			)
-		}
 	</main>
 	<MainFooter />
 </Layout>

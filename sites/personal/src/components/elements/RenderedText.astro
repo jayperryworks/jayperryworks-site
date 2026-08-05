@@ -15,6 +15,7 @@ import '@shared/styles/tokens/spacing.css';
 // TODO: figure out how to resolve links in markdown renderer
 import { linkResolver } from '@shared/lib/routes';
 import { markdownToHtml as render } from 'satteri';
+import satteriFootnotePlugin from '@shared/lib/satteriFootnotePlugin';
 import satteriInlinePlugin from '@shared/lib/satteriInlinePlugin';
 
 // --- props ---
@@ -22,9 +23,14 @@ const { markdown, inline = false, footnotes = false } = Astro.props;
 
 let mdastPlugins = [];
 let hastPlugins = [];
-if (inline) mdastPlugins.push(satteriInlinePlugin);
 
-const { html } = render(markdown, { mdastPlugins, hastPlugins });
+if (footnotes) mdastPlugins.push(satteriFootnotePlugin);
+if (inline) hastPlugins.push(satteriInlinePlugin);
+
+const { html } = render(markdown, {
+	mdastPlugins,
+	hastPlugins,
+});
 ---
 
 <Fragment set:html={html} />
