@@ -95,7 +95,7 @@ const { uid } = Astro.params;
 							{footnotes.map(({ id, text }) => (
 								<li
 									class="item"
-									id={id}
+									id={`note-${id}`}
 								>
 									<p>
 										<RenderedText
@@ -103,7 +103,7 @@ const { uid } = Astro.params;
 											inline={true}
 										/>
 										<a
-											href={`#note-${id}`}
+											href={`#reference-${id}`}
 											class="return"
 										>
 											Back

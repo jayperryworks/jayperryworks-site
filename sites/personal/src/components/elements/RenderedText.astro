@@ -21,14 +21,12 @@ import satteriInlinePlugin from '@shared/lib/satteriInlinePlugin';
 // --- props ---
 const { markdown, inline = false, footnotes = false } = Astro.props;
 
-let mdastPlugins = [];
 let hastPlugins = [];
 
-if (footnotes) mdastPlugins.push(satteriFootnotePlugin);
 if (inline) hastPlugins.push(satteriInlinePlugin);
+if (footnotes) hastPlugins.push(satteriFootnotePlugin);
 
 const { html } = render(markdown, {
-	mdastPlugins,
 	hastPlugins,
 });
 ---

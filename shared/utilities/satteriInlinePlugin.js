@@ -1,6 +1,11 @@
+/**
+ * @description Satteri plugin: Strip wrapping paragraphs away so text renders inline
+ * @module
+ * @exports
+ */
+
 import { markdownToHtml, defineMdastPlugin } from 'satteri';
 
-// strip wrapping paragraphs away so text renders inline
 export default defineMdastPlugin({
 	name: 'inline-text',
 	options: { position: false },
