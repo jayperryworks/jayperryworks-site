@@ -123,3 +123,8 @@ a code,
 	display: inline;
 	padding: 0;
 }
+
+sup {
+	font-size: 0.7em;
+	vertical-align: super;
+}

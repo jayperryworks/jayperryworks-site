@@ -5,21 +5,22 @@
  * @file
  */
 
-import { markdownToHtml, defineMdastPlugin, defineHastPlugin } from 'satteri';
+import { defineHastPlugin } from 'satteri';
 import * as sidenotes from '@shared/lib/sidenotes';
 
-let counter = 0;
+// Use popovers and dialogs instead of anchor links?
+// https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog
+// https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/popover
 
 /**
  * Render the raw HTML for a footnote reference with the ID and index
  *
  * @function
  * @param {string | number} id
- * @param {number} index
  * @returns {string}
  */
-function template(id, index) {
-	return `<a class="footnote-reference" href="#note-${id}" id="reference-${id}"><sup>${index}</sup></a>`;
+function template(id) {
+	return `&nbsp;<a class="footnote-reference" href="#note-${id}" id="reference-${id}" ><sup>${sidenotes.getCount()}</sup></a>`;
 }
 
 // strip wrapping paragraphs away so text renders inline
@@ -39,7 +40,7 @@ export default defineHastPlugin({
 
 		// for each match, insert the preceeding part (text chunk) and match as nodes in this context
 		for (const match of matches) {
-			counter += 1;
+			sidenotes.increment();
 			const id = match[1];
 
 			// add the preceeding part as a new node
@@ -53,7 +54,7 @@ export default defineHastPlugin({
 			// add the match as a new node
 			ctx.insertBefore(node, {
 				type: 'raw',
-				value: template(id, counter),
+				value: template(id),
 			});
 
 			// advance the cursor to the position at the end of the match string
