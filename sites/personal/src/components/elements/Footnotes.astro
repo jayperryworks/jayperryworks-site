@@ -1,0 +1,124 @@
+---
+/**
+ * Footnotes component
+ * @description Display footnotes as a list of popovers
+ * @param {Footnote[]} notes - the notes data
+ * @param {string} [class] - append classes to the container
+ * @param {ContentWidth} [width='default'] - width of the list
+ * @param {[key: string]: any} [attrs] - passed-in attributres
+ */
+
+// --- assets ---
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/tokens/type.css';
+import '@shared/styles/utilities/contentWidth.css';
+
+// --- types ---
+import type { Footnote } from '@shared/lib/kirby.types';
+import type { ContentWidth } from '@shared/lib/types';
+
+// --- components ---
+import RenderedText from '@local/components/elements/RenderedText.astro';
+import Heading from '@shared/components/blocks/Heading.astro';
+
+// --- props ---
+const { notes = [], class: className = '', width = 'default', ...attrs } = Astro.props;
+---
+
+{
+	notes?.length > 0 && (
+		<aside
+			class={['footnotes', className].filter(Boolean).join(' ')}
+			data-width={width}
+		>
+			<Heading
+				level={2}
+				size="delta"
+			>
+				Notes
+			</Heading>
+			<ol class="list">
+				{notes.filter(Boolean).map(({ id, text: markdown }) => (
+					<li
+						class="item"
+						id={`note-${id}`}
+					>
+						<RenderedText {markdown} />
+					</li>
+					<li
+						class="item"
+						id={`note-${id}`}
+					>
+						<RenderedText {markdown} />
+					</li>
+				))}
+			</ol>
+		</aside>
+	)
+}
+
+<style>
+	/* --- fallback list styles --- */
+	.footnotes {
+		background-color: var(--color-well);
+		border-radius: var(--border-radius);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-narrow);
+		padding: var(--space-medium);
+	}
+
+	.list {
+		margin: 0;
+		padding-inline-start: 1em;
+	}
+
+	.item {
+		font-size: var(--type-scale-zeta);
+		color: var(--color-secondary);
+	}
+
+	.item + .item {
+		padding-block-start: var(--space-xnarrow);
+	}
+
+	.item::marker {
+		font-style: italic;
+		color: var(--color-highlight);
+	}
+
+		/* -- Footnote references (appearing inline) --- */
+
+	:global(.footnote-reference) {
+		--color: var(--color-secondary);
+		--size: 1.4em;
+
+		background-color: var(--color);
+		border-radius: 1000px;
+		border: 2px solid var(--color);
+		cursor: pointer;
+		display: inline;
+		font-family: var(--type-font-accent);
+		font-size: var(--type-scale-eta);
+		height: var(--size);
+		mask-image: url('/assets/icons/asterisk.svg');
+		mask-position: 50% 50%;
+		mask-repeat: no-repeat;
+		mask-size: contain;
+		padding: 0 0.45rem;
+		position: relative;
+		text-align: center;
+		text-decoration: none;
+		transform: translateY(20%); /* scoot down a little */
+		transition:
+			color 0.25s ease,
+			background-color 0.25s ease;
+		width: var(--size);
+		vertical-align: top;
+	}
+
+	:global(.footnote-reference):hover,
+	:global(.footnote-reference):active {
+		--color: var(--color-highlight);
+	}
+</style>

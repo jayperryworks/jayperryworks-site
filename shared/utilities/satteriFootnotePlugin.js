@@ -19,8 +19,18 @@ import * as sidenotes from '@shared/lib/sidenotes';
  * @param {string | number} id
  * @returns {string}
  */
+
+// <button class="fn-btn" popovertarget="note-1" id="fn-1" aria-describedby="note-1">1</button>
 function template(id) {
-	return `&nbsp;<a class="footnote-reference" href="#note-${id}" id="reference-${id}" ><sup>${sidenotes.getCount()}</sup></a>`;
+	return `&nbsp;<button
+		aria-describedby="note-${id}"
+		class="footnote-reference"
+		id="reference-${id}"
+		style="
+			anchor-name: --reference-${id};
+			position-anchor: --reference-${id}
+		"
+	><span class="hide-visually">Note <em>${sidenotes.getCount()}</em></span></button>`;
 }
 
 // strip wrapping paragraphs away so text renders inline
