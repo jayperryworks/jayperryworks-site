@@ -26,6 +26,7 @@ function template(id) {
 		aria-describedby="note-${id}"
 		class="footnote-reference"
 		id="reference-${id}"
+		popovertarget="note-${id}"
 		style="
 			anchor-name: --reference-${id};
 			position-anchor: --reference-${id}

@@ -9,6 +9,7 @@
  */
 
 // --- assets ---
+import '@shared/styles/tokens/elevation.css';
 import '@shared/styles/tokens/spacing.css';
 import '@shared/styles/tokens/type.css';
 import '@shared/styles/utilities/contentWidth.css';
@@ -22,7 +23,12 @@ import RenderedText from '@local/components/elements/RenderedText.astro';
 import Heading from '@shared/components/blocks/Heading.astro';
 
 // --- props ---
-const { notes = [], class: className = '', width = 'default', ...attrs } = Astro.props;
+const {
+	notes = [],
+	class: className = '',
+	width = 'default',
+	...attrs
+} = Astro.props;
 ---
 
 {
@@ -32,6 +38,7 @@ const { notes = [], class: className = '', width = 'default', ...attrs } = Astro
 			data-width={width}
 		>
 			<Heading
+				class="title"
 				level={2}
 				size="delta"
 			>
@@ -42,12 +49,8 @@ const { notes = [], class: className = '', width = 'default', ...attrs } = Astro
 					<li
 						class="item"
 						id={`note-${id}`}
-					>
-						<RenderedText {markdown} />
-					</li>
-					<li
-						class="item"
-						id={`note-${id}`}
+						popover="auto"
+						position-anchor={`--reference-${id}`}
 					>
 						<RenderedText {markdown} />
 					</li>
@@ -58,7 +61,7 @@ const { notes = [], class: className = '', width = 'default', ...attrs } = Astro
 }
 
 <style>
-	/* --- fallback list styles --- */
+	/* --- Fallback list styles --- */
 	.footnotes {
 		background-color: var(--color-well);
 		border-radius: var(--border-radius);
@@ -76,6 +79,7 @@ const { notes = [], class: className = '', width = 'default', ...attrs } = Astro
 	.item {
 		font-size: var(--type-scale-zeta);
 		color: var(--color-secondary);
+		font-family: var(--type-font-accent);
 	}
 
 	.item + .item {
@@ -87,34 +91,100 @@ const { notes = [], class: className = '', width = 'default', ...attrs } = Astro
 		color: var(--color-highlight);
 	}
 
-		/* -- Footnote references (appearing inline) --- */
+	/* --- Popover styles --- */
+	.footnotes:has(.item[popover]) {
+		padding: 0;
+		background-color: transparent;
 
+		& :global(.title) {
+			display: none;
+		}
+	}
+
+	.list:has(.item[popover]) {
+		list-style: none;
+		padding: 0;
+	}
+
+	.item[popover] {
+		--max-width: 30rem;
+		--min-width: 12rem;
+
+		background-color: var(--color-island);
+		border-radius: var(--border-radius);
+		border: 0;
+		box-shadow: var(--elevation-medium);
+		color: var(--color-secondary);
+		inset-inline: var(--space-narrow);
+		margin-block-start: var(--space-narrow);
+		max-width: var(--max-width);
+		min-width: var(--min-width);
+		outline: 0;
+		padding: var(--space-narrow) var(--space-medium);
+	}
+
+	@supports (anchor-name: --x) {
+		.item[popover] {
+			position-area: bottom span-all;
+			position-try-fallbacks: flip-block, flip-inline;
+			position: absolute;
+		}
+	}
+
+	@supports not (anchor-name: --x) {
+		.item[popover] {
+			inset-block-start: 50%;
+			inset-inline-start: 50%;
+			position: fixed;
+			transform: translate(-50%, -50%);
+
+			&::backdrop {
+				background-color: oklch(from var(--color-surface) l c h / 0.4);
+			}
+		}
+	}
+
+	/* -- Footnote references (appearing inline) --- */
 	:global(.footnote-reference) {
 		--color: var(--color-secondary);
-		--size: 1.4em;
+		--size: 1.6em;
 
-		background-color: var(--color);
+		background-color: transparent;
 		border-radius: 1000px;
-		border: 2px solid var(--color);
+		border: 1px solid var(--color);
 		cursor: pointer;
-		display: inline;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 		font-family: var(--type-font-accent);
 		font-size: var(--type-scale-eta);
 		height: var(--size);
-		mask-image: url('/assets/icons/asterisk.svg');
-		mask-position: 50% 50%;
-		mask-repeat: no-repeat;
-		mask-size: contain;
-		padding: 0 0.45rem;
 		position: relative;
 		text-align: center;
 		text-decoration: none;
 		transform: translateY(20%); /* scoot down a little */
-		transition:
-			color 0.25s ease,
-			background-color 0.25s ease;
-		width: var(--size);
+		transition-duration: 0.25s;
+		transition-property: border-color, background-color;
+		transition-timing-function: ease-in-out;
 		vertical-align: top;
+		width: var(--size);
+		padding: 0;
+
+		&::before {
+			--icon-size: 70%;
+
+			background-color: var(--color);
+			border-radius: 1000px;
+			content: '';
+			display: block;
+			height: var(--icon-size);
+			mask-image: url('/assets/icons/asterisk.svg');
+			mask-position: 50% 50%;
+			mask-repeat: no-repeat;
+			mask-size: contain;
+			transition: background-color 0.25s ease-in-out;
+			width: var(--icon-size);
+		}
 	}
 
 	:global(.footnote-reference):hover,
