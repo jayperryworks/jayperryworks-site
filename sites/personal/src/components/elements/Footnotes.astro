@@ -93,8 +93,12 @@ const {
 
 	/* --- Popover styles --- */
 	.footnotes:has(.item[popover]) {
+		/* Hide if popovers are supported and applied */
 		padding: 0;
 		background-color: transparent;
+		position: absolute;
+		height: 0;
+		width: 0;
 
 		& :global(.title) {
 			display: none;
@@ -121,13 +125,28 @@ const {
 		min-width: var(--min-width);
 		outline: 0;
 		padding: var(--space-narrow) var(--space-medium);
+		transition-behavior: allow-discrete;
+		transition-duration: 0.25s;
+		transition-property: opacity, transform, overlay;
+		transition-timing-function: ease-in-out;
+	}
+
+	.item[popover]:popover-open {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	@starting-style {
+		.item[popover]:popover-open {
+			opacity: 0;
+			transform: translateY(-0.5rem);
+		}
 	}
 
 	@supports (anchor-name: --x) {
 		.item[popover] {
 			position-area: bottom span-all;
-			position-try-fallbacks: flip-block, flip-inline;
-			position: absolute;
+			position-try-fallbacks: flip-inline; /* flip-block breaking in Safari ATM */
 		}
 	}
 
@@ -144,7 +163,7 @@ const {
 		}
 	}
 
-	/* -- Footnote references (appearing inline) --- */
+	/* -- Footnote reference 'buttons' (appearing inline) --- */
 	:global(.footnote-reference) {
 		--color: var(--color-secondary);
 		--size: 1.6em;
