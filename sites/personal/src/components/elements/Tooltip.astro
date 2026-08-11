@@ -1,0 +1,196 @@
+---
+/**
+ * Tooltip component
+ * @description Render a small, non-focus-trapping popup
+ *
+ * @param {object} [align] - Align the popup relative to its anchor
+ * @param {Align} [align.x = 'center']
+ * @param {above | below} [align.y = 'end']
+ * @param {string} [as = 'small'] - the HTML element to render
+ * @param {string} [class] - append classes to the container
+ * @param {string} [id] - ID attribute
+ * @param {string} [maxWidth = '18rem'] - the max width of the popover
+ * @param {string} [minWidth = '12rem'] - the min width of the popover
+ * @param {boolean} [pointer = false] - render a little pointer
+ * @param {boolean} [show = false] - make the popup visible.
+ * @param {[key: string]: any} [attrs] - append attributes to the containers
+ */
+
+// --- types ---
+import type { Align } from '@shared/lib/types';
+
+// --- props ---
+const {
+	align = { x: 'center', y: 'above' },
+	as: El = 'small',
+	class: className = '',
+	id,
+	pointer = false,
+	maxWidth = '18rem',
+	minWidth = '12rem',
+	...attrs
+} = Astro.props;
+
+const classList = ['tooltip', className].filter(Boolean).join(' ');
+---
+
+<El
+	class={classList}
+	data-align-x={align?.x ?? 'center'}
+	data-align-y={align?.y ?? 'above'}
+	data-pointer={pointer || undefined}
+	popover="auto"
+	position-anchor={id}
+	{id}
+	{...attrs}
+>
+	<slot />
+</El>
+
+<style>
+	.tooltip {
+		--bg: var(--color-island);
+		--border: var(--color-border);
+		--max-width: 18rem;
+		--min-width: 12rem;
+		--padding: var(--space-narrow) var(--space-medium);
+		--pointer-margin: var(--space-xnarrow);
+		--pointer-size: 0.6em;
+		--transition-duration: 0.25s;
+
+		background-color: var(--color-island);
+		border-radius: var(--border-radius);
+		border: 0;
+		box-shadow: var(--elevation-medium);
+		color: var(--color-secondary);
+		inset-inline: var(--space-narrow);
+		margin-block-start: var(--space-narrow);
+		max-width: var(--max-width);
+		min-width: var(--min-width);
+		outline: 0;
+		padding: var(--padding);
+		transition-behavior: allow-discrete;
+		transition-duration: var(--transition-duration);
+		transition-property: opacity, transform, overlay;
+		transition-timing-function: ease-in-out;
+	}
+
+	.tooltip:popover-open {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	@starting-style {
+		.tooltip:popover-open {
+			opacity: 0;
+			transform: translateY(-0.5rem);
+		}
+	}
+
+	.tooltip[data-pointer]::before,
+	.tooltip[data-pointer]::after {
+		border-inline-end: var(--pointer-size) solid transparent;
+		border-inline-start: var(--pointer-size) solid transparent;
+		content: '';
+		display: inline-block;
+		height: 0;
+		position: absolute;
+		width: 0;
+	}
+
+	@supports (anchor-name: --x) {
+		.tooltip {
+			position-area: bottom span-all;
+			position-try-fallbacks: flip-inline; /* flip-block breaking in Safari ATM */
+		}
+	}
+
+	@supports not (anchor-name: --x) {
+		.tooltip {
+			inset-block-start: 50%;
+			inset-inline-start: 50%;
+			position: fixed;
+			transform: translate(-50%, -50%);
+		}
+
+		.tooltip::backdrop {
+			background-color: oklch(from var(--color-surface) l c h / 0.4);
+		}
+	}
+
+	/* --- old styles --- */
+	[data-align-x~='start'] {
+		inset-inline-start: calc(var(--pointer-margin) * -1);
+		text-align: left;
+	}
+
+	[data-align-x~='end'] {
+		inset-inline-end: calc(var(--pointer-margin) * -1);
+		text-align: right;
+	}
+
+	[data-align-x~='center'] {
+		inset-inline-start: 50%;
+		text-align: center;
+		transform: translateX(-50%);
+	}
+
+	.tooltip[data-pointer]::before {
+		border-block-start: var(--pointer-size) solid var(--border);
+		inset-block-end: calc(var(--pointer-size) * -1);
+	}
+
+	.tooltip[data-pointer]::after {
+		border-block-start: var(--pointer-size) solid var(--bg);
+		inset-block-end: calc((var(--pointer-size) - 0.1em) * -1);
+	}
+
+	[data-align-x~='start'][data-pointer]::before,
+	[data-align-x~='start'][data-pointer]::after {
+		inset-inline-start: var(--pointer-margin);
+	}
+
+	[data-align-x~='end'][data-pointer]::before,
+	[data-align-x~='end'][data-pointer]::after {
+		inset-inline-end: var(--pointer-margin);
+	}
+
+	[data-align-x~='center'][data-pointer]::before,
+	[data-align-x~='center'][data-pointer]::after {
+		inset-inline-start: 50%;
+		transform: translateX(-50%);
+	}
+
+	[data-align-x~='center'] {
+		inset-inline-start: 50%;
+		text-align: center;
+		transform: translateX(-50%);
+	}
+
+	.tooltip.show {
+		--show: 1;
+		pointer-events: all;
+	}
+
+	@media screen and (min-width: 45em) {
+		/* widen spacing a little on larger screens, where there's more outside room */
+		.tooltip {
+			--pointer-margin: var(--space-narrow);
+		}
+	}
+
+	@media screen and (min-width: 80em) {
+		/* move all tooltips to be centered on large screens */
+		.tooltip[data-align-x] {
+			inset-inline-start: 50%;
+			text-align: center;
+			transform: translateX(-50%);
+		}
+
+		.tooltip[data-align-x][data-pointer]::before,
+		.tooltip[data-align-x][data-pointer]::after {
+			inset-inline-start: 50%;
+			transform: translateX(-50%);
+		}
+	}
+</style>
