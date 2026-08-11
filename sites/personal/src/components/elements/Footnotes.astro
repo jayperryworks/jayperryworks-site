@@ -14,6 +14,9 @@ import '@shared/styles/tokens/spacing.css';
 import '@shared/styles/tokens/type.css';
 import '@shared/styles/utilities/contentWidth.css';
 
+// --- utilities ---
+import * as sidenotes from '@shared/lib/sidenotes.ts';
+
 // --- types ---
 import type { Footnote } from '@shared/lib/kirby.types';
 import type { ContentWidth } from '@shared/lib/types';
@@ -36,6 +39,7 @@ const {
 		<aside
 			class={['footnotes', className].filter(Boolean).join(' ')}
 			data-width={width}
+			{...attrs}
 		>
 			<Heading
 				class="title"
@@ -48,9 +52,9 @@ const {
 				{notes.filter(Boolean).map(({ id, text: markdown }) => (
 					<li
 						class="item"
-						id={`note-${id}`}
+						id={sidenotes.getNoteIDAttr(id)}
 						popover="auto"
-						position-anchor={`--reference-${id}`}
+						position-anchor={sidenotes.getAnchorName(id)}
 					>
 						<RenderedText {markdown} />
 					</li>

@@ -5,34 +5,9 @@
  * @file
  */
 
+import '@shared/styles/utilities/visibility.css';
 import { defineHastPlugin } from 'satteri';
 import * as sidenotes from '@shared/lib/sidenotes';
-
-// Use popovers and dialogs instead of anchor links?
-// https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog
-// https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/popover
-
-/**
- * Render the raw HTML for a footnote reference with the ID and index
- *
- * @function
- * @param {string | number} id
- * @returns {string}
- */
-
-// <button class="fn-btn" popovertarget="note-1" id="fn-1" aria-describedby="note-1">1</button>
-function template(id) {
-	return `&nbsp;<button
-		aria-describedby="note-${id}"
-		class="footnote-reference"
-		id="reference-${id}"
-		popovertarget="note-${id}"
-		style="
-			anchor-name: --reference-${id};
-			position-anchor: --reference-${id}
-		"
-	><span class="hide-visually">Note <em>${sidenotes.getCount()}</em></span></button>`;
-}
 
 // strip wrapping paragraphs away so text renders inline
 export default defineHastPlugin({
@@ -65,7 +40,7 @@ export default defineHastPlugin({
 			// add the match as a new node
 			ctx.insertBefore(node, {
 				type: 'raw',
-				value: template(id),
+				value: sidenotes.referenceTemplate(id),
 			});
 
 			// advance the cursor to the position at the end of the match string
