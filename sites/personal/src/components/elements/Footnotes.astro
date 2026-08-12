@@ -24,6 +24,7 @@ import type { ContentWidth } from '@shared/lib/types';
 // --- components ---
 import RenderedText from '@local/components/elements/RenderedText.astro';
 import Heading from '@shared/components/blocks/Heading.astro';
+import Tooltip from '@local/components/elements/Tooltip.astro';
 
 // --- props ---
 const {
@@ -50,14 +51,13 @@ const {
 			</Heading>
 			<ol class="list">
 				{notes.filter(Boolean).map(({ id, text: markdown }) => (
-					<li
+					<Tooltip
+						as="li"
 						class="item"
 						id={sidenotes.getNoteIDAttr(id)}
-						popover="auto"
-						position-anchor={sidenotes.getAnchorName(id)}
 					>
 						<RenderedText {markdown} />
-					</li>
+					</Tooltip>
 				))}
 			</ol>
 		</aside>
@@ -112,60 +112,6 @@ const {
 	.list:has(.item[popover]) {
 		list-style: none;
 		padding: 0;
-	}
-
-	.item[popover] {
-		--max-width: 30rem;
-		--min-width: 12rem;
-
-		/* https://blog.logrocket.com/animating-dialog-popover-elements-css-starting-style/ */
-		background-color: var(--color-island);
-		border-radius: var(--border-radius);
-		border: 0;
-		box-shadow: var(--elevation-medium);
-		color: var(--color-secondary);
-		inset-inline: var(--space-narrow);
-		margin-block-start: var(--space-narrow);
-		max-width: var(--max-width);
-		min-width: var(--min-width);
-		outline: 0;
-		padding: var(--space-narrow) var(--space-medium);
-		transition-behavior: allow-discrete;
-		transition-duration: 0.25s;
-		transition-property: opacity, transform, overlay;
-		transition-timing-function: ease-in-out;
-	}
-
-	.item[popover]:popover-open {
-		opacity: 1;
-		transform: translateY(0);
-	}
-
-	@starting-style {
-		.item[popover]:popover-open {
-			opacity: 0;
-			transform: translateY(-0.5rem);
-		}
-	}
-
-	@supports (anchor-name: --x) {
-		.item[popover] {
-			position-area: bottom span-all;
-			position-try-fallbacks: flip-inline; /* flip-block breaking in Safari ATM */
-		}
-	}
-
-	@supports not (anchor-name: --x) {
-		.item[popover] {
-			inset-block-start: 50%;
-			inset-inline-start: 50%;
-			position: fixed;
-			transform: translate(-50%, -50%);
-
-			&::backdrop {
-				background-color: oklch(from var(--color-surface) l c h / 0.4);
-			}
-		}
 	}
 
 	/* -- Footnote reference 'buttons' (appearing inline) --- */

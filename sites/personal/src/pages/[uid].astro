@@ -15,9 +15,6 @@ import '@shared/styles/tokens/spacing.css';
 // --- utils ---
 import fetchContent from '@shared/lib/fetchContent';
 
-// --- helpers ---
-import { titleCase } from '@shared/lib/stringHelpers';
-
 // --- components ---
 import Layout from '@local/layouts/Layout.astro';
 import BlockList from '@local/components/BlockList.astro';
@@ -30,8 +27,6 @@ import type { SEOContent, Theme, ThemeNames } from '@shared/lib/types';
 import type { Footnote } from '@shared/lib/kirby.types';
 
 // --- data & pagination ---
-// fetch data from content server
-
 export async function getStaticPaths() {
 	const pages = await fetchContent('pages', { env: 'dev' });
 
@@ -40,15 +35,7 @@ export async function getStaticPaths() {
 		if (!page.sites.includes('personal')) return result;
 
 		// otherwise, return the data
-		const {
-			body,
-			colorTheme: theme,
-			footnotes,
-			seo,
-			sites,
-			title,
-			uuid: uid,
-		} = page;
+		const { body, colorTheme: theme, footnotes, seo, title, uuid: uid } = page;
 
 		// otherwise
 		result.push({

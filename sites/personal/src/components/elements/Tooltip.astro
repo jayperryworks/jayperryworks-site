@@ -58,6 +58,7 @@ const classList = ['tooltip', className].filter(Boolean).join(' ');
 		--pointer-size: 0.6em;
 		--transition-duration: 0.25s;
 
+		/* https://blog.logrocket.com/animating-dialog-popover-elements-css-starting-style/ */
 		background-color: var(--color-island);
 		border-radius: var(--border-radius);
 		border: 0;
@@ -99,13 +100,14 @@ const classList = ['tooltip', className].filter(Boolean).join(' ');
 	}
 
 	@supports (anchor-name: --x) {
-		.tooltip {
+		[data-align-x='center'][data-align-y='below'] {
 			position-area: bottom span-all;
 			position-try-fallbacks: flip-inline; /* flip-block breaking in Safari ATM */
 		}
 	}
 
 	@supports not (anchor-name: --x) {
+		/* If anchor positioning is not supported, display the popup in the center of the window */
 		.tooltip {
 			inset-block-start: 50%;
 			inset-inline-start: 50%;
