@@ -3,9 +3,9 @@
  * Tooltip component
  * @description Render a small, non-focus-trapping popup
  *
- * @param {object} [align] - Align the popup relative to its anchor
- * @param {Align} [align.x = 'center']
- * @param {above | below} [align.y = 'end']
+ * @param {Align} [alignX = 'center'] - align the tooltip to its anchor horizontally
+ * @param {above | below} [alignY = 'below'] - align the tooltip to its anchor vertically
+ * @param {string} anchor
  * @param {string} [as = 'small'] - the HTML element to render
  * @param {string} [class] - append classes to the container
  * @param {string} [id] - ID attribute
@@ -21,7 +21,9 @@ import type { Align } from '@shared/lib/types';
 
 // --- props ---
 const {
-	align = { x: 'center', y: 'above' },
+	alignX = 'center',
+	alignY = 'above',
+	anchor,
 	as: El = 'small',
 	class: className = '',
 	id,
@@ -32,15 +34,27 @@ const {
 } = Astro.props;
 
 const classList = ['tooltip', className].filter(Boolean).join(' ');
+
+const alignValues = {
+	above: 'block-start',
+	below: 'block-end',
+	center: 'span-all',
+	end: 'inline-end',
+	start: 'inline-start',
+};
 ---
 
 <El
 	class={classList}
-	data-align-x={align?.x ?? 'center'}
-	data-align-y={align?.y ?? 'above'}
 	data-pointer={pointer || undefined}
 	popover="auto"
-	position-anchor={id}
+	style={[
+		`--align-x: ${alignX === 'center' ? 'span-all' : `inline-${alignX}`};`,
+		`--align-y: ${alignY === 'above' ? 'block-start' : 'block-end'};`,
+		anchor ? `position-anchor: ${anchor};` : undefined,
+	]
+		.filter(Boolean)
+		.join('')}
 	{id}
 	{...attrs}
 >
@@ -100,8 +114,8 @@ const classList = ['tooltip', className].filter(Boolean).join(' ');
 	}
 
 	@supports (anchor-name: --x) {
-		[data-align-x='center'][data-align-y='below'] {
-			position-area: bottom span-all;
+		.tooltip {
+			position-area: var(--align-y, 'block-start') var(--align-x, 'span-all');
 			position-try-fallbacks: flip-inline; /* flip-block breaking in Safari ATM */
 		}
 	}

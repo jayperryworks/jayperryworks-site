@@ -68,9 +68,6 @@ export function referenceTemplate(id: string): string {
 		class="footnote-reference"
 		id="${getReferenceIDAttr(id)}"
 		popovertarget="${getNoteIDAttr(id)}"
-		style="
-			anchor-name: ${getAnchorName(id)};
-			position-anchor: ${getAnchorName(id)}
-		"
+		style="anchor-name: ${getAnchorName(id)};"
 	><span class="hide-visually">Note <em>${getCount()}</em></span></button>`;
 }

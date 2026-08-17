@@ -52,6 +52,8 @@ const {
 			<ol class="list">
 				{notes.filter(Boolean).map(({ id, text: markdown }) => (
 					<Tooltip
+						alignY="below"
+						anchor={sidenotes.getAnchorName(id)}
 						as="li"
 						class="item"
 						id={sidenotes.getNoteIDAttr(id)}
