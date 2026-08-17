@@ -28,7 +28,7 @@ import type { Footnote } from '@shared/lib/kirby.types';
 
 // --- data & pagination ---
 export async function getStaticPaths() {
-	const pages = await fetchContent('pages', { env: 'dev' });
+	const pages = await fetchContent('pages');
 
 	return pages.reduce((result, page) => {
 		// if this isn't a personal page, bail out
