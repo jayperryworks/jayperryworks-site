@@ -58,6 +58,7 @@ User-agent: DuckAssistBot
 User-agent: Echobot Bot
 User-agent: EchoboxBot
 User-agent: ExaBot
+User-agent: ExaSearchBot
 User-agent: FacebookBot
 User-agent: facebookexternalhit
 User-agent: Factset_spyderbot
@@ -95,6 +96,7 @@ User-agent: KunatoCrawler
 User-agent: laion-huggingface-processor
 User-agent: LAIONDownloader
 User-agent: LCC
+User-agent: Lightpanda
 User-agent: LinerBot
 User-agent: Linguee Bot
 User-agent: LinkupBot
