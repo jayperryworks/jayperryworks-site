@@ -8,7 +8,10 @@ export default async function (endpoint, options = {}) {
 	const { env = 'prod' } = options;
 
 	const apiURL =
-		env === 'prod' ? import.meta.env.CONTENT_API_URL : 'http://jpw-api.test';
+		env === 'prod'
+			? import.meta.env.CONTENT_API_URL
+			: import.meta.env.LOCAL_DEV_URL;
+
 	const apiToken = import.meta.env.CONTENT_API_TOKEN;
 
 	try {
@@ -19,6 +22,6 @@ export default async function (endpoint, options = {}) {
 		});
 		return await request.json();
 	} catch (error) {
-		console.error('Failed to fetch book data:', error);
+		console.error('Failed to fetch data:', error);
 	}
 }

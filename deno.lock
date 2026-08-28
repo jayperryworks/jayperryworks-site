@@ -9,6 +9,11 @@
     "https://edge.netlify.com/bootstrap/globals/types.ts": "eaa6148ded3121d8dee62dd91c86e7fe76601df0f3ca8d7962243a30f4c8935f"
   },
   "workspace": {
+    "packageJson": {
+      "dependencies": [
+        "npm:svgo@^4.0.2"
+      ]
+    },
     "members": {
       "shared": {
         "packageJson": {
@@ -31,18 +36,20 @@
             "npm:unified@^11.0.4",
             "npm:unist-util-visit@^5.1.0",
             "npm:vite-svg-loader@^5.1.0",
-            "npm:vite@^7.3.1"
+            "npm:vite@^7.3.5"
           ]
         }
       },
       "sites/design": {
         "packageJson": {
           "dependencies": [
-            "npm:@astrojs/netlify@^7.0.3",
+            "npm:@astrojs/netlify@^7.0.13",
             "npm:@astrojs/sitemap@^3.7.0",
             "npm:@prismicio/helpers@^2.3.9",
             "npm:@prismicio/types@~0.2.9",
-            "npm:astro@6",
+            "npm:@types/react-dom@^19.2.3",
+            "npm:@types/react@^19.2.14",
+            "npm:astro@^6.4.8",
             "npm:date-fns@^4.1.0",
             "npm:vite-svg-loader@^5.1.0"
           ]
@@ -52,22 +59,24 @@
         "packageJson": {
           "dependencies": [
             "npm:@astrojs/check@~0.9.6",
-            "npm:@astrojs/netlify@^7.0.3",
-            "npm:@astrojs/rss@^4.0.15",
+            "npm:@astrojs/netlify@^7.0.13",
+            "npm:@astrojs/rss@^4.0.19",
             "npm:@astrojs/sitemap@^3.7.0",
             "npm:@netlify/blobs@^7.3.0",
             "npm:@prismicio/client@^7.21.6",
             "npm:@prismicio/helpers@^2.3.9",
             "npm:@prismicio/types@~0.2.9",
-            "npm:astro@^6.0.8",
+            "npm:@types/react-dom@^19.2.3",
+            "npm:@types/react@^19.2.14",
+            "npm:astro@^6.4.8",
             "npm:autoprefixer@^10.4.4",
             "npm:change-case@^5.4.4",
             "npm:cssnano@6",
             "npm:csv-parser@3",
             "npm:culori@^4.0.2",
             "npm:date-fns@^4.1.0",
-            "npm:install@0.13",
-            "npm:netlify-cli@^23.15.1",
+            "npm:netlify-cli@^26.0.2",
+            "npm:satteri@~0.9.5",
             "npm:vite-svg-loader@^5.1.0"
           ]
         }

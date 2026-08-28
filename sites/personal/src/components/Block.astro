@@ -17,9 +17,10 @@ import Aside from '@local/components/blocks/Aside.astro';
 // import CallToAction from '@shared/components/blocks/CallToAction.astro';
 // import Collage from '@shared/components/blocks/Collage.astro';
 // import Feed from '@shared/components/blocks/Feed.astro';
-// import Figure from '@shared/components/blocks/Figure.astro';
+import Figure from '@local/components/blocks/Figure.astro';
 import Heading from '@local/components/blocks/Heading.astro';
-// import ImageGallery from '@shared/components/blocks/ImageGallery.astro';
+import ImageGallery from '@local/components/blocks/ImageGallery.astro';
+import PageHeadline from '@local/components/blocks/PageHeadline.astro';
 import Passage from '@local/components/blocks/Passage.astro';
 // import Pullquote from '@shared/components/blocks/Pullquote.astro';
 // import StickyNoteGallery from '@shared/components/blocks/StickyNoteGallery.astro';
@@ -37,18 +38,19 @@ const { block, class: className } = Astro.props;
 
 /**
  * Match the 'prominence' value to the corresponding width token
+ * @function
  * @param {Block} block
  * @returns {string}
  */
 function getWidth(block) {
 	const widths = {
-		Small: 'narrow',
-		Large: 'xwide',
-		XLarge: 'xxwide',
+		small: 'narrow',
+		large: 'xwide',
+		xlarge: 'xxwide',
 	};
 
 	if (block.displayMode === 'slide') return widths['XLarge'];
-	return widths[block.prominence] || '';
+	return widths[block.prominence] || undefined;
 }
 
 const displayModeClass =
@@ -61,9 +63,10 @@ const blocks = {
 	// callToAction: CallToAction,
 	// collage: Collage,
 	// feed: Feed,
-	// figure: Figure,
+	figure: Figure,
 	heading: Heading,
-	// imageGallery: ImageGallery,
+	image_gallery: ImageGallery,
+	page_headline: PageHeadline,
 	passage: Passage,
 	// pullquote: Pullquote,
 	// quote: BlockQuote,
@@ -74,20 +77,19 @@ const blocks = {
 	// video: Video,
 };
 
+if (!blocks[block.type]) return;
+
 const Component = blocks[block.type];
-const classList = [
-	'block',
-	'space-outside-margins',
-	displayModeClass,
-	className,
-].join(' ');
+const classList = ['block', displayModeClass, className].join(' ');
 ---
 
 <ColorTransition
 	class={classList}
+	data-space="outside inline"
 	{...block.theme}
 >
-	<div class={`content-width centered ${getWidth(block)}`}>
-		<Component {...block} />
-	</div>
+	<Component
+		{...block}
+		width={getWidth(block)}
+	/>
 </ColorTransition>

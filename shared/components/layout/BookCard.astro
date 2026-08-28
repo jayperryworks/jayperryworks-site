@@ -23,10 +23,10 @@ import externalLink from '@shared/icons/external-link.svg?raw';
 import { removeArticles } from '@shared/lib/stringHelpers';
 
 // --- components ---
+import Image from '@local/components/elements/Image.astro';
 import Button from '@shared/components/elements/Button.astro';
 import Heading from '@shared/components/blocks/Heading.astro';
 import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
-import { Image } from 'astro:assets';
 
 // --- types ---
 /** @typedef {object} Action
@@ -45,14 +45,7 @@ import { Image } from 'astro:assets';
  */
 
 // --- props ---
-const {
-	author,
-	class: className = '',
-	cover,
-	links,
-	tags = [],
-	title,
-} = Astro.props;
+const { author, class: className = '', cover, links, title } = Astro.props;
 
 // set up data for the ButtonCard's actions prop
 const actions = Object.keys(links).map((label) => ({
@@ -98,14 +91,14 @@ function setImageStyle({ width, height }) {
 				{
 					cover ? (
 						<Image
-							src={cover.url}
 							alt={`Cover for '${title}'`}
 							class="cover-image"
 							height={cover.height}
-							sizes={`(min-width: 1200px) 600px, (min-width: 600px) 300px, 180px`}
+							sizes="(min-width: 125em) 800px, 20vw"
+							source={cover}
 							style={setImageStyle(cover)}
 							width={cover.width}
-							widths={[180, 300, 600]}
+							widths={[160, 300, 600, 800]}
 						/>
 					) : (
 						<div class="cover-image placeholder">
@@ -146,7 +139,7 @@ function setImageStyle({ width, height }) {
 
 		<!-- book metadata -->
 		{
-			Astro.slots.has() && (
+			Astro.slots.has('metadata') && (
 				<div class="metadata">
 					<slot name="metadata" />
 				</div>

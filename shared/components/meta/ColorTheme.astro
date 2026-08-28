@@ -33,16 +33,13 @@ const {
 const theme = { name, hue, custom };
 const El = el;
 
-const classList = [
-	'theme',
-	hasDarkMode(theme) ? 'has-dark-mode' : '',
-	className || '',
-].join(' ');
+const classList = ['theme', className || ''].join(' ').trim();
 ---
 
 <El
 	class={classList}
 	style={[setThemeStyle(theme), style || ''].join('')}
+	data-dark-mode={hasDarkMode(theme) || undefined}
 	{...attr}
 >
 	<slot />
@@ -105,7 +102,7 @@ const classList = [
 
 	/* Default theme tokens (dark mode) */
 	@media (prefers-color-scheme: dark) {
-		.has-dark-mode {
+		[data-dark-mode] {
 			--color-highlight: var(
 				--custom-dark-highlight,
 				oklch(71% 0.12 var(--base-h))
