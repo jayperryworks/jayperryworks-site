@@ -61,28 +61,34 @@ function getImageUrl(width) {
 	return `${host}/thumbs/${id}?width=${width}`;
 }
 
-const classList = ['image', className].join(' ').trim();
+const src = getImageUrl(widths[0]);
+const srcset = widths
+	.shift()
+	.map((w) => `${getImageUrl(w)} ${w}w`)
+	.join(', ');
+
+const classList = ['image', className].filter(Boolean).join(' ');
 
 const styleList = arrayToPunctatedString([
 	`--aspect-ratio: ${aspectRatio || `${width}/${height}`};`,
-	maxHeight ? `--max-height: ${maxHeight};` : '',
-	position ? `--object-position: ${position};` : '',
+	maxHeight ? `--max-height: ${maxHeight};` : false,
+	position ? `--object-position: ${position};` : false,
 	style,
 ]);
 ---
 
 <img
 	class={classList}
-	data-fit={[fit || '', maxHeight ? 'limit-height' : ''].join(' ').trim()}
+	data-fit={[fit, maxHeight && 'limit-height'].filter(Boolean).join(' ')}
 	data-border={border === true ? 'true' : undefined}
 	decoding="async"
 	loading="lazy"
-	src={getImageUrl(widths[0])}
-	srcset={widths.map((w) => `${getImageUrl(w)} ${w}w`)}
 	style={styleList}
 	{alt}
 	{height}
 	{sizes}
+	{src}
+	{srcset}
 	{width}
 />
 
