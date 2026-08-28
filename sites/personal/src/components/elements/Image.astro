@@ -4,13 +4,15 @@
  * - renders an img tag with srcset from a Prismic image data object
  * - uses Prismic/Imgix's default auto formatting
  *
- * @param {ImageSource} [source] - image source field from Prismic
+ * @param {ImageSource} [alt] - alt text to describe the image
  * @param {string} [aspectRatio] - specify an aspect ratio - defaults to image's  dimensions
  * @param {boolean} [border] - add a border to the image
  * @param {string} [class] - add classes to the container
  * @param {ImageFit} [fit] - specify a way to crop the image to its frame
+ * @param {string[]} [formats] - image formats to convert the original to
  * @param {number} [maxHeight] - maximum height of the image
  * @param {string} [position] - specify the object-position value (goes with fit above)
+ * @param {ImageSource} [source] - image source field from Kirby
  * @param {string} [style] - add style attributes to the container
  * @param {number[]} [widths] - responsive widths to add to the srcset
  */
@@ -30,16 +32,17 @@ import { arrayToPunctatedString } from '@shared/lib/stringHelpers';
 // [160, 200, 300, 400, 600, 800, 1000, 1200, 1400, 1600, 2000, 2400]
 const {
 	alt,
-	source,
 	aspectRatio,
 	border = false,
 	class: className = '',
 	fit,
+	formats = ['webp', 'avif'],
 	maxHeight,
 	position,
+	sizes = '(max-width: 75em) 98vw, 2000px',
+	source,
 	style,
 	widths = [400, 800, 1200, 2000],
-	sizes = '(max-width: 75em) 98vw, 2000px',
 } = Astro.props;
 
 // --- computed props ---
@@ -47,6 +50,7 @@ const { id, height, width } = source;
 
 /**
  * Generate the url to transform the image to a given width
+ * TODO: add format transformations, somehow
  *
  * @function
  * @param {number} width
@@ -62,8 +66,8 @@ function getImageUrl(width) {
 }
 
 const src = getImageUrl(widths[0]);
+widths.shift();
 const srcset = widths
-	.shift()
 	.map((w) => `${getImageUrl(w)} ${w}w`)
 	.join(', ');
 
