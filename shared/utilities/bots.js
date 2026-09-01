@@ -82,7 +82,6 @@ User-agent: HenkBot
 User-agent: iAskBot
 User-agent: iaskspider
 User-agent: iaskspider/2.0
-User-agent: IbouBot
 User-agent: ICC-Crawler
 User-agent: ImagesiftBot
 User-agent: imageSpider
@@ -135,6 +134,7 @@ User-agent: Querit-SearchBot
 User-agent: QueritBot
 User-agent: QuillBot
 User-agent: quillbot.com
+User-agent: Reflectionbot
 User-agent: SBIntuitionsBot
 User-agent: Scrapy
 User-agent: SemrushBot-OCOB
