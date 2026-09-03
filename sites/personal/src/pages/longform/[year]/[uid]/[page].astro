@@ -285,7 +285,7 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 
 					<!-- sequence nav -->
 					{sequenceNavItems.length > 1 && (
-						<!-- progress bar (for small screens) -->
+						// progress bar (for small screens)
 						<ProgressBar
 							class="progress"
 							value={currentPage}
@@ -298,11 +298,11 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 							}.
 						</ProgressBar>
 
-						<!-- for larger screens -->
+						// for larger screens
 						<div class={[
 							'sequence',
 							// if the sequence nav has a lot of items, make it wider
-							sequenceNavItems.length <= 6 ? 'wrapper' : 'wrapper wide'
+							sequenceNavItems.length <= 6 ? 'wrapper' : 'wrapper wide',
 						].join(' ')}>
 							<SequenceNav>
 								{sequenceNavItems.map((item) => (
