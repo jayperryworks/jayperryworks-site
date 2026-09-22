@@ -54,9 +54,12 @@ User-agent: Datenbank Crawler
 User-agent: DeepSeekBot
 User-agent: Devin
 User-agent: Diffbot
+User-agent: Diffbot-User
+User-agent: DoubaoBot
 User-agent: DuckAssistBot
 User-agent: Echobot Bot
 User-agent: EchoboxBot
+User-agent: ERNIEBot
 User-agent: ExaBot
 User-agent: ExaSearchBot
 User-agent: FacebookBot
@@ -89,7 +92,9 @@ User-agent: img2dataset
 User-agent: ISSCyberRiskCrawler
 User-agent: kagi-fetcher
 User-agent: Kangaroo Bot
+User-agent: Kimi-SearchBot
 User-agent: Kimi-User
+User-agent: KimiBot
 User-agent: KlaviyoAIBot
 User-agent: KunatoCrawler
 User-agent: laion-huggingface-processor
@@ -105,6 +110,8 @@ User-agent: Meta-ExternalAgent
 User-agent: meta-externalfetcher
 User-agent: Meta-ExternalFetcher
 User-agent: meta-webindexer
+User-agent: MistralAI-Index
+User-agent: MistralAI-Training
 User-agent: MistralAI-User
 User-agent: MistralAI-User/1.0
 User-agent: Mozilla-Tabstack
@@ -114,6 +121,7 @@ User-agent: netEstate Imprint Crawler
 User-agent: newsai
 User-agent: NotebookLM
 User-agent: NovaAct
+User-agent: OAI-AdsBot
 User-agent: OAI-SearchBot
 User-agent: omgili
 User-agent: omgilibot
@@ -134,6 +142,10 @@ User-agent: Querit-SearchBot
 User-agent: QueritBot
 User-agent: QuillBot
 User-agent: quillbot.com
+<<<<<<< Updated upstream
+=======
+User-agent: QwenBot
+>>>>>>> Stashed changes
 User-agent: Reflectionbot
 User-agent: SBIntuitionsBot
 User-agent: Scrapy
