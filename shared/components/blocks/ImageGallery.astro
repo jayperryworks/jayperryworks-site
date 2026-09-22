@@ -78,13 +78,13 @@ const {
 	</Gallery>
 </Figure>
 
-<style is:global>
-	.image-gallery li {
+<style>
+	.image-gallery :global(li) {
 		text-align: center;
 		font-size: 0;
 	}
 
-	.image-gallery li > :global(img) {
+	.image-gallery :global(li > img) {
 		display: block;
 	}
 </style>
