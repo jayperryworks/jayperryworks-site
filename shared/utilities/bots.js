@@ -1,5 +1,6 @@
 export default `
 User-agent: AddSearchBot
+User-agent: AgentDataBot
 User-agent: AgentTimes
 User-agent: AI2Bot
 User-agent: AI2Bot-DeepResearchEval
@@ -25,6 +26,7 @@ User-agent: Awario
 User-agent: AzureAI-SearchBot
 User-agent: bedrockbot
 User-agent: bigsur.ai
+User-agent: BixelBot
 User-agent: Bravebot
 User-agent: Brightbot
 User-agent: Brightbot 1.0
@@ -41,6 +43,7 @@ User-agent: Claude-User
 User-agent: Claude-Web
 User-agent: ClaudeBot
 User-agent: Cloudflare-AutoRAG
+User-agent: CloudflareBrowserRenderingCrawler
 User-agent: CloudVertexBot
 User-agent: Code
 User-agent: cohere-ai
@@ -92,6 +95,11 @@ User-agent: img2dataset
 User-agent: ISSCyberRiskCrawler
 User-agent: kagi-fetcher
 User-agent: Kangaroo Bot
+<<<<<<< Updated upstream
+=======
+User-agent: KeenableBot
+User-agent: Kimi-Agent
+>>>>>>> Stashed changes
 User-agent: Kimi-SearchBot
 User-agent: Kimi-User
 User-agent: KimiBot
@@ -137,12 +145,17 @@ User-agent: PetalBot
 User-agent: PhindBot
 User-agent: Poggio-Citations
 User-agent: Poseidon Research Crawler
+User-agent: qodercli
 User-agent: QualifiedBot
 User-agent: Querit-SearchBot
 User-agent: QueritBot
 User-agent: QuillBot
 User-agent: quillbot.com
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+User-agent: QwenBot
+>>>>>>> Stashed changes
 =======
 User-agent: QwenBot
 >>>>>>> Stashed changes
