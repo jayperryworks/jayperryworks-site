@@ -20,7 +20,7 @@
 		"@prismicio/client": "^7.21.6",
 		"@prismicio/helpers": "^2.3.9",
 		"@prismicio/types": "^0.2.9",
-		"astro": "^7.3.0",
+		"astro": "^7.2.8",
 		"autoprefixer": "^10.4.4",
 		"change-case": "^5.4.4",
 		"cssnano": "^6.0.0",
@@ -31,8 +31,8 @@
 	},
 	"devDependencies": {
 		"@netlify/blobs": "^7.3.0",
-		"@types/react-dom": "^19.2.3",
 		"@types/react": "^19.2.14",
+		"@types/react-dom": "^19.2.3",
 		"netlify-cli": "^26.0.2"
 	},
 	"optionalDependencies": {
