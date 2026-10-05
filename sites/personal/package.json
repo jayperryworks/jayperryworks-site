@@ -31,9 +31,8 @@
 	},
 	"devDependencies": {
 		"@netlify/blobs": "^7.3.0",
-		"@types/react": "^19.2.14",
-		"@types/react-dom": "^19.2.3",
-		"netlify-cli": "^26.0.2"
+    "@types/react-dom": "^19.2.3",
+		"netlify-cli": "^27.4.2"
 	},
 	"optionalDependencies": {
 		"@rollup/rollup-android-arm-eabi": "4.52.2",
