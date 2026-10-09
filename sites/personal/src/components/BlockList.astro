@@ -17,7 +17,6 @@ import '@shared/styles/tokens/type.css';
 import Block from '@local/components/Block.astro';
 
 // utils
-import blockTypes from '@shared/lib/blocks';
 import { reset as resetSidenoteCount } from '@shared/lib/sidenotes';
 
 // types
@@ -45,11 +44,15 @@ function getBlockClass(type: string, displayMode: string = 'flow'): string {
 	return displayMode;
 }
 
-// if the page body has a 'lede' (intro) paragraph,
-// add a 'lede' class to the first passage that appears in the list of blocks
-function getLedeClass(block: BlockType): string {
+/**
+ * Add a class to the first passage if the page has a 'lede' paragraph
+ * @function
+ * @param {BlockType} block
+ * @returns {string}
+ */
+function getLedeClass(block) {
 	if (showLedeStyle) {
-		const firstPassage = sectionList[0].blocks.find((block: BlockType) => {
+		const firstPassage = sectionList[0].blocks.find((block) => {
 			return block.type === 'passage';
 		});
 		return block === firstPassage ? 'lede' : '';

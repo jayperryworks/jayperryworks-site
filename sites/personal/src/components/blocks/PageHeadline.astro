@@ -1,0 +1,48 @@
+---
+/**
+ * Page headline block component
+ * @description Display a main heading (and optional subheading) on a top-level page
+ *
+ * @param {string} title - the main heading
+ * @param {string} [subtitle] - optional subheading
+ * @param {string} [class] - append classes to the container
+ */
+
+// --- components ---
+import Heading from '@local/components/blocks/Heading.astro';
+
+// --- props ---
+const { title, subtitle, class: className } = Astro.props;
+---
+
+<header class={['page-headline', className].join(' ').trim()}>
+	<Heading
+		align="center"
+		level="h1"
+		width="xxwide"
+	>
+		{title}
+	</Heading>
+
+	{
+		subtitle && (
+			<Heading
+				align="center"
+				size="gamma"
+				width="xxwide"
+				subheading
+			>
+				{subtitle}
+			</Heading>
+		)
+	}
+</header>
+
+<style>
+	.page-headline {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xxnarrow);
+		align-items: stretch;
+	}
+</style>

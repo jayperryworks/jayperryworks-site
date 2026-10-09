@@ -1,0 +1,85 @@
+---
+/**
+ * Figure block component
+ * - Display an image with optional caption and/or attribution
+ *
+ * @param {ImageSource} image - the image data from Prismic
+ * @param {string} [attribution] - credit for the artist/photographer
+ * @param {boolean} [border] - display a border around the image
+ * @param {string} [caption] - a caption displayed below the image
+ * @param {string} [class] - classes to append to the container
+ * @param {ImageFit} [fit] - object-fit styles for the image
+ * @param {Frame} [frame='none'] - a frame or device for the image
+ * @param {number} [maxHeight] - constrain the image to a certain height, in vh units
+ * @param {ContentWidth} [width='wide'] - how wide to make the heading
+ * @param {boolean} [useImageAspectRato=false] - for a device, use the image's own aspect ratio instead of of the default (e.g. 4/3 for a tablet)
+ */
+
+// --- styles ---
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/contentWidth.css';
+
+// --- types ---
+import type { ImageSource } from '@shared/lib/kirby.types';
+import type { ContentWidth, Frame, ImageFit } from '@shared/lib/types';
+
+// --- child components ---
+import ImageFrame from '@local/components/elements/ImageFrame.astro';
+import Caption from '@local/components/blocks/FigureCaption.astro';
+import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
+
+// --- props ---
+const {
+	image,
+	attribution,
+	border,
+	caption,
+	frame = 'none',
+	class: className,
+	fit,
+	useImageAspectRatio,
+	width = 'wide',
+} = Astro.props;
+---
+
+<figure class={['figure', className || ''].join(' ')}>
+	<RevealOnScroll
+		class={['wrapper', `content-width ${width} centered`].join(' ')}
+	>
+		<slot>
+			{
+				image && (
+					<ImageFrame
+						source={image}
+						{border}
+						{fit}
+						{frame}
+						{useImageAspectRatio}
+					/>
+				)
+			}
+		</slot>
+
+		{
+			(caption || attribution) && (
+				<Caption
+					class="caption"
+					text={caption}
+					{attribution}
+				/>
+			)
+		}
+	</RevealOnScroll>
+</figure>
+
+<style>
+	.figure,
+	.figure :global(.wrapper) {
+		text-align: center;
+	}
+
+	.figure :global(.caption) {
+		margin-block-start: auto;
+		padding-block-start: var(--space-narrow);
+	}
+</style>

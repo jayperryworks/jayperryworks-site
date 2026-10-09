@@ -285,37 +285,39 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 
 					<!-- sequence nav -->
 					{sequenceNavItems.length > 1 && (
-						// progress bar (for small screens)
-						<ProgressBar
-							class="progress"
-							value={currentPage}
-							range={sequenceNavItems.length}
-						>
-							Progress: You are currently reading {
-								type === 'chapter'
-								? `${project.chapterLabel} ${number} of ${project.chapterList.length}`
-								: `Appendix ${number} of ${project.appendixList.length}`
-							}.
-						</ProgressBar>
+						<Fragment>
+							{/* progress bar (for small screens) */}
+							<ProgressBar
+								class="progress"
+								value={currentPage}
+								range={sequenceNavItems.length}
+							>
+								Progress: You are currently reading {
+									type === 'chapter'
+									? `${project.chapterLabel} ${number} of ${project.chapterList.length}`
+									: `Appendix ${number} of ${project.appendixList.length}`
+								}.
+							</ProgressBar>
 
-						// for larger screens
-						<div class={[
-							'sequence',
-							// if the sequence nav has a lot of items, make it wider
-							sequenceNavItems.length <= 6 ? 'wrapper' : 'wrapper wide',
-						].join(' ')}>
-							<SequenceNav>
-								{sequenceNavItems.map((item) => (
-									<SequenceNavItem {...item}>
-										{
-											item.type === 'chapter'
-											? prismicHelpers.asText(item.title)
-											: `Appendix: ${prismicHelpers.asText(item.title)}`
-										}
-									</SequenceNavItem>
-								))}
-							</SequenceNav>
-						</div>
+							{/* for larger screens */}
+							<div class={[
+								'sequence',
+								// if the sequence nav has a lot of items, make it wider
+								sequenceNavItems.length <= 6 ? 'wrapper' : 'wrapper wide',
+							].join(' ')}>
+								<SequenceNav>
+									{sequenceNavItems.map((item) => (
+										<SequenceNavItem {...item}>
+											{
+												item.type === 'chapter'
+												? prismicHelpers.asText(item.title)
+												: `Appendix: ${prismicHelpers.asText(item.title)}`
+											}
+										</SequenceNavItem>
+									))}
+								</SequenceNav>
+							</div>
+						</Fragment>
 					)}
 
 					<!-- chapter title -->

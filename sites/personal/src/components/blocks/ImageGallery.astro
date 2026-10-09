@@ -1,8 +1,7 @@
 ---
 /**
  * @typedef {Object} ImageGalleryItem - image objects for each grid item
- * @property {ImageField} image - default image field
- * @property {ImageField} darkModeImage - a dark-mode version of the image
+ * @property {ImageSource} image - default image field
  */
 
 /**
@@ -22,13 +21,13 @@
  */
 
 // --- components ---
-import Figure from '@shared/components/blocks/Figure.astro';
+import Figure from '@local/components/blocks/Figure.astro';
 import Gallery from '@shared/components/layout/Gallery.astro';
-import ImageFrame from '@shared/components/elements/ImageFrame.astro';
+import ImageFrame from '@local/components/elements/ImageFrame.astro';
 import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
 
 // --- types ---
-import type { ImageField } from '@prismicio/types';
+import type { ImageSource } from '@shared/lib/kirby.types';
 import type {
 	ContentWidth,
 	FormattedText,
@@ -46,45 +45,47 @@ const {
 	class: className = '',
 	columnSize = 'medium',
 	fitImages = 'default',
-	frame = 'None',
+	frame = 'none',
 	gutter = 'xnarrow',
 	useImageAspectRatio = false,
 } = Astro.props;
 ---
 
 <Figure
-	caption={caption && { markdown: caption }}
 	class={['image-gallery', className].join(' ')}
 	{attribution}
+	{caption}
 >
 	<Gallery
 		size={columnSize}
 		{gutter}
 	>
 		{
-			images.map(({ image, darkModeImage }) => (
-				<RevealOnScroll tag="li">
-					<ImageFrame
-						source={image}
-						darkModeSource={darkModeImage}
-						fit={fitImages}
-						{border}
-						{frame}
-						{useImageAspectRatio}
-					/>
-				</RevealOnScroll>
-			))
+			images.map((image) => {
+				const { frame, border } = image;
+				return (
+					<RevealOnScroll tag="li">
+						<ImageFrame
+							source={image}
+							fit={fitImages}
+							{border}
+							{frame}
+							{useImageAspectRatio}
+						/>
+					</RevealOnScroll>
+				);
+			})
 		}
 	</Gallery>
 </Figure>
 
-<style>
-	.image-gallery :global(li) {
+<style is:global>
+	.image-gallery li {
 		text-align: center;
 		font-size: 0;
 	}
 
-	.image-gallery :global(li > img) {
+	.image-gallery li > :global(img) {
 		display: block;
 	}
 </style>

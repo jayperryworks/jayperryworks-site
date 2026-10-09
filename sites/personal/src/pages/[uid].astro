@@ -1,56 +1,50 @@
 ---
-// assets
+/**
+ * Top-level page template
+ *
+ * @param {object[]} body - the body blocks of the page
+ * @param {string} title
+ * @param {SEOContent} [seo] - SEO/metadata fields
+ * @param {ThemeNames | Partial<Theme>} [theme] - color theme
+ * @param {Footnote[]} [footnotes = []] - footnotes the body references
+ */
+
+// --- assets ---
 import '@shared/styles/tokens/spacing.css';
 
-// helpers
-import { fetchLinks } from '@shared/lib/routes';
-import { titleCase } from '@shared/lib/stringHelpers';
-import * as prismicHelpers from '@prismicio/helpers';
-import prismic from '@shared/lib/prismic';
+// --- utils ---
+import fetchContent from '@shared/lib/fetchContent';
 
-// components
+// --- components ---
 import Layout from '@local/layouts/Layout.astro';
-import BlockList from '@shared/components/BlockList.astro';
-import Heading from '@shared/components/blocks/Heading.astro';
+import BlockList from '@local/components/BlockList.astro';
 import MainNav from '@local/components/navigation/MainNav.astro';
 import MainFooter from '@local/components/navigation/MainFooter.astro';
+import Footnotes from '@local/components/elements/Footnotes.astro';
 
-// types
-import { Slice, TitleField } from '@prismicio/types';
-import { SEOContent, Theme, ThemeNames } from '@shared/lib/types';
+// --- types ---
+import type { SEOContent, Theme, ThemeNames } from '@shared/lib/types';
+import type { Footnote } from '@shared/lib/kirby.types';
 
-export interface Props {
-	body: Slice[];
-	title: TitleField;
-	seo?: SEOContent;
-	subtitle?: TitleField;
-	theme?: ThemeNames | Partial<Theme>;
-}
+// --- data & pagination ---
+export async function getStaticPaths() {
+	const pages = await fetchContent('pages');
 
-// data & pagination
-export async function getStaticPaths(): Promise<Function> {
-	const pages = await prismic.getAllByType('page', { fetchLinks });
+	return pages.reduce((result, page) => {
+		// if this isn't a personal page, bail out
+		if (!page.sites.includes('personal')) return result;
 
-	return pages.reduce((result, { uid, data }) => {
-		const { body, seo_description, seo_image, seo_title, title, theme } = data;
+		// otherwise, return the data
+		const { body, colorTheme: theme, footnotes, seo, title, uuid: uid } = page;
 
-		const site = data.site || 'Personal';
-
-		if (site === 'Design') return result;
-
-		const seo = {
-			description: seo_description,
-			image: seo_image?.url,
-			imageAlt: seo_image?.alt,
-			title: seo_title || prismicHelpers.asText(title),
-		};
-
+		// otherwise
 		result.push({
 			params: {
 				uid,
 			},
 			props: {
 				body,
+				footnotes,
 				seo,
 				theme,
 				title,
@@ -61,47 +55,35 @@ export async function getStaticPaths(): Promise<Function> {
 	}, []);
 }
 
-// props
-const { body, seo, subtitle, theme, title } = Astro.props as Props;
-
+// --- props ---
+const { body, footnotes: notes = [], seo, theme, title } = Astro.props;
 const { uid } = Astro.params;
 ---
 
 <Layout
-	pageTitle={titleCase(uid)}
+	pageTitle={title}
 	{seo}
 	{theme}
 >
 	<MainNav segment={uid} />
 	<main id="main">
 		<article>
-			<header class="title">
-				<Heading
-					level={1}
-					text={title}
-				/>
-				{
-					subtitle && (
-						<Heading
-							class="type-scale-gamma"
-							text={subtitle}
-							subheading
-						/>
-					)
-				}
-			</header>
 			<BlockList
 				{body}
 				showLedeStyle
 			/>
+			<Footnotes {notes} />
 		</article>
+		<MainFooter />
 	</main>
-	<MainFooter />
 </Layout>
 
 <style>
 	article {
 		padding-block: var(--space-xwide);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-wide);
 	}
 
 	.title {
