@@ -1,18 +1,22 @@
 ---
-// assets
+/**
+ * Longform chapter template
+ * @description Render longform chapters, paginated sequentially in each piece
+ */
+
+// --- assets ---
 import '@shared/styles/tokens/contentWidth.css';
 import '@shared/styles/tokens/spacing.css';
 
-// utilities
+// --- utilities ---
 import { format } from 'date-fns';
-import * as prismicHelpers from '@prismicio/helpers';
-import prismic from '@shared/lib/prismic';
+import fetchContent from '@shared/lib/fetchContent';
 
-// components
+// --- components ---
 import Layout from '@local/layouts/Layout.astro';
-import BlockList from '@shared/components/BlockList.astro';
+import BlockList from '@local/components/BlockList.astro';
 import Callout from '@shared/components/elements/Callout.astro';
-import Heading from '@shared/components/blocks/Heading.astro';
+import Heading from '@local/components/blocks/Heading.astro';
 import MainFooter from '@local/components/navigation/MainFooter.astro';
 import MainNav from '@local/components/navigation/MainNav.astro';
 import ReadNextLink from '@shared/components/navigation/ReadNextLink.astro';
@@ -20,174 +24,133 @@ import SequenceNav from '@shared/components/navigation/SequenceNav.astro';
 import SequenceNavItem from '@shared/components/navigation/SequenceNavItem.astro';
 import ProgressBar from '@shared/components/elements/ProgressBar.astro';
 
-// types
+// --- types ---
 import type {
 	Align,
 } from '@shared/lib/types';
 
 import type { Props as SequenceNavItemProps } from '@shared/components/navigation/SequenceNavItem.astro';
 import type { Action as CalloutAction } from '@shared/components/elements/Callout.astro';
-import type { RichTextField, TitleField } from '@prismicio/types';
 
-export interface SequenceNavItemData extends SequenceNavItemProps {
-	title: TitleField;
-	type: 'chapter'|'appendix';
-}
-
-type Callout = {
-	title: TitleField,
-	description: RichTextField,
-	actions?: CalloutAction[],
-}
+// --- data ---
 
 // Using 'nested pagination' to generate 'chapter' pages for each longform project
 // -> https://docs.astro.build/en/core-concepts/routing/#nested-pagination
 export async function getStaticPaths({ paginate }) {
+	const projectsResponse = await fetchContent('longform');
+
 	// query all longform projects
 	// -> use graphQuery to fetch linked Chapter data for each project
-	const projectsResponse = await prismic.getAllByType('longform', {
-		orderings: {
-			field: 'my.longform.date',
-			direction: 'desc',
-		},
-		graphQuery: `
-			{
-				longform {
-					...longformFields
-					chapters {
-						chapter {
-							...on longform_chapter {
-								...longform_chapterFields
-							}
-						}
-					}
-					appendices {
-						appendix {
-							...on longform_appendix {
-								...longform_appendixFields
-							}
-						}
-					}
-				}
-			}
-		`,
-	});
-
+	// const projectsResponse = await prismic.getAllByType('longform', {
+	// 	orderings: {
+	// 		field: 'my.longform.date',
+	// 		direction: 'desc',
+	// 	},
+	// 	graphQuery: `
+	// 		{
+	// 			longform {
+	// 				...longformFields
+	// 				chapters {
+	// 					chapter {
+	// 						...on longform_chapter {
+	// 							...longform_chapterFields
+	// 						}
+	// 					}
+	// 				}
+	// 				appendices {
+	// 					appendix {
+	// 						...on longform_appendix {
+	// 							...longform_appendixFields
+	// 						}
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	`,
+	// });
 
 	// loop over each project and create a massaged list of chapters to be paginated
-	return projectsResponse.flatMap(({ uid, data }) => {
-		const year = format(prismicHelpers.asDate(data.date), 'yyyy');
+	return projectsResponse.reduce((result, project) => {
+		const {
+			title,
+			subtitle,
+			development,
+			chapter_label: chapterLabel,
+			completion_date,
+			uuid,
+		} = project;
 
-		const callouts = data.body.map(({ primary, items }) => ({
-			title: primary.heading,
-			description: { prismicText: primary.description },
-			placement: primary.placement.toLowerCase(),
-			actions: items?.length > 0
-				? items.map(({ call_to_action_label: label, link }) => ({ label, link, }))
-				: undefined,
-		}));
+		const year = format(completion_date, 'yyyy');
+		const uid = uuid.split('/').slice(-1).pop();
+		let chapters = [];
+		let chaptersList = [];
+		let appendices = [];
+		let appendicesList = [];
 
-		// capture project metadata to use for each chapter view
-		const project = {
-			uid,
-			title: data.title,
-			subtitle: data.subtitle,
-			chapterLabel: data.chapter_label,
-			chapterList: data.chapters.map(({ chapter }) => ({
-				title: chapter.data.title,
-				type: 'chapter',
-			})),
-			appendixList: data.appendices.map(({ appendix }) => ({
-				title: appendix.data.title,
-				type: 'appendix',
-			})),
-			status: data.status,
-		};
-
-		const seo = {
-			description: data.seo_description,
-			image: data.seo_image?.url,
-			imageAlt: data.seo_image?.alt,
-			title: data.seo_title,
-		};
-
-		// set up chapter data
-		const chapters = data.chapters.map(({ chapter }, index) => {
-			const {
-				title,
-				subtitle,
-				preset_theme,
-				base_hue,
-				body,
-				body1: colorThemes,
-			} = chapter.data;
-
-			return {
-				type: 'chapter',
+		if (project.chapters && project.chapters.length > 0) {
+			chapters = project.chapters.map((chapter, index) => ({
 				number: index + 1,
-				uid,
-				title,
-				subtitle,
-				body,
-				callouts,
-				project,
-				seo,
-				theme: {
-					name: preset_theme,
-					hue: base_hue,
-					custom: colorThemes,
-				},
-			};
-		});
+				type: 'chapter',
+				...chapter,
+			}));
 
-		// set up appendix data, if any
-		const appendices = prismicHelpers.isFilled.group(data.appendices)
-			? data.appendices.map(({ appendix }, index) => {
-					const {
-						title,
-						subtitle,
-						preset_theme,
-						base_hue,
-						body,
-						body1: colorThemes,
-					} = appendix.data;
+			chaptersList = project.chapters.map((chapter) => ({
+				title: chapter.title,
+				type: 'chapter',
+			}));
+		};
 
-					return {
-						type: 'appendix',
-						number: index + 1,
-						uid,
-						title,
-						subtitle,
-						body,
-						callouts,
-						project: {
-							...project,
-							chapterLabel: 'Appendix',
-						},
-						seo,
-						theme: {
-							name: preset_theme,
-							hue: base_hue,
-							custom: colorThemes,
-						},
-					}
-				})
-			: [];
+		if (project.appendices && project.appendices.length > 0) {
+			appendices = project.appendices.map((appendix, index) => ({
+				number: index + 1,
+				type: 'appendix',
+				...appendix,
+			}));
+
+			appendicesList = project.appendices.map((appendix) => ({
+				title: appendix.title,
+				type: 'appendix',
+			}));
+		};
+
+		// Pull 'callout' blocks from the longform project
+		// -> and format for each chapter
+		// const callouts = data.body.map(({ primary, items }) => ({
+		// 	title: primary.heading,
+		// 	description: { prismicText: primary.description },
+		// 	placement: primary.placement.toLowerCase(),
+		// 	actions: items?.length > 0
+		// 		? items.map(({ call_to_action_label: label, link }) => ({ label, link, }))
+		// 		: undefined,
+		// }));
 
 		// one chapter per page under the given project params
 		const pages = paginate([...chapters, ...appendices], {
 			pageSize: 1,
 			params: { year, uid },
+			props: {
+				project: {
+					title,
+					subtitle,
+					development,
+					chapterLabel,
+					chaptersList,
+					appendicesList,
+				}
+			}
 		});
 
-		return pages;
-	});
+		result.push(...pages);
+		return result;
+	}, []);
 }
 
 const {
 	year,
 	uid,
 } = Astro.params;
+
+const { project } = Astro.props;
 
 const {
 	url,
@@ -198,9 +161,8 @@ const {
 
 const {
 	body,
-	callouts,
+	callouts = [],
 	number,
-	project,
 	seo,
 	subtitle,
 	theme,
@@ -211,8 +173,8 @@ const {
 // Build a page title with the project and chapter/appendix name
 // -> locating it down here instead of in the pagination function above because currentPage is accessible from here
 const pageTitle = type === 'chapter'
-? `${prismicHelpers.asText(project.title)}, ${project.chapterLabel} ${number}: ${prismicHelpers.asText(title)}`
-: `${prismicHelpers.asText(project.title)}, Appendix: ${prismicHelpers.asText(title)}`;
+? `${project.title}, ${project.chapterLabel} ${number}: ${title}`
+: `${project.title}, Appendix: ${title}`;
 
 // if no title was given for SEO content, make a default one using the page data above
 if (!seo.title) seo.title = pageTitle;
@@ -224,11 +186,11 @@ function sequenceNavItemAlign(index: number): Align {
 	return 'center';
 }
 
-const pagesList = [...project.chapterList, ...project.appendixList];
+const pagesList = [...project.chaptersList, ...project.appendicesList];
 
 // list of chapter links for the SequenceNav at the top and bottom of the page
 const sequenceNavItems = pagesList.map(
-	({ title, type }, index: number): SequenceNavItemData => ({
+	({ title, type }, index: number) => ({
 		title,
 		type,
 		href: `/longform/${year}/${uid}/${index + 1}`,
@@ -275,7 +237,7 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 						level={1}
 						text={project.title}
 					/>
-					{prismicHelpers.isFilled.title(project.subtitle) && (
+					{project.subtitle && (
 						<Heading
 							level={2}
 							text={project.subtitle}
@@ -294,8 +256,8 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 							>
 								Progress: You are currently reading {
 									type === 'chapter'
-									? `${project.chapterLabel} ${number} of ${project.chapterList.length}`
-									: `Appendix ${number} of ${project.appendixList.length}`
+									? `${project.chapterLabel} ${number} of ${project.chaptersList.length}`
+									: `Appendix ${number} of ${project.appendicesList.length}`
 								}.
 							</ProgressBar>
 
@@ -310,8 +272,8 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 										<SequenceNavItem {...item}>
 											{
 												item.type === 'chapter'
-												? prismicHelpers.asText(item.title)
-												: `Appendix: ${prismicHelpers.asText(item.title)}`
+												? item.title
+												: `Appendix: ${item.title}`
 											}
 										</SequenceNavItem>
 									))}
@@ -348,7 +310,7 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 			{
 				project.status === 'Finished'
 				&& type === 'chapter'
-				&& number === project.chapterList.length
+				&& number === project.chaptersList.length
 				&& (
 					<aside class="end | type-role-display type-scale-gamma">
 						<p>The end</p>
@@ -370,8 +332,8 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 					>
 						Progress: You are currently reading {
 							type === 'chapter'
-							? `${project.chapterLabel} ${number} of ${project.chapterList.length}`
-							: `Appendix ${number} of ${project.appendixList.length}`
+							? `${project.chapterLabel} ${number} of ${project.chaptersList.length}`
+							: `Appendix ${number} of ${project.appendicesList.length}`
 						}.
 					</ProgressBar>
 
@@ -381,8 +343,8 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 							<SequenceNavItem {...item} next={item.href === url.next}>
 								{
 									item.type === 'chapter'
-									? prismicHelpers.asText(item.title)
-									: `Appendix: ${prismicHelpers.asText(item.title)}`
+									? item.title
+									: `Appendix: ${item.title}`
 								}
 							</SequenceNavItem>
 						))}
@@ -406,7 +368,7 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 									}
 								</Fragment>
 								<Fragment slot="title">
-									{prismicHelpers.asText(nextPage.title)}
+									{nextPage.title}
 								</Fragment>
 							</ReadNextLink>
 						)}
