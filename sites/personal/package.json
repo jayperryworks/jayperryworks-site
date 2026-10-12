@@ -23,7 +23,7 @@
 		"astro": "^7.3.0",
 		"autoprefixer": "^10.4.4",
 		"change-case": "^5.4.4",
-		"cssnano": "^6.0.0",
+		"cssnano": "^9.4.0",
 		"csv-parser": "^3.0.0",
 		"culori": "^4.0.2",
 		"date-fns": "^4.1.0",
