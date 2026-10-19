@@ -30,6 +30,7 @@ import type { Footnote } from '@shared/lib/kirby.types';
 export async function getStaticPaths() {
 	const pages = await fetchContent('pages');
 
+	try {
 	return pages.reduce((result, page) => {
 		// if this isn't a personal page, bail out
 		if (!page.sites.includes('personal')) return result;
@@ -53,6 +54,9 @@ export async function getStaticPaths() {
 
 		return result;
 	}, []);
+	} catch(error) {
+		throw new Error('Error fetching top-level page data', error);
+	}
 }
 
 // --- props ---
