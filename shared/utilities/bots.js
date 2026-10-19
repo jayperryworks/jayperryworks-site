@@ -84,7 +84,10 @@ User-agent: GoogleOther
 User-agent: GoogleOther-Image
 User-agent: GoogleOther-Video
 User-agent: GPTBot
+User-agent: GrokAppAndroid
+User-agent: GrokBot
 User-agent: HenkBot
+User-agent: Hunyuan
 User-agent: iAskBot
 User-agent: iaskspider
 User-agent: iaskspider/2.0
@@ -95,11 +98,8 @@ User-agent: img2dataset
 User-agent: ISSCyberRiskCrawler
 User-agent: kagi-fetcher
 User-agent: Kangaroo Bot
-<<<<<<< Updated upstream
-=======
 User-agent: KeenableBot
 User-agent: Kimi-Agent
->>>>>>> Stashed changes
 User-agent: Kimi-SearchBot
 User-agent: Kimi-User
 User-agent: KimiBot
@@ -122,9 +122,11 @@ User-agent: MistralAI-Index
 User-agent: MistralAI-Training
 User-agent: MistralAI-User
 User-agent: MistralAI-User/1.0
+User-agent: MoonshotBot
 User-agent: Mozilla-Tabstack
 User-agent: MyCentralAIScraperBot
 User-agent: NagetBot
+User-agent: nbot
 User-agent: netEstate Imprint Crawler
 User-agent: newsai
 User-agent: NotebookLM
@@ -151,14 +153,7 @@ User-agent: Querit-SearchBot
 User-agent: QueritBot
 User-agent: QuillBot
 User-agent: quillbot.com
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
 User-agent: QwenBot
->>>>>>> Stashed changes
-=======
-User-agent: QwenBot
->>>>>>> Stashed changes
 User-agent: Reflectionbot
 User-agent: SBIntuitionsBot
 User-agent: Scrapy
@@ -184,9 +179,11 @@ User-agent: Webzio-Extended
 User-agent: webzio-extended
 User-agent: wpbot
 User-agent: WRTNBot
+User-agent: xAI-Grok
 User-agent: YaK
 User-agent: YandexAdditional
 User-agent: YandexAdditionalBot
+User-agent: YiBot
 User-agent: YiyanBot
 User-agent: YouBot
 User-agent: ZanistaBot`;

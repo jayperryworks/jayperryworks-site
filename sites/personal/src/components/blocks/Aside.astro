@@ -44,7 +44,7 @@ const classList = ['aside', 'content-width centered', className].join(' ');
 		label && (
 			<Heading
 				align="left"
-				class="type-scale-epsilon"
+				class="label | type-scale-epsilon"
 				level={2}
 			>
 				{label}
@@ -63,13 +63,18 @@ const classList = ['aside', 'content-width centered', className].join(' ');
 
 <style>
 	.aside {
+		align-items: center;
 		background-color: var(--color-well);
 		border-radius: var(--border-radius-round);
 		color: var(--color-secondary);
 		display: flex;
 		flex-direction: column;
-		align-items: center;
+		gap: var(--space-xnarrow);
 		padding: var(--space-medium);
+	}
+
+	.aside :global(.label) {
+		width: 100%;
 	}
 
 	.aside :global(.text) {
