@@ -37,39 +37,9 @@ import type { Action as CalloutAction } from '@shared/components/elements/Callou
 // Using 'nested pagination' to generate 'chapter' pages for each longform project
 // -> https://docs.astro.build/en/core-concepts/routing/#nested-pagination
 export async function getStaticPaths({ paginate }) {
-	const projectsResponse = await fetchContent('longform');
+	const projectsResponse = await fetchContent('longform', { env: 'dev' });
 
-	// query all longform projects
-	// -> use graphQuery to fetch linked Chapter data for each project
-	// const projectsResponse = await prismic.getAllByType('longform', {
-	// 	orderings: {
-	// 		field: 'my.longform.date',
-	// 		direction: 'desc',
-	// 	},
-	// 	graphQuery: `
-	// 		{
-	// 			longform {
-	// 				...longformFields
-	// 				chapters {
-	// 					chapter {
-	// 						...on longform_chapter {
-	// 							...longform_chapterFields
-	// 						}
-	// 					}
-	// 				}
-	// 				appendices {
-	// 					appendix {
-	// 						...on longform_appendix {
-	// 							...longform_appendixFields
-	// 						}
-	// 					}
-	// 				}
-	// 			}
-	// 		}
-	// 	`,
-	// });
-
-	// loop over each project and create a massaged list of chapters to be paginated
+	// Loop over each project and create a massaged list of chapters to be paginated
 	return projectsResponse.reduce((result, project) => {
 		const {
 			title,
@@ -80,12 +50,17 @@ export async function getStaticPaths({ paginate }) {
 			uuid,
 		} = project;
 
+
+		// Project params
 		const year = format(completion_date, 'yyyy');
+		// todo - pull a short slug from Kirby so I don't have to pull apart the path
 		const uid = uuid.split('/').slice(-1).pop();
+
+		// Chapters
+		// -> chapter content
 		let chapters = [];
+		// -> list of chapter titles/links for pagination
 		let chaptersList = [];
-		let appendices = [];
-		let appendicesList = [];
 
 		if (project.chapters && project.chapters.length > 0) {
 			chapters = project.chapters.map((chapter, index) => ({
@@ -100,6 +75,12 @@ export async function getStaticPaths({ paginate }) {
 			}));
 		};
 
+		// Appendices
+		// -> appendices content
+		let appendices = [];
+		// -> appendices titles/links for pagination
+		let appendicesList = [];
+
 		if (project.appendices && project.appendices.length > 0) {
 			appendices = project.appendices.map((appendix, index) => ({
 				number: index + 1,
@@ -113,29 +94,37 @@ export async function getStaticPaths({ paginate }) {
 			}));
 		};
 
+		// Callouts
+		let callouts = [];
+
 		// Pull 'callout' blocks from the longform project
 		// -> and format for each chapter
-		// const callouts = data.body.map(({ primary, items }) => ({
-		// 	title: primary.heading,
-		// 	description: { prismicText: primary.description },
-		// 	placement: primary.placement.toLowerCase(),
-		// 	actions: items?.length > 0
-		// 		? items.map(({ call_to_action_label: label, link }) => ({ label, link, }))
-		// 		: undefined,
-		// }));
+		if (project.callouts && project.callouts.length > 0) {
+			callouts = data.body.map(({ primary, items }) => ({
+				title: primary.heading,
+				description: { prismicText: primary.description },
+				placement: primary.placement.toLowerCase(),
+				actions: items?.length > 0
+					? items.map(({ call_to_action_label: label, link }) => ({ label, link, }))
+					: undefined,
+			}));
+		}
 
 		// one chapter per page under the given project params
 		const pages = paginate([...chapters, ...appendices], {
 			pageSize: 1,
 			params: { year, uid },
 			props: {
+				// add project data to a 'project' prop
+				// to distinguish it from chapter data
 				project: {
-					title,
-					subtitle,
-					development,
+					appendicesList,
+					callouts,
 					chapterLabel,
 					chaptersList,
-					appendicesList,
+					development,
+					subtitle,
+					title,
 				}
 			}
 		});
@@ -169,6 +158,8 @@ const {
 	title,
 	type,
 } = data[0];
+
+console.log(data)
 
 // Build a page title with the project and chapter/appendix name
 // -> locating it down here instead of in the pagination function above because currentPage is accessible from here

@@ -18,9 +18,6 @@ logger.warn = (msg, options) => {
 export default defineConfig({
 	...sharedConfig,
 
-	adapter: netlify({
-		imageCDN: false,
-	}),
 	integrations: [sitemap()],
 	site: 'https://jayperry.works',
 	vite: {
