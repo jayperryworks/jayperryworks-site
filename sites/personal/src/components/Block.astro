@@ -22,7 +22,7 @@ import Heading from '@local/components/blocks/Heading.astro';
 import ImageGallery from '@local/components/blocks/ImageGallery.astro';
 import PageHeadline from '@local/components/blocks/PageHeadline.astro';
 import Passage from '@local/components/blocks/Passage.astro';
-// import Pullquote from '@shared/components/blocks/Pullquote.astro';
+import Pullquote from '@local/components/blocks/Pullquote.astro';
 // import StickyNoteGallery from '@shared/components/blocks/StickyNoteGallery.astro';
 // import Table from '@shared/components/blocks/Table.astro';
 // import TextCard from '@shared/components/blocks/TextCard.astro';
@@ -49,7 +49,7 @@ function getWidth(block) {
 		xlarge: 'xxwide',
 	};
 
-	if (block.displayMode === 'slide') return widths['XLarge'];
+	if (block.displayMode === 'slide') return widths['xlarge'];
 	return widths[block.prominence] || undefined;
 }
 
@@ -68,7 +68,7 @@ const blocks = {
 	image_gallery: ImageGallery,
 	page_headline: PageHeadline,
 	passage: Passage,
-	// pullquote: Pullquote,
+	pullquote: Pullquote,
 	// quote: BlockQuote,
 	// stickyNoteGrid: StickyNoteGallery,
 	// table: Table,
@@ -76,8 +76,6 @@ const blocks = {
 	// textCardGallery: TextCardGallery,
 	// video: Video,
 };
-
-console.log(block.type)
 
 if (!blocks[block.type]) return;
 

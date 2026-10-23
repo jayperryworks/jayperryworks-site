@@ -13,12 +13,14 @@ import { format } from 'date-fns';
 import fetchContent from '@shared/lib/fetchContent';
 
 // --- components ---
+// local
 import Layout from '@local/layouts/Layout.astro';
 import BlockList from '@local/components/BlockList.astro';
 import Callout from '@shared/components/elements/Callout.astro';
 import Heading from '@local/components/blocks/Heading.astro';
 import MainFooter from '@local/components/navigation/MainFooter.astro';
 import MainNav from '@local/components/navigation/MainNav.astro';
+// shared
 import ReadNextLink from '@shared/components/navigation/ReadNextLink.astro';
 import SequenceNav from '@shared/components/navigation/SequenceNav.astro';
 import SequenceNavItem from '@shared/components/navigation/SequenceNavItem.astro';
@@ -159,8 +161,6 @@ const {
 	type,
 } = data[0];
 
-console.log(data)
-
 // Build a page title with the project and chapter/appendix name
 // -> locating it down here instead of in the pagination function above because currentPage is accessible from here
 const pageTitle = type === 'chapter'
@@ -225,12 +225,12 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 
 					<!-- project title -->
 					<Heading
-						level={1}
+						level="h1"
 						text={project.title}
 					/>
 					{project.subtitle && (
 						<Heading
-							level={2}
+							level="h2"
 							text={project.subtitle}
 							subheading
 						/>
@@ -275,11 +275,11 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 
 					<!-- chapter title -->
 					<div class="headline-chapter">
-						<Heading level={3} subheading>{
+						<Heading level="h3" subheading>{
 							type === 'chapter' ? `${project.chapterLabel} ${number}` : 'Appendix'
 						}</Heading>
-						<Heading level={2} class="header-chapter" text={title} />
-						{subtitle && <Heading level={3} subheading text={subtitle} />}
+						<Heading level="h2" class="header-chapter" text={title} />
+						{subtitle && <Heading level="h3" subheading text={subtitle} />}
 					</div>
 			</header>
 

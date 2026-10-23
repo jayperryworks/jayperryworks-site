@@ -22,10 +22,11 @@ import '@shared/styles/tokens/borders.css';
 
 // --- types ---
 import type { ImageFit } from '@shared/lib/types';
-import type { ImageSource } from '@shared/lib/kirby.types.ts';
+import type { ImageSource } from '@shared/lib/kirby/types.ts';
 
 // --- utilities ---
 import { arrayToPunctatedString } from '@shared/lib/stringHelpers';
+import { getImageUrl } from '@shared/lib/kirby/helpers';
 
 // --- props ---
 // sizes available on the server:
@@ -48,27 +49,11 @@ const {
 // --- computed props ---
 const { id, height, width } = source;
 
-/**
- * Generate the url to transform the image to a given width
- * TODO: add format transformations, somehow
- *
- * @function
- * @param {number} width
- * @returns {string}
- */
-function getImageUrl(width) {
-	// get the url string based on which environment we're using
-	const host = import.meta.env.DEV
-		? import.meta.env.LOCAL_DEV_URL
-		: import.meta.env.CONTENT_API_URL;
-
-	return `${host}/thumbs/${id}?width=${width}`;
-}
-
-const src = getImageUrl(widths[0]);
+const src = getImageUrl(id, widths[0]);
 widths.shift();
+
 const srcset = widths
-	.map((w) => `${getImageUrl(w)} ${w}w`)
+	.map((w) => `${getImageUrl(id, w)} ${w}w`)
 	.join(', ');
 
 const classList = ['image', className].filter(Boolean).join(' ');
