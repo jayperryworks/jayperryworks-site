@@ -47,7 +47,7 @@ const {
 } = Astro.props;
 
 // --- computed props ---
-const { id, height, width } = source;
+const { id, height, width, versions } = source;
 
 const src = getImageUrl(id, widths[0]);
 widths.shift();

@@ -1,0 +1,94 @@
+---
+/**
+ * Callout component
+ * @description Display a secondary message or call to action in a card
+ *
+ * @param {Action[]} [actions] - buttons to add to the callout
+ * @param {string} [class] - append classes to the container
+ * @param {string} [description] - formatted text
+ * @param {string} [title]
+ */
+
+// --- assets ---
+import '@shared/styles/tokens/borders.css';
+import '@shared/styles/tokens/spacing.css';
+import '@shared/styles/utilities/type.css';
+import arrow from '@shared/icons/arrow-right.svg?raw';
+
+// --- utils ---
+import { linkResolver } from '@shared/lib/routes';
+
+// --- components ---
+import Heading from '@local/components/blocks/Heading.astro';
+import RenderedText from '@local/components/elements/RenderedText.astro';
+import Button from '@shared/components/elements/Button.astro';
+
+// --- types ---
+/**
+ * @typedef {object} Action
+ * @param {string} label
+ * @param {string} link
+ */
+
+const {
+	actions,
+	class: className = '',
+	description,
+	title,
+} = Astro.props;
+---
+
+<aside class={['callout', className].join(' ')}>
+	{
+		title && (
+			<Heading
+				level="h2"
+				size="gamma"
+				text={title}
+			/>
+		)
+	}
+
+	<slot>
+		<RenderedText
+			allowHTML={true}
+			markdown={description}
+		/>
+	</slot>
+
+	{
+		actions?.length > 0 && (
+			<footer>
+				{actions.map(({ label, link }) => (
+					<Button
+						iconRight={arrow}
+						href={link}
+					>
+						{label}
+					</Button>
+				))}
+			</footer>
+		)
+	}
+</aside>
+
+<style>
+	.callout {
+		--color-surface: var(--color-well);
+
+		background-color: var(--color-well);
+		border-radius: var(--border-radius-round);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xnarrow);
+		padding: var(--space-wide);
+	}
+
+	footer {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xnarrow);
+		justify-content: flex-end;
+		padding-block-start: var(--space-medium);
+	}
+</style>

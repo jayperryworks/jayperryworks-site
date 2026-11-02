@@ -12,6 +12,7 @@
 // --- assets ---
 import '@shared/styles/tokens/spacing.css';
 import '@shared/styles/utilities/visibility.css';
+import '@shared/styles/utilities/contentWidth.css';
 
 // --- utilities ---
 import * as prismicHelpers from '@prismicio/helpers';
@@ -26,70 +27,80 @@ import Passage from '@shared/components/blocks/Passage.astro';
 import RevealOnScroll from '@shared/components/meta/RevealOnScroll.astro';
 
 // --- props ---
-const { text, class: className = '', color = 'primary', image } = Astro.props;
+const { text, class: className = '', color = 'primary', image, prominence = 'default' } = Astro.props;
 
-const imageSizes = {
-	small: 800,
-	medium: 1600,
-	large: 2400,
-};
+const imageSizes = ['small', 'medium', 'large', 'xlarge' ];
 
-/**
- * Create the CSS variables for the style attribute
- * @returns {string}
- */
-function variables() {
-	if (image) {
-		const { id, width, height } = image;
-
-		return [
-			`--aspect: ${width} / ${height};`,
-			`--color: var(--color-${color});`,
-			Object.keys(imageSizes).map((name) => (
-				`--image-${name}: url('${getImageUrl(id, imageSizes[name])}');`
-			)),
-		].join('');
-	}
-
-	return '';
-}
+// create CSS variables for each image size and format, using the imageSizes above
+const maskImageVariables = imageSizes.map((name) => {
+	return Object.keys(image.versions[name].formats).map((format) => (
+		`--image-${name}-${format}: url('${image.versions[name].formats[format]}');`
+	)).join('');
+});
 ---
 
 <RevealOnScroll>
 	<aside
 		class={['pullquote', className].join(' ')}
+		data-width={prominence}
 		role="presentation"
-		style={variables()}
+		style={[
+			`--aspect: ${image.width} / ${image.height};`,
+			`--color: var(--color-${color});`,
+			].join()}
 	>
-		<Passage
-			class={image ? 'hide-visually' : ''}
-			typeSize="delta"
-			{text}
-		/>
+		<div class="wrapper" style={maskImageVariables.join('')}>
+			<Passage
+				class={image ? 'hide-visually' : ''}
+				typeSize="delta"
+				{text}
+			/>
+		</div>
 	</aside>
 </RevealOnScroll>
 
 <style>
 	.pullquote {
-		--image: var(--image-small);
+		container-name: pullquote;
+		container-type: inline-size;
+		display: flex;
+	}
+
+	.wrapper {
+		--image-avif: var(--image-small-avif);
+		--image-webp: var(--image-small-webp);
 
 		aspect-ratio: var(--aspect);
 		background-color: var(--color, currentColor);
-		mask-image: var(--image);
-		mask-position: 50% 50%;
+		flex: 1;
+		mask-image: var(--image-webp);
+		mask-image: image-set(
+			var(--image-avif) type("image/avif"),
+			var(--image-webp) type("image/wep"),
+		);
+		mask-position: 50%;
 		mask-repeat: no-repeat;
 		mask-size: contain;
 	}
 
-	@media screen and (min-width: 37em) {
-		.pullquote {
-			--image: var(--image-medium);
+	@container pullquote (width > 400px) {
+		.wrapper {
+			--image-avif: var(--image-medium-avif);
+			--image-webp: var(--image-medium-webp);
 		}
 	}
 
-	@media screen and (min-width: 100em) {
-		.pullquote {
-			--image: var(--image-large);
+	@container pullquote (width > 640px) {
+		.wrapper {
+			--image-avif: var(--image-large-avif);
+			--image-webp: var(--image-large-webp);
+		}
+	}
+
+	@container pullquote (width > 1000px) {
+		.wrapper {
+			--image-avif: var(--image-xlarge-avif);
+			--image-webp: var(--image-xlarge-webp);
 		}
 	}
 </style>

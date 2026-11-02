@@ -16,7 +16,7 @@ import fetchContent from '@shared/lib/fetchContent';
 // local
 import Layout from '@local/layouts/Layout.astro';
 import BlockList from '@local/components/BlockList.astro';
-import Callout from '@shared/components/elements/Callout.astro';
+import Callout from '@local/components/elements/Callout.astro';
 import Heading from '@local/components/blocks/Heading.astro';
 import MainFooter from '@local/components/navigation/MainFooter.astro';
 import MainNav from '@local/components/navigation/MainNav.astro';
@@ -30,9 +30,6 @@ import ProgressBar from '@shared/components/elements/ProgressBar.astro';
 import type {
 	Align,
 } from '@shared/lib/types';
-
-import type { Props as SequenceNavItemProps } from '@shared/components/navigation/SequenceNavItem.astro';
-import type { Action as CalloutAction } from '@shared/components/elements/Callout.astro';
 
 // --- data ---
 
@@ -48,13 +45,13 @@ export async function getStaticPaths({ paginate }) {
 			subtitle,
 			development,
 			chapter_label: chapterLabel,
-			completion_date,
+			dateCompleted,
 			uuid,
 		} = project;
 
 
 		// Project params
-		const year = format(completion_date, 'yyyy');
+		const year = format(dateCompleted, 'yyyy');
 		// todo - pull a short slug from Kirby so I don't have to pull apart the path
 		const uid = uuid.split('/').slice(-1).pop();
 
@@ -96,21 +93,9 @@ export async function getStaticPaths({ paginate }) {
 			}));
 		};
 
-		// Callouts
-		let callouts = [];
-
-		// Pull 'callout' blocks from the longform project
-		// -> and format for each chapter
-		if (project.callouts && project.callouts.length > 0) {
-			callouts = data.body.map(({ primary, items }) => ({
-				title: primary.heading,
-				description: { prismicText: primary.description },
-				placement: primary.placement.toLowerCase(),
-				actions: items?.length > 0
-					? items.map(({ call_to_action_label: label, link }) => ({ label, link, }))
-					: undefined,
-			}));
-		}
+		let callouts = project.callouts && project.callouts.length > 0
+			? project.callouts.map((callout) => ({ title: callout.heading, ...callout }))
+			: [];
 
 		// one chapter per page under the given project params
 		const pages = paginate([...chapters, ...appendices], {
@@ -152,7 +137,6 @@ const {
 
 const {
 	body,
-	callouts = [],
 	number,
 	seo,
 	subtitle,
@@ -200,13 +184,15 @@ const nextPage = pagesList[currentPage] ? {
 } : null;
 
 // callouts
-const topCallouts = callouts.filter(({ placement }) => {
-	if (currentPage === 0) return (placement === 'top' || placement === 'start');
+const topCallouts = project.callouts.filter(({ placement, show }) => {
+	if (currentPage === 0) return (placement === 'top' && show === 'start');
+	if (currentPage === lastPage) return (placement === 'top' && show === 'end');
 	return placement === 'top';
 });
 
-const bottomCallouts = callouts.filter(({ placement }) => {
-	if (currentPage === lastPage) return (placement === 'bottom' || placement === 'end');
+const bottomCallouts = project.callouts.filter(({ placement, show }) => {
+	if (currentPage === 0) return (placement === 'bottom' || show === 'start');
+	if (currentPage === lastPage) return (placement === 'bottom' || show === 'end');
 	return placement === 'bottom';
 });
 ---
@@ -286,7 +272,7 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 			<!-- Top callouts -->
 			{topCallouts?.length > 0 && (
 				<div class="support">
-					{topCallouts.map((callout: Callout) => (
+					{topCallouts.map((callout) => (
 						<Callout
 							{...callout}
 							class="support-box"
@@ -373,7 +359,7 @@ const bottomCallouts = callouts.filter(({ placement }) => {
 	<!-- Bottom callouts -->
 	{bottomCallouts?.length > 0 && (
 		<div class="support bottom">
-			{bottomCallouts.map((callout: Callout) => (
+			{bottomCallouts.map((callout) => (
 				<Callout
 					{...callout}
 					class="support-box"

@@ -15,9 +15,23 @@
 [[redirects]]
 	from = "/blog"
 	to = "/blog/page/1"
+	status = 301
+	force = true
+[[redirects]]
+	from = "/blog/"
+	to = "/blog/page/1"
+	status = 301
+	force = true
 [[redirects]]
 	from = "/design"
 	to = "https://design.jayperry.works"
+	status = 301
+	force = true
+[[redirects]]
+	from = "/design/"
+	to = "https://design.jayperry.works"
+	status = 301
+	force = true
 [[redirects]]
 	from = "/work/prints/*"
 	to = "/pictures/:splat"
