@@ -7,7 +7,7 @@ import type {
 
 // --- color ---
 export type ColorRoles =
-	| 'primary'
+	'primary'
 	| 'secondary'
 	| 'highlight'
 	| 'surface'
