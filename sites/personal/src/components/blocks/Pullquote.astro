@@ -31,15 +31,14 @@ const {
 	prominence = 'default',
 } = Astro.props;
 
-// image sizes from the API to use for the handwriting image
-const imageSizes = ['small', 'medium', 'large', 'xlarge' ];
+const { dimensions, versions } = image;
 
 // create CSS variables for each image size and format, using the imageSizes above
-const maskImageVariables = imageSizes.map((name) => {
-	return Object.keys(image.versions[name].formats).map((format) => (
-		`--image-${name}-${format}: url('${image.versions[name].formats[format]}');`
-	)).join('');
-});
+const maskImageVariables = Object.keys(versions).map((width, index) => {
+	if (index === 0) return false;
+
+	return `--image-${width}: url('${versions[width]}');`;
+}).filter(Boolean);
 ---
 
 <RevealOnScroll>
@@ -48,7 +47,7 @@ const maskImageVariables = imageSizes.map((name) => {
 		data-width={prominence}
 		role="presentation"
 		style={[
-			`--aspect: ${image.width} / ${image.height};`,
+			`--aspect: ${dimensions.ratio};`,
 			`--color: var(--color-${color});`,
 			].join()}
 	>
@@ -70,17 +69,12 @@ const maskImageVariables = imageSizes.map((name) => {
 	}
 
 	.wrapper {
-		--image-avif: var(--image-small-avif);
-		--image-webp: var(--image-small-webp);
+		--image: var(--image-800);
 
 		aspect-ratio: var(--aspect);
 		background-color: var(--color, currentColor);
 		flex: 1;
-		mask-image: var(--image-webp);
-		mask-image: image-set(
-			var(--image-avif) type("image/avif"),
-			var(--image-webp) type("image/wep"),
-		);
+		mask-image: var(--image);
 		mask-position: 50%;
 		mask-repeat: no-repeat;
 		mask-size: contain;
@@ -88,22 +82,19 @@ const maskImageVariables = imageSizes.map((name) => {
 
 	@container pullquote (width > 400px) {
 		.wrapper {
-			--image-avif: var(--image-medium-avif);
-			--image-webp: var(--image-medium-webp);
+			--image: var(--image-1024);
 		}
 	}
 
-	@container pullquote (width > 640px) {
+	@container pullquote (width > 800px) {
 		.wrapper {
-			--image-avif: var(--image-large-avif);
-			--image-webp: var(--image-large-webp);
+			--image: var(--image-1440);
 		}
 	}
 
-	@container pullquote (width > 1000px) {
+	@container pullquote (width > 1024px) {
 		.wrapper {
-			--image-avif: var(--image-xlarge-avif);
-			--image-webp: var(--image-xlarge-webp);
+			--image: var(--image-2048);
 		}
 	}
 </style>

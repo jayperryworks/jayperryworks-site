@@ -37,29 +37,26 @@ const {
 	border = false,
 	class: className = '',
 	fit,
-	formats = ['webp', 'avif'],
 	maxHeight,
 	position,
 	sizes = '(max-width: 75em) 98vw, 2000px',
 	source,
 	style,
-	widths = [400, 800, 1200, 2000],
 } = Astro.props;
 
 // --- computed props ---
-const { id, height, width, versions } = source;
+const { dimensions, versions } = source;
 
-const src = getImageUrl(id, widths[0]);
-widths.shift();
-
-const srcset = widths
-	.map((w) => `${getImageUrl(id, w)} ${w}w`)
-	.join(', ');
+const src = Object.values(versions)[0];
+const srcset = Object.keys(versions).reduce((result, width, index) => {
+	if (index > 0) result.push(`${versions[width]} ${width}w`);
+	return result;
+}, []).join(', ');
 
 const classList = ['image', className].filter(Boolean).join(' ');
 
 const styleList = arrayToPunctatedString([
-	`--aspect-ratio: ${aspectRatio || `${width}/${height}`};`,
+	`--aspect-ratio: ${aspectRatio || dimensions.ratio};`,
 	maxHeight ? `--max-height: ${maxHeight};` : false,
 	position ? `--object-position: ${position};` : false,
 	style,
@@ -71,14 +68,14 @@ const styleList = arrayToPunctatedString([
 	data-fit={[fit, maxHeight && 'limit-height'].filter(Boolean).join(' ')}
 	data-border={border === true ? 'true' : undefined}
 	decoding="async"
+	height={dimensions.height}
 	loading="lazy"
 	style={styleList}
+	width={dimensions.width}
 	{alt}
-	{height}
 	{sizes}
 	{src}
 	{srcset}
-	{width}
 />
 
 <style>
