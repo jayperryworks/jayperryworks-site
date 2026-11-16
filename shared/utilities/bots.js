@@ -1,7 +1,9 @@
 export default `
+User-agent: __usage_ai-training
 User-agent: AddSearchBot
 User-agent: AgentDataBot
 User-agent: AgentTimes
+User-agent: AGI Agent
 User-agent: AI2Bot
 User-agent: AI2Bot-DeepResearchEval
 User-agent: Ai2Bot-Dolma
@@ -32,20 +34,24 @@ User-agent: Brightbot
 User-agent: Brightbot 1.0
 User-agent: BuddyBot
 User-agent: Bytespider
+User-agent: CartAI Agentic Commerce
 User-agent: CCBot
 User-agent: Channel3Bot
 User-agent: ChatGLM-Spider
 User-agent: ChatGPT Agent
 User-agent: ChatGPT-User
+User-agent: Claude-Agent
 User-agent: Claude-Code
 User-agent: Claude-SearchBot
 User-agent: Claude-User
 User-agent: Claude-Web
 User-agent: ClaudeBot
+User-agent: CledaraBot
 User-agent: Cloudflare-AutoRAG
 User-agent: CloudflareBrowserRenderingCrawler
 User-agent: CloudVertexBot
 User-agent: Code
+User-agent: Codex
 User-agent: cohere-ai
 User-agent: cohere-training-data-crawler
 User-agent: Cotoyogi
@@ -58,13 +64,17 @@ User-agent: DeepSeekBot
 User-agent: Devin
 User-agent: Diffbot
 User-agent: Diffbot-User
+User-agent: Dot
 User-agent: DoubaoBot
 User-agent: DuckAssistBot
 User-agent: Echobot Bot
 User-agent: EchoboxBot
+User-agent: ElevenlabsBot
+User-agent: ElevenlabsCrawler
 User-agent: ERNIEBot
 User-agent: ExaBot
 User-agent: ExaSearchBot
+User-agent: ExaUser
 User-agent: FacebookBot
 User-agent: facebookexternalhit
 User-agent: Factset_spyderbot
@@ -77,6 +87,7 @@ User-agent: Google-CloudVertexBot
 User-agent: Google-Extended
 User-agent: Google-Firebase
 User-agent: Google-Gemini-CLI
+User-agent: Google-GeminiNotebook
 User-agent: Google-NotebookLM
 User-agent: GoogleAgent-Mariner
 User-agent: GoogleAgent-URLContext
@@ -84,8 +95,12 @@ User-agent: GoogleOther
 User-agent: GoogleOther-Image
 User-agent: GoogleOther-Video
 User-agent: GPTBot
+User-agent: Grok Bot
 User-agent: GrokAppAndroid
 User-agent: GrokBot
+User-agent: Haiku-SearchBot
+User-agent: HarkBot
+User-agent: HatchFeed
 User-agent: HenkBot
 User-agent: Hunyuan
 User-agent: iAskBot
@@ -95,6 +110,7 @@ User-agent: ICC-Crawler
 User-agent: ImagesiftBot
 User-agent: imageSpider
 User-agent: img2dataset
+User-agent: Instinct
 User-agent: ISSCyberRiskCrawler
 User-agent: kagi-fetcher
 User-agent: Kangaroo Bot
@@ -109,6 +125,7 @@ User-agent: laion-huggingface-processor
 User-agent: LAIONDownloader
 User-agent: LCC
 User-agent: Lightpanda
+User-agent: Liner-User
 User-agent: LinerBot
 User-agent: Linguee Bot
 User-agent: LinkupBot
@@ -118,12 +135,14 @@ User-agent: Meta-ExternalAgent
 User-agent: meta-externalfetcher
 User-agent: Meta-ExternalFetcher
 User-agent: meta-webindexer
+User-agent: MiniMaxAgent
 User-agent: MistralAI-Index
 User-agent: MistralAI-Training
 User-agent: MistralAI-User
 User-agent: MistralAI-User/1.0
 User-agent: MoonshotBot
 User-agent: Mozilla-Tabstack
+User-agent: Muse
 User-agent: MyCentralAIScraperBot
 User-agent: NagetBot
 User-agent: nbot
@@ -141,6 +160,7 @@ User-agent: Operator
 User-agent: PanguBot
 User-agent: Panscient
 User-agent: panscient.com
+User-agent: Payhawk Invoice Fetching Agent
 User-agent: Perplexity-User
 User-agent: PerplexityBot
 User-agent: PetalBot
@@ -157,6 +177,7 @@ User-agent: QwenBot
 User-agent: Reflectionbot
 User-agent: SBIntuitionsBot
 User-agent: Scrapy
+User-agent: ScryBot
 User-agent: SemrushBot-OCOB
 User-agent: SemrushBot-SWA
 User-agent: Shap-User
